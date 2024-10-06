@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  install:
+    image: maven:3.6.3-openjdk-17
+    container_name: maven
+    working_dir: /usr/code/app
+    command: ['mvn', 'clean', 'install']
+    environment:
+      MUTATION_COVERAGE: "${MUTATION_COVERAGE}"
+      CODE_COVERAGE: "${CODE_COVERAGE}"
+      SONARQUBE: "${SONARQUBE}"
+      SONARQUBE_HOST_URL: "${SONARQUBE_HOST_URL}"
+      SONARQUBE_LOGIN: "${SONARQUBE_LOGIN}"
+      SONARQUBE_PROJECT_KEY: "${SONARQUBE_PROJECT_KEY}"
+    volumes:
+      - ${PWD}:/usr/code/app
+      - m2-data:/root/.m2
+
+volumes:
+  m2-data:

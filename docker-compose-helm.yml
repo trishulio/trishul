@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  helm:
+    image: alpine/helm:3.9.2
+    container_name: helm
+    working_dir: /usr/code/app
+    network_mode: "host" # Hack: This is needed so the helm can access the host's minikube IP
+    environment:
+      KUBECONFIG: ${KUBECONFIG}
+      HOME: ${HOME}
+    volumes:
+      - ${PWD}:/usr/code/app
+      - ${HOME}/.kube:${HOME}/.kube
+      - ${HOME}/.minikube/:${HOME}/.minikube
