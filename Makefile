@@ -1,6 +1,6 @@
 .PHONY: install containerize login_repo publish deploy undeploy deploy containerize_local set_credentials
 
-APP_NAME:=lastminet
+APP_NAME:=auth
 VERSION:=1.0.0
 AWS_ACCOUNT_ID:=992382473777
 AWS_REGION:=ca-central-1

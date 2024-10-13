@@ -3,29 +3,37 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ca.saasforge</groupId>
-    <artifactId>trishul-auth</artifactId>
+
+    <groupId>io.trishul</groupId>
+    <artifactId>trishul-parent</artifactId>
     <version>1.0.0</version>
-    <name>trishul-auth</name>
-    <description>Multitenant authentication</description>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+    <description>Parent project for Trishul modules</description>
+
+    <modules>
+        <module>modules/trishul-model</module>
+        <module>modules/trishul-auth</module>
+    </modules>
 
     <properties>
         <java.version>17</java.version>
-        <!-- <org.springframework.boot.version>2.6.0</org.springframework.boot.version> spring-boot-starter-parent version is explicitly specified. Update it if this is updated -->
+        <!-- spring-boot-starter-parent version is explicitly specified. Update it if this is updated -->
+        <org.springframework.boot.version>2.6.0</org.springframework.boot.version>
         <org.springframework.security.version>2.6.0</org.springframework.security.version>
-        <!-- <org.springdoc.openapi.version>1.5.12</org.springdoc.openapi.version> -->
-        <!-- <org.mapstruct.version>1.4.2.Final</org.mapstruct.version> -->
+        <org.springdoc.openapi.version>1.5.12</org.springdoc.openapi.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <com.google.guava.version>31.1-jre</com.google.guava.version>
-        <!-- <m2e.apt.activation>jdt_apt</m2e.apt.activation> -->
-        <!-- <javax.measure.version>2.0</javax.measure.version> -->
-        <!-- <javax.measure.impl.version>1.0.10</javax.measure.impl.version> -->
-        <!-- <org.joda.money.version>1.0.1</org.joda.money.version> -->
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+        <javax.measure.version>2.0</javax.measure.version>
+        <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
+        <org.joda.money.version>1.0.1</org.joda.money.version>
         <aws.sdk.version>1.12.153</aws.sdk.version>
         <org.jacoco.plugin.version>0.8.7</org.jacoco.plugin.version>
         <org.pitest.version>1.7.2</org.pitest.version>
         <org.pitest.junit5.plugin.version>0.15</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>3.7.0.1746</org.sonarsource.scanner.version>
+        <javax.servlet.servlet-api.version>4.0.1</javax.servlet.servlet-api.version>
+        <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
     </properties>
 
     <parent>
@@ -35,28 +43,22 @@
     </parent>
 
     <dependencies>
+            <!-- Common libraries like Guava and Commons Lang3, no scope needed -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-            <scope>provided</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${com.google.guava.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-cognitoidp</artifactId>
-            <scope>provided</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-cognitoidentity</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-iam</artifactId>
-            <scope>provided</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <!-- Test scope dependencies: will not be included in the final JAR -->
@@ -73,29 +75,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.unitils</groupId>
-            <artifactId>unitils-core</artifactId>
-            <version>3.4.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-parent</artifactId>
             <version>${org.pitest.version}</version>
             <type>pom</type>
-        </dependency>
-
-        <!-- Common libraries like Guava and Commons Lang3, no scope needed -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${com.google.guava.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
@@ -108,8 +91,52 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+       <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <profiles>
         <profile>
@@ -235,33 +262,4 @@
             </build>
         </profile>
     </profiles>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
