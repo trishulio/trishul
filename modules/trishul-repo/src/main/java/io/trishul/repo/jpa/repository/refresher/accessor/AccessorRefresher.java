@@ -11,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.trishul.repo.jpa.repository.exception.EntityNotFoundException;
-import io.trishul.repo.jpa.repository.model.Identified;
+import io.trishul.repo.jpa.repository.model.pojo.Identified;
 
 public class AccessorRefresher<I, A, V extends Identified<I>> {
     private static final Logger log = LoggerFactory.getLogger(AccessorRefresher.class);
 
-    private Class<V> clazz;
-    private Function<A, V> getter;
-    private BiConsumer<A, V> setter;
-    private Function<Iterable<I>, List<V>> entityRetriever;
+    private final Class<V> clazz;
+    private final Function<A, V> getter;
+    private final BiConsumer<A, V> setter;
+    private final Function<Iterable<I>, List<V>> entityRetriever;
 
     public AccessorRefresher(Class<V> clazz, Function<A, V> getter, BiConsumer<A, V> setter, Function<Iterable<I>, List<V>> entityRetriever) {
         this.clazz = clazz;
@@ -29,7 +29,7 @@ public class AccessorRefresher<I, A, V extends Identified<I>> {
     }
 
     public void refreshAccessors(Collection<? extends A> accessors) {
-        if (accessors != null && accessors.size() > 0) {
+        if (accessors != null && !accessors.isEmpty()) {
             Map<I, List<A>> lookupAccessorsByValueId = accessors.stream().filter(accessor -> accessor != null && getter.apply(accessor) != null).collect(Collectors.groupingBy(accessor -> getter.apply(accessor).getId()));
             log.debug("accessMap: {}", lookupAccessorsByValueId);
 

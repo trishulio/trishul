@@ -1,4 +1,4 @@
-package io.trishul.repo.jpa.repository.model;
+package io.trishul.repo.jpa.repository.model.pojo;
 
 import java.time.LocalDateTime;
 

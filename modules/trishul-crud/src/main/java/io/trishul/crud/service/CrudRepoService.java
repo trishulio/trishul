@@ -1,4 +1,4 @@
-package io.trishul.repo.jpa.repository.service;
+package io.trishul.crud.service;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import io.trishul.repo.jpa.repository.aggregation.ExtendedRepository;
 import io.trishul.repo.jpa.repository.model.pojo.Identified;
 import io.trishul.repo.jpa.repository.refresher.Refresher;
+import io.trishul.repo.jpa.repository.service.RepoService;
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
 
 public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationExecutor<E> & ExtendedRepository<ID>, ID, A, E extends Identified<ID>, U extends Refresher<E, A>> implements RepoService<ID, E, A> {

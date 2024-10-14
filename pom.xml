@@ -15,6 +15,10 @@
         <module>modules/trishul-auth</module>
         <module>modules/trishul-repo</module>
         <module>modules/trishul-tenant</module>
+        <module>modules/trishul-object</module>
+        <module>modules/trishul-crud</module>
+        <module>modules/trishul-iaas-repo</module>
+        <module>modules/trishul-object-service</module>
     </modules>
 
     <properties>
@@ -103,6 +107,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-auth</artifactId>
                 <version>${project.version}</version>
@@ -123,6 +133,30 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-tenant</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-object</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-crud</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-object-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-iaas-repo</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

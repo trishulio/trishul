@@ -12,13 +12,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
-import io.trishul.repo.jpa.repository.model.Identified;
+import io.trishul.repo.jpa.repository.model.pojo.Identified;
 
 public interface RepoService<ID, E extends Identified<ID>, A> {
     public static PageRequest pageRequest(SortedSet<String> sort, boolean orderAscending, int page, int size) {
         Sort sortBy = Sort.unsorted();
-        if (sort != null && sort.size() > 0) {
-            sortBy = Sort.by(orderAscending ? Direction.ASC : Direction.DESC, sort.toArray(new String[sort.size()]));
+        if (sort != null && !sort.isEmpty()) {
+            sortBy = Sort.by(orderAscending ? Direction.ASC : Direction.DESC, sort.toArray(String[]::new));
         }
 
         return PageRequest.of(page, size, sortBy);
