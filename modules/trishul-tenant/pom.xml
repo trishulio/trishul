@@ -17,8 +17,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-auth</artifactId>
         </dependency>
     </dependencies>
 </project>

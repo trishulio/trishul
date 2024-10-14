@@ -33,7 +33,7 @@ public class CognitoPrincipalContext implements PrincipalContext {
     }
 
     @Override
-    public UUID getGroupID() {
+    public UUID getGroupId() {
         return this.groupId;
     }
 

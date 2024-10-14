@@ -1,10 +1,9 @@
 package io.trishul.auth.session.context;
 
-import io.trishul.auth.session.token.IaasAuthorizationCredentials;
-
 import java.util.List;
 import java.util.UUID;
 
+import io.trishul.auth.session.token.IaasAuthorizationCredentials;
 public interface PrincipalContext {
     UUID getGroupId();
 
