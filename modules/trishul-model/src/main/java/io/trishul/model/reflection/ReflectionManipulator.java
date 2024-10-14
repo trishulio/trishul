@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.Nonnull;
+
 import io.trishul.model.lambda.CheckedFunction;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -73,7 +75,7 @@ public class ReflectionManipulator {
     public ReflectionManipulator() {
         this.propNamesCache = CacheBuilder.newBuilder().build(new CacheLoader<Class<?>, Set<String>>() {
             @Override
-            public Set<String> load(Class<?> clazz) throws Exception {
+            public Set<String> load(@Nonnull Class<?> clazz) throws Exception {
                 final Method[] methods = clazz.getMethods();
                 final Set<String> propertyNames = Arrays.stream(methods)
                                         .filter(m -> m.getName().startsWith("get") || m.getName().startsWith("set"))
@@ -90,7 +92,7 @@ public class ReflectionManipulator {
 
         this.propNamesCacheWithExclusions = CacheBuilder.newBuilder().build(new CacheLoader<PropNameKey, Set<String>>() {
             @Override
-            public Set<String> load(PropNameKey key) throws Exception {
+            public Set<String> load(@Nonnull PropNameKey key) throws Exception {
                 Set<String> propNames = ReflectionManipulator.this.propNamesCache.get(key.getClazz());
 
                 if (key.getExclusions() != null) {

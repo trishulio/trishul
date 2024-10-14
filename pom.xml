@@ -13,6 +13,8 @@
     <modules>
         <module>modules/trishul-model</module>
         <module>modules/trishul-auth</module>
+        <module>modules/trishul-repo</module>
+        <module>modules/trishul-tenant</module>
     </modules>
 
     <properties>
@@ -85,6 +87,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${org.springframework.boot.version}</version>
+                <type>pom</type>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-bom</artifactId>
                 <version>${aws.sdk.version}</version>
@@ -101,6 +111,18 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-repo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-tenant</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -14,7 +14,7 @@ public class CognitoPrincipalContext implements PrincipalContext {
     public static final String ATTRIBUTE_EMAIL = "email";
     public static final String ATTRIBUTE_EMAIL_VERIFIED = "email_verified";
 
-    private UUID tenantId;
+    private UUID groupId;
     private String username;
     private List<String> roles;
 
@@ -23,7 +23,7 @@ public class CognitoPrincipalContext implements PrincipalContext {
     public CognitoPrincipalContext(Jwt jwt, String iaasToken) {
         if (jwt != null) {
             setUsername(jwt);
-            setTenantId(jwt);
+            setGroupId(jwt);
             setRoles(jwt);
         }
 
@@ -33,8 +33,8 @@ public class CognitoPrincipalContext implements PrincipalContext {
     }
 
     @Override
-    public UUID getTenantId() {
-        return this.tenantId;
+    public UUID getGroupID() {
+        return this.groupId;
     }
 
     @Override
@@ -60,18 +60,18 @@ public class CognitoPrincipalContext implements PrincipalContext {
         this.roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
     }
 
-    private void setTenantId(Jwt jwt) {
+    private void setGroupId(Jwt jwt) {
         List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
         if (groups.size() > 1) {
             String msg = String.format("Each user should only belong to a single cognito group. Instead found %s", groups.size());
             throw new IllegalArgumentException(msg);
         }
 
-        String sTenantId = groups.get(0);
+        String sGroupId = groups.get(0);
 
-        UUID tenantId = UUID.fromString(sTenantId);
+        UUID groupId = UUID.fromString(sGroupId);
 
-        this.tenantId = tenantId;
+        this.groupId = groupId;
 
     }
 
