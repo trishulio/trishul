@@ -13,12 +13,14 @@
     <modules>
         <module>modules/trishul-model</module>
         <module>modules/trishul-auth</module>
+        <module>modules/trishul-iaas</module>
+        <module>modules/trishul-auth-aws</module>
         <module>modules/trishul-repo</module>
         <module>modules/trishul-tenant</module>
         <module>modules/trishul-object</module>
         <module>modules/trishul-crud</module>
-        <module>modules/trishul-iaas-repo</module>
         <module>modules/trishul-object-service</module>
+        <module>modules/trishul-object-service-aws</module>
     </modules>
 
     <properties>
@@ -120,6 +122,12 @@
 
             <dependency>
                 <groupId>io.trishul</groupId>
+                <artifactId>trishul-auth-aws</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
                 <artifactId>trishul-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -150,13 +158,19 @@
 
             <dependency>
                 <groupId>io.trishul</groupId>
+                <artifactId>trishul-iaas</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
                 <artifactId>trishul-object-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.trishul</groupId>
-                <artifactId>trishul-iaas-repo</artifactId>
+                <artifactId>trishul-object-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

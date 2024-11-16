@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.trishul.model.base.pojo.Identified;
 import io.trishul.repo.jpa.repository.exception.EntityNotFoundException;
-import io.trishul.repo.jpa.repository.model.pojo.Identified;
 
 public class AccessorRefresher<I, A, V extends Identified<I>> {
     private static final Logger log = LoggerFactory.getLogger(AccessorRefresher.class);

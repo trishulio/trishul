@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import io.trishul.repo.jpa.repository.model.pojo.Identified;
+import io.trishul.model.base.pojo.Identified;
 
 public interface CrudService<ID, E extends Identified<ID>, BE, UE extends Identified<ID>, A> {
     boolean exists(Set<ID> ids);

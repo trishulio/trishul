@@ -25,8 +25,8 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${com.fasterxml.jackson.version}</version>
         </dependency>
+        <!-- TODO: Remove the quantity and money dependencies -->
         <dependency>
             <groupId>tec.uom</groupId>
             <artifactId>uom-se</artifactId>
@@ -36,6 +36,11 @@
             <groupId>org.joda</groupId>
             <artifactId>joda-money</artifactId>
             <version>${org.joda.money.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
     </dependencies>
 </project>

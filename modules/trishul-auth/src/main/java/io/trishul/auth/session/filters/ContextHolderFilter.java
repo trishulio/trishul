@@ -15,23 +15,23 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import io.trishul.auth.session.context.CognitoPrincipalContext;
 import io.trishul.auth.session.context.PrincipalContext;
+import io.trishul.auth.session.context.PrincipalContextBuilder;
 import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 
 public class ContextHolderFilter implements Filter {
-    public static final String HEADER_NAME_IAAS_TOKEN = "X-Iaas-Token";
+    private final ThreadLocalContextHolder ctxHolder;
+    private final Supplier<SecurityContext> securityCtxSupplier;
+    private final PrincipalContextBuilder ctxBuilder;
 
-    private ThreadLocalContextHolder ctxHolder;
-    private Supplier<SecurityContext> securityCtxSupplier;
-
-    public ContextHolderFilter(ThreadLocalContextHolder ctxHolder) {
-        this(() -> SecurityContextHolder.getContext(), ctxHolder);
+    public ContextHolderFilter(ThreadLocalContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
+        this(() -> SecurityContextHolder.getContext(), ctxHolder, ctxBuilder);
     }
 
-    protected ContextHolderFilter(Supplier<SecurityContext> securityCtxSupplier, ThreadLocalContextHolder ctxHolder) {
+    protected ContextHolderFilter(Supplier<SecurityContext> securityCtxSupplier, ThreadLocalContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
         this.securityCtxSupplier = securityCtxSupplier;
         this.ctxHolder = ctxHolder;
+        this.ctxBuilder = ctxBuilder;
     }
 
     @Override
@@ -46,9 +46,8 @@ public class ContextHolderFilter implements Filter {
         Authentication auth = ctx.getAuthentication();
         Object principal = auth.getPrincipal();
         PrincipalContext principalCtx = null;
-        if (principal instanceof Jwt) {
-            Jwt jwt = (Jwt) principal;
-            principalCtx = new CognitoPrincipalContext(jwt, request.getHeader(HEADER_NAME_IAAS_TOKEN));
+        if (principal instanceof Jwt jwt) {
+            principalCtx = this.ctxBuilder.build(jwt, request);
         }
         this.ctxHolder.setContext(principalCtx);
     }

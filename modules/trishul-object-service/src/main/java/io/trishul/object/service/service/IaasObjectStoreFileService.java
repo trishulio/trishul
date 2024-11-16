@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
-import io.trishul.iaas.repository.repository.IaasRepository;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.Identified;
 import io.trishul.object.service.model.accessor.IaasObjectStoreFileAccessor;
 import io.trishul.object.service.model.entity.BaseIaasObjectStoreFile;
 import io.trishul.object.service.model.entity.IaasObjectStoreFile;
 import io.trishul.object.service.model.entity.UpdateIaasObjectStoreFile;
-import io.trishul.repo.jpa.repository.model.pojo.Identified;
 
 @Transactional
 public class IaasObjectStoreFileService extends BaseService implements CrudService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile, IaasObjectStoreFileAccessor> {

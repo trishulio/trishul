@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.repo.jpa.repository.model.pojo.CrudEntity;
+import io.trishul.model.base.pojo.CrudEntity;
 
 public class IaasObjectStoreFile extends BaseEntity implements UpdateIaasObjectStoreFile, CrudEntity<URI> {
     private URI fileKey;

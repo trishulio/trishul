@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
+import io.trishul.auth.session.context.PrincipalContextBuilder;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 import io.trishul.auth.session.filters.ContextHolderFilter;
@@ -39,9 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @ConditionalOnMissingBean(ContextHolderFilter.class)
-    public Filter ctxHolderFilter(ContextHolder ctxHolder) {
-        return new ContextHolderFilter((ThreadLocalContextHolder) ctxHolder);
+    public Filter ctxHolderFilter(ContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
+        return new ContextHolderFilter((ThreadLocalContextHolder) ctxHolder, ctxBuilder);
     }
-
-
 }

@@ -10,12 +10,13 @@ import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.base.pojo.Identified;
+
 import static io.trishul.model.validator.Validator.assertion;
 import io.trishul.object.decorator.EntityDecorator;
 import io.trishul.object.decorator.NoActionDecorator;
 import io.trishul.repo.jpa.repository.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
-import io.trishul.repo.jpa.repository.model.pojo.Identified;
 
 // import org.springframework.data.domain.Page;
 

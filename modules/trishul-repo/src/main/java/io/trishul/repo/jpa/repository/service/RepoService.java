@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
-import io.trishul.repo.jpa.repository.model.pojo.Identified;
+import io.trishul.model.base.pojo.Identified;
 
 public interface RepoService<ID, E extends Identified<ID>, A> {
     public static PageRequest pageRequest(SortedSet<String> sort, boolean orderAscending, int page, int size) {
