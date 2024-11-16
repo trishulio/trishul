@@ -19,6 +19,7 @@
         <module>modules/trishul-tenant</module>
         <module>modules/trishul-object</module>
         <module>modules/trishul-crud</module>
+        <module>modules/trishul-crud-aggregation</module>
         <module>modules/trishul-object-service</module>
         <module>modules/trishul-object-service-aws</module>
     </modules>

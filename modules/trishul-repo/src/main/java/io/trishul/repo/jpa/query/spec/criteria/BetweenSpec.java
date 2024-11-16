@@ -8,9 +8,9 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class BetweenSpec<C extends Comparable<C>> extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<C> spec;
-    private C start;
-    private C end;
+    private final CriteriaSpec<C> spec;
+    private final C start;
+    private final C end;
 
     public BetweenSpec(CriteriaSpec<C> spec, C start, C end) {
         this.spec = spec;
