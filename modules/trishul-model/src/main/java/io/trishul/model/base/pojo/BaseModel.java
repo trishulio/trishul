@@ -1,9 +1,9 @@
 package io.trishul.model.base.pojo;
 
+import java.util.Set;
+
 import io.trishul.model.json.JsonMapper;
 import io.trishul.model.reflection.ReflectionManipulator;
-
-import java.util.Set;
 
 public abstract class BaseModel {
     protected static ReflectionManipulator util;

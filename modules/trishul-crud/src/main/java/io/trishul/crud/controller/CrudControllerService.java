@@ -11,11 +11,10 @@ import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.base.mapper.BaseMapper;
 import io.trishul.model.base.pojo.Identified;
-
+import io.trishul.model.base.pojo.exception.EntityNotFoundException;
 import static io.trishul.model.validator.Validator.assertion;
-import io.trishul.object.decorator.EntityDecorator;
-import io.trishul.object.decorator.NoActionDecorator;
-import io.trishul.repo.jpa.repository.exception.EntityNotFoundException;
+import io.trishul.object.store.file.decorator.EntityDecorator;
+import io.trishul.object.store.file.decorator.NoActionDecorator;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 
 // import org.springframework.data.domain.Page;

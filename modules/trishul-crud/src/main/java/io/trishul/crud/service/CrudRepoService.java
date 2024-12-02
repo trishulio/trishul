@@ -16,8 +16,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import io.trishul.model.base.pojo.Identified;
+import io.trishul.model.base.pojo.refresher.Refresher;
 import io.trishul.repo.jpa.repository.aggregation.ExtendedRepository;
-import io.trishul.repo.jpa.repository.refresher.Refresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
 

@@ -6,8 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.model.base.pojo.Identified;
 
-public class IaasAuthorization extends BaseModel implements UpdateIaasAuthorization {
+public class IaasAuthorization extends BaseModel implements UpdateIaasAuthorization, Identified<String> {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasAuthorization.class);
 
@@ -26,6 +27,11 @@ public class IaasAuthorization extends BaseModel implements UpdateIaasAuthorizat
         setAccessSecretKey(accessSecretKey);
         setSessionToken(sessionToken);
         setExpiration(expiration);
+    }
+
+    @Override
+    public String getId() {
+        return this.getAccessKeyId();
     }
 
     @Override

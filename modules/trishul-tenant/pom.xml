@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
     <artifactId>trishul-tenant</artifactId>
-    <description>Multitenancy</description>
+    <description>Multitenant</description>
     <packaging>jar</packaging>
 
     <parent>
@@ -19,11 +19,6 @@
         <dependency>
             <groupId>io.trishul</groupId>
             <artifactId>trishul-model</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-auth</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -3,7 +3,7 @@ package io.trishul.auth.session.token;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class IaasAuthorizationCredentials extends BaseModel {
-    private String token;
+    private final String token;
 
     public IaasAuthorizationCredentials(String token) {
         this.token = token;

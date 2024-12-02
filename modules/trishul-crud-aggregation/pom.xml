@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-object</artifactId>
+            <artifactId>trishul-object-store-file</artifactId>
         </dependency>
 
         <dependency>
