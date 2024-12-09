@@ -20,8 +20,8 @@ public class PredicateSpecAccumulator {
     private static final Logger log = LoggerFactory.getLogger(PredicateSpecAccumulator.class);
 
     private final List<CriteriaSpec<Boolean>> aggregations;
-    private final boolean isNot;
-    private final Boolean isPredicate;
+    private boolean isNot;
+    private Boolean isPredicate;
 
     public PredicateSpecAccumulator() {
         this(new ArrayList<>());

@@ -1,4 +1,4 @@
-package io.trishul.iaas.access.service.role.policy.attachment;
+package io.trishul.iaas.access.service.role.policy.attachment.service;
 
 import java.util.Collection;
 import java.util.List;

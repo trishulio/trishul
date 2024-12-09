@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.trishul.auth.session.context.holder.ContextHolder;
-import io.trishul.iaas.idp.tenant.model.TenantIaasIdpTenantMapper;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.user.model.BaseIaasUser;
 import io.trishul.iaas.user.model.BaseIaasUserTenantMembership;
@@ -34,13 +33,11 @@ public class TenantIaasUserService {
         IaasRepository<String, IaasUser, BaseIaasUser, UpdateIaasUser> userService,
         IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership, UpdateIaasUserTenantMembership> membershipService,
         TenantIaasUserMapper userMapper,
-        TenantIaasIdpTenantMapper tenantMapper,
         ContextHolder ctxHolder
     ) {
         this.userService = userService;
         this.membershipService = membershipService;
         this.userMapper = userMapper;
-        this.tenantMapper = tenantMapper;
         this.ctxHolder = ctxHolder;
     }
 

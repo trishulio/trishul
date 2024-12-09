@@ -17,7 +17,7 @@ public class SequentialTaskSet implements TaskSet {
     public <T> void submit(Supplier<T> supplier) {
         try {
             T ret = supplier.get();
-            TaskResult<T> result = new TaskResultImpl<T>(ret);
+            TaskResult<T> result = new TaskResultImpl<>(ret);
             results.add(result);
         } catch (Exception e) {
             errors.add(e);

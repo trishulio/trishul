@@ -1,7 +1,7 @@
 package io.trishul.iaas.tenant.service;
 
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
-import io.trishul.iaas.idp.tenant.resources.TenantIaasIdpDeleteResult;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
 import io.trishul.model.base.pojo.BaseModel;
 

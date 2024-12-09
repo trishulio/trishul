@@ -24,8 +24,8 @@ import com.google.common.cache.LoadingCache;
 
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.attachment.policy.BaseIaasRolePolicyAttachment;
-import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
+import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.client.IaasClient;
@@ -125,7 +125,7 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
                         ListAttachedRolePoliciesRequest request = new ListAttachedRolePoliciesRequest()
                                                                   .withRoleName(roleName)
                                                                   .withMarker(marker);
-                        ListAttachedRolePoliciesResult result = null;
+                        ListAttachedRolePoliciesResult result;
                         try {
                             result = awsClient.listAttachedRolePolicies(request);
                         } catch (NoSuchEntityException e) {

@@ -14,7 +14,7 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.access.service.policy.service.IaasPolicyService;
-import io.trishul.iaas.access.service.role.policy.attachment.IaasRolePolicyAttachmentService;
+import io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService;
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;

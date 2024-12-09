@@ -1,7 +1,5 @@
-package io.trishul.iaas.idp.tenant.resources;
+package io.trishul.iaas.idp.tenant.model;
 
-import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
-import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class TenantIaasIdpResources extends BaseModel {

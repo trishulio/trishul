@@ -48,7 +48,6 @@ public class AwsIamRoleClient implements IaasClient<String, IaasRole, BaseIaasRo
             DeleteRoleResult result = this.awsIamClient.deleteRole(request);
             success = true;
         } catch (NoSuchEntityException e) {
-            success = false;
         }
 
         return success;

@@ -17,8 +17,6 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 
 import io.trishul.iaas.client.IaasClient;
-import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
-import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.iaas.user.model.BaseIaasUserTenantMembership;
 import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
@@ -31,12 +29,9 @@ public class AwsIaasUserTenantMembershipClient implements IaasClient<IaasUserTen
     private final AWSCognitoIdentityProvider idp;
     private final String userPoolId;
 
-    private final IaasEntityMapper<GroupType, IaasIdpTenant> groupMapper;
-
-    public AwsIaasUserTenantMembershipClient(AWSCognitoIdentityProvider idp, String userPoolId, IaasEntityMapper<GroupType, IaasIdpTenant> groupMapper) {
+    public AwsIaasUserTenantMembershipClient(AWSCognitoIdentityProvider idp, String userPoolId) {
         this.idp = idp;
         this.userPoolId = userPoolId;
-        this.groupMapper = groupMapper;
     }
 
     @Override

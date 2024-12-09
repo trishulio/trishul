@@ -5,10 +5,10 @@ import java.util.Set;
 
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
-import io.trishul.iaas.idp.tenant.resources.TenantIaasIdpDeleteResult;
-import io.trishul.iaas.idp.tenant.resources.TenantIaasIdpResources;
-import io.trishul.iaas.idp.tenant.resources.mapper.TenantIaasIdpResourcesMapper;
+import io.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapper;
 
 public class TenantIaasIdpService {
     private final IaasIdpTenantService idpService;

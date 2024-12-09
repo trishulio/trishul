@@ -3,7 +3,6 @@ package io.trishul.quantity.management.service.unit.controller;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,7 @@ public class QuantityUnitController extends BaseController {
                                            .map(unit -> quantityUnitMapper.toDto(unit))
                                            .toList();
 
-        PageDto<UnitDto> dto = new PageDto<UnitDto>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
+        PageDto<UnitDto> dto = new PageDto<>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
 
         return dto;
     }
