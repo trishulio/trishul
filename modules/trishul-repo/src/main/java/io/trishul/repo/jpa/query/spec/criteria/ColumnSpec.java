@@ -15,9 +15,9 @@ public class ColumnSpec<T> extends BaseModel implements CriteriaSpec<T> {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(ColumnSpec.class);
 
-    private RootUtil rootUtil;
+    private final RootUtil rootUtil;
 
-    private String[] paths;
+    private final String[] paths;
 
     protected ColumnSpec(RootUtil rootUtil, String[] paths) {
         this.rootUtil = rootUtil;

@@ -59,8 +59,8 @@ public class ReflectionManipulator {
         }
     }
 
-    private LoadingCache<Class<?>, Set<String>> propNamesCache;
-    private LoadingCache<PropNameKey, Set<String>> propNamesCacheWithExclusions;
+    private final LoadingCache<Class<?>, Set<String>> propNamesCache;
+    private final LoadingCache<PropNameKey, Set<String>> propNamesCacheWithExclusions;
 
     public boolean equals(Object o, Object that) {
         return EqualsBuilder.reflectionEquals(o, that);

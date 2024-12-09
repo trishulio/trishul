@@ -9,7 +9,7 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 public class TenantDataSourceManagerConnectionProvider implements ConnectionProvider {
     private static final long serialVersionUID = 1L;
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public TenantDataSourceManagerConnectionProvider(DataSource dataSource) {
         this.dataSource = dataSource;

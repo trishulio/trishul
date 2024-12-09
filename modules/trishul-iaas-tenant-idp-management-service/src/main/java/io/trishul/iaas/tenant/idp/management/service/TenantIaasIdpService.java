@@ -11,8 +11,8 @@ import io.trishul.iaas.idp.tenant.resources.TenantIaasIdpResources;
 import io.trishul.iaas.idp.tenant.resources.mapper.TenantIaasIdpResourcesMapper;
 
 public class TenantIaasIdpService {
-    private IaasIdpTenantService idpService;
-    private TenantIaasIdpResourcesMapper mapper;
+    private final IaasIdpTenantService idpService;
+    private final TenantIaasIdpResourcesMapper mapper;
 
     public TenantIaasIdpService(IaasIdpTenantService idpService, TenantIaasIdpResourcesMapper mapper) {
         this.idpService = idpService;

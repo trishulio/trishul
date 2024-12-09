@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class DiffSpec<T extends Number> extends BaseModel implements CriteriaSpec<T> {
-    private CriteriaSpec<T> pathX, pathY;
+    private final CriteriaSpec<T> pathX, pathY;
 
     public DiffSpec(CriteriaSpec<T> pathX, CriteriaSpec<T> pathY) {
         this.pathX = pathX;

@@ -19,9 +19,9 @@ public class PredicateSpecAccumulator {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(PredicateSpecAccumulator.class);
 
-    private List<CriteriaSpec<Boolean>> aggregations;
-    private boolean isNot;
-    private Boolean isPredicate;
+    private final List<CriteriaSpec<Boolean>> aggregations;
+    private final boolean isNot;
+    private final Boolean isPredicate;
 
     public PredicateSpecAccumulator() {
         this(new ArrayList<>());

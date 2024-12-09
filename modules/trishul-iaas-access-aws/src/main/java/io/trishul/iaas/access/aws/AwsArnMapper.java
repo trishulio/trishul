@@ -7,8 +7,8 @@ public class AwsArnMapper {
     public static final String AWS_SERVICE_PREFIX_POLICY = "policy/";
     public static final String AWS_SERVICE_PREFIX_ROLE = "role/";
 
-    private String accountId;
-    private String partition;
+    private final String accountId;
+    private final String partition;
 
     public AwsArnMapper(String accountId, String partition) {
         this.accountId = accountId;

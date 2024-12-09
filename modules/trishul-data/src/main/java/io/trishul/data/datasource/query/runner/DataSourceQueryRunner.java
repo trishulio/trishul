@@ -17,7 +17,7 @@ import io.trishul.model.lambda.CheckedSupplier;
 public class DataSourceQueryRunner {
     private static final Logger log = LoggerFactory.getLogger(DataSourceQueryRunner.class);
 
-    private DataSourceManager dsManager;
+    private final DataSourceManager dsManager;
 
     public DataSourceQueryRunner(DataSourceManager dsManager) {
         this.dsManager = dsManager;

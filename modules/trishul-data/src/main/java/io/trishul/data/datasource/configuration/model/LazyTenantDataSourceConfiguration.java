@@ -14,7 +14,7 @@ public class LazyTenantDataSourceConfiguration extends BaseModel implements Data
     private String password;
     private final String schemaName;
 
-    private SecretsManager<String, String> secretsManager;
+    private final SecretsManager<String, String> secretsManager;
 
     public LazyTenantDataSourceConfiguration(String fqTenantId, GlobalDataSourceConfiguration globalConfig, SecretsManager<String, String> secretsManager) {
         this.userName = fqTenantId;

@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class AndSpec extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<Boolean> spec;
+    private final CriteriaSpec<Boolean> spec;
 
     public AndSpec(CriteriaSpec<Boolean> spec) {
         this.spec = spec;

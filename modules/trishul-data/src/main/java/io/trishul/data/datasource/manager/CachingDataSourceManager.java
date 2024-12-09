@@ -20,8 +20,8 @@ import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 public class CachingDataSourceManager implements DataSourceManager {
     private static final Logger log = LoggerFactory.getLogger(CachingDataSourceManager.class);
 
-    private LoadingCache<DataSourceConfiguration, DataSource> cache;
-    private DataSource adminDs;
+    private final LoadingCache<DataSourceConfiguration, DataSource> cache;
+    private final DataSource adminDs;
 
     public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dsBuilder) {
         this.adminDs = adminDs;

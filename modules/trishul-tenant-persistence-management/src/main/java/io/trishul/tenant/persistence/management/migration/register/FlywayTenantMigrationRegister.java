@@ -18,9 +18,9 @@ import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 public class FlywayTenantMigrationRegister implements MigrationRegister {
     private static final Logger log = LoggerFactory.getLogger(FlywayTenantMigrationRegister.class);
 
-    private FluentConfigProvider provider;
-    private TenantDataSourceManager dsMgr;
-    private DataSourceConfigurationProvider<UUID> dataSourceConfigProvider;
+    private final FluentConfigProvider provider;
+    private final TenantDataSourceManager dsMgr;
+    private final DataSourceConfigurationProvider<UUID> dataSourceConfigProvider;
 
     public FlywayTenantMigrationRegister(TenantDataSourceManager dsMgr, DataSourceConfigurationProvider<UUID> dataSourceConfigProvider) {
         this(() -> Flyway.configure(), dsMgr, dataSourceConfigProvider);

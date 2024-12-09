@@ -17,7 +17,7 @@ public class RandomGeneratorImpl implements RandomGenerator {
         ALL_CHARS = allChars.chars().mapToObj(c -> (char) c).collect(ImmutableList.toImmutableList());
     }
 
-    private Random random;
+    private final Random random;
 
     public RandomGeneratorImpl(Random random) {
         this.random = random;

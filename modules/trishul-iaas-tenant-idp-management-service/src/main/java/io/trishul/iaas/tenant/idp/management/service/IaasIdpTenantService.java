@@ -23,7 +23,7 @@ public class IaasIdpTenantService extends BaseService implements CrudService<Str
     private static final Logger log = LoggerFactory.getLogger(IaasIdpTenantService.class);
 
     private final IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> iaasRepo;
-    private UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> updateService;
+    private final UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> updateService;
 
     public IaasIdpTenantService(UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> updateService, IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> iaasRepo) {
         this.updateService = updateService;

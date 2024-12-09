@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class IsNullSpec extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<?> spec;
+    private final CriteriaSpec<?> spec;
 
     public IsNullSpec(CriteriaSpec<?> spec) {
         this.spec = spec;

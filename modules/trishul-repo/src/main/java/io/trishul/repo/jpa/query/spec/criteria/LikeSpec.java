@@ -8,8 +8,8 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class LikeSpec extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<String> spec;
-    private String text;
+    private final CriteriaSpec<String> spec;
+    private final String text;
 
     public LikeSpec(CriteriaSpec<String> spec, String text) {
         this.spec = spec;

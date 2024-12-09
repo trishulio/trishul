@@ -21,8 +21,8 @@ import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 
 public class AwsIamRoleClient implements IaasClient<String, IaasRole, BaseIaasRole, UpdateIaasRole> {
-    private AmazonIdentityManagement awsIamClient;
-    private IaasEntityMapper<Role, IaasRole> mapper;
+    private final AmazonIdentityManagement awsIamClient;
+    private final IaasEntityMapper<Role, IaasRole> mapper;
 
     public AwsIamRoleClient(AmazonIdentityManagement awsIamClient, IaasEntityMapper<Role, IaasRole> mapper) {
         this.awsIamClient = awsIamClient;

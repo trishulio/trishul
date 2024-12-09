@@ -22,7 +22,7 @@ public class WhereClauseBuilderDelegate {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(WhereClauseBuilderDelegate.class);
 
-    private PredicateSpecAccumulator accumulator;
+    private final PredicateSpecAccumulator accumulator;
 
     public WhereClauseBuilderDelegate(PredicateSpecAccumulator accumulator) {
         this.accumulator = accumulator;

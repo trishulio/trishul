@@ -27,7 +27,6 @@ public class TenantIaasUserService {
     private final IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership, UpdateIaasUserTenantMembership> membershipService;
 
     private final TenantIaasUserMapper userMapper;
-    private final TenantIaasIdpTenantMapper tenantMapper;
 
     private final ContextHolder ctxHolder;
 

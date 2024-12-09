@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class MaxSpec<T extends Number> extends BaseModel implements CriteriaSpec<T> {
-    private CriteriaSpec<T> spec;
+    private final CriteriaSpec<T> spec;
 
     public MaxSpec(CriteriaSpec<T> spec) {
         this.spec = spec;

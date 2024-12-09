@@ -6,8 +6,8 @@ import javax.persistence.criteria.Path;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class JpaJoinerCachingProxy implements JpaJoiner {
-    private JpaJoinerLocalCache cache;
-    private JpaJoiner cjProcessor;
+    private final JpaJoinerLocalCache cache;
+    private final JpaJoiner cjProcessor;
 
     public JpaJoinerCachingProxy(JpaJoinerLocalCache cache, JpaJoiner cjProcessor) {
         this.cache = cache;
@@ -32,9 +32,9 @@ public class JpaJoinerCachingProxy implements JpaJoiner {
 
 class Key<X, Y> extends BaseModel {
     @SuppressWarnings("unused")
-    private From<X, Y> join;
+    private final From<X, Y> join;
     @SuppressWarnings("unused")
-    private String fieldName;
+    private final String fieldName;
 
     public Key(From<X, Y> join, String fieldName) {
         this.join = join;

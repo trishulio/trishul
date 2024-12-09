@@ -31,7 +31,7 @@ public class AwsIaasUserTenantMembershipClient implements IaasClient<IaasUserTen
     private final AWSCognitoIdentityProvider idp;
     private final String userPoolId;
 
-    private IaasEntityMapper<GroupType, IaasIdpTenant> groupMapper;
+    private final IaasEntityMapper<GroupType, IaasIdpTenant> groupMapper;
 
     public AwsIaasUserTenantMembershipClient(AWSCognitoIdentityProvider idp, String userPoolId, IaasEntityMapper<GroupType, IaasIdpTenant> groupMapper) {
         this.idp = idp;

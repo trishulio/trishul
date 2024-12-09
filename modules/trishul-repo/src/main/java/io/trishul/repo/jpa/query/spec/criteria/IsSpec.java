@@ -8,8 +8,8 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class IsSpec<T> extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<T> spec;
-    private Object value;
+    private final CriteriaSpec<T> spec;
+    private final Object value;
 
     public IsSpec(CriteriaSpec<T> spec, Object value) {
         this.spec = spec;

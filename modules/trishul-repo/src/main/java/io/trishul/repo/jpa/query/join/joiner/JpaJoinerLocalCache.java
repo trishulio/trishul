@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import javax.persistence.criteria.Path;
 
 public class JpaJoinerLocalCache {
-    private ThreadLocal<Map<Key<?, ?>, Path<?>>> cacheHolder;
+    private final ThreadLocal<Map<Key<?, ?>, Path<?>>> cacheHolder;
 
     public JpaJoinerLocalCache() {
         this.cacheHolder = ThreadLocal.withInitial(() -> new HashMap<>());

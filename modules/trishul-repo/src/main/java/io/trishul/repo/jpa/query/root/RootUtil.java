@@ -10,9 +10,9 @@ import io.trishul.repo.jpa.query.join.joiner.JpaJoiner;
 
 public class RootUtil {
     private static final Logger log = LoggerFactory.getLogger(RootUtil.class);
-    public static RootUtil INSTANCE = new RootUtil(JpaJoiner.JPA_JOINER);
+    public static final RootUtil INSTANCE = new RootUtil(JpaJoiner.JPA_JOINER);
 
-    private JpaJoiner jpaJoiner;
+    private final JpaJoiner jpaJoiner;
 
     protected RootUtil(JpaJoiner jpaJoiner) {
         this.jpaJoiner = jpaJoiner;

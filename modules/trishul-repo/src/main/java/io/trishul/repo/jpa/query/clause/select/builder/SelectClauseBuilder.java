@@ -14,7 +14,7 @@ import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class SelectClauseBuilder extends BaseModel {
-    private ColumnSpecAccumulator accumulator;
+    private final ColumnSpecAccumulator accumulator;
 
     public SelectClauseBuilder() {
         this(new ColumnSpecAccumulator());

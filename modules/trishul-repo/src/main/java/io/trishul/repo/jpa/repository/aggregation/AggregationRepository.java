@@ -17,7 +17,7 @@ public class AggregationRepository {
     @SuppressWarnings("unused")
     private static Logger log = LoggerFactory.getLogger(AggregationRepository.class);
 
-    private QueryResolver qResolver;
+    private final QueryResolver qResolver;
 
     public AggregationRepository(QueryResolver qResolver) {
         this.qResolver = qResolver;

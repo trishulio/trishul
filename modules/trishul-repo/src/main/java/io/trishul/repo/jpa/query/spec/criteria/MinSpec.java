@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class MinSpec<T extends Number> extends BaseModel implements CriteriaSpec<T> {
-    private CriteriaSpec<T> spec;
+    private final CriteriaSpec<T> spec;
 
     public MinSpec(CriteriaSpec<T> spec) {
         this.spec = spec;

@@ -16,8 +16,8 @@ import com.google.common.cache.LoadingCache;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient {
-    private LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>> getIdentityPools;
-    private LoadingCache<GetIdentityIdArgs, String> getIdentityId;
+    private final LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>> getIdentityPools;
+    private final LoadingCache<GetIdentityIdArgs, String> getIdentityId;
     private final LoadingCache<GetCredentialsForIdentityIdArgs, Credentials> getCredentialsForIdentity;
 
     public CachedAwsCognitoIdentityClient(AwsCognitoIdentityClient cognitoIdClient, long credentialsExpiryDurationSeconds) {

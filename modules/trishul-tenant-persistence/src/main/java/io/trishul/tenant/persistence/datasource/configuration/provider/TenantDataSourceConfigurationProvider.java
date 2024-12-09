@@ -16,8 +16,8 @@ import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.Tenant;
 
 public class TenantDataSourceConfigurationProvider implements DataSourceConfigurationProvider<UUID> {
-    private LoadingCache<UUID, DataSourceConfiguration> cache;
-    private DataSourceConfiguration adminDsConfig;
+    private final LoadingCache<UUID, DataSourceConfiguration> cache;
+    private final DataSourceConfiguration adminDsConfig;
 
     public TenantDataSourceConfigurationProvider(DataSourceConfiguration adminDsConfig, Tenant adminTenant, GlobalDataSourceConfiguration globalTenantDsConfig, DataSourceConfigurationManager dsConfigMgr, SecretsManager<String, String> secretsManager) {
         this.adminDsConfig = adminDsConfig;

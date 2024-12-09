@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class CountSpec<T> extends BaseModel implements CriteriaSpec<Long> {
-    private CriteriaSpec<T> spec;
+    private final CriteriaSpec<T> spec;
 
     public CountSpec(CriteriaSpec<T> spec) {
         this.spec = spec;

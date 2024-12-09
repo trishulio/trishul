@@ -13,7 +13,7 @@ import org.mapstruct.TargetType;
  * https://github.com/mapstruct/mapstruct/issues/469
  */
 public class CycleAvoidingMappingContext {
-    private Map<Object, Object> knownInstances = new IdentityHashMap<Object, Object>();
+    private final Map<Object, Object> knownInstances = new IdentityHashMap<Object, Object>();
 
     @SuppressWarnings("unchecked")
     @BeforeMapping

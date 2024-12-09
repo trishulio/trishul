@@ -59,7 +59,7 @@ public class AwsDocumentTemplates {
 
     private static final String POLICY_DESCRIPTION_TENANT_VFS = "File storage for tenant: %s";
 
-    private String cognitoIdPoolId;
+    private final String cognitoIdPoolId;
 
     public AwsDocumentTemplates(String cognitoIdPoolId) {
         this.cognitoIdPoolId = cognitoIdPoolId;

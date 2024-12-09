@@ -25,7 +25,7 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
 
     private final IaasRepository<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasRepo;
 
-    private UpdateService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> updateService;
+    private final UpdateService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> updateService;
 
     public IaasObjectStoreAccessConfigService(UpdateService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> updateService, IaasRepository<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasRepo) {
         this.updateService = updateService;

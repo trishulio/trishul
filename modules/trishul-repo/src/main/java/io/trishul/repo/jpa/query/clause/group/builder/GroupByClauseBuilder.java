@@ -14,7 +14,7 @@ import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class GroupByClauseBuilder extends BaseModel {
-    private ColumnSpecAccumulator accumulator;
+    private final ColumnSpecAccumulator accumulator;
 
     public GroupByClauseBuilder() {
         this(new ColumnSpecAccumulator());

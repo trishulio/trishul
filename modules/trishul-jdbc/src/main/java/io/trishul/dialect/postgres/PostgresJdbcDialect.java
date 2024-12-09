@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import io.trishul.dialect.JdbcDialect;
 
 public class PostgresJdbcDialect implements JdbcDialect {
-    private PostgresJdbcDialectSql pgSql;
+    private final PostgresJdbcDialectSql pgSql;
 
     public PostgresJdbcDialect(PostgresJdbcDialectSql pgSql) {
         this.pgSql = pgSql;

@@ -12,8 +12,8 @@ import io.trishul.model.base.pojo.Identified;
 import io.trishul.model.executor.BlockingAsyncExecutor;
 
 public class BulkIaasClient<ID, Entity extends Identified<ID>, BaseEntity, UpdateEntity> implements IaasRepository<ID, Entity, BaseEntity, UpdateEntity> {
-    private BlockingAsyncExecutor executor;
-    private IaasClient<ID, Entity, BaseEntity, UpdateEntity> iaasClient;
+    private final BlockingAsyncExecutor executor;
+    private final IaasClient<ID, Entity, BaseEntity, UpdateEntity> iaasClient;
 
     public BulkIaasClient(BlockingAsyncExecutor executor, IaasClient<ID, Entity, BaseEntity, UpdateEntity> iaasClient) {
         this.executor = executor;

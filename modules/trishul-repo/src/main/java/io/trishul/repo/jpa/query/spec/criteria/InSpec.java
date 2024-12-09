@@ -10,8 +10,8 @@ import javax.persistence.criteria.Root;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class InSpec<T> extends BaseModel implements CriteriaSpec<Boolean> {
-    private CriteriaSpec<T> spec;
-    private Collection<T> collection;
+    private final CriteriaSpec<T> spec;
+    private final Collection<T> collection;
 
     public InSpec(CriteriaSpec<T> spec, Collection<T> collection) {
         this.spec = spec;

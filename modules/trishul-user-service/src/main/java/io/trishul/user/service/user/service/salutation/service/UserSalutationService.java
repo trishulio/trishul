@@ -18,7 +18,7 @@ import io.trishul.user.service.user.service.salutation.repository.UserSalutation
 
 @Transactional
 public class UserSalutationService extends BaseService {
-    private UserSalutationRepository userSalutationRepository;
+    private final UserSalutationRepository userSalutationRepository;
 
     public UserSalutationService(UserSalutationRepository userSalutationRepository) {
         this.userSalutationRepository = userSalutationRepository;

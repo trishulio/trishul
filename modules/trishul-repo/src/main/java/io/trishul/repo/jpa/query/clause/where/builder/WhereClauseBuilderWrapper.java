@@ -13,7 +13,7 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(WhereClauseBuilderWrapper.class);
 
-    private WhereClauseBuilderDelegate delegate;
+    private final WhereClauseBuilderDelegate delegate;
 
     public WhereClauseBuilderWrapper() {
         this(new WhereClauseBuilderDelegate(new PredicateSpecAccumulator()));

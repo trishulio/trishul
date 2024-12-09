@@ -12,7 +12,7 @@ import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class ColumnSpecAccumulator extends BaseModel {
-    private List<CriteriaSpec<?>> aggregations;
+    private final List<CriteriaSpec<?>> aggregations;
 
     public ColumnSpecAccumulator() {
         this.aggregations = new ArrayList<>();

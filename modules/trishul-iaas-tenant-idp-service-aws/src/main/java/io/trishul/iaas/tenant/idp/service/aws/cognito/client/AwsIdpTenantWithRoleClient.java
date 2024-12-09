@@ -28,12 +28,12 @@ import io.trishul.iaas.mapper.IaasEntityMapper;
 public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> {
     private static final Logger log = LoggerFactory.getLogger(AwsIdpTenantWithRoleClient.class);
 
-    private AWSCognitoIdentityProvider idp;
+    private final AWSCognitoIdentityProvider idp;
     private final String userPoolId;
-    private IaasEntityMapper<GroupType, IaasIdpTenant> mapper;
-    private AwsArnMapper arnMapper;
+    private final IaasEntityMapper<GroupType, IaasIdpTenant> mapper;
+    private final AwsArnMapper arnMapper;
 
-    private IaasRoleService roleService;
+    private final IaasRoleService roleService;
 
     public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider idp, String userPoolId, IaasEntityMapper<GroupType, IaasIdpTenant> mapper, AwsArnMapper arnMapper, IaasRoleService roleService) {
         this.idp = idp;

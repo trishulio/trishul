@@ -27,9 +27,9 @@ import io.trishul.repo.jpa.repository.model.dto.PageDto;
 public class QuantityUnitController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(QuantityUnitController.class);
 
-    private QuantityUnitService quantityUnitService;
+    private final QuantityUnitService quantityUnitService;
 
-    private QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
+    private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
 
     public QuantityUnitController(QuantityUnitService quantityUnitService, AttributeFilter filter) {
         super(filter);

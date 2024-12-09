@@ -7,7 +7,7 @@ import java.util.Date;
 public class LocalDateTimeMapper {
     public static final LocalDateTimeMapper INSTANCE = new LocalDateTimeMapper();
 
-    private ZoneId zoneId;
+    private final ZoneId zoneId;
 
     public LocalDateTimeMapper() {
         this(ZoneId.systemDefault());

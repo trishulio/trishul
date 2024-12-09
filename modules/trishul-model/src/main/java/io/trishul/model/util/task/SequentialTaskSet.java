@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SequentialTaskSet implements TaskSet {
-    private List<Exception> errors;
-    private List<TaskResult<?>> results;
+    private final List<Exception> errors;
+    private final List<TaskResult<?>> results;
 
     public SequentialTaskSet() {
         this.errors = new ArrayList<>();

@@ -34,8 +34,8 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
     private static final Logger log = LoggerFactory.getLogger(AwsIamRolePolicyAttachmentClient.class);
 
     private final InheritableThreadLocal<LoadingCache<String, Set<String>>> attachedPolicyNameLocalCache;
-    private AmazonIdentityManagement awsClient;
-    private AwsArnMapper arnMapper;
+    private final AmazonIdentityManagement awsClient;
+    private final AwsArnMapper arnMapper;
 
     public AwsIamRolePolicyAttachmentClient(AmazonIdentityManagement awsIamClient, AwsArnMapper arnMapper) {
         this.awsClient = awsIamClient;

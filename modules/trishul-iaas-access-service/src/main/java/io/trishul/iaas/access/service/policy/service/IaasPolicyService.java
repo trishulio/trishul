@@ -26,7 +26,7 @@ public class IaasPolicyService extends BaseService implements CrudService<String
     private static final Logger log = LoggerFactory.getLogger(IaasPolicyService.class);
 
     private final IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo;
-    private UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService;
+    private final UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService;
 
     public IaasPolicyService(UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService, IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo) {
         this.updateService = updateService;

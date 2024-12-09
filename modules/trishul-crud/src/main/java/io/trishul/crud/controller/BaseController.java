@@ -18,13 +18,13 @@ public abstract class BaseController {
     public static final String VALUE_DEFAULT_PAGE_SIZE = "100";
     public static final String VALUE_DEFAULT_ATTR = "";
 
-    private AttributeFilter filter;
+    private final AttributeFilter filter;
 
     public BaseController() {
+        this(new AttributeFilter());
     }
 
-    @Deprecated(forRemoval = true)
-    public BaseController(AttributeFilter filter) {
+    protected BaseController(AttributeFilter filter) {
         this.filter = filter;
     }
 

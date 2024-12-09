@@ -9,7 +9,7 @@ import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 
 public class SumSpec<T extends Number> extends BaseModel implements CriteriaSpec<T> {
-    private CriteriaSpec<T> path;
+    private final CriteriaSpec<T> path;
 
     public SumSpec(PathProvider provider) {
         this(provider.getPath());

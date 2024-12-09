@@ -24,15 +24,15 @@ import io.trishul.object.store.model.IaasObjectStore;
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 
 public class AwsTenantIaasResourceBuilder implements TenantIaasResourceBuilder, TenantObjectStoreResourceBuilder {
-    private AwsDocumentTemplates templates;
+    private final AwsDocumentTemplates templates;
 
-    private List<String> allowedHeaders;
-    private List<String> allowedMethods;
-    private List<String> allowedOrigins;
-    private boolean blockPublicAcls;
-    private boolean ignorePublicAcls;
-    private boolean blockPublicPolicy;
-    private boolean restrictPublicBuckets;
+    private final List<String> allowedHeaders;
+    private final List<String> allowedMethods;
+    private final List<String> allowedOrigins;
+    private final boolean blockPublicAcls;
+    private final boolean ignorePublicAcls;
+    private final boolean blockPublicPolicy;
+    private final boolean restrictPublicBuckets;
 
     public AwsTenantIaasResourceBuilder(AwsDocumentTemplates templates, List<String> allowedHeaders, List<String> allowedMethods, List<String> allowedOrigins, boolean blockPublicAcls, boolean ignorePublicAcls, boolean blockPublicPolicy, boolean restrictPublicBuckets) {
         this.templates = templates;

@@ -27,7 +27,7 @@ public class IaasRoleService extends BaseService implements CrudService<String, 
 
     private final IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> iaasRepo;
 
-    private UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService;
+    private final UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService;
 
     public IaasRoleService(UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService, IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> iaasRepo) {
         this.updateService = updateService;
