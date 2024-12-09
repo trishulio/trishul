@@ -25,7 +25,7 @@ public class QueryResolver {
     @SuppressWarnings("unused")
     private static Logger log = LoggerFactory.getLogger(AggregationRepository.class);
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public QueryResolver(EntityManager em) {
         this.em = em;

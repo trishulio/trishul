@@ -1,4 +1,4 @@
-package io.trishul.crud.aggregation.service;
+package io.trishul.repo.aggregation.service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
-import io.trishul.crud.aggregation.repo.AggregationRepository;
-import io.trishul.crud.aggregation.service.function.AggregationFunction;
+import io.trishul.repo.aggregation.repo.AggregationRepository;
+import io.trishul.repo.aggregation.service.function.AggregationFunction;
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 import io.trishul.repo.jpa.query.path.provider.PathProvider;

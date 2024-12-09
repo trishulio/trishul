@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-crud-aggregation</artifactId>
+    <artifactId>trishul-repo-aggregation</artifactId>
     <description>Aggregation Service</description>
     <packaging>jar</packaging>
 
@@ -21,24 +21,5 @@
             <groupId>io.trishul</groupId>
             <artifactId>trishul-crud</artifactId>
         </dependency>
-    <!--  <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-repo</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-object-store-file</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency> -->
     </dependencies>
 </project>

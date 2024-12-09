@@ -1,4 +1,4 @@
-package io.trishul.iaas.auth.autoconfig;
+package io.trishul.iaas.auth.autoconfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

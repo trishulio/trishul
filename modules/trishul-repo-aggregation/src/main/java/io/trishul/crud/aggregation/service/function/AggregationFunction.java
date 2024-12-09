@@ -1,4 +1,4 @@
-package io.trishul.crud.aggregation.service.function;
+package io.trishul.repo.aggregation.service.function;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

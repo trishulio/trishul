@@ -1,4 +1,4 @@
-package io.trishul.crud.aggregation.repo;
+package io.trishul.repo.aggregation.repo;
 
 import java.util.List;
 
