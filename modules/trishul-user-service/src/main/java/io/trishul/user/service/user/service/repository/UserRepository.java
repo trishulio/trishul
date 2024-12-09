@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import io.company.brewcraft.model.user.User;
-import io.company.brewcraft.repository.ExtendedRepository;
+import io.trishul.repo.jpa.repository.aggregation.ExtendedRepository;
+import io.trishul.user.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, ExtendedRepository<Long> {
     @Override

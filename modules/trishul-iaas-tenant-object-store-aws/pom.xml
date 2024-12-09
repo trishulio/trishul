@@ -4,9 +4,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-tenant-persistence</artifactId>
-    <description>Multitenant Persistence</description>
+    <artifactId>trishul-iaas-tenant-object-store</artifactId>
+    <description>IaaS Tenant Object Store</description>
     <packaging>jar</packaging>
+
 
     <parent>
         <groupId>io.trishul</groupId>
@@ -18,19 +19,22 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-data</artifactId>
+            <artifactId>trishul-iaas-tenant</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-tenant-auth</artifactId>
+            <artifactId>trishul-iaas-tenant-idp</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-secrets</artifactId>
+            <artifactId>trishul-object-store</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-iaas-access</artifactId>
         </dependency>
     </dependencies>
 </project>

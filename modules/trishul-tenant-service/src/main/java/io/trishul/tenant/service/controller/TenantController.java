@@ -25,10 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.istack.NotNull;
-
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;

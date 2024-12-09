@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 
+import io.trishul.model.base.dto.BaseDto;
+
 public class UpdateTenantDto extends BaseDto {
     private UUID id;
 

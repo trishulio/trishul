@@ -14,6 +14,7 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.model.BaseIaasRole;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
+import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
 import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
@@ -22,7 +23,7 @@ import io.trishul.object.store.model.IaasObjectStore;
 
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 
-public class AwsTenantIaasResourceBuilder implements TenantIaasResourceBuilder {
+public class AwsTenantIaasResourceBuilder implements TenantIaasResourceBuilder, TenantObjectStoreResourceBuilder {
     private AwsDocumentTemplates templates;
 
     private List<String> allowedHeaders;

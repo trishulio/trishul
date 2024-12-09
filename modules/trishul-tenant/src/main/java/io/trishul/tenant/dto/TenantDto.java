@@ -4,6 +4,8 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import io.trishul.model.base.dto.BaseDto;
+
 public class TenantDto extends BaseDto {
     private UUID id;
     private String name;

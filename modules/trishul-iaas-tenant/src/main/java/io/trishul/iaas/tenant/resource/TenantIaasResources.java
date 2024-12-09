@@ -2,7 +2,7 @@ package io.trishul.iaas.tenant.resource;
 
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
 import io.trishul.iaas.idp.tenant.resources.TenantIaasIdpResources;
-import io.trishul.iaas.tenant.object.store.management.service.TenantIaasVfsResources;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class TenantIaasResources extends BaseModel {

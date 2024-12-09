@@ -22,6 +22,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import io.trishul.auth.autoconfiguration.AuthConfiguration;
+import io.trishul.auth.session.context.holder.ContextHolder;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
+
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class, AuthConfiguration.class})
 @EnableTransactionManagement

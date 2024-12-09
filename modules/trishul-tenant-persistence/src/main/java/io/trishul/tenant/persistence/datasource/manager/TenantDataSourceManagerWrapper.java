@@ -6,13 +6,14 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 
 public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
-    private DataSourceManager dsMgr;
-    private DataSourceConfigurationProvider<UUID> dsConfigMgr;
+    private final DataSourceManager dsMgr;
+    private final DataSourceConfigurationProvider<UUID> dsConfigMgr;
 
     public TenantDataSourceManagerWrapper(DataSourceManager dsMgr, TenantDataSourceConfigurationProvider dsConfigMgr) {
         this.dsMgr = dsMgr;

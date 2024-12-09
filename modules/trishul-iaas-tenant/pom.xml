@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-iaas-tenant-object-store-management-service</artifactId>
+            <artifactId>trishul-iaas-tenant-object-store</artifactId>
         </dependency>
     </dependencies>
 </project>

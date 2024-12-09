@@ -1,6 +1,6 @@
 package io.trishul.quantity.service.unit.service;
 
-import static io.company.brewcraft.repository.RepositoryUtil.pageRequest;
+import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
 
 import java.util.Set;
 import java.util.SortedSet;

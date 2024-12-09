@@ -17,9 +17,9 @@ import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 
 public class TenantIaasAuthService {
-    private TenantIaasResourceBuilder resourceBuilder;
-    private TenantIaasAuthResourceMapper mapper;
-    private IaasRoleService roleService;
+    private final TenantIaasResourceBuilder resourceBuilder;
+    private final TenantIaasAuthResourceMapper mapper;
+    private final IaasRoleService roleService;
 
     public TenantIaasAuthService(TenantIaasAuthResourceMapper mapper, IaasRoleService roleService, TenantIaasResourceBuilder resourceBuilder) {
         this.resourceBuilder = resourceBuilder;

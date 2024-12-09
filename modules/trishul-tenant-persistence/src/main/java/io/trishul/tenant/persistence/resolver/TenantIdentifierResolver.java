@@ -25,7 +25,9 @@ public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver
 
         PrincipalContext ctx = contextHolder.getPrincipalContext();
         if (ctx != null) {
-            tenantId = ctx.getTenantId();
+            tenantId = ctx.getGroupId();
+            // TODO: FIX THE GROUPID TO USE TENANTID
+            // tenantId = ctx.getTenantId();
         }
 
         if (tenantId != null) {

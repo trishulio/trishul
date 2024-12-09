@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import io.trishul.repo.jpa.repository.aggregation.AggregationRepository;
+import io.trishul.repo.jpa.repository.service.TransactionService;
 
 @Configuration
 public class RepositoryConfiguration {
