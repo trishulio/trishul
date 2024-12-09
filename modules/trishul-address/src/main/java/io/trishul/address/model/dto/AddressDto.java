@@ -1,4 +1,4 @@
-package io.trishul.address.dto;
+package io.trishul.address.model.dto;
 
 public class AddressDto {
     private Long id;

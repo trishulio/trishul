@@ -1,44 +1,56 @@
 package io.trishul.address.model;
 
-import io.trishul.model.base.pojo.BaseModel;
+import java.time.LocalDateTime;
 
-public class Address extends BaseModel {
-    private Long id;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import io.trishul.model.base.entity.BaseEntity;
+
+@MappedSuperclass
+public class Address extends BaseEntity {
+    @Column(name = "address_line_1")
     private String addressLine1;
 
+    @Column(name = "address_line_2")
     private String addressLine2;
 
+    @Column(name = "country")
     private String country;
 
+    @Column(name = "province")
     private String province;
 
+    @Column(name = "city")
     private String city;
 
+    @Column(name = "postal_code")
     private String postalCode;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
+
     public Address() {
-        super();
     }
 
-    public Address(Long id, String addressLine1, String addressLine2, String country, String province,
-            String city, String postalCode) {
-        super();
-        this.id = id;
+    public Address(String addressLine1, String addressLine2, String country, String province, String city, String postalCode, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+        this();
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.country = country;
         this.province = province;
         this.city = city;
         this.postalCode = postalCode;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.createdAt = createdAt;
+        this.lastUpdated = lastUpdated;
     }
 
     public String getAddressLine1() {
@@ -87,5 +99,21 @@ public class Address extends BaseModel {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }
