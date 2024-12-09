@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-auth-aws</artifactId>
-    <description>AWS implementation for trishul-auth</description>
+    <artifactId>trishul-iaas-auth</artifactId>
+    <description>IaaS authentication</description>
     <packaging>jar</packaging>
 
 
@@ -19,7 +19,15 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-auth</artifactId>
+            <artifactId>trishul-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 </project>

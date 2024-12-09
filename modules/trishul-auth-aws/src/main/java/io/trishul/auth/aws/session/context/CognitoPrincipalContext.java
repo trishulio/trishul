@@ -4,11 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import io.trishul.auth.session.token.IaasAuthorizationCredentials;
 import io.trishul.auth.session.context.PrincipalContext;
 
 public class CognitoPrincipalContext implements PrincipalContext {
@@ -22,18 +19,11 @@ public class CognitoPrincipalContext implements PrincipalContext {
     private String username;
     private List<String> roles;
 
-    private IaasAuthorizationCredentials iaasToken;
-
-    public CognitoPrincipalContext(Jwt jwt, HttpServletRequest request) {
+    public CognitoPrincipalContext(Jwt jwt) {
         if (jwt != null) {
             setUsername(jwt);
             setGroupId(jwt);
             setRoles(jwt);
-        }
-
-        String iaasToken = request.getHeader(PrincipalContext.HEADER_NAME_IAAS_TOKEN);
-        if (iaasToken != null) {
-            setIaasToken(iaasToken);
         }
     }
 
@@ -50,11 +40,6 @@ public class CognitoPrincipalContext implements PrincipalContext {
     @Override
     public List<String> getRoles() {
         return this.roles;
-    }
-
-    @Override
-    public IaasAuthorizationCredentials getIaasLogin() {
-        return this.iaasToken;
     }
 
     private void setUsername(Jwt jwt) {
@@ -75,9 +60,5 @@ public class CognitoPrincipalContext implements PrincipalContext {
         String sGroupId = groups.get(0);
 
         this.groupId = UUID.fromString(sGroupId);
-    }
-
-    private void setIaasToken(String iaasToken) {
-        this.iaasToken = new IaasAuthorizationCredentials(iaasToken);
     }
 }

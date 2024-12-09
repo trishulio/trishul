@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-auth</artifactId>
+            <artifactId>trishul-iaas-auth-aws</artifactId>
         </dependency>
 
         <dependency>

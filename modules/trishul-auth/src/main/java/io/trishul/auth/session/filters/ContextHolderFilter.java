@@ -8,7 +8,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -36,18 +35,18 @@ public class ContextHolderFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        setPrincipalContext((HttpServletRequest) request);
+        setPrincipalContext();
 
         chain.doFilter(request, response);
     }
 
-    private void setPrincipalContext(HttpServletRequest request) {
+    private void setPrincipalContext() {
         SecurityContext ctx = securityCtxSupplier.get();
         Authentication auth = ctx.getAuthentication();
         Object principal = auth.getPrincipal();
         PrincipalContext principalCtx = null;
         if (principal instanceof Jwt jwt) {
-            principalCtx = this.ctxBuilder.build(jwt, request);
+            principalCtx = this.ctxBuilder.build(jwt);
         }
         this.ctxHolder.setContext(principalCtx);
     }

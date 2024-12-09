@@ -11,8 +11,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import io.trishul.auth.session.context.IaasAuthorization;
-import io.trishul.auth.session.context.TenantContextIaasAuthorizationFetcher;
+import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
+import io.trishul.iaas.auth.session.context.IaasAuthorization;
+import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.repository.provider.IaasRepositoryProvider;
 import io.trishul.model.base.pojo.BaseModel;
@@ -31,11 +32,11 @@ public class TenantContextAwsObjectStoreFileClientProvider implements IaasReposi
     public static final Duration DURATION_REMOVE_UNUSED_CLIENTS = Duration.ofHours(1);
 
     private final String region;
-    private final TenantContextIaasAuthorizationFetcher authFetcher;
+    private final ContextHolderAuthorizationFetcher authFetcher;
     private final LoadingCache<GetAmazonS3ClientArgs, IaasRepository<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> > cache;
     private final IaasObjectStoreNameProvider bucketNameProvider;
 
-    public TenantContextAwsObjectStoreFileClientProvider(String region, IaasObjectStoreNameProvider bucketNameProvider, TenantContextIaasAuthorizationFetcher authFetcher, AwsFactory awsFactory, Long getPresignUrlDuration) {
+    public TenantContextAwsObjectStoreFileClientProvider(String region, IaasObjectStoreNameProvider bucketNameProvider, ContextHolderAuthorizationFetcher authFetcher, AwsFactory awsFactory, Long getPresignUrlDuration) {
         this.region = region;
         this.authFetcher = authFetcher;
         this.bucketNameProvider = bucketNameProvider;
