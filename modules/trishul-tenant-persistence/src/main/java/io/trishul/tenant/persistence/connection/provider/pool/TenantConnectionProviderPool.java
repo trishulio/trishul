@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
 import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
@@ -30,7 +31,7 @@ public class TenantConnectionProviderPool extends AbstractMultiTenantConnectionP
 
         this.cache = CacheBuilder.newBuilder().build(new CacheLoader<String, ConnectionProvider>() {
             @Override
-            public ConnectionProvider load(String sTenantId) throws Exception {
+            public ConnectionProvider load(@Nonnull String sTenantId) throws Exception {
                 UUID tenantId = UUID.fromString(sTenantId);
                 DataSource ds = dsMgr.getDataSource(tenantId);
 

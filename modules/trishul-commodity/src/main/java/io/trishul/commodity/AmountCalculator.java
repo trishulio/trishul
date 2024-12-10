@@ -9,7 +9,7 @@ import java.util.Objects;
 import org.joda.money.Money;
 
 import io.trishul.commodity.good.model.Good;
-import io.trishul.money.amount.entity.Amount;
+import io.trishul.money.amount.model.Amount;
 import io.trishul.money.amount.model.AmountSupplier;
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.calculator.TaxCalculator;

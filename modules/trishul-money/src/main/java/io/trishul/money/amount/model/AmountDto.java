@@ -1,4 +1,4 @@
-package io.trishul.money.amount.dto;
+package io.trishul.money.amount.model;
 
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.money.dto.MoneyDto;

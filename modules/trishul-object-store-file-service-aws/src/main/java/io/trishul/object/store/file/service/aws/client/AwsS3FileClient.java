@@ -22,10 +22,10 @@ import com.google.common.cache.LoadingCache;
 
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.model.mapper.LocalDateTimeMapper;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.iaas.client.IaasClient;
-import io.trishul.object.store.file.service.model.entity.BaseIaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.IaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.UpdateIaasObjectStoreFile;
 
 public class AwsS3FileClient implements IaasClient<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> {
     @SuppressWarnings("unused")

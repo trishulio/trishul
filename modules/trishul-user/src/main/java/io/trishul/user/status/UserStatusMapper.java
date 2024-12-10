@@ -4,8 +4,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import io.company.brewcraft.dto.user.UserStatusDto;
-
 @Mapper
 public interface UserStatusMapper {
     UserStatusMapper INSTANCE = Mappers.getMapper(UserStatusMapper.class);

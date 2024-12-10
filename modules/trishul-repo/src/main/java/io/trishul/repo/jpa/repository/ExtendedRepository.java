@@ -1,4 +1,4 @@
-package io.trishul.repo.jpa.repository.aggregation;
+package io.trishul.repo.jpa.repository;
 
 public interface ExtendedRepository<ID> {
     boolean existsByIds(Iterable<ID> ids);

@@ -1,4 +1,4 @@
-package io.trishul.object.store.file.service.model.decorator;
+package io.trishul.object.store.file.service.decorator;
 
 import java.net.URI;
 import java.util.List;

@@ -19,11 +19,10 @@ import org.springframework.data.jpa.repository.query.QueryUtils;
 
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
-import io.trishul.repo.jpa.repository.aggregation.AggregationRepository;
 
 public class QueryResolver {
     @SuppressWarnings("unused")
-    private static Logger log = LoggerFactory.getLogger(AggregationRepository.class);
+    private static Logger log = LoggerFactory.getLogger(QueryResolver.class);
 
     private final EntityManager em;
 

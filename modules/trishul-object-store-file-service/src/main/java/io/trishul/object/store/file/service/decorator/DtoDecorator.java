@@ -1,4 +1,4 @@
-package io.trishul.object.store.file.service.model.decorator;
+package io.trishul.object.store.file.service.decorator;
 
 public class DtoDecorator { // implements EntityDecorator<BaseDto> {
     // private static final Logger logger = LoggerFactory.getLogger(DtoDecorator.class);

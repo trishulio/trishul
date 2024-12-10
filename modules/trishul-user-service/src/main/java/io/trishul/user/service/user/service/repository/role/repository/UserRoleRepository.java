@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import io.trishul.repo.jpa.repository.aggregation.ExtendedRepository;
+import io.trishul.repo.jpa.repository.ExtendedRepository;
 import io.trishul.user.role.model.UserRole;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, Long>, JpaSpecificationExecutor<UserRole>, ExtendedRepository<Long> {

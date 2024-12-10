@@ -13,18 +13,17 @@ import com.google.common.cache.LoadingCache;
 
 import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
 import io.trishul.iaas.auth.session.context.IaasAuthorization;
-import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.repository.provider.IaasRepositoryProvider;
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.model.mapper.LocalDateTimeMapper;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.aws.client.AwsS3FileClient;
 import io.trishul.object.store.file.service.aws.factory.AwsFactory;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.client.SequentialExecutor;
-import io.trishul.object.store.file.service.model.entity.BaseIaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.IaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 
 public class TenantContextAwsObjectStoreFileClientProvider implements IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> {

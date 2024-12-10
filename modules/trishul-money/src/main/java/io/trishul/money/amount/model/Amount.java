@@ -1,4 +1,4 @@
-package io.trishul.money.amount.entity;
+package io.trishul.money.amount.model;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;

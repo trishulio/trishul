@@ -1,4 +1,4 @@
-package io.company.brewcraft.dto.user;
+package io.trishul.user.status;
 
 import java.time.LocalDateTime;
 

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import io.trishul.repo.jpa.repository.aggregation.ExtendedRepository;
+import io.trishul.repo.jpa.repository.ExtendedRepository;
 import io.trishul.tenant.entity.Tenant;
 
 @Repository

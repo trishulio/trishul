@@ -1,12 +1,10 @@
-package io.trishul.tenant.persistence.management.admin;
+package io.trishul.tenant.entity;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.tenant.entity.Tenant;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer" })
 public class AdminTenant extends Tenant {

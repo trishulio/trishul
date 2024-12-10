@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.Tenant;
-import io.trishul.tenant.persistence.management.admin.AdminTenant;
 
 @Configuration
 public class AdminTenantConfiguration {

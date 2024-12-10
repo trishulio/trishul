@@ -17,6 +17,7 @@ import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import io.trishul.iaas.user.model.TenantIaasUserMapper;
 import io.trishul.iaas.user.model.UpdateIaasUser;
 import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
+import io.trishul.tenant.auth.TenantIdProvider;
 import io.trishul.user.model.User;
 
 public class TenantIaasUserService {
@@ -26,24 +27,22 @@ public class TenantIaasUserService {
     private final IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership, UpdateIaasUserTenantMembership> membershipService;
 
     private final TenantIaasUserMapper userMapper;
-
-    private final ContextHolder ctxHolder;
+    private final TenantIdProvider tenantIdProvider;
 
     public TenantIaasUserService(
         IaasRepository<String, IaasUser, BaseIaasUser, UpdateIaasUser> userService,
         IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership, UpdateIaasUserTenantMembership> membershipService,
         TenantIaasUserMapper userMapper,
-        ContextHolder ctxHolder
+        TenantIdProvider tenantIdProvider
     ) {
         this.userService = userService;
         this.membershipService = membershipService;
         this.userMapper = userMapper;
-        this.ctxHolder = ctxHolder;
+        this.tenantIdProvider = tenantIdProvider;
     }
 
     public List<IaasUserTenantMembership> put(List<User> users) {
-        // TODO: temp: groupId should be tenantId -- fix this
-        String tenantId = this.ctxHolder.getPrincipalContext().getGroupId().toString();
+        String tenantId = this.tenantIdProvider.getTenantId().toString();
 
         List<UpdateIaasUser> updates = userMapper.fromUsers(users);
 
@@ -54,8 +53,7 @@ public class TenantIaasUserService {
     }
 
     public long delete(List<User> users) {
-        // TODO: temp: groupId should be tenantId -- fix this
-        String tenantId = this.ctxHolder.getPrincipalContext().getGroupId().toString();
+        String tenantId = this.tenantIdProvider.getTenantId().toString();
 
         List<IaasUser> iaasUsers = userMapper.fromUsers(users);
         Set<String> userIds = iaasUsers.stream().map(IaasUser::getId).collect(Collectors.toSet());

@@ -1,14 +1,13 @@
-package io.trishul.object.store.file.service.mapper;
+package io.trishul.object.store.file.model;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
-import io.trishul.object.store.file.service.controller.dto.AddIaasObjectStoreFileDto;
-import io.trishul.object.store.file.service.model.entity.IaasObjectStoreFile;
 
 @Mapper
 public interface IaasObjectStoreFileMapper extends BaseMapper<IaasObjectStoreFile, IaasObjectStoreFileDto, AddIaasObjectStoreFileDto, UpdateIaasObjectStoreFileDto> {

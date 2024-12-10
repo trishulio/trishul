@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,18 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.istack.NotNull;
-
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFileMapper;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
-import io.trishul.object.store.file.service.controller.dto.AddIaasObjectStoreFileDto;
-import io.trishul.object.store.file.service.mapper.IaasObjectStoreFileMapper;
-import io.trishul.object.store.file.service.model.entity.BaseIaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.IaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 
 @RestController

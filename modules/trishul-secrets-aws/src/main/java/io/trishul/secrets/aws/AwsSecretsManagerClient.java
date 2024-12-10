@@ -31,7 +31,7 @@ public class AwsSecretsManagerClient implements SecretsManager<String, String> {
     @Override
     public String get(String secretId) throws IOException {
         GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
-        GetSecretValueResult result = null;
+        GetSecretValueResult result;
 
         try {
             String secret = null;

@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.iaas.tenant.TenantContextIaasObjectStoreNameProvider;
+import io.trishul.tenant.auth.TenantIdProvider;
 import io.trishul.tenant.auth.context.TenantPrincipalContext;
-import io.trishul.tenant.model.TenantIdProvider;
 
 public class TenantContextAwsBucketNameProvider implements TenantContextIaasObjectStoreNameProvider {
     private final String defaultAppBucketName;

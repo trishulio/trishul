@@ -17,10 +17,10 @@ import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.model.base.pojo.Identified;
-import io.trishul.object.store.file.service.model.accessor.IaasObjectStoreFileAccessor;
-import io.trishul.object.store.file.service.model.entity.BaseIaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.IaasObjectStoreFile;
-import io.trishul.object.store.file.service.model.entity.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor;
 
 @Transactional
 public class IaasObjectStoreFileService extends BaseService implements CrudService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile, IaasObjectStoreFileAccessor> {

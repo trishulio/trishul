@@ -4,16 +4,15 @@ import java.util.UUID;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 
-import io.trishul.auth.session.context.PrincipalContext;
-import io.trishul.auth.session.context.holder.ContextHolder;
+import io.trishul.tenant.auth.TenantIdProvider;
 import io.trishul.tenant.entity.Tenant;
 
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
-    private final ContextHolder contextHolder;
+    private final TenantIdProvider tenantIdProvider;
     private final String defaultTenantId;
 
-    public TenantIdentifierResolver(ContextHolder contextHolder, Tenant adminTenant) {
-        this.contextHolder = contextHolder;
+    public TenantIdentifierResolver(TenantIdProvider tenantIdProvider, Tenant adminTenant) {
+        this.tenantIdProvider = tenantIdProvider;
         this.defaultTenantId = adminTenant.getId().toString();
     }
 
@@ -21,15 +20,7 @@ public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver
     public String resolveCurrentTenantIdentifier() {
         String currentTenantId = this.defaultTenantId;
 
-        UUID tenantId = null;
-
-        PrincipalContext ctx = contextHolder.getPrincipalContext();
-        if (ctx != null) {
-            tenantId = ctx.getGroupId();
-            // TODO: FIX THE GROUPID TO USE TENANTID
-            // tenantId = ctx.getTenantId();
-        }
-
+        UUID tenantId = this.tenantIdProvider.getTenantId();
         if (tenantId != null) {
             currentTenantId = tenantId.toString();
         }

@@ -4,12 +4,12 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import io.company.brewcraft.dto.user.UserStatusDto;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.user.role.model.UserRoleDto;
 import io.trishul.user.salutation.model.UserSalutationDto;
+import io.trishul.user.status.UserStatusDto;
 
 public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor {
     private Long id;

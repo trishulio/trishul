@@ -1,4 +1,4 @@
-package io.trishul.object.store.file.service.controller.dto;
+package io.trishul.object.store.file.model.dto;
 
 import java.time.LocalDateTime;
 

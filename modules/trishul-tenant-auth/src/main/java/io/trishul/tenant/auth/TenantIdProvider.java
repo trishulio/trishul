@@ -1,4 +1,4 @@
-package io.trishul.tenant.model;
+package io.trishul.tenant.auth;
 
 import java.util.UUID;
 

@@ -36,7 +36,6 @@
         <module>modules/trishul-tenant-persistence-management</module>
         <module>modules/trishul-tenant-service</module>
         <module>modules/trishul-money</module>
-        <module>modules/trishul-money-service</module>
         <module>modules/trishul-quantity</module>
         <module>modules/trishul-quantity-service</module>
         <module>modules/trishul-quantity-management-service</module>
@@ -45,7 +44,6 @@
         <module>modules/trishul-iaas-tenant</module>
         <module>modules/trishul-iaas-tenant-service</module>
         <module>modules/trishul-user</module>
-        <module>modules/trishul-user-management-service</module>
         <module>modules/trishul-user-service</module>
         <module>modules/trishul-iaas-access</module>
         <module>modules/trishul-iaas-access-aws</module>
@@ -62,7 +60,6 @@
         <module>modules/trishul-iaas-user-service-aws</module>
         <module>modules/trishul-object-store-aws</module>
         <module>modules/trishul-object-store-service-aws</module>
-        <module>modules/trishul-multitenant-aws</module>
     </modules>
 
     <properties>
@@ -308,12 +305,6 @@
 
             <dependency>
                 <groupId>io.trishul</groupId>
-                <artifactId>trishul-money-service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.trishul</groupId>
                 <artifactId>trishul-quantity</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -357,12 +348,6 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.trishul</groupId>
-                <artifactId>trishul-user-management-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -459,12 +444,6 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-object-store-service-aws</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.trishul</groupId>
-                <artifactId>trishul-multitenant-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

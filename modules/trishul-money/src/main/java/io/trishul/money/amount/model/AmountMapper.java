@@ -1,10 +1,9 @@
-package io.trishul.money.amount.entity;
+package io.trishul.money.amount.model;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import io.trishul.money.MoneyMapper;
-import io.trishul.money.amount.dto.AmountDto;
 import io.trishul.money.tax.model.TaxMapper;
 
 @Mapper(uses = { TaxMapper.class, MoneyMapper.class })

@@ -1,4 +1,4 @@
-package io.trishul.object.store.file.service.model.entity;
+package io.trishul.object.store.file.model;
 
 import java.net.URI;
 

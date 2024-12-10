@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import io.trishul.auth.autoconfiguration.AuthConfiguration;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.auth.TenantIdProvider;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
@@ -43,8 +44,8 @@ public class HibernateAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(CurrentTenantIdentifierResolver.class)
-    public CurrentTenantIdentifierResolver currentTenantIdentifierResolver(ContextHolder contextHolder, Tenant adminTenant) {
-        CurrentTenantIdentifierResolver currentTenantIdentifierResolver = new TenantIdentifierResolver(contextHolder, adminTenant);
+    public CurrentTenantIdentifierResolver currentTenantIdentifierResolver(TenantIdProvider tenantIdProvider, Tenant adminTenant) {
+        CurrentTenantIdentifierResolver currentTenantIdentifierResolver = new TenantIdentifierResolver(tenantIdProvider, adminTenant);
         return currentTenantIdentifierResolver;
     }
 

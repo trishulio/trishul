@@ -10,7 +10,7 @@ import io.trishul.model.base.entity.BaseEntity;
 
 @Entity(name = "currency")
 @JsonIgnoreProperties({ "hibernateLazyInitializer" })
-public class Currency extends BaseEntity implements BaseCurrency, UpdateCurrency {
+public class Currency extends BaseEntity implements UpdateCurrency {
     public static final String FIELD_NUMERIC_CODE = "numericCode";
     public static final String FIELD_CODE = "code";
 
