@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-user</artifactId>
-    <description>User</description>
+    <artifactId>trishul-test</artifactId>
+    <description>Test helper classes</description>
     <packaging>jar</packaging>
 
     <parent>
@@ -17,13 +17,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-test</artifactId>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-object-store-file</artifactId>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
         </dependency>
     </dependencies>
 </project>

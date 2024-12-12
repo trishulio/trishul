@@ -17,6 +17,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-test</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>

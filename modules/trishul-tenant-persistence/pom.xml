@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
+            <artifactId>trishul-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.trishul</groupId>
             <artifactId>trishul-data</artifactId>
         </dependency>
         <dependency>

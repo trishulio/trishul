@@ -21,5 +21,10 @@
             <groupId>io.trishul</groupId>
             <artifactId>trishul-model</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-test</artifactId>
+        </dependency>
     </dependencies>
 </project>

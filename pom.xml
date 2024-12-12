@@ -11,6 +11,7 @@
     <description>Parent project for Trishul modules</description>
 
     <modules>
+        <module>modules/trishul-test</module>
         <module>modules/trishul-model</module>
         <module>modules/trishul-iaas</module>
         <module>modules/trishul-auth</module>
@@ -108,23 +109,12 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
-        <!-- Test scope dependencies: will not be included in the final JAR -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-parent</artifactId>
             <version>${org.pitest.version}</version>
+            <!-- This scope value was added without verifying. IT doesn't exist in source repo. Try removing it if error occurs -->
+            <scope>test</scope>
             <type>pom</type>
         </dependency>
     </dependencies>
@@ -151,6 +141,13 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-test</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
