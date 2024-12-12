@@ -8,7 +8,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.util.Dummy;
+import io.trishul.test.model.Dummy;
 
 public class ReflectionManipulatorTest {
     public static class TestData {

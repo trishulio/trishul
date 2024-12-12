@@ -11,6 +11,7 @@
     <description>Parent project for Trishul modules</description>
 
     <modules>
+        <module>modules/trishul-base-types</module>
         <module>modules/trishul-test</module>
         <module>modules/trishul-model</module>
         <module>modules/trishul-iaas</module>
@@ -142,6 +143,12 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-base-types</artifactId>
+                <version>${project.version}</version>
+=            </dependency>
 
             <dependency>
                 <groupId>io.trishul</groupId>
