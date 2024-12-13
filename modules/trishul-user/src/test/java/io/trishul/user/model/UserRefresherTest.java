@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.trishul.base.types.base.pojo.OwnedByAccessor;
-import io.trishul.user.model.User;
-import io.trishul.user.model.UserAccessor;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.salutation.model.UserSalutationAccessor;
@@ -23,7 +21,7 @@ import io.trishul.user.role.binding.model.UserRoleBindingAccessor;
 public class UserRefresherTest {
     private AccessorRefresher<Long, UserAccessor, User> mRefresher;
     private AccessorRefresher<Long, AssignedToAccessor, User> mAssignedToRefresher;
-    private AccessorRefresher<Long, OwnedByAccessor, User> mOwnedByRefresher;
+    private AccessorRefresher<Long, OwnedByAccessor<User>, User> mOwnedByRefresher;
     private Refresher<UserStatus, UserStatusAccessor> mStatusRefresher;
     private Refresher<UserSalutation, UserSalutationAccessor> mSalutationRefresher;
     private Refresher<UserRoleBinding, UserRoleBindingAccessor> mRoleBindingRefresher;
@@ -81,7 +79,7 @@ public class UserRefresherTest {
 
     @Test
     public void testOwnedByRefreshAccessors_CallsAccessorRefresher() {
-        OwnedByAccessor accessor = mock(OwnedByAccessor.class);
+        OwnedByAccessor<User> accessor = mock(OwnedByAccessor.class);
         userRefresher.refreshOwnedByAccessors(List.of(accessor));
 
         verify(mOwnedByRefresher, times(1)).refreshAccessors(List.of(accessor));

@@ -9,6 +9,8 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.money.tax.rate.TaxRate;
+
 public class TaxRateCalculatorTest {
     private TaxRateCalculator calculator;
 

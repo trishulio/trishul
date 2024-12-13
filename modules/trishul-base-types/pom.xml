@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
     <artifactId>trishul-base-types</artifactId>
-    <description>Data models and mappers</description>
+    <description>Base Types</description>
     <packaging>jar</packaging>
 
     <parent>
@@ -14,7 +14,4 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-
-    <dependencies>
-    </dependencies>
 </project>

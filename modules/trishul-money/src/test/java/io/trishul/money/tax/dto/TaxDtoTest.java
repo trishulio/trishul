@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.money.tax.rate.dto.TaxRateDto;
+
 public class TaxDtoTest {
     private TaxDto tax;
 

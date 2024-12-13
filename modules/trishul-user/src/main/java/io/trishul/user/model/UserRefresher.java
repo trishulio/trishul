@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.trishul.base.types.base.pojo.OwnedByAccessor;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import io.trishul.model.base.pojo.refresher.accessor.OwnedByAccessor;
 import io.trishul.user.role.binding.model.UserRoleBinding;
 import io.trishul.user.role.binding.model.UserRoleBindingAccessor;
 import io.trishul.user.salutation.model.UserSalutation;

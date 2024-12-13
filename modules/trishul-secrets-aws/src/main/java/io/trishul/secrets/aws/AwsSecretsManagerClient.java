@@ -1,4 +1,4 @@
-package io.trishul.secrets.SecretsManager.aws;
+package io.trishul.secrets.aws;
 
 import java.io.IOException;
 

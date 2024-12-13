@@ -11,6 +11,10 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.money.tax.amount.TaxAmount;
+import io.trishul.money.tax.model.Tax;
+import io.trishul.money.tax.rate.TaxRate;
+
 public class TaxCalculatorTest {
     private TaxCalculator calculator;
 

@@ -16,7 +16,7 @@ import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import io.trishul.iaas.user.model.TenantIaasUserMapper;
 import io.trishul.iaas.user.model.UpdateIaasUser;
 import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
-import io.trishul.tenant.auth.TenantIdProvider;
+import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.user.model.User;
 
 public class TenantIaasUserService {

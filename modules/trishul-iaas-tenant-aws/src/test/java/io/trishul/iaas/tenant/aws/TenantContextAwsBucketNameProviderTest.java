@@ -10,9 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.trishul.auth.session.context.holder.ContextHolder;
-import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
+import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.iaas.tenant.TenantContextIaasObjectStoreNameProvider;
-import io.trishul.tenant.auth.TenantIdProvider;
 
 public class TenantContextAwsBucketNameProviderTest {
     private TenantContextIaasObjectStoreNameProvider provider;

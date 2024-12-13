@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableSet;
 
-import io.trishul.repo.jpa.query.join.model.CriteriaJoin;
+import io.trishul.model.base.entity.CriteriaJoin;
 
 public class CriteriaJoinAnnotationJoiner implements JpaJoiner {
     @SuppressWarnings("unused")

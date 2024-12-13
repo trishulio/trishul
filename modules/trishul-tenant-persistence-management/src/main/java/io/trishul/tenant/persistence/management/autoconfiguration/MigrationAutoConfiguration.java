@@ -45,7 +45,7 @@ public class MigrationAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(TenantRegister.class)
     public TenantRegister tenantRegister(DataSourceQueryRunner dsQueryRunner, DataSourceConfigurationProvider<UUID> tenantDsConfigProvider, DataSourceConfiguration adminDsConfig, SecretsManager<String, String> secretMgr, JdbcDialect dialect, RandomGenerator randomGen) {
-        TenantUserRegister userReg = new TenantUserRegister(dsQueryRunner, tenantDsConfigProvider, adminDsConfig, secretMgr, dialect, randomGen)(dsQueryRunner, (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDsConfig, secretMgr, dialect, randomGen);
+        TenantUserRegister userReg = new TenantUserRegister(dsQueryRunner, (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDsConfig, secretMgr, dialect, randomGen);
         TenantSchemaRegister schemaReg = new TenantSchemaRegister((TenantDataSourceConfigurationProvider) tenantDsConfigProvider, dsQueryRunner, dialect);
 
         return new UnifiedTenantRegister(userReg, schemaReg);

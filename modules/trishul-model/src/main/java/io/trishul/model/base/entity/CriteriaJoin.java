@@ -1,4 +1,4 @@
-package io.trishul.repo.jpa.query.join.model;
+package io.trishul.model.base.entity;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

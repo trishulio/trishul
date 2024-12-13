@@ -1,3 +1,4 @@
+// TODO: Move this out of production package
 package io.trishul.model.base.entity;
 
 import io.trishul.base.types.base.pojo.CrudEntity;

@@ -35,13 +35,6 @@ public class IaasAuthorizationTest {
     }
 
     @Test
-    public void testGetSetId() {
-        authorization.setId("ACCESS_KEY_ID");
-        assertEquals("ACCESS_KEY_ID", authorization.getId());
-        assertEquals("ACCESS_KEY_ID", authorization.getAccessKeyId());
-    }
-
-    @Test
     public void testGetSetAccessKeyId() {
         authorization.setAccessKeyId("ACCESS_KEY_ID");
         assertEquals("ACCESS_KEY_ID", authorization.getAccessKeyId());
@@ -64,10 +57,5 @@ public class IaasAuthorizationTest {
     public void testGetSetExpiration() {
         authorization.setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0));
         assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), authorization.getExpiration());
-    }
-
-    @Test
-    public void testGetVersion_ReturnsNull() {
-        assertNull(authorization.getVersion());
     }
 }

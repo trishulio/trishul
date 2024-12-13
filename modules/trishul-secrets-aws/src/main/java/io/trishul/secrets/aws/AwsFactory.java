@@ -1,4 +1,4 @@
-package io.trishul.secrets.SecretsManager.aws;
+package io.trishul.secrets.aws;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

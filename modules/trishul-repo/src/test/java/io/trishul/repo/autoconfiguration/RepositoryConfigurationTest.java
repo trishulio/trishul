@@ -25,14 +25,4 @@ public class RepositoryConfigurationTest {
 
         assertSame(QueryResolver.class, queryResolver.getClass());
     }
-
-    @Test
-    public void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
-        QueryResolver mResolver = mock(QueryResolver.class);
-
-        // TODO: Move to separate module
-        AggregationRepository aggrRepo = repoConf.aggrRepo(mResolver);
-
-        assertSame(AggregationRepository.class, aggrRepo.getClass());
-    }
 }

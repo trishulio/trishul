@@ -31,14 +31,16 @@ import org.springframework.data.jpa.repository.query.QueryUtils;
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 
+import io.trishul.model.base.entity.BaseEntity;
+
 public class QueryResolverTest {
     private QueryResolver qResolver;
 
     private EntityManager mEm;
     private CriteriaBuilder mCb;
-    private CriteriaQuery<TestEntity> mCq;
-    private Root<TestEntity> mRoot;
-    private TypedQuery<TestEntity> mTq;
+    private CriteriaQuery<BaseEntity> mCq;
+    private Root<BaseEntity> mRoot;
+    private TypedQuery<BaseEntity> mTq;
 
     @BeforeEach
     public void init() {
@@ -51,13 +53,13 @@ public class QueryResolverTest {
         doReturn(mCq).when(mCb).createQuery(Object.class);
 
         mRoot = mock(Root.class);
-        doReturn(mRoot).when(mCq).from(TestEntity.class);
+        doReturn(mRoot).when(mCq).from(BaseEntity.class);
 
         mTq = mock(TypedQuery.class);
         doReturn(mTq).when(mEm).createQuery(mCq);
 
         // For Sorting assertions
-        doReturn(TestEntity.class).when(mRoot).getJavaType();
+        doReturn(BaseEntity.class).when(mRoot).getJavaType();
         doReturn(mock(Path.class)).when(mRoot).get("id");
 
         // For pagination
@@ -69,7 +71,7 @@ public class QueryResolverTest {
 
     @Test
     public void testBuildQuery_ReturnsTypedQueryWithSelectAndGroupByAndWhereAndPageableClausesApplied_WhenAllClausesAreNotNull() {
-        Specification<TestEntity> mSpec = mock(Specification.class);
+        Specification<BaseEntity> mSpec = mock(Specification.class);
         Predicate mPred = mock(Predicate.class);
         doReturn(mPred).when(mSpec).toPredicate(mRoot, mCq, mCb);
 
@@ -81,7 +83,7 @@ public class QueryResolverTest {
         List<Expression<?>> mGroupSelection = List.of(mock(Expression.class));
         doReturn(mGroupSelection).when(mGroupBySelector).getGroupByClause(mRoot, mCq, mCb);
 
-        TypedQuery<Object> q = this.qResolver.buildQuery(TestEntity.class, Object.class, mSelector, mGroupBySelector, mSpec, PageRequest.of(10, 99, Direction.DESC, "id"));
+        TypedQuery<Object> q = this.qResolver.buildQuery(BaseEntity.class, Object.class, mSelector, mGroupBySelector, mSpec, PageRequest.of(10, 99, Direction.DESC, "id"));
         assertSame(mTq, q);
 
         InOrder order = inOrder(mCq, mTq);
@@ -96,7 +98,7 @@ public class QueryResolverTest {
 
     @Test
     public void testBuildQuery_ReturnsTypedQueryWithoutGroupByClause_WhenGroupByClauseIsNull() {
-        Specification<TestEntity> mSpec = mock(Specification.class);
+        Specification<BaseEntity> mSpec = mock(Specification.class);
         Predicate mPred = mock(Predicate.class);
         doReturn(mPred).when(mSpec).toPredicate(mRoot, mCq, mCb);
 
@@ -104,7 +106,7 @@ public class QueryResolverTest {
         List<Selection<?>> mSelection = List.of(mock(Selection.class));
         doReturn(mSelection).when(mSelector).getSelectClause(mRoot, mCq, mCb);
 
-        TypedQuery<Object> q = this.qResolver.buildQuery(TestEntity.class, Object.class, mSelector, null, mSpec, PageRequest.of(10, 99, Direction.DESC, "id"));
+        TypedQuery<Object> q = this.qResolver.buildQuery(BaseEntity.class, Object.class, mSelector, null, mSpec, PageRequest.of(10, 99, Direction.DESC, "id"));
         assertSame(mTq, q);
 
         InOrder order = inOrder(mCq, mTq);
@@ -118,7 +120,7 @@ public class QueryResolverTest {
 
     @Test
     public void testBuildQuery_ReturnsTypedQueryWithoutPagination_WhenPageableClauseIsNull() {
-        Specification<TestEntity> mSpec = mock(Specification.class);
+        Specification<BaseEntity> mSpec = mock(Specification.class);
         Predicate mPred = mock(Predicate.class);
         doReturn(mPred).when(mSpec).toPredicate(mRoot, mCq, mCb);
 
@@ -130,7 +132,7 @@ public class QueryResolverTest {
         List<Expression<?>> mGroupSelection = List.of(mock(Expression.class));
         doReturn(mGroupSelection).when(mGroupBySelector).getGroupByClause(mRoot, mCq, mCb);
 
-        TypedQuery<Object> q = this.qResolver.buildQuery(TestEntity.class, Object.class, mSelector, mGroupBySelector, mSpec, null);
+        TypedQuery<Object> q = this.qResolver.buildQuery(BaseEntity.class, Object.class, mSelector, mGroupBySelector, mSpec, null);
         assertSame(mTq, q);
 
         InOrder order = inOrder(mCq, mTq);

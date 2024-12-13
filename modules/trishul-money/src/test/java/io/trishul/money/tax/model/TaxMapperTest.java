@@ -8,9 +8,8 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.TaxDto;
-import io.company.brewcraft.dto.TaxRateDto;
-import io.trishul.money.tax.model.Tax;
+import io.trishul.money.tax.dto.TaxDto;
+import io.trishul.money.tax.rate.dto.TaxRateDto;
 import io.trishul.money.tax.rate.TaxRate;
 
 public class TaxMapperTest {

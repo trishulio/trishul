@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.money.tax.rate.TaxRate;
+
 public class TaxTest {
     private Tax tax;
 

@@ -16,7 +16,7 @@ import javax.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.trishul.repo.jpa.query.join.model.CriteriaJoin;
+import io.trishul.model.base.entity.CriteriaJoin;
 
 public class CriteriaJoinAnnotationJoinerTest {
     class Entity {

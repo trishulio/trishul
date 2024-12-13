@@ -66,7 +66,7 @@ public class HibernateAutoConfigurationTest {
 
     @Test
     public void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
-        CurrentTenantIdentifierResolver currentTenantIdentifierResolver = hibernateAutoConfiguration.currentTenantIdentifierResolver(null, new Tenant(UUID.randomUUID()));
+        CurrentTenantIdentifierResolver currentTenantIdentifierResolver = hibernateAutoConfiguration.currentTenantIdentifierResolver(null);
 
         assertTrue(currentTenantIdentifierResolver instanceof TenantIdentifierResolver);
     }

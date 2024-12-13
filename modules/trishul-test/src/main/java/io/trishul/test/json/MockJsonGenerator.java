@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.Version;
 
 public class MockJsonGenerator extends JsonGenerator {
-    private StringBuffer buffer;
+    private final StringBuffer buffer;
 
     public MockJsonGenerator() {
         this.buffer = new StringBuffer();

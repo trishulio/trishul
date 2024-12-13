@@ -19,7 +19,6 @@ import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileA
 import io.trishul.object.store.file.service.controller.IaasObjectStoreFileController;
 
 public class TemporaryImageSrcDecoratorTest {
-    class DummyDto extends BaseDto {};
     private TemporaryImageSrcDecorator decorator;
 
     private IaasObjectStoreFileController mController;
@@ -83,3 +82,30 @@ class DecoratedEntity extends BaseModel implements DecoratedIaasObjectStoreFileA
         this.objectStoreFile = objectStoreFile;
     }
 }
+
+class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor {
+    private Long id;
+    private URI imageSrc;
+    private IaasObjectStoreFileDto objectStoreFile;
+
+    public DummyDto(Long id, URI imageSrc) {
+        this(id);
+        this.imageSrc = imageSrc;
+    }
+
+    public DummyDto(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public URI getImageSrc() {
+        return this.imageSrc;
+    }
+
+    public void setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+        this.objectStoreFile = objectStoreFile;
+    }
+};
