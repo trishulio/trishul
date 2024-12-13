@@ -60,6 +60,8 @@ public class CollectionAccessorRefresherTest {
 
     @BeforeEach
     public void init() {
+        mEntityRetriever = mock(Function.class);
+
         refresher = new CollectionAccessorRefresher<Long, EntityAccessor, Entity>(
             Entity.class,
             accessor -> accessor.getEntityList(),
