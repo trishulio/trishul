@@ -5,6 +5,8 @@ import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
 
+import io.trishul.base.types.util.random.RandomGenerator;
+
 public class RandomGeneratorImpl implements RandomGenerator {
     private static final String CAPITAL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String LOWERCASE_CHARS = CAPITAL_CHARS.toLowerCase();

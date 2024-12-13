@@ -1,6 +1,6 @@
-package io.company.brewcraft.configuration;
+package io.trishul.repo.autoconfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 import javax.persistence.EntityManager;
@@ -8,8 +8,7 @@ import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.repository.AggregationRepository;
-import io.company.brewcraft.repository.QueryResolver;
+import io.trishul.repo.jpa.query.resolver.QueryResolver;
 
 public class RepositoryConfigurationTest {
     private RepositoryConfiguration repoConf;
@@ -31,6 +30,7 @@ public class RepositoryConfigurationTest {
     public void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
         QueryResolver mResolver = mock(QueryResolver.class);
 
+        // TODO: Move to separate module
         AggregationRepository aggrRepo = repoConf.aggrRepo(mResolver);
 
         assertSame(AggregationRepository.class, aggrRepo.getClass());

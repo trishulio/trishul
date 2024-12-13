@@ -1,4 +1,4 @@
-package io.company.brewcraft.security.idp;
+package io.trishul.secrets.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

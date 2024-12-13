@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.money.tax.rate;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.company.brewcraft.dto.TaxRateDto;
-import io.company.brewcraft.model.TaxRate;
+import io.trishul.money.tax.rate.TaxRate;
 import io.company.brewcraft.service.mapper.TaxRateMapper;
 
 public class TaxRateMapperTest {

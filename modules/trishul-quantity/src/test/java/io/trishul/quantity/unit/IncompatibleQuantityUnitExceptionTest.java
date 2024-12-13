@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.exception;
+package io.trishul.quantity.unit;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
@@ -9,8 +9,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.BaseQuantityUnitAccessor;
-import io.company.brewcraft.util.SupportedUnits;
+import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import tec.uom.se.quantity.Quantities;
 
 public class IncompatibleQuantityUnitExceptionTest {

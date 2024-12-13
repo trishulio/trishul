@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.model.executor.BlockingAsyncExecutor;
 
 public class BulkIaasClient<ID, Entity extends Identified<ID>, BaseEntity, UpdateEntity> implements IaasRepository<ID, Entity, BaseEntity, UpdateEntity> {

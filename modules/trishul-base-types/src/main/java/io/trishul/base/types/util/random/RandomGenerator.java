@@ -1,4 +1,4 @@
-package io.trishul.model.util.random;
+package io.trishul.base.types.util.random;
 
 public interface RandomGenerator {
     String string(int len);

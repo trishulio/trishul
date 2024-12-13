@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
-import io.trishul.model.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
 
 public class IaasPolicy extends BaseEntity implements UpdateIaasPolicy, CrudEntity<String>, Audited {
     private static final Logger log = LoggerFactory.getLogger(IaasPolicy.class);

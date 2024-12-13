@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.auth.aws.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -13,11 +13,12 @@ import org.junit.jupiter.api.Test;
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.IdentityPoolShortDescription;
 
-import io.company.brewcraft.model.IaasAuthorization;
-import io.company.brewcraft.model.IaasAuthorizationCredentials;
+import io.trishul.iaas.auth.session.context.IaasAuthorization;
+import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentials;
+import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
 
 public class AwsResourceCredentialsFetcherTest {
-    private IaasAuthorizationFetch fetcher;
+    private IaasAuthorizationFetcher fetcher;
 
     private AwsCognitoIdentityClient mIdentityClient;
 

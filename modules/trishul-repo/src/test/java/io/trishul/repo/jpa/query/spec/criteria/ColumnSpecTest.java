@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.repo.jpa.query.spec.criteria;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.repository.RootUtil;
+import io.trishul.repo.jpa.query.root.RootUtil;
 
 public class ColumnSpecTest {
     private Root<?> mRoot;

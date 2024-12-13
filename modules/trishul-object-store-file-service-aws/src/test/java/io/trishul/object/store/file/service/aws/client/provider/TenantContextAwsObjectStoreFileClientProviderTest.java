@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.object.store.file.service.aws.client.provider;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -15,23 +15,26 @@ import org.mockito.ArgumentCaptor;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 
-import io.company.brewcraft.model.BaseIaasObjectStoreFile;
-import io.company.brewcraft.model.IaasAuthorization;
-import io.company.brewcraft.model.IaasObjectStoreFile;
-import io.company.brewcraft.model.UpdateIaasObjectStoreFile;
-import io.company.brewcraft.security.idp.AwsFactory;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.iaas.auth.session.context.IaasAuthorization;
+import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.service.aws.factory.AwsFactory;
+import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 
 public class TenantContextAwsObjectStoreFileClientProviderTest {
     private TenantContextAwsObjectStoreFileClientProvider  provider;
 
-    private TenantContextIaasAuthorizationFetch mAuthFetcher;
-    private TenantContextIaasObjectStoreNameProvider mBucketNameProvider;
+    private ContextHolderAuthorizationFetcher mAuthFetcher;
+    private IaasObjectStoreNameProvider mBucketNameProvider;
     private AwsFactory mFactory;
 
     @BeforeEach
     public void init() {
-        mAuthFetcher = mock(TenantContextIaasAuthorizationFetch.class);
-        mBucketNameProvider = mock(TenantContextIaasObjectStoreNameProvider.class);
+        mAuthFetcher = mock(ContextHolderAuthorizationFetcher.class);
+        mBucketNameProvider = mock(IaasObjectStoreNameProvider.class);
         mFactory = mock(AwsFactory.class);
 
         provider = new TenantContextAwsObjectStoreFileClientProvider("REGION", mBucketNameProvider, mAuthFetcher, mFactory, 1000L);

@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.money.tax.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import io.company.brewcraft.dto.TaxDto;
 import io.company.brewcraft.dto.TaxRateDto;
-import io.company.brewcraft.model.Tax;
-import io.company.brewcraft.model.TaxRate;
+import io.trishul.money.tax.model.Tax;
+import io.trishul.money.tax.rate.TaxRate;
 
 public class TaxMapperTest {
     private TaxMapper mapper;

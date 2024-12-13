@@ -1,6 +1,6 @@
-package io.company.brewcraft.migration;
+package io.trishul.tenant.persistence.management.migration.register;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
@@ -17,10 +17,10 @@ import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.data.DataSourceConfiguration;
-import io.company.brewcraft.data.DataSourceConfigurationProvider;
-import io.company.brewcraft.data.TenantDataSourceManager;
-import io.company.brewcraft.model.Tenant;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 
 public class FlywayTenantMigrationRegisterTest {
     private TenantDataSourceManager mDsMgr;

@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository.user;
+package io.trishul.user.model;
 
 import static org.mockito.Mockito.*;
 
@@ -7,23 +7,18 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.user.User;
-import io.company.brewcraft.model.user.UserAccessor;
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.model.user.UserRoleBinding;
-import io.company.brewcraft.model.user.UserRoleBindingAccessor;
-import io.company.brewcraft.model.user.UserSalutation;
-import io.company.brewcraft.model.user.UserSalutationAccessor;
-import io.company.brewcraft.model.user.UserStatus;
-import io.company.brewcraft.model.user.UserStatusAccessor;
-import io.company.brewcraft.repository.AccessorRefresher;
-import io.company.brewcraft.repository.Refresher;
-import io.company.brewcraft.repository.user.impl.UserRefresher;
-import io.company.brewcraft.repository.user.impl.UserRoleBindingRefresher;
-import io.company.brewcraft.repository.user.impl.UserSalutationRefresher;
-import io.company.brewcraft.repository.user.impl.UserStatusRefresher;
-import io.company.brewcraft.service.AssignedToAccessor;
-import io.company.brewcraft.service.OwnedByAccessor;
+import io.trishul.base.types.base.pojo.OwnedByAccessor;
+import io.trishul.user.model.User;
+import io.trishul.user.model.UserAccessor;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.salutation.model.UserSalutationAccessor;
+import io.trishul.user.status.UserStatus;
+import io.trishul.user.status.UserStatusAccessor;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.user.role.binding.model.UserRoleBinding;
+import io.trishul.user.role.binding.model.UserRoleBindingAccessor;
 
 public class UserRefresherTest {
     private AccessorRefresher<Long, UserAccessor, User> mRefresher;

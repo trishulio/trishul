@@ -19,7 +19,7 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 
 @Transactional
 public class IaasPolicyService extends BaseService implements CrudService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy, IaasPolicyAccessor> {

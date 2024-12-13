@@ -1,15 +1,12 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.iaas.auth.session.context;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.dto.IaasAuthorizationDto;
-import io.company.brewcraft.model.IaasAuthorization;
 
 public class IaasAuthorizationMapperTest {
     private IaasAuthorizationMapper mapper;

@@ -1,4 +1,4 @@
-package io.company.brewcraft.security.idp;
+package io.trishul.object.store.aws.model.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

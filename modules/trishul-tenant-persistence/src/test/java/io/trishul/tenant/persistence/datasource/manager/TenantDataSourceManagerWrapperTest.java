@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.tenant.persistence.datasource.manager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -12,6 +12,10 @@ import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 
 public class TenantDataSourceManagerWrapperTest {
     private TenantDataSourceManagerWrapper tenantDsMgr;

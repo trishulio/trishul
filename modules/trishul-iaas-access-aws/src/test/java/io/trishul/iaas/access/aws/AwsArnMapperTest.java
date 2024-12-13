@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.access.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

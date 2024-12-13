@@ -1,12 +1,15 @@
-package io.company.brewcraft.dto;
+package io.trishul.money.amount.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.money.dto.MoneyDto;
+import io.trishul.money.tax.amount.dto.TaxAmountDto;
 
 public class AmountDtoTest {
     private AmountDto amount;

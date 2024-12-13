@@ -1,18 +1,18 @@
-package io.company.brewcraft.util;
-
-import static org.junit.Assert.assertSame;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+package io.trishul.model.util;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.data.CheckedRunnable;
-import io.company.brewcraft.util.validator.Validator;
+import io.trishul.base.types.lambda.CheckedRunnable;
+import io.trishul.model.validator.UtilityProvider;
+import io.trishul.model.validator.Validator;
 
 public class ThreadLocalUtilityProviderTest {
     private UtilityProvider provider;

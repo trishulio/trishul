@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.auth.aws.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;

@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.tenant.persistence.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -22,7 +22,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import io.company.brewcraft.model.Tenant;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 
 public class HibernateAutoConfigurationTest {
     private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;

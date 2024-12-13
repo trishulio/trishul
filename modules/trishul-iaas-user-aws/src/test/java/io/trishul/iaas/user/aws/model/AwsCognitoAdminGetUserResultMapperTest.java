@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.iaas.user.aws.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.amazonaws.services.cognitoidp.model.AdminGetUserResult;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 
-import io.company.brewcraft.model.IaasUser;
+import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 
 public class AwsCognitoAdminGetUserResultMapperTest {

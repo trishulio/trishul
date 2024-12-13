@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.object.store.file.service.decorator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -12,13 +12,14 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.controller.IaasObjectStoreFileController;
-import io.company.brewcraft.dto.IaasObjectStoreFileDto;
-import io.company.brewcraft.dto.ProductDto;
-import io.company.brewcraft.model.BaseModel;
-import io.company.brewcraft.model.DecoratedIaasObjectStoreFileAccessor;
+import io.trishul.model.base.dto.BaseDto;
+import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
+import io.trishul.object.store.file.service.controller.IaasObjectStoreFileController;
 
 public class TemporaryImageSrcDecoratorTest {
+    class DummyDto extends BaseDto {};
     private TemporaryImageSrcDecorator decorator;
 
     private IaasObjectStoreFileController mController;
@@ -50,11 +51,11 @@ public class TemporaryImageSrcDecoratorTest {
     public void testDecorate_DoesNothing_WhenExceptionIsThrown() {
         doThrow(RuntimeException.class).when(mController).getAll(any());
 
-        List<ProductDto> dtos = List.of(new ProductDto(1L), new ProductDto(2L));
+        List<DummyDto> dtos = List.of(new DummyDto(1L), new DummyDto(2L));
 
         decorator.decorate(dtos);
 
-        List<ProductDto> expected = List.of(new ProductDto(1L), new ProductDto(2L));
+        List<DummyDto> expected = List.of(new DummyDto(1L), new DummyDto(2L));
         assertEquals(expected, dtos);
     }
 }

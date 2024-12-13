@@ -1,6 +1,5 @@
-package io.trishul.model.util;
+package io.trishul.model.validator;
 
-import io.trishul.model.validator.Validator;
 
 public interface UtilityProvider {
     Validator getValidator();

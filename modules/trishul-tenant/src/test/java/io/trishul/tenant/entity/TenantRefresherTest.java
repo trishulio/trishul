@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.tenant.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -9,8 +9,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.Tenant;
-import io.company.brewcraft.model.TenantAccessor;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class TenantRefresherTest {
     private TenantRefresher tenantRefresher;

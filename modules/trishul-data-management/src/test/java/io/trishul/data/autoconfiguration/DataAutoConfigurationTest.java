@@ -1,4 +1,4 @@
-package io.company.brewcraft;
+package io.trishul.data.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,13 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import io.company.brewcraft.data.CachingDataSourceManager;
-import io.company.brewcraft.data.DataAutoConfiguration;
-import io.company.brewcraft.data.DataSourceBuilder;
-import io.company.brewcraft.data.DataSourceManager;
-import io.company.brewcraft.data.HikariDataSourceBuilder;
-import io.company.brewcraft.data.TenantDataSourceManager;
-import io.company.brewcraft.data.TenantDataSourceManagerWrapper;
+import io.trishul.data.datasource.manager.CachingDataSourceManager;
+import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 
 public class DataAutoConfigurationTest {
     private DataAutoConfiguration config;

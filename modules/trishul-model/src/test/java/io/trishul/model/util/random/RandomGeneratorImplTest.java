@@ -1,11 +1,12 @@
-package io.company.brewcraft.migration;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+package io.trishul.model.util.random;
 
 import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.base.types.util.random.RandomGenerator;
 
 public class RandomGeneratorImplTest {
     private RandomGenerator generator;

@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.amazonaws.services.cognitoidp.model.GroupType;
 
-import io.company.brewcraft.model.IaasIdpTenant;
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 
 public class AwsGroupTypeMapperTest {
     private AwsGroupTypeMapper mapper;

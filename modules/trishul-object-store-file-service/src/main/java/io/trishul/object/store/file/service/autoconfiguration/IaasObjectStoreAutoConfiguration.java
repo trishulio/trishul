@@ -14,7 +14,7 @@ import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.repository.provider.IaasRepositoryProvider;
 import io.trishul.iaas.repository.provider.IaasRepositoryProviderProxy;
 import io.trishul.model.executor.BlockingAsyncExecutor;
-import io.trishul.model.util.UtilityProvider;
+import io.trishul.model.validator.UtilityProvider;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;

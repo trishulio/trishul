@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.model.base.pojo.Identified;
-import io.trishul.model.base.pojo.exception.EntityNotFoundException;
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.exception.EntityNotFoundException;
 
 public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
     private static final Logger log = LoggerFactory.getLogger(CollectionAccessorRefresher.class);

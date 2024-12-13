@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.tenant.entity;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.MalformedURLException;
@@ -11,10 +11,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.AddTenantDto;
-import io.company.brewcraft.dto.TenantDto;
-import io.company.brewcraft.dto.UpdateTenantDto;
-import io.company.brewcraft.model.Tenant;
+import io.trishul.tenant.dto.AddTenantDto;
+import io.trishul.tenant.dto.TenantDto;
+import io.trishul.tenant.dto.UpdateTenantDto;
 
 public class TenantMapperTest {
     private TenantMapper mapper;

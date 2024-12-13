@@ -1,4 +1,4 @@
-package io.company.brewcraft.controller;
+package io.trishul.quantity.management.service.unit.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-import io.company.brewcraft.dto.PageDto;
-import io.company.brewcraft.dto.UnitDto;
-import io.company.brewcraft.model.UnitEntity;
-import io.company.brewcraft.service.QuantityUnitService;
-import io.company.brewcraft.util.controller.AttributeFilter;
+import io.trishul.quantity.unit.UnitEntity;
+import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.quantity.service.unit.service.QuantityUnitService;
+import io.trishul.quantity.unit.dto.UnitDto;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
 
 @SuppressWarnings("unchecked")
 public class QuantityUnitControllerTest {

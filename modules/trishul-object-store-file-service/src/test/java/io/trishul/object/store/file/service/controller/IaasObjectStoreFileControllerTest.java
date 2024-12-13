@@ -1,4 +1,4 @@
-package io.company.brewcraft.controller;
+package io.trishul.object.store.file.service.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -11,13 +11,14 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.AddIaasObjectStoreFileDto;
-import io.company.brewcraft.dto.IaasObjectStoreFileDto;
-import io.company.brewcraft.dto.UpdateIaasObjectStoreFileDto;
-import io.company.brewcraft.model.BaseIaasObjectStoreFile;
-import io.company.brewcraft.model.IaasObjectStoreFile;
-import io.company.brewcraft.model.UpdateIaasObjectStoreFile;
-import io.company.brewcraft.service.IaasObjectStoreFileService;
+import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 
 public class IaasObjectStoreFileControllerTest {
     private IaasObjectStoreFileController controller;

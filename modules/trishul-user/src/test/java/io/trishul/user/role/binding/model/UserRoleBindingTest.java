@@ -1,12 +1,15 @@
-package io.company.brewcraft.model.user;
+package io.trishul.user.role.binding.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.user.model.User;
+import io.trishul.user.role.model.UserRole;
 
 public class UserRoleBindingTest {
     private UserRoleBinding binding;

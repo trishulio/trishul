@@ -1,7 +1,7 @@
-package io.company.brewcraft.data;
+package io.trishul.tenant.persistence.datasource.configuration.provider;
 
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -12,9 +12,15 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.AdminTenant;
-import io.company.brewcraft.model.Tenant;
-import io.company.brewcraft.security.store.SecretsManager;
+import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.ImmutableGlobalDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import io.trishul.secrets.SecretsManager;
+import io.trishul.tenant.entity.AdminTenant;
+import io.trishul.tenant.entity.Tenant;
 
 public class TenantDataSourceConfigurationProviderTest {
     private DataSourceConfigurationProvider<UUID> dsProvider;

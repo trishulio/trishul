@@ -15,7 +15,7 @@ import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfigAccessor;
 

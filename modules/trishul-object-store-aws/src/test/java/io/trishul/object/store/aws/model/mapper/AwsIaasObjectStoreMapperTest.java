@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.object.store.aws.model.mapper;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.amazonaws.services.s3.model.Bucket;
 
-import io.company.brewcraft.model.IaasObjectStore;
+import io.trishul.object.store.model.IaasObjectStore;
 
 public class AwsIaasObjectStoreMapperTest {
     private AwsIaasObjectStoreMapper mapper;

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
-import io.trishul.model.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
 
 public class IaasRolePolicyAttachment extends BaseEntity implements UpdateIaasRolePolicyAttachment, CrudEntity<IaasRolePolicyAttachmentId>, Audited {
     private static final Logger log = LoggerFactory.getLogger(IaasRolePolicyAttachment.class);

@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.impl;
+package io.trishul.repo.aggregation.service.function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -6,15 +6,14 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.service.AggregationFunction;
-import io.company.brewcraft.service.AverageSpec;
-import io.company.brewcraft.service.CountSpec;
-import io.company.brewcraft.service.CriteriaSpec;
-import io.company.brewcraft.service.MaxSpec;
-import io.company.brewcraft.service.MinSpec;
-import io.company.brewcraft.service.PathProvider;
-import io.company.brewcraft.service.ColumnSpec;
-import io.company.brewcraft.service.SumSpec;
+import io.trishul.repo.jpa.query.path.provider.PathProvider;
+import io.trishul.repo.jpa.query.spec.criteria.AverageSpec;
+import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
+import io.trishul.repo.jpa.query.spec.criteria.CountSpec;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.criteria.MaxSpec;
+import io.trishul.repo.jpa.query.spec.criteria.MinSpec;
+import io.trishul.repo.jpa.query.spec.criteria.SumSpec;
 
 public class AggregationFunctionTest {
     @Test

@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.join.joiner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -16,7 +16,7 @@ import javax.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.service.CriteriaJoin;
+import io.trishul.repo.jpa.query.join.model.CriteriaJoin;
 
 public class CriteriaJoinAnnotationJoinerTest {
     class Entity {

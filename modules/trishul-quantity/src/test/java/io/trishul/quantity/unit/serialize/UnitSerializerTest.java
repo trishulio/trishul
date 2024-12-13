@@ -1,4 +1,4 @@
-package io.company.brewcraft.util;
+package io.trishul.quantity.unit.serialize;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,6 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
+
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.test.json.MockJsonGenerator;
 
 public class UnitSerializerTest {
     private JsonSerializer<Unit> serializer;

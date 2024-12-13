@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.user.role.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -7,12 +7,6 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.dto.user.AddUserRoleDto;
-import io.company.brewcraft.dto.user.UpdateUserRoleDto;
-import io.company.brewcraft.dto.user.UserRoleDto;
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.service.mapper.user.UserRoleMapper;
 
 public class UserRoleMapperTest {
     private UserRoleMapper mapper;

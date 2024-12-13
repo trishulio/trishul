@@ -1,6 +1,6 @@
-package io.company.brewcraft.dto;
+package io.trishul.money.tax.rate.dto;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;

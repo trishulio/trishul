@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.model.base.pojo.CrudEntity;
-import io.trishul.model.base.pojo.UpdatableEntity;
-import io.trishul.model.util.UtilityProvider;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.UpdatableEntity;
+import io.trishul.model.validator.UtilityProvider;
 import io.trishul.model.validator.Validator;
 
 public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends UpdatableEntity<ID>> extends BaseService implements UpdateService<ID, E, BE, UE> {

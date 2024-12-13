@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,17 +10,13 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.user.AddUserDto;
-import io.company.brewcraft.dto.user.UpdateUserDto;
-import io.company.brewcraft.dto.user.UserDto;
-import io.company.brewcraft.dto.user.UserRoleDto;
-import io.company.brewcraft.dto.user.UserSalutationDto;
-import io.company.brewcraft.dto.user.UserStatusDto;
-import io.company.brewcraft.model.user.User;
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.model.user.UserSalutation;
-import io.company.brewcraft.model.user.UserStatus;
-import io.company.brewcraft.service.mapper.user.UserMapper;
+import io.trishul.user.model.User;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleDto;
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.salutation.model.UserSalutationDto;
+import io.trishul.user.status.UserStatus;
+import io.trishul.user.status.UserStatusDto;
 
 public class UserMapperTest {
     private UserMapper mapper;

@@ -1,4 +1,4 @@
-package io.company.brewcraft;
+package io.trishul.data.datasource.builder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import io.company.brewcraft.data.DataSourceBuilder;
-import io.company.brewcraft.data.HikariDataSourceBuilder;
+import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
+import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 
 public class HikariDataSourceBuilderTest {
     private DataSourceBuilder builder;

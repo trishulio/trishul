@@ -1,4 +1,4 @@
-package io.company.brewcraft.util.controller;
+package io.trishul.crud.controller.filter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.util.Dummy;
+import io.trishul.test.model.Dummy;
 
 public class AttributeFilterTest {
     private AttributeFilter filter;

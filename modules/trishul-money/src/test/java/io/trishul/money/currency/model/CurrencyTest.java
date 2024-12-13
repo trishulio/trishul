@@ -1,4 +1,4 @@
-package io.company.brewcraft.model;
+package io.trishul.money.currency.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 

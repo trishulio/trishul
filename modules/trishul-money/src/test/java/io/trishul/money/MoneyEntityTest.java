@@ -1,4 +1,4 @@
-package io.company.brewcraft.model;
+package io.trishul.money;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+
+import io.trishul.money.currency.model.Currency;
 
 public class MoneyEntityTest {
     private MoneyEntity money;

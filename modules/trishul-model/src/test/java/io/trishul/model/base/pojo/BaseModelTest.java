@@ -1,20 +1,24 @@
-package io.company.brewcraft.model;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+package io.trishul.model.base.pojo;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
-import io.company.brewcraft.data.CheckedFunction;
-import io.company.brewcraft.util.JsonMapper;
-import io.company.brewcraft.util.entity.ReflectionManipulator;
+import io.trishul.base.types.lambda.CheckedFunction;
+import io.trishul.model.json.JsonMapper;
+import io.trishul.model.reflection.ReflectionManipulator;
 
 @SuppressWarnings("unchecked")
 public class BaseModelTest {

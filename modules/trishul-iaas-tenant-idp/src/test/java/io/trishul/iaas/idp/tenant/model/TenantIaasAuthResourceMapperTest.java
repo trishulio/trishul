@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.idp.tenant.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,8 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.IaasRole;
-import io.company.brewcraft.model.TenantIaasAuthResources;
+import io.trishul.iaas.access.role.model.IaasRole;
 
 public class TenantIaasAuthResourceMapperTest {
     private TenantIaasAuthResourceMapper mapper;

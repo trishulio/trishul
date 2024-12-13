@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.iaas.idp.tenant.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.MalformedURLException;
@@ -12,8 +12,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.IaasIdpTenant;
-import io.company.brewcraft.model.Tenant;
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.tenant.entity.Tenant;
 
 public class TenantIaasIdpTenantMapperTest {
     private TenantIaasIdpTenantMapper mapper;

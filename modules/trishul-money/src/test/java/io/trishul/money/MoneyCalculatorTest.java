@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.impl;
+package io.trishul.money;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,9 +10,6 @@ import org.joda.money.CurrencyMismatchException;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.service.MoneyCalculator;
-import io.company.brewcraft.service.MoneySupplier;
 
 public class MoneyCalculatorTest {
     private MoneyCalculator calculator;

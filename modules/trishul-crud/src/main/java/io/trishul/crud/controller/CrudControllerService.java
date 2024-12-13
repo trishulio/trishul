@@ -6,12 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.model.base.mapper.BaseMapper;
-import io.trishul.model.base.pojo.Identified;
-import io.trishul.model.base.pojo.exception.EntityNotFoundException;
+
 import static io.trishul.model.validator.Validator.assertion;
 import io.trishul.object.store.file.decorator.EntityDecorator;
 import io.trishul.object.store.file.decorator.NoActionDecorator;

@@ -1,4 +1,4 @@
-package io.trishul.model.util.task;
+package io.trishul.base.types.util.task;
 
 import java.util.List;
 import java.util.function.Supplier;

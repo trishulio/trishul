@@ -1,13 +1,12 @@
-package io.company.brewcraft.dto;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
+package io.trishul.model.validation;
 
 import javax.validation.ConstraintValidatorContext;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
 
 public class NullOrNotBlankValidatorTest {
     private NullOrNotBlankValidator validator;

@@ -1,4 +1,4 @@
-package io.company.brewcraft.model.user;
+package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,6 +10,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.user.role.binding.model.UserRoleBinding;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.status.UserStatus;
 
 public class UserTest {
     private User user;

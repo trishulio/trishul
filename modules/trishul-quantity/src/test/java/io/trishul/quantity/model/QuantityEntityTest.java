@@ -1,4 +1,4 @@
-package io.company.brewcraft.model;
+package io.trishul.quantity.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+
+import io.trishul.quantity.unit.UnitEntity;
 
 public class QuantityEntityTest {
     private QuantityEntity quantity;

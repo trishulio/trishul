@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.commodity;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
@@ -11,8 +11,8 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.Commodity;
-import io.company.brewcraft.util.SupportedUnits;
+import io.trishul.commodity.model.Commodity;
+import io.trishul.quantity.unit.SupportedUnits;
 import tec.uom.se.quantity.Quantities;
 
 public class CostCalculatorTest {

@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.data.datasource.configuration.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.security.store.SecretsManager;
+import io.trishul.secrets.SecretsManager;
 
 public class LazyTenantDataSourceConfigurationTest {
     private DataSourceConfiguration config;

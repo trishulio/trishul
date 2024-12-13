@@ -17,7 +17,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 
 public class IaasIdpTenantService extends BaseService implements CrudService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant, IaasIdpTenantAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasIdpTenantService.class);

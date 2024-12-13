@@ -1,4 +1,4 @@
-package io.trishul.model.base.pojo.exception;
+package io.trishul.model.base.exception;
 
 import java.text.MessageFormat;
 

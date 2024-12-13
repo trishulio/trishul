@@ -1,4 +1,4 @@
-package io.company.brewcraft.model;
+package io.trishul.quantity.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

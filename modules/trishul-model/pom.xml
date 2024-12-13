@@ -24,6 +24,7 @@
         <dependency>
             <groupId>io.trishul</groupId>
             <artifactId>trishul-test</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

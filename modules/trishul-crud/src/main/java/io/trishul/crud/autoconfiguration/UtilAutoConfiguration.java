@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import io.trishul.model.executor.BlockingAsyncExecutor;
 import io.trishul.model.util.ThreadLocalUtilityProvider;
-import io.trishul.model.util.UtilityProvider;
+import io.trishul.model.validator.UtilityProvider;
 
 @Configuration
 public class UtilAutoConfiguration {

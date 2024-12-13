@@ -1,4 +1,4 @@
-package io.trishul.model.validator;
+package io.trishul.base.types.validator;
 
 public class ValidationException extends RuntimeException {
     private static final long serialVersionUID = 1L;

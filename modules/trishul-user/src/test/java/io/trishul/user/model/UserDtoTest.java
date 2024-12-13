@@ -1,4 +1,4 @@
-package io.company.brewcraft.dto.user;
+package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,7 +10,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.IaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import io.trishul.user.role.model.UserRoleDto;
+import io.trishul.user.salutation.model.UserSalutationDto;
+import io.trishul.user.status.UserStatusDto;
 
 public class UserDtoTest {
     private UserDto dto;

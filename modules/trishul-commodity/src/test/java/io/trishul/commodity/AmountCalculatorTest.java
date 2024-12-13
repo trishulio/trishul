@@ -1,7 +1,7 @@
-package io.company.brewcraft.service;
+package io.trishul.commodity;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.Amount;
-import io.company.brewcraft.model.AmountSupplier;
-import io.company.brewcraft.model.Good;
-import io.company.brewcraft.model.Tax;
-import io.company.brewcraft.model.TaxAmount;
-import io.company.brewcraft.model.TaxRate;
-import io.company.brewcraft.util.SupportedUnits;
+import io.trishul.money.amount.model.Amount;
+import io.trishul.money.amount.model.AmountSupplier;
+import io.trishul.commodity.good.model.Good;
+import io.trishul.money.tax.model.Tax;
+import io.trishul.money.tax.amount.TaxAmount;
+import io.trishul.money.tax.rate.TaxRate;
+import io.trishul.quantity.unit.SupportedUnits;
 import tec.uom.se.quantity.Quantities;
 
 public class AmountCalculatorTest {

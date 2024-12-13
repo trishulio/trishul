@@ -1,11 +1,10 @@
-package io.company.brewcraft.service.impl;
+package io.trishul.quantity.service.unit.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
@@ -25,11 +24,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.company.brewcraft.model.UnitEntity;
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.repository.QuantityUnitRepository;
-import io.company.brewcraft.service.QuantityUnitService;
-import io.company.brewcraft.util.SupportedUnits;
+import io.trishul.quantity.service.unit.repository.QuantityUnitRepository;
+import io.trishul.quantity.unit.UnitEntity;
+import io.trishul.quantity.unit.SupportedUnits;
 
 public class QuantityUnitServiceImplTest {
     private QuantityUnitService quantityUnitService;

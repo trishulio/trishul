@@ -1,6 +1,9 @@
-package io.company.brewcraft.util;
+package io.trishul.quantity;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -16,7 +19,8 @@ import javax.measure.quantity.Volume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.BaseQuantityUnitAccessor;
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 

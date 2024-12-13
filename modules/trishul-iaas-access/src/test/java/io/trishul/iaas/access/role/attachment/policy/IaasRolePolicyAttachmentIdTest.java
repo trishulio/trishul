@@ -1,10 +1,13 @@
-package io.company.brewcraft.model;
+package io.trishul.iaas.access.role.attachment.policy;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.role.model.IaasRole;
 
 public class IaasRolePolicyAttachmentIdTest {
     private IaasRolePolicyAttachmentId id;

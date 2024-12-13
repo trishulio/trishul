@@ -2,7 +2,7 @@ package io.trishul.user.salutation.model;
 
 import java.util.Collection;
 
-import io.trishul.model.base.pojo.refresher.Refresher;
+import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class UserSalutationRefresher implements Refresher<UserSalutation, UserSalutationAccessor> {

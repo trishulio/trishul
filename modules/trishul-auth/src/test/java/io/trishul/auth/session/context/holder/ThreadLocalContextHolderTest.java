@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.auth.session.context.PrincipalContext;
-import io.trishul.model.lambda.CheckedRunnable;
+import io.trishul.base.types.lambda.CheckedRunnable;
 
 public class ThreadLocalContextHolderTest {
     private ThreadLocalContextHolder holder;

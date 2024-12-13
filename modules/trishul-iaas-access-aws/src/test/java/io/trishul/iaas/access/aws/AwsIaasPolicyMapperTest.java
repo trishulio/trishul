@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.access.aws;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.amazonaws.services.identitymanagement.model.Policy;
 
-import io.company.brewcraft.model.IaasPolicy;
+import io.trishul.iaas.access.policy.model.IaasPolicy;
 
 public class AwsIaasPolicyMapperTest {
     private AwsIaasPolicyMapper mapper;

@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.impl;
+package io.trishul.repo.jpa.query.spec.criteria;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,9 +9,6 @@ import javax.persistence.criteria.Root;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.service.CriteriaSpec;
-import io.company.brewcraft.service.RootSpec;
 
 public class RootSpecTest {
     private CriteriaSpec<?> spec;

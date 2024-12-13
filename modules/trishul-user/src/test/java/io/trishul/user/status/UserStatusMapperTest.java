@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.user.status;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,10 +6,6 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.dto.user.UserStatusDto;
-import io.company.brewcraft.model.user.UserStatus;
-import io.company.brewcraft.service.mapper.user.UserStatusMapper;
 
 public class UserStatusMapperTest {
     private UserStatusMapper mapper;

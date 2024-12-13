@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.tenant.object.store;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,9 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.IaasObjectStore;
-import io.company.brewcraft.model.IaasPolicy;
-import io.company.brewcraft.model.TenantIaasVfsResources;
+import io.trishul.object.store.model.IaasObjectStore;
+import io.trishul.iaas.access.policy.model.IaasPolicy;
 
 public class TenantIaasVfsResourceMapperTest {
     private TenantIaasVfsResourceMapper mapper;

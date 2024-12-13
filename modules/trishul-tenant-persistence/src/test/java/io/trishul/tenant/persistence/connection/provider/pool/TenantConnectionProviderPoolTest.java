@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.tenant.persistence.connection.provider.pool;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -13,6 +13,8 @@ import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 
 public class TenantConnectionProviderPoolTest {
     private DataSource mAdminDs;

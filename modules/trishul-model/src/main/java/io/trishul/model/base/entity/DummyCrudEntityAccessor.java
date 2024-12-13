@@ -1,4 +1,4 @@
-package io.company.brewcraft.model;
+package io.trishul.model.base.entity;
 
 public interface DummyCrudEntityAccessor {
     DummyCrudEntity getDummyCrudEntity();

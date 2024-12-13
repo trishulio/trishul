@@ -2,7 +2,7 @@ package io.trishul.user.role.binding.model;
 
 import java.util.Collection;
 
-import io.trishul.model.base.pojo.refresher.Refresher;
+import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
 

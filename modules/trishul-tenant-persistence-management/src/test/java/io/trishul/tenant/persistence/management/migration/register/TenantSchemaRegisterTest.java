@@ -1,7 +1,7 @@
-package io.company.brewcraft.migration;
+package io.trishul.tenant.persistence.management.migration.register;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -12,13 +12,13 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.data.CheckedConsumer;
-import io.company.brewcraft.data.CheckedSupplier;
-import io.company.brewcraft.data.DataSourceConfiguration;
-import io.company.brewcraft.data.DataSourceQueryRunner;
-import io.company.brewcraft.data.JdbcDialect;
-import io.company.brewcraft.data.TenantDataSourceConfigurationProvider;
-import io.company.brewcraft.model.Tenant;
+import io.trishul.base.types.lambda.CheckedConsumer;
+import io.trishul.base.types.lambda.CheckedSupplier;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
+import io.trishul.dialect.JdbcDialect;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 
 @SuppressWarnings("unchecked")
 public class TenantSchemaRegisterTest {

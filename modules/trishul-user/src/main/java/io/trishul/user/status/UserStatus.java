@@ -17,7 +17,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.Audited;
 
 @Entity(name = "user_status")
 @Table

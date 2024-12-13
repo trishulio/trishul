@@ -1,5 +1,6 @@
 package io.trishul.model.util;
 
+import io.trishul.model.validator.UtilityProvider;
 import io.trishul.model.validator.Validator;
 
 public class ThreadLocalUtilityProvider implements UtilityProvider {

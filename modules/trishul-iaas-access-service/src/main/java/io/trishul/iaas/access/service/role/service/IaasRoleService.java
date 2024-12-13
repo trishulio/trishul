@@ -19,7 +19,7 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 
 @Transactional
 public class IaasRoleService extends BaseService implements CrudService<String, IaasRole, BaseIaasRole, UpdateIaasRole, IaasRoleAccessor> {

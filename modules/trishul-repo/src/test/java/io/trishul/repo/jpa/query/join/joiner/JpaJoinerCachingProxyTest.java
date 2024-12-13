@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.join.joiner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;

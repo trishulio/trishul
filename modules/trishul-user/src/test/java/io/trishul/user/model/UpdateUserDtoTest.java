@@ -1,6 +1,6 @@
-package io.company.brewcraft.dto.user;
+package io.trishul.user.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URI;

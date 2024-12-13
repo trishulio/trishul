@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository.user;
+package io.trishul.user.role.binding.model;
 
 import static org.mockito.Mockito.*;
 
@@ -7,12 +7,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.model.user.UserRoleAccessor;
-import io.company.brewcraft.model.user.UserRoleBinding;
-import io.company.brewcraft.model.user.UserRoleBindingAccessor;
-import io.company.brewcraft.repository.Refresher;
-import io.company.brewcraft.repository.user.impl.UserRoleBindingRefresher;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleAccessor;
+import io.trishul.base.types.base.pojo.Refresher;
 
 public class UserRoleBindingRefresherTest {
     private Refresher<UserRole, UserRoleAccessor> mUserRoleRefresher;

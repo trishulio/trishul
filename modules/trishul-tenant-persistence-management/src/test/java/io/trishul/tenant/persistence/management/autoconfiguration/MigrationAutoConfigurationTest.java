@@ -1,4 +1,4 @@
-package io.company.brewcraft.migration;
+package io.trishul.tenant.persistence.management.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -6,6 +6,15 @@ import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.base.types.util.random.RandomGenerator;
+import io.trishul.model.util.random.RandomGeneratorImpl;
+import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
+import io.trishul.tenant.persistence.management.migration.manager.SequentialMigrationManager;
+import io.trishul.tenant.persistence.management.migration.register.FlywayTenantMigrationRegister;
+import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
+import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
+import io.trishul.tenant.persistence.management.migration.register.UnifiedTenantRegister;
 
 public class MigrationAutoConfigurationTest {
     private MigrationAutoConfiguration config;

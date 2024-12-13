@@ -1,12 +1,10 @@
-package io.company.brewcraft.dto;
+package io.trishul.user.role.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.dto.user.UpdateUserRoleDto;
 
 public class UpdateUserRoleDtoTest {
     private UpdateUserRoleDto dto;

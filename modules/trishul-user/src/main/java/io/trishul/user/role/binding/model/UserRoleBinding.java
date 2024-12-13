@@ -21,8 +21,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
-import io.trishul.model.base.pojo.UpdatableEntity;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.UpdatableEntity;
 import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
 import io.trishul.user.role.model.UserRole;

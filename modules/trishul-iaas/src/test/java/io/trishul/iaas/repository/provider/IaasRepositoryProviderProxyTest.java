@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.repository.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,10 +13,10 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.BaseDummyCrudEntity;
-import io.company.brewcraft.model.DummyCrudEntity;
-import io.company.brewcraft.model.IaasRepositoryProvider;
-import io.company.brewcraft.model.UpdateDummyCrudEntity;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.entity.DummyCrudEntity;
+import io.trishul.test.model.BaseDummyCrudEntity;
+import io.trishul.test.model.UpdateDummyCrudEntity;
 
 public class IaasRepositoryProviderProxyTest {
     private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity> proxy;

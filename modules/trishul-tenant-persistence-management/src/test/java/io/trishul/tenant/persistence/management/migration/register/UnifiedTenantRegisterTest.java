@@ -1,4 +1,4 @@
-package io.company.brewcraft.migration;
+package io.trishul.tenant.persistence.management.migration.register;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-import io.company.brewcraft.model.Tenant;
+import io.trishul.tenant.entity.Tenant;
 
 public class UnifiedTenantRegisterTest {
     private TenantRegister register;

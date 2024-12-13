@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.access.aws;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.amazonaws.services.identitymanagement.model.Role;
 import com.amazonaws.services.identitymanagement.model.RoleLastUsed;
 
-import io.company.brewcraft.model.IaasRole;
+import io.trishul.iaas.access.role.model.IaasRole;
 
 public class AwsIaasRoleMapperTest {
     private AwsIaasRoleMapper mapper;

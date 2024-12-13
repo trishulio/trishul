@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.quantity.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,10 +10,9 @@ import javax.measure.Quantity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.QuantityDto;
-import io.company.brewcraft.model.QuantityEntity;
-import io.company.brewcraft.model.UnitEntity;
-import io.company.brewcraft.util.SupportedUnits;
+import io.trishul.quantity.model.dto.QuantityDto;
+import io.trishul.quantity.unit.UnitEntity;
+import io.trishul.quantity.unit.SupportedUnits;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 

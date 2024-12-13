@@ -3,8 +3,8 @@ package io.trishul.iaas.user.model;
 import java.time.LocalDateTime;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
-import io.trishul.model.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
 
 public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIaasUser, Audited {
     private String userName;

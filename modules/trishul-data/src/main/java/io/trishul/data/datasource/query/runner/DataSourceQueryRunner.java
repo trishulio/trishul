@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.model.lambda.CheckedConsumer;
-import io.trishul.model.lambda.CheckedSupplier;
+import io.trishul.base.types.lambda.CheckedConsumer;
+import io.trishul.base.types.lambda.CheckedSupplier;
 
 public class DataSourceQueryRunner {
     private static final Logger log = LoggerFactory.getLogger(DataSourceQueryRunner.class);

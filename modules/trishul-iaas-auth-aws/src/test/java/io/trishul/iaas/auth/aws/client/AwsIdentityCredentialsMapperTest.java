@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.auth.aws.client;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 
-import io.company.brewcraft.model.IaasAuthorization;
+import io.trishul.iaas.auth.session.context.IaasAuthorization;
 
 public class AwsIdentityCredentialsMapperTest {
     private AwsIdentityCredentialsMapper mapper;

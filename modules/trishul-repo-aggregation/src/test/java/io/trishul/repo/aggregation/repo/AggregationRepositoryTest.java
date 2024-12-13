@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.aggregation.repo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -14,11 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
-import io.company.brewcraft.model.BaseModel;
-import io.company.brewcraft.repository.AggregationRepository;
-import io.company.brewcraft.repository.QueryResolver;
-import io.company.brewcraft.service.GroupByClauseBuilder;
-import io.company.brewcraft.service.SelectClauseBuilder;
+import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.repo.jpa.query.resolver.QueryResolver;
+import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
+import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 
 @SuppressWarnings("unchecked")
 public class AggregationRepositoryTest {

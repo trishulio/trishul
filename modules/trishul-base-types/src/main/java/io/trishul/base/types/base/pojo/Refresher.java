@@ -1,4 +1,4 @@
-package io.trishul.model.base.pojo.refresher;
+package io.trishul.base.types.base.pojo;
 
 import java.util.Collection;
 

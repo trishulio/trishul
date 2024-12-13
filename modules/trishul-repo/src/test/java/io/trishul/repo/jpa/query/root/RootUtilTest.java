@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.root;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,6 +10,9 @@ import javax.persistence.criteria.Path;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.repo.jpa.query.join.joiner.CriteriaJoinAnnotationJoiner;
+import io.trishul.repo.jpa.query.join.joiner.JpaJoiner;
 
 public class RootUtilTest {
     class Layer0 {

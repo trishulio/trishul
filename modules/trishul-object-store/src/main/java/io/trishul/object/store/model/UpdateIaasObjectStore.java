@@ -1,6 +1,6 @@
 package io.trishul.object.store.model;
 
-import io.trishul.model.base.pojo.UpdatableEntity;
+import io.trishul.base.types.base.pojo.UpdatableEntity;
 
 public interface UpdateIaasObjectStore extends BaseIaasObjectStore, UpdatableEntity<String> {
 }

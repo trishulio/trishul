@@ -6,11 +6,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.trishul.base.types.util.random.RandomGenerator;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
 import io.trishul.dialect.JdbcDialect;
-import io.trishul.model.util.random.RandomGenerator;
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;

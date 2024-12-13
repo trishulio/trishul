@@ -1,9 +1,9 @@
-package io.company.brewcraft.service.impl;
+package io.trishul.repo.jpa.query.spec.criteria;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,9 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import io.company.brewcraft.service.CriteriaSpec;
-import io.company.brewcraft.service.IsNullSpec;
 
 public class IsNullSpecTest {
     private CriteriaSpec<Boolean> spec;

@@ -20,7 +20,7 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentAcc
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Identified;
 
 @Transactional
 public class IaasRolePolicyAttachmentService extends BaseService implements CrudService<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment, IaasRolePolicyAttachmentAccessor> {

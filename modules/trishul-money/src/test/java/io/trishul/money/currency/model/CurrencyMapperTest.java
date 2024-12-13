@@ -1,12 +1,10 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.money.currency.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.joda.money.CurrencyUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.company.brewcraft.model.Currency;
 
 public class CurrencyMapperTest {
     private CurrencyMapper mapper;

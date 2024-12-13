@@ -1,4 +1,4 @@
-package io.trishul.model.util.task;
+package io.trishul.base.types.util.task;
 
 public interface TaskResult<T> {
     T getReturnValue();

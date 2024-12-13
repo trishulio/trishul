@@ -1,4 +1,4 @@
-package io.company.brewcraft.migration;
+package io.trishul.tenant.persistence.management.migration.manager;
 
 import static org.mockito.Mockito.*;
 
@@ -9,7 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-import io.company.brewcraft.model.Tenant;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
+import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
+
 
 @SuppressWarnings("unchecked")
 public class SequentialMigrationManagerTest {

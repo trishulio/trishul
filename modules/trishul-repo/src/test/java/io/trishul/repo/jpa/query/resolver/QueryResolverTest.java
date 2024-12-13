@@ -1,6 +1,6 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.resolver;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
@@ -28,10 +28,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 
-import io.company.brewcraft.repository.QueryResolver;
-import io.company.brewcraft.repository.AggregationRepositoryTest.TestEntity;
-import io.company.brewcraft.service.GroupByClauseBuilder;
-import io.company.brewcraft.service.SelectClauseBuilder;
+import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
+import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 
 public class QueryResolverTest {
     private QueryResolver qResolver;

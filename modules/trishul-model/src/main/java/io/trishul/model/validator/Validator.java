@@ -9,6 +9,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.trishul.base.types.validator.ValidationException;
+
 public class Validator {
     private static final Logger logger = LoggerFactory.getLogger(Validator.class);
 

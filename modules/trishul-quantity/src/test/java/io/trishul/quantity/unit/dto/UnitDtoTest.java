@@ -1,6 +1,6 @@
-package io.company.brewcraft.dto;
+package io.trishul.quantity.unit.dto;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;

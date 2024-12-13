@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.object.store.file.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.MalformedURLException;
@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.AddIaasObjectStoreFileDto;
-import io.company.brewcraft.dto.IaasObjectStoreFileDto;
-import io.company.brewcraft.dto.UpdateIaasObjectStoreFileDto;
-import io.company.brewcraft.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
 
 public class IaasObjectStoreFileMapperTest {
     private IaasObjectStoreFileMapper mapper;

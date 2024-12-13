@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.spec.accumulator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -14,10 +14,9 @@ import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.repository.PredicateSpecAccumulator;
-import io.company.brewcraft.service.AndSpec;
-import io.company.brewcraft.service.CriteriaSpec;
-import io.company.brewcraft.service.NotSpec;
+import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
 
 public class PredicateSpecAccumulatorTest {
     private PredicateSpecAccumulator accumulator;

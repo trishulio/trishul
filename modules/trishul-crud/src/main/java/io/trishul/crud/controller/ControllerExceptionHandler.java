@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import io.trishul.model.base.pojo.exception.EntityNotFoundException;
+import io.trishul.model.base.exception.EntityNotFoundException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {

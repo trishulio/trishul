@@ -3,7 +3,7 @@ package io.trishul.object.store.configuration.access.model;
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.CrudEntity;
 
 public class IaasObjectStoreAccessConfig extends BaseEntity implements CrudEntity<String> {
 

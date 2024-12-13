@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.clause.where.builder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

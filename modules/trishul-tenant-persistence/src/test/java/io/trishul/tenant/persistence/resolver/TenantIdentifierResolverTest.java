@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.tenant.persistence.resolver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,11 +11,10 @@ import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.Tenant;
-import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
-import io.company.brewcraft.security.session.ContextHolder;
-import io.company.brewcraft.security.session.PrincipalContext;
+import io.trishul.auth.session.context.PrincipalContext;
+import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
+import io.trishul.tenant.entity.Tenant;
 
 public class TenantIdentifierResolverTest {
     private ContextHolder mCtxHolder;

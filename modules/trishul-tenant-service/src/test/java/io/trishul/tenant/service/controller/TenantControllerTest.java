@@ -1,4 +1,4 @@
-package io.company.brewcraft.controller;
+package io.trishul.tenant.service.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -15,14 +15,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;
 
-import io.company.brewcraft.dto.AddTenantDto;
-import io.company.brewcraft.dto.PageDto;
-import io.company.brewcraft.dto.TenantDto;
-import io.company.brewcraft.dto.UpdateTenantDto;
-import io.company.brewcraft.model.BaseTenant;
-import io.company.brewcraft.model.Tenant;
-import io.company.brewcraft.model.UpdateTenant;
-import io.company.brewcraft.service.impl.TenantService;
+import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import io.trishul.tenant.dto.AddTenantDto;
+import io.trishul.tenant.dto.TenantDto;
+import io.trishul.tenant.dto.UpdateTenantDto;
+import io.trishul.tenant.entity.BaseTenant;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.entity.UpdateTenant;
+import io.trishul.tenant.service.service.TenantService;
 
 public class TenantControllerTest {
     private TenantController controller;

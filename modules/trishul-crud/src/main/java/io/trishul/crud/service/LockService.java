@@ -2,7 +2,7 @@ package io.trishul.crud.service;
 
 import javax.persistence.OptimisticLockException;
 
-import io.trishul.model.base.pojo.Versioned;
+import io.trishul.base.types.base.pojo.Versioned;
 
 public class LockService {
     public void optimisticLockCheck(Versioned original, Versioned update) {

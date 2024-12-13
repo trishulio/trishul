@@ -148,7 +148,7 @@
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-base-types</artifactId>
                 <version>${project.version}</version>
-=            </dependency>
+            </dependency>
 
             <dependency>
                 <groupId>io.trishul</groupId>

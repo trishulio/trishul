@@ -1,6 +1,6 @@
-package io.company.brewcraft.service;
+package io.trishul.iaas.user.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URI;
@@ -10,11 +10,11 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.model.IaasUser;
-import io.company.brewcraft.model.user.User;
-import io.company.brewcraft.model.user.UserRole;
-import io.company.brewcraft.model.user.UserSalutation;
-import io.company.brewcraft.model.user.UserStatus;
+import io.trishul.iaas.user.model.IaasUser;
+import io.trishul.user.model.User;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.status.UserStatus;
 
 public class TenantIaasUserMapperTest {
     private TenantIaasUserMapper mapper;

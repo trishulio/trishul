@@ -1,4 +1,4 @@
-package io.company.brewcraft;
+package io.trishul.dialect.postgres;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

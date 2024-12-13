@@ -1,4 +1,4 @@
-package io.company.brewcraft.data;
+package io.trishul.data.datasource.configuration.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

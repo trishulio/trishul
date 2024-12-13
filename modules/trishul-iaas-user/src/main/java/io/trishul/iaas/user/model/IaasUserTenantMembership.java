@@ -1,7 +1,7 @@
 package io.trishul.iaas.user.model;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.CrudEntity;
 
 public class IaasUserTenantMembership extends BaseEntity implements CrudEntity<IaasUserTenantMembershipId>,  UpdateIaasUserTenantMembership {
     private IaasUser user;

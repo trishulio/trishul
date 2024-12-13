@@ -1,6 +1,8 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.quantity.unit;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -12,8 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.UnitDto;
-import io.company.brewcraft.model.UnitEntity;
+import io.trishul.quantity.unit.dto.UnitDto;
 import tec.uom.se.quantity.QuantityDimension;
 import tec.uom.se.unit.BaseUnit;
 import tec.uom.se.unit.Units;

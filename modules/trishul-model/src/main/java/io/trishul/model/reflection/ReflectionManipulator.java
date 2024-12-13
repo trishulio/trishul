@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Nonnull;
 
-import io.trishul.model.lambda.CheckedFunction;
+import io.trishul.base.types.lambda.CheckedFunction;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;

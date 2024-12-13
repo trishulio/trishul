@@ -1,4 +1,4 @@
-package io.company.brewcraft.dto;
+package io.trishul.quantity.model.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 

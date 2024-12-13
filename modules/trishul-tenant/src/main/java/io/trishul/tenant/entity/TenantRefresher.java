@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.model.base.pojo.refresher.Refresher;
+import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class TenantRefresher implements Refresher<Tenant, TenantAccessor> {

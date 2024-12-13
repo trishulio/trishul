@@ -1,4 +1,4 @@
-package io.company.brewcraft.service;
+package io.trishul.repo.jpa.query.clause.select.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
@@ -16,7 +16,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import io.company.brewcraft.repository.ColumnSpecAccumulator;
+import io.trishul.repo.jpa.query.path.provider.PathProvider;
+import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
+import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class SelectClauseBuilderTest {
     private SelectClauseBuilder selector;

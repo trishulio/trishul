@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.model.base.pojo.refresher.accessor;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,14 +8,13 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import io.company.brewcraft.model.Identified;
-import io.company.brewcraft.repository.AccessorRefresher;
-import io.company.brewcraft.service.exception.EntityNotFoundException;
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.exception.EntityNotFoundException;
 
 public class AccessorRefresherTest {
     class Entity implements Identified<Long> {
@@ -55,21 +54,19 @@ public class AccessorRefresherTest {
         }
     }
 
-    interface EntityRepository extends JpaRepository<Entity, Long> {
-    }
-
     private AccessorRefresher<Long, EntityAccessor, Entity> refresher;
-    private EntityRepository mRepo;
+
+    private Function<Iterable<Long>, List<Entity>> mEntityRetriever;
 
     @BeforeEach
     public void init() {
-        mRepo = mock(EntityRepository.class);
+        mEntityRetriever = mock(Function.class);
 
         refresher = new AccessorRefresher<Long, EntityAccessor, Entity>(
             Entity.class,
             accessor -> accessor.getEntity(),
             (accessor, e) -> accessor.setEntity(e),
-            ids -> mRepo.findAllById(ids)
+            mEntityRetriever
         );
     }
 
@@ -90,7 +87,7 @@ public class AccessorRefresherTest {
             new Entity(1L),
             new Entity(2L)
         );
-        doReturn(repoEntities).when(mRepo).findAllById(Set.of(1L, 2L, 3L));
+        doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L));
 
         List<EntityConsumer> consumers = List.of(
             new EntityConsumer(new Entity(1L)),
@@ -111,7 +108,7 @@ public class AccessorRefresherTest {
             new Entity(3L),
             new Entity(1L)
         );
-        doReturn(repoEntities).when(mRepo).findAllById(Set.of(1L, 3L));
+        doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));
 
         List<EntityConsumer> consumers = List.of(
             new EntityConsumer(new Entity(1L)),
@@ -134,7 +131,7 @@ public class AccessorRefresherTest {
             new Entity(3L),
             new Entity(1L)
         );
-        doReturn(repoEntities).when(mRepo).findAllById(Set.of(1L, 2L, 3L));
+        doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L));
 
         List<EntityConsumer> consumers = List.of(
             new EntityConsumer(new Entity(1L)),

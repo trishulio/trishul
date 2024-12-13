@@ -1,6 +1,6 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.money.amount.model;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
@@ -9,11 +9,9 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.AmountDto;
-import io.company.brewcraft.dto.MoneyDto;
-import io.company.brewcraft.dto.TaxAmountDto;
-import io.company.brewcraft.model.Amount;
-import io.company.brewcraft.model.TaxAmount;
+import io.trishul.money.dto.MoneyDto;
+import io.trishul.money.tax.amount.dto.TaxAmountDto;
+import io.trishul.money.tax.amount.TaxAmount;
 
 public class AmountMapperTest {
 

@@ -1,4 +1,4 @@
-package io.company.brewcraft.service.mapper;
+package io.trishul.money;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,9 +8,8 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.dto.MoneyDto;
-import io.company.brewcraft.model.Currency;
-import io.company.brewcraft.model.MoneyEntity;
+import io.trishul.money.dto.MoneyDto;
+import io.trishul.money.currency.model.Currency;
 
 public class MoneyMapperTest {
     MoneyMapper mapper;

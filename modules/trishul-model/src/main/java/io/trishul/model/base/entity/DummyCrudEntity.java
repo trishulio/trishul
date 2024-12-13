@@ -1,11 +1,9 @@
-package io.trishul.test.model;
+package io.trishul.model.base.entity;
 
-import org.springframework.context.annotation.Profile;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.test.model.UpdateDummyCrudEntity;
 
-import io.trishul.model.base.pojo.CrudEntity;
-
-@Profile("IgnoredFromSpringContextTests")
-public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, BaseDummyCrudEntity, UpdateDummyCrudEntity {
+public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, UpdateDummyCrudEntity {
     private Long id;
     private String value;
     private String excludedValue;

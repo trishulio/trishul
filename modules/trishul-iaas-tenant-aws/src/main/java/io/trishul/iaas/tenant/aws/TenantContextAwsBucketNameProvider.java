@@ -2,19 +2,17 @@ package io.trishul.iaas.tenant.aws;
 
 import java.util.UUID;
 
-import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.iaas.tenant.TenantContextIaasObjectStoreNameProvider;
 import io.trishul.tenant.auth.TenantIdProvider;
-import io.trishul.tenant.auth.context.TenantPrincipalContext;
 
 public class TenantContextAwsBucketNameProvider implements TenantContextIaasObjectStoreNameProvider {
     private final String defaultAppBucketName;
     private final AwsDocumentTemplates templates;
-    private final ContextHolder contextHolder;
+    private final TenantIdProvider tenantIdProvider;
 
-    public TenantContextAwsBucketNameProvider(AwsDocumentTemplates templates, ContextHolder contextHolder, String defaultAppBucketName) {
+    public TenantContextAwsBucketNameProvider(AwsDocumentTemplates templates, TenantIdProvider tenantIdProvider, String defaultAppBucketName) {
         this.templates = templates;
-        this.contextHolder = contextHolder;
+        this.tenantIdProvider = tenantIdProvider;
         this.defaultAppBucketName = defaultAppBucketName;
     }
 
@@ -23,9 +21,7 @@ public class TenantContextAwsBucketNameProvider implements TenantContextIaasObje
         String objectStoreName = this.defaultAppBucketName;
 
         // TODO: Create a config with global tenant principal context.
-        TenantIdProvider tenantIdProvider = new TenantPrincipalContext(this.contextHolder.getPrincipalContext());
-
-        UUID tenantId = tenantIdProvider.getTenantId();
+        UUID tenantId = this.tenantIdProvider.getTenantId();
 
         String bucketName = null;
         if (tenantId != null) {

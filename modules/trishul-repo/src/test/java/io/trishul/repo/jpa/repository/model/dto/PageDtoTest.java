@@ -1,4 +1,4 @@
-package io.company.brewcraft.dto;
+package io.trishul.repo.jpa.repository.model.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.model.base.dto.BaseDto;
 
 public class PageDtoTest {
     class DummyDto extends BaseDto {

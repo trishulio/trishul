@@ -1,4 +1,4 @@
-package io.company.brewcraft.repository;
+package io.trishul.repo.jpa.query.spec.accumulator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -15,8 +15,8 @@ import javax.persistence.criteria.Selection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.company.brewcraft.repository.ColumnSpecAccumulator;
-import io.company.brewcraft.service.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class ColumnSpecAccumulatorTest {
     private ColumnSpecAccumulator accumulator;

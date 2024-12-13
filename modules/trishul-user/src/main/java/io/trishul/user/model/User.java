@@ -30,9 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.pojo.Audited;
-import io.trishul.model.base.pojo.CrudEntity;
-import io.trishul.model.base.pojo.join.CriteriaJoin;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.repo.jpa.query.join.model.CriteriaJoin;
 import io.trishul.user.role.binding.model.UserRoleBinding;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutation;
