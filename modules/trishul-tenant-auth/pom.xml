@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-test</artifactId>
+            <artifactId>trishul-test-bom</artifactId>
         </dependency>
 
         <dependency>

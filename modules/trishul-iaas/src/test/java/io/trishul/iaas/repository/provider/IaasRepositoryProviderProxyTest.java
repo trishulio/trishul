@@ -14,8 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.model.base.entity.DummyCrudEntity;
 import io.trishul.test.model.BaseDummyCrudEntity;
+import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
 
 public class IaasRepositoryProviderProxyTest {

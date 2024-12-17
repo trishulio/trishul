@@ -1,8 +1,7 @@
-// TODO: Move this out of production package
-package io.trishul.model.base.entity;
+package io.trishul.test.model;
 
 import io.trishul.base.types.base.pojo.CrudEntity;
-import io.trishul.test.model.UpdateDummyCrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 
 public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, UpdateDummyCrudEntity {
     private Long id;

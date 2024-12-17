@@ -18,12 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-test</artifactId>
+            <artifactId>trishul-test-bom</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-iaas-user</artifactId>
+            <artifactId>trishul-iaas-user-aws</artifactId>
         </dependency>
 
         <!-- TODO: Make this independent of AWS -->

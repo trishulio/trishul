@@ -12,6 +12,7 @@
 
     <modules>
         <module>modules/trishul-base-types</module>
+        <module>modules/trishul-test-bom</module>
         <module>modules/trishul-test</module>
         <module>modules/trishul-model</module>
         <module>modules/trishul-iaas</module>
@@ -153,6 +154,13 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-test</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-test-bom</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>

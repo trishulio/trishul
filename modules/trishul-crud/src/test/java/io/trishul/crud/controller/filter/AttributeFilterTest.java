@@ -7,7 +7,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.trishul.test.model.Dummy;
+import io.trishul.test.bom.model.Dummy;
 
 public class AttributeFilterTest {
     private AttributeFilter filter;

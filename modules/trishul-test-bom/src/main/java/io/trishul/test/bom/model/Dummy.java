@@ -1,4 +1,4 @@
-package io.trishul.test.model;
+package io.trishul.test.bom.model;
 
 public class Dummy {
     private String string;

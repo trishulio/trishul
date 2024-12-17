@@ -18,39 +18,13 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-base-types</artifactId>
+            <artifactId>trishul-test-bom</artifactId>
+            <scope>compile</scope> <!--Override the scope set in parent-->
         </dependency>
 
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        
-        <!-- In MemoryDB for E2E Testing -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-repo</artifactId>
         </dependency>
     </dependencies>
 </project>

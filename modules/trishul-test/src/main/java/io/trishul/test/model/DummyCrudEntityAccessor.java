@@ -1,5 +1,4 @@
-// TODO: Move this out of production package
-package io.trishul.model.base.entity;
+package io.trishul.test.model;
 
 public interface DummyCrudEntityAccessor {
     DummyCrudEntity getDummyCrudEntity();
