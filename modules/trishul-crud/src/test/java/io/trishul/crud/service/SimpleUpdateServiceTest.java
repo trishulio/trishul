@@ -9,10 +9,10 @@ import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
 import io.trishul.test.util.MockUtilProvider;
+import jakarta.persistence.OptimisticLockException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import jakarta.persistence.OptimisticLockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

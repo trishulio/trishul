@@ -2,12 +2,12 @@ package io.trishul.repo.jpa.query.spec.accumulator;
 
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Selection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColumnSpecAccumulator extends BaseModel {
     private final List<CriteriaSpec<?>> aggregations;

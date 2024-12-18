@@ -9,12 +9,12 @@ import io.trishul.object.store.model.BaseIaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStoreAccessor;
 import io.trishul.object.store.model.UpdateIaasObjectStore;
+import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,11 +4,11 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import jakarta.annotation.Nonnull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import jakarta.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
@@ -32,7 +32,9 @@ public class TenantConnectionProviderPool extends AbstractMultiTenantConnectionP
                                     @Override
                                     public ConnectionProvider load(@Nonnull String sTenantId)
                                             throws Exception {
-                                                // TODO: Since we change tenantID back to UUID, we can remove this operation by simply returning UUID in the TenantIdResolver
+                                        // TODO: Since we change tenantID back to UUID, we can
+                                        // remove this operation by simply returning UUID in the
+                                        // TenantIdResolver
                                         UUID tenantId = UUID.fromString(sTenantId);
                                         DataSource ds = dsMgr.getDataSource(tenantId);
 

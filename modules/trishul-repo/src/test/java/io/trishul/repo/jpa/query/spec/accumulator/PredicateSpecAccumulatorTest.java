@@ -10,12 +10,12 @@ import static org.mockito.Mockito.mock;
 import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

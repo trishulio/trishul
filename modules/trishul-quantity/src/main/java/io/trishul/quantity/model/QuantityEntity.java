@@ -2,11 +2,11 @@ package io.trishul.quantity.model;
 
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.quantity.unit.UnitEntity;
-import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 @Embeddable
 public class QuantityEntity extends BaseEntity {

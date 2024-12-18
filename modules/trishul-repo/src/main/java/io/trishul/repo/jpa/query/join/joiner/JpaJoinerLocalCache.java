@@ -1,9 +1,9 @@
 package io.trishul.repo.jpa.query.join.joiner;
 
+import jakarta.persistence.criteria.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import jakarta.persistence.criteria.Path;
 
 public class JpaJoinerLocalCache {
     private final ThreadLocal<Map<Key<?, ?>, Path<?>>> cacheHolder;

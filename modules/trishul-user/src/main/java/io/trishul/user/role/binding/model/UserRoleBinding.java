@@ -9,7 +9,6 @@ import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
-import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +20,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

@@ -3,12 +3,12 @@ package io.trishul.repo.jpa.query.spec.accumulator;
 import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

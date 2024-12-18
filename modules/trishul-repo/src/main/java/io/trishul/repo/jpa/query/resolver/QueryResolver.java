@@ -2,7 +2,6 @@ package io.trishul.repo.jpa.query.resolver;
 
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -11,6 +10,7 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Selection;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;

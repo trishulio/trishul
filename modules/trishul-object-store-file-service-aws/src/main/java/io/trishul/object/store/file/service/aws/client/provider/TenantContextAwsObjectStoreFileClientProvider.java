@@ -18,10 +18,10 @@ import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.aws.client.AwsS3FileClient;
 import io.trishul.object.store.file.service.aws.factory.AwsFactory;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
+import jakarta.annotation.Nonnull;
 import java.net.URI;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
-import jakarta.annotation.Nonnull;
 
 public class TenantContextAwsObjectStoreFileClientProvider
         implements IaasRepositoryProvider<

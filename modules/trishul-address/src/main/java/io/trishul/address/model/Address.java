@@ -1,9 +1,9 @@
 package io.trishul.address.model;
 
 import io.trishul.model.base.entity.BaseEntity;
-import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

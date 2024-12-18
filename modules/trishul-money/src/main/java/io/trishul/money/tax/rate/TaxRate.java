@@ -2,10 +2,10 @@ package io.trishul.money.tax.rate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.trishul.model.base.entity.BaseEntity;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.joda.money.Money;
 
 @Embeddable

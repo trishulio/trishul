@@ -5,11 +5,11 @@ import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
-import java.util.List;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Selection;
+import java.util.List;
 
 public class SelectClauseBuilder extends BaseModel {
     private final ColumnSpecAccumulator accumulator;

@@ -10,9 +10,9 @@ import io.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfig
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.Tenant;
+import jakarta.annotation.Nonnull;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import jakarta.annotation.Nonnull;
 
 public class TenantDataSourceConfigurationProvider
         implements DataSourceConfigurationProvider<UUID> {

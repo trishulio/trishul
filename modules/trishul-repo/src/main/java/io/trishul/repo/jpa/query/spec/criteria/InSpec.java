@@ -1,11 +1,11 @@
 package io.trishul.repo.jpa.query.spec.criteria;
 
 import io.trishul.model.base.pojo.BaseModel;
-import java.util.Collection;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
+import java.util.Collection;
 
 public class InSpec<T> extends BaseModel implements CriteriaSpec<Boolean> {
     private final CriteriaSpec<T> spec;
