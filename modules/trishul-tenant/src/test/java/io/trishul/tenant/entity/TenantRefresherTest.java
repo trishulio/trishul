@@ -1,15 +1,15 @@
 package io.trishul.tenant.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.UUID;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import java.util.List;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TenantRefresherTest {
     private TenantRefresher tenantRefresher;
@@ -26,7 +26,8 @@ public class TenantRefresherTest {
 
     @Test
     public void testRefreshAccessors_CallsRefreshAccessor() {
-        List<TenantAccessor> accessors = List.of(mock(TenantAccessor.class), mock(TenantAccessor.class));
+        List<TenantAccessor> accessors =
+                List.of(mock(TenantAccessor.class), mock(TenantAccessor.class));
 
         tenantRefresher.refreshAccessors(accessors);
 
@@ -35,10 +36,16 @@ public class TenantRefresherTest {
 
     @Test
     public void testRefresh_RefreshesSuppliers() {
-        List<Tenant> entities = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")), new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
+        List<Tenant> entities =
+                List.of(
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
         tenantRefresher.refresh(entities);
 
-        List<Tenant> expected = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")), new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
+        List<Tenant> expected =
+                List.of(
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
         assertEquals(expected, entities);
     }
 }

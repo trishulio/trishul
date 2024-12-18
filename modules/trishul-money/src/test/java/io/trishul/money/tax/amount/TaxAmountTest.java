@@ -1,7 +1,7 @@
 package io.trishul.money.tax.amount;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,8 @@ public class TaxAmountTest {
 
     @Test
     public void testAllArgConstructor() {
-        taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
+        taxAmount =
+                new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
 
         assertEquals(Money.parse("CAD 10"), taxAmount.getPstAmount());
         assertEquals(Money.parse("CAD 20"), taxAmount.getGstAmount());
@@ -75,7 +76,8 @@ public class TaxAmountTest {
 
     @Test
     public void testGetTotalTaxAmount_ReturnsTotalMoney() {
-        taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
+        taxAmount =
+                new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
 
         assertEquals(Money.parse("CAD 60"), taxAmount.getTotalTaxAmount());
     }

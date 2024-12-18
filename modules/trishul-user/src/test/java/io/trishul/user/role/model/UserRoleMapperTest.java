@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,22 +31,22 @@ public class UserRoleMapperTest {
 
     @Test
     public void testToDto_ReturnsRoleDto_WhenPojoIsNotNull() {
-        UserRole role = new UserRole(
-            1L,
-            "TITLE",
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        UserRole role =
+                new UserRole(
+                        1L,
+                        "TITLE",
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         UserRoleDto dto = mapper.toDto(role);
-        UserRoleDto expected = new UserRoleDto(
-            1L,
-            "TITLE",
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        UserRoleDto expected =
+                new UserRoleDto(
+                        1L,
+                        "TITLE",
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(expected, dto);
     }
@@ -64,19 +63,9 @@ public class UserRoleMapperTest {
 
     @Test
     public void testFromUpdateDto_ReturnsPojo_WhenArgIsNotNll() {
-        UpdateUserRoleDto arg = new UpdateUserRoleDto(
-            1L,
-            "TITLE",
-            1
-        );
+        UpdateUserRoleDto arg = new UpdateUserRoleDto(1L, "TITLE", 1);
 
-        UserRole expected = new UserRole(
-            1L,
-            "TITLE",
-            null,
-            null,
-            1
-        );
+        UserRole expected = new UserRole(1L, "TITLE", null, null, 1);
 
         assertEquals(expected, mapper.fromUpdateDto(arg));
     }
@@ -88,17 +77,9 @@ public class UserRoleMapperTest {
 
     @Test
     public void testFromAddDto_ReturnsPojo_WhenArgIsNotNll() {
-        AddUserRoleDto arg = new AddUserRoleDto(
-            "TITLE"
-        );
+        AddUserRoleDto arg = new AddUserRoleDto("TITLE");
 
-        UserRole expected = new UserRole(
-            null,
-            "TITLE",
-            null,
-            null,
-            null
-        );
+        UserRole expected = new UserRole(null, "TITLE", null, null, null);
 
         assertEquals(expected, mapper.fromAddDto(arg));
     }

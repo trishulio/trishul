@@ -1,5 +1,10 @@
 package io.trishul.model.reflection;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ImmutableSet;
+import io.trishul.base.types.lambda.CheckedFunction;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -11,19 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-
 import javax.annotation.Nonnull;
-
-import io.trishul.base.types.lambda.CheckedFunction;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableSet;
 
 public class ReflectionManipulator {
     private static final Logger logger = LoggerFactory.getLogger(ReflectionManipulator.class);
@@ -57,6 +54,11 @@ public class ReflectionManipulator {
         public boolean equals(Object o) {
             return EqualsBuilder.reflectionEquals(this, o);
         }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 
     private final LoadingCache<Class<?>, Set<String>> propNamesCache;
@@ -73,46 +75,82 @@ public class ReflectionManipulator {
     public static final ReflectionManipulator INSTANCE = new ReflectionManipulator();
 
     public ReflectionManipulator() {
-        this.propNamesCache = CacheBuilder.newBuilder().build(new CacheLoader<Class<?>, Set<String>>() {
-            @Override
-            public Set<String> load(@Nonnull Class<?> clazz) throws Exception {
-                final Method[] methods = clazz.getMethods();
-                final Set<String> propertyNames = Arrays.stream(methods)
-                                        .filter(m -> m.getName().startsWith("get") || m.getName().startsWith("set"))
-                                        .map(method -> method.getName().replaceFirst("get|set", ""))
-                                        .map(prop -> {
-                                            final char c = Character.toLowerCase(prop.charAt(0));
-                                                final String l = Character.toString(c);
-                                                return prop.replaceFirst("\\w", l);
-                                            })
-                                        .collect(ImmutableSet.toImmutableSet());
-                return propertyNames;
-            }
-        });
+        this.propNamesCache =
+                CacheBuilder.newBuilder()
+                        .build(
+                                new CacheLoader<Class<?>, Set<String>>() {
+                                    @Override
+                                    public Set<String> load(@Nonnull Class<?> clazz)
+                                            throws Exception {
+                                        final Method[] methods = clazz.getMethods();
+                                        final Set<String> propertyNames =
+                                                Arrays.stream(methods)
+                                                        .filter(
+                                                                m ->
+                                                                        m.getName()
+                                                                                        .startsWith(
+                                                                                                "get")
+                                                                                || m.getName()
+                                                                                        .startsWith(
+                                                                                                "set"))
+                                                        .map(
+                                                                method ->
+                                                                        method.getName()
+                                                                                .replaceFirst(
+                                                                                        "get|set",
+                                                                                        ""))
+                                                        .map(
+                                                                prop -> {
+                                                                    final char c =
+                                                                            Character.toLowerCase(
+                                                                                    prop.charAt(0));
+                                                                    final String l =
+                                                                            Character.toString(c);
+                                                                    return prop.replaceFirst(
+                                                                            "\\w", l);
+                                                                })
+                                                        .collect(ImmutableSet.toImmutableSet());
+                                        return propertyNames;
+                                    }
+                                });
 
-        this.propNamesCacheWithExclusions = CacheBuilder.newBuilder().build(new CacheLoader<PropNameKey, Set<String>>() {
-            @Override
-            public Set<String> load(@Nonnull PropNameKey key) throws Exception {
-                Set<String> propNames = ReflectionManipulator.this.propNamesCache.get(key.getClazz());
+        this.propNamesCacheWithExclusions =
+                CacheBuilder.newBuilder()
+                        .build(
+                                new CacheLoader<PropNameKey, Set<String>>() {
+                                    @Override
+                                    public Set<String> load(@Nonnull PropNameKey key)
+                                            throws Exception {
+                                        Set<String> propNames =
+                                                ReflectionManipulator.this.propNamesCache.get(
+                                                        key.getClazz());
 
-                if (key.getExclusions() != null) {
-                    propNames = propNames.stream()
-                                         .filter(prop -> !key.getExclusions().contains(prop))
-                                         .collect(ImmutableSet.toImmutableSet());
-                }
+                                        if (key.getExclusions() != null) {
+                                            propNames =
+                                                    propNames.stream()
+                                                            .filter(
+                                                                    prop ->
+                                                                            !key.getExclusions()
+                                                                                    .contains(prop))
+                                                            .collect(ImmutableSet.toImmutableSet());
+                                        }
 
-                return propNames;
-            }
-        });
+                                        return propNames;
+                                    }
+                                });
     }
 
-    public void copy(Object o1, Object o2, CheckedFunction<Boolean, PropertyDescriptor, ReflectiveOperationException> predicate) {
+    public void copy(
+            Object o1,
+            Object o2,
+            CheckedFunction<Boolean, PropertyDescriptor, ReflectiveOperationException> predicate) {
         if (o1 == null || o2 == null) {
             throw new NullPointerException("Outer Joins can not be on null objects");
         }
 
         try {
-            final PropertyDescriptor[] pds = Introspector.getBeanInfo(o2.getClass(), Object.class).getPropertyDescriptors();
+            final PropertyDescriptor[] pds =
+                    Introspector.getBeanInfo(o2.getClass(), Object.class).getPropertyDescriptors();
 
             for (final PropertyDescriptor pd : pds) {
                 final Method getter = pd.getReadMethod();
@@ -130,13 +168,18 @@ public class ReflectionManipulator {
                 }
             }
         } catch (final IntrospectionException e) {
-            final String msg = String.format("Failed to introspect object because: %s", e.getMessage());
+            final String msg =
+                    String.format("Failed to introspect object because: %s", e.getMessage());
             this.handleException(msg, e);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            final String msg = String.format("Failed to access the value using dynamic method because: %s", e.getMessage());
+            final String msg =
+                    String.format(
+                            "Failed to access the value using dynamic method because: %s",
+                            e.getMessage());
             this.handleException(msg, e);
         } catch (final ReflectiveOperationException e) {
-            final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
+            final String msg =
+                    String.format("Failed to execute the predicate because: %s", e.getMessage());
             this.handleException(msg, e);
         }
     }
@@ -151,7 +194,9 @@ public class ReflectionManipulator {
             return this.propNamesCacheWithExclusions.get(key);
 
         } catch (final ExecutionException e) {
-            throw new RuntimeException(String.format("Failed to fetch properties names because: %s", e.getMessage()), e);
+            throw new RuntimeException(
+                    String.format("Failed to fetch properties names because: %s", e.getMessage()),
+                    e);
         }
     }
 
@@ -165,7 +210,8 @@ public class ReflectionManipulator {
             final Constructor<T> constructor = clazz.getConstructor();
             obj = constructor.newInstance();
 
-            final PropertyDescriptor[] pds = Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors();
+            final PropertyDescriptor[] pds =
+                    Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors();
             for (final PropertyDescriptor pd : pds) {
                 if (props.containsKey(pd.getName())) {
                     final Method setter = pd.getWriteMethod();
@@ -173,13 +219,18 @@ public class ReflectionManipulator {
                 }
             }
         } catch (final IntrospectionException e) {
-            final String msg = String.format("Failed to introspect object because: %s", e.getMessage());
+            final String msg =
+                    String.format("Failed to introspect object because: %s", e.getMessage());
             this.handleException(msg, e);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            final String msg = String.format("Failed to access the value using dynamic method because: %s", e.getMessage());
+            final String msg =
+                    String.format(
+                            "Failed to access the value using dynamic method because: %s",
+                            e.getMessage());
             this.handleException(msg, e);
         } catch (final ReflectiveOperationException e) {
-            final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
+            final String msg =
+                    String.format("Failed to execute the predicate because: %s", e.getMessage());
             this.handleException(msg, e);
         }
 

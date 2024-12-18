@@ -1,20 +1,19 @@
 package io.trishul.crud.service;
 
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.base.types.base.pojo.UpdatableEntity;
+import io.trishul.model.validator.UtilityProvider;
+import io.trishul.model.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.base.types.base.pojo.CrudEntity;
-import io.trishul.base.types.base.pojo.UpdatableEntity;
-import io.trishul.model.validator.UtilityProvider;
-import io.trishul.model.validator.Validator;
-
-public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends UpdatableEntity<ID>> extends BaseService implements UpdateService<ID, E, BE, UE> {
+public class SimpleUpdateService<ID, E extends CrudEntity<ID>, BE, UE extends UpdatableEntity<ID>>
+        extends BaseService implements UpdateService<ID, E, BE, UE> {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(SimpleUpdateService.class);
 
@@ -26,7 +25,13 @@ public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends U
     private final Class<E> entityCls;
     private final Set<String> excludeProps;
 
-    public SimpleUpdateService(UtilityProvider utilProvider, LockService lockService, Class<? extends BE> baseEntityCls, Class<? extends UE> updateEntityCls, Class<E> entityCls, Set<String> excludeProps) {
+    public SimpleUpdateService(
+            UtilityProvider utilProvider,
+            LockService lockService,
+            Class<? extends BE> baseEntityCls,
+            Class<? extends UE> updateEntityCls,
+            Class<E> entityCls,
+            Set<String> excludeProps) {
         this.utilProvider = utilProvider;
         this.baseEntityCls = baseEntityCls;
         this.updateEntityCls = updateEntityCls;
@@ -41,11 +46,16 @@ public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends U
             return null;
         }
 
-        return additions.stream().map(addition -> {
-            final E item = this.newEntity();
-            item.override(addition, this.getPropertyNames(this.baseEntityCls, this.excludeProps));
-            return item;
-         }).toList();
+        return additions.stream()
+                .map(
+                        addition -> {
+                            final E item = this.newEntity();
+                            item.override(
+                                    addition,
+                                    this.getPropertyNames(this.baseEntityCls, this.excludeProps));
+                            return item;
+                        })
+                .toList();
     }
 
     @Override
@@ -57,22 +67,31 @@ public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends U
         final Validator validator = this.utilProvider.getValidator();
 
         existingItems = existingItems != null ? existingItems : new ArrayList<>(0);
-        final Map<ID, E> idToItemLookup = existingItems.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
+        final Map<ID, E> idToItemLookup =
+                existingItems.stream()
+                        .collect(Collectors.toMap(item -> item.getId(), item -> item));
 
-        final List<E> targetItems = updates.stream().map(update -> {
-            final E item = this.newEntity();
-            Class<?> itemCls = this.baseEntityCls;
-            if (update.getId() != null) {
-                final E existing = idToItemLookup.get(update.getId());
-                if (existing != null) {
-                    this.lockService.optimisticLockCheck(existing, update);
-                    itemCls = this.updateEntityCls;
-                }
-            }
-            item.override(update, this.getPropertyNames(itemCls, this.excludeProps));
-            item.setId(update.getId()); // Note: During "creation" for JPA entities, this ID is ignored.
-            return item;
-        }).toList();
+        final List<E> targetItems =
+                updates.stream()
+                        .map(
+                                update -> {
+                                    final E item = this.newEntity();
+                                    Class<?> itemCls = this.baseEntityCls;
+                                    if (update.getId() != null) {
+                                        final E existing = idToItemLookup.get(update.getId());
+                                        if (existing != null) {
+                                            this.lockService.optimisticLockCheck(existing, update);
+                                            itemCls = this.updateEntityCls;
+                                        }
+                                    }
+                                    item.override(
+                                            update,
+                                            this.getPropertyNames(itemCls, this.excludeProps));
+                                    item.setId(update.getId()); // Note: During "creation" for JPA
+                                    // entities, this ID is ignored.
+                                    return item;
+                                })
+                        .toList();
 
         validator.raiseErrors();
         return targetItems;
@@ -85,23 +104,40 @@ public class SimpleUpdateService <ID, E extends CrudEntity<ID>, BE, UE extends U
         List<E> targetItems = null;
         patches = patches == null ? new ArrayList<>() : patches;
 
-        final Map<ID, UE> idToItemLookup = patches.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
+        final Map<ID, UE> idToItemLookup =
+                patches.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
 
         if (existingItems != null) {
-            targetItems = existingItems.stream().map(existing -> {
-                final UE patch = idToItemLookup.remove(existing.getId());
-                final E item = this.newEntity();
-                item.override(existing, this.getPropertyNames(this.entityCls, this.excludeProps));
-                if (patch != null) {
-                    this.lockService.optimisticLockCheck(existing, patch);
-                    item.outerJoin(patch, this.getPropertyNames(this.updateEntityCls, this.excludeProps));
-                }
-                item.setId(existing.getId());
-                return item;
-            }).toList();
+            targetItems =
+                    existingItems.stream()
+                            .map(
+                                    existing -> {
+                                        final UE patch = idToItemLookup.remove(existing.getId());
+                                        final E item = this.newEntity();
+                                        item.override(
+                                                existing,
+                                                this.getPropertyNames(
+                                                        this.entityCls, this.excludeProps));
+                                        if (patch != null) {
+                                            this.lockService.optimisticLockCheck(existing, patch);
+                                            item.outerJoin(
+                                                    patch,
+                                                    this.getPropertyNames(
+                                                            this.updateEntityCls,
+                                                            this.excludeProps));
+                                        }
+                                        item.setId(existing.getId());
+                                        return item;
+                                    })
+                            .toList();
         }
 
-        idToItemLookup.forEach((id, patch) -> validator.rule(false, "Cannot apply the patch with Id: %s to an existing entity as it does not exist", id));
+        idToItemLookup.forEach(
+                (id, patch) ->
+                        validator.rule(
+                                false,
+                                "Cannot apply the patch with Id: %s to an existing entity as it does not exist",
+                                id));
 
         validator.raiseErrors();
         return targetItems;

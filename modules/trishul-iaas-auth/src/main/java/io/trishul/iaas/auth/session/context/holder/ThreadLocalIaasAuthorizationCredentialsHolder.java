@@ -2,10 +2,12 @@ package io.trishul.iaas.auth.session.context.holder;
 
 import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentials;
 
-public class ThreadLocalIaasAuthorizationCredentialsHolder implements IaasAuthorizationCredentialsHolder {
-    private final InheritableThreadLocal<IaasAuthorizationCredentials> iaasAuthorizationCredentialsContainer;
+public class ThreadLocalIaasAuthorizationCredentialsHolder
+        implements IaasAuthorizationCredentialsHolder {
+    private final InheritableThreadLocal<IaasAuthorizationCredentials>
+            iaasAuthorizationCredentialsContainer;
 
-   public ThreadLocalIaasAuthorizationCredentialsHolder() {
+    public ThreadLocalIaasAuthorizationCredentialsHolder() {
         this.iaasAuthorizationCredentialsContainer = new InheritableThreadLocal<>();
     }
 
@@ -14,7 +16,8 @@ public class ThreadLocalIaasAuthorizationCredentialsHolder implements IaasAuthor
         return this.iaasAuthorizationCredentialsContainer.get();
     }
 
-    public void setIaasAuthorizationCredentials(IaasAuthorizationCredentials iaasAuthorizationCredentials) {
+    public void setIaasAuthorizationCredentials(
+            IaasAuthorizationCredentials iaasAuthorizationCredentials) {
         this.iaasAuthorizationCredentialsContainer.set(iaasAuthorizationCredentials);
     }
 }

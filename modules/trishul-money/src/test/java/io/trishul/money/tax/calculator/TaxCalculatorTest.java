@@ -1,19 +1,17 @@
 package io.trishul.money.tax.calculator;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.money.Money;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.model.Tax;
 import io.trishul.money.tax.rate.TaxRate;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import org.joda.money.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TaxCalculatorTest {
     private TaxCalculator calculator;
@@ -56,25 +54,28 @@ public class TaxCalculatorTest {
 
     @Test
     public void testTotal_ReturnsTaxAmountWithTotals_WhenTaxAmountsAreNotEmpty() {
-        List<TaxAmount> amounts = new ArrayList<>() {
-            private static final long serialVersionUID = 1L;
-            {
-                add(null);
-                add(null);
-                add(new TaxAmount());
-                add(null);
-                add(new TaxAmount(Money.parse("CAD 10")));
-                add(new TaxAmount(null, Money.parse("CAD 20")));
-                add(new TaxAmount(Money.parse("CAD 35"), null));
-                add(new TaxAmount(Money.parse("CAD 40"), Money.parse("CAD 50")));
-                add(null);
-                add(new TaxAmount());
-            }
-        };
+        List<TaxAmount> amounts =
+                new ArrayList<>() {
+                    private static final long serialVersionUID = 1L;
+
+                    {
+                        add(null);
+                        add(null);
+                        add(new TaxAmount());
+                        add(null);
+                        add(new TaxAmount(Money.parse("CAD 10")));
+                        add(new TaxAmount(null, Money.parse("CAD 20")));
+                        add(new TaxAmount(Money.parse("CAD 35"), null));
+                        add(new TaxAmount(Money.parse("CAD 40"), Money.parse("CAD 50")));
+                        add(null);
+                        add(new TaxAmount());
+                    }
+                };
 
         TaxAmount total = calculator.getTaxAmountTotal(amounts);
 
-        TaxAmount expected = new TaxAmount(Money.parse("CAD 75"), Money.parse("CAD 70"), Money.parse("CAD 10"));
+        TaxAmount expected =
+                new TaxAmount(Money.parse("CAD 75"), Money.parse("CAD 70"), Money.parse("CAD 10"));
         assertEquals(expected, total);
     }
 }

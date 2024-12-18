@@ -1,46 +1,65 @@
 package io.trishul.object.store.file.service.service;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.crud.service.BaseService;
+import io.trishul.crud.service.CrudService;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
+import io.trishul.object.store.file.model.IaasObjectStoreFile;
+import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
+import io.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.crud.service.BaseService;
-import io.trishul.crud.service.CrudService;
-import io.trishul.crud.service.UpdateService;
-import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
-import io.trishul.object.store.file.model.IaasObjectStoreFile;
-import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
-import io.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor;
-
 @Transactional
-public class IaasObjectStoreFileService extends BaseService implements CrudService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile, IaasObjectStoreFileAccessor> {
+public class IaasObjectStoreFileService extends BaseService
+        implements CrudService<
+                URI,
+                IaasObjectStoreFile,
+                BaseIaasObjectStoreFile,
+                UpdateIaasObjectStoreFile,
+                IaasObjectStoreFileAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasObjectStoreFileService.class);
 
-    private final IaasRepository<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> iaasRepo;
+    private final IaasRepository<
+                    URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile>
+            iaasRepo;
 
-    private final UpdateService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> updateService;
+    private final UpdateService<
+                    URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile>
+            updateService;
 
-    public IaasObjectStoreFileService(UpdateService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> updateService, IaasRepository<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> iaasRepo) {
+    public IaasObjectStoreFileService(
+            UpdateService<
+                            URI,
+                            IaasObjectStoreFile,
+                            BaseIaasObjectStoreFile,
+                            UpdateIaasObjectStoreFile>
+                    updateService,
+            IaasRepository<
+                            URI,
+                            IaasObjectStoreFile,
+                            BaseIaasObjectStoreFile,
+                            UpdateIaasObjectStoreFile>
+                    iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<URI> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -78,22 +97,25 @@ public class IaasObjectStoreFileService extends BaseService implements CrudServi
 
     @Override
     public List<IaasObjectStoreFile> getByIds(Collection<? extends Identified<URI>> idProviders) {
-        Set<URI> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+        Set<URI> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
-    public List<IaasObjectStoreFile> getByAccessorIds(Collection<? extends IaasObjectStoreFileAccessor> accessors) {
-        List<IaasObjectStoreFile> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getObjectStoreFile())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+    public List<IaasObjectStoreFile> getByAccessorIds(
+            Collection<? extends IaasObjectStoreFileAccessor> accessors) {
+        List<IaasObjectStoreFile> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getObjectStoreFile())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 

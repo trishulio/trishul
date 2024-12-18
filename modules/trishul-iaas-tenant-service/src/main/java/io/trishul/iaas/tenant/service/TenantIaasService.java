@@ -1,10 +1,5 @@
 package io.trishul.iaas.tenant.service;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
@@ -20,6 +15,10 @@ import io.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsService;
 import io.trishul.iaas.tenant.resource.TenantIaasResources;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.UpdateTenant;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class TenantIaasService {
     private final TenantIaasAuthService authService;
@@ -28,7 +27,11 @@ public class TenantIaasService {
 
     private final TenantIaasIdpTenantMapper mapper;
 
-    public TenantIaasService(TenantIaasAuthService authService, TenantIaasIdpService idpService, TenantIaasVfsService vfsService, TenantIaasIdpTenantMapper mapper) {
+    public TenantIaasService(
+            TenantIaasAuthService authService,
+            TenantIaasIdpService idpService,
+            TenantIaasVfsService vfsService,
+            TenantIaasIdpTenantMapper mapper) {
         this.authService = authService;
         this.idpService = idpService;
         this.vfsService = vfsService;
@@ -83,12 +86,18 @@ public class TenantIaasService {
         return new TenantIaasDeleteResult(authDelete, idpDelete, vfsDelete);
     }
 
-    private List<TenantIaasResources> map(List<TenantIaasIdpResources> idpResources, List<TenantIaasAuthResources> authResources, List<? extends TenantIaasVfsResources> vfsResources) {
+    private List<TenantIaasResources> map(
+            List<TenantIaasIdpResources> idpResources,
+            List<TenantIaasAuthResources> authResources,
+            List<? extends TenantIaasVfsResources> vfsResources) {
         Iterator<TenantIaasIdpResources> idpIterator = idpResources.iterator();
         Iterator<TenantIaasAuthResources> authIterator = authResources.iterator();
 
         return vfsResources.stream()
-                           .map(vfsResource -> new TenantIaasResources(authIterator.next(), idpIterator.next(), vfsResource))
-                           .toList();
+                .map(
+                        vfsResource ->
+                                new TenantIaasResources(
+                                        authIterator.next(), idpIterator.next(), vfsResource))
+                .toList();
     }
 }

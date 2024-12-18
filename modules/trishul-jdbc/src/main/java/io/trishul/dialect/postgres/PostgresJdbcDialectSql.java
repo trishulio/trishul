@@ -9,7 +9,8 @@ public class PostgresJdbcDialectSql {
         return f("CREATE USER %s PASSWORD '%s'", username, password);
     }
 
-    public String grantPrivilege(String privilege, String resourceType, String resourceName, String username) {
+    public String grantPrivilege(
+            String privilege, String resourceType, String resourceName, String username) {
         return f("GRANT %s ON %s %s TO %s", privilege, resourceType, resourceName, username);
     }
 
@@ -18,7 +19,9 @@ public class PostgresJdbcDialectSql {
     }
 
     public String schemaExists() {
-        return f("SELECT schema_name FROM information_schema.schemata WHERE schema_name = %s", placeholders(1));
+        return f(
+                "SELECT schema_name FROM information_schema.schemata WHERE schema_name = %s",
+                placeholders(1));
     }
 
     public String dropUser(String username) {

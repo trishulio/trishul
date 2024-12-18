@@ -1,7 +1,16 @@
 package io.trishul.auth.session.filters;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
+import io.trishul.auth.session.context.PrincipalContext;
+import io.trishul.auth.session.context.PrincipalContextBuilder;
+import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
+import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,22 +18,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import io.trishul.auth.session.context.PrincipalContext;
-import io.trishul.auth.session.context.PrincipalContextBuilder;
-import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 
 public class ContextHolderFilterTest {
     private Filter filter;

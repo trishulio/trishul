@@ -7,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.function.Function;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +24,8 @@ public class AttributeFilter {
     private void setNullValueOnProps(Object o, Function<String, Boolean> predicate) {
         try {
             final Object NULL_VALUE = null;
-            PropertyDescriptor[] pds = Introspector.getBeanInfo(o.getClass()).getPropertyDescriptors();
+            PropertyDescriptor[] pds =
+                    Introspector.getBeanInfo(o.getClass()).getPropertyDescriptors();
             for (PropertyDescriptor pd : pds) {
                 if (!predicate.apply(pd.getName())) {
                     continue;
@@ -41,7 +41,8 @@ public class AttributeFilter {
             logger.error(msg);
             throw new RuntimeException(msg, e.getCause());
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            String msg = String.format("Failed to dynamically call setter because: %s", e.getMessage());
+            String msg =
+                    String.format("Failed to dynamically call setter because: %s", e.getMessage());
             logger.error(msg);
             throw new RuntimeException(msg, e.getCause());
         }

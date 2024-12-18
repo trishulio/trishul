@@ -1,10 +1,9 @@
 package io.trishul.iaas.user.model;
 
-import java.time.LocalDateTime;
-
-import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
+import java.time.LocalDateTime;
 
 public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIaasUser, Audited {
     private String userName;
@@ -22,7 +21,12 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
         setId(id);
     }
 
-    public IaasUser(String userName, String email, String phoneNumber, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public IaasUser(
+            String userName,
+            String email,
+            String phoneNumber,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this(email);
         setUserName(userName);
         setPhoneNumber(phoneNumber);

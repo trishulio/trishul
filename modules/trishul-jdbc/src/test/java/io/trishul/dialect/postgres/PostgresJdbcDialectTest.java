@@ -3,16 +3,16 @@ package io.trishul.dialect.postgres;
 import static io.trishul.test.db.DbMockUtil.mockPs;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import io.trishul.dialect.JdbcDialect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.dialect.JdbcDialect;
 
 public class PostgresJdbcDialectTest {
     private JdbcDialect dialect;
@@ -26,7 +26,8 @@ public class PostgresJdbcDialectTest {
     }
 
     @Test
-    public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount1() throws SQLException {
+    public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount1()
+            throws SQLException {
         Connection mConn = mock(Connection.class);
         PreparedStatement mPs = mockPs(mConn, sql.createSchemaIfNotExist("SCHEMA_NAME"), 1);
         boolean created = dialect.createSchemaIfNotExists(mConn, "SCHEMA_NAME");
@@ -36,7 +37,8 @@ public class PostgresJdbcDialectTest {
     }
 
     @Test
-    public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount0() throws SQLException {
+    public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount0()
+            throws SQLException {
         Connection mConn = mock(Connection.class);
         PreparedStatement mPs = mockPs(mConn, sql.createSchemaIfNotExist("SCHEMA_NAME"), 0);
         boolean created = dialect.createSchemaIfNotExists(mConn, "SCHEMA_NAME");
@@ -59,7 +61,8 @@ public class PostgresJdbcDialectTest {
     @Test
     public void testGrantPrivilege_RunsGrantSql() throws SQLException {
         Connection mConn = mock(Connection.class);
-        PreparedStatement mPs = mockPs(mConn, sql.grantPrivilege("CONNECT", "DATABASE", "DB_1", "USER_1"), 1);
+        PreparedStatement mPs =
+                mockPs(mConn, sql.grantPrivilege("CONNECT", "DATABASE", "DB_1", "USER_1"), 1);
 
         dialect.grantPrivilege(mConn, "CONNECT", "DATABASE", "DB_1", "USER_1");
 
@@ -70,7 +73,7 @@ public class PostgresJdbcDialectTest {
     @Test
     public void testUserExist_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
         Connection mConn = mock(Connection.class);
-        PreparedStatement mPs = mockPs(mConn, sql.userExist(), new Object[][] { {} });
+        PreparedStatement mPs = mockPs(mConn, sql.userExist(), new Object[][] {{}});
 
         boolean b = dialect.userExists(mConn, "USER_1");
         assertTrue(b);
@@ -94,7 +97,7 @@ public class PostgresJdbcDialectTest {
     @Test
     public void testSchemaExists_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
         Connection mConn = mock(Connection.class);
-        PreparedStatement mPs = mockPs(mConn, sql.schemaExists(), new Object[][] { {} });
+        PreparedStatement mPs = mockPs(mConn, sql.schemaExists(), new Object[][] {{}});
 
         boolean b = dialect.schemaExists(mConn, "SCHEMA_1");
         assertTrue(b);

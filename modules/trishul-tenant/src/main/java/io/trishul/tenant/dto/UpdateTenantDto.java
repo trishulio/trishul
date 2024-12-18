@@ -1,20 +1,16 @@
 package io.trishul.tenant.dto;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.net.URL;
 import java.util.UUID;
-
 import javax.validation.constraints.NotBlank;
-
-import io.trishul.model.base.dto.BaseDto;
 
 public class UpdateTenantDto extends BaseDto {
     private UUID id;
 
-    @NotBlank
-    private String name;
+    @NotBlank private String name;
 
-    @NotBlank
-    private URL url;
+    @NotBlank private URL url;
 
     public UpdateTenantDto() {
         super();

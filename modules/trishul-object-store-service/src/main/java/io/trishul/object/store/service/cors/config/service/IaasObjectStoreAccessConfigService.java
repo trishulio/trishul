@@ -1,43 +1,69 @@
 package io.trishul.object.store.service.cors.config.service;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.crud.service.BaseService;
+import io.trishul.crud.service.CrudService;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
+import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfigAccessor;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.crud.service.BaseService;
-import io.trishul.crud.service.CrudService;
-import io.trishul.crud.service.UpdateService;
-import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
-import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfigAccessor;
-
 @Transactional
-public class IaasObjectStoreAccessConfigService extends BaseService implements CrudService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfigAccessor> {
-    private static final Logger log = LoggerFactory.getLogger(IaasObjectStoreAccessConfigService.class);
+public class IaasObjectStoreAccessConfigService extends BaseService
+        implements CrudService<
+                String,
+                IaasObjectStoreAccessConfig,
+                IaasObjectStoreAccessConfig,
+                IaasObjectStoreAccessConfig,
+                IaasObjectStoreAccessConfigAccessor> {
+    private static final Logger log =
+            LoggerFactory.getLogger(IaasObjectStoreAccessConfigService.class);
 
-    private final IaasRepository<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasRepo;
+    private final IaasRepository<
+                    String,
+                    IaasObjectStoreAccessConfig,
+                    IaasObjectStoreAccessConfig,
+                    IaasObjectStoreAccessConfig>
+            iaasRepo;
 
-    private final UpdateService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> updateService;
+    private final UpdateService<
+                    String,
+                    IaasObjectStoreAccessConfig,
+                    IaasObjectStoreAccessConfig,
+                    IaasObjectStoreAccessConfig>
+            updateService;
 
-    public IaasObjectStoreAccessConfigService(UpdateService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> updateService, IaasRepository<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasRepo) {
+    public IaasObjectStoreAccessConfigService(
+            UpdateService<
+                            String,
+                            IaasObjectStoreAccessConfig,
+                            IaasObjectStoreAccessConfig,
+                            IaasObjectStoreAccessConfig>
+                    updateService,
+            IaasRepository<
+                            String,
+                            IaasObjectStoreAccessConfig,
+                            IaasObjectStoreAccessConfig,
+                            IaasObjectStoreAccessConfig>
+                    iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -63,7 +89,10 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
         if (objectStoreAccessConfigs.size() == 1) {
             objectStoreAccessConfig = objectStoreAccessConfigs.get(0);
         } else {
-            log.error("Unexpectedly returned more than 1 access config for objectStore: {}: results {}", id, objectStoreAccessConfigs);
+            log.error(
+                    "Unexpectedly returned more than 1 access config for objectStore: {}: results {}",
+                    id,
+                    objectStoreAccessConfigs);
         }
 
         return objectStoreAccessConfig;
@@ -74,23 +103,27 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
     }
 
     @Override
-    public List<IaasObjectStoreAccessConfig> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+    public List<IaasObjectStoreAccessConfig> getByIds(
+            Collection<? extends Identified<String>> idProviders) {
+        Set<String> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
-    public List<IaasObjectStoreAccessConfig> getByAccessorIds(Collection<? extends IaasObjectStoreAccessConfigAccessor> accessors) {
-        List<IaasObjectStoreAccessConfig> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIaasObjectStoreAccessConfig())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+    public List<IaasObjectStoreAccessConfig> getByAccessorIds(
+            Collection<? extends IaasObjectStoreAccessConfigAccessor> accessors) {
+        List<IaasObjectStoreAccessConfig> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIaasObjectStoreAccessConfig())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 
@@ -100,7 +133,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
             return null;
         }
 
-        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs = this.updateService.getAddEntities(additions);
+        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs =
+                this.updateService.getAddEntities(additions);
 
         return iaasRepo.add(objectStoreAccessConfigs);
     }
@@ -111,7 +145,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
             return null;
         }
 
-        List<IaasObjectStoreAccessConfig> updated = this.updateService.getPutEntities(null, updates);
+        List<IaasObjectStoreAccessConfig> updated =
+                this.updateService.getPutEntities(null, updates);
 
         return iaasRepo.put(updated);
     }
@@ -124,7 +159,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements C
 
         List<IaasObjectStoreAccessConfig> existing = this.getByIds(updates);
 
-        List<IaasObjectStoreAccessConfig> updated = this.updateService.getPatchEntities(existing, updates);
+        List<IaasObjectStoreAccessConfig> updated =
+                this.updateService.getPatchEntities(existing, updates);
 
         return iaasRepo.put(updated);
     }

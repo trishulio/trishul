@@ -9,8 +9,7 @@ public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, Upd
     private String excludedValue;
     private Integer version;
 
-    public DummyCrudEntity() {
-    }
+    public DummyCrudEntity() {}
 
     public DummyCrudEntity(Long id, String value, String excludedValue, Integer version) {
         this.setId(id);

@@ -1,18 +1,18 @@
 package io.trishul.iaas.auth.aws.client;
 
+import com.amazonaws.services.cognitoidentity.model.Credentials;
+import io.trishul.iaas.auth.session.context.IaasAuthorization;
+import io.trishul.iaas.mapper.IaasEntityMapper;
+import io.trishul.model.mapper.LocalDateTimeMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.amazonaws.services.cognitoidentity.model.Credentials;
-
-import io.trishul.iaas.auth.session.context.IaasAuthorization;
-import io.trishul.iaas.mapper.IaasEntityMapper;
-import io.trishul.model.mapper.LocalDateTimeMapper;
-
 @Mapper(uses = LocalDateTimeMapper.class)
-public interface AwsIdentityCredentialsMapper extends IaasEntityMapper<Credentials, IaasAuthorization> {
-    final AwsIdentityCredentialsMapper INSTANCE = Mappers.getMapper(AwsIdentityCredentialsMapper.class);
+public interface AwsIdentityCredentialsMapper
+        extends IaasEntityMapper<Credentials, IaasAuthorization> {
+    final AwsIdentityCredentialsMapper INSTANCE =
+            Mappers.getMapper(AwsIdentityCredentialsMapper.class);
 
     @Override
     @Mapping(ignore = true, target = IaasAuthorization.ATTR_ID) // AccessKeyId is the ID

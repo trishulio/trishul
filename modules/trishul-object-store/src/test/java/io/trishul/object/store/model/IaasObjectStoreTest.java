@@ -1,10 +1,9 @@
 package io.trishul.object.store.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,11 @@ public class IaasObjectStoreTest {
 
     @Test
     public void testAllArgConstructor() {
-        objectStore = new IaasObjectStore("ID", LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
+        objectStore =
+                new IaasObjectStore(
+                        "ID",
+                        LocalDateTime.of(2002, 1, 1, 0, 0),
+                        LocalDateTime.of(2003, 1, 1, 0, 0));
 
         assertEquals("ID", objectStore.getId());
         assertEquals("ID", objectStore.getName());

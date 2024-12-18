@@ -1,17 +1,14 @@
 package io.trishul.commodity;
 
+import io.trishul.commodity.model.Commodity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import org.joda.money.Money;
-
-import io.trishul.commodity.model.Commodity;
 
 public class CostCalculator {
     public static final CostCalculator INSTANCE = new CostCalculator();
 
-    protected CostCalculator() {
-    }
+    protected CostCalculator() {}
 
     public Money getCost(Commodity commodity) {
         Money amount = null;
@@ -20,7 +17,10 @@ public class CostCalculator {
         Money price = null;
 
         if (commodity != null) {
-            qty = commodity.getQuantity() != null ? (BigDecimal) commodity.getQuantity().getValue() : null;
+            qty =
+                    commodity.getQuantity() != null
+                            ? (BigDecimal) commodity.getQuantity().getValue()
+                            : null;
             price = commodity.getPrice() != null ? commodity.getPrice() : null;
         }
 

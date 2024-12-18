@@ -3,20 +3,20 @@ package io.trishul.object.store.file.service.decorator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 
+import io.trishul.model.base.dto.BaseDto;
+import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
+import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import io.trishul.object.store.file.service.controller.IaasObjectStoreFileController;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.model.base.dto.BaseDto;
-import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
-import io.trishul.model.base.pojo.BaseModel;
-import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
-import io.trishul.object.store.file.service.controller.IaasObjectStoreFileController;
 
 public class TemporaryImageSrcDecoratorTest {
     private TemporaryImageSrcDecorator decorator;
@@ -32,16 +32,29 @@ public class TemporaryImageSrcDecoratorTest {
 
     @Test
     public void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
-        doAnswer(inv -> inv.getArgument(0, Set.class).stream().map(uri -> new IaasObjectStoreFileDto((URI) uri)).toList()).when(mController).getAll(anySet());
+        doAnswer(
+                        inv ->
+                                inv.getArgument(0, Set.class).stream()
+                                        .map(uri -> new IaasObjectStoreFileDto((URI) uri))
+                                        .toList())
+                .when(mController)
+                .getAll(anySet());
 
-        List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/2")), new DecoratedEntity(URI.create("http://localhost/1")));
+        List<DecoratedEntity> entities =
+                List.of(
+                        new DecoratedEntity(URI.create("http://localhost/2")),
+                        new DecoratedEntity(URI.create("http://localhost/1")));
 
         decorator.decorate(entities);
 
-        List<DecoratedEntity> expected = List.of(
-            new DecoratedEntity(URI.create("http://localhost/2"), new IaasObjectStoreFileDto(URI.create("http://localhost/2"))),
-            new DecoratedEntity(URI.create("http://localhost/1"), new IaasObjectStoreFileDto(URI.create("http://localhost/1")))
-        );
+        List<DecoratedEntity> expected =
+                List.of(
+                        new DecoratedEntity(
+                                URI.create("http://localhost/2"),
+                                new IaasObjectStoreFileDto(URI.create("http://localhost/2"))),
+                        new DecoratedEntity(
+                                URI.create("http://localhost/1"),
+                                new IaasObjectStoreFileDto(URI.create("http://localhost/1"))));
 
         assertEquals(expected, entities);
     }
@@ -108,4 +121,5 @@ class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor {
     public void setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
         this.objectStoreFile = objectStoreFile;
     }
-};
+}
+;

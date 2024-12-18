@@ -1,18 +1,15 @@
 package io.trishul.data.datasource.query.runner;
 
+import io.trishul.base.types.lambda.CheckedConsumer;
+import io.trishul.base.types.lambda.CheckedSupplier;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.manager.DataSourceManager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.base.types.lambda.CheckedConsumer;
-import io.trishul.base.types.lambda.CheckedSupplier;
 
 public class DataSourceQueryRunner {
     private static final Logger log = LoggerFactory.getLogger(DataSourceQueryRunner.class);
@@ -23,12 +20,14 @@ public class DataSourceQueryRunner {
         this.dsManager = dsManager;
     }
 
-    public <T> T query(DataSourceConfiguration dsConfig, CheckedSupplier<T, Connection, Exception> supplier) {
+    public <T> T query(
+            DataSourceConfiguration dsConfig, CheckedSupplier<T, Connection, Exception> supplier) {
         try {
             DataSource ds = this.dsManager.getDataSource(dsConfig);
             return executeQuery(ds, supplier);
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(String.format("Failed to fetch the datasource for tenant: %s", dsConfig), e);
+            throw new RuntimeException(
+                    String.format("Failed to fetch the datasource for tenant: %s", dsConfig), e);
         }
     }
 
@@ -36,12 +35,14 @@ public class DataSourceQueryRunner {
         return executeQuery(this.dsManager.getAdminDataSource(), supplier);
     }
 
-    public void query(DataSourceConfiguration dsConfig, CheckedConsumer<Connection, Exception> runnable) {
+    public void query(
+            DataSourceConfiguration dsConfig, CheckedConsumer<Connection, Exception> runnable) {
         try {
             DataSource ds = this.dsManager.getDataSource(dsConfig);
             executeQuery(ds, runnable);
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(String.format("Failed to fetch the datasource for tenant: %s", dsConfig), e);
+            throw new RuntimeException(
+                    String.format("Failed to fetch the datasource for tenant: %s", dsConfig), e);
         }
     }
 

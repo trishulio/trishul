@@ -1,45 +1,55 @@
 package io.trishul.object.store.service;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.crud.service.BaseService;
+import io.trishul.crud.service.CrudService;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.object.store.model.BaseIaasObjectStore;
+import io.trishul.object.store.model.IaasObjectStore;
+import io.trishul.object.store.model.IaasObjectStoreAccessor;
+import io.trishul.object.store.model.UpdateIaasObjectStore;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.crud.service.BaseService;
-import io.trishul.crud.service.CrudService;
-import io.trishul.crud.service.UpdateService;
-import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.object.store.model.BaseIaasObjectStore;
-import io.trishul.object.store.model.IaasObjectStore;
-import io.trishul.object.store.model.IaasObjectStoreAccessor;
-import io.trishul.object.store.model.UpdateIaasObjectStore;
-
 @Transactional
-public class IaasObjectStoreService extends BaseService implements CrudService<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore, IaasObjectStoreAccessor> {
+public class IaasObjectStoreService extends BaseService
+        implements CrudService<
+                String,
+                IaasObjectStore,
+                BaseIaasObjectStore,
+                UpdateIaasObjectStore,
+                IaasObjectStoreAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasObjectStoreService.class);
 
-    private final IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> iaasRepo;
+    private final IaasRepository<
+                    String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
+            iaasRepo;
 
-    private final UpdateService<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> updateService;
+    private final UpdateService<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
+            updateService;
 
-    public IaasObjectStoreService(UpdateService<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> updateService, IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> iaasRepo) {
+    public IaasObjectStoreService(
+            UpdateService<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
+                    updateService,
+            IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
+                    iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -77,22 +87,25 @@ public class IaasObjectStoreService extends BaseService implements CrudService<S
 
     @Override
     public List<IaasObjectStore> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+        Set<String> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
-    public List<IaasObjectStore> getByAccessorIds(Collection<? extends IaasObjectStoreAccessor> accessors) {
-        List<IaasObjectStore> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIaasObjectStore())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+    public List<IaasObjectStore> getByAccessorIds(
+            Collection<? extends IaasObjectStoreAccessor> accessors) {
+        List<IaasObjectStore> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIaasObjectStore())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 

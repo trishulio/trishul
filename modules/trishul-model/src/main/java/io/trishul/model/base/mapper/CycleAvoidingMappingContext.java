@@ -2,7 +2,6 @@ package io.trishul.model.base.mapper;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
-
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.TargetType;

@@ -1,14 +1,12 @@
 package io.trishul.money.tax.calculator;
 
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.stream.StreamSupport;
-
-import org.joda.money.Money;
-
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.model.Tax;
 import io.trishul.money.tax.rate.calculator.TaxRateCalculator;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.StreamSupport;
+import org.joda.money.Money;
 
 public class TaxCalculator {
     public static final TaxCalculator INSTANCE = new TaxCalculator(TaxRateCalculator.INSTANCE);
@@ -41,11 +39,12 @@ public class TaxCalculator {
             Money gst = null;
             Money hst = null;
 
-            Iterator<TaxAmount> it = StreamSupport.stream(taxAmounts.spliterator(), false)
-                  .filter(Objects::nonNull)
-                  .iterator();
+            Iterator<TaxAmount> it =
+                    StreamSupport.stream(taxAmounts.spliterator(), false)
+                            .filter(Objects::nonNull)
+                            .iterator();
 
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 TaxAmount amount = it.next();
                 if (pst == null) {
                     pst = amount.getPstAmount();

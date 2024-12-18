@@ -1,24 +1,24 @@
 package io.trishul.model.util.random;
 
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.base.types.util.random.RandomGenerator;
+import java.security.SecureRandom;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RandomGeneratorImplTest {
     private RandomGenerator generator;
 
-    private Random mRandom;
+    private SecureRandom mRandom;
 
     @BeforeEach
     public void init() {
         // Manually extending the class because Mockito cannot mock
         // java.util.Random class due to one of it's properties.
-        class RandomMock extends Random {
+        class RandomMock extends SecureRandom {
             int i = 1;
+
             @Override
             public int nextInt(int l) {
                 int r = i;

@@ -1,18 +1,16 @@
 package io.trishul.auth.autoconfiguration;
 
+import io.trishul.auth.session.context.PrincipalContextBuilder;
+import io.trishul.auth.session.context.holder.ContextHolder;
+import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
+import io.trishul.auth.session.filters.ContextHolderFilter;
 import javax.servlet.Filter;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-
-import io.trishul.auth.session.context.PrincipalContextBuilder;
-import io.trishul.auth.session.context.holder.ContextHolder;
-import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
-import io.trishul.auth.session.filters.ContextHolderFilter;
 
 @Configuration
 public class AuthConfiguration {

@@ -1,35 +1,30 @@
 package io.trishul.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.CrudEntity;
-
 @Entity(name = "tenant")
 @Table(name = "TENANT")
-@JsonIgnoreProperties({ "hibernateLazyInitializer" })
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>, Audited {
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
     public static final String FIELD_URL = "url";
     public static final String FIELD_IS_READY = "isReady";
 
-    @Id
-    private UUID id;
+    @Id private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -58,7 +53,13 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
         setId(id);
     }
 
-    public Tenant(UUID id, String name, URL url, Boolean isReady, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public Tenant(
+            UUID id,
+            String name,
+            URL url,
+            Boolean isReady,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this(id);
         this.name = name;
         this.url = url;

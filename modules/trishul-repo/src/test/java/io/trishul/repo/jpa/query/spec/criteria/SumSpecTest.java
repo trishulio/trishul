@@ -1,7 +1,7 @@
 package io.trishul.repo.jpa.query.spec.criteria;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -9,7 +9,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,17 +44,19 @@ public class SumSpecTest {
 
     @Test
     public void testConstructor_PathProvider_AddsSelectColumnWithPathFromProvider() {
-        spec = new SumSpec<>(() -> new String[] { "PATH_1", "PATH_2" });
+        spec = new SumSpec<>(() -> new String[] {"PATH_1", "PATH_2"});
 
-        SumSpec<Number> expected = new SumSpec<>(new ColumnSpec<>(new String[] { "PATH_1", "PATH_2" }));
+        SumSpec<Number> expected =
+                new SumSpec<>(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}));
         assertEquals(expected, spec);
     }
 
     @Test
     public void testConstructor_String_AddsSelectColumnWithPathValues() {
-        spec = new SumSpec<>(new String[] { "PATH_1", "PATH_2" });
+        spec = new SumSpec<>(new String[] {"PATH_1", "PATH_2"});
 
-        SumSpec<Number> expected = new SumSpec<>(new ColumnSpec<>(new String[] { "PATH_1", "PATH_2" }));
+        SumSpec<Number> expected =
+                new SumSpec<>(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}));
         assertEquals(expected, spec);
     }
 }

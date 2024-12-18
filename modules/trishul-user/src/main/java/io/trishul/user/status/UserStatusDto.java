@@ -1,8 +1,7 @@
 package io.trishul.user.status;
 
-import java.time.LocalDateTime;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class UserStatusDto extends BaseDto {
     private Long id;
@@ -15,14 +14,18 @@ public class UserStatusDto extends BaseDto {
 
     private Integer version;
 
-    public UserStatusDto() {
-    }
+    public UserStatusDto() {}
 
     public UserStatusDto(Long id) {
         setId(id);
     }
 
-    public UserStatusDto(Long id, String name, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    public UserStatusDto(
+            Long id,
+            String name,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated,
+            Integer version) {
         this(id);
         setName(name);
         setCreatedAt(createdAt);

@@ -6,16 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 
 public class CollectionAccessorRefresherTest {
     class Entity implements Identified<Long> {
@@ -62,12 +60,12 @@ public class CollectionAccessorRefresherTest {
     public void init() {
         mEntityRetriever = mock(Function.class);
 
-        refresher = new CollectionAccessorRefresher<Long, EntityAccessor, Entity>(
-            Entity.class,
-            accessor -> accessor.getEntityList(),
-            (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)),
-            mEntityRetriever
-        );
+        refresher =
+                new CollectionAccessorRefresher<Long, EntityAccessor, Entity>(
+                        Entity.class,
+                        accessor -> accessor.getEntityList(),
+                        (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)),
+                        mEntityRetriever);
     }
 
     @Test
@@ -82,20 +80,20 @@ public class CollectionAccessorRefresherTest {
 
     @Test
     public void testRefreshAccessors_ReplacesConsumerEntitiesWithMatchingRepoEntities_() {
-        List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
-            new Entity(3L),
-            new Entity(1L),
-            new Entity(2L),
-            new Entity(5L),
-            new Entity(4L)
-        );
+        List<Entity> repoEntities =
+                List.of( // Unordered on purpose to capture any edge case
+                        new Entity(3L),
+                        new Entity(1L),
+                        new Entity(2L),
+                        new Entity(5L),
+                        new Entity(4L));
         doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L, 4L, 5L));
 
-        List<EntityConsumer> consumers = List.of(
-            new EntityConsumer(List.of(new Entity(1L))),
-            new EntityConsumer(List.of(new Entity(2L), new Entity(3L))),
-            new EntityConsumer(List.of(new Entity(4L), new Entity(5L)))
-        );
+        List<EntityConsumer> consumers =
+                List.of(
+                        new EntityConsumer(List.of(new Entity(1L))),
+                        new EntityConsumer(List.of(new Entity(2L), new Entity(3L))),
+                        new EntityConsumer(List.of(new Entity(4L), new Entity(5L))));
 
         refresher.refreshAccessors(consumers);
 
@@ -113,18 +111,17 @@ public class CollectionAccessorRefresherTest {
 
     @Test
     public void testRefreshAccessors_IgnoresConsumerWithNullEntities() {
-        List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
-            new Entity(3L),
-            new Entity(1L)
-        );
+        List<Entity> repoEntities =
+                List.of( // Unordered on purpose to capture any edge case
+                        new Entity(3L), new Entity(1L));
         doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));
 
-        List<EntityConsumer> consumers = List.of(
-            new EntityConsumer(List.of(new Entity(1L))),
-            new EntityConsumer(null),
-            new EntityConsumer(List.of(new Entity(3L))),
-            new EntityConsumer(null)
-        );
+        List<EntityConsumer> consumers =
+                List.of(
+                        new EntityConsumer(List.of(new Entity(1L))),
+                        new EntityConsumer(null),
+                        new EntityConsumer(List.of(new Entity(3L))),
+                        new EntityConsumer(null));
 
         refresher.refreshAccessors(consumers);
 
@@ -141,18 +138,17 @@ public class CollectionAccessorRefresherTest {
 
     @Test
     public void testRefreshAccessors_IgnoresConsumerWithEntitiesContainingEmptyLists() {
-        List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
-            new Entity(3L),
-            new Entity(1L)
-        );
+        List<Entity> repoEntities =
+                List.of( // Unordered on purpose to capture any edge case
+                        new Entity(3L), new Entity(1L));
         doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));
 
-        List<EntityConsumer> consumers = List.of(
-            new EntityConsumer(List.of(new Entity(1L))),
-            new EntityConsumer(List.of()),
-            new EntityConsumer(List.of(new Entity(3L))),
-            new EntityConsumer(List.of())
-        );
+        List<EntityConsumer> consumers =
+                List.of(
+                        new EntityConsumer(List.of(new Entity(1L))),
+                        new EntityConsumer(List.of()),
+                        new EntityConsumer(List.of(new Entity(3L))),
+                        new EntityConsumer(List.of()));
 
         refresher.refreshAccessors(consumers);
 
@@ -168,19 +164,22 @@ public class CollectionAccessorRefresherTest {
     }
 
     @Test
-    public void testRefreshAccessors_ThrowsException_WhenEntityRetrieverDoesNotReturnReferencedEntity() {
-        List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
-            new Entity(3L),
-            new Entity(1L)
-        );
+    public void
+            testRefreshAccessors_ThrowsException_WhenEntityRetrieverDoesNotReturnReferencedEntity() {
+        List<Entity> repoEntities =
+                List.of( // Unordered on purpose to capture any edge case
+                        new Entity(3L), new Entity(1L));
         doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L));
 
-        List<EntityConsumer> consumers = List.of(
-            new EntityConsumer(List.of(new Entity(1L))),
-            new EntityConsumer(List.of(new Entity(2L))),
-            new EntityConsumer(List.of(new Entity(3L)))
-        );
+        List<EntityConsumer> consumers =
+                List.of(
+                        new EntityConsumer(List.of(new Entity(1L))),
+                        new EntityConsumer(List.of(new Entity(2L))),
+                        new EntityConsumer(List.of(new Entity(3L))));
 
-        assertThrows(EntityNotFoundException.class, () -> refresher.refreshAccessors(consumers), "Cannot find all objects in Id-Set: [1, 2, 3]");
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> refresher.refreshAccessors(consumers),
+                "Cannot find all objects in Id-Set: [1, 2, 3]");
     }
 }

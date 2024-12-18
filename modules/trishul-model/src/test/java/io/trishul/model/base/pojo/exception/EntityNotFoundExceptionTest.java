@@ -1,9 +1,9 @@
 package io.trishul.model.base.pojo.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.model.base.exception.EntityNotFoundException;
+import org.junit.jupiter.api.Test;
 
 public class EntityNotFoundExceptionTest {
     @Test
@@ -22,6 +22,7 @@ public class EntityNotFoundExceptionTest {
     public void testConstructor_StringObject_SetsIdStringWhenObjectIsNotNull() {
         class Id {
             String str;
+
             public Id(String str) {
                 this.str = str;
             }
@@ -37,7 +38,8 @@ public class EntityNotFoundExceptionTest {
 
     @Test
     public void testConstructor_StringStringString() {
-        EntityNotFoundException exception = new EntityNotFoundException("EntityTest", "FIELD", "ID");
+        EntityNotFoundException exception =
+                new EntityNotFoundException("EntityTest", "FIELD", "ID");
         assertEquals("EntityTest not found with FIELD: ID", exception.getMessage());
     }
 }

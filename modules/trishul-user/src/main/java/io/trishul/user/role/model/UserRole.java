@@ -1,7 +1,10 @@
 package io.trishul.user.role.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,26 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.CrudEntity;
-
 @Entity(name = "user_role")
 @Table
-@JsonIgnoreProperties({ "hibernateLazyInitializer" })
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUserRole, Audited {
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_generator")
-    @SequenceGenerator(name = "user_role_generator", sequenceName = "user_role_sequence", allocationSize = 1)
+    @SequenceGenerator(
+            name = "user_role_generator",
+            sequenceName = "user_role_sequence",
+            allocationSize = 1)
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -43,18 +42,21 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
 
-    @Version
-    private Integer version;
+    @Version private Integer version;
 
-    public UserRole() {
-    }
+    public UserRole() {}
 
     public UserRole(Long id) {
         this();
         setId(id);
     }
 
-    public UserRole(Long id, String name, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    public UserRole(
+            Long id,
+            String name,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated,
+            Integer version) {
         this(id);
         setName(name);
         setCreatedAt(createdAt);

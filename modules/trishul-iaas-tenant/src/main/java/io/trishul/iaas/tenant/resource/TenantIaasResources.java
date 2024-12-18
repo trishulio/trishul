@@ -10,10 +10,12 @@ public class TenantIaasResources extends BaseModel {
     private TenantIaasIdpResources idpResources;
     private TenantIaasVfsResources vfsResources;
 
-    public TenantIaasResources() {
-    }
+    public TenantIaasResources() {}
 
-    public TenantIaasResources(TenantIaasAuthResources authResources, TenantIaasIdpResources idpResources, TenantIaasVfsResources vfsResources) {
+    public TenantIaasResources(
+            TenantIaasAuthResources authResources,
+            TenantIaasIdpResources idpResources,
+            TenantIaasVfsResources vfsResources) {
         this();
         setAuthResources(authResources);
         setIdpResources(idpResources);

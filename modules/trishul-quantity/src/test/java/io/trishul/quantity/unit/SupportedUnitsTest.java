@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 import javax.measure.quantity.Volume;
-
 import org.junit.jupiter.api.Test;
-
 import tec.uom.se.quantity.Quantities;
 
 public class SupportedUnitsTest {

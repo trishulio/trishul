@@ -1,1 +1,1 @@
-Trishul Auth
+Trishul

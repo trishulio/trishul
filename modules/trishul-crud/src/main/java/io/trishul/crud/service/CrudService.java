@@ -1,10 +1,9 @@
 package io.trishul.crud.service;
 
+import io.trishul.base.types.base.pojo.Identified;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import io.trishul.base.types.base.pojo.Identified;
 
 public interface CrudService<ID, E extends Identified<ID>, BE, UE extends Identified<ID>, A> {
     boolean exists(Set<ID> ids);

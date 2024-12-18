@@ -1,17 +1,15 @@
 package io.trishul.repo.jpa.query.clause.select.builder;
 
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
-
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
 public class SelectClauseBuilder extends BaseModel {
     private final ColumnSpecAccumulator accumulator;
@@ -48,7 +46,8 @@ public class SelectClauseBuilder extends BaseModel {
         return this;
     }
 
-    public List<Selection<?>> getSelectClause(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    public List<Selection<?>> getSelectClause(
+            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         return this.accumulator.getColumns(root, cq, cb);
     }
 }

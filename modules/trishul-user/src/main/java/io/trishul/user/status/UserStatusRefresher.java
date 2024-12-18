@@ -1,9 +1,8 @@
 package io.trishul.user.status;
 
-import java.util.Collection;
-
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import java.util.Collection;
 
 public class UserStatusRefresher implements Refresher<UserStatus, UserStatusAccessor> {
     private final AccessorRefresher<Long, UserStatusAccessor, UserStatus> refresher;

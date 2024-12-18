@@ -1,5 +1,11 @@
 package io.trishul.crud.service;
 
+import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
+
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.repo.jpa.repository.ExtendedRepository;
+import io.trishul.repo.jpa.repository.service.RepoService;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -8,20 +14,20 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.base.types.base.pojo.Refresher;
-import io.trishul.repo.jpa.repository.ExtendedRepository;
-import io.trishul.repo.jpa.repository.service.RepoService;
-import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
-
-public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationExecutor<E> & ExtendedRepository<ID>, ID, A, E extends Identified<ID>, U extends Refresher<E, A>> implements RepoService<ID, E, A> {
+public class CrudRepoService<
+                T extends
+                        JpaRepository<E, ID> & JpaSpecificationExecutor<E> & ExtendedRepository<ID>,
+                ID,
+                A,
+                E extends Identified<ID>,
+                U extends Refresher<E, A>>
+        implements RepoService<ID, E, A> {
     private final T repo;
     private final U refresher;
 
@@ -41,7 +47,12 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
     }
 
     @Override
-    public Page<E> getAll(Specification<E> spec, SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    public Page<E> getAll(
+            Specification<E> spec,
+            SortedSet<String> sort,
+            boolean orderAscending,
+            int page,
+            int size) {
         final PageRequest pageable = pageRequest(sort, orderAscending, page, size);
 
         final Page<E> entities = this.repo.findAll(spec, pageable);
@@ -62,24 +73,31 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
             return null;
         }
 
-        final Set<ID> ids = idProviders.stream().filter(Objects::nonNull).map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        final Set<ID> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.repo.findAllById(ids);
     }
 
     @Override
-    public List<E> getByAccessorIds(Collection<? extends A> accessors, Function<A, ? extends Identified<ID>> entityGetter) {
+    public List<E> getByAccessorIds(
+            Collection<? extends A> accessors, Function<A, ? extends Identified<ID>> entityGetter) {
         if (accessors == null) {
             return null;
         }
 
-        final Set<ID> ids = accessors.stream()
-                                     .filter(Objects::nonNull)
-                                     .map(accessor -> entityGetter.apply(accessor))
-                                     .filter(Objects::nonNull)
-                                     .map(identified -> identified.getId())
-                                     .filter(Objects::nonNull)
-                                     .collect(Collectors.toSet());
+        final Set<ID> ids =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> entityGetter.apply(accessor))
+                        .filter(Objects::nonNull)
+                        .map(identified -> identified.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
         return this.repo.findAllById(ids);
     }
 

@@ -1,25 +1,22 @@
 package io.trishul.model.json;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class JacksonJsonMapperTest {
     public static class TestData {
         private int x, y;
 
-        public TestData() {
-        }
+        public TestData() {}
 
         public TestData(int x, int y) {
             this.x = x;
@@ -79,81 +76,87 @@ public class JacksonJsonMapperTest {
     }
 
     // @Test
-    // public void testQuantitySerialization_ReturnsJsonWithSymbolAndValue_WhenQuantityIsNotNull() {
-    //     String json = mapper.writeString(Quantities.getQuantity(new BigDecimal("10.99"), SupportedUnits.GRAM));
+    // public void
+    // testQuantitySerialization_ReturnsJsonWithSymbolAndValue_WhenQuantityIsNotNull()
+    // {
+    // String json = mapper.writeString(Quantities.getQuantity(new
+    // BigDecimal("10.99"),
+    // SupportedUnits.GRAM));
 
-    //     assertEquals("{\"symbol\":\"g\",\"value\":10.99}", json);
+    // assertEquals("{\"symbol\":\"g\",\"value\":10.99}", json);
     // }
 
     // @Test
-    // public void testQuantityDeserialization_ReturnsQuantityWithValueAndUnit_WhenJsonIsNotNull() {
-    //     String json = "{\"symbol\":\"kg\",\"value\":10.99}";
+    // public void
+    // testQuantityDeserialization_ReturnsQuantityWithValueAndUnit_WhenJsonIsNotNull()
+    // {
+    // String json = "{\"symbol\":\"kg\",\"value\":10.99}";
 
-    //     Quantity<?> qty = mapper.readString(json, Quantity.class);
+    // Quantity<?> qty = mapper.readString(json, Quantity.class);
 
-    //     assertEquals(Quantities.getQuantity("10.99 kg"), qty);
+    // assertEquals(Quantities.getQuantity("10.99 kg"), qty);
     // }
 
     // @Test
     // public void testQuantityDeserialization_ReturnsNull_WhenJsonIsNull() {
-    //     Quantity<?> qty = mapper.readString("null", Quantity.class);
-    //     assertNull(qty);
+    // Quantity<?> qty = mapper.readString("null", Quantity.class);
+    // assertNull(qty);
     // }
 
     // @Test
     // public void testUnitSerialization_ReturnsJsonWithSymbol_WhenUnitIsNotNull() {
-    //     String json = mapper.writeString(SupportedUnits.KILOGRAM);
+    // String json = mapper.writeString(SupportedUnits.KILOGRAM);
 
-    //     assertEquals("{\"symbol\":\"kg\"}", json);
+    // assertEquals("{\"symbol\":\"kg\"}", json);
     // }
 
     // @Test
     // public void testUnitDeserialization_ReturnsUnit_WhenJsonIsNotNull() {
-    //     String json = "{\"symbol\":\"g\"}";
+    // String json = "{\"symbol\":\"g\"}";
 
-    //     Unit<?> unit = mapper.readString(json, Unit.class);
+    // Unit<?> unit = mapper.readString(json, Unit.class);
 
-    //     assertEquals(SupportedUnits.GRAM, unit);
+    // assertEquals(SupportedUnits.GRAM, unit);
     // }
 
     // @Test
     // public void testUnitDeserialization_ReturnsNull_WhenJsonIsNull() {
-    //     String json = "null";
+    // String json = "null";
 
-    //     Unit<?> unit = mapper.readString(json, Unit.class);
+    // Unit<?> unit = mapper.readString(json, Unit.class);
 
-    //     assertNull(unit);
+    // assertNull(unit);
     // }
 
     // @Test
     // public void testMoneySerialization_ReturnsMoneyJson_WhenEntityIsNotNull() {
-    //     Money money = Money.parse("CAD 10");
-    //     String json = mapper.writeString(money);
+    // Money money = Money.parse("CAD 10");
+    // String json = mapper.writeString(money);
 
-    //     assertEquals("{\"currency\":\"CAD\",\"amount\":10}", json);
+    // assertEquals("{\"currency\":\"CAD\",\"amount\":10}", json);
     // }
 
     // @Test
     // public void testMoneySerialization_ReturnsNullString_WhenEntityIsNull() {
-    //     String json = mapper.writeString((Money) null);
+    // String json = mapper.writeString((Money) null);
 
-    //     assertEquals("null", json);
+    // assertEquals("null", json);
     // }
 
     // @Test
     // public void testMoneyDeserialization_ReturnsMoney_WhenJsonIsNotNull() {
-    //     String json = "{\"currency\":\"CAD\",\"amount\":10}";
-    //     Money money = mapper.readString(json, Money.class);
+    // String json = "{\"currency\":\"CAD\",\"amount\":10}";
+    // Money money = mapper.readString(json, Money.class);
 
-    //     assertEquals(Money.parse("CAD 10"), money);
+    // assertEquals(Money.parse("CAD 10"), money);
     // }
 
     // @Test
     // public void testMoneyDeserialization_ReturnsNull_WhenJsonStringIsNull() {
-    //     String json = "null";
-    //     Money money = mapper.readString(json, Money.class);
+    // String json = "null";
+    // Money money = mapper.readString(json, Money.class);
 
-    //     assertNull(money);
+    // assertNull(money);
     // }
 
     @Test
@@ -176,7 +179,9 @@ public class JacksonJsonMapperTest {
     }
 
     @Test
-    public void testWriteString_DoesNotCauseStackOverflowInCatchClause_WhenEntityOverridesToStringToCallJacksonMapper() throws JsonProcessingException {
+    public void
+            testWriteString_DoesNotCauseStackOverflowInCatchClause_WhenEntityOverridesToStringToCallJacksonMapper()
+                    throws JsonProcessingException {
         doThrow(JsonProcessingException.class).when(mObjectMapper).writeValueAsString(any());
 
         class OverrideToStringWithJackson extends TestData {

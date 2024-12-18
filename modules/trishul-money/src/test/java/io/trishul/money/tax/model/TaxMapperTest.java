@@ -3,14 +3,12 @@ package io.trishul.money.tax.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import io.trishul.money.tax.dto.TaxDto;
+import io.trishul.money.tax.rate.TaxRate;
+import io.trishul.money.tax.rate.dto.TaxRateDto;
 import java.math.BigDecimal;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.money.tax.dto.TaxDto;
-import io.trishul.money.tax.rate.dto.TaxRateDto;
-import io.trishul.money.tax.rate.TaxRate;
 
 public class TaxMapperTest {
     private TaxMapper mapper;
@@ -23,7 +21,9 @@ public class TaxMapperTest {
     @Test
     public void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
 
-        TaxDto dto = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
+        TaxDto dto =
+                new TaxDto(
+                        new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
         Tax tax = mapper.fromDto(dto);
 
         Tax expected = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
@@ -41,7 +41,9 @@ public class TaxMapperTest {
 
         TaxDto dto = mapper.toDto(tax);
 
-        TaxDto expected = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
+        TaxDto expected =
+                new TaxDto(
+                        new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
         assertEquals(expected, dto);
     }
 

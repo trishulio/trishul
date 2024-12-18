@@ -1,15 +1,13 @@
-// todo: refactor this class to take in datasourceconfiguration parameter and return datasource, not extend the builder which should be a configuration class instead
+// todo: refactor this class to take in datasourceconfiguration parameter and return datasource, not
+// extend the builder which should be a configuration class instead
 package io.trishul.data.datasource.builder;
-
-import javax.sql.DataSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import io.trishul.data.datasource.configuration.builder.AbstractDataSourceBuilder;
+import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HikariDataSourceBuilder extends AbstractDataSourceBuilder {
     private static final Logger log = LoggerFactory.getLogger(HikariDataSourceBuilder.class);

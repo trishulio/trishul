@@ -1,15 +1,13 @@
 package io.trishul.repo.jpa.query.spec.accumulator;
 
+import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
-
-import io.trishul.model.base.pojo.BaseModel;
-import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class ColumnSpecAccumulator extends BaseModel {
     private final List<CriteriaSpec<?>> aggregations;
@@ -24,11 +22,13 @@ public class ColumnSpecAccumulator extends BaseModel {
         }
     }
 
-    public <T extends Selection<?>> List<T> getColumns(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    public <T extends Selection<?>> List<T> getColumns(
+            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         @SuppressWarnings("unchecked")
-        List<T> columns = this.aggregations.stream()
-                                           .map(spec -> (T) spec.getExpression(root, cq, cb))
-                                           .toList();
+        List<T> columns =
+                this.aggregations.stream()
+                        .map(spec -> (T) spec.getExpression(root, cq, cb))
+                        .toList();
         return columns;
     }
 }

@@ -1,20 +1,18 @@
 package io.trishul.user.service.user.service.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Function;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.jpa.domain.Specification;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.UpdateService;
@@ -26,6 +24,16 @@ import io.trishul.user.model.UpdateUser;
 import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
 import io.trishul.user.service.user.service.repository.UserRepository;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.jpa.domain.Specification;
 
 public class UserServiceTest {
     private UserService service;
@@ -52,25 +60,33 @@ public class UserServiceTest {
     @Test
     public void testGetUsers_ReturnsEntitiesFromRepoService_WithCustomSpec() {
         @SuppressWarnings("unchecked")
-        final ArgumentCaptor<Specification<User>> captor = ArgumentCaptor.forClass(Specification.class);
+        final ArgumentCaptor<Specification<User>> captor =
+                ArgumentCaptor.forClass(Specification.class);
         final Page<User> mPage = new PageImpl<>(List.of(new User(1L)));
-        doReturn(mPage).when(this.mRepoService).getAll(captor.capture(), eq(new TreeSet<>(List.of("username"))), eq(true), eq(1), eq(100));
+        doReturn(mPage)
+                .when(this.mRepoService)
+                .getAll(
+                        captor.capture(),
+                        eq(new TreeSet<>(List.of("username"))),
+                        eq(true),
+                        eq(1),
+                        eq(100));
 
-        final Page<User> page = this.service.getUsers(
-            Set.of(1L),
-            Set.of(2L),
-            Set.of("userName"),
-            Set.of("displayName"),
-            Set.of("email"),
-            Set.of("phoneNumber"),
-            Set.of(10L),
-            Set.of(20L),
-            Set.of("role"),
-            1,
-            100,
-            new TreeSet<>(List.of("username")),
-            true
-        );
+        final Page<User> page =
+                this.service.getUsers(
+                        Set.of(1L),
+                        Set.of(2L),
+                        Set.of("userName"),
+                        Set.of("displayName"),
+                        Set.of("email"),
+                        Set.of("phoneNumber"),
+                        Set.of(10L),
+                        Set.of(20L),
+                        Set.of("role"),
+                        1,
+                        100,
+                        new TreeSet<>(List.of("username")),
+                        true);
 
         final Page<User> expected = new PageImpl<>(List.of(new User(1L)));
         assertEquals(expected, page);
@@ -90,7 +106,8 @@ public class UserServiceTest {
 
     @Test
     public void testGetByIds_CallsRepoService() {
-        ArgumentCaptor<List<? extends Identified<Long>>> captor = ArgumentCaptor.forClass(List.class);
+        ArgumentCaptor<List<? extends Identified<Long>>> captor =
+                ArgumentCaptor.forClass(List.class);
 
         doReturn(List.of(new User(1L))).when(mRepoService).getByIds(captor.capture());
 
@@ -100,18 +117,24 @@ public class UserServiceTest {
 
     @Test
     public void testGetByAccessorIds_CallsRepoService() {
-        ArgumentCaptor<Function<UserAccessor, User>> captor = ArgumentCaptor.forClass(Function.class);
+        ArgumentCaptor<Function<UserAccessor, User>> captor =
+                ArgumentCaptor.forClass(Function.class);
 
-        List<? extends UserAccessor> accessors = List.of(new UserAccessor() {
-             @Override
-             public void setUser(User User) {}
-             @Override
-             public User getUser() {
-                 return new User(1L);
-             }
-         });
+        List<? extends UserAccessor> accessors =
+                List.of(
+                        new UserAccessor() {
+                            @Override
+                            public void setUser(User User) {}
 
-        doReturn(List.of(new User(1L))).when(mRepoService).getByAccessorIds(eq(accessors), captor.capture());
+                            @Override
+                            public User getUser() {
+                                return new User(1L);
+                            }
+                        });
+
+        doReturn(List.of(new User(1L)))
+                .when(mRepoService)
+                .getByAccessorIds(eq(accessors), captor.capture());
 
         assertEquals(List.of(new User(1L)), service.getByAccessorIds(accessors));
         assertEquals(new User(1L), captor.getValue().apply(accessors.get(0)));
@@ -190,7 +213,9 @@ public class UserServiceTest {
         final UpdateUser user1 = new User(1L);
         final UpdateUser user2 = new User(2L);
 
-        doReturn(List.of(new User(1L), new User(2L))).when(this.mRepoService).getByIds(List.of(user1, user2));
+        doReturn(List.of(new User(1L), new User(2L)))
+                .when(this.mRepoService)
+                .getByIds(List.of(user1, user2));
 
         final List<User> updated = this.service.put(List.of(user1, user2, new User()));
 
@@ -208,12 +233,16 @@ public class UserServiceTest {
 
     @Test
     public void testPatch_PatchesUserAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
-        doAnswer(inv -> inv.getArgument(1)).when(this.mUpdateService).getPatchEntities(any(), any());
+        doAnswer(inv -> inv.getArgument(1))
+                .when(this.mUpdateService)
+                .getPatchEntities(any(), any());
 
         final UpdateUser user1 = new User(1L);
         final UpdateUser user2 = new User(2L);
 
-        doReturn(List.of(new User(1L), new User(2L))).when(this.mRepoService).getByIds(List.of(user1, user2));
+        doReturn(List.of(new User(1L), new User(2L)))
+                .when(this.mRepoService)
+                .getByIds(List.of(user1, user2));
 
         final List<User> updated = this.service.patch(List.of(user1, user2));
 
@@ -231,11 +260,17 @@ public class UserServiceTest {
 
     @Test
     public void testPatch_ThrowsNotFoundException_WhenAllUsersDontExist() {
-        doAnswer(inv -> inv.getArgument(1)).when(this.mUpdateService).getPatchEntities(any(), any());
+        doAnswer(inv -> inv.getArgument(1))
+                .when(this.mUpdateService)
+                .getPatchEntities(any(), any());
 
-        final List<UpdateUser> updates = List.of(new User(1L), new User(2L), new User(3L), new User(4L));
+        final List<UpdateUser> updates =
+                List.of(new User(1L), new User(2L), new User(3L), new User(4L));
         doReturn(List.of(new User(1L), new User(2L))).when(this.mRepoService).getByIds(updates);
 
-        assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates), "Cannot find users with Ids: [3, 4]");
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> this.service.patch(updates),
+                "Cannot find users with Ids: [3, 4]");
     }
 }

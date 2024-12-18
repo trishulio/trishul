@@ -1,14 +1,14 @@
 package io.trishul.iaas.idp.tenant.model;
 
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.iaas.access.role.model.IaasRole;
+import io.trishul.model.base.pojo.BaseModel;
 import java.time.LocalDateTime;
 
-import io.trishul.iaas.access.role.model.IaasRole;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.model.base.pojo.BaseModel;
-import io.trishul.base.types.base.pojo.CrudEntity;
-
 // TODO: Rename all the tenant stuff in the IdpTenant as IdpGroup
-public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant, CrudEntity<String>, Audited {
+public class IaasIdpTenant extends BaseModel
+        implements UpdateIaasIdpTenant, CrudEntity<String>, Audited {
     private String name;
     private IaasRole role;
     private String description;
@@ -24,7 +24,12 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant, Cru
         setName(name);
     }
 
-    public IaasIdpTenant(String name, IaasRole role, String description, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public IaasIdpTenant(
+            String name,
+            IaasRole role,
+            String description,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this(name);
         setIaasRole(role);
         setDescription(description);

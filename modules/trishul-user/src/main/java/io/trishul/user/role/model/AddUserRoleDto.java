@@ -5,8 +5,7 @@ import io.trishul.model.base.dto.BaseDto;
 public class AddUserRoleDto extends BaseDto {
     private String name;
 
-    public AddUserRoleDto() {
-    }
+    public AddUserRoleDto() {}
 
     public AddUserRoleDto(String name) {
         this();

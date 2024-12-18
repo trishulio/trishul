@@ -1,9 +1,8 @@
 package io.trishul.crud.autoconfiguration;
 
+import io.trishul.crud.service.LockService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.crud.service.LockService;
 
 @Configuration
 public class ServiceAutoConfiguration {

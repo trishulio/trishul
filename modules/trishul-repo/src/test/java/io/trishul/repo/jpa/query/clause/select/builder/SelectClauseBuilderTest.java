@@ -5,21 +5,18 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 public class SelectClauseBuilderTest {
     private SelectClauseBuilder selector;

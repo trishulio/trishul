@@ -1,13 +1,13 @@
 package io.trishul.user.role.model;
 
+import io.trishul.model.base.mapper.BaseMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import io.trishul.model.base.mapper.BaseMapper;
-
 @Mapper
-public interface UserRoleMapper extends BaseMapper<UserRole, UserRoleDto, AddUserRoleDto, UpdateUserRoleDto> {
+public interface UserRoleMapper
+        extends BaseMapper<UserRole, UserRoleDto, AddUserRoleDto, UpdateUserRoleDto> {
     UserRoleMapper INSTANCE = Mappers.getMapper(UserRoleMapper.class);
 
     @Mapping(target = UserRole.ATTR_NAME, ignore = true)

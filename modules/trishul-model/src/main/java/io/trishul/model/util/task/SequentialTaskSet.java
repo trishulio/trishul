@@ -36,11 +36,11 @@ public class SequentialTaskSet implements TaskSet {
 
     @Override
     public List<Exception> getErrors() {
-        return this.errors;
+        return this.errors.stream().toList();
     }
 
     @Override
     public List<TaskResult<?>> getResults() {
-        return this.results;
+        return this.results.stream().toList();
     }
 }

@@ -6,15 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+import io.trishul.quantity.unit.dto.UnitDto;
 import javax.measure.MetricPrefix;
 import javax.measure.Unit;
 import javax.measure.quantity.AmountOfSubstance;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.quantity.unit.dto.UnitDto;
 import tec.uom.se.quantity.QuantityDimension;
 import tec.uom.se.unit.BaseUnit;
 import tec.uom.se.unit.Units;
@@ -77,7 +75,9 @@ public class QuantityUnitMapperTest {
         assertSame(Units.YEAR, mapper.fromSymbol("year"));
 
         // Custom values tests
-        assertEquals(new BaseUnit<AmountOfSubstance>("each", QuantityDimension.AMOUNT_OF_SUBSTANCE), mapper.fromSymbol("each"));
+        assertEquals(
+                new BaseUnit<AmountOfSubstance>("each", QuantityDimension.AMOUNT_OF_SUBSTANCE),
+                mapper.fromSymbol("each"));
         assertEquals(MetricPrefix.HECTO(Units.LITRE), mapper.fromSymbol("hl"));
     }
 
@@ -122,7 +122,7 @@ public class QuantityUnitMapperTest {
 
     @Test
     public void testToDto_ReturnsNull_WhenPojoIsNull() {
-        assertNull(mapper.toDto((Unit<?>)null));
+        assertNull(mapper.toDto((Unit<?>) null));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class QuantityUnitMapperTest {
 
     @Test
     public void testToDto_ReturnsNull_WhenEntityIsNull() {
-        assertNull(mapper.toDto((UnitEntity)null));
+        assertNull(mapper.toDto((UnitEntity) null));
     }
 
     @Test

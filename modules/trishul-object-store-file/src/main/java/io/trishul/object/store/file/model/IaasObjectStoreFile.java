@@ -1,14 +1,14 @@
 package io.trishul.object.store.file.model;
 
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.CrudEntity;
-
-public class IaasObjectStoreFile extends BaseEntity implements UpdateIaasObjectStoreFile, CrudEntity<URI> {
+public class IaasObjectStoreFile extends BaseEntity
+        implements UpdateIaasObjectStoreFile, CrudEntity<URI> {
     private URI fileKey;
     private LocalDateTime expiration;
     private URL fileUrl;
@@ -59,17 +59,15 @@ public class IaasObjectStoreFile extends BaseEntity implements UpdateIaasObjectS
     }
 
     /**
-     * setExpiration rounds the expiry time to the nearest hour or hour-and-a-half.
-     * This is to take advantage of the caching in the ObjectStoreClient so that we
-     * can reuse the cache URL when request is made to get URL for the same resource
-     * in an hour.
+     * setExpiration rounds the expiry time to the nearest hour or hour-and-a-half. This is to take
+     * advantage of the caching in the ObjectStoreClient so that we can reuse the cache URL when
+     * request is made to get URL for the same resource in an hour.
      */
     @Override
     public void setMinValidUntil(LocalDateTime minValidUntil) {
         int hourIncrement = minValidUntil.getMinute() <= 30 ? 1 : 2;
 
-        setExpiration(minValidUntil.plusHours(hourIncrement)
-                .truncatedTo(ChronoUnit.HOURS));
+        setExpiration(minValidUntil.plusHours(hourIncrement).truncatedTo(ChronoUnit.HOURS));
     }
 
     @Override

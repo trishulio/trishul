@@ -1,8 +1,7 @@
 package io.trishul.tenant.persistence.resolver;
 
-import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
-
 import io.trishul.tenant.entity.TenantIdProvider;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
     private final TenantIdProvider tenantIdProvider;

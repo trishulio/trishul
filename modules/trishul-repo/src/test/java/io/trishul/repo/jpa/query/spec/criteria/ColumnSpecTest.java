@@ -4,14 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.repo.jpa.query.root.RootUtil;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.repo.jpa.query.root.RootUtil;
 
 public class ColumnSpecTest {
     private Root<?> mRoot;

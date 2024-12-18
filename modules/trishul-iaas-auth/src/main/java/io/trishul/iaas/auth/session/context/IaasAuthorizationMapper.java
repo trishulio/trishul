@@ -7,7 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface IaasAuthorizationMapper {
-    static final IaasAuthorizationMapper INSTANCE = Mappers.getMapper(IaasAuthorizationMapper.class);
+    static final IaasAuthorizationMapper INSTANCE =
+            Mappers.getMapper(IaasAuthorizationMapper.class);
 
     @Mapping(source = IaasAuthorization.ATTR_ACCESS_KEY_ID, target = "accessKeyId")
     @Mapping(source = IaasAuthorization.ATTR_ACCESS_SECRET_KEY, target = "accessSecretKey")

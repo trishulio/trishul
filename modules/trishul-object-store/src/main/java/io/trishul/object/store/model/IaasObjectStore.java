@@ -1,15 +1,14 @@
 package io.trishul.object.store.model;
 
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.CrudEntity;
-
-public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore, CrudEntity<String>, Audited {
+public class IaasObjectStore extends BaseEntity
+        implements UpdateIaasObjectStore, CrudEntity<String>, Audited {
     private static final Logger log = LoggerFactory.getLogger(IaasObjectStore.class);
 
     private String name;

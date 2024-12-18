@@ -1,11 +1,10 @@
 package io.trishul.tenant.entity;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,8 @@ public class AdminTenantTest {
 
     @BeforeEach
     public void init() {
-        adminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "ADMIN");
+        adminTenant =
+                new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "ADMIN");
     }
 
     @Test

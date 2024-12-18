@@ -1,8 +1,7 @@
 package io.trishul.money.tax.rate.dto;
 
-import java.math.BigDecimal;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.math.BigDecimal;
 
 public class TaxRateDto extends BaseDto {
     private BigDecimal value;

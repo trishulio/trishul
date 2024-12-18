@@ -4,24 +4,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class IaasRepositoryProviderProxyTest {
     private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity> proxy;
-    private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity> mDelegate;
-    private IaasRepositoryProvider<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity> mProvider;
+    private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity>
+            mDelegate;
+    private IaasRepositoryProvider<
+                    Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity>
+            mProvider;
 
     @BeforeEach
     public void init() {
@@ -35,7 +38,13 @@ public class IaasRepositoryProviderProxyTest {
 
     @Test
     public void testGet_ReturnsValueFromDelegate() {
-        doAnswer(inv -> inv.getArgument(0, Set.class).stream().map(id -> new DummyCrudEntity((Long) id)).toList()).when(mDelegate).get(anySet());
+        doAnswer(
+                        inv ->
+                                inv.getArgument(0, Set.class).stream()
+                                        .map(id -> new DummyCrudEntity((Long) id))
+                                        .toList())
+                .when(mDelegate)
+                .get(anySet());
 
         List<DummyCrudEntity> entities = proxy.get(Set.of(1L, 2L));
 
@@ -48,7 +57,8 @@ public class IaasRepositoryProviderProxyTest {
     public void testAdd_ReturnsValueFromDelegate() {
         doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).add(anyList());
 
-        List<DummyCrudEntity> entities = proxy.add(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
+        List<DummyCrudEntity> entities =
+                proxy.add(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
 
         List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
 
@@ -59,7 +69,8 @@ public class IaasRepositoryProviderProxyTest {
     public void testPut_ReturnsValueFromDelegate() {
         doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).put(anyList());
 
-        List<DummyCrudEntity> entities = proxy.put(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
+        List<DummyCrudEntity> entities =
+                proxy.put(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
 
         List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
 

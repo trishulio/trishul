@@ -1,13 +1,11 @@
 package io.trishul.iaas.access.role.model;
 
-import java.time.LocalDateTime;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
+import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<String>, Audited {
     private static final Logger log = LoggerFactory.getLogger(IaasRole.class);
@@ -30,7 +28,15 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
         setId(id);
     }
 
-    public IaasRole(String id, String description, String assumePolicyDocument, String iaasResourceName, String iaasId, LocalDateTime lastUsed, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public IaasRole(
+            String id,
+            String description,
+            String assumePolicyDocument,
+            String iaasResourceName,
+            String iaasId,
+            LocalDateTime lastUsed,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this(id);
         setDescription(description);
         setAssumePolicyDocument(assumePolicyDocument);

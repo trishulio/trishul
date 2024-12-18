@@ -1,10 +1,6 @@
 package io.trishul.crud.controller;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Page;
+import static io.trishul.model.validator.Validator.assertion;
 
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
@@ -12,23 +8,24 @@ import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.model.base.mapper.BaseMapper;
-
-import static io.trishul.model.validator.Validator.assertion;
 import io.trishul.object.store.file.decorator.EntityDecorator;
 import io.trishul.object.store.file.decorator.NoActionDecorator;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 // import org.springframework.data.domain.Page;
 
 public class CrudControllerService<
-    ID,
-    Entity extends UpdateEntity,
-    AddEntity,
-    UpdateEntity extends Identified<ID>,
-    EntityDto extends BaseDto,
-    AddDto extends BaseDto,
-    UpdateDto extends BaseDto
-> {
+        ID,
+        Entity extends UpdateEntity,
+        AddEntity,
+        UpdateEntity extends Identified<ID>,
+        EntityDto extends BaseDto,
+        AddDto extends BaseDto,
+        UpdateDto extends BaseDto> {
     private final AttributeFilter filter;
     private final BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper;
     private final CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service;
@@ -36,12 +33,11 @@ public class CrudControllerService<
     private final EntityDecorator<EntityDto> decorator;
 
     public CrudControllerService(
-        AttributeFilter filter,
-        BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
-        CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service,
-        String entityName,
-        EntityDecorator<EntityDto> decorator
-    ) {
+            AttributeFilter filter,
+            BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
+            CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service,
+            String entityName,
+            EntityDecorator<EntityDto> decorator) {
         this.filter = filter;
         this.mapper = mapper;
         this.service = service;
@@ -50,11 +46,10 @@ public class CrudControllerService<
     }
 
     public CrudControllerService(
-        AttributeFilter filter,
-        BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
-        CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service,
-        String entityName
-    ) {
+            AttributeFilter filter,
+            BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
+            CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service,
+            String entityName) {
         this(filter, mapper, service, entityName, new NoActionDecorator<>());
     }
 
@@ -85,7 +80,11 @@ public class CrudControllerService<
 
     public List<EntityDto> add(List<AddDto> addDtos) {
         @SuppressWarnings("unchecked")
-        List<AddEntity> additions = (List<AddEntity>) addDtos.stream().map(dto -> mapper.fromAddDto(dto)).collect(Collectors.toList());
+        List<AddEntity> additions =
+                (List<AddEntity>)
+                        addDtos.stream()
+                                .map(dto -> mapper.fromAddDto(dto))
+                                .collect(Collectors.toList());
         List<Entity> added = this.service.add(additions);
 
         List<EntityDto> dtos = added.stream().map(entity -> mapper.toDto(entity)).toList();
@@ -96,7 +95,10 @@ public class CrudControllerService<
     }
 
     public List<EntityDto> put(List<UpdateDto> updateDtos) {
-        List<UpdateEntity> updates = updateDtos.stream().map(dto -> mapper.fromUpdateDto(dto)).collect(Collectors.toList());
+        List<UpdateEntity> updates =
+                updateDtos.stream()
+                        .map(dto -> mapper.fromUpdateDto(dto))
+                        .collect(Collectors.toList());
         List<Entity> updated = this.service.put(updates);
 
         List<EntityDto> dtos = updated.stream().map(entity -> mapper.toDto(entity)).toList();
@@ -107,7 +109,10 @@ public class CrudControllerService<
     }
 
     public List<EntityDto> patch(List<UpdateDto> updateDtos) {
-        List<UpdateEntity> updates = updateDtos.stream().map(dto -> mapper.fromUpdateDto(dto)).collect(Collectors.toList());
+        List<UpdateEntity> updates =
+                updateDtos.stream()
+                        .map(dto -> mapper.fromUpdateDto(dto))
+                        .collect(Collectors.toList());
         List<Entity> patched = this.service.patch(updates);
 
         List<EntityDto> dtos = patched.stream().map(entity -> mapper.toDto(entity)).toList();

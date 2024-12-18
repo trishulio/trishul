@@ -1,16 +1,15 @@
 package io.trishul.money;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import io.trishul.money.currency.model.Currency;
 import java.math.BigDecimal;
-
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-
-import io.trishul.money.currency.model.Currency;
 
 public class MoneyEntityTest {
     private MoneyEntity money;

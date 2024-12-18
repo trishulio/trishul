@@ -1,19 +1,23 @@
 package io.trishul.iaas.tenant.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TenantIaasDeleteResultTest {
     private TenantIaasDeleteResult result;
 
     @BeforeEach
     public void init() {
-        result = new TenantIaasDeleteResult(new TenantIaasAuthDeleteResult(10), new TenantIaasIdpDeleteResult(11), new TenantIaasVfsDeleteResult(12, 13));
+        result =
+                new TenantIaasDeleteResult(
+                        new TenantIaasAuthDeleteResult(10),
+                        new TenantIaasIdpDeleteResult(11),
+                        new TenantIaasVfsDeleteResult(12, 13));
     }
 
     @Test

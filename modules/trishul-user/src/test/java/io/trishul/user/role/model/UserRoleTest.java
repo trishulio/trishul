@@ -1,9 +1,9 @@
 package io.trishul.user.role.model;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,13 @@ public class UserRoleTest {
 
     @Test
     public void testAllArgs_SetsAllFields() {
-        role = new UserRole(
-            1L,
-            "ROLE_NAME",
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        role =
+                new UserRole(
+                        1L,
+                        "ROLE_NAME",
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(1L, role.getId());
         assertEquals("ROLE_NAME", role.getName());

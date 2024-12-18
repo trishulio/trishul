@@ -1,50 +1,64 @@
 package io.trishul.iaas.auth.aws.client;
 
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-import javax.annotation.Nonnull;
-
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.IdentityPoolShortDescription;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
 import io.trishul.model.base.pojo.BaseModel;
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 
 public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient {
-    private final LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>> getIdentityPools;
+    private final LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>>
+            getIdentityPools;
     private final LoadingCache<GetIdentityIdArgs, String> getIdentityId;
-    private final LoadingCache<GetCredentialsForIdentityIdArgs, Credentials> getCredentialsForIdentity;
+    private final LoadingCache<GetCredentialsForIdentityIdArgs, Credentials>
+            getCredentialsForIdentity;
 
-    public CachedAwsCognitoIdentityClient(AwsCognitoIdentityClient cognitoIdClient, long credentialsExpiryDurationSeconds) {
-        this.getIdentityPools = CacheBuilder.newBuilder()
-                                            .build(new CacheLoader<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>>() {
-                                              @Override
-                                              public List<IdentityPoolShortDescription> load(@Nonnull GetIdentityPoolsArgs key) throws Exception {
-                                                  return cognitoIdClient.getIdentityPools(key.pageSize);
-                                              }
-                                            });
+    public CachedAwsCognitoIdentityClient(
+            AwsCognitoIdentityClient cognitoIdClient, long credentialsExpiryDurationSeconds) {
+        this.getIdentityPools =
+                CacheBuilder.newBuilder()
+                        .build(
+                                new CacheLoader<
+                                        GetIdentityPoolsArgs,
+                                        List<IdentityPoolShortDescription>>() {
+                                    @Override
+                                    public List<IdentityPoolShortDescription> load(
+                                            @Nonnull GetIdentityPoolsArgs key) throws Exception {
+                                        return cognitoIdClient.getIdentityPools(key.pageSize);
+                                    }
+                                });
 
-        this.getIdentityId = CacheBuilder.newBuilder()
-                                      .build(new CacheLoader<GetIdentityIdArgs, String>() {
-                                        @Override
-                                        public String load(@Nonnull GetIdentityIdArgs key) throws Exception {
-                                            return cognitoIdClient.getIdentityId(key.identityPoolId, key.logins);
-                                        }
-                                      });
+        this.getIdentityId =
+                CacheBuilder.newBuilder()
+                        .build(
+                                new CacheLoader<GetIdentityIdArgs, String>() {
+                                    @Override
+                                    public String load(@Nonnull GetIdentityIdArgs key)
+                                            throws Exception {
+                                        return cognitoIdClient.getIdentityId(
+                                                key.identityPoolId, key.logins);
+                                    }
+                                });
 
-        this.getCredentialsForIdentity = CacheBuilder.newBuilder()
-                                      .expireAfterWrite(Duration.ofSeconds(credentialsExpiryDurationSeconds))
-                                      .build(new CacheLoader<GetCredentialsForIdentityIdArgs, Credentials>() {
-                                        @Override
-                                        public Credentials load(@Nonnull GetCredentialsForIdentityIdArgs key) throws Exception {
-                                            return cognitoIdClient.getCredentialsForIdentity(key.identityId, key.logins);
-                                        }
-                                      });
+        this.getCredentialsForIdentity =
+                CacheBuilder.newBuilder()
+                        .expireAfterWrite(Duration.ofSeconds(credentialsExpiryDurationSeconds))
+                        .build(
+                                new CacheLoader<GetCredentialsForIdentityIdArgs, Credentials>() {
+                                    @Override
+                                    public Credentials load(
+                                            @Nonnull GetCredentialsForIdentityIdArgs key)
+                                            throws Exception {
+                                        return cognitoIdClient.getCredentialsForIdentity(
+                                                key.identityId, key.logins);
+                                    }
+                                });
     }
 
     @Override
@@ -71,7 +85,8 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
 
     @Override
     public Credentials getCredentialsForIdentity(String identityId, Map<String, String> logins) {
-        GetCredentialsForIdentityIdArgs args = new GetCredentialsForIdentityIdArgs(identityId, logins);
+        GetCredentialsForIdentityIdArgs args =
+                new GetCredentialsForIdentityIdArgs(identityId, logins);
 
         try {
             return this.getCredentialsForIdentity.get(args);

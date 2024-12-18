@@ -11,11 +11,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/actuator/**", "/public/**", "/static/**", "/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html")
-            .permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .oauth2ResourceServer()
-            .jwt();
+                .antMatchers(
+                        "/actuator/**",
+                        "/public/**",
+                        "/static/**",
+                        "/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .oauth2ResourceServer()
+                .jwt();
     }
 }

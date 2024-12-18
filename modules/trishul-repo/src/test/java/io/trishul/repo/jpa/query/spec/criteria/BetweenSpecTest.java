@@ -4,16 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.model.base.pojo.BaseModel;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.model.base.pojo.BaseModel;
 
 public class BetweenSpecTest {
     class MockComparable extends BaseModel implements Comparable<MockComparable> {
@@ -50,9 +48,12 @@ public class BetweenSpecTest {
     }
 
     @Test
-    public void testGetExpression_ReturnsBetweenExpressionOnDelegatePath_WhenBothStartAndEndAreNotNull() {
+    public void
+            testGetExpression_ReturnsBetweenExpressionOnDelegatePath_WhenBothStartAndEndAreNotNull() {
         Predicate mBetweenExpr = mock(Predicate.class);
-        doReturn(mBetweenExpr).when(mCb).between(mExpr, new MockComparable(1), new MockComparable(2));
+        doReturn(mBetweenExpr)
+                .when(mCb)
+                .between(mExpr, new MockComparable(1), new MockComparable(2));
 
         spec = new BetweenSpec<>(mDelegate, new MockComparable(1), new MockComparable(2));
         assertSame(mBetweenExpr, spec.getExpression(mRoot, mCq, mCb));

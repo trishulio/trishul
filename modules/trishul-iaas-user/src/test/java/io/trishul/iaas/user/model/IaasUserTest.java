@@ -1,10 +1,9 @@
 package io.trishul.iaas.user.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,13 @@ public class IaasUserTest {
 
     @Test
     public void testAllArgConstructor() {
-        iaasUser = new IaasUser("USERNAME", "EMAIL", "PHONE_NUMBER", LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2001, 1, 1, 0, 0));
+        iaasUser =
+                new IaasUser(
+                        "USERNAME",
+                        "EMAIL",
+                        "PHONE_NUMBER",
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        LocalDateTime.of(2001, 1, 1, 0, 0));
 
         assertEquals("EMAIL", iaasUser.getId());
         assertEquals("USERNAME", iaasUser.getUserName());

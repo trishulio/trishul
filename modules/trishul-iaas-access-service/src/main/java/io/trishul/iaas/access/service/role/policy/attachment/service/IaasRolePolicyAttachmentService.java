@@ -1,16 +1,6 @@
 package io.trishul.iaas.access.service.role.policy.attachment.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
@@ -20,27 +10,63 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentAcc
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Transactional
-public class IaasRolePolicyAttachmentService extends BaseService implements CrudService<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment, IaasRolePolicyAttachmentAccessor> {
-    private static final Logger log = LoggerFactory.getLogger(IaasRolePolicyAttachmentService.class);
+public class IaasRolePolicyAttachmentService extends BaseService
+        implements CrudService<
+                IaasRolePolicyAttachmentId,
+                IaasRolePolicyAttachment,
+                BaseIaasRolePolicyAttachment,
+                UpdateIaasRolePolicyAttachment,
+                IaasRolePolicyAttachmentAccessor> {
+    private static final Logger log =
+            LoggerFactory.getLogger(IaasRolePolicyAttachmentService.class);
 
-    private final IaasRepository<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment> iaasRepo;
+    private final IaasRepository<
+                    IaasRolePolicyAttachmentId,
+                    IaasRolePolicyAttachment,
+                    BaseIaasRolePolicyAttachment,
+                    UpdateIaasRolePolicyAttachment>
+            iaasRepo;
 
-    private final UpdateService<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment> updateService;
+    private final UpdateService<
+                    IaasRolePolicyAttachmentId,
+                    IaasRolePolicyAttachment,
+                    BaseIaasRolePolicyAttachment,
+                    UpdateIaasRolePolicyAttachment>
+            updateService;
 
-    public IaasRolePolicyAttachmentService(UpdateService<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment> updateService, IaasRepository<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment> iaasRepo) {
+    public IaasRolePolicyAttachmentService(
+            UpdateService<
+                            IaasRolePolicyAttachmentId,
+                            IaasRolePolicyAttachment,
+                            BaseIaasRolePolicyAttachment,
+                            UpdateIaasRolePolicyAttachment>
+                    updateService,
+            IaasRepository<
+                            IaasRolePolicyAttachmentId,
+                            IaasRolePolicyAttachment,
+                            BaseIaasRolePolicyAttachment,
+                            UpdateIaasRolePolicyAttachment>
+                    iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<IaasRolePolicyAttachmentId> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -77,23 +103,27 @@ public class IaasRolePolicyAttachmentService extends BaseService implements Crud
     }
 
     @Override
-    public List<IaasRolePolicyAttachment> getByIds(Collection<? extends Identified<IaasRolePolicyAttachmentId>> idProviders) {
-        Set<IaasRolePolicyAttachmentId> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+    public List<IaasRolePolicyAttachment> getByIds(
+            Collection<? extends Identified<IaasRolePolicyAttachmentId>> idProviders) {
+        Set<IaasRolePolicyAttachmentId> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
-    public List<IaasRolePolicyAttachment> getByAccessorIds(Collection<? extends IaasRolePolicyAttachmentAccessor> accessors) {
-        List<IaasRolePolicyAttachment> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIaasRolePolicyAttachment())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+    public List<IaasRolePolicyAttachment> getByAccessorIds(
+            Collection<? extends IaasRolePolicyAttachmentAccessor> accessors) {
+        List<IaasRolePolicyAttachment> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIaasRolePolicyAttachment())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 
@@ -127,7 +157,8 @@ public class IaasRolePolicyAttachmentService extends BaseService implements Crud
 
         List<IaasRolePolicyAttachment> existing = this.getByIds(updates);
 
-        List<IaasRolePolicyAttachment> updated = this.updateService.getPatchEntities(existing, updates);
+        List<IaasRolePolicyAttachment> updated =
+                this.updateService.getPatchEntities(existing, updates);
 
         return iaasRepo.put(updated);
     }

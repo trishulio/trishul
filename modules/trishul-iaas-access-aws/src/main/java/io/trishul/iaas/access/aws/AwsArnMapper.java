@@ -27,15 +27,17 @@ public class AwsArnMapper {
         return Arn.fromString(arn).getResource().getResource();
     }
 
-    private String getServiceArn(String region, String serviceName, String resourcePrefix, String resourceName) {
-        String arn = Arn.builder()
-            .withAccountId(this.accountId)
-            .withPartition(this.partition)
-            .withService(serviceName)
-            .withRegion(region)
-            .withResource(resourcePrefix + resourceName)
-            .build()
-            .toString();
+    private String getServiceArn(
+            String region, String serviceName, String resourcePrefix, String resourceName) {
+        String arn =
+                Arn.builder()
+                        .withAccountId(this.accountId)
+                        .withPartition(this.partition)
+                        .withService(serviceName)
+                        .withRegion(region)
+                        .withResource(resourcePrefix + resourceName)
+                        .build()
+                        .toString();
 
         return arn.toLowerCase();
     }

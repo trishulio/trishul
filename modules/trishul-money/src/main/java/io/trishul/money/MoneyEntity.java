@@ -1,15 +1,13 @@
 package io.trishul.money;
 
+import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.money.currency.model.Currency;
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.money.currency.model.Currency;
 
 @Embeddable
 public class MoneyEntity extends BaseEntity {
@@ -23,8 +21,7 @@ public class MoneyEntity extends BaseEntity {
     @Column(name = "amount", precision = 20, scale = 4)
     private BigDecimal amount;
 
-    public MoneyEntity() {
-    }
+    public MoneyEntity() {}
 
     public MoneyEntity(Currency currency, BigDecimal amount) {
         setCurrency(currency);

@@ -1,15 +1,14 @@
 package io.trishul.user.model;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import io.trishul.model.base.mapper.BaseMapper;
 import io.trishul.user.role.model.UserRoleMapper;
 import io.trishul.user.salutation.model.UserSalutationMapper;
 import io.trishul.user.status.UserStatusMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class })
+@Mapper(uses = {UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class})
 public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, UpdateUserDto> {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 

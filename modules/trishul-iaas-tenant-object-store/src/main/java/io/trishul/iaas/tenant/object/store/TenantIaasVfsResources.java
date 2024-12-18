@@ -8,8 +8,7 @@ public class TenantIaasVfsResources extends BaseModel {
     private IaasObjectStore objectStore;
     private IaasPolicy policy;
 
-    public TenantIaasVfsResources() {
-    }
+    public TenantIaasVfsResources() {}
 
     public TenantIaasVfsResources(IaasObjectStore objectStore, IaasPolicy policy) {
         this();

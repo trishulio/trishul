@@ -3,17 +3,15 @@ package io.trishul.user.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.user.role.model.UserRoleDto;
 import io.trishul.user.salutation.model.UserSalutationDto;
 import io.trishul.user.status.UserStatusDto;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class UserDtoTest {
     private UserDto dto;
@@ -25,23 +23,23 @@ public class UserDtoTest {
 
     @Test
     public void testAllArgConstructor_SetsAllFields() {
-        dto = new UserDto(
-            1L,
-            "USER_NAME",
-            "DISPLAY_NAME",
-            "FIRST_NAME",
-            "LAST_NAME",
-            "EMAIL",
-            "PHONE_NUMBER",
-            URI.create("IMAGE_SRC"),
-            new IaasObjectStoreFileDto(URI.create("file.txt")),
-            new UserStatusDto(1L),
-            new UserSalutationDto(2L),
-            List.of(new UserRoleDto(3L)),
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        dto =
+                new UserDto(
+                        1L,
+                        "USER_NAME",
+                        "DISPLAY_NAME",
+                        "FIRST_NAME",
+                        "LAST_NAME",
+                        "EMAIL",
+                        "PHONE_NUMBER",
+                        URI.create("IMAGE_SRC"),
+                        new IaasObjectStoreFileDto(URI.create("file.txt")),
+                        new UserStatusDto(1L),
+                        new UserSalutationDto(2L),
+                        List.of(new UserRoleDto(3L)),
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(1L, dto.getId());
         assertEquals("USER_NAME", dto.getUserName());

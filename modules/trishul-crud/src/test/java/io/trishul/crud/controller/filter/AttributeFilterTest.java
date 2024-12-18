@@ -1,13 +1,12 @@
 package io.trishul.crud.controller.filter;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Set;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import io.trishul.test.bom.model.Dummy;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AttributeFilterTest {
     private AttributeFilter filter;

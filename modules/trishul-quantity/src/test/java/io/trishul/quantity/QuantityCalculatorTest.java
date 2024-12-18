@@ -1,26 +1,23 @@
 package io.trishul.quantity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import java.math.BigDecimal;
-
 import javax.measure.Quantity;
 import javax.measure.quantity.AmountOfSubstance;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import javax.measure.quantity.Volume;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.quantity.unit.SupportedUnits;
-import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 
@@ -52,8 +49,10 @@ public class QuantityCalculatorTest {
 
     @Test
     public void subtractAmmount_Succes() {
-        Quantity<AmountOfSubstance> q1 = Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.EACH);
-        Quantity<AmountOfSubstance> q2 = Quantities.getQuantity(new BigDecimal("25"), SupportedUnits.EACH);
+        Quantity<AmountOfSubstance> q1 =
+                Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.EACH);
+        Quantity<AmountOfSubstance> q2 =
+                Quantities.getQuantity(new BigDecimal("25"), SupportedUnits.EACH);
         Quantity<AmountOfSubstance> result = (Quantity<AmountOfSubstance>) calc.subtract(q1, q2);
 
         assertEquals(Quantities.getQuantity(new BigDecimal("75"), SupportedUnits.EACH), result);
@@ -87,8 +86,10 @@ public class QuantityCalculatorTest {
 
     @Test
     public void addAmmount_Succes() {
-        Quantity<AmountOfSubstance> q1 = Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.EACH);
-        Quantity<AmountOfSubstance> q2 = Quantities.getQuantity(new BigDecimal("25"), SupportedUnits.EACH);
+        Quantity<AmountOfSubstance> q1 =
+                Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.EACH);
+        Quantity<AmountOfSubstance> q2 =
+                Quantities.getQuantity(new BigDecimal("25"), SupportedUnits.EACH);
         Quantity<AmountOfSubstance> result = (Quantity<AmountOfSubstance>) calc.add(q1, q2);
 
         assertEquals(Quantities.getQuantity(new BigDecimal("125"), SupportedUnits.EACH), result);
@@ -108,7 +109,8 @@ public class QuantityCalculatorTest {
     }
 
     @Test
-    public void testToSystemQuantityValueWithDisplayUnit_ReturnsSystemValueWithDisplayUnit_WhenArgIsNotNull() {
+    public void
+            testToSystemQuantityValueWithDisplayUnit_ReturnsSystemValueWithDisplayUnit_WhenArgIsNotNull() {
         Quantity<?> input = Quantities.getQuantity(new BigDecimal("100000"), SupportedUnits.GRAM);
 
         Quantity<?> output = calc.toSystemQuantityValueWithDisplayUnit(input);
@@ -122,7 +124,8 @@ public class QuantityCalculatorTest {
     }
 
     @Test
-    public void testFromSystemQuantityValueWithDisplayUnit_ReturnsQuantityInDisplayUnit_WhenArgIsNotNull() {
+    public void
+            testFromSystemQuantityValueWithDisplayUnit_ReturnsQuantityInDisplayUnit_WhenArgIsNotNull() {
         Quantity<?> input = Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.GRAM);
 
         Quantity<?> output = calc.fromSystemQuantityValueWithDisplayUnit(input);
@@ -151,7 +154,8 @@ public class QuantityCalculatorTest {
     }
 
     @Test
-    public void testIsCompatibleQtyForUnitAccessor_ReturnsTrue_WhenAccessorQuantityIsCompatibleWithUnit() {
+    public void
+            testIsCompatibleQtyForUnitAccessor_ReturnsTrue_WhenAccessorQuantityIsCompatibleWithUnit() {
         BaseQuantityUnitAccessor accessor = mock(BaseQuantityUnitAccessor.class);
         doReturn(SupportedUnits.GRAM).when(accessor).getBaseQuantityUnit();
 
@@ -159,7 +163,8 @@ public class QuantityCalculatorTest {
     }
 
     @Test
-    public void testIsCompatibleQtyForUnitAccessor_ReturnsFalse_WhenAccessorQuantityIsNotCompatibleWithUnit() {
+    public void
+            testIsCompatibleQtyForUnitAccessor_ReturnsFalse_WhenAccessorQuantityIsNotCompatibleWithUnit() {
         BaseQuantityUnitAccessor accessor = mock(BaseQuantityUnitAccessor.class);
         doReturn(SupportedUnits.LITRE).when(accessor).getBaseQuantityUnit();
 
@@ -168,7 +173,9 @@ public class QuantityCalculatorTest {
 
     @Test
     public void testAreCompatibleQuantities_ReturnsTrue_WhenQuantitiesHaveCompatibleUnits() {
-        assertTrue(calc.areCompatibleQuantities(Quantities.getQuantity("10 g"), Quantities.getQuantity("10 g")));
+        assertTrue(
+                calc.areCompatibleQuantities(
+                        Quantities.getQuantity("10 g"), Quantities.getQuantity("10 g")));
     }
 
     @Test
@@ -180,16 +187,22 @@ public class QuantityCalculatorTest {
 
     @Test
     public void testAreCompatibleQuantities_ReturnsFalse_WhenQuantitiesHaveIncompatibleUnits() {
-        assertFalse(calc.areCompatibleQuantities(Quantities.getQuantity("10 g"), Quantities.getQuantity("10 l")));
+        assertFalse(
+                calc.areCompatibleQuantities(
+                        Quantities.getQuantity("10 g"), Quantities.getQuantity("10 l")));
     }
 
     @Test
     public void testIsExpectedUnit_ReturnsTrue_WhenUnitIsExpected() {
-        assertTrue(calc.isExpectedUnit(SupportedUnits.GRAM, Quantities.getQuantity(100, SupportedUnits.GRAM)));
+        assertTrue(
+                calc.isExpectedUnit(
+                        SupportedUnits.GRAM, Quantities.getQuantity(100, SupportedUnits.GRAM)));
     }
 
     @Test
     public void testIsExpectedUnit_ReturnsFalse_WhenUnitIsNotExpected() {
-        assertFalse(calc.isExpectedUnit(SupportedUnits.GRAM, Quantities.getQuantity(100, SupportedUnits.LITRE)));
+        assertFalse(
+                calc.isExpectedUnit(
+                        SupportedUnits.GRAM, Quantities.getQuantity(100, SupportedUnits.LITRE)));
     }
 }

@@ -1,14 +1,5 @@
 package io.trishul.repo.jpa.query.clause.where.builder;
 
-import java.util.Collection;
-import java.util.Set;
-
-import javax.persistence.criteria.Predicate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.domain.Specification;
-
 import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
@@ -17,6 +8,12 @@ import io.trishul.repo.jpa.query.spec.criteria.InSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsNullSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
 import io.trishul.repo.jpa.query.spec.criteria.LikeSpec;
+import java.util.Collection;
+import java.util.Set;
+import javax.persistence.criteria.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 
 public class WhereClauseBuilderDelegate {
     @SuppressWarnings("unused")

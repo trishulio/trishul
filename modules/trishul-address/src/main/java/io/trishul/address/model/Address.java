@@ -1,14 +1,11 @@
 package io.trishul.address.model;
 
+import io.trishul.model.base.entity.BaseEntity;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import io.trishul.model.base.entity.BaseEntity;
 
 @MappedSuperclass
 public class Address extends BaseEntity {
@@ -38,10 +35,17 @@ public class Address extends BaseEntity {
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
 
-    public Address() {
-    }
+    public Address() {}
 
-    public Address(String addressLine1, String addressLine2, String country, String province, String city, String postalCode, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public Address(
+            String addressLine1,
+            String addressLine2,
+            String country,
+            String province,
+            String city,
+            String postalCode,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this();
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;

@@ -1,10 +1,9 @@
 package io.trishul.tenant.dto;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import io.trishul.model.base.dto.BaseDto;
 
 public class TenantDto extends BaseDto {
     private UUID id;
@@ -23,7 +22,13 @@ public class TenantDto extends BaseDto {
         setId(id);
     }
 
-    public TenantDto(UUID id, String name, URL url, Boolean isReady, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public TenantDto(
+            UUID id,
+            String name,
+            URL url,
+            Boolean isReady,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated) {
         this(id);
         setName(name);
         setUrl(url);

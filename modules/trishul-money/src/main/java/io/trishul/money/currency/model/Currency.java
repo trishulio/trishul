@@ -1,15 +1,13 @@
 package io.trishul.money.currency.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.trishul.model.base.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.model.base.entity.BaseEntity;
-
 @Entity(name = "currency")
-@JsonIgnoreProperties({ "hibernateLazyInitializer" })
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Currency extends BaseEntity implements UpdateCurrency {
     public static final String FIELD_NUMERIC_CODE = "numericCode";
     public static final String FIELD_CODE = "code";

@@ -1,43 +1,35 @@
 package io.trishul.user.model;
 
-import java.net.URI;
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.validation.NullOrNotBlank;
+import java.net.URI;
+import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UpdateUserDto extends BaseDto {
     private Long id;
 
-    @NullOrNotBlank
-    private String userName;
+    @NullOrNotBlank private String userName;
 
-    @NullOrNotBlank
-    private String displayName;
+    @NullOrNotBlank private String displayName;
 
-    @NullOrNotBlank
-    private String firstName;
+    @NullOrNotBlank private String firstName;
 
-    @NullOrNotBlank
-    private String lastName;
+    @NullOrNotBlank private String lastName;
 
     private Long statusId;
 
     private Long salutationId;
 
-    @NullOrNotBlank
-    private String phoneNumber;
+    @NullOrNotBlank private String phoneNumber;
 
     private URI imageSrc;
 
     @Size(min = 1)
     private List<Long> roleIds;
 
-    @NotNull
-    private Integer version;
+    @NotNull private Integer version;
 
     public UpdateUserDto() {
         super();
@@ -48,7 +40,18 @@ public class UpdateUserDto extends BaseDto {
         setId(id);
     }
 
-    public UpdateUserDto(Long id, String userName, String displayName, String firstName, String lastName, Long statusId, Long salutationId, String phoneNumber, URI imageSrc, List<Long> roleIds, @NotNull Integer version) {
+    public UpdateUserDto(
+            Long id,
+            String userName,
+            String displayName,
+            String firstName,
+            String lastName,
+            Long statusId,
+            Long salutationId,
+            String phoneNumber,
+            URI imageSrc,
+            List<Long> roleIds,
+            @NotNull Integer version) {
         this(id);
         setUserName(userName);
         setDisplayName(displayName);

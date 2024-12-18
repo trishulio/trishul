@@ -1,19 +1,16 @@
 package io.trishul.repo.jpa.query.spec.accumulator;
 
+import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
-import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
-import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
 
 public class PredicateSpecAccumulator {
     @SuppressWarnings("unused")
@@ -57,9 +54,14 @@ public class PredicateSpecAccumulator {
         this.isPredicate = isPredicate;
     }
 
-    public Predicate[] getPredicates(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public Predicate[] getPredicates(
+            Root<?> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Predicate[] predicates = new Predicate[this.aggregations.size()];
-        predicates = this.aggregations.stream().map(spec -> spec.getExpression(root, query, criteriaBuilder)).toList().toArray(predicates);
+        predicates =
+                this.aggregations.stream()
+                        .map(spec -> spec.getExpression(root, query, criteriaBuilder))
+                        .toList()
+                        .toArray(predicates);
 
         return predicates;
     }

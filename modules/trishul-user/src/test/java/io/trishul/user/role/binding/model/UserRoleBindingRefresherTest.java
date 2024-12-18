@@ -1,15 +1,16 @@
 package io.trishul.user.role.binding.model;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
-import io.trishul.base.types.base.pojo.Refresher;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class UserRoleBindingRefresherTest {
     private Refresher<UserRole, UserRoleAccessor> mUserRoleRefresher;
@@ -27,12 +28,14 @@ public class UserRoleBindingRefresherTest {
         List<UserRoleBinding> bindings = List.of(new UserRoleBinding(1L), new UserRoleBinding(2L));
         userRoleBindingRefresher.refresh(bindings);
 
-        verify(mUserRoleRefresher, times(1)).refreshAccessors(List.of(new UserRoleBinding(1L), new UserRoleBinding(2L)));
+        verify(mUserRoleRefresher, times(1))
+                .refreshAccessors(List.of(new UserRoleBinding(1L), new UserRoleBinding(2L)));
     }
 
     @Test
     public void testRefreshAccessors_DoesNothing() {
-        List<UserRoleBindingAccessor> accessors = List.of(mock(UserRoleBindingAccessor.class), mock(UserRoleBindingAccessor.class));
+        List<UserRoleBindingAccessor> accessors =
+                List.of(mock(UserRoleBindingAccessor.class), mock(UserRoleBindingAccessor.class));
 
         userRoleBindingRefresher.refreshAccessors(accessors);
 

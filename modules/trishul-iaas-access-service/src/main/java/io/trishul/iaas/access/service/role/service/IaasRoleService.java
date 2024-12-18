@@ -1,16 +1,6 @@
 package io.trishul.iaas.access.service.role.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
@@ -19,25 +9,35 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Transactional
-public class IaasRoleService extends BaseService implements CrudService<String, IaasRole, BaseIaasRole, UpdateIaasRole, IaasRoleAccessor> {
+public class IaasRoleService extends BaseService
+        implements CrudService<String, IaasRole, BaseIaasRole, UpdateIaasRole, IaasRoleAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasRoleService.class);
 
     private final IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> iaasRepo;
 
     private final UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService;
 
-    public IaasRoleService(UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService, IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> iaasRepo) {
+    public IaasRoleService(
+            UpdateService<String, IaasRole, BaseIaasRole, UpdateIaasRole> updateService,
+            IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values()
-                .stream().filter(b -> !b)
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
                 .findAny()
                 .orElseGet(() -> true);
     }
@@ -77,22 +77,24 @@ public class IaasRoleService extends BaseService implements CrudService<String, 
 
     @Override
     public List<IaasRole> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+        Set<String> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
     public List<IaasRole> getByAccessorIds(Collection<? extends IaasRoleAccessor> accessors) {
-        List<IaasRole> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIaasRole())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+        List<IaasRole> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIaasRole())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 

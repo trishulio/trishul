@@ -1,8 +1,5 @@
 package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.CreateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.CreateGroupResult;
@@ -14,7 +11,6 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupResult;
-
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
@@ -24,8 +20,11 @@ import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> {
+public class AwsIdpTenantWithRoleClient
+        implements IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> {
     private static final Logger log = LoggerFactory.getLogger(AwsIdpTenantWithRoleClient.class);
 
     private final AWSCognitoIdentityProvider idp;
@@ -35,7 +34,12 @@ public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTen
 
     private final IaasRoleService roleService;
 
-    public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider idp, String userPoolId, IaasEntityMapper<GroupType, IaasIdpTenant> mapper, AwsArnMapper arnMapper, IaasRoleService roleService) {
+    public AwsIdpTenantWithRoleClient(
+            AWSCognitoIdentityProvider idp,
+            String userPoolId,
+            IaasEntityMapper<GroupType, IaasIdpTenant> mapper,
+            AwsArnMapper arnMapper,
+            IaasRoleService roleService) {
         this.idp = idp;
         this.userPoolId = userPoolId;
         this.mapper = mapper;
@@ -47,9 +51,8 @@ public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTen
     public IaasIdpTenant get(String id) {
         IaasIdpTenant tenant = null;
 
-        GetGroupRequest request = new GetGroupRequest()
-                                        .withGroupName(id)
-                                        .withUserPoolId(userPoolId);
+        GetGroupRequest request =
+                new GetGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
 
         try {
             GetGroupResult result = this.idp.getGroup(request);
@@ -60,16 +63,17 @@ public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTen
             log.error("Failed to fetch group: {}", id);
         }
 
-        return  tenant;
+        return tenant;
     }
 
     @Override
     public <BE extends BaseIaasIdpTenant> IaasIdpTenant add(BE entity) {
-        CreateGroupRequest request = new CreateGroupRequest()
-                                         .withDescription(entity.getDescription())
-                                         .withGroupName(entity.getName())
-                                         .withRoleArn(roleArn(entity))
-                                         .withUserPoolId(userPoolId);
+        CreateGroupRequest request =
+                new CreateGroupRequest()
+                        .withDescription(entity.getDescription())
+                        .withGroupName(entity.getName())
+                        .withRoleArn(roleArn(entity))
+                        .withUserPoolId(userPoolId);
 
         CreateGroupResult result = this.idp.createGroup(request);
 
@@ -92,9 +96,8 @@ public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTen
     public boolean delete(String id) {
         boolean success = false;
 
-        DeleteGroupRequest request = new DeleteGroupRequest()
-                                         .withGroupName(id)
-                                         .withUserPoolId(userPoolId);
+        DeleteGroupRequest request =
+                new DeleteGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
 
         try {
             DeleteGroupResult result = this.idp.deleteGroup(request);
@@ -112,11 +115,12 @@ public class AwsIdpTenantWithRoleClient implements IaasClient<String, IaasIdpTen
     }
 
     public <UE extends UpdateIaasIdpTenant> IaasIdpTenant update(UE entity) {
-        UpdateGroupRequest request = new UpdateGroupRequest()
-                                         .withDescription(entity.getDescription())
-                                         .withGroupName(entity.getName())
-                                         .withRoleArn(roleArn(entity))
-                                         .withUserPoolId(userPoolId);
+        UpdateGroupRequest request =
+                new UpdateGroupRequest()
+                        .withDescription(entity.getDescription())
+                        .withGroupName(entity.getName())
+                        .withRoleArn(roleArn(entity))
+                        .withUserPoolId(userPoolId);
 
         UpdateGroupResult result = this.idp.updateGroup(request);
 

@@ -1,14 +1,13 @@
 package io.trishul.iaas.auth.session.context;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.pojo.BaseModel;
 import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.trishul.model.base.pojo.BaseModel;
-import io.trishul.base.types.base.pojo.Identified;
-
-public class IaasAuthorization extends BaseModel implements UpdateIaasAuthorization, Identified<String> {
+public class IaasAuthorization extends BaseModel
+        implements UpdateIaasAuthorization, Identified<String> {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasAuthorization.class);
 
@@ -21,7 +20,11 @@ public class IaasAuthorization extends BaseModel implements UpdateIaasAuthorizat
         super();
     }
 
-    public IaasAuthorization(String accessKeyId, String accessSecretKey, String sessionToken, LocalDateTime expiration) {
+    public IaasAuthorization(
+            String accessKeyId,
+            String accessSecretKey,
+            String sessionToken,
+            LocalDateTime expiration) {
         this();
         setAccessKeyId(accessKeyId);
         setAccessSecretKey(accessSecretKey);

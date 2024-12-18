@@ -2,18 +2,16 @@ package io.trishul.data.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
+import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
+import io.trishul.data.datasource.manager.CachingDataSourceManager;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import io.trishul.data.datasource.manager.CachingDataSourceManager;
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 
 public class DataAutoConfigurationTest {
     private DataAutoConfiguration config;

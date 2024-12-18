@@ -1,15 +1,15 @@
 package io.trishul.iaas.client;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.iaas.repository.IaasRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
-
-public class SequentialExecutor<ID, Entity extends Identified<ID>, BaseEntity, UpdateEntity> implements IaasRepository<ID, Entity, BaseEntity, UpdateEntity> {
+public class SequentialExecutor<ID, Entity extends Identified<ID>, BaseEntity, UpdateEntity>
+        implements IaasRepository<ID, Entity, BaseEntity, UpdateEntity> {
     private final IaasClient<ID, Entity, BaseEntity, UpdateEntity> iaasClient;
 
     public SequentialExecutor(IaasClient<ID, Entity, BaseEntity, UpdateEntity> iaasClient) {
@@ -40,11 +40,10 @@ public class SequentialExecutor<ID, Entity extends Identified<ID>, BaseEntity, U
     public Map<ID, Boolean> exists(Set<ID> ids) {
         Map<ID, Boolean> exists = new HashMap<>();
 
-        this.get(ids)
-             .stream()
-             .filter(Objects::nonNull)
-             .map(Identified::getId)
-             .forEach(existingId -> exists.put(existingId, true));
+        this.get(ids).stream()
+                .filter(Objects::nonNull)
+                .map(Identified::getId)
+                .forEach(existingId -> exists.put(existingId, true));
         ids.forEach(id -> exists.putIfAbsent(id, false));
 
         return exists;

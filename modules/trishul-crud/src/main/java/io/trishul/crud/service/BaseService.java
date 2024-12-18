@@ -1,8 +1,7 @@
 package io.trishul.crud.service;
 
-import java.util.Set;
-
 import io.trishul.model.reflection.ReflectionManipulator;
+import java.util.Set;
 
 public class BaseService {
     protected ReflectionManipulator util;

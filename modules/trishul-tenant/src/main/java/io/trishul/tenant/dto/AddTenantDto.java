@@ -1,17 +1,13 @@
 package io.trishul.tenant.dto;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.net.URL;
-
 import javax.validation.constraints.NotBlank;
 
-import io.trishul.model.base.dto.BaseDto;
-
 public class AddTenantDto extends BaseDto {
-    @NotBlank
-    private String name;
+    @NotBlank private String name;
 
-    @NotBlank
-    private URL url;
+    @NotBlank private URL url;
 
     public AddTenantDto() {
         super();

@@ -1,13 +1,12 @@
 package io.trishul.money;
 
+import io.trishul.money.currency.model.Currency;
+import io.trishul.money.currency.model.CurrencyMapper;
+import io.trishul.money.dto.MoneyDto;
 import org.joda.money.Money;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import io.trishul.money.currency.model.Currency;
-import io.trishul.money.currency.model.CurrencyMapper;
-import io.trishul.money.dto.MoneyDto;
 
 @Mapper
 public interface MoneyMapper {
@@ -30,7 +29,9 @@ public interface MoneyMapper {
         Money money = null;
         if (entity != null) {
             String symbol = entity.getCurrency().getCode();
-            String amount = entity.getAmount().toString(); // TODO: Difference between toString and toPlainString() ?
+            String amount =
+                    entity.getAmount()
+                            .toString(); // TODO: Difference between toString and toPlainString() ?
             money = Money.parse(String.format("%s %s", symbol, amount));
         }
         return money;

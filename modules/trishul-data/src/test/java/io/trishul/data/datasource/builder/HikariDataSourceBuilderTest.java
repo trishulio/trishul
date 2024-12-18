@@ -1,20 +1,18 @@
 package io.trishul.data.datasource.builder;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.zaxxer.hikari.HikariDataSource;
+import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.zaxxer.hikari.HikariDataSource;
-
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
-import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 
 public class HikariDataSourceBuilderTest {
     private DataSourceBuilder builder;
@@ -26,11 +24,12 @@ public class HikariDataSourceBuilderTest {
 
     @Test
     public void testBuild_ReturnsDataSource_CreatedWithProps() throws SQLException {
-        DataSource ds = builder.url("jdbc:hsqldb:mem:unittestdb")
-                               .username("test_user")
-                               .password("test_pass")
-                               .autoCommit(false)
-                               .build();
+        DataSource ds =
+                builder.url("jdbc:hsqldb:mem:unittestdb")
+                        .username("test_user")
+                        .password("test_pass")
+                        .autoCommit(false)
+                        .build();
 
         assertTrue(ds instanceof HikariDataSource);
 
@@ -87,12 +86,12 @@ public class HikariDataSourceBuilderTest {
     @Test
     public void testClear_ClearsAllValues() {
         builder.username("username")
-               .password("password")
-               .schema("schema")
-               .autoCommit(true)
-               .url("url")
-               .poolSize(99)
-               .clear();
+                .password("password")
+                .schema("schema")
+                .autoCommit(true)
+                .url("url")
+                .poolSize(99)
+                .clear();
         assertNull(builder.username());
         assertNull(builder.password());
         assertNull(builder.schema());

@@ -1,12 +1,22 @@
 package io.trishul.user.service.user.service.role.controller;
 
+import io.trishul.crud.controller.BaseController;
+import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import io.trishul.user.role.model.AddUserRoleDto;
+import io.trishul.user.role.model.BaseUserRole;
+import io.trishul.user.role.model.UpdateUserRole;
+import io.trishul.user.role.model.UpdateUserRoleDto;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleDto;
+import io.trishul.user.role.model.UserRoleMapper;
+import io.trishul.user.service.user.service.role.service.UserRoleService;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,87 +33,105 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.trishul.crud.controller.BaseController;
-import io.trishul.crud.controller.CrudControllerService;
-import io.trishul.crud.controller.filter.AttributeFilter;
-import io.trishul.repo.jpa.repository.model.dto.PageDto;
-import io.trishul.user.role.model.AddUserRoleDto;
-import io.trishul.user.role.model.BaseUserRole;
-import io.trishul.user.role.model.UpdateUserRole;
-import io.trishul.user.role.model.UpdateUserRoleDto;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.role.model.UserRoleDto;
-import io.trishul.user.role.model.UserRoleMapper;
-import io.trishul.user.service.user.service.role.service.UserRoleService;
-
 @RestController
 @RequestMapping(path = "/api/v1/users/roles")
 public class UserRoleController extends BaseController {
     private CrudControllerService<
-        Long,
-        UserRole,
-        BaseUserRole,
-        UpdateUserRole,
-        UserRoleDto,
-        AddUserRoleDto,
-        UpdateUserRoleDto
-    > controller;
+                    Long,
+                    UserRole,
+                    BaseUserRole,
+                    UpdateUserRole,
+                    UserRoleDto,
+                    AddUserRoleDto,
+                    UpdateUserRoleDto>
+            controller;
 
     private final UserRoleService userRoleService;
 
-    protected UserRoleController(CrudControllerService<
-            Long,
-            UserRole,
-            BaseUserRole,
-            UpdateUserRole,
-            UserRoleDto,
-            AddUserRoleDto,
-            UpdateUserRoleDto
-        > controller, UserRoleService userRoleService)
-    {
+    protected UserRoleController(
+            CrudControllerService<
+                            Long,
+                            UserRole,
+                            BaseUserRole,
+                            UpdateUserRole,
+                            UserRoleDto,
+                            AddUserRoleDto,
+                            UpdateUserRoleDto>
+                    controller,
+            UserRoleService userRoleService) {
         this.controller = controller;
         this.userRoleService = userRoleService;
     }
 
     @Autowired
     public UserRoleController(UserRoleService userRoleService, AttributeFilter filter) {
-        this(new CrudControllerService<>(filter, UserRoleMapper.INSTANCE, userRoleService, "UserRole"), userRoleService);
+        this(
+                new CrudControllerService<>(
+                        filter, UserRoleMapper.INSTANCE, userRoleService, "UserRole"),
+                userRoleService);
     }
 
-    @GetMapping(value = "", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(
+            value = "",
+            consumes = MediaType.ALL_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public PageDto<UserRoleDto> getAllUserRoles(
-        @RequestParam(name = "ids", required = false) Set<Long> ids,
-        @RequestParam(name = "exclude_ids", required = false) Set<Long> excludeIds,
-        @RequestParam(name = "names", required = false) Set<String> names,
-        @RequestParam(name = PROPNAME_SORT_BY, defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
-        @RequestParam(name = PROPNAME_ORDER_ASC, defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
-        @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
-        @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
-        @RequestParam(name = PROPNAME_ATTR, defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes
-    ) {
-        Page<UserRole> orders = userRoleService.getUserRoles(ids, excludeIds, names, sort, orderAscending, page, size);
+            @RequestParam(name = "ids", required = false) Set<Long> ids,
+            @RequestParam(name = "exclude_ids", required = false) Set<Long> excludeIds,
+            @RequestParam(name = "names", required = false) Set<String> names,
+            @RequestParam(name = PROPNAME_SORT_BY, defaultValue = VALUE_DEFAULT_SORT_BY)
+                    SortedSet<String> sort,
+            @RequestParam(name = PROPNAME_ORDER_ASC, defaultValue = VALUE_DEFAULT_ORDER_ASC)
+                    boolean orderAscending,
+            @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX)
+                    int page,
+            @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE)
+                    int size,
+            @RequestParam(name = PROPNAME_ATTR, defaultValue = VALUE_DEFAULT_ATTR)
+                    Set<String> attributes) {
+        Page<UserRole> orders =
+                userRoleService.getUserRoles(
+                        ids, excludeIds, names, sort, orderAscending, page, size);
 
         return this.controller.getAll(orders, attributes);
     }
 
-    @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserRoleDto getUserRole(@PathVariable("id") Long id, @RequestParam(name = PROPNAME_ATTR, defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    @GetMapping(
+            value = "/{id}",
+            consumes = MediaType.ALL_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserRoleDto getUserRole(
+            @PathVariable("id") Long id,
+            @RequestParam(name = PROPNAME_ATTR, defaultValue = VALUE_DEFAULT_ATTR)
+                    Set<String> attributes) {
         return this.controller.get(id, attributes);
     }
 
-    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(
+            value = "",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<UserRoleDto> postUserRole(@Valid @NotNull @RequestBody List<AddUserRoleDto> addDtos) {
+    public List<UserRoleDto> postUserRole(
+            @Valid @NotNull @RequestBody List<AddUserRoleDto> addDtos) {
         return this.controller.add(addDtos);
     }
 
-    @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserRoleDto> putUserRole(@Valid @NotNull @RequestBody List<UpdateUserRoleDto> updateDtos) {
+    @PutMapping(
+            value = "",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserRoleDto> putUserRole(
+            @Valid @NotNull @RequestBody List<UpdateUserRoleDto> updateDtos) {
         return this.controller.put(updateDtos);
     }
 
-    @PatchMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserRoleDto> patchUserRole(@Valid @NotNull @RequestBody List<UpdateUserRoleDto> updateDtos) {
+    @PatchMapping(
+            value = "",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserRoleDto> patchUserRole(
+            @Valid @NotNull @RequestBody List<UpdateUserRoleDto> updateDtos) {
         return this.controller.patch(updateDtos);
     }
 

@@ -40,7 +40,8 @@ public class PostgresJdbcDialectSqlTest {
     @Test
     public void testSchemaExists_ReturnsSqlWithPlaceholder() {
         String sql = pgSql.schemaExists();
-        assertEquals("SELECT schema_name FROM information_schema.schemata WHERE schema_name = ?", sql);
+        assertEquals(
+                "SELECT schema_name FROM information_schema.schemata WHERE schema_name = ?", sql);
     }
 
     @Test

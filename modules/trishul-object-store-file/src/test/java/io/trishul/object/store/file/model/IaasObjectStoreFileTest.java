@@ -1,13 +1,12 @@
 package io.trishul.object.store.file.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,11 @@ public class IaasObjectStoreFileTest {
 
     @Test
     public void testAllArgConstructor() throws MalformedURLException {
-        file = new IaasObjectStoreFile(URI.create("file.txt"), LocalDateTime.of(2000, 1, 1, 0, 0), new URL("http://localhost/"));
+        file =
+                new IaasObjectStoreFile(
+                        URI.create("file.txt"),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        new URL("http://localhost/"));
 
         assertEquals(URI.create("file.txt"), file.getFileKey());
         assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());

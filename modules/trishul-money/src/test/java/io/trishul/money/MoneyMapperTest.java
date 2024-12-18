@@ -1,15 +1,14 @@
 package io.trishul.money;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import io.trishul.money.currency.model.Currency;
+import io.trishul.money.dto.MoneyDto;
 import java.math.BigDecimal;
-
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.money.dto.MoneyDto;
-import io.trishul.money.currency.model.Currency;
 
 public class MoneyMapperTest {
     MoneyMapper mapper;

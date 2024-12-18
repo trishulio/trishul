@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,11 @@ public class UpdateTenantDtoTest {
 
     @Test
     public void testAllArgConstructor() throws MalformedURLException {
-        tenantDto = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NAME", new URL("http://localhost/"));
+        tenantDto =
+                new UpdateTenantDto(
+                        UUID.fromString("00000000-0000-0000-0000-000000000000"),
+                        "NAME",
+                        new URL("http://localhost/"));
 
         assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000000"), tenantDto.getId());
         assertEquals("NAME", tenantDto.getName());

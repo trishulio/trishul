@@ -1,14 +1,12 @@
 package io.trishul.iaas.access.aws;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import com.amazonaws.services.identitymanagement.model.Policy;
-
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = LocalDateTimeMapper.class)
 public interface AwsIaasPolicyMapper extends IaasEntityMapper<Policy, IaasPolicy> {

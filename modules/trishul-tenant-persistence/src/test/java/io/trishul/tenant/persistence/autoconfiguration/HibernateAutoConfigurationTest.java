@@ -1,15 +1,17 @@
 package io.trishul.tenant.persistence.autoconfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import java.util.Map;
-import java.util.UUID;
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -21,11 +23,6 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.tenant.entity.Tenant;
-import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
-import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 
 public class HibernateAutoConfigurationTest {
     private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
@@ -46,7 +43,8 @@ public class HibernateAutoConfigurationTest {
 
     @BeforeEach
     public void init() {
-        localContainerEntityManagerFactoryBeanMock = mock(LocalContainerEntityManagerFactoryBean.class);
+        localContainerEntityManagerFactoryBeanMock =
+                mock(LocalContainerEntityManagerFactoryBean.class);
         entityManagerFactoryMock = mock(EntityManagerFactory.class);
         jpaVendorAdapterMock = mock(HibernateJpaVendorAdapter.class);
         dataSourceManageMock = mock(DataSourceManager.class);
@@ -59,23 +57,28 @@ public class HibernateAutoConfigurationTest {
 
     @Test
     public void testMultiTenantConnectionProvider_ReturnsInstanceOfTenantConnectionProvider() {
-        MultiTenantConnectionProvider multiTenantConnectionProvider = hibernateAutoConfiguration.multiTenantConnectionProvider(null, null);
+        MultiTenantConnectionProvider multiTenantConnectionProvider =
+                hibernateAutoConfiguration.multiTenantConnectionProvider(null, null);
 
         assertTrue(multiTenantConnectionProvider instanceof TenantConnectionProviderPool);
     }
 
     @Test
     public void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
-        CurrentTenantIdentifierResolver currentTenantIdentifierResolver = hibernateAutoConfiguration.currentTenantIdentifierResolver(null);
+        CurrentTenantIdentifierResolver currentTenantIdentifierResolver =
+                hibernateAutoConfiguration.currentTenantIdentifierResolver(null);
 
         assertTrue(currentTenantIdentifierResolver instanceof TenantIdentifierResolver);
     }
 
     @Test
     public void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
-        when(localContainerEntityManagerFactoryBeanMock.getObject()).thenReturn(entityManagerFactoryMock);
+        when(localContainerEntityManagerFactoryBeanMock.getObject())
+                .thenReturn(entityManagerFactoryMock);
 
-        PlatformTransactionManager platformTransactionManager = hibernateAutoConfiguration.transactionManager(localContainerEntityManagerFactoryBeanMock);
+        PlatformTransactionManager platformTransactionManager =
+                hibernateAutoConfiguration.transactionManager(
+                        localContainerEntityManagerFactoryBeanMock);
 
         assertTrue(platformTransactionManager instanceof JpaTransactionManager);
     }
@@ -91,16 +94,30 @@ public class HibernateAutoConfigurationTest {
     public void testLocalContainerEntityManagerFactoryBean() {
         when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
-        LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = hibernateAutoConfiguration.entityManagerFactory(jpaVendorAdapterMock, dataSourceManageMock, multiTenantConnectionProviderMock, currentTenantIdentifierResolverMock);
+        LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean =
+                hibernateAutoConfiguration.entityManagerFactory(
+                        jpaVendorAdapterMock,
+                        dataSourceManageMock,
+                        multiTenantConnectionProviderMock,
+                        currentTenantIdentifierResolverMock);
 
         assertSame(dataSourceMock, localContainerEntityManagerFactoryBean.getDataSource());
-        assertSame(jpaVendorAdapterMock, localContainerEntityManagerFactoryBean.getJpaVendorAdapter());
+        assertSame(
+                jpaVendorAdapterMock, localContainerEntityManagerFactoryBean.getJpaVendorAdapter());
 
-        Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
+        Map<String, Object> jpaPropertyMap =
+                localContainerEntityManagerFactoryBean.getJpaPropertyMap();
         assertEquals(4, jpaPropertyMap.size());
-        assertEquals(MultiTenancyStrategy.SCHEMA.toString(), jpaPropertyMap.get(Environment.MULTI_TENANT));
-        assertEquals("org.hibernate.dialect.PostgreSQLDialect", jpaPropertyMap.get(Environment.DIALECT));
-        assertEquals(multiTenantConnectionProviderMock, jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
-        assertEquals(currentTenantIdentifierResolverMock, jpaPropertyMap.get(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER));
+        assertEquals(
+                MultiTenancyStrategy.SCHEMA.toString(),
+                jpaPropertyMap.get(Environment.MULTI_TENANT));
+        assertEquals(
+                "org.hibernate.dialect.PostgreSQLDialect", jpaPropertyMap.get(Environment.DIALECT));
+        assertEquals(
+                multiTenantConnectionProviderMock,
+                jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
+        assertEquals(
+                currentTenantIdentifierResolverMock,
+                jpaPropertyMap.get(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER));
     }
 }

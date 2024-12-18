@@ -1,8 +1,7 @@
 package io.trishul.user.role.model;
 
-import java.time.LocalDateTime;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class UserRoleDto extends BaseDto {
     private Long id;
@@ -15,14 +14,18 @@ public class UserRoleDto extends BaseDto {
 
     private Integer version;
 
-    public UserRoleDto() {
-    }
+    public UserRoleDto() {}
 
     public UserRoleDto(Long id) {
         setId(id);
     }
 
-    public UserRoleDto(Long id, String name, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    public UserRoleDto(
+            Long id,
+            String name,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated,
+            Integer version) {
         this(id);
         setName(name);
         setCreatedAt(createdAt);

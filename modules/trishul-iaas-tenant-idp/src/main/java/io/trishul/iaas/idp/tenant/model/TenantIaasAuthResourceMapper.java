@@ -1,9 +1,8 @@
 package io.trishul.iaas.idp.tenant.model;
 
+import io.trishul.iaas.access.role.model.IaasRole;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.trishul.iaas.access.role.model.IaasRole;
 
 public class TenantIaasAuthResourceMapper {
     public static final TenantIaasAuthResourceMapper INSTANCE = new TenantIaasAuthResourceMapper();

@@ -1,9 +1,8 @@
 package io.trishul.crud.controller;
 
-import java.util.Set;
-
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.model.base.dto.BaseDto;
+import java.util.Set;
 
 public abstract class BaseController {
     public static final String PROPNAME_SORT_BY = "sort";

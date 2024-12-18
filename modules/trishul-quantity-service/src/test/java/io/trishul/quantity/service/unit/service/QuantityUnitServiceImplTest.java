@@ -1,16 +1,20 @@
 package io.trishul.quantity.service.unit.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import io.trishul.quantity.service.unit.repository.QuantityUnitRepository;
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.quantity.unit.UnitEntity;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
-
 import javax.measure.Unit;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -24,10 +28,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.trishul.quantity.service.unit.repository.QuantityUnitRepository;
-import io.trishul.quantity.unit.UnitEntity;
-import io.trishul.quantity.unit.SupportedUnits;
-
 public class QuantityUnitServiceImplTest {
     private QuantityUnitService quantityUnitService;
 
@@ -37,18 +37,23 @@ public class QuantityUnitServiceImplTest {
     public void init() {
         quantityUnitRepositoryMock = mock(QuantityUnitRepository.class);
 
-        quantityUnitService = new  QuantityUnitServiceImpl(quantityUnitRepositoryMock);
+        quantityUnitService = new QuantityUnitServiceImpl(quantityUnitRepositoryMock);
     }
 
     @Test
     public void testGetRoles_returnsRoles() throws Exception {
         Page<UnitEntity> expectedUnitsPage = new PageImpl<>(List.of(new UnitEntity("g", "g")));
 
-        final ArgumentCaptor<Specification<UnitEntity>> specificationCaptor = ArgumentCaptor.forClass(Specification.class);
+        final ArgumentCaptor<Specification<UnitEntity>> specificationCaptor =
+                ArgumentCaptor.forClass(Specification.class);
 
-        when(quantityUnitRepositoryMock.findAll(specificationCaptor.capture(), eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"}))))).thenReturn(expectedUnitsPage);
+        when(quantityUnitRepositoryMock.findAll(
+                        specificationCaptor.capture(),
+                        eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
+                .thenReturn(expectedUnitsPage);
 
-        Page<UnitEntity> actualUnitsPage = quantityUnitService.getUnits(null, new TreeSet<>(List.of("id")), true, 0, 100);
+        Page<UnitEntity> actualUnitsPage =
+                quantityUnitService.getUnits(null, new TreeSet<>(List.of("id")), true, 0, 100);
 
         assertEquals(List.of(new UnitEntity("g", "g")), actualUnitsPage.getContent());
 
@@ -71,7 +76,8 @@ public class QuantityUnitServiceImplTest {
 
     @Test
     public void testQuantityUnitService_classIsTransactional() throws Exception {
-        Transactional transactional = quantityUnitService.getClass().getAnnotation(Transactional.class);
+        Transactional transactional =
+                quantityUnitService.getClass().getAnnotation(Transactional.class);
 
         assertNotNull(transactional);
         assertEquals(transactional.isolation(), Isolation.DEFAULT);
@@ -81,7 +87,7 @@ public class QuantityUnitServiceImplTest {
     @Test
     public void testQuantityUnitService_methodsAreNotTransactional() throws Exception {
         Method[] methods = quantityUnitService.getClass().getMethods();
-        for(Method method : methods) {
+        for (Method method : methods) {
             assertFalse(method.isAnnotationPresent(Transactional.class));
         }
     }

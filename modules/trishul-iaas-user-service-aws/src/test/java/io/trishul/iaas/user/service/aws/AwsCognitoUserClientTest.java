@@ -1,17 +1,16 @@
 package io.trishul.iaas.user.service.aws;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Supplier;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
@@ -24,11 +23,16 @@ import com.amazonaws.services.cognitoidp.model.AttributeType;
 import com.amazonaws.services.cognitoidp.model.DeliveryMediumType;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UserType;
-
+import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 import io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper;
 import io.trishul.iaas.user.aws.model.AwsCognitoUserMapper;
 import io.trishul.iaas.user.model.IaasUser;
-import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Supplier;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AwsCognitoUserClientTest {
     private AwsCognitoUserClient client;
@@ -38,23 +42,41 @@ public class AwsCognitoUserClientTest {
     @BeforeEach
     public void init() {
         mIdp = mock(AWSCognitoIdentityProvider.class);
-        client = new AwsCognitoUserClient(mIdp, "USER_POOL_ID", AwsCognitoAdminGetUserResultMapper.INSTANCE, AwsCognitoUserMapper.INSTANCE);
+        client =
+                new AwsCognitoUserClient(
+                        mIdp,
+                        "USER_POOL_ID",
+                        AwsCognitoAdminGetUserResultMapper.INSTANCE,
+                        AwsCognitoUserMapper.INSTANCE);
     }
 
     @Test
     public void testGet_ReturnsUserFromResult_WhenClientReturnsResult() {
-        doAnswer(inv -> {
-            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
-            return new AdminGetUserResult()
-                        .withUserAttributes(new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL).withValue("EMAIL"))
-                        .withUserCreateDate(new Date(100, 0, 1))
-                        .withUserLastModifiedDate(new Date(100, 1, 2))
-                        .withUsername(req.getUsername());
-        }).when(mIdp).adminGetUser(any());
+        doAnswer(
+                        inv -> {
+                            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
+                            return new AdminGetUserResult()
+                                    .withUserAttributes(
+                                            new AttributeType()
+                                                    .withName(
+                                                            CognitoPrincipalContext.ATTRIBUTE_EMAIL)
+                                                    .withValue("EMAIL"))
+                                    .withUserCreateDate(new Date(100, 0, 1))
+                                    .withUserLastModifiedDate(new Date(100, 1, 2))
+                                    .withUsername(req.getUsername());
+                        })
+                .when(mIdp)
+                .adminGetUser(any());
 
         IaasUser user = client.get("USERNAME");
 
-        IaasUser expected = new IaasUser(null, "EMAIL", null, LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
+        IaasUser expected =
+                new IaasUser(
+                        null,
+                        "EMAIL",
+                        null,
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 2, 2, 0, 0));
         assertEquals(expected, user);
     }
 
@@ -67,22 +89,41 @@ public class AwsCognitoUserClientTest {
 
     @Test
     public void testAdd_AddsAndReturnsUser() {
-        doAnswer(inv -> {
-            AdminCreateUserRequest req = inv.getArgument(0, AdminCreateUserRequest.class);
+        doAnswer(
+                        inv -> {
+                            AdminCreateUserRequest req =
+                                    inv.getArgument(0, AdminCreateUserRequest.class);
 
-            assertEquals(List.of(DeliveryMediumType.EMAIL.toString()), req.getDesiredDeliveryMediums());
-            UserType userType = new UserType()
-                                    .withAttributes(req.getUserAttributes())
-                                    .withUserCreateDate(new Date(100, 0, 1))
-                                    .withUserLastModifiedDate(new Date(100, 1, 2))
-                                    .withUsername(req.getUsername());
-            return new AdminCreateUserResult()
-                       .withUser(userType);
-        }).when(mIdp).adminCreateUser(any());
+                            assertEquals(
+                                    List.of(DeliveryMediumType.EMAIL.toString()),
+                                    req.getDesiredDeliveryMediums());
+                            UserType userType =
+                                    new UserType()
+                                            .withAttributes(req.getUserAttributes())
+                                            .withUserCreateDate(new Date(100, 0, 1))
+                                            .withUserLastModifiedDate(new Date(100, 1, 2))
+                                            .withUsername(req.getUsername());
+                            return new AdminCreateUserResult().withUser(userType);
+                        })
+                .when(mIdp)
+                .adminCreateUser(any());
 
-        IaasUser user = client.add(new IaasUser("USERNAME", "EMAIL", null, LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0)));
+        IaasUser user =
+                client.add(
+                        new IaasUser(
+                                "USERNAME",
+                                "EMAIL",
+                                null,
+                                LocalDateTime.of(2000, 1, 1, 0, 0),
+                                LocalDateTime.of(2000, 2, 2, 0, 0)));
 
-        IaasUser expected = new IaasUser(null, "EMAIL", null, LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
+        IaasUser expected =
+                new IaasUser(
+                        null,
+                        "EMAIL",
+                        null,
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 2, 2, 0, 0));
         assertEquals(expected, user);
     }
 
@@ -102,20 +143,44 @@ public class AwsCognitoUserClientTest {
         }
 
         AttributeSupplier attributesSupplier = new AttributeSupplier();
-        doAnswer(inv -> {
-            AdminUpdateUserAttributesRequest req = inv.getArgument(0, AdminUpdateUserAttributesRequest.class);
-            attributesSupplier.setAttributes(req.getUserAttributes());
-            return new AdminUpdateUserAttributesResult();
-        }).when(mIdp).adminUpdateUserAttributes(any());
+        doAnswer(
+                        inv -> {
+                            AdminUpdateUserAttributesRequest req =
+                                    inv.getArgument(0, AdminUpdateUserAttributesRequest.class);
+                            attributesSupplier.setAttributes(req.getUserAttributes());
+                            return new AdminUpdateUserAttributesResult();
+                        })
+                .when(mIdp)
+                .adminUpdateUserAttributes(any());
 
-        doAnswer(inv -> {
-            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
-            return new AdminGetUserResult().withUserAttributes(attributesSupplier.get()).withUserCreateDate(new Date(100, 0, 1)).withUserLastModifiedDate(new Date(100, 1, 2)).withUsername(req.getUsername());
-        }).when(mIdp).adminGetUser(any());
+        doAnswer(
+                        inv -> {
+                            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
+                            return new AdminGetUserResult()
+                                    .withUserAttributes(attributesSupplier.get())
+                                    .withUserCreateDate(new Date(100, 0, 1))
+                                    .withUserLastModifiedDate(new Date(100, 1, 2))
+                                    .withUsername(req.getUsername());
+                        })
+                .when(mIdp)
+                .adminGetUser(any());
 
-        IaasUser user = client.update(new IaasUser("USERNAME", "EMAIL", null, LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0)));
+        IaasUser user =
+                client.update(
+                        new IaasUser(
+                                "USERNAME",
+                                "EMAIL",
+                                null,
+                                LocalDateTime.of(2000, 1, 1, 0, 0),
+                                LocalDateTime.of(2000, 2, 2, 0, 0)));
 
-        IaasUser expected = new IaasUser(null, "EMAIL", null, LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
+        IaasUser expected =
+                new IaasUser(
+                        null,
+                        "EMAIL",
+                        null,
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 2, 2, 0, 0));
         assertEquals(expected, user);
 
         verify(mIdp).adminUpdateUserAttributes(any());

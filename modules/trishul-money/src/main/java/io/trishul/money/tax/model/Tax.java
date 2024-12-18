@@ -1,14 +1,13 @@
 package io.trishul.money.tax.model;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.Column;
-
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.model.validator.Validator;
 import io.trishul.money.tax.rate.TaxRate;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 @Embeddable
 public class Tax extends BaseEntity {
@@ -17,21 +16,15 @@ public class Tax extends BaseEntity {
     public static final String FIELD_PST_RATE = "pstRate";
 
     @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "value", column = @Column(name = "gst_rate"))
-    })
+    @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "gst_rate"))})
     private TaxRate gstRate;
 
     @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "value", column = @Column(name = "pst_rate"))
-    })
+    @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "pst_rate"))})
     private TaxRate pstRate;
 
     @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "value", column = @Column(name = "hst_rate"))
-    })
+    @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "hst_rate"))})
     private TaxRate hstRate;
 
     public Tax() {
@@ -53,7 +46,10 @@ public class Tax extends BaseEntity {
     }
 
     public void setGstRate(TaxRate gstRate) {
-        Validator.assertion(!TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())), IllegalArgumentException.class, "Cannot set GST when HST is present. Remove HST");
+        Validator.assertion(
+                !TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())),
+                IllegalArgumentException.class,
+                "Cannot set GST when HST is present. Remove HST");
         this.gstRate = gstRate;
     }
 
@@ -62,7 +58,10 @@ public class Tax extends BaseEntity {
     }
 
     public void setPstRate(TaxRate pstRate) {
-        Validator.assertion(!TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())), IllegalArgumentException.class, "Cannot set PST when HST is present. Remove HST");
+        Validator.assertion(
+                !TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())),
+                IllegalArgumentException.class,
+                "Cannot set PST when HST is present. Remove HST");
         this.pstRate = pstRate;
     }
 
@@ -72,8 +71,14 @@ public class Tax extends BaseEntity {
 
     public void setHstRate(TaxRate hstRate) {
         if (TaxRate.isSet(hstRate)) {
-            Validator.assertion(!TaxRate.isSet(getPstRate()), IllegalArgumentException.class, "Cannot set HST when PST is present. Remove PST");
-            Validator.assertion(!TaxRate.isSet(getGstRate()), IllegalArgumentException.class, "Cannot set HST when GST is present. Remove GST");
+            Validator.assertion(
+                    !TaxRate.isSet(getPstRate()),
+                    IllegalArgumentException.class,
+                    "Cannot set HST when PST is present. Remove PST");
+            Validator.assertion(
+                    !TaxRate.isSet(getGstRate()),
+                    IllegalArgumentException.class,
+                    "Cannot set HST when GST is present. Remove GST");
         }
         this.hstRate = hstRate;
     }

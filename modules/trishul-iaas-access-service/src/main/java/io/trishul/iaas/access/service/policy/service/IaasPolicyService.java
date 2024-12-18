@@ -1,16 +1,6 @@
 package io.trishul.iaas.access.service.policy.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
@@ -19,26 +9,37 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Transactional
-public class IaasPolicyService extends BaseService implements CrudService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy, IaasPolicyAccessor> {
+public class IaasPolicyService extends BaseService
+        implements CrudService<
+                String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy, IaasPolicyAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasPolicyService.class);
 
     private final IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo;
     private final UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService;
 
-    public IaasPolicyService(UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService, IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo) {
+    public IaasPolicyService(
+            UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService,
+            IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -76,22 +77,24 @@ public class IaasPolicyService extends BaseService implements CrudService<String
 
     @Override
     public List<IaasPolicy> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+        Set<String> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
     public List<IaasPolicy> getByAccessorIds(Collection<? extends IaasPolicyAccessor> accessors) {
-        List<IaasPolicy> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIaasPolicy())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+        List<IaasPolicy> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIaasPolicy())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 

@@ -12,14 +12,21 @@ import io.trishul.object.store.model.BaseIaasObjectStore;
 
 public interface TenantObjectStoreResourceBuilder {
     String getVfsPolicyId(String iaasIdpTenantId);
+
     <P extends BaseIaasPolicy, T extends BaseIaasIdpTenant> P buildVfsPolicy(T iaasIdpTenant);
 
     String getObjectStoreId(String iaasIdpTenantId);
-    <O extends BaseIaasObjectStore, T extends BaseIaasIdpTenant> O buildObjectStore(T iaasIdpTenant);
+
+    <O extends BaseIaasObjectStore, T extends BaseIaasIdpTenant> O buildObjectStore(
+            T iaasIdpTenant);
 
     IaasRolePolicyAttachmentId buildVfsAttachmentId(String iaasIdpTenantId);
+
     <A extends BaseIaasRolePolicyAttachment> A buildAttachment(IaasRole role, IaasPolicy policy);
 
-    <T extends BaseIaasIdpTenant> IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(T iaasIdpTenant);
-    <T extends BaseIaasIdpTenant> IaasObjectStoreAccessConfig buildPublicAccessBlock(T iaasIdpTenant);
+    <T extends BaseIaasIdpTenant>
+            IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(T iaasIdpTenant);
+
+    <T extends BaseIaasIdpTenant> IaasObjectStoreAccessConfig buildPublicAccessBlock(
+            T iaasIdpTenant);
 }

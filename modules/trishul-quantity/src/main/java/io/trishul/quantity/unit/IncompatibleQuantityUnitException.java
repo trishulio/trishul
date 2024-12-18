@@ -1,10 +1,9 @@
 package io.trishul.quantity.unit;
 
-import javax.measure.Quantity;
-import javax.measure.Unit;
-
 import io.trishul.quantity.QuantityCalculator;
 import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
+import javax.measure.Quantity;
+import javax.measure.Unit;
 
 public class IncompatibleQuantityUnitException extends IllegalArgumentException {
     private static final long serialVersionUID = 5114542775018005333L;
@@ -26,11 +25,14 @@ public class IncompatibleQuantityUnitException extends IllegalArgumentException 
                 qtyUnit = quantity.getUnit();
             }
 
-            if(unitAccessor != null) {
+            if (unitAccessor != null) {
                 accessorUnit = unitAccessor.getBaseQuantityUnit();
             }
 
-            String error = String.format("Quantity Unit: %s is not compatible with accessor unit: %s", qtyUnit, accessorUnit);
+            String error =
+                    String.format(
+                            "Quantity Unit: %s is not compatible with accessor unit: %s",
+                            qtyUnit, accessorUnit);
 
             throw new IncompatibleQuantityUnitException(error);
         }
@@ -47,7 +49,8 @@ public class IncompatibleQuantityUnitException extends IllegalArgumentException 
                 unit2 = quantity2.getUnit();
             }
 
-            String error = String.format("Quantity with units %s and %s are not compatible", unit1, unit2);
+            String error =
+                    String.format("Quantity with units %s and %s are not compatible", unit1, unit2);
 
             throw new IncompatibleQuantityUnitException(error);
         }
@@ -56,7 +59,10 @@ public class IncompatibleQuantityUnitException extends IllegalArgumentException 
     public static void validateExpectedUnit(Unit<?> expectedUnit, Quantity<?> quantity) {
         if (!QuantityCalculator.INSTANCE.isExpectedUnit(expectedUnit, quantity)) {
             Unit<?> quantityUnit = quantity != null ? quantity.getUnit() : null;
-            String error = String.format("Quantity Unit: %s does not match expected unit: %s", quantityUnit, expectedUnit);
+            String error =
+                    String.format(
+                            "Quantity Unit: %s does not match expected unit: %s",
+                            quantityUnit, expectedUnit);
 
             throw new IncompatibleQuantityUnitException(error);
         }

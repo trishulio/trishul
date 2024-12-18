@@ -1,19 +1,16 @@
 package io.trishul.quantity.model;
 
+import io.trishul.quantity.model.dto.QuantityDto;
+import io.trishul.quantity.unit.QuantityUnitMapper;
 import java.math.BigDecimal;
-
 import javax.measure.Quantity;
 import javax.measure.Unit;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import io.trishul.quantity.model.dto.QuantityDto;
-import io.trishul.quantity.unit.QuantityUnitMapper;
 import tec.uom.se.quantity.Quantities;
 
-@Mapper(uses = { QuantityUnitMapper.class })
+@Mapper(uses = {QuantityUnitMapper.class})
 public abstract class QuantityMapper {
     public static final QuantityMapper INSTANCE = Mappers.getMapper(QuantityMapper.class);
 
@@ -44,10 +41,9 @@ public abstract class QuantityMapper {
     }
 
     /**
-     * Numbers can be casted as BigDecimal here because Spring by default parses
-     * JSON values to BigDecimal when field type is defined as Number. But for
-     * clarity, the QuantityDto also uses BigDecimal so that it can be casted here
-     * if there is a change in default behavior by Spring.
+     * Numbers can be casted as BigDecimal here because Spring by default parses JSON values to
+     * BigDecimal when field type is defined as Number. But for clarity, the QuantityDto also uses
+     * BigDecimal so that it can be casted here if there is a change in default behavior by Spring.
      */
     public BigDecimal parseNumber(Number num) {
         BigDecimal bigDecimal = null;

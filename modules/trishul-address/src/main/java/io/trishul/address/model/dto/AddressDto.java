@@ -15,10 +15,16 @@ public class AddressDto {
 
     private String postalCode;
 
-    public AddressDto() {
-    }
+    public AddressDto() {}
 
-    public AddressDto(Long id, String addressLine1, String addressLine2, String country, String province, String city, String postalCode) {
+    public AddressDto(
+            Long id,
+            String addressLine1,
+            String addressLine2,
+            String country,
+            String province,
+            String city,
+            String postalCode) {
         this.id = id;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;

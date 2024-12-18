@@ -16,7 +16,13 @@ public interface JdbcDialect {
 
     void reassignOwnedByTo(Connection conn, String owner, String assignee) throws SQLException;
 
-    void grantPrivilege(Connection conn, String privilege, String resourceType, String resourceName, String username) throws SQLException;
+    void grantPrivilege(
+            Connection conn,
+            String privilege,
+            String resourceType,
+            String resourceName,
+            String username)
+            throws SQLException;
 
     boolean userExists(Connection conn, String username) throws SQLException;
 

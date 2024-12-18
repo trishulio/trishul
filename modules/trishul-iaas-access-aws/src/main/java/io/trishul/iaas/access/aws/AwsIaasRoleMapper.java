@@ -1,14 +1,12 @@
 package io.trishul.iaas.access.aws;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import com.amazonaws.services.identitymanagement.model.Role;
-
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = LocalDateTimeMapper.class)
 public interface AwsIaasRoleMapper extends IaasEntityMapper<Role, IaasRole> {

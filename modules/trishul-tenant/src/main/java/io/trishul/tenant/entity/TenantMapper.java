@@ -1,13 +1,12 @@
 package io.trishul.tenant.entity;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import io.trishul.model.base.mapper.BaseMapper;
 import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;
 import io.trishul.tenant.dto.UpdateTenantDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto, UpdateTenantDto> {

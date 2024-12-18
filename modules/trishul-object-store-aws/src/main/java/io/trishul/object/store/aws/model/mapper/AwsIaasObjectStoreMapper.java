@@ -1,14 +1,12 @@
 package io.trishul.object.store.aws.model.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import com.amazonaws.services.s3.model.Bucket;
-
 import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import io.trishul.object.store.model.IaasObjectStore;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = LocalDateTimeMapper.class)
 public interface AwsIaasObjectStoreMapper extends IaasEntityMapper<Bucket, IaasObjectStore> {

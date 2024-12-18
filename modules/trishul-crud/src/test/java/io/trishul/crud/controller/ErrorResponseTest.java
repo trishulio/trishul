@@ -1,8 +1,8 @@
 package io.trishul.crud.controller;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 public class ErrorResponseTest {
@@ -13,7 +13,8 @@ public class ErrorResponseTest {
         String error = "error";
         String message = "message";
         String path = "path";
-        ErrorResponse errorResponse = new ErrorResponse(localDateTime, status, error, message, path);
+        ErrorResponse errorResponse =
+                new ErrorResponse(localDateTime, status, error, message, path);
 
         assertEquals(errorResponse.getTimestamp(), localDateTime);
         assertEquals(errorResponse.getStatus(), status);

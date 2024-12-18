@@ -6,5 +6,4 @@ public interface UserRoleBindingAccessor {
     List<UserRoleBinding> getRoleBindings();
 
     void setRoleBindings(List<UserRoleBinding> roleBindings);
-
 }

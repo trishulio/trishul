@@ -1,11 +1,10 @@
 package io.trishul.user.model;
 
-import java.net.URI;
-import java.util.List;
-
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutationAccessor;
 import io.trishul.user.status.UserStatusAccessor;
+import java.net.URI;
+import java.util.List;
 
 public interface BaseUser extends UserStatusAccessor, UserSalutationAccessor {
     final String ATTR_DISPLAY_NAME = "displayName";

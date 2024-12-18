@@ -1,15 +1,13 @@
 package io.trishul.money.amount.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.math.BigDecimal;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import io.trishul.money.dto.MoneyDto;
 import io.trishul.money.tax.amount.dto.TaxAmountDto;
+import java.math.BigDecimal;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AmountDtoTest {
     private AmountDto amount;
@@ -28,7 +26,11 @@ public class AmountDtoTest {
 
     @Test
     public void testAllArgConstructor() {
-        amount = new AmountDto(new MoneyDto("CAD", new BigDecimal("10")), new MoneyDto("CAD", new BigDecimal("20")), new TaxAmountDto());
+        amount =
+                new AmountDto(
+                        new MoneyDto("CAD", new BigDecimal("10")),
+                        new MoneyDto("CAD", new BigDecimal("20")),
+                        new TaxAmountDto());
 
         assertEquals(new MoneyDto("CAD", new BigDecimal("10")), amount.getTotal());
         assertEquals(new MoneyDto("CAD", new BigDecimal("20")), amount.getSubTotal());
@@ -51,8 +53,15 @@ public class AmountDtoTest {
 
     @Test
     public void testGetSetTaxAmount() {
-        amount.setTaxAmount(new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10")), new MoneyDto("CAD", new BigDecimal("20"))));
+        amount.setTaxAmount(
+                new TaxAmountDto(
+                        new MoneyDto("CAD", new BigDecimal("10")),
+                        new MoneyDto("CAD", new BigDecimal("20"))));
 
-        assertEquals(new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10")), new MoneyDto("CAD", new BigDecimal("20"))), amount.getTaxAmount());
+        assertEquals(
+                new TaxAmountDto(
+                        new MoneyDto("CAD", new BigDecimal("10")),
+                        new MoneyDto("CAD", new BigDecimal("20"))),
+                amount.getTaxAmount());
     }
 }

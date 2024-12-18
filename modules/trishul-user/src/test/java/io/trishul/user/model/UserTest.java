@@ -3,18 +3,16 @@ package io.trishul.user.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.user.role.binding.model.UserRoleBinding;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.status.UserStatus;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class UserTest {
     private User user;
@@ -26,22 +24,22 @@ public class UserTest {
 
     @Test
     public void testAllArgConstructor_SetsAllFields() {
-        user = new User(
-            1L,
-            "USER_NAME",
-            "DISPLAY_NAME",
-            "FIRST_NAME",
-            "LAST_NAME",
-            "EMAIL",
-            "PHONE_NUMBER",
-            URI.create("IMAGE_SRC"),
-            new UserStatus(1L),
-            new UserSalutation(2L),
-            List.of(new UserRole(3L)),
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        user =
+                new User(
+                        1L,
+                        "USER_NAME",
+                        "DISPLAY_NAME",
+                        "FIRST_NAME",
+                        "LAST_NAME",
+                        "EMAIL",
+                        "PHONE_NUMBER",
+                        URI.create("IMAGE_SRC"),
+                        new UserStatus(1L),
+                        new UserSalutation(2L),
+                        List.of(new UserRole(3L)),
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(1L, user.getId());
         assertEquals("USER_NAME", user.getUserName());
@@ -164,10 +162,10 @@ public class UserTest {
         assertNull(user.getRoles());
         user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
 
-        List<UserRoleBinding> expected = List.of(
-            new UserRoleBinding(null, new UserRole(1L), user),
-            new UserRoleBinding(null, new UserRole(2L), user)
-        );
+        List<UserRoleBinding> expected =
+                List.of(
+                        new UserRoleBinding(null, new UserRole(1L), user),
+                        new UserRoleBinding(null, new UserRole(2L), user));
 
         assertEquals(expected, user.getRoleBindings());
     }

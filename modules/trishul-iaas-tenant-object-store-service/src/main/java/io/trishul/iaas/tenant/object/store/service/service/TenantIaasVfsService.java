@@ -1,11 +1,5 @@
 package io.trishul.iaas.tenant.object.store.service.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
@@ -17,6 +11,10 @@ import io.trishul.iaas.access.service.policy.service.IaasPolicyService;
 import io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService;
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
+import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
 import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
 import io.trishul.object.store.model.BaseIaasObjectStore;
@@ -25,10 +23,11 @@ import io.trishul.object.store.model.UpdateIaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
-import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
-import io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper;
-import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
-import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class TenantIaasVfsService {
     private final TenantIaasVfsResourceMapper mapper;
@@ -40,7 +39,14 @@ public class TenantIaasVfsService {
 
     private final TenantObjectStoreResourceBuilder resourceBuilder;
 
-    public TenantIaasVfsService(TenantIaasVfsResourceMapper mapper, IaasPolicyService policyService, IaasObjectStoreService objectStoreService, IaasRolePolicyAttachmentService rolePolicyAttachmentService, IaasObjectStoreCorsConfigService objectStoreCorsConfigService, IaasObjectStoreAccessConfigService objectStoreAccessConfigService, TenantObjectStoreResourceBuilder resourceBuilder) {
+    public TenantIaasVfsService(
+            TenantIaasVfsResourceMapper mapper,
+            IaasPolicyService policyService,
+            IaasObjectStoreService objectStoreService,
+            IaasRolePolicyAttachmentService rolePolicyAttachmentService,
+            IaasObjectStoreCorsConfigService objectStoreCorsConfigService,
+            IaasObjectStoreAccessConfigService objectStoreAccessConfigService,
+            TenantObjectStoreResourceBuilder resourceBuilder) {
         this.mapper = mapper;
         this.policyService = policyService;
         this.objectStoreService = objectStoreService;
@@ -55,13 +61,15 @@ public class TenantIaasVfsService {
         Set<String> objectStoreIds = new HashSet<>();
 
         iaasIdpTenantIds.stream()
-               .forEach(iaasIdpTenantId -> {
-                   String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
-                   policyIds.add(policyId);
+                .forEach(
+                        iaasIdpTenantId -> {
+                            String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
+                            policyIds.add(policyId);
 
-                   String objectStoreId = this.resourceBuilder.getObjectStoreId(iaasIdpTenantId);
-                   objectStoreIds.add(objectStoreId);
-                });
+                            String objectStoreId =
+                                    this.resourceBuilder.getObjectStoreId(iaasIdpTenantId);
+                            objectStoreIds.add(objectStoreId);
+                        });
 
         List<IaasPolicy> policies = this.policyService.getAll(policyIds);
         List<IaasObjectStore> objectStores = this.objectStoreService.getAll(objectStoreIds);
@@ -73,37 +81,45 @@ public class TenantIaasVfsService {
         List<BaseIaasObjectStore> objectStoreAdditions = new ArrayList<>(tenants.size());
         List<BaseIaasPolicy> policiesAdditions = new ArrayList<>(tenants.size());
 
-        tenants.forEach(tenant -> {
-            BaseIaasObjectStore objectStore = this.resourceBuilder.buildObjectStore(tenant);
-            objectStoreAdditions.add(objectStore);
+        tenants.forEach(
+                tenant -> {
+                    BaseIaasObjectStore objectStore = this.resourceBuilder.buildObjectStore(tenant);
+                    objectStoreAdditions.add(objectStore);
 
-            BaseIaasPolicy policy = this.resourceBuilder.buildVfsPolicy(tenant);
-            policiesAdditions.add(policy);
-        });
+                    BaseIaasPolicy policy = this.resourceBuilder.buildVfsPolicy(tenant);
+                    policiesAdditions.add(policy);
+                });
 
         List<IaasPolicy> policies = this.policyService.add(policiesAdditions);
         List<IaasObjectStore> objectStores = this.objectStoreService.add(objectStoreAdditions);
 
         Iterator<IaasPolicy> policiesIterator = policies.iterator();
 
-        List<BaseIaasRolePolicyAttachment> attachmentAdditions = tenants.stream()
-                .map(tenant -> this.resourceBuilder.buildAttachment(tenant.getIaasRole(), policiesIterator.next()))
-                .map(o -> (BaseIaasRolePolicyAttachment) o)
-                .toList();
+        List<BaseIaasRolePolicyAttachment> attachmentAdditions =
+                tenants.stream()
+                        .map(
+                                tenant ->
+                                        this.resourceBuilder.buildAttachment(
+                                                tenant.getIaasRole(), policiesIterator.next()))
+                        .map(o -> (BaseIaasRolePolicyAttachment) o)
+                        .toList();
 
-        List<IaasRolePolicyAttachment> attachments = this.rolePolicyAttachmentService.add(attachmentAdditions);
+        List<IaasRolePolicyAttachment> attachments =
+                this.rolePolicyAttachmentService.add(attachmentAdditions);
 
-        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates = tenants.stream()
-                .map(this.resourceBuilder::buildObjectStoreCorsConfiguration)
-                .toList();
+        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates =
+                tenants.stream()
+                        .map(this.resourceBuilder::buildObjectStoreCorsConfiguration)
+                        .toList();
 
-        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs = this.objectStoreCorsConfigService.add(objectStoreCorsConfigUpdates);
+        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs =
+                this.objectStoreCorsConfigService.add(objectStoreCorsConfigUpdates);
 
-        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates = tenants.stream()
-                .map(this.resourceBuilder::buildPublicAccessBlock)
-                .toList();
+        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates =
+                tenants.stream().map(this.resourceBuilder::buildPublicAccessBlock).toList();
 
-        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs = this.objectStoreAccessConfigService.add(objectStoreAccessConfigUpdates);
+        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs =
+                this.objectStoreAccessConfigService.add(objectStoreAccessConfigUpdates);
 
         return this.mapper.fromComponents(objectStores, policies);
     }
@@ -112,38 +128,50 @@ public class TenantIaasVfsService {
         List<UpdateIaasObjectStore> objectStoreUpdates = new ArrayList<>(tenants.size());
         List<UpdateIaasPolicy> policiesUpdates = new ArrayList<>(tenants.size());
 
-        tenants.forEach(tenant -> {
-            UpdateIaasObjectStore objectStore = this.resourceBuilder.buildObjectStore(tenant);
-            objectStoreUpdates.add(objectStore);
+        tenants.forEach(
+                tenant -> {
+                    UpdateIaasObjectStore objectStore =
+                            this.resourceBuilder.buildObjectStore(tenant);
+                    objectStoreUpdates.add(objectStore);
 
-            UpdateIaasPolicy policy = this.resourceBuilder.buildVfsPolicy(tenant);
-            policiesUpdates.add(policy);
-        });
+                    UpdateIaasPolicy policy = this.resourceBuilder.buildVfsPolicy(tenant);
+                    policiesUpdates.add(policy);
+                });
 
         List<IaasPolicy> policies = this.policyService.put(policiesUpdates);
         List<IaasObjectStore> objectStores = this.objectStoreService.put(objectStoreUpdates);
 
         Iterator<IaasPolicy> policiesIterator = policies.iterator();
 
-        List<UpdateIaasRolePolicyAttachment> attachmentUpdates = tenants.stream()
-                .map(tenant -> this.resourceBuilder.buildAttachment(tenant.getIaasRole(), policiesIterator.next()))
-                .map(o -> (UpdateIaasRolePolicyAttachment) o)
-                .toList();
+        List<UpdateIaasRolePolicyAttachment> attachmentUpdates =
+                tenants.stream()
+                        .map(
+                                tenant ->
+                                        this.resourceBuilder.buildAttachment(
+                                                tenant.getIaasRole(), policiesIterator.next()))
+                        .map(o -> (UpdateIaasRolePolicyAttachment) o)
+                        .toList();
 
-        List<IaasRolePolicyAttachment> attachments = this.rolePolicyAttachmentService.put(attachmentUpdates);
+        List<IaasRolePolicyAttachment> attachments =
+                this.rolePolicyAttachmentService.put(attachmentUpdates);
 
-        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates = tenants.stream()
-                .map(tenant -> this.resourceBuilder.buildObjectStoreCorsConfiguration(tenant))
-                .map(o -> o)
-                .toList();
+        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates =
+                tenants.stream()
+                        .map(
+                                tenant ->
+                                        this.resourceBuilder.buildObjectStoreCorsConfiguration(
+                                                tenant))
+                        .map(o -> o)
+                        .toList();
 
-        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs = this.objectStoreCorsConfigService.put(objectStoreCorsConfigUpdates);
+        List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs =
+                this.objectStoreCorsConfigService.put(objectStoreCorsConfigUpdates);
 
-        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates = tenants.stream()
-                .map(this.resourceBuilder::buildPublicAccessBlock)
-                .toList();
+        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates =
+                tenants.stream().map(this.resourceBuilder::buildPublicAccessBlock).toList();
 
-        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs = this.objectStoreAccessConfigService.put(objectStoreAccessConfigUpdates);
+        List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs =
+                this.objectStoreAccessConfigService.put(objectStoreAccessConfigUpdates);
 
         return this.mapper.fromComponents(objectStores, policies);
     }
@@ -153,18 +181,20 @@ public class TenantIaasVfsService {
         Set<String> policyIds = new HashSet<>();
         Set<IaasRolePolicyAttachmentId> attachmentIds = new HashSet<>();
 
-        iaasIdpTenantIds
-        .stream()
-        .forEach(iaasIdpTenantId -> {
-            String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
-            policyIds.add(policyId);
+        iaasIdpTenantIds.stream()
+                .forEach(
+                        iaasIdpTenantId -> {
+                            String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
+                            policyIds.add(policyId);
 
-            IaasRolePolicyAttachmentId attachmentId = this.resourceBuilder.buildVfsAttachmentId(iaasIdpTenantId);
-            attachmentIds.add(attachmentId);
+                            IaasRolePolicyAttachmentId attachmentId =
+                                    this.resourceBuilder.buildVfsAttachmentId(iaasIdpTenantId);
+                            attachmentIds.add(attachmentId);
 
-            String objectStoreId = this.resourceBuilder.getObjectStoreId(iaasIdpTenantId);
-            objectStoreIds.add(objectStoreId);
-         });
+                            String objectStoreId =
+                                    this.resourceBuilder.getObjectStoreId(iaasIdpTenantId);
+                            objectStoreIds.add(objectStoreId);
+                        });
 
         this.rolePolicyAttachmentService.delete(attachmentIds);
         this.objectStoreCorsConfigService.delete(objectStoreIds);

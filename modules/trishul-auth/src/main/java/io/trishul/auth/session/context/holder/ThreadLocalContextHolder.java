@@ -5,7 +5,7 @@ import io.trishul.auth.session.context.PrincipalContext;
 public class ThreadLocalContextHolder implements ContextHolder {
     private final InheritableThreadLocal<PrincipalContext> principalCtxContainer;
 
-   public ThreadLocalContextHolder() {
+    public ThreadLocalContextHolder() {
         this.principalCtxContainer = new InheritableThreadLocal<>();
     }
 

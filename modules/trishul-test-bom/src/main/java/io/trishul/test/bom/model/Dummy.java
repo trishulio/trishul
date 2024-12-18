@@ -8,10 +8,15 @@ public class Dummy {
     private Character character;
     private Boolean bool;
 
-    public Dummy() {
-    }
+    public Dummy() {}
 
-    public Dummy(String string, Long longg, Double doublee, Integer integer, Character character, Boolean bool) {
+    public Dummy(
+            String string,
+            Long longg,
+            Double doublee,
+            Integer integer,
+            Character character,
+            Boolean bool) {
         setString(string);
         setLongg(longg);
         setDoublee(doublee);

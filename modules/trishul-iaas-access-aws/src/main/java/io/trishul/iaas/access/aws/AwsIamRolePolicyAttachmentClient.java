@@ -1,14 +1,5 @@
 package io.trishul.iaas.access.aws;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
-
-import org.apache.commons.lang3.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.AttachRolePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.AttachRolePolicyResult;
@@ -21,7 +12,6 @@ import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.attachment.policy.BaseIaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
@@ -29,15 +19,30 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.client.IaasClient;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import org.apache.commons.lang3.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment, UpdateIaasRolePolicyAttachment> {
-    private static final Logger log = LoggerFactory.getLogger(AwsIamRolePolicyAttachmentClient.class);
+public class AwsIamRolePolicyAttachmentClient
+        implements IaasClient<
+                IaasRolePolicyAttachmentId,
+                IaasRolePolicyAttachment,
+                BaseIaasRolePolicyAttachment,
+                UpdateIaasRolePolicyAttachment> {
+    private static final Logger log =
+            LoggerFactory.getLogger(AwsIamRolePolicyAttachmentClient.class);
 
-    private final InheritableThreadLocal<LoadingCache<String, Set<String>>> attachedPolicyNameLocalCache;
+    private final InheritableThreadLocal<LoadingCache<String, Set<String>>>
+            attachedPolicyNameLocalCache;
     private final AmazonIdentityManagement awsClient;
     private final AwsArnMapper arnMapper;
 
-    public AwsIamRolePolicyAttachmentClient(AmazonIdentityManagement awsIamClient, AwsArnMapper arnMapper) {
+    public AwsIamRolePolicyAttachmentClient(
+            AmazonIdentityManagement awsIamClient, AwsArnMapper arnMapper) {
         this.awsClient = awsIamClient;
         this.arnMapper = arnMapper;
 
@@ -63,7 +68,8 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
             return attachment;
 
         } catch (ExecutionException e) {
-            throw new RuntimeException("Failed to fetch all the attachedPolicies because " + e.getMessage(), e);
+            throw new RuntimeException(
+                    "Failed to fetch all the attachedPolicies because " + e.getMessage(), e);
         }
     }
 
@@ -71,9 +77,10 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
     public <BE extends BaseIaasRolePolicyAttachment> IaasRolePolicyAttachment add(BE attachment) {
         String policyArn = this.arnMapper.getPolicyArn(attachment.getIaasPolicy().getId());
 
-        AttachRolePolicyRequest request = new AttachRolePolicyRequest()
-                                            .withPolicyArn(policyArn)
-                                            .withRoleName(attachment.getIaasRole().getId());
+        AttachRolePolicyRequest request =
+                new AttachRolePolicyRequest()
+                        .withPolicyArn(policyArn)
+                        .withRoleName(attachment.getIaasRole().getId());
 
         AttachRolePolicyResult result = this.awsClient.attachRolePolicy(request);
 
@@ -95,15 +102,17 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
     public boolean delete(IaasRolePolicyAttachmentId id) {
         String policyArn = this.arnMapper.getPolicyArn(id.getPolicyId());
 
-        DetachRolePolicyRequest request = new DetachRolePolicyRequest()
-                                            .withPolicyArn(policyArn)
-                                            .withRoleName(id.getRoleId());
+        DetachRolePolicyRequest request =
+                new DetachRolePolicyRequest().withPolicyArn(policyArn).withRoleName(id.getRoleId());
         try {
             DetachRolePolicyResult result = this.awsClient.detachRolePolicy(request);
             getCache().invalidate(id.getRoleId());
             return true;
-        } catch(NoSuchEntityException e) {
-            log.error("Failed to delete attachment with role: '{}' and policy: '{}'", id.getRoleId(), policyArn);
+        } catch (NoSuchEntityException e) {
+            log.error(
+                    "Failed to delete attachment with role: '{}' and policy: '{}'",
+                    id.getRoleId(),
+                    policyArn);
             return false;
         }
     }
@@ -116,31 +125,43 @@ public class AwsIamRolePolicyAttachmentClient implements IaasClient<IaasRolePoli
     private LoadingCache<String, Set<String>> getCache() {
         LoadingCache<String, Set<String>> cache = this.attachedPolicyNameLocalCache.get();
         if (cache == null) {
-            cache = CacheBuilder.newBuilder().build(new CacheLoader<String, Set<String>>(){
-                @Override
-                public Set<String> load(String roleName) throws Exception {
-                    Set<String> allPolicyNames = new HashSet<>();
-                    String marker = null;
-                    do {
-                        ListAttachedRolePoliciesRequest request = new ListAttachedRolePoliciesRequest()
-                                                                  .withRoleName(roleName)
-                                                                  .withMarker(marker);
-                        ListAttachedRolePoliciesResult result;
-                        try {
-                            result = awsClient.listAttachedRolePolicies(request);
-                        } catch (NoSuchEntityException e) {
-                            marker = null;
-                            continue;
-                        }
+            cache =
+                    CacheBuilder.newBuilder()
+                            .build(
+                                    new CacheLoader<String, Set<String>>() {
+                                        @Override
+                                        public Set<String> load(String roleName) throws Exception {
+                                            Set<String> allPolicyNames = new HashSet<>();
+                                            String marker = null;
+                                            do {
+                                                ListAttachedRolePoliciesRequest request =
+                                                        new ListAttachedRolePoliciesRequest()
+                                                                .withRoleName(roleName)
+                                                                .withMarker(marker);
+                                                ListAttachedRolePoliciesResult result;
+                                                try {
+                                                    result =
+                                                            awsClient.listAttachedRolePolicies(
+                                                                    request);
+                                                } catch (NoSuchEntityException e) {
+                                                    marker = null;
+                                                    continue;
+                                                }
 
-                        marker = BooleanUtils.isTrue(result.isTruncated()) ? result.getMarker() : null;
+                                                marker =
+                                                        BooleanUtils.isTrue(result.isTruncated())
+                                                                ? result.getMarker()
+                                                                : null;
 
-                        List<AttachedPolicy> policies = result.getAttachedPolicies();
-                        policies.stream().map(policy -> policy.getPolicyName()).forEach(allPolicyNames::add);
-                    } while (marker != null);
-                    return allPolicyNames;
-                }
-            });
+                                                List<AttachedPolicy> policies =
+                                                        result.getAttachedPolicies();
+                                                policies.stream()
+                                                        .map(policy -> policy.getPolicyName())
+                                                        .forEach(allPolicyNames::add);
+                                            } while (marker != null);
+                                            return allPolicyNames;
+                                        }
+                                    });
 
             attachedPolicyNameLocalCache.set(cache);
         }

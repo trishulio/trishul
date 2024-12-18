@@ -1,10 +1,10 @@
 package io.trishul.model.mapper;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

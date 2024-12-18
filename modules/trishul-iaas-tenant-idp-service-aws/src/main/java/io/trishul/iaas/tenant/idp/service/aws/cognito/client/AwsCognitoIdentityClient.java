@@ -1,10 +1,9 @@
 package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
-import java.util.List;
-import java.util.Map;
-
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.IdentityPoolShortDescription;
+import java.util.List;
+import java.util.Map;
 
 public interface AwsCognitoIdentityClient {
     List<IdentityPoolShortDescription> getIdentityPools(int pageSize);

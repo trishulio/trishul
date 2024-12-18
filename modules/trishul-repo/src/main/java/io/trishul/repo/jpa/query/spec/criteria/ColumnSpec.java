@@ -1,15 +1,13 @@
 package io.trishul.repo.jpa.query.spec.criteria;
 
+import io.trishul.model.base.pojo.BaseModel;
+import io.trishul.repo.jpa.query.root.RootUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.trishul.model.base.pojo.BaseModel;
-import io.trishul.repo.jpa.query.root.RootUtil;
 
 public class ColumnSpec<T> extends BaseModel implements CriteriaSpec<T> {
     @SuppressWarnings("unused")

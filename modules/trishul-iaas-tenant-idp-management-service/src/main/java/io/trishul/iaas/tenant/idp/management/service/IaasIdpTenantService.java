@@ -1,14 +1,6 @@
 package io.trishul.iaas.tenant.idp.management.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.UpdateService;
@@ -17,25 +9,43 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
-import io.trishul.base.types.base.pojo.Identified;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class IaasIdpTenantService extends BaseService implements CrudService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant, IaasIdpTenantAccessor> {
+public class IaasIdpTenantService extends BaseService
+        implements CrudService<
+                String,
+                IaasIdpTenant,
+                BaseIaasIdpTenant,
+                UpdateIaasIdpTenant,
+                IaasIdpTenantAccessor> {
     private static final Logger log = LoggerFactory.getLogger(IaasIdpTenantService.class);
 
-    private final IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> iaasRepo;
-    private final UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> updateService;
+    private final IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant>
+            iaasRepo;
+    private final UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant>
+            updateService;
 
-    public IaasIdpTenantService(UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> updateService, IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> iaasRepo) {
+    public IaasIdpTenantService(
+            UpdateService<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant>
+                    updateService,
+            IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant>
+                    iaasRepo) {
         this.updateService = updateService;
         this.iaasRepo = iaasRepo;
     }
 
     @Override
     public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values()
-                                    .stream().filter(b -> !b)
-                                    .findAny()
-                                    .orElseGet(() -> true);
+        return iaasRepo.exists(ids).values().stream()
+                .filter(b -> !b)
+                .findAny()
+                .orElseGet(() -> true);
     }
 
     @Override
@@ -73,22 +83,25 @@ public class IaasIdpTenantService extends BaseService implements CrudService<Str
 
     @Override
     public List<IaasIdpTenant> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids = idProviders.stream()
-                    .filter(Objects::nonNull)
-                    .map(provider -> provider.getId())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+        Set<String> ids =
+                idProviders.stream()
+                        .filter(Objects::nonNull)
+                        .map(provider -> provider.getId())
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
 
         return this.iaasRepo.get(ids);
     }
 
     @Override
-    public List<IaasIdpTenant> getByAccessorIds(Collection<? extends IaasIdpTenantAccessor> accessors) {
-        List<IaasIdpTenant> idProviders = accessors.stream()
-                                    .filter(Objects::nonNull)
-                                    .map(accessor -> accessor.getIdpTenant())
-                                    .filter(Objects::nonNull)
-                                    .toList();
+    public List<IaasIdpTenant> getByAccessorIds(
+            Collection<? extends IaasIdpTenantAccessor> accessors) {
+        List<IaasIdpTenant> idProviders =
+                accessors.stream()
+                        .filter(Objects::nonNull)
+                        .map(accessor -> accessor.getIdpTenant())
+                        .filter(Objects::nonNull)
+                        .toList();
         return getByIds(idProviders);
     }
 

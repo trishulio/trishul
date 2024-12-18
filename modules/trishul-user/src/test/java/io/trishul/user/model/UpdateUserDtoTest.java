@@ -1,11 +1,10 @@
 package io.trishul.user.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.net.URI;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,19 +18,19 @@ public class UpdateUserDtoTest {
 
     @Test
     public void testAllArgConstructor_SetsAllFields() {
-        dto = new UpdateUserDto(
-            1L,
-            "userName",
-            "displayName",
-            "firstName",
-            "lastName",
-            1L,
-            2L,
-            "phoneNumber",
-            URI.create("imageSrc"),
-            List.of(10L),
-            1
-        );
+        dto =
+                new UpdateUserDto(
+                        1L,
+                        "userName",
+                        "displayName",
+                        "firstName",
+                        "lastName",
+                        1L,
+                        2L,
+                        "phoneNumber",
+                        URI.create("imageSrc"),
+                        List.of(10L),
+                        1);
 
         assertEquals(1L, dto.getId());
         assertEquals("userName", dto.getUserName());

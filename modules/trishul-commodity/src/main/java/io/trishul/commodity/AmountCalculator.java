@@ -1,21 +1,20 @@
 package io.trishul.commodity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
-import org.joda.money.Money;
-
 import io.trishul.commodity.good.model.Good;
 import io.trishul.money.amount.model.Amount;
 import io.trishul.money.amount.model.AmountSupplier;
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.calculator.TaxCalculator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import org.joda.money.Money;
 
 public class AmountCalculator {
-    public static final AmountCalculator INSTANCE = new AmountCalculator(CostCalculator.INSTANCE, TaxCalculator.INSTANCE);
+    public static final AmountCalculator INSTANCE =
+            new AmountCalculator(CostCalculator.INSTANCE, TaxCalculator.INSTANCE);
 
     private final CostCalculator costCalculator;
     private final TaxCalculator taxCalculator;
@@ -45,11 +44,12 @@ public class AmountCalculator {
             TaxAmount totalTaxAmount = null;
 
             List<TaxAmount> taxAmounts = new ArrayList<>(amountSuppliers.size());
-            Iterator<Amount> it = amountSuppliers.stream()
-                           .filter(Objects::nonNull)
-                           .map(AmountSupplier::getAmount)
-                           .filter(Objects::nonNull)
-                           .iterator();
+            Iterator<Amount> it =
+                    amountSuppliers.stream()
+                            .filter(Objects::nonNull)
+                            .map(AmountSupplier::getAmount)
+                            .filter(Objects::nonNull)
+                            .iterator();
 
             while (it.hasNext()) {
                 Amount current = it.next();

@@ -1,8 +1,7 @@
 package io.trishul.user.salutation.model;
 
-import java.time.LocalDateTime;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class UserSalutationDto extends BaseDto {
     private Long id;
@@ -15,14 +14,18 @@ public class UserSalutationDto extends BaseDto {
 
     private Integer version;
 
-    public UserSalutationDto() {
-    }
+    public UserSalutationDto() {}
 
     public UserSalutationDto(Long id) {
         setId(id);
     }
 
-    public UserSalutationDto(Long id, String title, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    public UserSalutationDto(
+            Long id,
+            String title,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated,
+            Integer version) {
         this(id);
         setTitle(title);
         setCreatedAt(createdAt);

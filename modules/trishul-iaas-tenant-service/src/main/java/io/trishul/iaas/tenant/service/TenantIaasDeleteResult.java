@@ -10,10 +10,12 @@ public class TenantIaasDeleteResult extends BaseModel {
     private TenantIaasIdpDeleteResult idp;
     private TenantIaasVfsDeleteResult vfs;
 
-    public TenantIaasDeleteResult() {
-    }
+    public TenantIaasDeleteResult() {}
 
-    public TenantIaasDeleteResult(TenantIaasAuthDeleteResult auth, TenantIaasIdpDeleteResult idp, TenantIaasVfsDeleteResult vfs) {
+    public TenantIaasDeleteResult(
+            TenantIaasAuthDeleteResult auth,
+            TenantIaasIdpDeleteResult idp,
+            TenantIaasVfsDeleteResult vfs) {
         this();
         setAuth(auth);
         setIdp(idp);

@@ -6,7 +6,9 @@ public class ContextHolderAuthorizationFetcher {
     private final IaasAuthorizationFetcher fetcher;
     private final IaasAuthorizationCredentialsHolder credentialsHolder;
 
-    public ContextHolderAuthorizationFetcher(IaasAuthorizationFetcher fetcher, IaasAuthorizationCredentialsHolder credentialsHolder) {
+    public ContextHolderAuthorizationFetcher(
+            IaasAuthorizationFetcher fetcher,
+            IaasAuthorizationCredentialsHolder credentialsHolder) {
         this.fetcher = fetcher;
         this.credentialsHolder = credentialsHolder;
     }

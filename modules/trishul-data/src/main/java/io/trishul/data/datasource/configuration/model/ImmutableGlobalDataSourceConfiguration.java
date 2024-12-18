@@ -1,10 +1,10 @@
 package io.trishul.data.datasource.configuration.model;
 
+import io.trishul.model.base.pojo.BaseModel;
 import java.net.URI;
 
-import io.trishul.model.base.pojo.BaseModel;
-
-public class ImmutableGlobalDataSourceConfiguration extends BaseModel implements GlobalDataSourceConfiguration {
+public class ImmutableGlobalDataSourceConfiguration extends BaseModel
+        implements GlobalDataSourceConfiguration {
     private final URI url;
     private final String dbName;
     private final String migrationScriptPath;
@@ -12,7 +12,13 @@ public class ImmutableGlobalDataSourceConfiguration extends BaseModel implements
     private final int poolSize;
     private final boolean autoCommit;
 
-    public ImmutableGlobalDataSourceConfiguration(URI url, String dbName, String migrationScriptPath, String schemaPrefix, int poolSize, boolean autoCommit) {
+    public ImmutableGlobalDataSourceConfiguration(
+            URI url,
+            String dbName,
+            String migrationScriptPath,
+            String schemaPrefix,
+            int poolSize,
+            boolean autoCommit) {
         this.url = url;
         this.dbName = dbName;
         this.schemaPrefix = schemaPrefix;

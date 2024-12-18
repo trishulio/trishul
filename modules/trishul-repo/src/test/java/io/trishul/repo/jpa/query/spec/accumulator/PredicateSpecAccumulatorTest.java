@@ -1,22 +1,23 @@
 package io.trishul.repo.jpa.query.spec.accumulator;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PredicateSpecAccumulatorTest {
     private PredicateSpecAccumulator accumulator;
@@ -70,6 +71,7 @@ public class PredicateSpecAccumulatorTest {
         accumulator.add(spec1);
         accumulator.add(spec2);
 
-        assertArrayEquals(new Predicate[] { mExpr1, mExpr2 }, accumulator.getPredicates(mRoot, mCq, mCb));
+        assertArrayEquals(
+                new Predicate[] {mExpr1, mExpr2}, accumulator.getPredicates(mRoot, mCq, mCb));
     }
 }

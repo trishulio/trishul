@@ -1,13 +1,13 @@
 package io.trishul.repo.jpa.query.spec.criteria;
 
+import io.trishul.model.base.pojo.BaseModel;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
-import io.trishul.model.base.pojo.BaseModel;
-
-public class BetweenSpec<C extends Comparable<C>> extends BaseModel implements CriteriaSpec<Boolean> {
+public class BetweenSpec<C extends Comparable<C>> extends BaseModel
+        implements CriteriaSpec<Boolean> {
     private final CriteriaSpec<C> spec;
     private final C start;
     private final C end;
@@ -19,7 +19,8 @@ public class BetweenSpec<C extends Comparable<C>> extends BaseModel implements C
     }
 
     @Override
-    public Expression<Boolean> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    public Expression<Boolean> getExpression(
+            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         Expression<Boolean> expr = null;
         Expression<? extends C> innerExpr = this.spec.getExpression(root, cq, cb);
 

@@ -1,10 +1,9 @@
 package io.trishul.iaas.access.policy.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,15 @@ public class IaasPolicyTest {
 
     @Test
     public void testAllArgConstructor() {
-        policy = new IaasPolicy("ID", "DOCUMENT", "DESCRIPTION", "IAAS_RES_NAME", "IAAS_ID", LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
+        policy =
+                new IaasPolicy(
+                        "ID",
+                        "DOCUMENT",
+                        "DESCRIPTION",
+                        "IAAS_RES_NAME",
+                        "IAAS_ID",
+                        LocalDateTime.of(2002, 1, 1, 0, 0),
+                        LocalDateTime.of(2003, 1, 1, 0, 0));
 
         assertEquals("ID", policy.getId());
         assertEquals("ID", policy.getName());

@@ -1,8 +1,7 @@
 package io.trishul.money.dto;
 
-import java.math.BigDecimal;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.math.BigDecimal;
 
 public class MoneyDto extends BaseDto {
     public static final String ATTR_CURRENCY = "currency";

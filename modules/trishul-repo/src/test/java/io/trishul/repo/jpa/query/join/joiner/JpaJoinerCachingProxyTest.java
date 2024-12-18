@@ -6,20 +6,16 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.util.function.Supplier;
-
 import javax.persistence.criteria.From;
 import javax.persistence.criteria.Path;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 public class JpaJoinerCachingProxyTest {
-    class Entity {
-    }
+    class Entity {}
 
-    class Child {
-    }
+    class Child {}
 
     private From<Object, Entity> mRoot;
     private From<Child, Entity> mChild;

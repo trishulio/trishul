@@ -2,7 +2,6 @@ package io.trishul.repo.jpa.query.clause.where.builder;
 
 import java.util.Collection;
 import java.util.Set;
-
 import org.springframework.data.jpa.domain.Specification;
 
 public interface WhereClauseBuilder {

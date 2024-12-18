@@ -1,15 +1,27 @@
 package io.trishul.crud.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.test.model.DummyCrudEntity;
+import io.trishul.test.model.DummyCrudEntityAccessor;
+import io.trishul.test.repository.DummyCrudEntityRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -18,13 +30,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
-
-import io.trishul.test.model.DummyCrudEntity;
-import io.trishul.test.model.DummyCrudEntityAccessor;
-import io.trishul.test.repository.DummyCrudEntityRepository;
-import io.trishul.base.types.base.pojo.Refresher;
-import io.trishul.repo.jpa.repository.service.RepoService;
-import io.trishul.base.types.base.pojo.Identified;
 
 public class CrudRepoServiceTest {
     // Hack to mock instance of type Long parameterized Identified interface
@@ -74,10 +79,12 @@ public class CrudRepoServiceTest {
         final Page<DummyCrudEntity> mPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
 
         final Specification<DummyCrudEntity> mSpec = mock(Specification.class);
-        final PageRequest expectedPageRequest = PageRequest.of(1, 100, Direction.DESC, "col_1", "col_2");
+        final PageRequest expectedPageRequest =
+                PageRequest.of(1, 100, Direction.DESC, "col_1", "col_2");
         doReturn(mPage).when(this.mRepo).findAll(mSpec, expectedPageRequest);
 
-        final Page<DummyCrudEntity> page = this.service.getAll(mSpec, new TreeSet<>(List.of("col_1", "col_2")), false, 1, 100);
+        final Page<DummyCrudEntity> page =
+                this.service.getAll(mSpec, new TreeSet<>(List.of("col_1", "col_2")), false, 1, 100);
 
         final Page<DummyCrudEntity> expected = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
         assertEquals(expected, page);
@@ -99,11 +106,13 @@ public class CrudRepoServiceTest {
     }
 
     @Test
-    public void testGetByIds_ReturnsListOfEntitiesWithNonNullProviderIdsFromRepository_WhenProvidersIsNotNull() {
+    public void
+            testGetByIds_ReturnsListOfEntitiesWithNonNullProviderIdsFromRepository_WhenProvidersIsNotNull() {
         final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
         doReturn(mEntities).when(this.mRepo).findAllById(Set.of(1L));
 
-        final List<? extends Identified<Long>> idProviders = new ArrayList<>(List.of(mock(LongIdentified.class), mock(LongIdentified.class)));
+        final List<? extends Identified<Long>> idProviders =
+                new ArrayList<>(List.of(mock(LongIdentified.class), mock(LongIdentified.class)));
         idProviders.add(null);
         doReturn(1L).when(idProviders.get(0)).getId();
 
@@ -119,17 +128,24 @@ public class CrudRepoServiceTest {
     }
 
     @Test
-    public void testGetByAccessorIds_ReturnsListOfEntitiesWithNonNullAccessorsIdsFromRepository_WhenAccessorsAreNotNull() {
+    public void
+            testGetByAccessorIds_ReturnsListOfEntitiesWithNonNullAccessorsIdsFromRepository_WhenAccessorsAreNotNull() {
         final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
         doReturn(mEntities).when(this.mRepo).findAllById(Set.of(1L));
 
-        final List<? extends DummyCrudEntityAccessor> accessors = new ArrayList<>(List.of(mock(DummyCrudEntityAccessor.class), mock(DummyCrudEntityAccessor.class), mock(DummyCrudEntityAccessor.class)));
+        final List<? extends DummyCrudEntityAccessor> accessors =
+                new ArrayList<>(
+                        List.of(
+                                mock(DummyCrudEntityAccessor.class),
+                                mock(DummyCrudEntityAccessor.class),
+                                mock(DummyCrudEntityAccessor.class)));
         accessors.add(null);
         doReturn(new DummyCrudEntity(1L)).when(accessors.get(0)).getDummyCrudEntity();
         doReturn(new DummyCrudEntity()).when(accessors.get(1)).getDummyCrudEntity();
         doReturn(null).when(accessors.get(2)).getDummyCrudEntity();
 
-        final List<DummyCrudEntity> entities = this.service.getByAccessorIds(accessors, accessor -> accessor.getDummyCrudEntity());
+        final List<DummyCrudEntity> entities =
+                this.service.getByAccessorIds(accessors, accessor -> accessor.getDummyCrudEntity());
 
         final List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L));
         assertEquals(expected, entities);

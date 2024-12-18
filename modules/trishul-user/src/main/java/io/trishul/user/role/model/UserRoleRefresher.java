@@ -1,9 +1,8 @@
 package io.trishul.user.role.model;
 
-import java.util.Collection;
-
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import java.util.Collection;
 
 public class UserRoleRefresher implements Refresher<UserRole, UserRoleAccessor> {
     private AccessorRefresher<Long, UserRoleAccessor, UserRole> refresher;

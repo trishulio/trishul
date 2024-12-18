@@ -1,11 +1,10 @@
 package io.trishul.dialect.postgres;
 
+import io.trishul.dialect.JdbcDialect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import io.trishul.dialect.JdbcDialect;
 
 public class PostgresJdbcDialect implements JdbcDialect {
     private final PostgresJdbcDialectSql pgSql;
@@ -27,7 +26,13 @@ public class PostgresJdbcDialect implements JdbcDialect {
     }
 
     @Override
-    public void grantPrivilege(Connection conn, String privilege, String resourceType, String resourceName, String username) throws SQLException {
+    public void grantPrivilege(
+            Connection conn,
+            String privilege,
+            String resourceType,
+            String resourceName,
+            String username)
+            throws SQLException {
         String sql = this.pgSql.grantPrivilege(privilege, resourceType, resourceName, username);
         update(conn, sql);
     }
@@ -82,7 +87,8 @@ public class PostgresJdbcDialect implements JdbcDialect {
     }
 
     @Override
-    public void reassignOwnedByTo(Connection conn, String owner, String assignee) throws SQLException {
+    public void reassignOwnedByTo(Connection conn, String owner, String assignee)
+            throws SQLException {
         String sql = this.pgSql.reassignOwnedByTo(owner, assignee);
         update(conn, sql);
     }

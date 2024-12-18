@@ -4,19 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
-import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 
 public class ColumnSpecAccumulatorTest {
     private ColumnSpecAccumulator accumulator;

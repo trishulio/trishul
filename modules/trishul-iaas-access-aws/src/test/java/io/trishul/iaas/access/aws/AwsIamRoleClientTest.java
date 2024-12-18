@@ -3,8 +3,6 @@ package io.trishul.iaas.access.aws;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -25,10 +23,11 @@ import com.amazonaws.services.identitymanagement.model.Policy;
 import com.amazonaws.services.identitymanagement.model.Role;
 import com.amazonaws.services.identitymanagement.model.UpdateAssumeRolePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.UpdateRoleRequest;
-
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AwsIamRoleClientTest {
     private AwsIamRoleClient client;
@@ -47,11 +46,14 @@ public class AwsIamRoleClientTest {
 
     @Test
     public void testGet_ReturnsPolicyFromAwsRequest() {
-        doAnswer(inv -> {
-            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
-            Role role = new Role().withRoleName(req.getRoleName());
-            return new GetRoleResult().withRole(role);
-        }).when(mAwsIamClient).getRole(any());
+        doAnswer(
+                        inv -> {
+                            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
+                            Role role = new Role().withRoleName(req.getRoleName());
+                            return new GetRoleResult().withRole(role);
+                        })
+                .when(mAwsIamClient)
+                .getRole(any());
 
         IaasRole role = client.get("ROLE");
 
@@ -67,57 +69,107 @@ public class AwsIamRoleClientTest {
 
     @Test
     public void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
-        doThrow(NoSuchEntityException.class).when(mAwsIamClient).deleteRole(new DeleteRoleRequest().withRoleName("ROLE"));
+        doThrow(NoSuchEntityException.class)
+                .when(mAwsIamClient)
+                .deleteRole(new DeleteRoleRequest().withRoleName("ROLE"));
 
         assertFalse(client.delete("ROLE"));
     }
 
     @Test
     public void testAdd_ReturnsAddedRole() {
-        doAnswer(inv -> {
-            CreateRoleRequest req = inv.getArgument(0, CreateRoleRequest.class);
+        doAnswer(
+                        inv -> {
+                            CreateRoleRequest req = inv.getArgument(0, CreateRoleRequest.class);
 
-            Role role = new Role()
-                            .withRoleName(req.getRoleName())
-                            .withDescription(req.getDescription())
-                            .withAssumeRolePolicyDocument(req.getAssumeRolePolicyDocument())
-                            .withRoleId(req.getRoleName() + "_ID")
-                            .withArn(req.getRoleName() + "_ARN");
+                            Role role =
+                                    new Role()
+                                            .withRoleName(req.getRoleName())
+                                            .withDescription(req.getDescription())
+                                            .withAssumeRolePolicyDocument(
+                                                    req.getAssumeRolePolicyDocument())
+                                            .withRoleId(req.getRoleName() + "_ID")
+                                            .withArn(req.getRoleName() + "_ARN");
 
-            return new CreateRoleResult().withRole(role);
-        }).when(mAwsIamClient).createRole(any());
+                            return new CreateRoleResult().withRole(role);
+                        })
+                .when(mAwsIamClient)
+                .createRole(any());
 
-        IaasRole role = client.add(new IaasRole("ROLE_1", "DESCRIPTION_1", "DOCUMENT_1", null, null, null, null, null));
+        IaasRole role =
+                client.add(
+                        new IaasRole(
+                                "ROLE_1",
+                                "DESCRIPTION_1",
+                                "DOCUMENT_1",
+                                null,
+                                null,
+                                null,
+                                null,
+                                null));
 
-        IaasRole expected = new IaasRole("ROLE_1", "DESCRIPTION_1", "DOCUMENT_1", "ROLE_1_ARN", "ROLE_1_ID", null, null, null);
+        IaasRole expected =
+                new IaasRole(
+                        "ROLE_1",
+                        "DESCRIPTION_1",
+                        "DOCUMENT_1",
+                        "ROLE_1_ARN",
+                        "ROLE_1_ID",
+                        null,
+                        null,
+                        null);
 
         assertEquals(expected, role);
     }
 
     @Test
     public void testUpdate_ReturnsUpdateRole() {
-        doAnswer(inv -> {
-            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
-            Role role = new Role().withRoleName(req.getRoleName());
-            return new GetRoleResult().withRole(role);
-        }).when(mAwsIamClient).getRole(any());
+        doAnswer(
+                        inv -> {
+                            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
+                            Role role = new Role().withRoleName(req.getRoleName());
+                            return new GetRoleResult().withRole(role);
+                        })
+                .when(mAwsIamClient)
+                .getRole(any());
 
-        IaasRole role = client.update(new IaasRole("ROLE_1", "DESCRIPTION_1", "DOCUMENT_1", null, null, null, null, null));
+        IaasRole role =
+                client.update(
+                        new IaasRole(
+                                "ROLE_1",
+                                "DESCRIPTION_1",
+                                "DOCUMENT_1",
+                                null,
+                                null,
+                                null,
+                                null,
+                                null));
 
         IaasRole expected = new IaasRole("ROLE_1");
         assertEquals(expected, role);
 
-        verify(mAwsIamClient).updateRole(new UpdateRoleRequest().withRoleName("ROLE_1").withDescription("DESCRIPTION_1"));
-        verify(mAwsIamClient).updateAssumeRolePolicy(new UpdateAssumeRolePolicyRequest().withRoleName("ROLE_1").withPolicyDocument("DOCUMENT_1"));
+        verify(mAwsIamClient)
+                .updateRole(
+                        new UpdateRoleRequest()
+                                .withRoleName("ROLE_1")
+                                .withDescription("DESCRIPTION_1"));
+        verify(mAwsIamClient)
+                .updateAssumeRolePolicy(
+                        new UpdateAssumeRolePolicyRequest()
+                                .withRoleName("ROLE_1")
+                                .withPolicyDocument("DOCUMENT_1"));
     }
 
     @Test
     public void testExists_ReturnsTrue_WhenGetReturnsObject() {
-        doAnswer(inv -> {
-            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
-            Role role = new Role().withRoleName(req.getRoleName());
-            return new GetRoleResult().withRole(role);
-        }).when(mAwsIamClient).getRole(any());
+        doAnswer(
+                        inv -> {
+                            GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
+                            Role role = new Role().withRoleName(req.getRoleName());
+                            return new GetRoleResult().withRole(role);
+                        })
+                .when(mAwsIamClient)
+                .getRole(any());
 
         assertTrue(client.exists("ROLE"));
     }

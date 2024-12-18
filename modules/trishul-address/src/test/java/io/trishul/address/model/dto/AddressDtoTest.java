@@ -1,6 +1,7 @@
 package io.trishul.address.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,8 @@ public class AddressDtoTest {
         String city = "city";
         String postalCode = "postalCode";
 
-        AddressDto addressDto = new AddressDto(id, addressLine1, addressLine2, country, province, city, postalCode);
+        AddressDto addressDto =
+                new AddressDto(id, addressLine1, addressLine2, country, province, city, postalCode);
 
         assertSame(id, addressDto.getId());
         assertSame(addressLine1, addressDto.getAddressLine1());

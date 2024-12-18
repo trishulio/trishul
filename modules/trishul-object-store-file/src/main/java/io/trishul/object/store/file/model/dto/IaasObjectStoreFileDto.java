@@ -1,10 +1,9 @@
 package io.trishul.object.store.file.model.dto;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
-
-import io.trishul.model.base.dto.BaseDto;
 
 public class IaasObjectStoreFileDto extends BaseDto {
     private URI fileKey;

@@ -1,8 +1,5 @@
 package io.trishul.model.reflection;
 
-import java.util.Map;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -10,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.test.bom.model.Dummy;
+import java.util.Map;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ReflectionManipulatorTest {
     public static class TestData {
@@ -24,12 +23,24 @@ public class ReflectionManipulatorTest {
         }
 
         int x;
-        public int getX() {return this.x;}
-        public void setX(int x) {this.x = x;}
+
+        public int getX() {
+            return this.x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
 
         int y;
-        public int getY() {return this.y;}
-        public void setY(int y) {this.y = y;}
+
+        public int getY() {
+            return this.y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
     }
 
     private ReflectionManipulator util;
@@ -124,9 +135,18 @@ public class ReflectionManipulatorTest {
 
     @Test
     public void testOuterJoin_ThrowsException_WhenEitherObjectIsNull() {
-        assertThrows(NullPointerException.class, () -> this.util.copy(null, null, pd -> true), "Outer Joins can not be on null objects");
-        assertThrows(NullPointerException.class, () -> this.util.copy(null, new Dummy(), pd -> true), "Outer Joins can not be on null objects");
-        assertThrows(NullPointerException.class, () -> this.util.copy(new Dummy(), null, pd -> true), "Outer Joins can not be on null objects");
+        assertThrows(
+                NullPointerException.class,
+                () -> this.util.copy(null, null, pd -> true),
+                "Outer Joins can not be on null objects");
+        assertThrows(
+                NullPointerException.class,
+                () -> this.util.copy(null, new Dummy(), pd -> true),
+                "Outer Joins can not be on null objects");
+        assertThrows(
+                NullPointerException.class,
+                () -> this.util.copy(new Dummy(), null, pd -> true),
+                "Outer Joins can not be on null objects");
     }
 
     @Test
@@ -137,7 +157,10 @@ public class ReflectionManipulatorTest {
             }
 
             int x;
-            public void setX(int x) {this.x = x;}
+
+            public void setX(int x) {
+                this.x = x;
+            }
         }
         final TestDataWithoutGetter o1 = new TestDataWithoutGetter(10);
         final TestDataWithoutGetter o2 = new TestDataWithoutGetter(20);
@@ -156,7 +179,10 @@ public class ReflectionManipulatorTest {
             }
 
             int x;
-            public int getX() {return this.x;}
+
+            public int getX() {
+                return this.x;
+            }
         }
         final TestDataWithoutSetter o1 = new TestDataWithoutSetter(10);
         final TestDataWithoutSetter o2 = new TestDataWithoutSetter(20);
@@ -179,7 +205,8 @@ public class ReflectionManipulatorTest {
     }
 
     @Test
-    public void testOuterJoin_CopiesProperty_WhenGetterAndSetterAreBothPresentAndPredicateReturnsTrue() {
+    public void
+            testOuterJoin_CopiesProperty_WhenGetterAndSetterAreBothPresentAndPredicateReturnsTrue() {
         final TestData o1 = new TestData(10);
         final TestData o2 = new TestData(20);
 
@@ -202,7 +229,8 @@ public class ReflectionManipulatorTest {
     }
 
     @Test
-    public void testGetPropertyNames_ReturnsListOfPropertyNamesWithExclusions_WhenExcludedContainsClassProps() {
+    public void
+            testGetPropertyNames_ReturnsListOfPropertyNamesWithExclusions_WhenExcludedContainsClassProps() {
         Set<String> props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));
 
         props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));

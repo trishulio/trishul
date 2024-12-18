@@ -1,11 +1,10 @@
 package io.trishul.iaas.idp.tenant.model;
 
+import io.trishul.tenant.entity.BaseTenant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import io.trishul.tenant.entity.BaseTenant;
 
 public class TenantIaasIdpTenantMapper {
     public static final TenantIaasIdpTenantMapper INSTANCE = new TenantIaasIdpTenantMapper();
@@ -22,7 +21,8 @@ public class TenantIaasIdpTenantMapper {
     }
 
     @SuppressWarnings("unchecked")
-    public <Idp extends BaseIaasIdpTenant, T extends BaseTenant> List<Idp> fromTenants(List<T> tenants) {
+    public <Idp extends BaseIaasIdpTenant, T extends BaseTenant> List<Idp> fromTenants(
+            List<T> tenants) {
         List<Idp> idpTenants = null;
 
         if (tenants != null) {

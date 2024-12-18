@@ -17,15 +17,19 @@ public class BlockingAsyncExecutor {
             operations[i] = CompletableFuture.supplyAsync(suppliers.get(i));
         }
 
-        CompletableFuture<List<R>> resultOperation = CompletableFuture.allOf(operations)
-                         .thenApply(__ -> Arrays.stream(operations)
-                                                  .map(CompletableFuture::join)
-                                                  .toList());
+        CompletableFuture<List<R>> resultOperation =
+                CompletableFuture.allOf(operations)
+                        .thenApply(
+                                __ ->
+                                        Arrays.stream(operations)
+                                                .map(CompletableFuture::join)
+                                                .toList());
 
         try {
             return resultOperation.get();
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(String.format("Failed to execute tasks because: %s", e.getMessage()), e);
+            throw new RuntimeException(
+                    String.format("Failed to execute tasks because: %s", e.getMessage()), e);
         }
     }
 
@@ -41,7 +45,8 @@ public class BlockingAsyncExecutor {
         try {
             resultOperation.get();
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(String.format("Failed to execute tasks because: %s", e.getMessage()), e);
+            throw new RuntimeException(
+                    String.format("Failed to execute tasks because: %s", e.getMessage()), e);
         }
     }
 }

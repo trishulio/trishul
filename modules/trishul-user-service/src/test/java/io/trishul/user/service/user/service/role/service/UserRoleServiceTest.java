@@ -1,23 +1,17 @@
 package io.trishul.user.service.user.service.role.service;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Function;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.jpa.domain.Specification;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.UpdateService;
@@ -27,6 +21,16 @@ import io.trishul.user.role.model.BaseUserRole;
 import io.trishul.user.role.model.UpdateUserRole;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.jpa.domain.Specification;
 
 public class UserRoleServiceTest {
     private UserRoleService service;
@@ -46,19 +50,27 @@ public class UserRoleServiceTest {
     @Test
     public void testGetUserRoles_ReturnsEntitiesFromRepoService_WithCustomSpec() {
         @SuppressWarnings("unchecked")
-        final ArgumentCaptor<Specification<UserRole>> captor = ArgumentCaptor.forClass(Specification.class);
+        final ArgumentCaptor<Specification<UserRole>> captor =
+                ArgumentCaptor.forClass(Specification.class);
         final Page<UserRole> mPage = new PageImpl<>(List.of(new UserRole(1L)));
-        doReturn(mPage).when(this.mRepoService).getAll(captor.capture(), eq(new TreeSet<>(List.of("userRolename"))), eq(true), eq(1), eq(100));
+        doReturn(mPage)
+                .when(this.mRepoService)
+                .getAll(
+                        captor.capture(),
+                        eq(new TreeSet<>(List.of("userRolename"))),
+                        eq(true),
+                        eq(1),
+                        eq(100));
 
-        final Page<UserRole> page = this.service.getUserRoles(
-            Set.of(1L),
-            Set.of(2L),
-            Set.of("name"),
-            new TreeSet<>(List.of("userRolename")),
-            true,
-            1,
-            100
-        );
+        final Page<UserRole> page =
+                this.service.getUserRoles(
+                        Set.of(1L),
+                        Set.of(2L),
+                        Set.of("name"),
+                        new TreeSet<>(List.of("userRolename")),
+                        true,
+                        1,
+                        100);
 
         final Page<UserRole> expected = new PageImpl<>(List.of(new UserRole(1L)));
         assertEquals(expected, page);
@@ -78,7 +90,8 @@ public class UserRoleServiceTest {
 
     @Test
     public void testGetByIds_CallsRepoService() {
-        ArgumentCaptor<List<? extends Identified<Long>>> captor = ArgumentCaptor.forClass(List.class);
+        ArgumentCaptor<List<? extends Identified<Long>>> captor =
+                ArgumentCaptor.forClass(List.class);
 
         doReturn(List.of(new UserRole(1L))).when(mRepoService).getByIds(captor.capture());
 
@@ -88,18 +101,24 @@ public class UserRoleServiceTest {
 
     @Test
     public void testGetByAccessorIds_CallsRepoService() {
-        ArgumentCaptor<Function<UserRoleAccessor, UserRole>> captor = ArgumentCaptor.forClass(Function.class);
+        ArgumentCaptor<Function<UserRoleAccessor, UserRole>> captor =
+                ArgumentCaptor.forClass(Function.class);
 
-        List<? extends UserRoleAccessor> accessors = List.of(new UserRoleAccessor() {
-             @Override
-             public void setRole(UserRole userRole) {}
-             @Override
-             public UserRole getRole() {
-                 return new UserRole(1L);
-             }
-         });
+        List<? extends UserRoleAccessor> accessors =
+                List.of(
+                        new UserRoleAccessor() {
+                            @Override
+                            public void setRole(UserRole userRole) {}
 
-        doReturn(List.of(new UserRole(1L))).when(mRepoService).getByAccessorIds(eq(accessors), captor.capture());
+                            @Override
+                            public UserRole getRole() {
+                                return new UserRole(1L);
+                            }
+                        });
+
+        doReturn(List.of(new UserRole(1L)))
+                .when(mRepoService)
+                .getByAccessorIds(eq(accessors), captor.capture());
 
         assertEquals(List.of(new UserRole(1L)), service.getByAccessorIds(accessors));
         assertEquals(new UserRole(1L), captor.getValue().apply(accessors.get(0)));
@@ -175,9 +194,12 @@ public class UserRoleServiceTest {
         final UpdateUserRole userRole1 = new UserRole(1L);
         final UpdateUserRole userRole2 = new UserRole(2L);
 
-        doReturn(List.of(new UserRole(1L), new UserRole(2L))).when(this.mRepoService).getByIds(List.of(userRole1, userRole2));
+        doReturn(List.of(new UserRole(1L), new UserRole(2L)))
+                .when(this.mRepoService)
+                .getByIds(List.of(userRole1, userRole2));
 
-        final List<UserRole> updated = this.service.put(List.of(userRole1, userRole2, new UserRole()));
+        final List<UserRole> updated =
+                this.service.put(List.of(userRole1, userRole2, new UserRole()));
 
         final List<UserRole> expected = List.of(new UserRole(1L), new UserRole(2L), new UserRole());
 
@@ -193,12 +215,16 @@ public class UserRoleServiceTest {
 
     @Test
     public void testPatch_PatchesUserRoleAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
-        doAnswer(inv -> inv.getArgument(1)).when(this.mUpdateService).getPatchEntities(any(), any());
+        doAnswer(inv -> inv.getArgument(1))
+                .when(this.mUpdateService)
+                .getPatchEntities(any(), any());
 
         final UpdateUserRole userRole1 = new UserRole(1L);
         final UpdateUserRole userRole2 = new UserRole(2L);
 
-        doReturn(List.of(new UserRole(1L), new UserRole(2L))).when(this.mRepoService).getByIds(List.of(userRole1, userRole2));
+        doReturn(List.of(new UserRole(1L), new UserRole(2L)))
+                .when(this.mRepoService)
+                .getByIds(List.of(userRole1, userRole2));
 
         final List<UserRole> updated = this.service.patch(List.of(userRole1, userRole2));
 
@@ -216,11 +242,19 @@ public class UserRoleServiceTest {
 
     @Test
     public void testPatch_ThrowsNotFoundException_WhenAllUserRolesDontExist() {
-        doAnswer(inv -> inv.getArgument(1)).when(this.mUpdateService).getPatchEntities(any(), any());
+        doAnswer(inv -> inv.getArgument(1))
+                .when(this.mUpdateService)
+                .getPatchEntities(any(), any());
 
-        final List<UpdateUserRole> updates = List.of(new UserRole(1L), new UserRole(2L), new UserRole(3L), new UserRole(4L));
-        doReturn(List.of(new UserRole(1L), new UserRole(2L))).when(this.mRepoService).getByIds(updates);
+        final List<UpdateUserRole> updates =
+                List.of(new UserRole(1L), new UserRole(2L), new UserRole(3L), new UserRole(4L));
+        doReturn(List.of(new UserRole(1L), new UserRole(2L)))
+                .when(this.mRepoService)
+                .getByIds(updates);
 
-        assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates), "Cannot find userRoles with Ids: [3, 4]");
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> this.service.patch(updates),
+                "Cannot find userRoles with Ids: [3, 4]");
     }
 }

@@ -1,16 +1,12 @@
 package io.trishul.money.tax.rate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.trishul.model.base.entity.BaseEntity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-
 import org.joda.money.Money;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.trishul.model.base.entity.BaseEntity;
 
 @Embeddable
 public class TaxRate extends BaseEntity {

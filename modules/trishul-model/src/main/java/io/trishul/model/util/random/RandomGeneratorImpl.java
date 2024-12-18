@@ -1,11 +1,9 @@
 package io.trishul.model.util.random;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.ImmutableList;
-
 import io.trishul.base.types.util.random.RandomGenerator;
+import java.security.SecureRandom;
+import java.util.List;
 
 public class RandomGeneratorImpl implements RandomGenerator {
     private static final String CAPITAL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -16,13 +14,15 @@ public class RandomGeneratorImpl implements RandomGenerator {
 
     static {
         String allChars = CAPITAL_CHARS + LOWERCASE_CHARS + DIGITS + SYMBOLS;
-        ALL_CHARS = allChars.chars().mapToObj(c -> (char) c).collect(ImmutableList.toImmutableList());
+        ALL_CHARS =
+                allChars.chars().mapToObj(c -> (char) c).collect(ImmutableList.toImmutableList());
     }
 
-    private final Random random;
+    private final SecureRandom random;
 
-    public RandomGeneratorImpl(Random random) {
-        this.random = random;
+    public RandomGeneratorImpl(SecureRandom random) {
+        // Defensive copying: Use a new SecureRandom instance if none is provided
+        this.random = (random != null) ? random : new SecureRandom();
     }
 
     @Override

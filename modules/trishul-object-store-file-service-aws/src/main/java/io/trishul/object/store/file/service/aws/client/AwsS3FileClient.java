@@ -1,17 +1,5 @@
 package io.trishul.object.store.file.service.aws.client;
 
-import java.net.URI;
-import java.net.URL;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
-
-import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
@@ -19,15 +7,25 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
+import io.trishul.iaas.client.IaasClient;
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
-import io.trishul.iaas.client.IaasClient;
+import java.net.URI;
+import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class AwsS3FileClient implements IaasClient<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> {
+public class AwsS3FileClient
+        implements IaasClient<
+                URI, IaasObjectStoreFile, BaseIaasObjectStoreFile, UpdateIaasObjectStoreFile> {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(AwsS3FileClient.class);
 
@@ -37,25 +35,39 @@ public class AwsS3FileClient implements IaasClient<URI, IaasObjectStoreFile, Bas
 
     private final long getDuration;
 
-    public AwsS3FileClient(AmazonS3 s3, String bucketName, LocalDateTimeMapper dtMapper, long getDuration) {
+    public AwsS3FileClient(
+            AmazonS3 s3, String bucketName, LocalDateTimeMapper dtMapper, long getDuration) {
         this.s3 = s3;
         this.bucketName = bucketName;
-        this.presignUrlCache = CacheBuilder.newBuilder()
-                                            .expireAfterWrite(Duration.ofHours(1))
-                                            .build(new CacheLoader<PresignUrlRequest, IaasObjectStoreFile>(){
-            @Override
-            public IaasObjectStoreFile load(@Nonnull PresignUrlRequest key) throws Exception {
-                IaasObjectStoreFile file = new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, null);
+        this.presignUrlCache =
+                CacheBuilder.newBuilder()
+                        .expireAfterWrite(Duration.ofHours(1))
+                        .build(
+                                new CacheLoader<PresignUrlRequest, IaasObjectStoreFile>() {
+                                    @Override
+                                    public IaasObjectStoreFile load(@Nonnull PresignUrlRequest key)
+                                            throws Exception {
+                                        IaasObjectStoreFile file =
+                                                new IaasObjectStoreFile(
+                                                        URI.create(key.fileKey),
+                                                        key.expiration,
+                                                        null);
 
-                GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest(bucketName, file.getFileKey().toString())
-                        .withMethod(key.method)
-                        .withExpiration(dtMapper.toUtilDate(file.getExpiration()));
+                                        GeneratePresignedUrlRequest req =
+                                                new GeneratePresignedUrlRequest(
+                                                                bucketName,
+                                                                file.getFileKey().toString())
+                                                        .withMethod(key.method)
+                                                        .withExpiration(
+                                                                dtMapper.toUtilDate(
+                                                                        file.getExpiration()));
 
-                URL url = s3.generatePresignedUrl(req);
+                                        URL url = s3.generatePresignedUrl(req);
 
-                return new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, url);
-            }
-        });
+                                        return new IaasObjectStoreFile(
+                                                URI.create(key.fileKey), key.expiration, url);
+                                    }
+                                });
 
         this.getDuration = getDuration;
     }
@@ -94,7 +106,8 @@ public class AwsS3FileClient implements IaasClient<URI, IaasObjectStoreFile, Bas
         return s3.doesObjectExist(bucketName, id.toString());
     }
 
-    private IaasObjectStoreFile presign(String fileKey, LocalDateTime expiration, HttpMethod method) {
+    private IaasObjectStoreFile presign(
+            String fileKey, LocalDateTime expiration, HttpMethod method) {
         PresignUrlRequest request = new PresignUrlRequest(fileKey, expiration, method);
         try {
             return this.presignUrlCache.get(request);

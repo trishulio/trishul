@@ -8,8 +8,7 @@ public class IaasRolePolicyAttachmentId extends BaseModel {
     private String policyId;
     private String roleId;
 
-    public IaasRolePolicyAttachmentId() {
-    }
+    public IaasRolePolicyAttachmentId() {}
 
     public IaasRolePolicyAttachmentId(String roleId, String policyId) {
         this();
@@ -40,7 +39,7 @@ public class IaasRolePolicyAttachmentId extends BaseModel {
             id = new IaasRolePolicyAttachmentId();
         }
 
-        if (role != null ) {
+        if (role != null) {
             id.setRoleId(role.getId());
         }
 

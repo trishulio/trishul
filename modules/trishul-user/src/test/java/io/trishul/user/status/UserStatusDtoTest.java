@@ -1,9 +1,9 @@
 package io.trishul.user.status;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,13 @@ public class UserStatusDtoTest {
 
     @Test
     public void testAllArgConstructor_SetsAllFields() {
-        dto = new UserStatusDto(
-            1L,
-            "STATUS",
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        dto =
+                new UserStatusDto(
+                        1L,
+                        "STATUS",
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(1L, dto.getId());
         assertEquals("STATUS", dto.getName());

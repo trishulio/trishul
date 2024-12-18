@@ -4,18 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.UUID;
-
-import javax.sql.DataSource;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.UUID;
+import javax.sql.DataSource;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TenantDataSourceManagerWrapperTest {
     private TenantDataSourceManagerWrapper tenantDsMgr;
@@ -32,7 +29,8 @@ public class TenantDataSourceManagerWrapperTest {
     }
 
     @Test
-    public void testGetDataSource_ReturnsAdminDataSource_WhenTenantIdIsNull() throws SQLException, IOException {
+    public void testGetDataSource_ReturnsAdminDataSource_WhenTenantIdIsNull()
+            throws SQLException, IOException {
         DataSource mDs = mock(DataSource.class);
         doReturn(mDs).when(mDsMgr).getAdminDataSource();
 
@@ -40,13 +38,18 @@ public class TenantDataSourceManagerWrapperTest {
     }
 
     @Test
-    public void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNull() throws SQLException, IOException {
+    public void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNull()
+            throws SQLException, IOException {
         DataSourceConfiguration mConfig = mock(DataSourceConfiguration.class);
-        doReturn(mConfig).when(mConfigProvider).getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        doReturn(mConfig)
+                .when(mConfigProvider)
+                .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
         DataSource mDs = mock(DataSource.class);
         doReturn(mDs).when(mDsMgr).getDataSource(mConfig);
 
-        assertEquals(mDs, tenantDsMgr.getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+        assertEquals(
+                mDs,
+                tenantDsMgr.getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     }
 }

@@ -2,9 +2,7 @@ package io.trishul.tenant.persistence.connection.provider.pool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 public class TenantDataSourceManagerConnectionProvider implements ConnectionProvider {

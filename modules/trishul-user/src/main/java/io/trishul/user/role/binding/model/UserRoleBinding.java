@@ -1,7 +1,15 @@
 package io.trishul.user.role.binding.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.UpdatableEntity;
+import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.user.model.User;
+import io.trishul.user.model.UserAccessor;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleAccessor;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,42 +21,36 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.UpdatableEntity;
-import io.trishul.user.model.User;
-import io.trishul.user.model.UserAccessor;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.role.model.UserRoleAccessor;
-
 /***
- * There exists a many-to-many relationship between a user and a user-role. But due to
- * hibernate performance issues, it is better to represent a many-to-many relationship
- * as a bi-directional one-to-many relationship. This is an intermediary class to create
- * that relationship between a user and a role entity. It's modelled not to be used directly
- * outside the user context and hence always hidden under the user class' implementation.
+ * There exists a many-to-many relationship between a user and a user-role. But
+ * due to hibernate performance issues, it is better to represent a many-to-many
+ * relationship as a bi-directional one-to-many relationship. This is an
+ * intermediary class to create that relationship between a user and a role
+ * entity. It's modelled not to be used directly outside the user context and
+ * hence always hidden under the user class' implementation.
+ *
  * @author Rishab Manocha
  *
  */
 
 @Entity
 @Table(name = "user_role_binding")
-@JsonIgnoreProperties({ "hibernateLazyInitializer" })
-public class UserRoleBinding extends BaseEntity implements Audited, UserRoleAccessor, UserAccessor, UpdatableEntity<Long> {
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class UserRoleBinding extends BaseEntity
+        implements Audited, UserRoleAccessor, UserAccessor, UpdatableEntity<Long> {
     public static final String FIELD_ID = "id";
     public static final String FIELD_USER_ROLE_TYPE = "role";
     public static final String FIELD_USER = "user";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_binding_generator")
-    @SequenceGenerator(name = "user_role_binding_generator", sequenceName = "user_role_binding_sequence", allocationSize = 1)
+    @SequenceGenerator(
+            name = "user_role_binding_generator",
+            sequenceName = "user_role_binding_sequence",
+            allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -68,11 +70,9 @@ public class UserRoleBinding extends BaseEntity implements Audited, UserRoleAcce
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
 
-    @Version
-    private Integer version;
+    @Version private Integer version;
 
-    public UserRoleBinding() {
-    }
+    public UserRoleBinding() {}
 
     public UserRoleBinding(Long id) {
         this();

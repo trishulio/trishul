@@ -1,15 +1,14 @@
 package io.trishul.user.model;
 
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.user.role.model.UserRoleDto;
 import io.trishul.user.salutation.model.UserSalutationDto;
 import io.trishul.user.status.UserStatusDto;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor {
     private Long id;
@@ -42,15 +41,29 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
 
     private Integer version;
 
-    public UserDto() {
-    }
+    public UserDto() {}
 
     public UserDto(Long id) {
         this();
         setId(id);
     }
 
-    public UserDto(Long id, String userName, String displayName, String firstName, String lastName, String email, String phoneNumber, URI imageSrc, IaasObjectStoreFileDto objectStoreFile, UserStatusDto status, UserSalutationDto salutation, List<UserRoleDto> roles, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    public UserDto(
+            Long id,
+            String userName,
+            String displayName,
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            URI imageSrc,
+            IaasObjectStoreFileDto objectStoreFile,
+            UserStatusDto status,
+            UserSalutationDto salutation,
+            List<UserRoleDto> roles,
+            LocalDateTime createdAt,
+            LocalDateTime lastUpdated,
+            Integer version) {
         this(id);
         setUserName(userName);
         setDisplayName(displayName);

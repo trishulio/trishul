@@ -1,18 +1,18 @@
 package io.trishul.iaas.tenant.object.store;
 
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.object.store.model.IaasObjectStore;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
-
-import io.trishul.iaas.access.policy.model.IaasPolicy;
-import io.trishul.object.store.model.IaasObjectStore;
 
 public class TenantIaasVfsResourceMapper {
     public static final TenantIaasVfsResourceMapper INSTANCE = new TenantIaasVfsResourceMapper();
 
     protected TenantIaasVfsResourceMapper() {}
 
-    public List<TenantIaasVfsResources> fromComponents(List<IaasObjectStore> objectStores, List<IaasPolicy> policies) {
+    public List<TenantIaasVfsResources> fromComponents(
+            List<IaasObjectStore> objectStores, List<IaasPolicy> policies) {
         int objectStoreCount = objectStores.size();
         boolean areSameSize = objectStoreCount == policies.size();
 
@@ -24,13 +24,14 @@ public class TenantIaasVfsResourceMapper {
         Iterator<IaasObjectStore> objectStoresIterator = objectStores.iterator();
         Iterator<IaasPolicy> policiesIterator = policies.iterator();
 
-        List<TenantIaasVfsResources> resources = Stream.generate(() -> new TenantIaasVfsResources(
-                                                                             objectStoresIterator.next(),
-                                                                             policiesIterator.next()
-                                                                     )
-                                                                 )
-                                                                 .limit(objectStoreCount)
-                                                                 .toList();
-         return resources;
+        List<TenantIaasVfsResources> resources =
+                Stream.generate(
+                                () ->
+                                        new TenantIaasVfsResources(
+                                                objectStoresIterator.next(),
+                                                policiesIterator.next()))
+                        .limit(objectStoreCount)
+                        .toList();
+        return resources;
     }
 }

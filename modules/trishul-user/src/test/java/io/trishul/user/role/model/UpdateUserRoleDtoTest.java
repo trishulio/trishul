@@ -1,7 +1,7 @@
 package io.trishul.user.role.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +16,7 @@ public class UpdateUserRoleDtoTest {
 
     @Test
     public void testAllArgs_SetsAllFields() {
-        dto = new UpdateUserRoleDto(
-            1L,
-            "ROLE_NAME",
-            1
-        );
+        dto = new UpdateUserRoleDto(1L, "ROLE_NAME", 1);
 
         assertEquals(1L, dto.getId());
         assertEquals("ROLE_NAME", dto.getName());

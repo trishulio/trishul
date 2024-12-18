@@ -1,10 +1,9 @@
 package io.trishul.user.salutation.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,13 +17,13 @@ public class UserSalutationTest {
 
     @Test
     public void testAllArgConstructor() {
-        salutation = new UserSalutation(
-            1L,
-            "TITLE",
-            LocalDateTime.of(1999, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0),
-            1
-        );
+        salutation =
+                new UserSalutation(
+                        1L,
+                        "TITLE",
+                        LocalDateTime.of(1999, 1, 1, 0, 0),
+                        LocalDateTime.of(2000, 1, 1, 0, 0),
+                        1);
 
         assertEquals(1L, salutation.getId());
         assertEquals("TITLE", salutation.getTitle());

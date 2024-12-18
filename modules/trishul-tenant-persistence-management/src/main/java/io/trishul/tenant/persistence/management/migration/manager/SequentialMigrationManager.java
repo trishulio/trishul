@@ -1,15 +1,13 @@
 package io.trishul.tenant.persistence.management.migration.manager;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.trishul.model.util.task.SequentialTaskSet;
 import io.trishul.model.util.task.TaskSet;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // Note: Can be replaced with a parallel task-set that uses blocking Async executor;
 public class SequentialMigrationManager implements MigrationManager {
@@ -35,9 +33,12 @@ public class SequentialMigrationManager implements MigrationManager {
     public void migrateAll(List<Tenant> tenants) {
         TaskSet tasks = new SequentialTaskSet();
 
-        tenants.forEach(id -> tasks.submit(() -> {
-            migrate(id);
-        }));
+        tenants.forEach(
+                id ->
+                        tasks.submit(
+                                () -> {
+                                    migrate(id);
+                                }));
 
         log.info("{} tenants migrated successfully", tasks.getResults().size());
         if (tasks.getErrors().size() > 0) {

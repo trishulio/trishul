@@ -1,10 +1,9 @@
 package io.trishul.iaas.access.role.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,16 @@ public class IaasRoleTest {
 
     @Test
     public void testAllArgConstructor() {
-        role = new IaasRole("ID", "DESCRIPTION", "DOCUMENT", "IAAS_RES_NAME", "IAAS_ID", LocalDateTime.of(2001, 1, 1, 0, 0), LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
+        role =
+                new IaasRole(
+                        "ID",
+                        "DESCRIPTION",
+                        "DOCUMENT",
+                        "IAAS_RES_NAME",
+                        "IAAS_ID",
+                        LocalDateTime.of(2001, 1, 1, 0, 0),
+                        LocalDateTime.of(2002, 1, 1, 0, 0),
+                        LocalDateTime.of(2003, 1, 1, 0, 0));
 
         assertEquals("ID", role.getId());
         assertEquals("ID", role.getName());

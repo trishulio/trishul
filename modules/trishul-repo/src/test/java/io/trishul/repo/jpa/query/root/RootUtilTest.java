@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Path;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.repo.jpa.query.join.joiner.CriteriaJoinAnnotationJoiner;
 import io.trishul.repo.jpa.query.join.joiner.JpaJoiner;
+import javax.persistence.criteria.From;
+import javax.persistence.criteria.Path;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RootUtilTest {
     class Layer0 {
@@ -27,8 +25,7 @@ public class RootUtilTest {
         private Layer3 layer3;
     }
 
-    class Layer3 {
-    }
+    class Layer3 {}
 
     private From<?, Layer0> mRoot;
 
@@ -73,10 +70,12 @@ public class RootUtilTest {
 
     @Test
     public void testGetPath_ReturnsDeepPathOnJoin_WhenPathIsNotNull() {
-        assertEquals(mPath0, rootUtil.getPath(mRoot, new String[] { "get" }));
-        assertEquals(mPath1, rootUtil.getPath(mRoot, new String[] { "layer1", "get" }));
-        assertEquals(mPath2, rootUtil.getPath(mRoot, new String[] { "layer1", "layer2", "get" }));
-        assertEquals(mPath3, rootUtil.getPath(mRoot, new String[] { "layer1", "layer2", "layer3", "get" }));
+        assertEquals(mPath0, rootUtil.getPath(mRoot, new String[] {"get"}));
+        assertEquals(mPath1, rootUtil.getPath(mRoot, new String[] {"layer1", "get"}));
+        assertEquals(mPath2, rootUtil.getPath(mRoot, new String[] {"layer1", "layer2", "get"}));
+        assertEquals(
+                mPath3,
+                rootUtil.getPath(mRoot, new String[] {"layer1", "layer2", "layer3", "get"}));
     }
 
     @Test
@@ -86,6 +85,7 @@ public class RootUtilTest {
 
     @Test
     public void testGetPath_ThrowException_WhenPathIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, new String[] {}));
+        assertThrows(
+                IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, new String[] {}));
     }
 }

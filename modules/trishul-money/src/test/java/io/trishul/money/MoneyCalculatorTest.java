@@ -1,11 +1,12 @@
 package io.trishul.money;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.joda.money.CurrencyMismatchException;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,6 @@ public class MoneyCalculatorTest {
     public void testTotal_ReturnsNull_WhenCollectionIsEmpty() {
         Money total = calculator.total(Collections.emptyList());
         assertNull(total);
-
     }
 
     @Test
@@ -44,11 +44,8 @@ public class MoneyCalculatorTest {
 
     @Test
     public void testTotal_IgnoresSupplierInCollectionWithNullAmounts() {
-        List<MoneySupplier> suppliers = List.of(
-            () -> null,
-            () -> Money.parse("CAD 10"),
-            () -> null
-        );
+        List<MoneySupplier> suppliers =
+                List.of(() -> null, () -> Money.parse("CAD 10"), () -> null);
 
         Money total = calculator.total(suppliers);
         assertEquals(Money.parse("CAD 10"), total);
@@ -56,11 +53,11 @@ public class MoneyCalculatorTest {
 
     @Test
     public void testTotal_ReturnsTotalOfTheSameCurrency() {
-        List<MoneySupplier> suppliers = List.of(
-            () -> Money.parse("CAD 10"),
-            () -> Money.parse("CAD 20"),
-            () -> Money.parse("CAD 30")
-        );
+        List<MoneySupplier> suppliers =
+                List.of(
+                        () -> Money.parse("CAD 10"),
+                        () -> Money.parse("CAD 20"),
+                        () -> Money.parse("CAD 30"));
 
         Money total = calculator.total(suppliers);
         assertEquals(Money.parse("CAD 60"), total);
@@ -68,11 +65,11 @@ public class MoneyCalculatorTest {
 
     @Test
     public void testTotal_ThrowsCurrencyMistMatchException_WhenDifferentCurrenciesAreSupplied() {
-        List<MoneySupplier> suppliers = List.of(
-            () -> Money.parse("CAD 10"),
-            () -> Money.parse("USD 20"),
-            () -> Money.parse("INR 30")
-        );
+        List<MoneySupplier> suppliers =
+                List.of(
+                        () -> Money.parse("CAD 10"),
+                        () -> Money.parse("USD 20"),
+                        () -> Money.parse("INR 30"));
 
         assertThrows(CurrencyMismatchException.class, () -> calculator.total(suppliers));
     }

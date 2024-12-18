@@ -1,17 +1,16 @@
 package io.trishul.iaas.access.role.attachment.policy;
 
-import java.time.LocalDateTime;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.trishul.base.types.base.pojo.Audited;
+import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.CrudEntity;
+import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class IaasRolePolicyAttachment extends BaseEntity implements UpdateIaasRolePolicyAttachment, CrudEntity<IaasRolePolicyAttachmentId>, Audited {
+public class IaasRolePolicyAttachment extends BaseEntity
+        implements UpdateIaasRolePolicyAttachment, CrudEntity<IaasRolePolicyAttachmentId>, Audited {
     private static final Logger log = LoggerFactory.getLogger(IaasRolePolicyAttachment.class);
 
     private IaasRole role;
@@ -34,7 +33,8 @@ public class IaasRolePolicyAttachment extends BaseEntity implements UpdateIaasRo
         setIaasPolicy(policy);
     }
 
-    public IaasRolePolicyAttachment(IaasRole role, IaasPolicy policy, LocalDateTime createdAt, LocalDateTime lastUpdated) {
+    public IaasRolePolicyAttachment(
+            IaasRole role, IaasPolicy policy, LocalDateTime createdAt, LocalDateTime lastUpdated) {
         this(role, policy);
         setCreatedAt(createdAt);
         setLastUpdated(lastUpdated);

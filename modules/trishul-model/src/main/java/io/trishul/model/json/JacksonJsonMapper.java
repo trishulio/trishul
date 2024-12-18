@@ -1,10 +1,12 @@
 package io.trishul.model.json;
 
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class JacksonJsonMapper implements JsonMapper {
     public ObjectMapper mapper;
@@ -12,17 +14,18 @@ public class JacksonJsonMapper implements JsonMapper {
 
     public JacksonJsonMapper(ObjectMapper mapper) {
         this.module = new SimpleModule();
-        this.mapper = mapper
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .registerModule(new JavaTimeModule());
+        this.mapper =
+                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                        .registerModule(new JavaTimeModule());
     }
 
     public <T> SimpleModule addSerializer(Class<? extends T> type, JsonSerializer<T> serializer) {
         return this.module.addSerializer(type, serializer);
     }
 
-    public <T> SimpleModule addDeserializer(Class<T> type, JsonDeserializer<? extends T> deserializer) {
+    public <T> SimpleModule addDeserializer(
+            Class<T> type, JsonDeserializer<? extends T> deserializer) {
         return this.module.addDeserializer(type, deserializer);
     }
 
@@ -35,7 +38,11 @@ public class JacksonJsonMapper implements JsonMapper {
         try {
             return this.mapper.writeValueAsString(o);
         } catch (final JsonProcessingException e) {
-            throw new RuntimeException(String.format("Failed to serialize object of class: '%s' because %s", o.getClass(), e.getMessage()), e);
+            throw new RuntimeException(
+                    String.format(
+                            "Failed to serialize object of class: '%s' because %s",
+                            o.getClass(), e.getMessage()),
+                    e);
         }
     }
 
@@ -44,7 +51,10 @@ public class JacksonJsonMapper implements JsonMapper {
         try {
             return this.mapper.readValue(json, clazz);
         } catch (final JsonProcessingException e) {
-            throw new RuntimeException(String.format("Failed to de-serialize string: '%s' because %s", json, e.getMessage()), e);
+            throw new RuntimeException(
+                    String.format(
+                            "Failed to de-serialize string: '%s' because %s", json, e.getMessage()),
+                    e);
         }
     }
 }

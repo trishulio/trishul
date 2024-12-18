@@ -1,9 +1,8 @@
 package io.trishul.object.store.configuration.cors.model;
 
 import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
-
-import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.base.types.base.pojo.CrudEntity;
+import io.trishul.model.base.entity.BaseEntity;
 
 public class IaasObjectStoreCorsConfiguration extends BaseEntity implements CrudEntity<String> {
 
@@ -15,8 +14,8 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity implements Crud
         super();
     }
 
-    public IaasObjectStoreCorsConfiguration(String bucketName,
-            BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
+    public IaasObjectStoreCorsConfiguration(
+            String bucketName, BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
         this();
         this.bucketName = bucketName;
         this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
@@ -44,7 +43,8 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity implements Crud
         return bucketCrossOriginConfiguration;
     }
 
-    public void setBucketCrossOriginConfiguration(BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
+    public void setBucketCrossOriginConfiguration(
+            BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
         this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
     }
 

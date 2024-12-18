@@ -5,13 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.tenant.entity.TenantIdProvider;
 import java.util.UUID;
-
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.tenant.entity.TenantIdProvider;
 
 public class TenantIdentifierResolverTest {
     private CurrentTenantIdentifierResolver resolver;
@@ -26,11 +24,17 @@ public class TenantIdentifierResolverTest {
 
     @Test
     public void testResolveCurrentTenantIdentifier_ReturnsTenantIdFromTenantIdProvider() {
-        doReturn(UUID.fromString("00000000-0000-0000-0000-000000000000")).when(mTenantIdProvider).getTenantId();
-        assertEquals("00000000-0000-0000-0000-000000000000", resolver.resolveCurrentTenantIdentifier());
+        doReturn(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+                .when(mTenantIdProvider)
+                .getTenantId();
+        assertEquals(
+                "00000000-0000-0000-0000-000000000000", resolver.resolveCurrentTenantIdentifier());
 
-        doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001")).when(mTenantIdProvider).getTenantId();
-        assertEquals("00000000-0000-0000-0000-000000000001", resolver.resolveCurrentTenantIdentifier());
+        doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001"))
+                .when(mTenantIdProvider)
+                .getTenantId();
+        assertEquals(
+                "00000000-0000-0000-0000-000000000001", resolver.resolveCurrentTenantIdentifier());
     }
 
     @Test

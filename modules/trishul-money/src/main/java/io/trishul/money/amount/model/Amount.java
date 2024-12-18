@@ -1,5 +1,9 @@
 package io.trishul.money.amount.model;
 
+import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.money.MoneyEntity;
+import io.trishul.money.MoneyMapper;
+import io.trishul.money.tax.amount.TaxAmount;
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.AttributeOverride;
@@ -9,13 +13,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
-
 import org.joda.money.Money;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.money.MoneyEntity;
-import io.trishul.money.MoneyMapper;
-import io.trishul.money.tax.amount.TaxAmount;
 
 @Embeddable
 public class Amount extends BaseEntity {
@@ -28,7 +26,12 @@ public class Amount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "total_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "total_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity total;
 
@@ -37,12 +40,16 @@ public class Amount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "sub_total_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "sub_total_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "sub_total_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity subTotal;
 
-    @Embedded
-    private TaxAmount taxAmount;
+    @Embedded private TaxAmount taxAmount;
 
     public Amount() {
         super();

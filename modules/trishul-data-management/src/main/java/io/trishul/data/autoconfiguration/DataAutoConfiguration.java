@@ -1,20 +1,5 @@
 package io.trishul.data.autoconfiguration;
 
-import java.net.URI;
-import java.util.UUID;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
-
 import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
@@ -33,7 +18,18 @@ import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
-
+import java.net.URI;
+import java.util.UUID;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Configuration
 public class DataAutoConfiguration {
@@ -46,9 +42,21 @@ public class DataAutoConfiguration {
     @Bean
     @Qualifier("adminDs")
     @ConditionalOnMissingBean(DataSourceConfiguration.class)
-    public DataSourceConfiguration adminDs(@Value("${spring.datasource.url}") String jdbcUrl, @Value("${app.config.ds.db-name}") String dbName, @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix, @Value("${app.config.tenant.admin.ds.schema.migration}") String schemaMigrationScriptPath, @Value("${spring.datasource.hikari.maximumPoolSize}") int poolSize, @Value("${spring.datasource.hikari.auto-commit}") boolean autoCommit, SecretsManager<String, String> secretsMgr, DataSourceConfigurationManager dataSourceConfigurationManager, Tenant adminTenant) {
+    public DataSourceConfiguration adminDs(
+            @Value("${spring.datasource.url}") String jdbcUrl,
+            @Value("${app.config.ds.db-name}") String dbName,
+            @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix,
+            @Value("${app.config.tenant.admin.ds.schema.migration}")
+                    String schemaMigrationScriptPath,
+            @Value("${spring.datasource.hikari.maximumPoolSize}") int poolSize,
+            @Value("${spring.datasource.hikari.auto-commit}") boolean autoCommit,
+            SecretsManager<String, String> secretsMgr,
+            DataSourceConfigurationManager dataSourceConfigurationManager,
+            Tenant adminTenant) {
         URI uri = URI.create(jdbcUrl);
-        GlobalDataSourceConfiguration globalConfig = new ImmutableGlobalDataSourceConfiguration(uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
+        GlobalDataSourceConfiguration globalConfig =
+                new ImmutableGlobalDataSourceConfiguration(
+                        uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
         String fqName = dataSourceConfigurationManager.getFqName(schemaPrefix, adminTenant.getId());
 
         return new LazyTenantDataSourceConfiguration(fqName, globalConfig, secretsMgr);
@@ -56,11 +64,24 @@ public class DataAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(DataSourceConfigurationProvider.class)
-    public DataSourceConfigurationProvider<UUID> tenantDsConfigProvider(DataSourceConfiguration adminDsConfig, Tenant adminTenant, DataSourceConfigurationManager dsConfigMgr, SecretsManager<String, String> secretsManager, @Value("${spring.datasource.url}") String jdbcUrl, @Value("${app.config.ds.db-name}") String dbName, @Value("${app.config.tenant.ds.schema.prefix}") String schemaPrefix, @Value("${app.config.tenant.ds.schema.migration}") String schemaMigrationScriptPath, @Value("${app.config.tenant.ds.pool.size}") int poolSize, @Value("${app.config.tenant.ds.db.auto-commit}") boolean autoCommit) {
+    public DataSourceConfigurationProvider<UUID> tenantDsConfigProvider(
+            DataSourceConfiguration adminDsConfig,
+            Tenant adminTenant,
+            DataSourceConfigurationManager dsConfigMgr,
+            SecretsManager<String, String> secretsManager,
+            @Value("${spring.datasource.url}") String jdbcUrl,
+            @Value("${app.config.ds.db-name}") String dbName,
+            @Value("${app.config.tenant.ds.schema.prefix}") String schemaPrefix,
+            @Value("${app.config.tenant.ds.schema.migration}") String schemaMigrationScriptPath,
+            @Value("${app.config.tenant.ds.pool.size}") int poolSize,
+            @Value("${app.config.tenant.ds.db.auto-commit}") boolean autoCommit) {
         URI uri = URI.create(jdbcUrl);
-        GlobalDataSourceConfiguration globalTenantDsConfig = new ImmutableGlobalDataSourceConfiguration(uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
+        GlobalDataSourceConfiguration globalTenantDsConfig =
+                new ImmutableGlobalDataSourceConfiguration(
+                        uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
 
-        return new TenantDataSourceConfigurationProvider(adminDsConfig, adminTenant, globalTenantDsConfig, dsConfigMgr, secretsManager);
+        return new TenantDataSourceConfigurationProvider(
+                adminDsConfig, adminTenant, globalTenantDsConfig, dsConfigMgr, secretsManager);
     }
 
     @Bean
@@ -86,8 +107,13 @@ public class DataAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(TenantDataSourceManager.class)
-    public TenantDataSourceManager tenantDsManager(DataSourceManager dataSourceManager, DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
-        TenantDataSourceManager mgr = new TenantDataSourceManagerWrapper(dataSourceManager, (TenantDataSourceConfigurationProvider) tenantDsConfigProvider);
+    public TenantDataSourceManager tenantDsManager(
+            DataSourceManager dataSourceManager,
+            DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
+        TenantDataSourceManager mgr =
+                new TenantDataSourceManagerWrapper(
+                        dataSourceManager,
+                        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider);
         return mgr;
     }
 
@@ -101,7 +127,8 @@ public class DataAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(TransactionTemplate.class)
     public TransactionTemplate transactionTemplate(DataSourceManager dataSourceManager) {
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSourceManager.getAdminDataSource());
+        PlatformTransactionManager transactionManager =
+                new DataSourceTransactionManager(dataSourceManager.getAdminDataSource());
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
         return transactionTemplate;
     }

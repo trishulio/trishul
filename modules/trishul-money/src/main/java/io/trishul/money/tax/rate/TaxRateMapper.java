@@ -1,9 +1,8 @@
 package io.trishul.money.tax.rate;
 
+import io.trishul.money.tax.rate.dto.TaxRateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-
-import io.trishul.money.tax.rate.dto.TaxRateDto;
 
 @Mapper
 public interface TaxRateMapper {

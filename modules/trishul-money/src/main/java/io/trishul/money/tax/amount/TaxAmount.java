@@ -1,8 +1,11 @@
 package io.trishul.money.tax.amount;
 
+import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.money.MoneyCalculator;
+import io.trishul.money.MoneyEntity;
+import io.trishul.money.MoneyMapper;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.AttributeOverride;
@@ -12,13 +15,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
-
 import org.joda.money.Money;
-
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.money.MoneyCalculator;
-import io.trishul.money.MoneyEntity;
-import io.trishul.money.MoneyMapper;
 
 @Embeddable
 public class TaxAmount extends BaseEntity {
@@ -32,7 +29,12 @@ public class TaxAmount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "pst_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "pst_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "pst_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity pstAmount;
 
@@ -41,7 +43,12 @@ public class TaxAmount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "gst_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "gst_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "gst_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity gstAmount;
 
@@ -50,7 +57,12 @@ public class TaxAmount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "hst_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "hst_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "hst_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity hstAmount;
 
@@ -59,7 +71,12 @@ public class TaxAmount extends BaseEntity {
         @AttributeOverride(name = "amount", column = @Column(name = "total_tax_amount"))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "total_tax_amount_currency_code", referencedColumnName = "numeric_code"))
+        @AssociationOverride(
+                name = "currency",
+                joinColumns =
+                        @JoinColumn(
+                                name = "total_tax_amount_currency_code",
+                                referencedColumnName = "numeric_code"))
     })
     private MoneyEntity totalTaxAmount;
 

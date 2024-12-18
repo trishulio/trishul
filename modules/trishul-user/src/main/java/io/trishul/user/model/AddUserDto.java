@@ -1,49 +1,47 @@
-
 package io.trishul.user.model;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.net.URI;
 import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import io.trishul.model.base.dto.BaseDto;
-
 public class AddUserDto extends BaseDto {
-    @NotBlank
-    private String userName;
+    @NotBlank private String userName;
 
-    @NotBlank
-    private String displayName;
+    @NotBlank private String displayName;
 
-    @NotBlank
-    private String firstName;
+    @NotBlank private String firstName;
 
-    @NotBlank
-    private String lastName;
+    @NotBlank private String lastName;
 
-    @NotBlank
-    @Email
-    private String email;
+    @NotBlank @Email private String email;
 
-    @NotNull
-    private Long statusId;
+    @NotNull private Long statusId;
 
     private Long salutationId;
 
     private String phoneNumber;
 
-    @NotEmpty
-    private List<Long> roleIds;
+    @NotEmpty private List<Long> roleIds;
 
     private URI imageSrc;
 
-    public AddUserDto() {
-    }
+    public AddUserDto() {}
 
-    public AddUserDto(@NotBlank String userName, @NotBlank String displayName, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String email, @NotNull Long statusId, @NotNull Long salutationId, @NotBlank String phoneNumber, URI imageSrc, List<Long> roleIds) {
+    public AddUserDto(
+            @NotBlank String userName,
+            @NotBlank String displayName,
+            @NotBlank String firstName,
+            @NotBlank String lastName,
+            @NotBlank String email,
+            @NotNull Long statusId,
+            @NotNull Long salutationId,
+            @NotBlank String phoneNumber,
+            URI imageSrc,
+            List<Long> roleIds) {
         setUserName(userName);
         setDisplayName(displayName);
         setFirstName(firstName);

@@ -1,15 +1,13 @@
 package io.trishul.money.tax.model;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import io.trishul.money.tax.rate.TaxRate;
 import java.math.BigDecimal;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.money.tax.rate.TaxRate;
 
 public class TaxTest {
     private Tax tax;
@@ -56,7 +54,9 @@ public class TaxTest {
 
         tax.setGstRate(null);
         tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-        assertThrows(IllegalArgumentException.class, () -> tax.setGstRate(new TaxRate(new BigDecimal("2"))));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tax.setGstRate(new TaxRate(new BigDecimal("2"))));
     }
 
     @Test
@@ -71,7 +71,9 @@ public class TaxTest {
 
         tax.setPstRate(null);
         tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-        assertThrows(IllegalArgumentException.class, () -> tax.setPstRate(new TaxRate(new BigDecimal("2"))));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tax.setPstRate(new TaxRate(new BigDecimal("2"))));
     }
 
     @Test
@@ -86,7 +88,9 @@ public class TaxTest {
 
         tax.setHstRate(null);
         tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-        assertThrows(IllegalArgumentException.class, () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
     }
 
     @Test
@@ -95,6 +99,8 @@ public class TaxTest {
 
         tax.setHstRate(null);
         tax.setHstRate(new TaxRate(new BigDecimal("0.00")));
-        assertThrows(IllegalArgumentException.class, () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
     }
 }

@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.secrets.SecretsManager;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.secrets.SecretsManager;
 
 public class LazyTenantDataSourceConfigurationTest {
     private DataSourceConfiguration config;
@@ -23,7 +21,17 @@ public class LazyTenantDataSourceConfigurationTest {
     public void init() throws URISyntaxException {
         mSecretsMgr = mock(SecretsManager.class);
 
-        config = new LazyTenantDataSourceConfiguration("FQ_TENANT_ID", new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName", "MIGRATION_PATH", "SCHEMA_", 10, false), mSecretsMgr);
+        config =
+                new LazyTenantDataSourceConfiguration(
+                        "FQ_TENANT_ID",
+                        new ImmutableGlobalDataSourceConfiguration(
+                                new URI("jdbc://localhost/"),
+                                "dbName",
+                                "MIGRATION_PATH",
+                                "SCHEMA_",
+                                10,
+                                false),
+                        mSecretsMgr);
     }
 
     @Test

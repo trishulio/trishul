@@ -1,12 +1,10 @@
 package io.trishul.auth.aws.session.context;
 
+import io.trishul.auth.session.context.PrincipalContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import io.trishul.auth.session.context.PrincipalContext;
 
 public class CognitoPrincipalContext implements PrincipalContext {
     public static final String CLAIM_GROUPS = "cognito:groups";
@@ -53,7 +51,10 @@ public class CognitoPrincipalContext implements PrincipalContext {
     private void setGroupId(Jwt jwt) {
         List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
         if (groups.size() > 1) {
-            String msg = String.format("Each user should only belong to a single cognito group. Instead found %s", groups.size());
+            String msg =
+                    String.format(
+                            "Each user should only belong to a single cognito group. Instead found %s",
+                            groups.size());
             throw new IllegalArgumentException(msg);
         }
 

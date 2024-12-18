@@ -1,13 +1,11 @@
 package io.trishul.repo.jpa.query.clause.where.builder;
 
+import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import java.util.Collection;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
-
-import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 
 public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
     @SuppressWarnings("unused")
@@ -25,7 +23,7 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
 
     @Override
     public WhereClauseBuilder isNull(String path) {
-        this.delegate.isNull(new String[] { path });
+        this.delegate.isNull(new String[] {path});
         return this;
     }
 
@@ -43,13 +41,13 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
 
     @Override
     public WhereClauseBuilder in(String path, Collection<?> collection) {
-        this.delegate.in(new String[] { path }, collection);
+        this.delegate.in(new String[] {path}, collection);
         return this;
     }
 
     @Override
     public WhereClauseBuilder is(String path, Object value) {
-        this.delegate.is(new String[] { path }, value);
+        this.delegate.is(new String[] {path}, value);
         return this;
     }
 
@@ -73,7 +71,7 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
 
     @Override
     public WhereClauseBuilder like(String path, Set<String> queries) {
-        this.delegate.like(new String[] { path }, queries);
+        this.delegate.like(new String[] {path}, queries);
         return this;
     }
 
@@ -85,7 +83,7 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
 
     @Override
     public <C extends Comparable<C>> WhereClauseBuilder between(String path, C start, C end) {
-        this.delegate.between(new String[] { path }, start, end);
+        this.delegate.between(new String[] {path}, start, end);
         return this;
     }
 
@@ -106,5 +104,4 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
     public <T> Specification<T> build() {
         return this.delegate.build();
     }
-
 }

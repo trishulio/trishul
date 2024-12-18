@@ -6,10 +6,9 @@
 
 // import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 
-
 // @TestConfiguration
 // public class TestGlobalConfiguration {
-//     @MockBean
-//     private ThreadLocalContextHolder contextHolderMock;
+// @MockBean
+// private ThreadLocalContextHolder contextHolderMock;
 
 // }

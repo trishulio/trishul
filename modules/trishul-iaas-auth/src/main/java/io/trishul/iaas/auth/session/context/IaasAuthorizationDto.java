@@ -1,9 +1,8 @@
 // TODO: Looks liek this file is not being used. Gonna skip. Add to module if use arises
 package io.trishul.iaas.auth.session.context;
 
-import java.time.LocalDateTime;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class IaasAuthorizationDto extends BaseDto {
     private String accessKeyId;
@@ -15,7 +14,11 @@ public class IaasAuthorizationDto extends BaseDto {
         super();
     }
 
-    public IaasAuthorizationDto(String accessKeyId, String accessSecretKey, String sessionToken, LocalDateTime expiration) {
+    public IaasAuthorizationDto(
+            String accessKeyId,
+            String accessSecretKey,
+            String sessionToken,
+            LocalDateTime expiration) {
         setAccessKeyId(accessKeyId);
         setAccessSecretKey(accessSecretKey);
         setSessionToken(sessionToken);

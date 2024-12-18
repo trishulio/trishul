@@ -1,12 +1,11 @@
 package io.trishul.money.amount.model;
 
+import io.trishul.money.MoneyMapper;
+import io.trishul.money.tax.model.TaxMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import io.trishul.money.MoneyMapper;
-import io.trishul.money.tax.model.TaxMapper;
-
-@Mapper(uses = { TaxMapper.class, MoneyMapper.class })
+@Mapper(uses = {TaxMapper.class, MoneyMapper.class})
 public interface AmountMapper {
     final AmountMapper INSTANCE = Mappers.getMapper(AmountMapper.class);
 

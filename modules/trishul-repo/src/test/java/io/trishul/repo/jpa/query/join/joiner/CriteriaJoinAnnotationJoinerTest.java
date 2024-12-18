@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.model.base.entity.CriteriaJoin;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,41 +13,34 @@ import javax.persistence.criteria.From;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.model.base.entity.CriteriaJoin;
 
 public class CriteriaJoinAnnotationJoinerTest {
     class Entity {
         @JoinColumn
         @CriteriaJoin(type = JoinType.LEFT)
         private Child left;
+
         @JoinColumn
         @CriteriaJoin(type = JoinType.RIGHT)
         private Child right;
+
         @JoinColumn
         @CriteriaJoin(type = JoinType.INNER)
         private Child inner;
-        @JoinColumn
-        @CriteriaJoin
-        private Child difault;
 
-        @ManyToOne
-        private Child manyToOne;
-        @OneToMany
-        private Child oneToMany;
-        @Embedded
-        private Child embedded;
-        @JoinColumn
-        private Child joinColumn;
+        @JoinColumn @CriteriaJoin private Child difault;
+
+        @ManyToOne private Child manyToOne;
+        @OneToMany private Child oneToMany;
+        @Embedded private Child embedded;
+        @JoinColumn private Child joinColumn;
 
         private Child get;
     }
 
-    class Child {
-    }
+    class Child {}
 
     private JpaJoiner cjProcessor;
 

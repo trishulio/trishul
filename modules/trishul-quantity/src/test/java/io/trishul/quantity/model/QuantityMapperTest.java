@@ -3,16 +3,13 @@ package io.trishul.quantity.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import io.trishul.quantity.model.dto.QuantityDto;
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.quantity.unit.UnitEntity;
 import java.math.BigDecimal;
-
 import javax.measure.Quantity;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.quantity.model.dto.QuantityDto;
-import io.trishul.quantity.unit.UnitEntity;
-import io.trishul.quantity.unit.SupportedUnits;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 
@@ -26,7 +23,8 @@ public class QuantityMapperTest {
 
     @Test
     public void testToDto_ReturnsDto_WhenQuantityIsNotNull() {
-        QuantityDto dto = mapper.toDto(Quantities.getQuantity(new BigDecimal(100), SupportedUnits.GRAM));
+        QuantityDto dto =
+                mapper.toDto(Quantities.getQuantity(new BigDecimal(100), SupportedUnits.GRAM));
 
         assertEquals("g", dto.getSymbol());
         assertEquals(new BigDecimal(100), dto.getValue());
@@ -42,7 +40,8 @@ public class QuantityMapperTest {
         Quantity<?> qty = Quantities.getQuantity(new BigDecimal("10.00"), Units.AMPERE);
 
         QuantityEntity entity = mapper.toEntity(qty);
-        QuantityEntity expected = new QuantityEntity(new UnitEntity("A", null), new BigDecimal("10.00"));
+        QuantityEntity expected =
+                new QuantityEntity(new UnitEntity("A", null), new BigDecimal("10.00"));
 
         assertEquals(expected, entity);
     }

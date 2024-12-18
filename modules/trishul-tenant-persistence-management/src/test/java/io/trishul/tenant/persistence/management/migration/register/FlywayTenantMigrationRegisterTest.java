@@ -1,26 +1,25 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
-
 import javax.sql.DataSource;
-
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationInfoService;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
-import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
-import io.trishul.tenant.entity.Tenant;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 
 public class FlywayTenantMigrationRegisterTest {
     private TenantDataSourceManager mDsMgr;
@@ -38,11 +37,15 @@ public class FlywayTenantMigrationRegisterTest {
         doReturn("SCHEMA").when(mConfig).getSchemaName();
 
         mConfigProvider = mock(DataSourceConfigurationProvider.class);
-        doReturn(mConfig).when(mConfigProvider).getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        doReturn(mConfig)
+                .when(mConfigProvider)
+                .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
         mDsMgr = mock(TenantDataSourceManager.class);
         mDs = mock(DataSource.class);
-        doReturn(mDs).when(mDsMgr).getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        doReturn(mDs)
+                .when(mDsMgr)
+                .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
         mFwConfig = mock(FluentConfiguration.class);
         register = new FlywayTenantMigrationRegister(() -> mFwConfig, mDsMgr, mConfigProvider);
@@ -70,7 +73,9 @@ public class FlywayTenantMigrationRegisterTest {
         Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
         doReturn(mInfo).when(mFw).info();
 
-        boolean b = register.isMigrated(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+        boolean b =
+                register.isMigrated(
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
         assertTrue(b);
     }
@@ -88,12 +93,15 @@ public class FlywayTenantMigrationRegisterTest {
         Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
         doReturn(mInfo).when(mFw).info();
 
-        boolean b = register.isMigrated(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+        boolean b =
+                register.isMigrated(
+                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
         assertFalse(b);
     }
 
-    private Flyway mockFlyway(FluentConfiguration config, String schemas, String location, DataSource ds) {
+    private Flyway mockFlyway(
+            FluentConfiguration config, String schemas, String location, DataSource ds) {
         Flyway mFw = mock(Flyway.class);
         doReturn(mFw).when(config).load();
         doReturn(config).when(config).locations(location);

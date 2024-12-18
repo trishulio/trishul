@@ -1,11 +1,10 @@
 package io.trishul.iaas.idp.tenant.model.mapper;
 
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
-import io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
 
 public class TenantIaasIdpResourcesMapper {
     public static final TenantIaasIdpResourcesMapper INSTANCE = new TenantIaasIdpResourcesMapper();

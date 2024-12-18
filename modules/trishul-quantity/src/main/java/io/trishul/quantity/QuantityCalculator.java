@@ -1,19 +1,19 @@
 package io.trishul.quantity;
 
+import io.trishul.quantity.unit.SupportedUnits;
+import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import javax.measure.Quantity;
 import javax.measure.Unit;
 import javax.measure.quantity.AmountOfSubstance;
 import javax.measure.quantity.Mass;
 import javax.measure.quantity.Volume;
-
-import io.trishul.quantity.unit.SupportedUnits;
-import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import tec.uom.se.quantity.Quantities;
 
 public class QuantityCalculator {
     public static final QuantityCalculator INSTANCE = new QuantityCalculator();
 
-    private QuantityCalculator() {};
+    private QuantityCalculator() {}
+    ;
 
     @SuppressWarnings("unchecked")
     public Quantity<?> subtract(Quantity<?> q1, Quantity<?> q2) {
@@ -72,14 +72,16 @@ public class QuantityCalculator {
         return systemUnitValueWithDisplayUnit;
     }
 
-    public <T extends Quantity<T>> Quantity<T> fromSystemQuantityValueWithDisplayUnit(Quantity<T> quantityWithDisplayUnit) {
+    public <T extends Quantity<T>> Quantity<T> fromSystemQuantityValueWithDisplayUnit(
+            Quantity<T> quantityWithDisplayUnit) {
         Quantity<T> qtyInDisplayUnit = null;
 
         if (quantityWithDisplayUnit != null) {
             Unit<T> displayUnit = quantityWithDisplayUnit.getUnit();
 
             Number valueInSystemUnit = quantityWithDisplayUnit.getValue();
-            Quantity<T> qtyInSystemUnit = Quantities.getQuantity(valueInSystemUnit, displayUnit.getSystemUnit());
+            Quantity<T> qtyInSystemUnit =
+                    Quantities.getQuantity(valueInSystemUnit, displayUnit.getSystemUnit());
 
             Number valueInDisplayUnit = qtyInSystemUnit.to(displayUnit).getValue();
 
@@ -89,10 +91,13 @@ public class QuantityCalculator {
         return qtyInDisplayUnit;
     }
 
-    public boolean isCompatibleQtyForUnitAccessor(Quantity<?> quantity, BaseQuantityUnitAccessor unitAccessor) {
+    public boolean isCompatibleQtyForUnitAccessor(
+            Quantity<?> quantity, BaseQuantityUnitAccessor unitAccessor) {
         boolean isCompatible = true;
 
-        if (unitAccessor != null && unitAccessor.getBaseQuantityUnit() != null && quantity != null) {
+        if (unitAccessor != null
+                && unitAccessor.getBaseQuantityUnit() != null
+                && quantity != null) {
             isCompatible = unitAccessor.getBaseQuantityUnit().isCompatible(quantity.getUnit());
         }
 

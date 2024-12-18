@@ -1,14 +1,12 @@
 package io.trishul.money.tax.rate;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.math.BigDecimal;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import io.trishul.money.tax.rate.dto.TaxRateDto;
+import java.math.BigDecimal;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TaxRateMapperTest {
 

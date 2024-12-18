@@ -1,8 +1,7 @@
 package io.trishul.quantity.model.dto;
 
-import java.math.BigDecimal;
-
 import io.trishul.model.base.dto.BaseDto;
+import java.math.BigDecimal;
 
 public class QuantityDto extends BaseDto {
     public static final String ATTR_SYMBOL = "symbol";

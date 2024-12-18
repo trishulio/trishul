@@ -3,7 +3,6 @@ package io.trishul.repo.jpa.query.join.joiner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import javax.persistence.criteria.Path;
 
 public class JpaJoinerLocalCache {

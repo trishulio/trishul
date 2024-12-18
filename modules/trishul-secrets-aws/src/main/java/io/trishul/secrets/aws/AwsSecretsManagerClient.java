@@ -1,10 +1,5 @@
 package io.trishul.secrets.aws;
 
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.model.CreateSecretRequest;
 import com.amazonaws.services.secretsmanager.model.DeleteSecretRequest;
@@ -16,8 +11,10 @@ import com.amazonaws.services.secretsmanager.model.InvalidRequestException;
 import com.amazonaws.services.secretsmanager.model.PutSecretValueRequest;
 import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
 import com.amazonaws.services.secretsmanager.model.UpdateSecretRequest;
-
 import io.trishul.secrets.SecretsManager;
+import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsSecretsManagerClient implements SecretsManager<String, String> {
     private final AWSSecretsManager client;
@@ -78,7 +75,8 @@ public class AwsSecretsManagerClient implements SecretsManager<String, String> {
         if (!secretExists) {
             this.create(secretId, secret);
         } else {
-            PutSecretValueRequest updateSecretRequest = new PutSecretValueRequest().withSecretId(secretId).withSecretString(secret);
+            PutSecretValueRequest updateSecretRequest =
+                    new PutSecretValueRequest().withSecretId(secretId).withSecretString(secret);
 
             try {
                 client.putSecretValue(updateSecretRequest);
@@ -91,7 +89,8 @@ public class AwsSecretsManagerClient implements SecretsManager<String, String> {
 
     @Override
     public void create(String secretId, String secret) throws IOException {
-        CreateSecretRequest createSecretRequest = new CreateSecretRequest().withName(secretId).withSecretString(secret);
+        CreateSecretRequest createSecretRequest =
+                new CreateSecretRequest().withName(secretId).withSecretString(secret);
 
         try {
             client.createSecret(createSecretRequest);
@@ -103,7 +102,8 @@ public class AwsSecretsManagerClient implements SecretsManager<String, String> {
 
     @Override
     public void update(String secretId, String secret) throws IOException {
-        UpdateSecretRequest updateSecretRequest = new UpdateSecretRequest().withSecretId(secretId).withSecretString(secret);
+        UpdateSecretRequest updateSecretRequest =
+                new UpdateSecretRequest().withSecretId(secretId).withSecretString(secret);
 
         try {
             client.updateSecret(updateSecretRequest);

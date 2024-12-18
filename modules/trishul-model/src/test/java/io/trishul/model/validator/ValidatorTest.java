@@ -3,10 +3,10 @@ package io.trishul.model.validator;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.base.types.validator.ValidationException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ValidatorTest {
     private Validator validator;
@@ -19,7 +19,10 @@ public class ValidatorTest {
     @Test
     public void testRule_SetsMsgAsError_WhenConditionIsFalse() {
         validator.rule(false, "This is an error message: %s", "TEST");
-        assertThrows(ValidationException.class, () -> validator.raiseErrors(), "1. This is an error message: TEST");
+        assertThrows(
+                ValidationException.class,
+                () -> validator.raiseErrors(),
+                "1. This is an error message: TEST");
     }
 
     @Test
@@ -28,7 +31,10 @@ public class ValidatorTest {
         validator.rule(false, "This is an error message: %s", "TEST");
         validator.rule(true, "This is not an error message: %s", "TEST");
 
-        assertThrows(ValidationException.class, () -> validator.raiseErrors(), "1. This is an error message: TEST");
+        assertThrows(
+                ValidationException.class,
+                () -> validator.raiseErrors(),
+                "1. This is an error message: TEST");
     }
 
     @Test
@@ -46,25 +52,34 @@ public class ValidatorTest {
         validator.rule(true, "This message is ignored: %s", "TEST");
         validator.rule(false, "This is error C: %s", "TEST");
 
-        String expected = ""
-                + "1. This is error A: TEST\n"
-                + "2. This is error B: TEST\n"
-                + "3. This is error C: TEST\n";
+        String expected =
+                ""
+                        + "1. This is error A: TEST\n"
+                        + "2. This is error B: TEST\n"
+                        + "3. This is error C: TEST\n";
         assertThrows(ValidationException.class, () -> validator.raiseErrors(), expected);
     }
 
     @Test
     public void testAssertion_CreatesAndThrowsExceptionObjectWithMsg_WhenConditionIsFalse() {
-        assertThrows(RuntimeException.class, () -> {
-            Validator.assertion(false, RuntimeException.class, "This is the error message");
-        }, "This is the error message");
+        assertThrows(
+                RuntimeException.class,
+                () -> {
+                    Validator.assertion(false, RuntimeException.class, "This is the error message");
+                },
+                "This is the error message");
     }
 
     @Test
     public void testAssertion_ThrowsSpecifiedExceptionType_WhenConditionIsFalse() {
-        assertThrows(RuntimeException.class, () -> Validator.assertion(false, RuntimeException.class));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> Validator.assertion(false, ArrayIndexOutOfBoundsException.class));
-        assertThrows(IndexOutOfBoundsException.class, () -> Validator.assertion(false, IndexOutOfBoundsException.class));
+        assertThrows(
+                RuntimeException.class, () -> Validator.assertion(false, RuntimeException.class));
+        assertThrows(
+                ArrayIndexOutOfBoundsException.class,
+                () -> Validator.assertion(false, ArrayIndexOutOfBoundsException.class));
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> Validator.assertion(false, IndexOutOfBoundsException.class));
     }
 
     @Test

@@ -4,17 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.UUID;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 
 public class TenantConnectionProviderPoolTest {
     private DataSource mAdminDs;
@@ -41,14 +38,20 @@ public class TenantConnectionProviderPoolTest {
     }
 
     @Test
-    public void testSelectConnectionProvider_ReturnsConnectionProviderWithTenantDs() throws SQLException, IOException {
+    public void testSelectConnectionProvider_ReturnsConnectionProviderWithTenantDs()
+            throws SQLException, IOException {
         DataSource mDs = mock(DataSource.class);
-        doReturn(mDs).when(mDsMgr).getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+        doReturn(mDs)
+                .when(mDsMgr)
+                .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
         Connection mConn = mock(Connection.class);
         doReturn(mConn).when(mDs).getConnection();
 
-        Connection conn = providerPool.selectConnectionProvider("00000000-0000-0000-0000-000000000001").getConnection();
+        Connection conn =
+                providerPool
+                        .selectConnectionProvider("00000000-0000-0000-0000-000000000001")
+                        .getConnection();
         assertEquals(mConn, conn);
     }
 }

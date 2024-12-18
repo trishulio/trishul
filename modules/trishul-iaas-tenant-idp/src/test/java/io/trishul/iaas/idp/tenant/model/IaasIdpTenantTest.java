@@ -1,13 +1,12 @@
 package io.trishul.iaas.idp.tenant.model;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import io.trishul.iaas.access.role.model.IaasRole;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class IaasIdpTenantTest {
     private IaasIdpTenant idpTenant;
@@ -30,7 +29,13 @@ public class IaasIdpTenantTest {
 
     @Test
     public void testAllArgConstructor() {
-        idpTenant = new IaasIdpTenant("ID", new IaasRole("ROLE"), "DESCRIPTION", LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
+        idpTenant =
+                new IaasIdpTenant(
+                        "ID",
+                        new IaasRole("ROLE"),
+                        "DESCRIPTION",
+                        LocalDateTime.of(2002, 1, 1, 0, 0),
+                        LocalDateTime.of(2003, 1, 1, 0, 0));
 
         assertEquals("ID", idpTenant.getId());
         assertEquals("ID", idpTenant.getName());

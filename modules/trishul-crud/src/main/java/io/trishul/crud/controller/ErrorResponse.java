@@ -9,7 +9,8 @@ public class ErrorResponse {
     private final String message;
     private final String path;
 
-    public ErrorResponse(LocalDateTime timestamp, int status, String error, String message, String path) {
+    public ErrorResponse(
+            LocalDateTime timestamp, int status, String error, String message, String path) {
         super();
         this.timestamp = timestamp;
         this.status = status;

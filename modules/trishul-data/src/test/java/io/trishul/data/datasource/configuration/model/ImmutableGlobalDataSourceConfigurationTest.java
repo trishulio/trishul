@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,14 @@ public class ImmutableGlobalDataSourceConfigurationTest {
 
     @BeforeEach
     public void init() throws URISyntaxException {
-        dsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName", "MIGRATION_PATH", "SCHEMA_PREFIX", 10, true);
+        dsConfig =
+                new ImmutableGlobalDataSourceConfiguration(
+                        new URI("jdbc://localhost/"),
+                        "dbName",
+                        "MIGRATION_PATH",
+                        "SCHEMA_PREFIX",
+                        10,
+                        true);
     }
 
     @Test

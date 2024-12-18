@@ -1,5 +1,8 @@
 package io.trishul.quantity.unit;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.trishul.model.base.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,13 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.trishul.model.base.entity.BaseEntity;
-
 @Entity(name = "qty_unit")
-@JsonIgnoreProperties({ "hibernateLazyInitializer" })
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class UnitEntity extends BaseEntity {
     public static final String FIELD_SYMBOL = "symbol";
     public static final String FIELD_NAME = "name";
