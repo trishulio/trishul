@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.UUID;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -38,9 +38,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/operations/tenants")
 public class TenantController extends BaseController {
-    private TenantService tenantService;
+    private final TenantService tenantService;
 
-    private CrudControllerService<
+    private final CrudControllerService<
                     UUID,
                     Tenant,
                     BaseTenant,

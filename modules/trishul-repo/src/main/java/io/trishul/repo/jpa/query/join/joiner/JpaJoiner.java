@@ -1,7 +1,7 @@
 package io.trishul.repo.jpa.query.join.joiner;
 
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Path;
+import jakarta.persistence.criteria.From;
+import jakarta.persistence.criteria.Path;
 
 public interface JpaJoiner {
     final JpaJoiner JPA_JOINER =

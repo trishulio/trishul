@@ -2,11 +2,11 @@ package io.trishul.model.validation;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
-import javax.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+
+import jakarta.validation.ConstraintValidatorContext;
 
 public class NullOrNotBlankValidatorTest {
     private NullOrNotBlankValidator validator;

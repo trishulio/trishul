@@ -3,8 +3,8 @@ package io.trishul.crud.controller;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-import javax.persistence.OptimisticLockException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -40,8 +40,13 @@ public class UserRoleServiceTest {
 
     @BeforeEach
     public void init() {
-        this.mUpdateService = mock(UpdateService.class);
-        this.mRepoService = mock(RepoService.class);
+        interface UserRoleUpdateService
+                extends UpdateService<Long, UserRole, BaseUserRole, UpdateUserRole> {}
+        ;
+        interface UserRoleRepoService extends RepoService<Long, UserRole, UserRoleAccessor> {}
+        ;
+        this.mUpdateService = mock(UserRoleUpdateService.class);
+        this.mRepoService = mock(UserRoleRepoService.class);
         doAnswer(inv -> inv.getArgument(0)).when(this.mRepoService).saveAll(anyList());
 
         this.service = new UserRoleService(mUpdateService, mRepoService);
@@ -90,8 +95,10 @@ public class UserRoleServiceTest {
 
     @Test
     public void testGetByIds_CallsRepoService() {
+        interface IdentifiedList extends List<Identified<Long>> {}
+        ;
         ArgumentCaptor<List<? extends Identified<Long>>> captor =
-                ArgumentCaptor.forClass(List.class);
+                ArgumentCaptor.forClass(IdentifiedList.class);
 
         doReturn(List.of(new UserRole(1L))).when(mRepoService).getByIds(captor.capture());
 
@@ -101,8 +108,10 @@ public class UserRoleServiceTest {
 
     @Test
     public void testGetByAccessorIds_CallsRepoService() {
+        interface UserRoleAccessorToUserRoleFunction extends Function<UserRoleAccessor, UserRole> {}
+        ;
         ArgumentCaptor<Function<UserRoleAccessor, UserRole>> captor =
-                ArgumentCaptor.forClass(Function.class);
+                ArgumentCaptor.forClass(UserRoleAccessorToUserRoleFunction.class);
 
         List<? extends UserRoleAccessor> accessors =
                 List.of(

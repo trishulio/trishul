@@ -10,7 +10,7 @@ import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
 import io.trishul.repo.jpa.query.spec.criteria.LikeSpec;
 import java.util.Collection;
 import java.util.Set;
-import javax.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;

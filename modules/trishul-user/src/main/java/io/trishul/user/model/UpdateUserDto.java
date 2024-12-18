@@ -4,8 +4,8 @@ import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.validation.NullOrNotBlank;
 import java.net.URI;
 import java.util.List;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class UpdateUserDto extends BaseDto {
     private Long id;

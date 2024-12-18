@@ -14,8 +14,8 @@ import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/v1/vfs/files")
 public class IaasObjectStoreFileController extends BaseController {
     @SuppressWarnings("unused")
-    private static IaasObjectStoreFileMapper mapper = IaasObjectStoreFileMapper.INSTANCE;
+    private static final IaasObjectStoreFileMapper mapper = IaasObjectStoreFileMapper.INSTANCE;
 
-    private CrudControllerService<
+    private final CrudControllerService<
                     URI,
                     IaasObjectStoreFile,
                     BaseIaasObjectStoreFile,

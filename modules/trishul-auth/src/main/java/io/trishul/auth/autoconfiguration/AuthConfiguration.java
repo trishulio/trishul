@@ -4,7 +4,7 @@ import io.trishul.auth.session.context.PrincipalContextBuilder;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 import io.trishul.auth.session.filters.ContextHolderFilter;
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;

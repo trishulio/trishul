@@ -2,9 +2,9 @@ package io.trishul.money.currency.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.trishul.model.base.entity.BaseEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity(name = "currency")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})

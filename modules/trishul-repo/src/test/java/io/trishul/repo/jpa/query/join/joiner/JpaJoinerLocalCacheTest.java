@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
-import javax.persistence.criteria.Path;
+import jakarta.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

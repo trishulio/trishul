@@ -1,7 +1,6 @@
 // TODO: Figure out if this is a tenant module class or data module class
 package io.trishul.tenant.persistence.autoconfiguration;
 
-import io.trishul.auth.autoconfiguration.AuthConfiguration;
 import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
@@ -10,7 +9,6 @@ import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
-import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -27,23 +25,23 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@AutoConfigureAfter({DataSourceAutoConfiguration.class, AuthConfiguration.class})
+@AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
 public class HibernateAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MultiTenantConnectionProvider.class)
-    public MultiTenantConnectionProvider multiTenantConnectionProvider(
+    public MultiTenantConnectionProvider<String> multiTenantConnectionProvider(
             TenantDataSourceManager tenantDataSourceManager, DataSource adminDataSource) {
-        MultiTenantConnectionProvider multiTenantConnectionProvider =
+        MultiTenantConnectionProvider<String> multiTenantConnectionProvider =
                 new TenantConnectionProviderPool(tenantDataSourceManager, adminDataSource);
         return multiTenantConnectionProvider;
     }
 
     @Bean
     @ConditionalOnMissingBean(CurrentTenantIdentifierResolver.class)
-    public CurrentTenantIdentifierResolver currentTenantIdentifierResolver(
+    public CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver(
             TenantIdProvider tenantIdProvider) {
-        CurrentTenantIdentifierResolver currentTenantIdentifierResolver =
+        CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver =
                 new TenantIdentifierResolver(tenantIdProvider);
         return currentTenantIdentifierResolver;
     }
@@ -59,8 +57,8 @@ public class HibernateAutoConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             JpaVendorAdapter jpaVendorAdapter,
             DataSourceManager dataSourceManager,
-            MultiTenantConnectionProvider multiTenantConnectionProvider,
-            CurrentTenantIdentifierResolver currentTenantIdentifierResolver) {
+            MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
+            CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory =
                 new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSourceManager.getAdminDataSource());
@@ -71,7 +69,6 @@ public class HibernateAutoConfiguration {
         // that an application will implement
 
         Map<String, Object> jpaProperties = new HashMap<>();
-        jpaProperties.put(Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA.toString());
         jpaProperties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
         jpaProperties.put(
                 Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);

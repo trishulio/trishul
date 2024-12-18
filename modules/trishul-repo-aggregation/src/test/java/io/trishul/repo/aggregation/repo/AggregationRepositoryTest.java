@@ -10,7 +10,7 @@ import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;

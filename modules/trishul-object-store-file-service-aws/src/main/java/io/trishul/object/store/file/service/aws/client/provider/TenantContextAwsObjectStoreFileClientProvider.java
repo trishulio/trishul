@@ -21,7 +21,7 @@ import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import java.net.URI;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class TenantContextAwsObjectStoreFileClientProvider
         implements IaasRepositoryProvider<

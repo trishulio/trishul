@@ -1,7 +1,7 @@
 package io.trishul.iaas.auth.session.context;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class IaasAuthorizationCredentialsBuilder {
     public IaasAuthorizationCredentials build(ServletRequest request) {

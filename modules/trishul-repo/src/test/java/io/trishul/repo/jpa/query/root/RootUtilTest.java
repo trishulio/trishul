@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 
 import io.trishul.repo.jpa.query.join.joiner.CriteriaJoinAnnotationJoiner;
 import io.trishul.repo.jpa.query.join.joiner.JpaJoiner;
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Path;
+import jakarta.persistence.criteria.From;
+import jakarta.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -3,7 +3,7 @@ package io.trishul.tenant.dto;
 import io.trishul.model.base.dto.BaseDto;
 import java.net.URL;
 import java.util.UUID;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class UpdateTenantDto extends BaseDto {
     private UUID id;

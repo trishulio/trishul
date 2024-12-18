@@ -10,9 +10,8 @@ import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import java.util.Map;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -108,9 +107,6 @@ public class HibernateAutoConfigurationTest {
         Map<String, Object> jpaPropertyMap =
                 localContainerEntityManagerFactoryBean.getJpaPropertyMap();
         assertEquals(4, jpaPropertyMap.size());
-        assertEquals(
-                MultiTenancyStrategy.SCHEMA.toString(),
-                jpaPropertyMap.get(Environment.MULTI_TENANT));
         assertEquals(
                 "org.hibernate.dialect.PostgreSQLDialect", jpaPropertyMap.get(Environment.DIALECT));
         assertEquals(

@@ -2,8 +2,8 @@ package io.trishul.repo.autoconfiguration;
 
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import io.trishul.repo.jpa.repository.service.TransactionService;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

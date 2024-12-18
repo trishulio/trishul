@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserSalutationController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(UserSalutationController.class);
 
-    private UserSalutationService userSalutationService;
+    private final UserSalutationService userSalutationService;
 
-    private UserSalutationMapper userSalutationMapper = UserSalutationMapper.INSTANCE;
+    private final UserSalutationMapper userSalutationMapper = UserSalutationMapper.INSTANCE;
 
     public UserSalutationController(UserSalutationService userService, AttributeFilter filter) {
         super(filter);
@@ -56,7 +56,7 @@ public class UserSalutationController extends BaseController {
                         .toList();
 
         PageDto<UserSalutationDto> dto =
-                new PageDto<UserSalutationDto>(
+                new PageDto<>(
                         userSalutations,
                         userSalutationPage.getTotalPages(),
                         userSalutationPage.getTotalElements());

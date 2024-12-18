@@ -4,15 +4,15 @@ import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.MoneyEntity;
 import io.trishul.money.MoneyMapper;
 import io.trishul.money.tax.amount.TaxAmount;
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.JoinColumn;
-import javax.persistence.PrePersist;
+import jakarta.persistence.AssociationOverride;
+import jakarta.persistence.AssociationOverrides;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
 import org.joda.money.Money;
 
 @Embeddable

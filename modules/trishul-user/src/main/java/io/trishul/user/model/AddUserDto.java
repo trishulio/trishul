@@ -3,10 +3,10 @@ package io.trishul.user.model;
 import io.trishul.model.base.dto.BaseDto;
 import java.net.URI;
 import java.util.List;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class AddUserDto extends BaseDto {
     @NotBlank private String userName;

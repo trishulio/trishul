@@ -4,11 +4,11 @@ import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentials;
 import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentialsBuilder;
 import io.trishul.iaas.auth.session.context.holder.ThreadLocalIaasAuthorizationCredentialsHolder;
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 public class IaasAuthorizationCredentialsHolderFilter implements Filter {
     private final ThreadLocalIaasAuthorizationCredentialsHolder ctxHolder;

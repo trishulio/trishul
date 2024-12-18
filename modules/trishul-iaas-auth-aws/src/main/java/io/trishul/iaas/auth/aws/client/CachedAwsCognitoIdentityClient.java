@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient {
     private final LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>>

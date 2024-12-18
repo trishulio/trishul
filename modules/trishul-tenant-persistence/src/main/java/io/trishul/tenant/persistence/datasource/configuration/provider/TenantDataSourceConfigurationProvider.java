@@ -12,7 +12,7 @@ import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.Tenant;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class TenantDataSourceConfigurationProvider
         implements DataSourceConfigurationProvider<UUID> {

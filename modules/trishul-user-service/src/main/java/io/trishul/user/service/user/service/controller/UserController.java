@@ -15,8 +15,8 @@ import io.trishul.user.service.user.service.service.UserService;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/users")
 public class UserController extends BaseController {
-    private CrudControllerService<
+    private final CrudControllerService<
                     Long, User, BaseUser, UpdateUser, UserDto, AddUserDto, UpdateUserDto>
             controller;
 

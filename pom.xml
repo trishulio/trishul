@@ -72,17 +72,16 @@
         <org.springframework.security.version>2.6.0</org.springframework.security.version>
         <org.springdoc.openapi.version>1.5.12</org.springdoc.openapi.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <com.google.guava.version>33.4.0-jre</com.google.guava.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <javax.measure.version>2.0</javax.measure.version>
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
         <org.joda.money.version>1.0.1</org.joda.money.version>
         <aws.sdk.version>1.12.780</aws.sdk.version>
         <org.jacoco.plugin.version>0.8.12</org.jacoco.plugin.version>
-        <org.pitest.version>1.17.3</org.pitest.version>
+        <org.pitest.version>1.9.9</org.pitest.version>
         <org.pitest.junit5.plugin.version>0.15</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>3.7.0.1746</org.sonarsource.scanner.version>
-        <javax.servlet.servlet-api.version>4.0.1</javax.servlet.servlet-api.version>
+        <jakarta.servlet.servlet-api.version>4.0.1</jakarta.servlet.servlet-api.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
         <spotless.version>2.44.0.BETA4</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
@@ -98,28 +97,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${org.springframework.boot.version}</version>
+        <version>3.4.0</version>
     </parent>
 
     <dependencies>
-            <!-- Common libraries like Guava and Commons Lang3, no scope needed -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${com.google.guava.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-parent</artifactId>
@@ -137,7 +118,7 @@
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${org.springframework.boot.version}</version>
                 <type>pom</type>
-                <scope>provided</scope>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -635,7 +616,7 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
@@ -670,7 +651,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 

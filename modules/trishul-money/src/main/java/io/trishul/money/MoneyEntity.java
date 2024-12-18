@@ -3,11 +3,11 @@ package io.trishul.money;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.currency.model.Currency;
 import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Embeddable
 public class MoneyEntity extends BaseEntity {
