@@ -16,6 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.user.service.TenantIaasUserService;
+import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.user.model.BaseUser;
+import io.trishul.user.model.UpdateUser;
+import io.trishul.user.model.User;
+import io.trishul.user.model.UserAccessor;
+import io.trishul.user.service.user.service.repository.UserRepository;
+
 public class UserServiceTest {
     private UserService service;
 

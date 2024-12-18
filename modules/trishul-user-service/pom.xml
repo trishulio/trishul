@@ -33,6 +33,11 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
+            <artifactId>trishul-object-store-file-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.trishul</groupId>
             <artifactId>trishul-crud</artifactId>
         </dependency>
     </dependencies>

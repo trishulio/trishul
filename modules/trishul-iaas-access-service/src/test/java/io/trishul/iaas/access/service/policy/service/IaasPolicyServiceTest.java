@@ -13,7 +13,15 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import io.trishul.crud.service.LockService;
+import io.trishul.crud.service.SimpleUpdateService;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
+import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
+import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.util.MockUtilProvider;
 
 public class IaasPolicyServiceTest {
@@ -26,7 +34,7 @@ public class IaasPolicyServiceTest {
     @BeforeEach
     public void init() {
         mLockService = mock(LockService.class);
-        mUpdateService = new SimpleUpdateService<>(new MockUtilProvider(), this.mLockService, BaseIaasPolicy.class, UpdateIaasPolicy.class, IaasPolicy.class, Set.of("createdAt"));
+        mUpdateService = spy(new SimpleUpdateService<>(new MockUtilProvider(), this.mLockService, BaseIaasPolicy.class, UpdateIaasPolicy.class, IaasPolicy.class, Set.of("createdAt")));
         mIaasRepo = mock(IaasRepository.class);
 
         service = new IaasPolicyService(mUpdateService, mIaasRepo);

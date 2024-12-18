@@ -1,12 +1,14 @@
 package io.trishul.iaas.access.role.attachment.policy;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.role.model.IaasRole;
 
 public class IaasRolePolicyAttachmentTest {
     private IaasRolePolicyAttachment attachment;

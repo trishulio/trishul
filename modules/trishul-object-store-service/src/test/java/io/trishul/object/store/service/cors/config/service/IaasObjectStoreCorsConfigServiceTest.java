@@ -33,7 +33,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
     @BeforeEach
     public void init() {
         mLockService = mock(LockService.class);
-        mUpdateService = new SimpleUpdateService<>(new MockUtilProvider(), mLockService, IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class, Set.of("createdAt"));
+        mUpdateService = spy(new SimpleUpdateService<>(new MockUtilProvider(), mLockService, IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class, Set.of("createdAt")));
         mIaasRepo = mock(IaasRepository.class);
 
         service = new IaasObjectStoreCorsConfigService(mUpdateService, mIaasRepo);

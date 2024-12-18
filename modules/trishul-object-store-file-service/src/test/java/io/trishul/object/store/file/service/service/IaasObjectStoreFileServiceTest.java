@@ -37,7 +37,7 @@ public class IaasObjectStoreFileServiceTest {
     @BeforeEach
     public void init() {
         mLockService = mock(LockService.class);
-        mUpdateService = new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasObjectStoreFile.class, UpdateIaasObjectStoreFile.class, IaasObjectStoreFile.class, Set.of("createdAt"));
+        mUpdateService = spy(new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasObjectStoreFile.class, UpdateIaasObjectStoreFile.class, IaasObjectStoreFile.class, Set.of("createdAt")));
         mIaasRepo = mock(IaasRepository.class);
 
         service = new IaasObjectStoreFileService(mUpdateService, mIaasRepo);

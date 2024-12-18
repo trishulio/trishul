@@ -23,6 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.trishul.crud.controller.BaseController;
+import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import io.trishul.user.model.AddUserDto;
+import io.trishul.user.model.BaseUser;
+import io.trishul.user.model.UpdateUser;
+import io.trishul.user.model.UpdateUserDto;
+import io.trishul.user.model.User;
+import io.trishul.user.model.UserDto;
+import io.trishul.user.model.UserMapper;
+import io.trishul.user.service.user.service.service.UserService;
+
 @RestController
 @RequestMapping(path = "/api/v1/users")
 public class UserController extends BaseController {

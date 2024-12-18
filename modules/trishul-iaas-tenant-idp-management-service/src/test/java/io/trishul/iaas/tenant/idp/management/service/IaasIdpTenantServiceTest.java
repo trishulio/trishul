@@ -35,7 +35,7 @@ public class IaasIdpTenantServiceTest {
     @BeforeEach
     public void init() {
         mLockService = mock(LockService.class);
-        mUpdateService = new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasIdpTenant.class, UpdateIaasIdpTenant.class, IaasIdpTenant.class, Set.of("createdAt"));
+        mUpdateService = spy(new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasIdpTenant.class, UpdateIaasIdpTenant.class, IaasIdpTenant.class, Set.of("createdAt")));
         mIaasRepo = mock(IaasRepository.class);
 
         service = new IaasIdpTenantService(mUpdateService, mIaasRepo);

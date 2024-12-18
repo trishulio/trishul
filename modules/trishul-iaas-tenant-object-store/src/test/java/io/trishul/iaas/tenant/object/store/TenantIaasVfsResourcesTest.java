@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.object.store.model.IaasObjectStore;
+
 public class TenantIaasVfsResourcesTest {
     private TenantIaasVfsResources resources;
 

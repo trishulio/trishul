@@ -1,11 +1,14 @@
 package io.trishul.user.role.model;
 
-import static org.mockito.Mockito.*;
-
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class UserRoleRefresherTest {
     private AccessorRefresher<Long, UserRoleAccessor, UserRole> refresher;

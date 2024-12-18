@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.trishul.crud.controller.BaseController;
+import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.salutation.model.UserSalutationDto;
+import io.trishul.user.salutation.model.UserSalutationMapper;
+import io.trishul.user.service.user.service.salutation.service.UserSalutationService;
+
 @RestController
 @RequestMapping(path = "/api/v1/users/salutations")
 public class UserSalutationController extends BaseController {

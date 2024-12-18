@@ -22,6 +22,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.trishul.user.salutation.model.UserSalutation;
+import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
+
 public class UserSalutationServiceTest {
     private UserSalutationService userSalutationService;
 

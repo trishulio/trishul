@@ -19,6 +19,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.user.role.model.BaseUserRole;
+import io.trishul.user.role.model.UpdateUserRole;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleAccessor;
+
 public class UserRoleServiceTest {
     private UserRoleService service;
 

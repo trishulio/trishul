@@ -1,7 +1,6 @@
 package io.trishul.crud.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class SimpleUpdateServiceTest {
 
     @BeforeEach
     public void init() {
-        this.mLockService = mock(LockService.class);
+        this.mLockService = new LockService(); // mock(LockService.class);
 
         this.service = new SimpleUpdateService<>(new MockUtilProvider(), this.mLockService, BaseDummyCrudEntity.class, UpdateDummyCrudEntity.class, DummyCrudEntity.class, Set.of(BaseDummyCrudEntity.ATTR_EXCLUDED_VALUE));
     }

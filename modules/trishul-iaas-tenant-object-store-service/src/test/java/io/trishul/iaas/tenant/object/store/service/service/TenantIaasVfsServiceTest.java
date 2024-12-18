@@ -13,6 +13,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
+import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
+import io.trishul.iaas.access.role.model.IaasRole;
+import io.trishul.iaas.access.service.policy.service.IaasPolicyService;
+import io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService;
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
+import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
+import io.trishul.object.store.service.IaasObjectStoreService;
+import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
+import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
+import io.trishul.object.store.model.IaasObjectStore;
+
 public class TenantIaasVfsServiceTest {
     private TenantIaasVfsService service;
 
@@ -22,7 +37,7 @@ public class TenantIaasVfsServiceTest {
     private IaasRolePolicyAttachmentService mAttachmentService;
     private IaasObjectStoreCorsConfigService mIaasBucketCrossOriginConfigService;
     private IaasObjectStoreAccessConfigService mIaasPublicAccessBlockService;
-    private TenantIaasResourceBuilder mBuilder;
+    private TenantObjectStoreResourceBuilder mBuilder;
 
     @BeforeEach
     public void init() {
@@ -32,7 +47,7 @@ public class TenantIaasVfsServiceTest {
         mAttachmentService = mock(IaasRolePolicyAttachmentService.class);
         mIaasBucketCrossOriginConfigService = mock(IaasObjectStoreCorsConfigService.class);
         mIaasPublicAccessBlockService = mock(IaasObjectStoreAccessConfigService.class);
-        mBuilder = mock(TenantIaasResourceBuilder.class);
+        mBuilder = mock(TenantObjectStoreResourceBuilder.class);
 
         this.service = new TenantIaasVfsService(mResMapper, mPolicyService, mObjectStoreService, mAttachmentService, mIaasBucketCrossOriginConfigService, mIaasPublicAccessBlockService, mBuilder);
 

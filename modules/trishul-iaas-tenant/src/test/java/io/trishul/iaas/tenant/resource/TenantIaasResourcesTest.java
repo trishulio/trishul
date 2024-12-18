@@ -5,6 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.role.model.IaasRole;
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
+import io.trishul.object.store.model.IaasObjectStore;
+
 public class TenantIaasResourcesTest {
     private TenantIaasResources resources;
 

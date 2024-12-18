@@ -1,9 +1,12 @@
 package io.trishul.iaas.tenant.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
+import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
 
 public class TenantIaasDeleteResultTest {
     private TenantIaasDeleteResult result;

@@ -13,7 +13,16 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import io.trishul.crud.service.LockService;
+import io.trishul.crud.service.SimpleUpdateService;
+import io.trishul.crud.service.UpdateService;
+import io.trishul.iaas.access.role.model.BaseIaasRole;
+import io.trishul.iaas.access.role.model.IaasRole;
+import io.trishul.iaas.access.role.model.IaasRoleAccessor;
+import io.trishul.iaas.access.role.model.UpdateIaasRole;
+import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.test.util.MockUtilProvider;
 
 public class IaasRoleServiceTest {
     private IaasRoleService service;
@@ -26,7 +35,7 @@ public class IaasRoleServiceTest {
     @BeforeEach
     public void init() {
         mLockService = mock(LockService.class);
-        mUpdateService = new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasRole.class, UpdateIaasRole.class, IaasRole.class, Set.of("createdAt"));
+        mUpdateService = spy(new SimpleUpdateService<>(new MockUtilProvider(), mLockService, BaseIaasRole.class, UpdateIaasRole.class, IaasRole.class, Set.of("createdAt")));
         mIaasRepo = mock(IaasRepository.class);
 
         service = new IaasRoleService(mUpdateService, mIaasRepo);

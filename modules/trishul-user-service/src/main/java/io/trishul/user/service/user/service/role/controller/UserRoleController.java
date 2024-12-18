@@ -23,6 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.trishul.crud.controller.BaseController;
+import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
+import io.trishul.user.role.model.AddUserRoleDto;
+import io.trishul.user.role.model.BaseUserRole;
+import io.trishul.user.role.model.UpdateUserRole;
+import io.trishul.user.role.model.UpdateUserRoleDto;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.role.model.UserRoleDto;
+import io.trishul.user.role.model.UserRoleMapper;
+import io.trishul.user.service.user.service.role.service.UserRoleService;
+
 @RestController
 @RequestMapping(path = "/api/v1/users/roles")
 public class UserRoleController extends BaseController {

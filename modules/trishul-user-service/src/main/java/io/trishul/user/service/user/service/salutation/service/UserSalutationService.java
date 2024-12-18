@@ -5,10 +5,9 @@ import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
 import java.util.Set;
 import java.util.SortedSet;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.trishul.crud.service.BaseService;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
