@@ -557,6 +557,7 @@
                         <effort>max</effort>
                         <threshold>low</threshold>
                         <xmlOutput>true</xmlOutput>
+                        <!-- TODO: Debt. Get rid of all violations -->
                         <failOnError>false</failOnError>
                         <plugins>
                             <plugin>
@@ -584,14 +585,7 @@
                     <configuration>
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
-                        <dependencyExcludes>
-                            <!-- Prevent this dependency from being updated -->
-                            <!-- because it breaks the QuantityMapper compilation -->
-                            <dependencyExclude>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct</artifactId>
-                            </dependencyExclude>
-                        </dependencyExcludes>
+                        <excludeProperties>org.mapstruct.version,org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.jar.plugin.version</excludeProperties>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -610,7 +604,7 @@
                     <configuration>
                         <failBuildOnCVSS>7</failBuildOnCVSS>
                         <suppressionFile>${session.topLevelProject.basedir}/dependency-check-suppressions.xml</suppressionFile>
-                        <dataDirectory>${project.build.directory}/dependency-check-data</dataDirectory>
+                        <dataDirectory>${session.topLevelProject.basedir}/dependency-check-data</dataDirectory>
                     </configuration>
                 </plugin>
             </plugins>

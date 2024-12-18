@@ -23,6 +23,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.test.types.StringSet;
 import io.trishul.test.util.MockUtilProvider;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -52,7 +53,10 @@ public class IaasIdpTenantServiceTest {
                                 UpdateIaasIdpTenant.class,
                                 IaasIdpTenant.class,
                                 Set.of("createdAt")));
-        mIaasRepo = mock(IaasRepository.class);
+        interface IdpTenantRepository
+                extends IaasRepository<
+                        String, IaasIdpTenant, BaseIaasIdpTenant, UpdateIaasIdpTenant> {}
+        mIaasRepo = mock(IdpTenantRepository.class);
 
         service = new IaasIdpTenantService(mUpdateService, mIaasRepo);
     }
@@ -190,7 +194,7 @@ public class IaasIdpTenantServiceTest {
         IaasIdpTenantAccessor accessor =
                 new IaasIdpTenantAccessor() {
                     @Override
-                    public void setIdpTenant(IaasIdpTenant attachment) {}
+                    public final void setIdpTenant(IaasIdpTenant attachment) {}
 
                     @Override
                     public IaasIdpTenant getIdpTenant() {
@@ -285,7 +289,7 @@ public class IaasIdpTenantServiceTest {
 
         doAnswer(
                         inv -> {
-                            Iterator<String> it = inv.getArgument(0, Set.class).iterator();
+                            Iterator<String> it = inv.getArgument(0, StringSet.class).iterator();
                             String id2 = it.next();
                             String id1 = it.next();
 

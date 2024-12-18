@@ -18,7 +18,7 @@ public class AddIaasObjectStoreFileDto extends BaseDto {
         return minValidUntil;
     }
 
-    public void setMinValidUntil(LocalDateTime minValidUntil) {
+    public final void setMinValidUntil(LocalDateTime minValidUntil) {
         this.minValidUntil = minValidUntil;
     }
 }

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class CollectionAccessorRefresherTest {
     class Entity implements Identified<Long> {
-        private Long id;
+        private final Long id;
 
         public Entity(Long id) {
             this.id = id;
@@ -48,7 +48,7 @@ public class CollectionAccessorRefresherTest {
         }
 
         @Override
-        public void setEntityList(List<Entity> entity) {
+        public final void setEntityList(List<Entity> entity) {
             this.e = entity;
         }
     }
@@ -61,7 +61,7 @@ public class CollectionAccessorRefresherTest {
         mEntityRetriever = mock(Function.class);
 
         refresher =
-                new CollectionAccessorRefresher<Long, EntityAccessor, Entity>(
+                new CollectionAccessorRefresher<>(
                         Entity.class,
                         accessor -> accessor.getEntityList(),
                         (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)),

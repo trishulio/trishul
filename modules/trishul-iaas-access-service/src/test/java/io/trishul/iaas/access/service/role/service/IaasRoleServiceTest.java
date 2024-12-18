@@ -22,6 +22,7 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.test.types.StringSet;
 import io.trishul.test.util.MockUtilProvider;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -51,7 +52,10 @@ public class IaasRoleServiceTest {
                                 UpdateIaasRole.class,
                                 IaasRole.class,
                                 Set.of("createdAt")));
-        mIaasRepo = mock(IaasRepository.class);
+
+        interface IaasRoleRepository
+                extends IaasRepository<String, IaasRole, BaseIaasRole, UpdateIaasRole> {}
+        mIaasRepo = mock(IaasRoleRepository.class);
 
         service = new IaasRoleService(mUpdateService, mIaasRepo);
     }
@@ -189,7 +193,7 @@ public class IaasRoleServiceTest {
         IaasRoleAccessor accessor =
                 new IaasRoleAccessor() {
                     @Override
-                    public void setIaasRole(IaasRole attachment) {}
+                    public final void setIaasRole(IaasRole attachment) {}
 
                     @Override
                     public IaasRole getIaasRole() {
@@ -324,9 +328,9 @@ public class IaasRoleServiceTest {
 
         doAnswer(
                         inv -> {
-                            Iterator<String> it = inv.getArgument(0, Set.class).iterator();
-                            String id2 = it.next();
-                            String id1 = it.next();
+                            Iterator<String> it = inv.getArgument(0, StringSet.class).iterator();
+                            it.next();
+                            it.next();
 
                             return List.of(
                                     new IaasRole(

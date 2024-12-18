@@ -68,9 +68,11 @@ public class TenantIaasVfsServiceTest {
                                         inv.getArgument(1, IaasPolicy.class)))
                 .when(mBuilder)
                 .buildAttachment(any(IaasRole.class), any(IaasPolicy.class));
+        interface ObjectStoreList extends List<IaasObjectStore> {}
         doAnswer(
                         inv -> {
-                            List<IaasObjectStore> objectStores = inv.getArgument(0, List.class);
+                            List<IaasObjectStore> objectStores =
+                                    inv.getArgument(0, ObjectStoreList.class);
                             Iterator<IaasPolicy> policies =
                                     inv.getArgument(1, List.class).iterator();
 

@@ -28,7 +28,7 @@ public class IaasUserTenantMembership extends BaseEntity
     }
 
     @Override
-    public void setId(IaasUserTenantMembershipId id) {
+    public final void setId(IaasUserTenantMembershipId id) {
         if (id != null) {
             if (user == null) {
                 user = new IaasUser(id.getUserId());
@@ -43,7 +43,7 @@ public class IaasUserTenantMembership extends BaseEntity
     }
 
     @Override
-    public void setUser(IaasUser user) {
+    public final void setUser(IaasUser user) {
         this.user = user;
     }
 
@@ -53,7 +53,7 @@ public class IaasUserTenantMembership extends BaseEntity
     }
 
     @Override
-    public void setTenantId(String tenantId) {
+    public final void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
 

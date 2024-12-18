@@ -18,9 +18,13 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsIamRoleClient
         implements IaasClient<String, IaasRole, BaseIaasRole, UpdateIaasRole> {
+    private static final Logger log = LoggerFactory.getLogger(AwsIamRoleClient.class);
+
     private final AmazonIdentityManagement awsIamClient;
     private final IaasEntityMapper<Role, IaasRole> mapper;
 
@@ -45,6 +49,7 @@ public class AwsIamRoleClient
         DeleteRoleRequest request = new DeleteRoleRequest().withRoleName(roleName);
         try {
             DeleteRoleResult result = this.awsIamClient.deleteRole(request);
+            log.info(String.format("AWS DeleteRoleResult: %s", result.toString()));
             success = true;
         } catch (NoSuchEntityException e) {
         }
@@ -91,6 +96,7 @@ public class AwsIamRoleClient
                         .withDescription(role.getDescription());
 
         UpdateRoleResult result = this.awsIamClient.updateRole(request);
+        log.info(String.format("AWS UpdateRoleResult: %s", result.toString()));
 
         UpdateAssumeRolePolicyRequest policyRequest =
                 new UpdateAssumeRolePolicyRequest()
@@ -99,6 +105,7 @@ public class AwsIamRoleClient
         UpdateAssumeRolePolicyResult policyResult =
                 this.awsIamClient.updateAssumeRolePolicy(policyRequest);
 
+        log.info(String.format("AWS UpdateAssumeRolePolicyResult: %s", policyResult.toString()));
         return get(role.getName());
     }
 }

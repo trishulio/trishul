@@ -29,7 +29,7 @@ public class IaasObjectStoreFileDto extends BaseDto {
         return this.fileKey;
     }
 
-    public void setFileKey(URI fileKey) {
+    public final void setFileKey(URI fileKey) {
         this.fileKey = fileKey;
     }
 
@@ -37,7 +37,7 @@ public class IaasObjectStoreFileDto extends BaseDto {
         return this.expiration;
     }
 
-    public void setExpiration(LocalDateTime expiration) {
+    public final void setExpiration(LocalDateTime expiration) {
         this.expiration = expiration;
     }
 
@@ -45,7 +45,7 @@ public class IaasObjectStoreFileDto extends BaseDto {
         return this.fileUrl;
     }
 
-    public void setFileUrl(URL fileUrl) {
+    public final void setFileUrl(URL fileUrl) {
         this.fileUrl = fileUrl;
     }
 }

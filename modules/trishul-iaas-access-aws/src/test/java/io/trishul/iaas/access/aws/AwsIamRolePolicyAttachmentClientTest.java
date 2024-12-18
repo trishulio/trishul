@@ -134,8 +134,6 @@ public class AwsIamRolePolicyAttachmentClientTest {
                 .when(mArnMapper)
                 .getPolicyArn(anyString());
 
-        IaasRolePolicyAttachment addition =
-                new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1"));
         IaasRolePolicyAttachment attachment =
                 client.put(
                         new IaasRolePolicyAttachment(

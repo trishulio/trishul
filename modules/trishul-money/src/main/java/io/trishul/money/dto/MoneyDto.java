@@ -23,19 +23,19 @@ public class MoneyDto extends BaseDto {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public final void setCurrency(String currency) {
         this.currency = currency;
     }
 
     public BigDecimal getAmount() {
-        BigDecimal amount = null;
+        BigDecimal amt = null;
         if (this.amount != null) {
-            amount = new BigDecimal(this.amount.stripTrailingZeros().toPlainString());
+            amt = new BigDecimal(this.amount.stripTrailingZeros().toPlainString());
         }
-        return amount;
+        return amt;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public final void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

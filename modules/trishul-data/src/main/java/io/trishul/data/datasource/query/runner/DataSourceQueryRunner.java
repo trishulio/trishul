@@ -57,7 +57,9 @@ public class DataSourceQueryRunner {
             return supplier.get(conn);
         } catch (Exception e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException eR) {
                 log.error("Failed to perform rollback because {}", eR);
             }
@@ -80,7 +82,9 @@ public class DataSourceQueryRunner {
             runnable.run(conn);
         } catch (Exception e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException eR) {
                 log.error("Failed to perform rollback because {}", eR);
             }

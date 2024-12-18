@@ -26,7 +26,7 @@ public class TenantIaasDeleteResult extends BaseModel {
         return auth;
     }
 
-    public void setAuth(TenantIaasAuthDeleteResult auth) {
+    public final void setAuth(TenantIaasAuthDeleteResult auth) {
         this.auth = auth;
     }
 
@@ -34,7 +34,7 @@ public class TenantIaasDeleteResult extends BaseModel {
         return idp;
     }
 
-    public void setIdp(TenantIaasIdpDeleteResult idp) {
+    public final void setIdp(TenantIaasIdpDeleteResult idp) {
         this.idp = idp;
     }
 
@@ -42,7 +42,7 @@ public class TenantIaasDeleteResult extends BaseModel {
         return vfs;
     }
 
-    public void setVfs(TenantIaasVfsDeleteResult vfs) {
+    public final void setVfs(TenantIaasVfsDeleteResult vfs) {
         this.vfs = vfs;
     }
 }

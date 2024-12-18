@@ -164,7 +164,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
         IaasObjectStoreAccessConfigAccessor accessor =
                 new IaasObjectStoreAccessConfigAccessor() {
                     @Override
-                    public void setIaasObjectStoreAccessConfig(
+                    public final void setIaasObjectStoreAccessConfig(
                             IaasObjectStoreAccessConfig attachment) {}
 
                     @Override

@@ -61,7 +61,7 @@ public class Address extends BaseEntity {
         return addressLine1;
     }
 
-    public void setAddressLine1(String addressLine1) {
+    public final void setAddressLine1(String addressLine1) {
         this.addressLine1 = addressLine1;
     }
 
@@ -69,7 +69,7 @@ public class Address extends BaseEntity {
         return addressLine2;
     }
 
-    public void setAddressLine2(String addressLine2) {
+    public final void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
     }
 
@@ -77,7 +77,7 @@ public class Address extends BaseEntity {
         return country;
     }
 
-    public void setCountry(String country) {
+    public final void setCountry(String country) {
         this.country = country;
     }
 
@@ -85,7 +85,7 @@ public class Address extends BaseEntity {
         return province;
     }
 
-    public void setProvince(String province) {
+    public final void setProvince(String province) {
         this.province = province;
     }
 
@@ -93,7 +93,7 @@ public class Address extends BaseEntity {
         return city;
     }
 
-    public void setCity(String city) {
+    public final void setCity(String city) {
         this.city = city;
     }
 
@@ -101,7 +101,7 @@ public class Address extends BaseEntity {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public final void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -109,7 +109,7 @@ public class Address extends BaseEntity {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime created) {
+    public final void setCreatedAt(LocalDateTime created) {
         this.createdAt = created;
     }
 
@@ -117,7 +117,7 @@ public class Address extends BaseEntity {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

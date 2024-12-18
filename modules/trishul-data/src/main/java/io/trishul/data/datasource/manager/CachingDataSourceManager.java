@@ -5,10 +5,10 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
-import jakarta.annotation.Nonnull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,12 +58,12 @@ public class CachingDataSourceManager implements DataSourceManager {
             // TODO: These checks are buggy.
             log.error("Error loading the datasource from the cache");
             Throwable cause = e.getCause();
-            if (cause instanceof SQLException) {
+            if (cause instanceof SQLException c) {
                 log.error("SQLException occurred while fetching DataSource");
-                throw (SQLException) cause;
-            } else if (cause instanceof IOException) {
+                throw c;
+            } else if (cause instanceof IOException io) {
                 log.error("IOException occurred while fetching DataSource");
-                throw (IOException) cause;
+                throw io;
             } else {
                 log.error("Unknown error occurred while fetching DataSource");
                 throw new RuntimeException(cause);

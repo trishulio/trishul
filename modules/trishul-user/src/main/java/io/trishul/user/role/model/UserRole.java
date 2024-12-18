@@ -70,7 +70,7 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
     }
 
     @Override
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -80,7 +80,7 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -90,7 +90,7 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -100,7 +100,7 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -109,7 +109,7 @@ public class UserRole extends BaseEntity implements CrudEntity<Long>, UpdateUser
         return this.version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 }

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.iaas.tenant.TenantContextIaasObjectStoreNameProvider;
 import io.trishul.tenant.entity.TenantIdProvider;
 import java.util.UUID;
@@ -15,7 +14,6 @@ public class TenantContextAwsBucketNameProviderTest {
     private TenantContextIaasObjectStoreNameProvider provider;
 
     private AwsDocumentTemplates mTemplates;
-    private ContextHolder mCtxHolder;
     private TenantIdProvider mTenantIdProvider;
 
     @BeforeEach

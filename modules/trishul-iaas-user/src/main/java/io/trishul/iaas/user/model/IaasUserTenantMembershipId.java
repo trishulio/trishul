@@ -20,7 +20,7 @@ public class IaasUserTenantMembershipId extends BaseEntity {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public final void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -28,7 +28,7 @@ public class IaasUserTenantMembershipId extends BaseEntity {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public final void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
 
@@ -37,14 +37,13 @@ public class IaasUserTenantMembershipId extends BaseEntity {
 
         if (user != null || tenantId != null) {
             id = new IaasUserTenantMembershipId();
-        }
+            if (user != null) {
+                id.setUserId(user.getId());
+            }
 
-        if (user != null) {
-            id.setUserId(user.getId());
-        }
-
-        if (tenantId != null) {
-            id.setTenantId(tenantId);
+            if (tenantId != null) {
+                id.setTenantId(tenantId);
+            }
         }
 
         return id;

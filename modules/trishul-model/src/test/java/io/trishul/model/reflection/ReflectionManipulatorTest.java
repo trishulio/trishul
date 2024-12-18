@@ -28,7 +28,7 @@ public class ReflectionManipulatorTest {
             return this.x;
         }
 
-        public void setX(int x) {
+        public final void setX(int x) {
             this.x = x;
         }
 
@@ -38,7 +38,7 @@ public class ReflectionManipulatorTest {
             return this.y;
         }
 
-        public void setY(int y) {
+        public final void setY(int y) {
             this.y = y;
         }
     }
@@ -158,7 +158,7 @@ public class ReflectionManipulatorTest {
 
             int x;
 
-            public void setX(int x) {
+            public final void setX(int x) {
                 this.x = x;
             }
         }

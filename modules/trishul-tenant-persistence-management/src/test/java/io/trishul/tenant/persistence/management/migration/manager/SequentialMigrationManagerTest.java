@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-@SuppressWarnings("unchecked")
 public class SequentialMigrationManagerTest {
     private MigrationManager mgr;
 

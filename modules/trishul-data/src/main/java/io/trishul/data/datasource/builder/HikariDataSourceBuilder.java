@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HikariDataSourceBuilder extends AbstractDataSourceBuilder {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(HikariDataSourceBuilder.class);
 
     public static final String KEY_USERNAME = "dataSource.user";

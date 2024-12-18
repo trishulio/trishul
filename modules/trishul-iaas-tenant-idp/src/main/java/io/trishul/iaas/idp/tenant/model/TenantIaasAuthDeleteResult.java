@@ -13,7 +13,7 @@ public class TenantIaasAuthDeleteResult extends BaseModel {
         return roles;
     }
 
-    public void setRoles(long roles) {
+    public final void setRoles(long roles) {
         this.roles = roles;
     }
 }

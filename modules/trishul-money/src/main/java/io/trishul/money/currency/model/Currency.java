@@ -34,7 +34,7 @@ public class Currency extends BaseEntity implements UpdateCurrency {
     }
 
     @Override
-    public void setNumericCode(Integer numericCode) {
+    public final void setNumericCode(Integer numericCode) {
         this.numericCode = numericCode;
     }
 
@@ -44,7 +44,7 @@ public class Currency extends BaseEntity implements UpdateCurrency {
     }
 
     @Override
-    public void setCode(String code) {
+    public final void setCode(String code) {
         this.code = code;
     }
 }

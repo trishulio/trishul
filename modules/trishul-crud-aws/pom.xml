@@ -8,7 +8,6 @@
     <description>Crud</description>
     <packaging>jar</packaging>
 
-
     <parent>
         <groupId>io.trishul</groupId>
         <artifactId>trishul-parent</artifactId>

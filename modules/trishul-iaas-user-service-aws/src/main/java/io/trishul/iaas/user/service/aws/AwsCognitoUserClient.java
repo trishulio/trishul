@@ -104,6 +104,8 @@ public class AwsCognitoUserClient
 
         try {
             AdminDeleteUserResult result = this.idp.adminDeleteUser(req);
+            log.info(String.format("AdminDeleteUserResult result: %s", result.toString()));
+
             success = true;
         } catch (UserNotFoundException e) {
             log.error("Failed to delete user: {}", id);
@@ -141,6 +143,7 @@ public class AwsCognitoUserClient
                         .withUserAttributes(attributes);
 
         AdminUpdateUserAttributesResult result = this.idp.adminUpdateUserAttributes(req);
+        log.info(String.format("AdminUpdateUserAttributesResult result: %s", result.toString()));
 
         return get(update.getId());
     }

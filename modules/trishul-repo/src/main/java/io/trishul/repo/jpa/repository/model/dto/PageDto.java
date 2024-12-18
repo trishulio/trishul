@@ -23,7 +23,7 @@ public class PageDto<T extends BaseDto> extends BaseDto implements Iterable<T> {
         return content;
     }
 
-    public void setContent(List<T> content) {
+    public final void setContent(List<T> content) {
         this.content = content;
     }
 
@@ -31,7 +31,7 @@ public class PageDto<T extends BaseDto> extends BaseDto implements Iterable<T> {
         return totalElements;
     }
 
-    public void setTotalElements(long totalElements) {
+    public final void setTotalElements(long totalElements) {
         this.totalElements = totalElements;
     }
 
@@ -39,7 +39,7 @@ public class PageDto<T extends BaseDto> extends BaseDto implements Iterable<T> {
         return totalPages;
     }
 
-    public void setTotalPages(int totalPages) {
+    public final void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
     }
 

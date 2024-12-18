@@ -25,7 +25,7 @@ public class SequentialExecutorTest {
 
     @BeforeEach
     public void init() {
-        mIaasClient = mock(IaasClient.class);
+        mIaasClient = mock(DummyCrudEntityIaasClient.class);
         seqClient = new SequentialExecutor<>(mIaasClient);
     }
 

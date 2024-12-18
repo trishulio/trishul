@@ -34,7 +34,7 @@ public class IaasObjectStoreFile extends BaseEntity
     }
 
     @Override
-    public void setId(URI id) {
+    public final void setId(URI id) {
         setFileKey(id);
     }
 
@@ -44,7 +44,7 @@ public class IaasObjectStoreFile extends BaseEntity
     }
 
     @Override
-    public void setFileKey(URI fileKey) {
+    public final void setFileKey(URI fileKey) {
         this.fileKey = fileKey;
     }
 
@@ -54,7 +54,7 @@ public class IaasObjectStoreFile extends BaseEntity
     }
 
     @Override
-    public void setExpiration(LocalDateTime expiration) {
+    public final void setExpiration(LocalDateTime expiration) {
         this.expiration = expiration;
     }
 
@@ -64,7 +64,7 @@ public class IaasObjectStoreFile extends BaseEntity
      * request is made to get URL for the same resource in an hour.
      */
     @Override
-    public void setMinValidUntil(LocalDateTime minValidUntil) {
+    public final void setMinValidUntil(LocalDateTime minValidUntil) {
         int hourIncrement = minValidUntil.getMinute() <= 30 ? 1 : 2;
 
         setExpiration(minValidUntil.plusHours(hourIncrement).truncatedTo(ChronoUnit.HOURS));
@@ -76,7 +76,7 @@ public class IaasObjectStoreFile extends BaseEntity
     }
 
     @Override
-    public void setFileUrl(URL fileUrl) {
+    public final void setFileUrl(URL fileUrl) {
         this.fileUrl = fileUrl;
     }
 

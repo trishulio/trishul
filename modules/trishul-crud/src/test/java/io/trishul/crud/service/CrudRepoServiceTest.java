@@ -16,6 +16,8 @@ import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntityAccessor;
+import io.trishul.test.model.DummyCrudEntityRefresher;
+import io.trishul.test.model.DummyCrudEntitySpecification;
 import io.trishul.test.repository.DummyCrudEntityRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class CrudRepoServiceTest {
     @BeforeEach
     public void init() {
         this.mRepo = mock(DummyCrudEntityRepository.class);
-        this.mRefresher = mock(Refresher.class);
+        this.mRefresher = mock(DummyCrudEntityRefresher.class);
         this.service = new CrudRepoService<>(this.mRepo, this.mRefresher);
     }
 
@@ -78,7 +80,7 @@ public class CrudRepoServiceTest {
     public void testGetAll_BuildsAPageRequestAndReturnsPageFromJpaRepository() {
         final Page<DummyCrudEntity> mPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
 
-        final Specification<DummyCrudEntity> mSpec = mock(Specification.class);
+        final Specification<DummyCrudEntity> mSpec = mock(DummyCrudEntitySpecification.class);
         final PageRequest expectedPageRequest =
                 PageRequest.of(1, 100, Direction.DESC, "col_1", "col_2");
         doReturn(mPage).when(this.mRepo).findAll(mSpec, expectedPageRequest);
@@ -92,7 +94,7 @@ public class CrudRepoServiceTest {
 
     @Test
     public void testGetAll_ReturnsListOfItemsWithMatchingSpec() {
-        final Specification<DummyCrudEntity> mSpec = mock(Specification.class);
+        final Specification<DummyCrudEntity> mSpec = mock(DummyCrudEntitySpecification.class);
         doReturn(List.of(new DummyCrudEntity(1L))).when(this.mRepo).findAll(mSpec);
 
         final List<DummyCrudEntity> entities = this.service.getAll(mSpec);

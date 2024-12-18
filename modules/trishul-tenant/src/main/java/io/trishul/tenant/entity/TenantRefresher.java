@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TenantRefresher implements Refresher<Tenant, TenantAccessor> {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(TenantRefresher.class);
 
     private final AccessorRefresher<UUID, TenantAccessor, Tenant> refresher;

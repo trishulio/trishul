@@ -101,6 +101,8 @@ public class AwsIdpTenantWithRoleClient
 
         try {
             DeleteGroupResult result = this.idp.deleteGroup(request);
+            log.info(String.format("DeleteGroupResult result: %s", result.toString()));
+
             success = true;
         } catch (ResourceNotFoundException e) {
             log.error("Failed to delete group with id: {}", id);

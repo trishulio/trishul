@@ -8,7 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UserDtoDecorator implements EntityDecorator<UserDto> {
-    private static final Logger logger = LoggerFactory.getLogger(UserDtoDecorator.class);
+    @SuppressWarnings("unused")
+    private static final Logger log = LoggerFactory.getLogger(UserDtoDecorator.class);
 
     private TemporaryImageSrcDecorator imageSrcDecorator;
 

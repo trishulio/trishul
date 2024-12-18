@@ -51,7 +51,7 @@ public class UnitEntity extends BaseEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -59,7 +59,7 @@ public class UnitEntity extends BaseEntity {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public final void setSymbol(String symbol) {
         this.symbol = symbol;
     }
 
@@ -67,7 +67,7 @@ public class UnitEntity extends BaseEntity {
         return baseUnitEntity;
     }
 
-    public void setBaseUnitEntity(UnitEntity baseUnitEntity) {
+    public final void setBaseUnitEntity(UnitEntity baseUnitEntity) {
         this.baseUnitEntity = baseUnitEntity;
     }
 }

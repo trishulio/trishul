@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class IaasRolePolicyAttachment extends BaseEntity
         implements UpdateIaasRolePolicyAttachment, CrudEntity<IaasRolePolicyAttachmentId>, Audited {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasRolePolicyAttachment.class);
 
     private IaasRole role;
@@ -46,7 +47,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
     }
 
     @Override
-    public void setId(IaasRolePolicyAttachmentId id) {
+    public final void setId(IaasRolePolicyAttachmentId id) {
         if (id == null) {
             if (this.role != null) {
                 this.role.setId(null);
@@ -75,7 +76,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
     }
 
     @Override
-    public void setIaasRole(IaasRole role) {
+    public final void setIaasRole(IaasRole role) {
         this.role = role;
     }
 
@@ -85,7 +86,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
     }
 
     @Override
-    public void setIaasPolicy(IaasPolicy policy) {
+    public final void setIaasPolicy(IaasPolicy policy) {
         this.policy = policy;
     }
 
@@ -95,7 +96,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -105,7 +106,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

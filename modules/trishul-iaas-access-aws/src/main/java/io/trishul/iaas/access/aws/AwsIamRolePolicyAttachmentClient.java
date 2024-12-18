@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,7 @@ public class AwsIamRolePolicyAttachmentClient
                         .withRoleName(attachment.getIaasRole().getId());
 
         AttachRolePolicyResult result = this.awsClient.attachRolePolicy(request);
+        log.info(String.format("AWS AttachRolePolicyResult: %s", result.toString()));
 
         getCache().invalidate(attachment.getIaasRole().getId());
 
@@ -106,6 +108,8 @@ public class AwsIamRolePolicyAttachmentClient
                 new DetachRolePolicyRequest().withPolicyArn(policyArn).withRoleName(id.getRoleId());
         try {
             DetachRolePolicyResult result = this.awsClient.detachRolePolicy(request);
+            log.info(String.format("AWS DetachRolePolicyResult: %s", result.toString()));
+
             getCache().invalidate(id.getRoleId());
             return true;
         } catch (NoSuchEntityException e) {
@@ -130,7 +134,8 @@ public class AwsIamRolePolicyAttachmentClient
                             .build(
                                     new CacheLoader<String, Set<String>>() {
                                         @Override
-                                        public Set<String> load(String roleName) throws Exception {
+                                        public Set<String> load(@Nonnull String roleName)
+                                                throws Exception {
                                             Set<String> allPolicyNames = new HashSet<>();
                                             String marker = null;
                                             do {

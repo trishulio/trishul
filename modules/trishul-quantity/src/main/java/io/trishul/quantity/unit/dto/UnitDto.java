@@ -17,7 +17,7 @@ public class UnitDto extends BaseDto {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public final void setSymbol(String symbol) {
         this.symbol = symbol;
     }
 }

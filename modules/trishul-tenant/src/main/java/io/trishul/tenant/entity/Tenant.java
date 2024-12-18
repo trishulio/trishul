@@ -69,7 +69,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @PrePersist
-    public void setId() {
+    public final void setId() {
         if (this.id == null) {
             this.id = UUID.randomUUID();
         }
@@ -81,7 +81,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setId(UUID id) {
+    public final void setId(UUID id) {
         this.id = id;
     }
 
@@ -91,7 +91,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -101,7 +101,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setUrl(URL url) {
+    public final void setUrl(URL url) {
         this.url = url;
     }
 
@@ -111,7 +111,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setIsReady(Boolean isReady) {
+    public final void setIsReady(Boolean isReady) {
         this.isReady = isReady;
     }
 
@@ -121,7 +121,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -131,7 +131,7 @@ public class Tenant extends BaseEntity implements UpdateTenant, CrudEntity<UUID>
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

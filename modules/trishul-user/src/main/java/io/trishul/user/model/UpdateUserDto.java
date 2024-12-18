@@ -69,7 +69,7 @@ public class UpdateUserDto extends BaseDto {
         return id;
     }
 
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class UpdateUserDto extends BaseDto {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public final void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -85,7 +85,7 @@ public class UpdateUserDto extends BaseDto {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public final void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
@@ -93,7 +93,7 @@ public class UpdateUserDto extends BaseDto {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public final void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -101,7 +101,7 @@ public class UpdateUserDto extends BaseDto {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public final void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -109,7 +109,7 @@ public class UpdateUserDto extends BaseDto {
         return statusId;
     }
 
-    public void setStatusId(Long statusId) {
+    public final void setStatusId(Long statusId) {
         this.statusId = statusId;
     }
 
@@ -117,7 +117,7 @@ public class UpdateUserDto extends BaseDto {
         return salutationId;
     }
 
-    public void setSalutationId(Long salutationId) {
+    public final void setSalutationId(Long salutationId) {
         this.salutationId = salutationId;
     }
 
@@ -125,7 +125,7 @@ public class UpdateUserDto extends BaseDto {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public final void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -133,7 +133,7 @@ public class UpdateUserDto extends BaseDto {
         return roleIds;
     }
 
-    public void setRoleIds(List<Long> roleIds) {
+    public final void setRoleIds(List<Long> roleIds) {
         this.roleIds = roleIds;
     }
 
@@ -141,7 +141,7 @@ public class UpdateUserDto extends BaseDto {
         return imageSrc;
     }
 
-    public void setImageSrc(URI imageSrc) {
+    public final void setImageSrc(URI imageSrc) {
         this.imageSrc = imageSrc;
     }
 
@@ -149,7 +149,7 @@ public class UpdateUserDto extends BaseDto {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 }

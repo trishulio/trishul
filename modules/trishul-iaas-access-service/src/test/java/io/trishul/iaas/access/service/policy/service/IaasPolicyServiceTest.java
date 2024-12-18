@@ -22,6 +22,7 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.test.types.StringSet;
 import io.trishul.test.util.MockUtilProvider;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -50,7 +51,10 @@ public class IaasPolicyServiceTest {
                                 UpdateIaasPolicy.class,
                                 IaasPolicy.class,
                                 Set.of("createdAt")));
-        mIaasRepo = mock(IaasRepository.class);
+
+        interface IaasPolicyRepository
+                extends IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> {}
+        mIaasRepo = mock(IaasPolicyRepository.class);
 
         service = new IaasPolicyService(mUpdateService, mIaasRepo);
     }
@@ -188,7 +192,7 @@ public class IaasPolicyServiceTest {
         IaasPolicyAccessor accessor =
                 new IaasPolicyAccessor() {
                     @Override
-                    public void setIaasPolicy(IaasPolicy attachment) {}
+                    public final void setIaasPolicy(IaasPolicy attachment) {}
 
                     @Override
                     public IaasPolicy getIaasPolicy() {
@@ -315,7 +319,7 @@ public class IaasPolicyServiceTest {
 
         doAnswer(
                         inv -> {
-                            Iterator<String> it = inv.getArgument(0, Set.class).iterator();
+                            Iterator<String> it = inv.getArgument(0, StringSet.class).iterator();
                             String id2 = it.next();
                             String id1 = it.next();
 

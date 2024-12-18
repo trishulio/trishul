@@ -28,7 +28,6 @@ import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
 import com.amazonaws.services.identitymanagement.model.Policy;
 import com.amazonaws.services.identitymanagement.model.PolicyVersion;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
-import io.trishul.iaas.mapper.IaasEntityMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +39,6 @@ public class AwsIamPolicyClientTest {
 
     private AmazonIdentityManagement mAwsIamClient;
     private AwsArnMapper mAwsMapper;
-    private IaasEntityMapper<Policy, IaasPolicy> mapper;
 
     @BeforeEach
     public void init() {

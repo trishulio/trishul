@@ -40,14 +40,13 @@ public class PostgresJdbcDialect implements JdbcDialect {
     @Override
     public boolean userExists(Connection conn, String username) throws SQLException {
         String sql = this.pgSql.userExist();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setObject(1, username);
-
-        ResultSet rs = ps.executeQuery();
-        boolean userExists = rs.next();
-
-        rs.close();
-        ps.close();
+        boolean userExists;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                userExists = rs.next();
+            }
+        }
 
         return userExists;
     }
@@ -56,14 +55,13 @@ public class PostgresJdbcDialect implements JdbcDialect {
     public boolean schemaExists(Connection conn, String schemaName) throws SQLException {
         String sql = this.pgSql.schemaExists();
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setObject(1, schemaName);
-
-        ResultSet rs = ps.executeQuery();
-        boolean exists = rs.next();
-
-        rs.close();
-        ps.close();
+        boolean exists;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, schemaName);
+            try (ResultSet rs = ps.executeQuery()) {
+                exists = rs.next();
+            }
+        }
 
         return exists;
     }
@@ -71,13 +69,13 @@ public class PostgresJdbcDialect implements JdbcDialect {
     @Override
     public void dropSchema(Connection conn, String schemaName) throws SQLException {
         String sql = this.pgSql.dropSchema(schemaName);
-        int count = update(conn, sql);
+        update(conn, sql);
     }
 
     @Override
     public void dropUser(Connection conn, String username) throws SQLException {
         String sql = this.pgSql.dropUser(username);
-        int count = update(conn, sql);
+        update(conn, sql);
     }
 
     @Override
@@ -94,10 +92,10 @@ public class PostgresJdbcDialect implements JdbcDialect {
     }
 
     private int update(Connection conn, String sql) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement(sql);
-        int updateCount = ps.executeUpdate();
-
-        ps.close();
+        int updateCount;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            updateCount = ps.executeUpdate();
+        }
 
         return updateCount;
     }

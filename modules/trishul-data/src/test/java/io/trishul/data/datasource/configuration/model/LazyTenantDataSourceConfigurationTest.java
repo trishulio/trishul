@@ -19,7 +19,8 @@ public class LazyTenantDataSourceConfigurationTest {
 
     @BeforeEach
     public void init() throws URISyntaxException {
-        mSecretsMgr = mock(SecretsManager.class);
+        interface StringSecretsManager extends SecretsManager<String, String> {}
+        mSecretsMgr = mock(StringSecretsManager.class);
 
         config =
                 new LazyTenantDataSourceConfiguration(

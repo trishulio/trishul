@@ -28,7 +28,7 @@ public class TaxRate extends BaseEntity {
         return this.value;
     }
 
-    public void setValue(BigDecimal value) {
+    public final void setValue(BigDecimal value) {
         this.value = value;
     }
 

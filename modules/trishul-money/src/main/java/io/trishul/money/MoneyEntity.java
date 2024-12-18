@@ -32,7 +32,7 @@ public class MoneyEntity extends BaseEntity {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public final void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -40,7 +40,7 @@ public class MoneyEntity extends BaseEntity {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public final void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

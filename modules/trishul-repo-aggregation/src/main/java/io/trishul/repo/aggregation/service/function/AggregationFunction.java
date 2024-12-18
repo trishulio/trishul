@@ -14,8 +14,7 @@ import java.util.Arrays;
 
 /***
  * TODO: This is a handy approach but might not be a scalable solution.
- * Bottleneck occurs when aggregations are decorated or are on multiple
- * fields.
+ * Bottleneck occurs when aggregations are decorated or are on multiple fields.
  *
  * How aggregations are used will become more clear when their usage increases.
  * For now, these enums are used temporarily.

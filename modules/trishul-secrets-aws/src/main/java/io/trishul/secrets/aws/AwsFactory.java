@@ -10,7 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsFactory {
-    private static final Logger logger = LoggerFactory.getLogger(AwsFactory.class);
+    @SuppressWarnings("unused")
+    private static final Logger log = LoggerFactory.getLogger(AwsFactory.class);
 
     public AWSSecretsManager secretsMgrClient(
             String region, String url, String accessKeyId, String accessSecretKey) {

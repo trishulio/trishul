@@ -15,7 +15,7 @@ public class TenantIaasVfsDeleteResult extends BaseModel {
         return objectStore;
     }
 
-    public void setObjectStore(long objectStore) {
+    public final void setObjectStore(long objectStore) {
         this.objectStore = objectStore;
     }
 
@@ -23,7 +23,7 @@ public class TenantIaasVfsDeleteResult extends BaseModel {
         return policy;
     }
 
-    public void setPolicy(long policy) {
+    public final void setPolicy(long policy) {
         this.policy = policy;
     }
 }

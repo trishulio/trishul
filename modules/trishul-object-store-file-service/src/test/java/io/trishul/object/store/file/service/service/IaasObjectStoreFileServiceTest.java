@@ -194,7 +194,7 @@ public class IaasObjectStoreFileServiceTest {
         IaasObjectStoreFileAccessor accessor =
                 new IaasObjectStoreFileAccessor() {
                     @Override
-                    public void setObjectStoreFile(IaasObjectStoreFile attachment) {}
+                    public final void setObjectStoreFile(IaasObjectStoreFile attachment) {}
 
                     @Override
                     public IaasObjectStoreFile getObjectStoreFile() {

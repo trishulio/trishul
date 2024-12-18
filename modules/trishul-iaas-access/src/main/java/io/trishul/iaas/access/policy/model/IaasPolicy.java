@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class IaasPolicy extends BaseEntity
         implements UpdateIaasPolicy, CrudEntity<String>, Audited {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasPolicy.class);
 
     private String name;
@@ -51,7 +52,7 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setName(id);
     }
 
@@ -61,23 +62,27 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getIaasId() {
         return iaasId;
     }
 
-    public void setIaasId(String iaasId) {
+    @Override
+    public final void setIaasId(String iaasId) {
         this.iaasId = iaasId;
     }
 
+    @Override
     public String getIaasResourceName() {
         return iaasResourceName;
     }
 
-    public void setIaasResourceName(String iaasResourceName) {
+    @Override
+    public final void setIaasResourceName(String iaasResourceName) {
         this.iaasResourceName = iaasResourceName;
     }
 
@@ -87,7 +92,7 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setDocument(String document) {
+    public final void setDocument(String document) {
         this.document = document;
     }
 
@@ -97,7 +102,7 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setDescription(String description) {
+    public final void setDescription(String description) {
         this.description = description;
     }
 
@@ -107,7 +112,7 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -117,7 +122,7 @@ public class IaasPolicy extends BaseEntity
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

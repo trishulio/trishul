@@ -40,7 +40,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setEmail(id);
     }
 
@@ -50,7 +50,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setUserName(String userName) {
+    public final void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -60,7 +60,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 
@@ -70,7 +70,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setPhoneNumber(String phoneNumber) {
+    public final void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -80,7 +80,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -90,7 +90,7 @@ public class IaasUser extends BaseEntity implements CrudEntity<String>, UpdateIa
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

@@ -19,6 +19,7 @@ import io.trishul.crud.service.UpdateService;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.test.types.LongIdentifiedList;
 import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.UpdateUser;
 import io.trishul.user.model.User;
@@ -107,7 +108,7 @@ public class UserServiceTest {
     @Test
     public void testGetByIds_CallsRepoService() {
         ArgumentCaptor<List<? extends Identified<Long>>> captor =
-                ArgumentCaptor.forClass(List.class);
+                ArgumentCaptor.forClass(LongIdentifiedList.class);
 
         doReturn(List.of(new User(1L))).when(mRepoService).getByIds(captor.capture());
 
@@ -124,7 +125,7 @@ public class UserServiceTest {
                 List.of(
                         new UserAccessor() {
                             @Override
-                            public void setUser(User User) {}
+                            public final void setUser(User User) {}
 
                             @Override
                             public User getUser() {

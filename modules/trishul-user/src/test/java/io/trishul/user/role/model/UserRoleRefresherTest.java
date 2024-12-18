@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +18,17 @@ public class UserRoleRefresherTest {
 
     @BeforeEach
     public void init() {
-        refresher = mock(AccessorRefresher.class);
+        class UserRoleAccessorRefresher
+                extends AccessorRefresher<Long, UserRoleAccessor, UserRole> {
+            public UserRoleAccessorRefresher(
+                    Class<UserRole> clazz,
+                    Function<UserRoleAccessor, UserRole> getter,
+                    BiConsumer<UserRoleAccessor, UserRole> setter,
+                    Function<Iterable<Long>, List<UserRole>> entityRetriever) {
+                super(clazz, getter, setter, entityRetriever);
+            }
+        }
+        refresher = mock(UserRoleAccessorRefresher.class);
         userRoleRefresher = new UserRoleRefresher(refresher);
     }
 

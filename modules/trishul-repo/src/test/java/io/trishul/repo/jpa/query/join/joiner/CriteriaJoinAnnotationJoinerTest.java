@@ -37,6 +37,7 @@ public class CriteriaJoinAnnotationJoinerTest {
         @Embedded private Child embedded;
         @JoinColumn private Child joinColumn;
 
+        @SuppressWarnings("unused")
         private Child get;
     }
 

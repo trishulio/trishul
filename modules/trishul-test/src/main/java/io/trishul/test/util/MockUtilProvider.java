@@ -15,7 +15,7 @@ public class MockUtilProvider implements UtilityProvider {
     }
 
     @Override
-    public void setValidator(Validator validator) {}
+    public final void setValidator(Validator validator) {}
 
     @Override
     public Validator getValidator() {

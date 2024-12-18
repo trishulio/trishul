@@ -17,6 +17,7 @@ import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.UpdateService;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.test.types.LongIdentifiedList;
 import io.trishul.user.role.model.BaseUserRole;
 import io.trishul.user.role.model.UpdateUserRole;
 import io.trishul.user.role.model.UserRole;
@@ -42,9 +43,7 @@ public class UserRoleServiceTest {
     public void init() {
         interface UserRoleUpdateService
                 extends UpdateService<Long, UserRole, BaseUserRole, UpdateUserRole> {}
-        ;
         interface UserRoleRepoService extends RepoService<Long, UserRole, UserRoleAccessor> {}
-        ;
         this.mUpdateService = mock(UserRoleUpdateService.class);
         this.mRepoService = mock(UserRoleRepoService.class);
         doAnswer(inv -> inv.getArgument(0)).when(this.mRepoService).saveAll(anyList());
@@ -95,10 +94,8 @@ public class UserRoleServiceTest {
 
     @Test
     public void testGetByIds_CallsRepoService() {
-        interface IdentifiedList extends List<Identified<Long>> {}
-        ;
         ArgumentCaptor<List<? extends Identified<Long>>> captor =
-                ArgumentCaptor.forClass(IdentifiedList.class);
+                ArgumentCaptor.forClass(LongIdentifiedList.class);
 
         doReturn(List.of(new UserRole(1L))).when(mRepoService).getByIds(captor.capture());
 
@@ -109,7 +106,6 @@ public class UserRoleServiceTest {
     @Test
     public void testGetByAccessorIds_CallsRepoService() {
         interface UserRoleAccessorToUserRoleFunction extends Function<UserRoleAccessor, UserRole> {}
-        ;
         ArgumentCaptor<Function<UserRoleAccessor, UserRole>> captor =
                 ArgumentCaptor.forClass(UserRoleAccessorToUserRoleFunction.class);
 
@@ -117,7 +113,7 @@ public class UserRoleServiceTest {
                 List.of(
                         new UserRoleAccessor() {
                             @Override
-                            public void setRole(UserRole userRole) {}
+                            public final void setRole(UserRole userRole) {}
 
                             @Override
                             public UserRole getRole() {

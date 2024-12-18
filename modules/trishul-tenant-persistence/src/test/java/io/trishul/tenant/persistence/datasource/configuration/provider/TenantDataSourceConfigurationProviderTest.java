@@ -40,7 +40,8 @@ public class TenantDataSourceConfigurationProviderTest {
                 new LazyTenantDataSourceConfiguration(
                         "00000000-0000-0000-0000-000000000000", mGlobalDsConfig, mSecretsMgr);
         mConfigMgr = new DataSourceConfigurationManager();
-        mSecretsMgr = mock(SecretsManager.class);
+        interface StringSecretsManager extends SecretsManager<String, String> {}
+        mSecretsMgr = mock(StringSecretsManager.class);
 
         dsProvider =
                 new TenantDataSourceConfigurationProvider(

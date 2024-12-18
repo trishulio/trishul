@@ -29,7 +29,7 @@ public class BulkIaasClientTest {
 
     @BeforeEach
     public void init() {
-        mIaasClient = mock(IaasClient.class);
+        mIaasClient = mock(DummyCrudEntityIaasClient.class);
 
         bulkClient = new BulkIaasClient<>(new BlockingAsyncExecutor(), mIaasClient);
     }

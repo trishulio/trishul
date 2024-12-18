@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<String>, Audited {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasRole.class);
 
     private String name;
@@ -53,7 +54,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setName(id);
     }
 
@@ -63,7 +64,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -73,7 +74,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setDescription(String description) {
+    public final void setDescription(String description) {
         this.description = description;
     }
 
@@ -83,7 +84,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setAssumePolicyDocument(String assumePolicyDocument) {
+    public final void setAssumePolicyDocument(String assumePolicyDocument) {
         this.assumePolicyDocument = assumePolicyDocument;
     }
 
@@ -93,7 +94,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setIaasResourceName(String iaasResourceName) {
+    public final void setIaasResourceName(String iaasResourceName) {
         this.iaasResourceName = iaasResourceName;
     }
 
@@ -103,7 +104,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setIaasId(String iaasId) {
+    public final void setIaasId(String iaasId) {
         this.iaasId = iaasId;
     }
 
@@ -113,7 +114,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setLastUsed(LocalDateTime lastUsed) {
+    public final void setLastUsed(LocalDateTime lastUsed) {
         this.lastUsed = lastUsed;
     }
 
@@ -123,7 +124,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -133,7 +134,7 @@ public class IaasRole extends BaseEntity implements UpdateIaasRole, CrudEntity<S
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

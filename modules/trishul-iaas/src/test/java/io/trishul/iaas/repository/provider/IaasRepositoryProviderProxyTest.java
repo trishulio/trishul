@@ -12,6 +12,7 @@ import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
+import io.trishul.test.types.LongSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,9 +29,9 @@ public class IaasRepositoryProviderProxyTest {
 
     @BeforeEach
     public void init() {
-        mProvider = mock(IaasRepositoryProvider.class);
+        mProvider = mock(DummyCrudEntityIaasRepositoryProvider.class);
 
-        mDelegate = mock(IaasRepository.class);
+        mDelegate = mock(DummyCrudEntityIaasRepository.class);
         doReturn(mDelegate).when(mProvider).getIaasRepository();
 
         proxy = new IaasRepositoryProviderProxy<>(mProvider);
@@ -40,8 +41,8 @@ public class IaasRepositoryProviderProxyTest {
     public void testGet_ReturnsValueFromDelegate() {
         doAnswer(
                         inv ->
-                                inv.getArgument(0, Set.class).stream()
-                                        .map(id -> new DummyCrudEntity((Long) id))
+                                inv.getArgument(0, LongSet.class).stream()
+                                        .map(id -> new DummyCrudEntity(id))
                                         .toList())
                 .when(mDelegate)
                 .get(anySet());

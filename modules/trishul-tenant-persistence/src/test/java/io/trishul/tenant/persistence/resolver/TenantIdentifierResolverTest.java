@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TenantIdentifierResolverTest {
-    private CurrentTenantIdentifierResolver resolver;
+    private CurrentTenantIdentifierResolver<String> resolver;
     private TenantIdProvider mTenantIdProvider;
 
     @BeforeEach

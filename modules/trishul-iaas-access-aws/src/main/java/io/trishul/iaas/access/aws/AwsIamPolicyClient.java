@@ -71,7 +71,7 @@ public class AwsIamPolicyClient
 
         try {
             DeletePolicyResult result = this.awsIamClient.deletePolicy(request);
-            // TODO: Log result
+            log.info(String.format("AWS Delete Policy result: ", result.toString()));
             success = true;
         } catch (NoSuchEntityException e) {
             log.error("Failed to policy with ARN: {}", policyArn);
@@ -128,6 +128,7 @@ public class AwsIamPolicyClient
                         .withSetAsDefault(true);
 
         CreatePolicyVersionResult result = awsIamClient.createPolicyVersion(request);
+        log.info(String.format("AWS Create Policy Version result: %s", result.toString()));
         // A policy can have max 5 versions. After that the existing versions need to be
         // deleted.
         // This implementation removes all existing versions and retains only 1 at each
@@ -178,6 +179,7 @@ public class AwsIamPolicyClient
                 new DeletePolicyVersionRequest().withPolicyArn(policyArn).withVersionId(versionId);
 
         DeletePolicyVersionResult result = awsIamClient.deletePolicyVersion(request);
+        log.info(String.format("AWS DeletePolicyVersionResult: %s", result.toString()));
     }
 
     protected String getDefaultDocument(String policyName) {

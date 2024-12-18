@@ -19,13 +19,10 @@ import com.amazonaws.services.identitymanagement.model.DeleteRoleRequest;
 import com.amazonaws.services.identitymanagement.model.GetRoleRequest;
 import com.amazonaws.services.identitymanagement.model.GetRoleResult;
 import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
-import com.amazonaws.services.identitymanagement.model.Policy;
 import com.amazonaws.services.identitymanagement.model.Role;
 import com.amazonaws.services.identitymanagement.model.UpdateAssumeRolePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.UpdateRoleRequest;
-import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
-import io.trishul.iaas.mapper.IaasEntityMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,13 +30,10 @@ public class AwsIamRoleClientTest {
     private AwsIamRoleClient client;
 
     private AmazonIdentityManagement mAwsIamClient;
-    private AwsArnMapper mAwsMapper;
-    private IaasEntityMapper<Policy, IaasPolicy> mapper;
 
     @BeforeEach
     public void init() {
         mAwsIamClient = mock(AmazonIdentityManagement.class);
-        mAwsMapper = mock(AwsArnMapper.class);
 
         client = new AwsIamRoleClient(mAwsIamClient, AwsIaasRoleMapper.INSTANCE);
     }

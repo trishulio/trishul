@@ -38,8 +38,16 @@ public class TenantIaasUserServiceTest {
 
     @BeforeEach
     public void init() {
-        mUserService = mock(IaasRepository.class);
-        mMembershipService = mock(IaasRepository.class);
+        interface UserRepository
+                extends IaasRepository<String, IaasUser, BaseIaasUser, UpdateIaasUser> {}
+        interface UserTenantMembershipRepository
+                extends IaasRepository<
+                        IaasUserTenantMembershipId,
+                        IaasUserTenantMembership,
+                        BaseIaasUserTenantMembership,
+                        UpdateIaasUserTenantMembership> {}
+        mUserService = mock(UserRepository.class);
+        mMembershipService = mock(UserTenantMembershipRepository.class);
         mTenantIdProvider = mock(TenantIdProvider.class);
 
         service =

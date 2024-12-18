@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class IaasObjectStore extends BaseEntity
         implements UpdateIaasObjectStore, CrudEntity<String>, Audited {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(IaasObjectStore.class);
 
     private String name;
@@ -31,7 +32,7 @@ public class IaasObjectStore extends BaseEntity
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setName(id);
     }
 
@@ -46,7 +47,7 @@ public class IaasObjectStore extends BaseEntity
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -56,7 +57,7 @@ public class IaasObjectStore extends BaseEntity
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -66,7 +67,7 @@ public class IaasObjectStore extends BaseEntity
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

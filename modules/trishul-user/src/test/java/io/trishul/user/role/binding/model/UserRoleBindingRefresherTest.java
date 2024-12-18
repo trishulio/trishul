@@ -19,7 +19,8 @@ public class UserRoleBindingRefresherTest {
 
     @BeforeEach
     public void init() {
-        mUserRoleRefresher = mock(Refresher.class);
+        interface UserRoleRefresher extends Refresher<UserRole, UserRoleAccessor> {}
+        mUserRoleRefresher = mock(UserRoleRefresher.class);
         userRoleBindingRefresher = new UserRoleBindingRefresher(mUserRoleRefresher);
     }
 

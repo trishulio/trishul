@@ -29,7 +29,7 @@ public class Dummy {
         return string;
     }
 
-    public void setString(String string) {
+    public final void setString(String string) {
         this.string = string;
     }
 
@@ -37,7 +37,7 @@ public class Dummy {
         return longg;
     }
 
-    public void setLongg(Long longg) {
+    public final void setLongg(Long longg) {
         this.longg = longg;
     }
 
@@ -45,7 +45,7 @@ public class Dummy {
         return doublee;
     }
 
-    public void setDoublee(Double doublee) {
+    public final void setDoublee(Double doublee) {
         this.doublee = doublee;
     }
 
@@ -53,7 +53,7 @@ public class Dummy {
         return integer;
     }
 
-    public void setInteger(Integer integer) {
+    public final void setInteger(Integer integer) {
         this.integer = integer;
     }
 
@@ -61,7 +61,7 @@ public class Dummy {
         return character;
     }
 
-    public void setCharacter(Character character) {
+    public final void setCharacter(Character character) {
         this.character = character;
     }
 
@@ -69,7 +69,7 @@ public class Dummy {
         return bool;
     }
 
-    public void setBool(Boolean bool) {
+    public final void setBool(Boolean bool) {
         this.bool = bool;
     }
 }

@@ -27,7 +27,7 @@ public class IaasObjectStoreAccessConfig extends BaseEntity implements CrudEntit
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setObjectStoreName(id);
     }
 
@@ -40,7 +40,7 @@ public class IaasObjectStoreAccessConfig extends BaseEntity implements CrudEntit
         return objectStoreName;
     }
 
-    public void setObjectStoreName(String objectStoreName) {
+    public final void setObjectStoreName(String objectStoreName) {
         this.objectStoreName = objectStoreName;
     }
 
@@ -48,7 +48,8 @@ public class IaasObjectStoreAccessConfig extends BaseEntity implements CrudEntit
         return publicAccessBlockConfig;
     }
 
-    public void setPublicAccessBlockConfig(PublicAccessBlockConfiguration publicAccessBlockConfig) {
+    public final void setPublicAccessBlockConfig(
+            PublicAccessBlockConfiguration publicAccessBlockConfig) {
         this.publicAccessBlockConfig = publicAccessBlockConfig;
     }
 

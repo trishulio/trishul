@@ -37,7 +37,7 @@ public class TaxAmountDto extends BaseDto {
         return pstAmount;
     }
 
-    public void setPstAmount(MoneyDto pstAmount) {
+    public final void setPstAmount(MoneyDto pstAmount) {
         this.pstAmount = pstAmount;
     }
 
@@ -45,7 +45,7 @@ public class TaxAmountDto extends BaseDto {
         return gstAmount;
     }
 
-    public void setGstAmount(MoneyDto gstAmount) {
+    public final void setGstAmount(MoneyDto gstAmount) {
         this.gstAmount = gstAmount;
     }
 
@@ -53,7 +53,7 @@ public class TaxAmountDto extends BaseDto {
         return hstAmount;
     }
 
-    public void setHstAmount(MoneyDto hstAmount) {
+    public final void setHstAmount(MoneyDto hstAmount) {
         this.hstAmount = hstAmount;
     }
 
@@ -61,7 +61,7 @@ public class TaxAmountDto extends BaseDto {
         return totalTaxAmount;
     }
 
-    public void setTotalTaxAmount(MoneyDto totalTaxAmount) {
+    public final void setTotalTaxAmount(MoneyDto totalTaxAmount) {
         this.totalTaxAmount = totalTaxAmount;
     }
 }

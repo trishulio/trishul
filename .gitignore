@@ -1,7 +1,6 @@
 charts/
 HELP.md
 target/
-.mvn
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -35,3 +34,4 @@ build/
 .vscode/
 
 *.env
+dependency-check-data/

@@ -82,7 +82,7 @@ public class TenantIaasIdpServiceTest {
 
     @Test
     public void testDelete_ReturnsDeleteResult() {
-        doAnswer(inv -> new Long(inv.getArgument(0, Set.class).size()))
+        doAnswer(inv -> (long) inv.getArgument(0, Set.class).size())
                 .when(mIdpTenantService)
                 .delete(anySet());
 

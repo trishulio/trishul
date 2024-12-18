@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @Mapper
 public abstract class CurrencyMapper {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(CurrencyMapper.class);
 
     public static final CurrencyMapper INSTANCE = Mappers.getMapper(CurrencyMapper.class);

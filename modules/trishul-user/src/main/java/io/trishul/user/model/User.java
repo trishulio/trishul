@@ -145,7 +145,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -155,7 +155,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public final void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
@@ -165,7 +165,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setFirstName(String firstName) {
+    public final void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -175,7 +175,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setLastName(String lastName) {
+    public final void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -185,7 +185,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 
@@ -205,7 +205,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setImageSrc(URI imageSrc) {
+    public final void setImageSrc(URI imageSrc) {
         if (imageSrc != null) {
             this.imageSrc = imageSrc.toString();
         } else {
@@ -219,7 +219,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setPhoneNumber(String phoneNumber) {
+    public final void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -229,7 +229,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setStatus(UserStatus status) {
+    public final void setStatus(UserStatus status) {
         this.status = status;
     }
 
@@ -238,7 +238,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 
@@ -248,12 +248,12 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setUserName(String userName) {
+    public final void setUserName(String userName) {
         this.userName = userName;
     }
 
     @Override
-    public void setRoles(List<UserRole> roles) {
+    public final void setRoles(List<UserRole> roles) {
         if (roles == null) {
             if (this.roleBindings != null) {
                 this.roleBindings.clear();
@@ -315,7 +315,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setSalutation(UserSalutation salutation) {
+    public final void setSalutation(UserSalutation salutation) {
         this.salutation = salutation;
     }
 
@@ -325,7 +325,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -335,7 +335,7 @@ public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Au
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

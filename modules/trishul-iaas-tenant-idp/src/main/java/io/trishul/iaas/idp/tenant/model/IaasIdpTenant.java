@@ -43,7 +43,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setName(id);
     }
 
@@ -53,7 +53,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -63,7 +63,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setDescription(String description) {
+    public final void setDescription(String description) {
         this.description = description;
     }
 
@@ -73,7 +73,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setIaasRole(IaasRole role) {
+    public final void setIaasRole(IaasRole role) {
         this.role = role;
     }
 
@@ -83,7 +83,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -93,7 +93,7 @@ public class IaasIdpTenant extends BaseModel
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 

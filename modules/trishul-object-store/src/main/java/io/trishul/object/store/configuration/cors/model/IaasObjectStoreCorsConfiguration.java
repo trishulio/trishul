@@ -22,7 +22,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity implements Crud
     }
 
     @Override
-    public void setId(String id) {
+    public final void setId(String id) {
         setBucketName(id);
     }
 
@@ -35,7 +35,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity implements Crud
         return bucketName;
     }
 
-    public void setBucketName(String bucketName) {
+    public final void setBucketName(String bucketName) {
         this.bucketName = bucketName;
     }
 
@@ -43,7 +43,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity implements Crud
         return bucketCrossOriginConfiguration;
     }
 
-    public void setBucketCrossOriginConfiguration(
+    public final void setBucketCrossOriginConfiguration(
             BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
         this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
     }

@@ -190,7 +190,7 @@ public class IaasObjectStoreServiceTest {
         IaasObjectStoreAccessor accessor =
                 new IaasObjectStoreAccessor() {
                     @Override
-                    public void setIaasObjectStore(IaasObjectStore attachment) {}
+                    public final void setIaasObjectStore(IaasObjectStore attachment) {}
 
                     @Override
                     public IaasObjectStore getIaasObjectStore() {
@@ -274,8 +274,8 @@ public class IaasObjectStoreServiceTest {
         doAnswer(
                         inv -> {
                             Iterator<String> it = inv.getArgument(0, Set.class).iterator();
-                            String id2 = it.next();
-                            String id1 = it.next();
+                            it.next();
+                            it.next();
 
                             return List.of(
                                     new IaasObjectStore(

@@ -27,7 +27,7 @@ public class TaxDto extends BaseDto {
         return gstRate;
     }
 
-    public void setGstRate(TaxRateDto gstRate) {
+    public final void setGstRate(TaxRateDto gstRate) {
         this.gstRate = gstRate;
     }
 
@@ -35,7 +35,7 @@ public class TaxDto extends BaseDto {
         return pstRate;
     }
 
-    public void setPstRate(TaxRateDto pstRate) {
+    public final void setPstRate(TaxRateDto pstRate) {
         this.pstRate = pstRate;
     }
 
@@ -43,7 +43,7 @@ public class TaxDto extends BaseDto {
         return hstRate;
     }
 
-    public void setHstRate(TaxRateDto hstRate) {
+    public final void setHstRate(TaxRateDto hstRate) {
         this.hstRate = hstRate;
     }
 }

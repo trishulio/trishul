@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/users/salutations")
 public class UserSalutationController extends BaseController {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(UserSalutationController.class);
 
     private final UserSalutationService userSalutationService;

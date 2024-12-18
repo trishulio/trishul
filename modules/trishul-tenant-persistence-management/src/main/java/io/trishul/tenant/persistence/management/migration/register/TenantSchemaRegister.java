@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TenantSchemaRegister implements TenantRegister {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(TenantSchemaRegister.class);
 
     private final DataSourceConfigurationProvider<UUID> configProvider;

@@ -20,7 +20,7 @@ public class TenantIaasVfsResources extends BaseModel {
         return objectStore;
     }
 
-    public void setObjectStore(IaasObjectStore objectStore) {
+    public final void setObjectStore(IaasObjectStore objectStore) {
         this.objectStore = objectStore;
     }
 
@@ -28,7 +28,7 @@ public class TenantIaasVfsResources extends BaseModel {
         return policy;
     }
 
-    public void setPolicy(IaasPolicy policy) {
+    public final void setPolicy(IaasPolicy policy) {
         this.policy = policy;
     }
 }

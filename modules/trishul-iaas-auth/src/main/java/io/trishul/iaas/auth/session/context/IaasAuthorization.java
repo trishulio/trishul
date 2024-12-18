@@ -43,7 +43,7 @@ public class IaasAuthorization extends BaseModel
     }
 
     @Override
-    public void setAccessKeyId(String accessKeyId) {
+    public final void setAccessKeyId(String accessKeyId) {
         this.accessKeyId = accessKeyId;
     }
 
@@ -53,7 +53,7 @@ public class IaasAuthorization extends BaseModel
     }
 
     @Override
-    public void setAccessSecretKey(String accessSecretKey) {
+    public final void setAccessSecretKey(String accessSecretKey) {
         this.accessSecretKey = accessSecretKey;
     }
 
@@ -63,7 +63,7 @@ public class IaasAuthorization extends BaseModel
     }
 
     @Override
-    public void setSessionToken(String sessionToken) {
+    public final void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
     }
 
@@ -73,7 +73,7 @@ public class IaasAuthorization extends BaseModel
     }
 
     @Override
-    public void setExpiration(LocalDateTime expiration) {
+    public final void setExpiration(LocalDateTime expiration) {
         this.expiration = expiration;
     }
 }

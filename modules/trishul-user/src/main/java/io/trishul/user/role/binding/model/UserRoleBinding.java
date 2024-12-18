@@ -91,7 +91,7 @@ public class UserRoleBinding extends BaseEntity
     }
 
     @Override
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -101,7 +101,7 @@ public class UserRoleBinding extends BaseEntity
     }
 
     @Override
-    public void setRole(UserRole userRole) {
+    public final void setRole(UserRole userRole) {
         this.role = userRole;
     }
 
@@ -111,7 +111,7 @@ public class UserRoleBinding extends BaseEntity
     }
 
     @Override
-    public void setUser(User user) {
+    public final void setUser(User user) {
         this.user = user;
     }
 
@@ -121,7 +121,7 @@ public class UserRoleBinding extends BaseEntity
     }
 
     @Override
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -131,7 +131,7 @@ public class UserRoleBinding extends BaseEntity
     }
 
     @Override
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -140,7 +140,7 @@ public class UserRoleBinding extends BaseEntity
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 }

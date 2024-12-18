@@ -16,7 +16,7 @@ public class ThreadLocalIaasAuthorizationCredentialsHolder
         return this.iaasAuthorizationCredentialsContainer.get();
     }
 
-    public void setIaasAuthorizationCredentials(
+    public final void setIaasAuthorizationCredentials(
             IaasAuthorizationCredentials iaasAuthorizationCredentials) {
         this.iaasAuthorizationCredentialsContainer.set(iaasAuthorizationCredentials);
     }

@@ -29,6 +29,7 @@ import org.springframework.data.jpa.domain.Specification;
 @Transactional
 public class UserService extends BaseService
         implements CrudService<Long, User, BaseUser, UpdateUser, UserAccessor> {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UpdateService<Long, User, BaseUser, UpdateUser> updateService;

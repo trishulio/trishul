@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-@SuppressWarnings("unchecked")
 public class QuantityUnitControllerTest {
     private QuantityUnitController quantityUnitController;
 

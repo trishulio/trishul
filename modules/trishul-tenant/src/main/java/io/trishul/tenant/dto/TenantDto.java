@@ -41,7 +41,7 @@ public class TenantDto extends BaseDto {
         return id;
     }
 
-    public void setId(UUID id) {
+    public final void setId(UUID id) {
         this.id = id;
     }
 
@@ -49,7 +49,7 @@ public class TenantDto extends BaseDto {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -57,7 +57,7 @@ public class TenantDto extends BaseDto {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public final void setUrl(URL url) {
         this.url = url;
     }
 
@@ -65,7 +65,7 @@ public class TenantDto extends BaseDto {
         return isReady;
     }
 
-    public void setIsReady(Boolean isReady) {
+    public final void setIsReady(Boolean isReady) {
         this.isReady = isReady;
     }
 
@@ -73,7 +73,7 @@ public class TenantDto extends BaseDto {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -81,7 +81,7 @@ public class TenantDto extends BaseDto {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

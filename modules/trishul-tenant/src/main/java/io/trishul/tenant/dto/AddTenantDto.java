@@ -22,7 +22,7 @@ public class AddTenantDto extends BaseDto {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -30,7 +30,7 @@ public class AddTenantDto extends BaseDto {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public final void setUrl(URL url) {
         this.url = url;
     }
 }

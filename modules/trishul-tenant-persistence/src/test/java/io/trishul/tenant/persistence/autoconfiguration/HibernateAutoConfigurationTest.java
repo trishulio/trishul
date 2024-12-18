@@ -32,9 +32,9 @@ public class HibernateAutoConfigurationTest {
 
     private DataSourceManager dataSourceManageMock;
 
-    private MultiTenantConnectionProvider multiTenantConnectionProviderMock;
+    private MultiTenantConnectionProvider<String> multiTenantConnectionProviderMock;
 
-    private CurrentTenantIdentifierResolver currentTenantIdentifierResolverMock;
+    private CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolverMock;
 
     private DataSource dataSourceMock;
 
@@ -56,7 +56,7 @@ public class HibernateAutoConfigurationTest {
 
     @Test
     public void testMultiTenantConnectionProvider_ReturnsInstanceOfTenantConnectionProvider() {
-        MultiTenantConnectionProvider multiTenantConnectionProvider =
+        MultiTenantConnectionProvider<String> multiTenantConnectionProvider =
                 hibernateAutoConfiguration.multiTenantConnectionProvider(null, null);
 
         assertTrue(multiTenantConnectionProvider instanceof TenantConnectionProviderPool);
@@ -64,7 +64,7 @@ public class HibernateAutoConfigurationTest {
 
     @Test
     public void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
-        CurrentTenantIdentifierResolver currentTenantIdentifierResolver =
+        CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver =
                 hibernateAutoConfiguration.currentTenantIdentifierResolver(null);
 
         assertTrue(currentTenantIdentifierResolver instanceof TenantIdentifierResolver);

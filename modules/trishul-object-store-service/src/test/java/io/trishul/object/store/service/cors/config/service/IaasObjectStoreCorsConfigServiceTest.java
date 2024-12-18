@@ -185,7 +185,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
         IaasObjectStoreCorsConfigurationAccessor accessor =
                 new IaasObjectStoreCorsConfigurationAccessor() {
                     @Override
-                    public void setIaasObjectStoreCorsConfiguration(
+                    public final void setIaasObjectStoreCorsConfiguration(
                             IaasObjectStoreCorsConfiguration attachment) {}
 
                     @Override

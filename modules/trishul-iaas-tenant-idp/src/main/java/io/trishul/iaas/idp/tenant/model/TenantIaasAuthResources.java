@@ -19,7 +19,7 @@ public class TenantIaasAuthResources extends BaseModel {
         return role;
     }
 
-    public void setRole(IaasRole role) {
+    public final void setRole(IaasRole role) {
         this.role = role;
     }
 }

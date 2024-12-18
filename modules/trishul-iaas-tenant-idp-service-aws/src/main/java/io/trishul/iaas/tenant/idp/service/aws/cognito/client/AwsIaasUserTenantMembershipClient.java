@@ -62,6 +62,7 @@ public class AwsIaasUserTenantMembershipClient
                         .withGroupName(addition.getTenantId())
                         .withUserPoolId(userPoolId);
         AdminAddUserToGroupResult result = this.idp.adminAddUserToGroup(request);
+        log.info(String.format("AdminAddUserToGroupResult result: %s", result.toString()));
 
         return (IaasUserTenantMembership) addition;
     }
@@ -86,6 +87,8 @@ public class AwsIaasUserTenantMembershipClient
                         .withUserPoolId(userPoolId);
         try {
             AdminRemoveUserFromGroupResult result = this.idp.adminRemoveUserFromGroup(request);
+            log.info(String.format("AdminRemoveUserFromGroupResult result: %s", result.toString()));
+
             success = true;
         } catch (ResourceNotFoundException e) {
             log.error("Failed to remove user: {} from group: {}", id.getUserId(), id.getTenantId());

@@ -26,6 +26,7 @@ import io.trishul.tenant.entity.TenantAccessor;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;
+import io.trishul.test.types.UuidIdentifiedList;
 import io.trishul.test.util.MockUtilProvider;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -140,7 +141,7 @@ public class TenantServiceTest {
     @Test
     public void testGetByIds_CallsRepoService() {
         ArgumentCaptor<List<? extends Identified<UUID>>> captor =
-                ArgumentCaptor.forClass(List.class);
+                ArgumentCaptor.forClass(UuidIdentifiedList.class);
 
         doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
                 .when(mRepoService)
@@ -164,7 +165,7 @@ public class TenantServiceTest {
                 List.of(
                         new TenantAccessor() {
                             @Override
-                            public void setTenant(Tenant tenant) {}
+                            public final void setTenant(Tenant tenant) {}
 
                             @Override
                             public Tenant getTenant() {

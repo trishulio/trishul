@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsFactory {
+    @SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(AwsFactory.class);
 
     public AmazonIdentityManagement iamClient(String iamAccessKeyId, String iamSecret) {

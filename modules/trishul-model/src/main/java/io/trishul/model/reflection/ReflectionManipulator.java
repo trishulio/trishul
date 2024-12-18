@@ -5,7 +5,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
 import io.trishul.base.types.lambda.CheckedFunction;
-import jakarta.annotation.Nonnull;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class ReflectionManipulator {
             return this.clazz;
         }
 
-        public void setClazz(Class<?> clazz) {
+        public final void setClazz(Class<?> clazz) {
             this.clazz = clazz;
         }
 
@@ -46,7 +46,7 @@ public class ReflectionManipulator {
             return this.exclusions;
         }
 
-        public void setExclusions(Set<String> exclusions) {
+        public final void setExclusions(Set<String> exclusions) {
             this.exclusions = exclusions;
         }
 

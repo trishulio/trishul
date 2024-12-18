@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(CollectionAccessorRefresher.class);
 
     private final Class<V> clazz;
@@ -35,7 +36,7 @@ public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
     }
 
     public void refreshAccessors(Collection<? extends A> accessors) {
-        if (accessors != null && accessors.size() > 0) {
+        if (accessors != null && !accessors.isEmpty()) {
             final Map<A, Set<I>> entityToCollectionEntitiesIds = new HashMap<>();
             final Set<I> allCollectionEntitiesIds = new HashSet<>();
 

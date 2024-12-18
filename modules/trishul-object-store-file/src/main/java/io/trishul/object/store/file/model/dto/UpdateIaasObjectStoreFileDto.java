@@ -25,7 +25,7 @@ public class UpdateIaasObjectStoreFileDto extends BaseDto {
         return this.fileKey;
     }
 
-    public void setFileKey(URI fileKey) {
+    public final void setFileKey(URI fileKey) {
         this.fileKey = fileKey;
     }
 
@@ -33,7 +33,7 @@ public class UpdateIaasObjectStoreFileDto extends BaseDto {
         return minValidUntil;
     }
 
-    public void setMinValidUntil(LocalDateTime minValidUntil) {
+    public final void setMinValidUntil(LocalDateTime minValidUntil) {
         this.minValidUntil = minValidUntil;
     }
 }

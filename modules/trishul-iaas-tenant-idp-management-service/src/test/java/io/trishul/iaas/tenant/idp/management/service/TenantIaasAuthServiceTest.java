@@ -41,9 +41,10 @@ public class TenantIaasAuthServiceTest {
         doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_NAME")
                 .when(mResourceBuilder)
                 .getRoleId(anyString());
+        interface RoleSet extends Set<IaasRole> {}
         doAnswer(
                         inv ->
-                                inv.getArgument(0, Set.class).stream()
+                                inv.getArgument(0, RoleSet.class).stream()
                                         .map(id -> new IaasRole(id.toString()))
                                         .toList())
                 .when(mRoleService)
@@ -100,7 +101,7 @@ public class TenantIaasAuthServiceTest {
         doAnswer(inv -> inv.getArgument(0, String.class))
                 .when(mResourceBuilder)
                 .getRoleId(anyString());
-        doAnswer(inv -> new Long(inv.getArgument(0, Set.class).size()))
+        doAnswer(inv -> (long) inv.getArgument(0, Set.class).size())
                 .when(mRoleService)
                 .delete(anySet());
 

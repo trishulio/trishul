@@ -28,7 +28,7 @@ public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, Upd
     }
 
     @Override
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, Upd
     }
 
     @Override
-    public void setValue(String value) {
+    public final void setValue(String value) {
         this.value = value;
     }
 
@@ -47,7 +47,7 @@ public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, Upd
         return this.version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 
@@ -57,7 +57,7 @@ public class DummyCrudEntity extends BaseEntity implements CrudEntity<Long>, Upd
     }
 
     @Override
-    public void setExcludedValue(String excludedValue) {
+    public final void setExcludedValue(String excludedValue) {
         this.excludedValue = excludedValue;
     }
 }

@@ -45,7 +45,7 @@ public class Tax extends BaseEntity {
         return gstRate;
     }
 
-    public void setGstRate(TaxRate gstRate) {
+    public final void setGstRate(TaxRate gstRate) {
         Validator.assertion(
                 !TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())),
                 IllegalArgumentException.class,
@@ -57,7 +57,7 @@ public class Tax extends BaseEntity {
         return pstRate;
     }
 
-    public void setPstRate(TaxRate pstRate) {
+    public final void setPstRate(TaxRate pstRate) {
         Validator.assertion(
                 !TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())),
                 IllegalArgumentException.class,
@@ -69,7 +69,7 @@ public class Tax extends BaseEntity {
         return hstRate;
     }
 
-    public void setHstRate(TaxRate hstRate) {
+    public final void setHstRate(TaxRate hstRate) {
         if (TaxRate.isSet(hstRate)) {
             Validator.assertion(
                     !TaxRate.isSet(getPstRate()),

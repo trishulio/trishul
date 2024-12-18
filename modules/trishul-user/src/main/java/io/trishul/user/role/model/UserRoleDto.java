@@ -37,7 +37,7 @@ public class UserRoleDto extends BaseDto {
         return id;
     }
 
-    public void setId(Long id) {
+    public final void setId(Long id) {
         this.id = id;
     }
 
@@ -45,7 +45,7 @@ public class UserRoleDto extends BaseDto {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -53,7 +53,7 @@ public class UserRoleDto extends BaseDto {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public final void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -61,7 +61,7 @@ public class UserRoleDto extends BaseDto {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public final void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
@@ -69,7 +69,7 @@ public class UserRoleDto extends BaseDto {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public final void setVersion(Integer version) {
         this.version = version;
     }
 }
