@@ -1,9 +1,10 @@
 package io.trishul.repo.jpa.query.clause.select.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
@@ -31,65 +32,53 @@ public class SelectClauseBuilderTest {
     @Test
     public void testSelect_PathProvider_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
         ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
 
         PathProvider mProvider = mock(PathProvider.class);
         doReturn(new String[] {"PATH_1", "PATH_2"}).when(mProvider).getPath();
 
         selector.select(mProvider);
 
+        verify(mAccumulator).add(captor.capture());
         assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
     }
 
     @Test
     public void testSelect_PathProvider_DoesNothign_WhenProviderIsNull() {
-        ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
-
         selector.select((PathProvider) null);
-
-        assertEquals(List.of(), captor.getAllValues());
+        verifyNoInteractions(mAccumulator);
     }
 
     @Test
     public void testSelect_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
         ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
 
         selector.select(new String[] {"PATH_1", "PATH_2"});
 
+        verify(mAccumulator).add(captor.capture());
         assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
     }
 
     @Test
     public void testSelect_StringArray_DoesNothing_WhenStringArrayIsNull() {
-        ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
-
         selector.select((String[]) null);
-
-        assertEquals(List.of(), captor.getAllValues());
+        verifyNoInteractions(mAccumulator);
     }
 
     @Test
     public void testSelect_CriteriaSpec_AddsTheSpec_WhenSpecIsNotNull() {
-        ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
+        ArgumentCaptor<CriteriaSpec<?>> captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
         CriteriaSpec<?> mSpec = mock(CriteriaSpec.class);
         selector.select(mSpec);
 
+        verify(mAccumulator).add(captor.capture());
         assertEquals(mSpec, captor.getValue());
     }
 
     @Test
     public void testSelect_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
-        ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
-
         selector.select((CriteriaSpec<?>) null);
-
-        assertEquals(List.of(), captor.getAllValues());
+        verifyNoInteractions(mAccumulator);
     }
 
     @Test

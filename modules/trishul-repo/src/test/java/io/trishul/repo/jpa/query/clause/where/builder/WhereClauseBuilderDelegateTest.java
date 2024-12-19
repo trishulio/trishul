@@ -1,10 +1,11 @@
 package io.trishul.repo.jpa.query.clause.where.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
@@ -36,7 +37,6 @@ public class WhereClauseBuilderDelegateTest {
     public void init() {
         mAccumulator = mock(PredicateSpecAccumulator.class);
         captor = ArgumentCaptor.forClass(CriteriaSpec.class);
-        doNothing().when(mAccumulator).add(captor.capture());
 
         builder = new WhereClauseBuilderDelegate(mAccumulator);
     }
@@ -46,6 +46,7 @@ public class WhereClauseBuilderDelegateTest {
         builder.isNull(new String[] {"layer-1"});
 
         CriteriaSpec<Boolean> expected = new IsNullSpec(new ColumnSpec<>(new String[] {"layer-1"}));
+        verify(mAccumulator).add(captor.capture());
         assertEquals(expected, captor.getValue());
 
         verify(mAccumulator).setIsNot(false);
@@ -57,6 +58,7 @@ public class WhereClauseBuilderDelegateTest {
 
         CriteriaSpec<Boolean> expected =
                 new InSpec<>(new ColumnSpec<>(new String[] {"layer-1"}), List.of("V1", "V2"));
+        verify(mAccumulator).add(captor.capture());
         assertEquals(expected, captor.getValue());
 
         verify(mAccumulator).setIsNot(false);
@@ -65,33 +67,31 @@ public class WhereClauseBuilderDelegateTest {
     @Test
     public void testIn_AddsNothingAndResetNotFlag_WhenCollectionIsNull() {
         builder.in(new String[] {"layer-1"}, null);
-
-        assertEquals(List.of(), captor.getAllValues());
-
         verify(mAccumulator).setIsNot(false);
+        verifyNoMoreInteractions(mAccumulator);
     }
 
     @Test
     public void testLike_AddsLikeSpecAndResetFlag_WhenCollectionIsNotNull() {
         builder.like(new String[] {"layer-1"}, Set.of("V1", "V2"));
 
+        verify(mAccumulator, times(2)).add(captor.capture());
+
         List<CriteriaSpec<Boolean>> expected =
                 List.of(
                         new LikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V1"),
                         new LikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V2"));
-
-        Assertions.assertThat(expected).hasSameElementsAs(captor.getAllValues());
+        Assertions.assertThat(captor.getAllValues()).containsExactlyInAnyOrderElementsOf(expected);
 
         verify(mAccumulator).setIsNot(false);
+        verifyNoMoreInteractions(mAccumulator);
     }
 
     @Test
     public void testLike_AddsNothingAndResetFlag_WhenCollectionIsNull() {
         builder.like(new String[] {"layer-1"}, null);
-
-        assertEquals(List.of(), captor.getAllValues());
-
         verify(mAccumulator).setIsNot(false);
+        verifyNoMoreInteractions(mAccumulator);
     }
 
     @Test
@@ -107,6 +107,7 @@ public class WhereClauseBuilderDelegateTest {
                         LocalDateTime.of(2000, 1, 1, 1, 1),
                         LocalDateTime.of(2000, 1, 1, 1, 1));
 
+        verify(mAccumulator).add(captor.capture());
         assertEquals(expected, captor.getValue());
 
         verify(mAccumulator).setIsNot(false);
@@ -115,10 +116,8 @@ public class WhereClauseBuilderDelegateTest {
     @Test
     public void testBetween_AddsNothingAndResetFlag_WhenStartAndEndAreNull() {
         builder.between(new String[] {"layer-1"}, null, null);
-
-        assertEquals(List.of(), captor.getAllValues());
-
         verify(mAccumulator).setIsNot(false);
+        verifyNoMoreInteractions(mAccumulator);
     }
 
     @Test
