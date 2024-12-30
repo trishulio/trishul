@@ -2,8 +2,8 @@ package io.trishul.quantity.unit.accessor;
 
 import javax.measure.Unit;
 
-public interface BaseQuantityUnitAccessor {
-    Unit<?> getBaseQuantityUnit();
+public interface BaseQuantityUnitAccessor<T extends BaseQuantityUnitAccessor<T>> {
+  Unit<?> getBaseQuantityUnit();
 
-    void setBaseQuantityUnit(Unit<?> baseQuantityUnit);
+  T setBaseQuantityUnit(Unit<?> baseQuantityUnit);
 }

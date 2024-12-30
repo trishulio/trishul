@@ -13,61 +13,64 @@ import jakarta.persistence.ManyToOne;
 @Entity(name = "qty_unit")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class UnitEntity extends BaseEntity {
-    public static final String FIELD_SYMBOL = "symbol";
-    public static final String FIELD_NAME = "name";
-    public static final String FIELD_BASE_UNIT_ENTITY = "baseUnitEntity";
+  public static final String FIELD_SYMBOL = "symbol";
+  public static final String FIELD_NAME = "name";
+  public static final String FIELD_BASE_UNIT_ENTITY = "baseUnitEntity";
 
-    @Id
-    @Column(name = "symbol", unique = true, updatable = false, length = 4)
-    private String symbol;
+  @Id
+  @Column(name = "symbol", unique = true, updatable = false, length = 4)
+  private String symbol;
 
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
+  @Column(name = "name", unique = true, nullable = false)
+  private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "base_unit_symbol", referencedColumnName = "symbol")
-    @JsonBackReference
-    private UnitEntity baseUnitEntity;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "base_unit_symbol", referencedColumnName = "symbol")
+  @JsonBackReference
+  private UnitEntity baseUnitEntity;
 
-    public UnitEntity() {
-        this(null, null, null);
-    }
+  public UnitEntity() {
+    this(null, null, null);
+  }
 
-    public UnitEntity(String symbol) {
-        this(symbol, null, null);
-    }
+  public UnitEntity(String symbol) {
+    this(symbol, null, null);
+  }
 
-    public UnitEntity(String symbol, String name) {
-        this(symbol, name, null);
-    }
+  public UnitEntity(String symbol, String name) {
+    this(symbol, name, null);
+  }
 
-    public UnitEntity(String symbol, String name, UnitEntity baseUnitEntity) {
-        setName(name);
-        setSymbol(symbol);
-        setBaseUnitEntity(baseUnitEntity);
-    }
+  public UnitEntity(String symbol, String name, UnitEntity baseUnitEntity) {
+    setName(name);
+    setSymbol(symbol);
+    setBaseUnitEntity(baseUnitEntity);
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public final void setName(String name) {
-        this.name = name;
-    }
+  public final UnitEntity setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public String getSymbol() {
-        return symbol;
-    }
+  public String getSymbol() {
+    return symbol;
+  }
 
-    public final void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+  public final UnitEntity setSymbol(String symbol) {
+    this.symbol = symbol;
+    return this;
+  }
 
-    public UnitEntity getBaseUnitEntity() {
-        return baseUnitEntity;
-    }
+  public UnitEntity getBaseUnitEntity() {
+    return baseUnitEntity;
+  }
 
-    public final void setBaseUnitEntity(UnitEntity baseUnitEntity) {
-        this.baseUnitEntity = baseUnitEntity;
-    }
+  public final UnitEntity setBaseUnitEntity(UnitEntity baseUnitEntity) {
+    this.baseUnitEntity = baseUnitEntity;
+    return this;
+  }
 }

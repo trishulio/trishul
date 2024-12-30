@@ -1,7 +1,6 @@
 package io.trishul.quantity.service.unit.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
-
 import io.trishul.quantity.service.unit.repository.QuantityUnitRepository;
 import io.trishul.quantity.unit.QuantityUnitMapper;
 import io.trishul.quantity.unit.UnitEntity;
@@ -15,33 +14,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class QuantityUnitServiceImpl implements QuantityUnitService {
-    private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
+  private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
 
-    private final QuantityUnitRepository quantityUnitRepository;
+  private final QuantityUnitRepository quantityUnitRepository;
 
-    public QuantityUnitServiceImpl(QuantityUnitRepository quantityUnitRepository) {
-        this.quantityUnitRepository = quantityUnitRepository;
-    }
+  public QuantityUnitServiceImpl(QuantityUnitRepository quantityUnitRepository) {
+    this.quantityUnitRepository = quantityUnitRepository;
+  }
 
-    @Override
-    public Page<UnitEntity> getUnits(
-            Set<String> symbols,
-            SortedSet<String> sort,
-            boolean orderAscending,
-            int page,
-            int size) {
-        Specification<UnitEntity> spec =
-                WhereClauseBuilder.builder().in(UnitEntity.FIELD_SYMBOL, symbols).build();
-        Page<UnitEntity> units =
-                quantityUnitRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
+  @Override
+  public Page<UnitEntity> getUnits(Set<String> symbols, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    Specification<UnitEntity> spec
+        = WhereClauseBuilder.builder().in(UnitEntity.FIELD_SYMBOL, symbols).build();
+    Page<UnitEntity> units
+        = quantityUnitRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
 
-        return units;
-    }
+    return units;
+  }
 
-    @Override
-    public Unit<?> get(String symbol) {
-        UnitEntity unit = quantityUnitRepository.findBySymbol(symbol).orElse(null);
+  @Override
+  public Unit<?> get(String symbol) {
+    UnitEntity unit = quantityUnitRepository.findBySymbol(symbol).orElse(null);
 
-        return quantityUnitMapper.fromEntity(unit);
-    }
+    return quantityUnitMapper.fromEntity(unit);
+  }
 }

@@ -3,7 +3,7 @@ package io.trishul.iaas.access.service.policy.service;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import io.trishul.crud.service.UpdateService;
+import io.trishul.crud.service.EntityMergerService;
 import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
@@ -19,117 +19,105 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Transactional
-public class IaasPolicyService extends BaseService
-        implements CrudService<
-                String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy, IaasPolicyAccessor> {
-    private static final Logger log = LoggerFactory.getLogger(IaasPolicyService.class);
+public class IaasPolicyService extends BaseService implements
+    CrudService<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>, IaasPolicyAccessor<?>> {
+  private static final Logger log = LoggerFactory.getLogger(IaasPolicyService.class);
 
-    private final IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo;
-    private final UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService;
+  private final IaasRepository<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasRepo;
+  private final EntityMergerService<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> entityMergerService;
 
-    public IaasPolicyService(
-            UpdateService<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> updateService,
-            IaasRepository<String, IaasPolicy, BaseIaasPolicy, UpdateIaasPolicy> iaasRepo) {
-        this.updateService = updateService;
-        this.iaasRepo = iaasRepo;
+  public IaasPolicyService(
+      EntityMergerService<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> entityMergerService,
+      IaasRepository<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasRepo) {
+    this.entityMergerService = entityMergerService;
+    this.iaasRepo = iaasRepo;
+  }
+
+  @Override
+  public boolean exists(Set<String> ids) {
+    return iaasRepo.exists(ids).values().stream().filter(b -> !b).findAny().orElseGet(() -> true);
+  }
+
+  @Override
+  public boolean exist(String id) {
+    return exists(Set.of(id));
+  }
+
+  @Override
+  public long delete(Set<String> ids) {
+    return this.iaasRepo.delete(ids);
+  }
+
+  @Override
+  public long delete(String id) {
+    return this.iaasRepo.delete(Set.of(id));
+  }
+
+  @Override
+  public IaasPolicy get(String id) {
+    IaasPolicy policy = null;
+
+    List<IaasPolicy> policies = this.iaasRepo.get(Set.of(id));
+    if (policies.size() == 1) {
+      policy = policies.get(0);
+    } else {
+      log.debug("Get policy: '{}' returned {}", policies);
     }
 
-    @Override
-    public boolean exists(Set<String> ids) {
-        return iaasRepo.exists(ids).values().stream()
-                .filter(b -> !b)
-                .findAny()
-                .orElseGet(() -> true);
+    return policy;
+  }
+
+  public List<IaasPolicy> getAll(Set<String> ids) {
+    return this.iaasRepo.get(ids);
+  }
+
+  @Override
+  public List<IaasPolicy> getByIds(Collection<? extends Identified<String>> idProviders) {
+    Set<String> ids = idProviders.stream().filter(Objects::nonNull)
+        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+
+    return this.iaasRepo.get(ids);
+  }
+
+  @Override
+  public List<IaasPolicy> getByAccessorIds(Collection<? extends IaasPolicyAccessor<?>> accessors) {
+    List<IaasPolicy> idProviders = accessors.stream().filter(Objects::nonNull)
+        .map(accessor -> accessor.getIaasPolicy()).filter(Objects::nonNull).toList();
+    return getByIds(idProviders);
+  }
+
+  @Override
+  public List<IaasPolicy> add(List<? extends BaseIaasPolicy<?>> additions) {
+    if (additions == null) {
+      return null;
     }
 
-    @Override
-    public boolean exist(String id) {
-        return exists(Set.of(id));
+    List<IaasPolicy> policies = this.entityMergerService.getAddEntities(additions);
+
+    return iaasRepo.add(policies);
+  }
+
+  @Override
+  public List<IaasPolicy> put(List<? extends UpdateIaasPolicy<?>> updates) {
+    if (updates == null) {
+      return null;
     }
 
-    @Override
-    public long delete(Set<String> ids) {
-        return this.iaasRepo.delete(ids);
+    List<IaasPolicy> updated = this.entityMergerService.getPutEntities(null, updates);
+
+    return iaasRepo.put(updated);
+  }
+
+  @Override
+  public List<IaasPolicy> patch(List<? extends UpdateIaasPolicy<?>> updates) {
+    if (updates == null) {
+      return null;
     }
 
-    @Override
-    public long delete(String id) {
-        return this.iaasRepo.delete(Set.of(id));
-    }
+    List<IaasPolicy> existing = this.getByIds(updates);
 
-    @Override
-    public IaasPolicy get(String id) {
-        IaasPolicy policy = null;
+    List<IaasPolicy> updated = this.entityMergerService.getPatchEntities(existing, updates);
 
-        List<IaasPolicy> policies = this.iaasRepo.get(Set.of(id));
-        if (policies.size() == 1) {
-            policy = policies.get(0);
-        } else {
-            log.debug("Get policy: '{}' returned {}", policies);
-        }
-
-        return policy;
-    }
-
-    public List<IaasPolicy> getAll(Set<String> ids) {
-        return this.iaasRepo.get(ids);
-    }
-
-    @Override
-    public List<IaasPolicy> getByIds(Collection<? extends Identified<String>> idProviders) {
-        Set<String> ids =
-                idProviders.stream()
-                        .filter(Objects::nonNull)
-                        .map(provider -> provider.getId())
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toSet());
-
-        return this.iaasRepo.get(ids);
-    }
-
-    @Override
-    public List<IaasPolicy> getByAccessorIds(Collection<? extends IaasPolicyAccessor> accessors) {
-        List<IaasPolicy> idProviders =
-                accessors.stream()
-                        .filter(Objects::nonNull)
-                        .map(accessor -> accessor.getIaasPolicy())
-                        .filter(Objects::nonNull)
-                        .toList();
-        return getByIds(idProviders);
-    }
-
-    @Override
-    public List<IaasPolicy> add(List<BaseIaasPolicy> additions) {
-        if (additions == null) {
-            return null;
-        }
-
-        List<IaasPolicy> policies = this.updateService.getAddEntities(additions);
-
-        return iaasRepo.add(policies);
-    }
-
-    @Override
-    public List<IaasPolicy> put(List<UpdateIaasPolicy> updates) {
-        if (updates == null) {
-            return null;
-        }
-
-        List<IaasPolicy> updated = this.updateService.getPutEntities(null, updates);
-
-        return iaasRepo.put(updated);
-    }
-
-    @Override
-    public List<IaasPolicy> patch(List<UpdateIaasPolicy> updates) {
-        if (updates == null) {
-            return null;
-        }
-
-        List<IaasPolicy> existing = this.getByIds(updates);
-
-        List<IaasPolicy> updated = this.updateService.getPatchEntities(existing, updates);
-
-        return iaasRepo.put(updated);
-    }
+    return iaasRepo.put(updated);
+  }
 }

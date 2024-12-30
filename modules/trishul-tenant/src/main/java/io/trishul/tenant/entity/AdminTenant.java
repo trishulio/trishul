@@ -1,45 +1,41 @@
 package io.trishul.tenant.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.net.URL;
 import java.util.UUID;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class AdminTenant extends Tenant {
-    public AdminTenant(UUID id, String name) {
-        super();
-        super.setId(id);
-        super.setName(name);
-        super.setIsReady(true);
-    }
-    // TODO: Decouple admin tenant from Tenant since admin tenant is immutable
+public class AdminTenant implements TenantData {
+  private final UUID id;
+  private final String name;
+  private final URL url;
+  private final Boolean isReady;
 
-    // @Override
-    // public final void setId(UUID id) {
-    // throwImmutableException();
-    // }
+  public AdminTenant(UUID id, String name, URL url) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.url = url;
+    this.isReady = true;
+  }
 
-    // @Override
-    // public final void setName(String name) {
-    // throwImmutableException();
-    // }
+  @Override
+  public UUID getId() {
+    return id;
+  }
 
-    // @Override
-    // public final void setUrl(URL url) {
-    // throwImmutableException();
-    // }
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    // @Override
-    // public final void setCreatedAt(LocalDateTime createdAt) {
-    // throwImmutableException();
-    // }
+  @Override
+  public URL getUrl() {
+    return url;
+  }
 
-    // @Override
-    // public final void setLastUpdated(LocalDateTime lastUpdated) {
-    // throwImmutableException();
-    // }
-
-    // private void throwImmutableException() {
-    // throw new UnsupportedOperationException("AdminTenant is immutable. Cannot be
-    // updated");
-    // }
+  @Override
+  public Boolean getIsReady() {
+    return isReady;
+  }
 }

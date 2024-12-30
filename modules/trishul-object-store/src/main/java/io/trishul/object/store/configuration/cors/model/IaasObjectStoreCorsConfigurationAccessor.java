@@ -1,8 +1,8 @@
 package io.trishul.object.store.configuration.cors.model;
 
-public interface IaasObjectStoreCorsConfigurationAccessor {
+public interface IaasObjectStoreCorsConfigurationAccessor<T extends IaasObjectStoreCorsConfigurationAccessor<T>> {
 
-    IaasObjectStoreCorsConfiguration getIaasObjectStoreCorsConfiguration();
+  IaasObjectStoreCorsConfiguration getIaasObjectStoreCorsConfiguration();
 
-    void setIaasObjectStoreCorsConfiguration(IaasObjectStoreCorsConfiguration file);
+  T setIaasObjectStoreCorsConfiguration(IaasObjectStoreCorsConfiguration file);
 }

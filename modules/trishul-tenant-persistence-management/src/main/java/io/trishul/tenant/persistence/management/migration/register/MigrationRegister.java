@@ -1,9 +1,10 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
 import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.entity.TenantData;
 
 public interface MigrationRegister {
-    void migrate(Tenant tenant);
+  void migrate(TenantData tenant);
 
-    boolean isMigrated(Tenant tenant);
+  boolean isMigrated(TenantData tenant);
 }

@@ -18,65 +18,53 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TenantIaasUserService {
-    private static final Logger log = LoggerFactory.getLogger(TenantIaasUserService.class);
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(TenantIaasUserService.class);
 
-    private final IaasRepository<String, IaasUser, BaseIaasUser, UpdateIaasUser> userService;
-    private final IaasRepository<
-                    IaasUserTenantMembershipId,
-                    IaasUserTenantMembership,
-                    BaseIaasUserTenantMembership,
-                    UpdateIaasUserTenantMembership>
-            membershipService;
+  private final IaasRepository<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> userService;
+  private final IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> membershipService;
 
-    private final TenantIaasUserMapper userMapper;
-    private final TenantIdProvider tenantIdProvider;
+  private final TenantIaasUserMapper userMapper;
+  private final TenantIdProvider tenantIdProvider;
 
-    public TenantIaasUserService(
-            IaasRepository<String, IaasUser, BaseIaasUser, UpdateIaasUser> userService,
-            IaasRepository<
-                            IaasUserTenantMembershipId,
-                            IaasUserTenantMembership,
-                            BaseIaasUserTenantMembership,
-                            UpdateIaasUserTenantMembership>
-                    membershipService,
-            TenantIaasUserMapper userMapper,
-            TenantIdProvider tenantIdProvider) {
-        this.userService = userService;
-        this.membershipService = membershipService;
-        this.userMapper = userMapper;
-        this.tenantIdProvider = tenantIdProvider;
-    }
+  public TenantIaasUserService(
+      IaasRepository<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> userService,
+      IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> membershipService,
+      TenantIaasUserMapper userMapper, TenantIdProvider tenantIdProvider) {
+    this.userService = userService;
+    this.membershipService = membershipService;
+    this.userMapper = userMapper;
+    this.tenantIdProvider = tenantIdProvider;
+  }
 
-    public List<IaasUserTenantMembership> put(List<User> users) {
-        String tenantId = this.tenantIdProvider.getTenantId().toString();
+  public List<IaasUserTenantMembership> put(List<User> users) {
+    String tenantId = this.tenantIdProvider.getTenantId().toString();
 
-        List<UpdateIaasUser> updates = userMapper.fromUsers(users);
+    @SuppressWarnings("unchecked")
+    List<? extends UpdateIaasUser<?>> updates = (List<? extends UpdateIaasUser<?>>) userMapper.fromUsers(users);
 
-        List<IaasUser> iaasUsers = this.userService.put(updates);
-        List<IaasUserTenantMembership> memberships =
-                iaasUsers.stream()
-                        .map(iaasUser -> new IaasUserTenantMembership(iaasUser, tenantId))
-                        .toList();
+    List<IaasUser> iaasUsers = this.userService.put(updates);
+    List<IaasUserTenantMembership> memberships = iaasUsers.stream()
+        .map(iaasUser -> new IaasUserTenantMembership(iaasUser, tenantId)).toList();
 
-        return this.membershipService.put(memberships);
-    }
+    return this.membershipService.put(memberships);
+  }
 
-    public long delete(List<User> users) {
-        String tenantId = this.tenantIdProvider.getTenantId().toString();
+  public long delete(List<User> users) {
+    String tenantId = this.tenantIdProvider.getTenantId().toString();
 
-        List<IaasUser> iaasUsers = userMapper.fromUsers(users);
-        Set<String> userIds = iaasUsers.stream().map(IaasUser::getId).collect(Collectors.toSet());
-        Set<IaasUserTenantMembershipId> membershipIds =
-                userIds.stream()
-                        .map(userId -> new IaasUserTenantMembershipId(userId, tenantId))
-                        .collect(Collectors.toSet());
+    List<IaasUser> iaasUsers = userMapper.fromUsers(users);
+    Set<String> userIds = iaasUsers.stream().map(IaasUser::getId).collect(Collectors.toSet());
+    Set<IaasUserTenantMembershipId> membershipIds
+        = userIds.stream().map(userId -> new IaasUserTenantMembershipId(userId, tenantId))
+            .collect(Collectors.toSet());
 
-        long membershipCount = this.membershipService.delete(membershipIds);
+    long membershipCount = this.membershipService.delete(membershipIds);
 
-        long userCount = this.userService.delete(userIds);
+    long userCount = this.userService.delete(userIds);
 
-        log.info("Deleted user memberships: {}; users: {}", membershipCount, userCount);
+    log.info("Deleted user memberships: {}; users: {}", membershipCount, userCount);
 
-        return userCount;
-    }
+    return userCount;
+  }
 }

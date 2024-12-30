@@ -27,57 +27,45 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MigrationAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(RandomGenerator.class)
-    public RandomGenerator randomGenerator() throws NoSuchAlgorithmException {
-        SecureRandom random = SecureRandom.getInstanceStrong();
-        return new RandomGeneratorImpl(random);
-    }
+  @Bean
+  @ConditionalOnMissingBean(RandomGenerator.class)
+  public RandomGenerator randomGenerator() throws NoSuchAlgorithmException {
+    SecureRandom random = SecureRandom.getInstanceStrong();
+    return new RandomGeneratorImpl(random);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(DataSourceQueryRunner.class)
-    public DataSourceQueryRunner dsQueryRunner(DataSourceManager dsManager) {
-        return new DataSourceQueryRunner(dsManager);
-    }
+  @Bean
+  @ConditionalOnMissingBean(DataSourceQueryRunner.class)
+  public DataSourceQueryRunner dsQueryRunner(DataSourceManager dsManager) {
+    return new DataSourceQueryRunner(dsManager);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(TenantRegister.class)
-    public TenantRegister tenantRegister(
-            DataSourceQueryRunner dsQueryRunner,
-            DataSourceConfigurationProvider<UUID> tenantDsConfigProvider,
-            DataSourceConfiguration adminDsConfig,
-            SecretsManager<String, String> secretMgr,
-            JdbcDialect dialect,
-            RandomGenerator randomGen) {
-        TenantUserRegister userReg =
-                new TenantUserRegister(
-                        dsQueryRunner,
-                        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider,
-                        adminDsConfig,
-                        secretMgr,
-                        dialect,
-                        randomGen);
-        TenantSchemaRegister schemaReg =
-                new TenantSchemaRegister(
-                        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider,
-                        dsQueryRunner,
-                        dialect);
+  @Bean
+  @ConditionalOnMissingBean(TenantRegister.class)
+  public TenantRegister tenantRegister(DataSourceQueryRunner dsQueryRunner,
+      DataSourceConfigurationProvider<UUID> tenantDsConfigProvider,
+      DataSourceConfiguration adminDsConfig, SecretsManager<String, String> secretMgr,
+      JdbcDialect dialect, RandomGenerator randomGen) {
+    TenantUserRegister userReg = new TenantUserRegister(dsQueryRunner,
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDsConfig, secretMgr,
+        dialect, randomGen);
+    TenantSchemaRegister schemaReg = new TenantSchemaRegister(
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, dsQueryRunner, dialect);
 
-        return new UnifiedTenantRegister(userReg, schemaReg);
-    }
+    return new UnifiedTenantRegister(userReg, schemaReg);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(MigrationManager.class)
-    public MigrationManager migrationMgr(
-            TenantRegister tenantRegister, MigrationRegister migrationReg) {
-        return new SequentialMigrationManager(tenantRegister, migrationReg);
-    }
+  @Bean
+  @ConditionalOnMissingBean(MigrationManager.class)
+  public MigrationManager migrationMgr(TenantRegister tenantRegister,
+      MigrationRegister migrationReg) {
+    return new SequentialMigrationManager(tenantRegister, migrationReg);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(MigrationRegister.class)
-    public MigrationRegister migrationReg(
-            TenantDataSourceManager dsMgr,
-            DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
-        return new FlywayTenantMigrationRegister(dsMgr, tenantDsConfigProvider);
-    }
+  @Bean
+  @ConditionalOnMissingBean(MigrationRegister.class)
+  public MigrationRegister migrationReg(TenantDataSourceManager dsMgr,
+      DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
+    return new FlywayTenantMigrationRegister(dsMgr, tenantDsConfigProvider);
+  }
 }

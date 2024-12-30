@@ -7,47 +7,44 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TenantIaasIdpTenantMapper {
-    public static final TenantIaasIdpTenantMapper INSTANCE = new TenantIaasIdpTenantMapper();
+  public static final TenantIaasIdpTenantMapper INSTANCE = new TenantIaasIdpTenantMapper();
 
-    protected TenantIaasIdpTenantMapper() {}
+  protected TenantIaasIdpTenantMapper() {}
 
-    public Set<String> toIaasTenantIds(Set<UUID> tenantIds) {
-        Set<String> iaasTenantIds = null;
-        if (tenantIds != null) {
-            iaasTenantIds = tenantIds.stream().map(UUID::toString).collect(Collectors.toSet());
-        }
-
-        return iaasTenantIds;
+  public Set<String> toIaasTenantIds(Set<UUID> tenantIds) {
+    Set<String> iaasTenantIds = null;
+    if (tenantIds != null) {
+      iaasTenantIds = tenantIds.stream().map(UUID::toString).collect(Collectors.toSet());
     }
 
-    @SuppressWarnings("unchecked")
-    public <Idp extends BaseIaasIdpTenant, T extends BaseTenant> List<Idp> fromTenants(
-            List<T> tenants) {
-        List<Idp> idpTenants = null;
+    return iaasTenantIds;
+  }
 
-        if (tenants != null) {
-            idpTenants = tenants.stream().map(tenant -> (Idp) fromTenant(tenant)).toList();
-        }
+  public List<? extends BaseIaasIdpTenant<?>> fromTenants(List<? extends BaseTenant<?>> tenants) {
+    List<? extends BaseIaasIdpTenant<?>> idpTenants = null;
 
-        return idpTenants;
+    if (tenants != null) {
+      idpTenants = tenants.stream().map(tenant -> (BaseIaasIdpTenant<?>) fromTenant(tenant)).toList();
     }
 
-    @SuppressWarnings("unchecked")
-    public <Idp extends BaseIaasIdpTenant, T extends BaseTenant> Idp fromTenant(T tenant) {
-        Idp idpTenant = null;
+    return idpTenants;
+  }
 
-        if (tenant != null) {
-            idpTenant = (Idp) new IaasIdpTenant();
+  public BaseIaasIdpTenant<?> fromTenant(BaseTenant<?> tenant) {
+    BaseIaasIdpTenant<?> idpTenant = null;
 
-            UUID id = tenant.getId();
-            if (id != null) {
-                idpTenant.setName(id.toString());
-            } else {
-                idpTenant.setName(null);
-            }
-            idpTenant.setIaasRole(null);
-        }
+    if (tenant != null) {
+      idpTenant = (BaseIaasIdpTenant<?>) new IaasIdpTenant();
 
-        return idpTenant;
+      UUID id = tenant.getId();
+      if (id != null) {
+        idpTenant.setName(id.toString());
+      } else {
+        idpTenant.setName(null);
+      }
+      idpTenant.setIaasRole(null);
     }
+
+    return idpTenant;
+  }
 }

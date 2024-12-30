@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 public interface DataSourceManager {
-    DataSource getAdminDataSource();
+  DataSource getAdminDataSource();
 
-    DataSource getDataSource(DataSourceConfiguration dataSourceConfig)
-            throws SQLException, IOException;
+  DataSource getDataSource(DataSourceConfiguration dataSourceConfig)
+      throws SQLException, IOException;
 }

@@ -1,14 +1,14 @@
 package io.trishul.iaas.user.model;
 
-public interface BaseIaasUserTenantMembership {
-    final String ATTR_USER = "user";
-    final String ATTR_TENANT_ID = "tenantId";
+public interface BaseIaasUserTenantMembership<T extends BaseIaasUserTenantMembership<T>> {
+  final String ATTR_USER = "user";
+  final String ATTR_TENANT_ID = "tenantId";
 
-    IaasUser getUser();
+  IaasUser getUser();
 
-    void setUser(IaasUser user);
+  T setUser(IaasUser user);
 
-    String getTenantId();
+  String getTenantId();
 
-    void setTenantId(String tenantId);
+  T setTenantId(String tenantId);
 }

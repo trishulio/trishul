@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface DummyCrudEntityRepository
-        extends JpaRepository<DummyCrudEntity, Long>,
-                JpaSpecificationExecutor<DummyCrudEntity>,
-                Refresher<DummyCrudEntity, DummyCrudEntityAccessor>,
-                ExtendedRepository<Long> {}
+    extends JpaRepository<DummyCrudEntity, Long>, JpaSpecificationExecutor<DummyCrudEntity>,
+    Refresher<DummyCrudEntity, DummyCrudEntityAccessor<?>>, ExtendedRepository<Long> {
+}

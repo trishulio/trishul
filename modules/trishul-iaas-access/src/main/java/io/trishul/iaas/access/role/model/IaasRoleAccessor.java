@@ -1,9 +1,9 @@
 package io.trishul.iaas.access.role.model;
 
-public interface IaasRoleAccessor {
-    final String ATTR_IAAS_ROLE = "iaasRole";
+public interface IaasRoleAccessor<T extends IaasRoleAccessor<T>> {
+  final String ATTR_IAAS_ROLE = "iaasRole";
 
-    IaasRole getIaasRole();
+  IaasRole getIaasRole();
 
-    void setIaasRole(IaasRole iaasRole);
+  T setIaasRole(IaasRole iaasRole);
 }

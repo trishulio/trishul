@@ -6,13 +6,13 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserStatusMapper {
-    UserStatusMapper INSTANCE = Mappers.getMapper(UserStatusMapper.class);
+  UserStatusMapper INSTANCE = Mappers.getMapper(UserStatusMapper.class);
 
-    @Mapping(target = UserStatus.ATTR_NAME, ignore = true)
-    @Mapping(target = UserStatus.ATTR_CREATED_AT, ignore = true)
-    @Mapping(target = UserStatus.ATTR_LAST_UPDATED, ignore = true)
-    @Mapping(target = UserStatus.ATTR_VERSION, ignore = true)
-    UserStatus fromDto(Long id);
+  @Mapping(target = UserStatus.ATTR_NAME, ignore = true)
+  @Mapping(target = UserStatus.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = UserStatus.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = UserStatus.ATTR_VERSION, ignore = true)
+  UserStatus fromDto(Long id);
 
-    UserStatusDto toDto(UserStatus status);
+  UserStatusDto toDto(UserStatus status);
 }

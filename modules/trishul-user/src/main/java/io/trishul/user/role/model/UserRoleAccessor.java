@@ -1,9 +1,9 @@
 package io.trishul.user.role.model;
 
-public interface UserRoleAccessor {
-    final String ATTR_ROLE_TYPE = "role";
+public interface UserRoleAccessor<T extends UserRoleAccessor<T>> {
+  final String ATTR_ROLE_TYPE = "role";
 
-    UserRole getRole();
+  UserRole getRole();
 
-    void setRole(UserRole role);
+  T setRole(UserRole role);
 }

@@ -5,30 +5,32 @@ import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.object.store.model.IaasObjectStore;
 
 public class TenantIaasVfsResources extends BaseModel {
-    private IaasObjectStore objectStore;
-    private IaasPolicy policy;
+  private IaasObjectStore objectStore;
+  private IaasPolicy policy;
 
-    public TenantIaasVfsResources() {}
+  public TenantIaasVfsResources() {}
 
-    public TenantIaasVfsResources(IaasObjectStore objectStore, IaasPolicy policy) {
-        this();
-        setObjectStore(objectStore);
-        setPolicy(policy);
-    }
+  public TenantIaasVfsResources(IaasObjectStore objectStore, IaasPolicy policy) {
+    this();
+    setObjectStore(objectStore);
+    setPolicy(policy);
+  }
 
-    public IaasObjectStore getObjectStore() {
-        return objectStore;
-    }
+  public IaasObjectStore getObjectStore() {
+    return objectStore;
+  }
 
-    public final void setObjectStore(IaasObjectStore objectStore) {
-        this.objectStore = objectStore;
-    }
+  public TenantIaasVfsResources setObjectStore(IaasObjectStore objectStore) {
+    this.objectStore = objectStore;
+    return this;
+  }
 
-    public IaasPolicy getPolicy() {
-        return policy;
-    }
+  public IaasPolicy getPolicy() {
+    return policy;
+  }
 
-    public final void setPolicy(IaasPolicy policy) {
-        this.policy = policy;
-    }
+  public TenantIaasVfsResources setPolicy(IaasPolicy policy) {
+    this.policy = policy;
+    return this;
+  }
 }

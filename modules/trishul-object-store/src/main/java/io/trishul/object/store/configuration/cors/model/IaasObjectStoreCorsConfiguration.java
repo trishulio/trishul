@@ -4,53 +4,57 @@ import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
 
-public class IaasObjectStoreCorsConfiguration extends BaseEntity implements CrudEntity<String> {
+public class IaasObjectStoreCorsConfiguration extends BaseEntity
+    implements CrudEntity<String, IaasObjectStoreCorsConfiguration> {
 
-    private String bucketName;
+  private String bucketName;
 
-    private BucketCrossOriginConfiguration bucketCrossOriginConfiguration;
+  private BucketCrossOriginConfiguration bucketCrossOriginConfiguration;
 
-    public IaasObjectStoreCorsConfiguration() {
-        super();
-    }
+  public IaasObjectStoreCorsConfiguration() {
+    super();
+  }
 
-    public IaasObjectStoreCorsConfiguration(
-            String bucketName, BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
-        this();
-        this.bucketName = bucketName;
-        this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
-    }
+  public IaasObjectStoreCorsConfiguration(String bucketName,
+      BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
+    this();
+    this.bucketName = bucketName;
+    this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
+  }
 
-    @Override
-    public final void setId(String id) {
-        setBucketName(id);
-    }
+  @Override
+  public final IaasObjectStoreCorsConfiguration setId(String id) {
+    setBucketName(id);
+    return this;
+  }
 
-    @Override
-    public String getId() {
-        return getBucketName();
-    }
+  @Override
+  public String getId() {
+    return getBucketName();
+  }
 
-    public String getBucketName() {
-        return bucketName;
-    }
+  public String getBucketName() {
+    return bucketName;
+  }
 
-    public final void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
+  public final IaasObjectStoreCorsConfiguration setBucketName(String bucketName) {
+    this.bucketName = bucketName;
+    return this;
+  }
 
-    public BucketCrossOriginConfiguration getBucketCrossOriginConfiguration() {
-        return bucketCrossOriginConfiguration;
-    }
+  public BucketCrossOriginConfiguration getBucketCrossOriginConfiguration() {
+    return bucketCrossOriginConfiguration;
+  }
 
-    public final void setBucketCrossOriginConfiguration(
-            BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
-        this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
-    }
+  public final IaasObjectStoreCorsConfiguration setBucketCrossOriginConfiguration(
+      BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
+    this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
+    return this;
+  }
 
-    @Override
-    public Integer getVersion() {
-        // Not implemented due to lack of use-case
-        return null;
-    }
+  @Override
+  public Integer getVersion() {
+    // Not implemented due to lack of use-case
+    return null;
+  }
 }

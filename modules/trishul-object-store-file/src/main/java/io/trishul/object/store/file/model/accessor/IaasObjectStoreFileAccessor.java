@@ -2,8 +2,8 @@ package io.trishul.object.store.file.model.accessor;
 
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 
-public interface IaasObjectStoreFileAccessor {
-    IaasObjectStoreFile getObjectStoreFile();
+public interface IaasObjectStoreFileAccessor<T extends IaasObjectStoreFileAccessor<T>> {
+  IaasObjectStoreFile getObjectStoreFile();
 
-    void setObjectStoreFile(IaasObjectStoreFile file);
+  T setObjectStoreFile(IaasObjectStoreFile file);
 }

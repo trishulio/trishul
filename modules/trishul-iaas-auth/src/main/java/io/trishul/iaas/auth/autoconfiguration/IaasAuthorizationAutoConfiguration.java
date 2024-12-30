@@ -10,21 +10,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IaasAuthorizationAutoConfiguration {
 
-    @Bean
-    public IaasAuthorizationCredentialsHolder ctxHolder() {
-        return new ThreadLocalIaasAuthorizationCredentialsHolder();
-    }
+  @Bean
+  public IaasAuthorizationCredentialsHolder ctxHolder() {
+    return new ThreadLocalIaasAuthorizationCredentialsHolder();
+  }
 
-    @Bean
-    public IaasAuthorizationCredentialsBuilder credentialsBuilder() {
-        return new IaasAuthorizationCredentialsBuilder();
-    }
+  @Bean
+  public IaasAuthorizationCredentialsBuilder credentialsBuilder() {
+    return new IaasAuthorizationCredentialsBuilder();
+  }
 
-    @Bean
-    public IaasAuthorizationCredentialsHolderFilter iaasAuthorizationCredentialsHolderFilter(
-            IaasAuthorizationCredentialsHolder ctxHolder,
-            IaasAuthorizationCredentialsBuilder credentialsBuilder) {
-        return new IaasAuthorizationCredentialsHolderFilter(
-                (ThreadLocalIaasAuthorizationCredentialsHolder) ctxHolder, credentialsBuilder);
-    }
+  @Bean
+  public IaasAuthorizationCredentialsHolderFilter iaasAuthorizationCredentialsHolderFilter(
+      IaasAuthorizationCredentialsHolder ctxHolder,
+      IaasAuthorizationCredentialsBuilder credentialsBuilder) {
+    return new IaasAuthorizationCredentialsHolderFilter(
+        (ThreadLocalIaasAuthorizationCredentialsHolder) ctxHolder, credentialsBuilder);
+  }
 }

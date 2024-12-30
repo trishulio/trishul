@@ -1,7 +1,7 @@
 package io.trishul.test.model;
 
-public interface DummyCrudEntityAccessor {
-    DummyCrudEntity getDummyCrudEntity();
+public interface DummyCrudEntityAccessor<T extends DummyCrudEntityAccessor<T>> {
+  DummyCrudEntity getDummyCrudEntity();
 
-    void setDummyCrudEntity(DummyCrudEntity entity);
+  T setDummyCrudEntity(DummyCrudEntity entity);
 }

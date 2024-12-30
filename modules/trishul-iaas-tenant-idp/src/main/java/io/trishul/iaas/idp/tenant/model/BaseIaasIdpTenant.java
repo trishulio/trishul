@@ -2,15 +2,15 @@ package io.trishul.iaas.idp.tenant.model;
 
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
 
-public interface BaseIaasIdpTenant extends IaasRoleAccessor {
-    final String ATTR_NAME = "name";
-    final String ATTR_DESCRIPTION = "description";
+public interface BaseIaasIdpTenant<T extends BaseIaasIdpTenant<T>> extends IaasRoleAccessor<T> {
+  final String ATTR_NAME = "name";
+  final String ATTR_DESCRIPTION = "description";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 
-    String getDescription();
+  String getDescription();
 
-    void setDescription(String description);
+  T setDescription(String description);
 }

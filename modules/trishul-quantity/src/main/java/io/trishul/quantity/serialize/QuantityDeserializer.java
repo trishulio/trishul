@@ -14,15 +14,15 @@ import javax.measure.Unit;
 import tec.uom.se.quantity.Quantities;
 
 public class QuantityDeserializer extends JsonDeserializer<Quantity<?>> {
-    @Override
-    public Quantity<?> deserialize(JsonParser p, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-        JsonNode node = p.getCodec().readTree(p);
+  @Override
+  public Quantity<?> deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    JsonNode node = p.getCodec().readTree(p);
 
-        Unit<?> unit =
-                QuantityUnitMapper.INSTANCE.fromSymbol(node.get(QuantityDto.ATTR_SYMBOL).asText());
-        Number value = new BigDecimal(node.get(QuantityDto.ATTR_VALUE).asText());
+    Unit<?> unit
+        = QuantityUnitMapper.INSTANCE.fromSymbol(node.get(QuantityDto.ATTR_SYMBOL).asText());
+    Number value = new BigDecimal(node.get(QuantityDto.ATTR_VALUE).asText());
 
-        return Quantities.getQuantity(value, unit);
-    }
+    return Quantities.getQuantity(value, unit);
+  }
 }

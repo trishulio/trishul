@@ -7,14 +7,14 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public class AverageSpec<T extends Number> extends BaseModel implements CriteriaSpec<Double> {
-    private final CriteriaSpec<T> spec;
+  private final CriteriaSpec<T> spec;
 
-    public AverageSpec(CriteriaSpec<T> spec) {
-        this.spec = spec;
-    }
+  public AverageSpec(CriteriaSpec<T> spec) {
+    this.spec = spec;
+  }
 
-    @Override
-    public Expression<Double> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return cb.avg(this.spec.getExpression(root, cq, cb));
-    }
+  @Override
+  public Expression<Double> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    return cb.avg(this.spec.getExpression(root, cq, cb));
+  }
 }

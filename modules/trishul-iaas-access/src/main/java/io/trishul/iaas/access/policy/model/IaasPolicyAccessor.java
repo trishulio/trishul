@@ -1,7 +1,7 @@
 package io.trishul.iaas.access.policy.model;
 
-public interface IaasPolicyAccessor {
-    IaasPolicy getIaasPolicy();
+public interface IaasPolicyAccessor<T extends IaasPolicyAccessor<T>> {
+  IaasPolicy getIaasPolicy();
 
-    void setIaasPolicy(IaasPolicy tenantPolicy);
+  T setIaasPolicy(IaasPolicy tenantPolicy);
 }

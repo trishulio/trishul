@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface AwsCognitoIdentityClient {
-    List<IdentityPoolShortDescription> getIdentityPools(int pageSize);
+  List<IdentityPoolShortDescription> getIdentityPools(int pageSize);
 
-    String getIdentityId(String identityPoolId, Map<String, String> logins);
+  String getIdentityId(String identityPoolId, Map<String, String> logins);
 
-    Credentials getCredentialsForIdentity(String identityId, Map<String, String> logins);
+  Credentials getCredentialsForIdentity(String identityId, Map<String, String> logins);
 }

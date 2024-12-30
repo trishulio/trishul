@@ -4,23 +4,23 @@ import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public interface BaseIaasObjectStoreFile {
-    final String ATTR_FILE_KEY = "fileKey";
-    final String ATTR_EXPIRATION = "expiration";
-    final String ATTR_FILE_URL = "fileUrl";
-    final String ATTR_MIN_VALID_UNTIL = "minValidUntil";
+public interface BaseIaasObjectStoreFile<T extends BaseIaasObjectStoreFile<T>> {
+  final String ATTR_FILE_KEY = "fileKey";
+  final String ATTR_EXPIRATION = "expiration";
+  final String ATTR_FILE_URL = "fileUrl";
+  final String ATTR_MIN_VALID_UNTIL = "minValidUntil";
 
-    URI getFileKey();
+  URI getFileKey();
 
-    void setFileKey(URI fileKey);
+  T setFileKey(URI fileKey);
 
-    LocalDateTime getExpiration();
+  LocalDateTime getExpiration();
 
-    void setExpiration(LocalDateTime expiration);
+  T setExpiration(LocalDateTime expiration);
 
-    URL getFileUrl();
+  URL getFileUrl();
 
-    void setFileUrl(URL fileUrl);
+  T setFileUrl(URL fileUrl);
 
-    void setMinValidUntil(LocalDateTime minValidUntil);
+  T setMinValidUntil(LocalDateTime minValidUntil);
 }

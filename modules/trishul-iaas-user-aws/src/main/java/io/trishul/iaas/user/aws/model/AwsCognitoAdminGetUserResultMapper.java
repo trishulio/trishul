@@ -13,34 +13,33 @@ import org.springframework.util.CollectionUtils;
 
 @Mapper(uses = {LocalDateTimeMapper.class})
 public interface AwsCognitoAdminGetUserResultMapper
-        extends IaasEntityMapper<AdminGetUserResult, IaasUser> {
-    final AwsCognitoAdminGetUserResultMapper INSTANCE =
-            Mappers.getMapper(AwsCognitoAdminGetUserResultMapper.class);
+    extends IaasEntityMapper<AdminGetUserResult, IaasUser> {
+  final AwsCognitoAdminGetUserResultMapper INSTANCE
+      = Mappers.getMapper(AwsCognitoAdminGetUserResultMapper.class);
 
-    @Override
-    default IaasUser fromIaasEntity(AdminGetUserResult result) {
-        IaasUser iaasUser = null;
+  @Override
+  default IaasUser fromIaasEntity(AdminGetUserResult result) {
+    IaasUser iaasUser = null;
 
-        if (result != null) {
-            iaasUser = new IaasUser();
-            iaasUser.setId(result.getUsername());
-            iaasUser.setCreatedAt(
-                    LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserCreateDate()));
-            iaasUser.setLastUpdated(
-                    LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserLastModifiedDate()));
+    if (result != null) {
+      iaasUser = new IaasUser();
+      iaasUser.setId(result.getUsername());
+      iaasUser.setCreatedAt(LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserCreateDate()));
+      iaasUser.setLastUpdated(
+          LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserLastModifiedDate()));
 
-            List<AttributeType> attributes = result.getUserAttributes();
-            if (!CollectionUtils.isEmpty(attributes)) {
-                for (AttributeType attr : attributes) {
-                    if (CognitoPrincipalContext.ATTRIBUTE_EMAIL.equalsIgnoreCase(attr.getName())) {
-                        iaasUser.setEmail(attr.getValue());
-                    }
-                }
-            }
-
-            iaasUser.setPhoneNumber(null);
+      List<AttributeType> attributes = result.getUserAttributes();
+      if (!CollectionUtils.isEmpty(attributes)) {
+        for (AttributeType attr : attributes) {
+          if (CognitoPrincipalContext.ATTRIBUTE_EMAIL.equalsIgnoreCase(attr.getName())) {
+            iaasUser.setEmail(attr.getValue());
+          }
         }
+      }
 
-        return iaasUser;
+      iaasUser.setPhoneNumber(null);
     }
+
+    return iaasUser;
+  }
 }

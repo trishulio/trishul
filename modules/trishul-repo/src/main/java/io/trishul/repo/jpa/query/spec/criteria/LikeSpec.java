@@ -7,19 +7,17 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public class LikeSpec extends BaseModel implements CriteriaSpec<Boolean> {
-    private final CriteriaSpec<String> spec;
-    private final String text;
+  private final CriteriaSpec<String> spec;
+  private final String text;
 
-    public LikeSpec(CriteriaSpec<String> spec, String text) {
-        this.spec = spec;
-        this.text = text;
-    }
+  public LikeSpec(CriteriaSpec<String> spec, String text) {
+    this.spec = spec;
+    this.text = text;
+  }
 
-    @Override
-    public Expression<Boolean> getExpression(
-            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return cb.like(
-                cb.lower(this.spec.getExpression(root, cq, cb)),
-                String.format("%%%s%%", text.toLowerCase()));
-    }
+  @Override
+  public Expression<Boolean> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    return cb.like(cb.lower(this.spec.getExpression(root, cq, cb)),
+        String.format("%%%s%%", text.toLowerCase()));
+  }
 }

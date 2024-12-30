@@ -8,24 +8,24 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public class SumSpec<T extends Number> extends BaseModel implements CriteriaSpec<T> {
-    private final CriteriaSpec<T> path;
+  private final CriteriaSpec<T> path;
 
-    public SumSpec(PathProvider provider) {
-        this(provider.getPath());
-    }
+  public SumSpec(PathProvider provider) {
+    this(provider.getPath());
+  }
 
-    public SumSpec(String[] paths) {
-        this(new ColumnSpec<>(paths));
-    }
+  public SumSpec(String[] paths) {
+    this(new ColumnSpec<>(paths));
+  }
 
-    public SumSpec(CriteriaSpec<T> path) {
-        this.path = path;
-    }
+  public SumSpec(CriteriaSpec<T> path) {
+    this.path = path;
+  }
 
-    @Override
-    public Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        Expression<T> x = this.path.getExpression(root, cq, cb);
+  @Override
+  public Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    Expression<T> x = this.path.getExpression(root, cq, cb);
 
-        return cb.sum(x);
-    }
+    return cb.sum(x);
+  }
 }

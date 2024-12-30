@@ -220,7 +220,7 @@
 // public void testUserRoleService_ReturnsInstanceOfUserRoleService() {
 // final UtilityProvider utilProvider = mock(UtilityProvider.class);
 // final UserRoleRepository userRoleRepository = mock(UserRoleRepository.class);
-// final Refresher<UserRole, UserRoleAccessor> userRoleRefresher =
+// final Refresher<UserRole, UserRoleAccessor<?>> userRoleRefresher =
 // mock(Refresher.class);
 
 // final UserRoleService service =
@@ -245,7 +245,7 @@
 // @Test
 // public void testUserService_ReturnsInstanceOfUserService() {
 // final UserRepository userRepositoryMock = mock(UserRepository.class);
-// final Refresher<User, UserAccessor> userRefresher = mock(Refresher.class);
+// final Refresher<User, UserAccessor<?>> userRefresher = mock(Refresher.class);
 // final UtilityProvider mUtilProvider = mock(UtilityProvider.class);
 // final TenantIaasUserService idpUserService =
 // mock(TenantIaasUserService.class);

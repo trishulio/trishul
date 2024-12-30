@@ -7,22 +7,22 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TenantIaasIdpResourcesMapper {
-    public static final TenantIaasIdpResourcesMapper INSTANCE = new TenantIaasIdpResourcesMapper();
+  public static final TenantIaasIdpResourcesMapper INSTANCE = new TenantIaasIdpResourcesMapper();
 
-    protected TenantIaasIdpResourcesMapper() {}
+  protected TenantIaasIdpResourcesMapper() {}
 
-    public List<TenantIaasIdpResources> fromComponents(List<IaasIdpTenant> idpTenants) {
-        List<TenantIaasIdpResources> resources = new ArrayList<>();
+  public List<TenantIaasIdpResources> fromComponents(List<IaasIdpTenant> idpTenants) {
+    List<TenantIaasIdpResources> resources = new ArrayList<>();
 
-        Iterator<IaasIdpTenant> idpTenantsIterator = idpTenants.iterator();
-        while (idpTenantsIterator.hasNext()) {
-            resources.add(fromComponents(idpTenantsIterator.next()));
-        }
-
-        return resources;
+    Iterator<IaasIdpTenant> idpTenantsIterator = idpTenants.iterator();
+    while (idpTenantsIterator.hasNext()) {
+      resources.add(fromComponents(idpTenantsIterator.next()));
     }
 
-    public TenantIaasIdpResources fromComponents(IaasIdpTenant idpTenant) {
-        return new TenantIaasIdpResources(idpTenant);
-    }
+    return resources;
+  }
+
+  public TenantIaasIdpResources fromComponents(IaasIdpTenant idpTenant) {
+    return new TenantIaasIdpResources(idpTenant);
+  }
 }

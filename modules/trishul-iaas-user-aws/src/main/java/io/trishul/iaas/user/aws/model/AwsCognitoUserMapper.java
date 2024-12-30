@@ -13,31 +13,31 @@ import org.springframework.util.CollectionUtils;
 
 @Mapper
 public interface AwsCognitoUserMapper extends IaasEntityMapper<UserType, IaasUser> {
-    final AwsCognitoUserMapper INSTANCE = Mappers.getMapper(AwsCognitoUserMapper.class);
+  final AwsCognitoUserMapper INSTANCE = Mappers.getMapper(AwsCognitoUserMapper.class);
 
-    @Override
-    default IaasUser fromIaasEntity(UserType userType) {
-        IaasUser iaasUser = null;
+  @Override
+  default IaasUser fromIaasEntity(UserType userType) {
+    IaasUser iaasUser = null;
 
-        if (userType != null) {
-            iaasUser = new IaasUser();
-            iaasUser.setId(userType.getUsername());
-            iaasUser.setCreatedAt(
-                    LocalDateTimeMapper.INSTANCE.fromUtilDate(userType.getUserCreateDate()));
-            iaasUser.setLastUpdated(
-                    LocalDateTimeMapper.INSTANCE.fromUtilDate(userType.getUserLastModifiedDate()));
-            List<AttributeType> attributes = userType.getAttributes();
-            if (!CollectionUtils.isEmpty(attributes)) {
-                for (AttributeType attr : attributes) {
-                    if (CognitoPrincipalContext.ATTRIBUTE_EMAIL.equalsIgnoreCase(attr.getName())) {
-                        iaasUser.setEmail(attr.getValue());
-                    }
-                }
-            }
-
-            iaasUser.setPhoneNumber(null);
+    if (userType != null) {
+      iaasUser = new IaasUser();
+      iaasUser.setId(userType.getUsername());
+      iaasUser
+          .setCreatedAt(LocalDateTimeMapper.INSTANCE.fromUtilDate(userType.getUserCreateDate()));
+      iaasUser.setLastUpdated(
+          LocalDateTimeMapper.INSTANCE.fromUtilDate(userType.getUserLastModifiedDate()));
+      List<AttributeType> attributes = userType.getAttributes();
+      if (!CollectionUtils.isEmpty(attributes)) {
+        for (AttributeType attr : attributes) {
+          if (CognitoPrincipalContext.ATTRIBUTE_EMAIL.equalsIgnoreCase(attr.getName())) {
+            iaasUser.setEmail(attr.getValue());
+          }
         }
+      }
 
-        return iaasUser;
+      iaasUser.setPhoneNumber(null);
     }
+
+    return iaasUser;
+  }
 }

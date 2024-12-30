@@ -8,43 +8,42 @@ import jakarta.persistence.Id;
 
 @Entity(name = "currency")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class Currency extends BaseEntity implements UpdateCurrency {
-    public static final String FIELD_NUMERIC_CODE = "numericCode";
-    public static final String FIELD_CODE = "code";
+public class Currency extends BaseEntity implements UpdateCurrency<Currency> {
+  @Id
+  @Column(name = "numeric_code")
+  private Integer numericCode;
 
-    @Id
-    @Column(name = "numeric_code")
-    private Integer numericCode;
+  @Column(name = "code", nullable = false, length = 3)
+  private String code;
 
-    @Column(name = "code", nullable = false, length = 3)
-    private String code;
+  public Currency() {
+    this(null, null);
+  }
 
-    public Currency() {
-        this(null, null);
-    }
+  public Currency(Integer numericCode, String code) {
+    setNumericCode(numericCode);
+    setCode(code);
+  }
 
-    public Currency(Integer numericCode, String code) {
-        setNumericCode(numericCode);
-        setCode(code);
-    }
+  @Override
+  public Integer getNumericCode() {
+    return numericCode;
+  }
 
-    @Override
-    public Integer getNumericCode() {
-        return numericCode;
-    }
+  @Override
+  public Currency setNumericCode(Integer numericCode) {
+    this.numericCode = numericCode;
+    return this;
+  }
 
-    @Override
-    public final void setNumericCode(Integer numericCode) {
-        this.numericCode = numericCode;
-    }
+  @Override
+  public String getCode() {
+    return code;
+  }
 
-    @Override
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public final void setCode(String code) {
-        this.code = code;
-    }
+  @Override
+  public Currency setCode(String code) {
+    this.code = code;
+    return this;
+  }
 }

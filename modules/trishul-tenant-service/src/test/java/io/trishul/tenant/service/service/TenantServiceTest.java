@@ -1,9 +1,19 @@
 package io.trishul.tenant.service.service;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.UUID;
+import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
@@ -12,393 +22,300 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.jpa.domain.Specification;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.LockService;
-import io.trishul.crud.service.SimpleUpdateService;
-import io.trishul.crud.service.UpdateService;
+import io.trishul.crud.service.CrudEntityMergerService;
+import io.trishul.crud.service.EntityMergerService;
 import io.trishul.iaas.tenant.service.TenantIaasService;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantAccessor;
+import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;
-import io.trishul.test.types.UuidIdentifiedList;
 import io.trishul.test.util.MockUtilProvider;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.function.Function;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.jpa.domain.Specification;
 
 public class TenantServiceTest {
-    private TenantService service;
+  private TenantService service;
 
-    private Tenant mAdminTenant;
-    private RepoService<UUID, Tenant, TenantAccessor> mRepoService;
-    private TenantRepository mTenantRepo;
-    private MigrationManager mMigrationMgr;
-    private TenantIaasService mIaasService;
-    private LockService mLockService;
+  private TenantData mAdminTenant;
+  private RepoService<UUID, Tenant, TenantAccessor<?>> mRepoService;
+  private TenantRepository mTenantRepo;
+  private MigrationManager mMigrationMgr;
+  private TenantIaasService mIaasService;
+  private LockService mLockService;
 
-    @BeforeEach
-    public void init() {
-        mAdminTenant = mock(Tenant.class);
-        mTenantRepo = mock(TenantRepository.class);
+  @BeforeEach
+  public void init() {
+    mAdminTenant = mock(Tenant.class);
+    mTenantRepo = mock(TenantRepository.class);
 
-        mMigrationMgr = mock(MigrationManager.class);
-        mIaasService = mock(TenantIaasService.class);
+    mMigrationMgr = mock(MigrationManager.class);
+    mIaasService = mock(TenantIaasService.class);
 
-        mRepoService = mock(RepoService.class);
-        doAnswer(inv -> inv.getArgument(0)).when(mRepoService).saveAll(anyList());
+    mRepoService = mock(RepoService.class);
+    doAnswer(inv -> inv.getArgument(0)).when(mRepoService).saveAll(anyList());
 
-        mLockService = mock(LockService.class);
-        UpdateService<UUID, Tenant, BaseTenant, UpdateTenant> mUpdateService =
-                new SimpleUpdateService<>(
-                        new MockUtilProvider(),
-                        mLockService,
-                        BaseTenant.class,
-                        UpdateTenant.class,
-                        Tenant.class,
-                        Set.of("createdAt"));
+    mLockService = mock(LockService.class);
+    EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> mMergerService
+        = new CrudEntityMergerService<>(new MockUtilProvider(), mLockService, BaseTenant.class,
+            UpdateTenant.class, Tenant.class, Set.of("createdAt"));
 
-        this.service =
-                new TenantService(
-                        mAdminTenant,
-                        mRepoService,
-                        mUpdateService,
-                        mTenantRepo,
-                        mMigrationMgr,
-                        mIaasService);
+    this.service = new TenantService(mAdminTenant, mRepoService, mMergerService, mTenantRepo,
+        mMigrationMgr, mIaasService);
+  }
+
+  @Test
+  public void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec()
+      throws MalformedURLException {
+    @SuppressWarnings("unchecked")
+    final ArgumentCaptor<Specification<Tenant>> captor
+        = ArgumentCaptor.forClass(Specification.class);
+    final Page<Tenant> mPage = new PageImpl<>(
+        List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
+    doReturn(mPage).when(this.mRepoService).getAll(captor.capture(),
+        eq(new TreeSet<>(List.of("id"))), eq(true), eq(10), eq(20));
+
+    final Page<Tenant> page
+        = this.service.getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
+            Set.of("T1"), Set.of(new URL("http://localhost/")), true, new TreeSet<>(List.of("id")), // sort,
+            true, // orderAscending,
+            10, // page,
+            20 // size
+        );
+
+    final Page<Tenant> expected = new PageImpl<>(
+        List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
+    assertEquals(expected, page);
+
+    // TODO: Pending testing for the specification
+    captor.getValue();
+  }
+
+  @Test
+  public void testGetTenant_ReturnsTenantPojo_WhenRepoServiceReturnsOptionalWithEntity() {
+    doReturn(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")))
+        .when(this.mRepoService).get(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    final Tenant tenant = this.service.get(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    assertEquals(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")), tenant);
+  }
+
+  @Test
+  public void testGetByIds_CallsRepoService() {
+    ArgumentCaptor<List<? extends Identified<UUID>>> captor = ArgumentCaptor.forClass(List.class);
+
+    doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
+        .when(mRepoService).getByIds(captor.capture());
+
+    assertEquals(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))),
+        service.getByIds(List.of(() -> UUID.fromString("00000000-0000-0000-0000-000000000001"))));
+    assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+        captor.getValue().get(0).getId());
+  }
+
+  @Test
+  public void testGetByAccessorIds_CallsRepoService() {
+    ArgumentCaptor<Function<TenantAccessor<?>, Tenant>> captor
+        = ArgumentCaptor.forClass(Function.class);
+
+    class DummyTenantAccessor implements TenantAccessor<DummyTenantAccessor> {
+      @Override
+      public final DummyTenantAccessor setTenant(Tenant tenant) {
+        return this;
+      }
+
+      @Override
+      public Tenant getTenant() {
+        return new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+      }
     }
+    List<? extends TenantAccessor<?>> accessors = List.of(new DummyTenantAccessor());
 
-    @Test
-    public void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec()
-            throws MalformedURLException {
-        @SuppressWarnings("unchecked")
-        final ArgumentCaptor<Specification<Tenant>> captor =
-                ArgumentCaptor.forClass(Specification.class);
-        final Page<Tenant> mPage =
-                new PageImpl<>(
-                        List.of(
-                                new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000001"))));
-        doReturn(mPage)
-                .when(this.mRepoService)
-                .getAll(
-                        captor.capture(),
-                        eq(new TreeSet<>(List.of("id"))),
-                        eq(true),
-                        eq(10),
-                        eq(20));
+    doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
+        .when(mRepoService).getByAccessorIds(eq(accessors), captor.capture());
 
-        final Page<Tenant> page =
-                this.service.getAll(
-                        Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
-                        Set.of("T1"),
-                        Set.of(new URL("http://localhost/")),
-                        true,
-                        new TreeSet<>(List.of("id")), // sort,
-                        true, // orderAscending,
-                        10, // page,
-                        20 // size
-                        );
+    assertEquals(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))),
+        service.getByAccessorIds(accessors));
+    assertEquals(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        captor.getValue().apply(accessors.get(0)));
+  }
 
-        final Page<Tenant> expected =
-                new PageImpl<>(
-                        List.of(
-                                new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000001"))));
-        assertEquals(expected, page);
+  @Test
+  public void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+    doReturn(true).when(this.mRepoService)
+        .exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-        // TODO: Pending testing for the specification
-        captor.getValue();
-    }
+    assertTrue(this.service.exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+        UUID.fromString("00000000-0000-0000-0000-000000000002"),
+        UUID.fromString("00000000-0000-0000-0000-000000000003"))));
+  }
 
-    @Test
-    public void testGetTenant_ReturnsTenantPojo_WhenRepoServiceReturnsOptionalWithEntity() {
-        doReturn(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")))
-                .when(this.mRepoService)
-                .get(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+  @Test
+  public void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+    doReturn(true).when(this.mRepoService)
+        .exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-        final Tenant tenant =
-                this.service.get(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    assertTrue(this.service.exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+        UUID.fromString("00000000-0000-0000-0000-000000000002"),
+        UUID.fromString("00000000-0000-0000-0000-000000000003"))));
+  }
 
-        assertEquals(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")), tenant);
-    }
+  @Test
+  public void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+    doReturn(true).when(this.mRepoService)
+        .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    @Test
-    public void testGetByIds_CallsRepoService() {
-        ArgumentCaptor<List<? extends Identified<UUID>>> captor =
-                ArgumentCaptor.forClass(UuidIdentifiedList.class);
+    assertTrue(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+  }
 
-        doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
-                .when(mRepoService)
-                .getByIds(captor.capture());
+  @Test
+  public void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+    doReturn(true).when(this.mRepoService)
+        .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-        assertEquals(
-                List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))),
-                service.getByIds(
-                        List.of(() -> UUID.fromString("00000000-0000-0000-0000-000000000001"))));
-        assertEquals(
-                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                captor.getValue().get(0).getId());
-    }
+    assertTrue(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+  }
 
-    @Test
-    public void testGetByAccessorIds_CallsRepoService() {
-        ArgumentCaptor<Function<TenantAccessor, Tenant>> captor =
-                ArgumentCaptor.forClass(Function.class);
+  @Test
+  public void testDelete_CallsRepoServiceDeleteBulk_WhenTenantExists() {
+    doReturn(10L).when(this.mRepoService)
+        .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-        List<? extends TenantAccessor> accessors =
-                List.of(
-                        new TenantAccessor() {
-                            @Override
-                            public final void setTenant(Tenant tenant) {}
+    final long count
+        = this.service.delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
+    assertEquals(10L, count);
+  }
 
-                            @Override
-                            public Tenant getTenant() {
-                                return new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000001"));
-                            }
-                        });
+  @Test
+  public void testDelete_CallsRepoServiceDelete_WhenTenantExists() {
+    doAnswer(inv -> {
+      Set<UUID> ids = inv.getArgument(0, Set.class);
+      return ids.stream().map(Tenant::new).peek(tenant -> tenant.setIsReady(true)).toList();
+    }).when(mTenantRepo).findAllById(any());
 
-        doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
-                .when(mRepoService)
-                .getByAccessorIds(eq(accessors), captor.capture());
+    this.service.delete(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-        assertEquals(
-                List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))),
-                service.getByAccessorIds(accessors));
-        assertEquals(
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                captor.getValue().apply(accessors.get(0)));
-    }
+    Set<UUID> tenantIds = Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    @Test
-    public void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
-        doReturn(true)
-                .when(this.mRepoService)
-                .exists(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003")));
+    verify(mIaasService, times(1)).delete(tenantIds);
 
-        assertTrue(
-                this.service.exists(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003"))));
-    }
+    List<Tenant> expected
+        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    expected.get(0).setIsReady(false);
+    verify(mRepoService, times(1)).saveAll(expected);
+    verify(mRepoService).delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+  }
 
-    @Test
-    public void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-        doReturn(true)
-                .when(this.mRepoService)
-                .exists(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003")));
+  @Test
+  public void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
+    final BaseTenant<?> tenant1
+        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final BaseTenant<?> tenant2 = new Tenant();
 
-        assertTrue(
-                this.service.exists(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003"))));
-    }
+    final List<Tenant> added = this.service.add(List.of(tenant1, tenant2));
 
-    @Test
-    public void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
-        doReturn(true)
-                .when(this.mRepoService)
-                .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final List<Tenant> expected = List
+        .of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")), new Tenant());
+    expected.forEach(tenant -> tenant.setIsReady(true));
 
-        assertTrue(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-    }
+    assertEquals(expected, added);
+    verify(this.mRepoService, times(2)).saveAll(added);
+    verify(mIaasService, times(1)).put(added);
+  }
 
-    @Test
-    public void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-        doReturn(true)
-                .when(this.mRepoService)
-                .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+  @Test
+  public void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
+    assertNull(this.service.add(null));
+    verify(this.mRepoService, times(0)).saveAll(any());
+  }
 
-        assertTrue(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-    }
+  @Test
+  public void testPut_UpdatesTenantAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
+    final UpdateTenant<?> tenant1
+        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final UpdateTenant<?> tenant2
+        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
 
-    @Test
-    public void testDelete_CallsRepoServiceDeleteBulk_WhenTenantExists() {
-        doReturn(10L)
-                .when(this.mRepoService)
-                .delete(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003")));
+    doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
+            .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
 
-        final long count =
-                this.service.delete(
-                        Set.of(
-                                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                                UUID.fromString("00000000-0000-0000-0000-000000000003")));
-        assertEquals(10L, count);
-    }
+    final List<Tenant> updated = this.service.put(List.of(tenant1, tenant2, new Tenant()));
 
-    @Test
-    public void testDelete_CallsRepoServiceDelete_WhenTenantExists() {
-        doAnswer(
-                        inv -> {
-                            Set<UUID> ids = inv.getArgument(0, Set.class);
-                            return ids.stream()
-                                    .map(Tenant::new)
-                                    .peek(tenant -> tenant.setIsReady(true))
-                                    .toList();
-                        })
-                .when(mTenantRepo)
-                .findAllById(any());
+    final List<Tenant> expected
+        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")), new Tenant());
+    expected.forEach(tenant -> tenant.setIsReady(true));
 
-        this.service.delete(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    assertEquals(expected, updated);
+    verify(this.mRepoService, times(2)).saveAll(updated);
+    verify(mIaasService, times(1)).put(updated);
+  }
 
-        Set<UUID> tenantIds = Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+  @Test
+  public void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
+    assertNull(this.service.put(null));
+    verify(this.mRepoService, times(0)).saveAll(any());
+  }
 
-        verify(mIaasService, times(1)).delete(tenantIds);
+  @Test
+  public void testPatch_PatchesTenantAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
+    final UpdateTenant<?> tenant1
+        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final UpdateTenant<?> tenant2
+        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
 
-        List<Tenant> expected =
-                List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-        expected.get(0).setIsReady(false);
-        verify(mRepoService, times(1)).saveAll(expected);
-        verify(mRepoService)
-                .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-    }
+    doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
+            .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
 
-    @Test
-    public void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
-        final BaseTenant tenant1 =
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        final BaseTenant tenant2 = new Tenant();
+    final List<Tenant> updated = this.service.patch(List.of(tenant1, tenant2));
 
-        final List<Tenant> added = this.service.add(List.of(tenant1, tenant2));
+    final List<Tenant> expected
+        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
+    expected.forEach(tenant -> tenant.setIsReady(true));
 
-        final List<Tenant> expected =
-                List.of(
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        new Tenant());
-        expected.forEach(tenant -> tenant.setIsReady(true));
+    assertEquals(expected, updated);
+    verify(this.mRepoService, times(2)).saveAll(updated);
+    verify(mIaasService, times(1)).put(updated);
+  }
 
-        assertEquals(expected, added);
-        verify(this.mRepoService, times(2)).saveAll(added);
-        verify(mIaasService, times(1)).put(added);
-    }
+  @Test
+  public void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
+    assertNull(this.service.patch(null));
+    verify(this.mRepoService, times(0)).saveAll(any());
+  }
 
-    @Test
-    public void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
-        assertNull(this.service.add(null));
-        verify(this.mRepoService, times(0)).saveAll(any());
-    }
+  @Test
+  public void testPatch_ThrowsNotFoundException_WhenAllTenantsDontExist() {
+    final List<UpdateTenant<?>> updates
+        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),
+            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000003")),
+            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000004")));
+    doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
+            .when(this.mRepoService).getByIds(updates);
 
-    @Test
-    public void testPut_UpdatesTenantAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
-        final UpdateTenant tenant1 =
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        final UpdateTenant tenant2 =
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
-
-        doReturn(
-                        List.of(
-                                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                                new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-                .when(this.mRepoService)
-                .getByIds(List.of(tenant1, tenant2));
-
-        final List<Tenant> updated = this.service.put(List.of(tenant1, tenant2, new Tenant()));
-
-        final List<Tenant> expected =
-                List.of(
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-                        new Tenant());
-        expected.forEach(tenant -> tenant.setIsReady(true));
-
-        assertEquals(expected, updated);
-        verify(this.mRepoService, times(2)).saveAll(updated);
-        verify(mIaasService, times(1)).put(updated);
-    }
-
-    @Test
-    public void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
-        assertNull(this.service.put(null));
-        verify(this.mRepoService, times(0)).saveAll(any());
-    }
-
-    @Test
-    public void testPatch_PatchesTenantAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
-        final UpdateTenant tenant1 =
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        final UpdateTenant tenant2 =
-                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
-
-        doReturn(
-                        List.of(
-                                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                                new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-                .when(this.mRepoService)
-                .getByIds(List.of(tenant1, tenant2));
-
-        final List<Tenant> updated = this.service.patch(List.of(tenant1, tenant2));
-
-        final List<Tenant> expected =
-                List.of(
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
-        expected.forEach(tenant -> tenant.setIsReady(true));
-
-        assertEquals(expected, updated);
-        verify(this.mRepoService, times(2)).saveAll(updated);
-        verify(mIaasService, times(1)).put(updated);
-    }
-
-    @Test
-    public void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
-        assertNull(this.service.patch(null));
-        verify(this.mRepoService, times(0)).saveAll(any());
-    }
-
-    @Test
-    public void testPatch_ThrowsNotFoundException_WhenAllTenantsDontExist() {
-        final List<UpdateTenant> updates =
-                List.of(
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000003")),
-                        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000004")));
-        doReturn(
-                        List.of(
-                                new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-                                new Tenant(
-                                        UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-                .when(this.mRepoService)
-                .getByIds(updates);
-
-        assertThrows(
-                EntityNotFoundException.class,
-                () -> this.service.patch(updates),
-                "Cannot find tenants with Ids: [3, 4]");
-    }
+    EntityNotFoundException exception
+        = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
+    assertEquals("Cannot find tenants with Ids: [3, 4]", exception.getMessage());
+  }
 }

@@ -37,305 +37,293 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity(name = "user")
 @Table(name = "_user")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class User extends BaseEntity implements CrudEntity<Long>, UpdateUser, Audited {
-    public static final String FIELD_ID = "id";
-    public static final String FIELD_USER_NAME = "userName";
-    public static final String FIELD_DISPLAY_NAME = "displayName";
-    public static final String FIELD_EMAIL = "email";
-    public static final String FIELD_PHONE_NUMBER = "phoneNumber";
-    public static final String FIELD_STATUS = "status";
-    public static final String FIELD_SALUTATION = "salutation";
-    public static final String FIELD_ROLES = "roleBindings";
+public class User extends BaseEntity
+    implements CrudEntity<Long, User>, UpdateUser<User>, Audited<User> {
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+  @SequenceGenerator(name = "user_generator", sequenceName = "user_sequence", allocationSize = 1)
+  private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name = "user_generator", sequenceName = "user_sequence", allocationSize = 1)
-    private Long id;
+  @Column(name = "user_name", unique = true)
+  private String userName;
 
-    @Column(name = "user_name", unique = true)
-    private String userName;
+  @Column(name = "display_name")
+  private String displayName;
 
-    @Column(name = "display_name")
-    private String displayName;
+  @Column(name = "first_name")
+  private String firstName;
 
-    @Column(name = "first_name")
-    private String firstName;
+  @Column(name = "last_name")
+  private String lastName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  @Column(name = "email", updatable = false, unique = true)
+  @Email
+  private String email;
 
-    @Column(name = "email", updatable = false, unique = true)
-    @Email
-    private String email;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,
+      fetch = FetchType.LAZY)
+  @JsonManagedReference
+  @CriteriaJoin
+  private List<UserRoleBinding> roleBindings;
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @CriteriaJoin
-    private List<UserRoleBinding> roleBindings;
+  @Column(name = "image_source")
+  private String imageSrc;
 
-    @Column(name = "image_source")
-    private String imageSrc;
+  @Column(name = "phone_number")
+  private String phoneNumber;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_status_id", referencedColumnName = "id")
+  private UserStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_status_id", referencedColumnName = "id")
-    private UserStatus status;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_salutation_id", referencedColumnName = "id")
+  private UserSalutation salutation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_salutation_id", referencedColumnName = "id")
-    private UserSalutation salutation;
+  @Version
+  private Integer version;
 
-    @Version private Integer version;
+  @CreationTimestamp
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+  @UpdateTimestamp
+  @Column(name = "last_updated")
+  private LocalDateTime lastUpdated;
 
-    @UpdateTimestamp
-    @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+  public User() {}
 
-    public User() {}
+  public User(Long id) {
+    this();
+    setId(id);
+  }
 
-    public User(Long id) {
-        this();
-        setId(id);
+  public User(Long id, String userName, String displayName, String firstName, String lastName,
+      String email, String phoneNumber, URI imageSrc, UserStatus status, UserSalutation salutation,
+      List<UserRole> roles, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+    this(id);
+    setUserName(userName);
+    setDisplayName(displayName);
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setStatus(status);
+    setImageSrc(imageSrc);
+    setRoles(roles);
+    setSalutation(salutation);
+    setCreatedAt(createdAt);
+    setLastUpdated(lastUpdated);
+    setVersion(version);
+  }
+
+  @Override
+  public Long getId() {
+    return id;
+  }
+
+  @Override
+  public final User setId(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  @Override
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  @Override
+  public final User setDisplayName(String displayName) {
+    this.displayName = displayName;
+    return this;
+  }
+
+  @Override
+  public String getFirstName() {
+    return firstName;
+  }
+
+  @Override
+  public final User setFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  @Override
+  public String getLastName() {
+    return lastName;
+  }
+
+  @Override
+  public final User setLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  @Override
+  public String getEmail() {
+    return email;
+  }
+
+  @Override
+  public final User setEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  @Override
+  public URI getImageSrc() {
+    URI uri = null;
+    if (this.imageSrc != null) {
+      try {
+        uri = new URI(this.imageSrc);
+      } catch (URISyntaxException e) {
+        throw new RuntimeException(
+            String.format("Failed to convert to URI, value: %s", this.imageSrc), e);
+      }
     }
 
-    public User(
-            Long id,
-            String userName,
-            String displayName,
-            String firstName,
-            String lastName,
-            String email,
-            String phoneNumber,
-            URI imageSrc,
-            UserStatus status,
-            UserSalutation salutation,
-            List<UserRole> roles,
-            LocalDateTime createdAt,
-            LocalDateTime lastUpdated,
-            Integer version) {
-        this(id);
-        setUserName(userName);
-        setDisplayName(displayName);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setPhoneNumber(phoneNumber);
-        setStatus(status);
-        setImageSrc(imageSrc);
-        setRoles(roles);
-        setSalutation(salutation);
-        setCreatedAt(createdAt);
-        setLastUpdated(lastUpdated);
-        setVersion(version);
+    return uri;
+  }
+
+  @Override
+  public final User setImageSrc(URI imageSrc) {
+    if (imageSrc != null) {
+      this.imageSrc = imageSrc.toString();
+    } else {
+      this.imageSrc = null;
     }
+    return this;
+  }
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+  @Override
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 
-    @Override
-    public final void setId(Long id) {
-        this.id = id;
-    }
+  @Override
+  public final User setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+    return this;
+  }
 
-    @Override
-    public String getDisplayName() {
-        return displayName;
-    }
+  @Override
+  public UserStatus getStatus() {
+    return status;
+  }
 
-    @Override
-    public final void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
+  @Override
+  public final User setStatus(UserStatus status) {
+    this.status = status;
+    return this;
+  }
 
-    @Override
-    public String getFirstName() {
-        return firstName;
-    }
+  @Override
+  public Integer getVersion() {
+    return version;
+  }
 
-    @Override
-    public final void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public final User setVersion(Integer version) {
+    this.version = version;
+    return this;
+  }
 
-    @Override
-    public String getLastName() {
-        return lastName;
-    }
+  @Override
+  public String getUserName() {
+    return userName;
+  }
 
-    @Override
-    public final void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  @Override
+  public final User setUserName(String userName) {
+    this.userName = userName;
+    return this;
+  }
 
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public final void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public URI getImageSrc() {
-        URI uri = null;
-        if (this.imageSrc != null) {
-            try {
-                uri = new URI(this.imageSrc);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(
-                        String.format("Failed to convert to URI, value: %s", this.imageSrc), e);
-            }
-        }
-
-        return uri;
-    }
-
-    @Override
-    public final void setImageSrc(URI imageSrc) {
-        if (imageSrc != null) {
-            this.imageSrc = imageSrc.toString();
-        } else {
-            this.imageSrc = null;
-        }
-    }
-
-    @Override
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    @Override
-    public final void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    @Override
-    public final void setStatus(UserStatus status) {
-        this.status = status;
-    }
-
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
-
-    public final void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    @Override
-    public String getUserName() {
-        return userName;
-    }
-
-    @Override
-    public final void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Override
-    public final void setRoles(List<UserRole> roles) {
-        if (roles == null) {
-            if (this.roleBindings != null) {
-                this.roleBindings.clear();
-            } else {
-                this.roleBindings = null;
-            }
-            return;
-        }
-
-        // Reusing existing bindings instead of adding new to avoid creating dangling
-        // child
-        // entities.
-        if (roleBindings == null) {
-            roleBindings = new ArrayList<>();
-        }
-
-        Map<Long, UserRoleBinding> existingBindings =
-                roleBindings.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        binding -> binding.getRole().getId(), binding -> binding));
+  @Override
+  public final User setRoles(List<UserRole> roles) {
+    if (roles == null) {
+      if (this.roleBindings != null) {
         this.roleBindings.clear();
-        roles.forEach(
-                role -> {
-                    UserRoleBinding existing = existingBindings.remove(role.getId());
-                    if (existing == null) {
-                        existing = new UserRoleBinding();
-                    }
-
-                    existing.setRole(role);
-                    existing.setUser(this);
-
-                    this.roleBindings.add(existing);
-                });
+      } else {
+        this.roleBindings = null;
+      }
+      return this;
     }
 
-    @Override
-    public List<UserRole> getRoles() {
-        if (this.roleBindings == null) {
-            return null;
-        }
-
-        return this.roleBindings.stream().map(binding -> binding.getRole()).toList();
+    // Reusing existing bindings instead of adding new to avoid creating dangling
+    // child
+    // entities.
+    if (roleBindings == null) {
+      roleBindings = new ArrayList<>();
     }
 
-    /**
-     * Used by the repository to directly access the bindings. Refrain from using this is business
-     * logic. Prefer, getRoles() method.
-     *
-     * @return
-     */
-    public List<UserRoleBinding> getRoleBindings() {
-        return this.roleBindings;
+    Map<Long, UserRoleBinding> existingBindings = roleBindings.stream()
+        .collect(Collectors.toMap(binding -> binding.getRole().getId(), binding -> binding));
+    this.roleBindings.clear();
+    roles.forEach(role -> {
+      UserRoleBinding existing = existingBindings.remove(role.getId());
+      if (existing == null) {
+        existing = new UserRoleBinding();
+      }
+
+      existing.setRole(role);
+      existing.setUser(this);
+
+      this.roleBindings.add(existing);
+    });
+    return this;
+  }
+
+  @Override
+  public List<UserRole> getRoles() {
+    if (this.roleBindings == null) {
+      return null;
     }
 
-    @Override
-    public UserSalutation getSalutation() {
-        return salutation;
-    }
+    return this.roleBindings.stream().map(binding -> binding.getRole()).toList();
+  }
 
-    @Override
-    public final void setSalutation(UserSalutation salutation) {
-        this.salutation = salutation;
-    }
+  /**
+   * Used by the repository to directly access the bindings. Refrain from using this is business
+   * logic. Prefer, getRoles() method.
+   *
+   * @return
+   */
+  public List<UserRoleBinding> getRoleBindings() {
+    return this.roleBindings;
+  }
 
-    @Override
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
+  @Override
+  public UserSalutation getSalutation() {
+    return salutation;
+  }
 
-    @Override
-    public final void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+  @Override
+  public final User setSalutation(UserSalutation salutation) {
+    this.salutation = salutation;
+    return this;
+  }
 
-    @Override
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+  @Override
+  public LocalDateTime getLastUpdated() {
+    return lastUpdated;
+  }
 
-    @Override
-    public final void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+  @Override
+  public final User setLastUpdated(LocalDateTime lastUpdated) {
+    this.lastUpdated = lastUpdated;
+    return this;
+  }
+
+  @Override
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  @Override
+  public final User setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
 }

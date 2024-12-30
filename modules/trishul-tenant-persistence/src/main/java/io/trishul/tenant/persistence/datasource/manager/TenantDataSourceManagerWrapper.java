@@ -10,25 +10,25 @@ import java.util.UUID;
 import javax.sql.DataSource;
 
 public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
-    private final DataSourceManager dsMgr;
-    private final DataSourceConfigurationProvider<UUID> dsConfigMgr;
+  private final DataSourceManager dsMgr;
+  private final DataSourceConfigurationProvider<UUID> dsConfigMgr;
 
-    public TenantDataSourceManagerWrapper(
-            DataSourceManager dsMgr, TenantDataSourceConfigurationProvider dsConfigMgr) {
-        this.dsMgr = dsMgr;
-        this.dsConfigMgr = dsConfigMgr;
+  public TenantDataSourceManagerWrapper(DataSourceManager dsMgr,
+      TenantDataSourceConfigurationProvider dsConfigMgr) {
+    this.dsMgr = dsMgr;
+    this.dsConfigMgr = dsConfigMgr;
+  }
+
+  @Override
+  public DataSource getDataSource(UUID tenantId) throws SQLException, IOException {
+    DataSource ds = this.dsMgr.getAdminDataSource();
+
+    if (tenantId != null) {
+      DataSourceConfiguration config = this.dsConfigMgr.getConfiguration(tenantId);
+
+      ds = this.dsMgr.getDataSource(config);
     }
 
-    @Override
-    public DataSource getDataSource(UUID tenantId) throws SQLException, IOException {
-        DataSource ds = this.dsMgr.getAdminDataSource();
-
-        if (tenantId != null) {
-            DataSourceConfiguration config = this.dsConfigMgr.getConfiguration(tenantId);
-
-            ds = this.dsMgr.getDataSource(config);
-        }
-
-        return ds;
-    }
+    return ds;
+  }
 }

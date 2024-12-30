@@ -10,25 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColumnSpecAccumulator extends BaseModel {
-    private final List<CriteriaSpec<?>> aggregations;
+  private final List<CriteriaSpec<?>> aggregations;
 
-    public ColumnSpecAccumulator() {
-        this.aggregations = new ArrayList<>();
-    }
+  public ColumnSpecAccumulator() {
+    this.aggregations = new ArrayList<>();
+  }
 
-    public void add(CriteriaSpec<?> spec) {
-        if (spec != null) {
-            this.aggregations.add(spec);
-        }
+  public void add(CriteriaSpec<?> spec) {
+    if (spec != null) {
+      this.aggregations.add(spec);
     }
+  }
 
-    public <T extends Selection<?>> List<T> getColumns(
-            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        @SuppressWarnings("unchecked")
-        List<T> columns =
-                this.aggregations.stream()
-                        .map(spec -> (T) spec.getExpression(root, cq, cb))
-                        .toList();
-        return columns;
-    }
+  public <T extends Selection<?>> List<T> getColumns(Root<?> root, CriteriaQuery<?> cq,
+      CriteriaBuilder cb) {
+    @SuppressWarnings("unchecked")
+    List<T> columns
+        = this.aggregations.stream().map(spec -> (T) spec.getExpression(root, cq, cb)).toList();
+    return columns;
+  }
 }

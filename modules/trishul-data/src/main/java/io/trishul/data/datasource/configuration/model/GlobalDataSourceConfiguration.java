@@ -3,15 +3,15 @@ package io.trishul.data.datasource.configuration.model;
 import java.net.URI;
 
 public interface GlobalDataSourceConfiguration {
-    URI getUrl();
+  URI getUrl();
 
-    String getDbName();
+  String getDbName();
 
-    String getMigrationScriptPath();
+  String getMigrationScriptPath();
 
-    String getSchemaPrefix();
+  String getSchemaPrefix();
 
-    int getPoolSize();
+  int getPoolSize();
 
-    boolean isAutoCommit();
+  boolean isAutoCommit();
 }

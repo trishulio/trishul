@@ -1,9 +1,15 @@
 package io.trishul.iaas.user.service.aws;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -11,10 +17,11 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-
+import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserResult;
+import com.amazonaws.services.cognitoidp.model.AdminDeleteUserResult;
 import com.amazonaws.services.cognitoidp.model.AdminGetUserRequest;
 import com.amazonaws.services.cognitoidp.model.AdminGetUserResult;
 import com.amazonaws.services.cognitoidp.model.AdminUpdateUserAttributesRequest;
@@ -27,216 +34,176 @@ import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 import io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper;
 import io.trishul.iaas.user.aws.model.AwsCognitoUserMapper;
 import io.trishul.iaas.user.model.IaasUser;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Supplier;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class AwsCognitoUserClientTest {
-    private AwsCognitoUserClient client;
+  private AwsCognitoUserClient client;
 
-    private AWSCognitoIdentityProvider mIdp;
+  private AWSCognitoIdentityProvider mIdp;
 
-    @BeforeEach
-    public void init() {
-        mIdp = mock(AWSCognitoIdentityProvider.class);
-        client =
-                new AwsCognitoUserClient(
-                        mIdp,
-                        "USER_POOL_ID",
-                        AwsCognitoAdminGetUserResultMapper.INSTANCE,
-                        AwsCognitoUserMapper.INSTANCE);
+  @BeforeEach
+  public void init() {
+    mIdp = mock(AWSCognitoIdentityProvider.class);
+    client = new AwsCognitoUserClient(mIdp, "USER_POOL_ID",
+        AwsCognitoAdminGetUserResultMapper.INSTANCE, AwsCognitoUserMapper.INSTANCE);
+  }
+
+  private ResponseMetadata mockResponseMetadata() {
+    ResponseMetadata metadata = mock(ResponseMetadata.class);
+    doReturn("mock-request-id").when(metadata).getRequestId();
+    return metadata;
+  }
+
+  @Test
+  public void testGet_ReturnsUserFromResult_WhenClientReturnsResult() {
+    doAnswer(inv -> {
+      AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
+      return new AdminGetUserResult()
+          .withUserAttributes(new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL)
+              .withValue("EMAIL"))
+          .withUserCreateDate(new Date(100, 0, 1)).withUserLastModifiedDate(new Date(100, 1, 2))
+          .withUsername(req.getUsername());
+    }).when(mIdp).adminGetUser(any());
+
+    IaasUser user = client.get("USERNAME");
+
+    IaasUser expected
+        = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+    assertEquals(expected, user);
+  }
+
+  @Test
+  public void testGet_ReturnsNull_WhenClientThrowsNotFoundException() {
+    doThrow(UserNotFoundException.class).when(mIdp).adminGetUser(any());
+
+    assertNull(client.get("USERNAME"));
+  }
+
+  @Test
+  public void testAdd_AddsAndReturnsUser() {
+    doAnswer(inv -> {
+      AdminCreateUserRequest req = inv.getArgument(0, AdminCreateUserRequest.class);
+
+      assertEquals(List.of(DeliveryMediumType.EMAIL.toString()), req.getDesiredDeliveryMediums());
+      UserType userType = new UserType().withAttributes(req.getUserAttributes())
+          .withUserCreateDate(new Date(100, 0, 1)).withUserLastModifiedDate(new Date(100, 1, 2))
+          .withUsername(req.getUsername());
+      AdminCreateUserResult result = new AdminCreateUserResult().withUser(userType);
+      result.setSdkResponseMetadata(mockResponseMetadata());
+      return result;
+    }).when(mIdp).adminCreateUser(any());
+
+    IaasUser user = client.add(new IaasUser().setId("USERNAME").setEmail("EMAIL")
+        .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+        .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0)));
+
+    IaasUser expected
+        = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+    assertEquals(expected, user);
+  }
+
+  @Test
+  public void testUpdate_UpdatesAttributesAndReturnsUser() {
+    class AttributeSupplier implements Supplier<List<AttributeType>> {
+      private List<AttributeType> attributes;
+
+      @Override
+      public List<AttributeType> get() {
+        return this.attributes;
+      }
+
+      public final void setAttributes(List<AttributeType> attributes) {
+        this.attributes = attributes;
+      }
     }
 
-    @Test
-    public void testGet_ReturnsUserFromResult_WhenClientReturnsResult() {
-        doAnswer(
-                        inv -> {
-                            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
-                            return new AdminGetUserResult()
-                                    .withUserAttributes(
-                                            new AttributeType()
-                                                    .withName(
-                                                            CognitoPrincipalContext.ATTRIBUTE_EMAIL)
-                                                    .withValue("EMAIL"))
-                                    .withUserCreateDate(new Date(100, 0, 1))
-                                    .withUserLastModifiedDate(new Date(100, 1, 2))
-                                    .withUsername(req.getUsername());
-                        })
-                .when(mIdp)
-                .adminGetUser(any());
+    AttributeSupplier attributesSupplier = new AttributeSupplier();
+    doAnswer(inv -> {
+      AdminUpdateUserAttributesRequest req
+          = inv.getArgument(0, AdminUpdateUserAttributesRequest.class);
+      attributesSupplier.setAttributes(req.getUserAttributes());
+      AdminUpdateUserAttributesResult result = new AdminUpdateUserAttributesResult();
+      result.setSdkResponseMetadata(mockResponseMetadata());
+      return result;
+    }).when(mIdp).adminUpdateUserAttributes(any());
 
-        IaasUser user = client.get("USERNAME");
+    doAnswer(inv -> {
+      AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
+      return new AdminGetUserResult().withUserAttributes(attributesSupplier.get())
+          .withUserCreateDate(new Date(100, 0, 1)).withUserLastModifiedDate(new Date(100, 1, 2))
+          .withUsername(req.getUsername());
+    }).when(mIdp).adminGetUser(any());
 
-        IaasUser expected =
-                new IaasUser(
-                        null,
-                        "EMAIL",
-                        null,
-                        LocalDateTime.of(2000, 1, 1, 0, 0),
-                        LocalDateTime.of(2000, 2, 2, 0, 0));
-        assertEquals(expected, user);
-    }
+    IaasUser user = client.update(new IaasUser().setId("USERNAME").setEmail("EMAIL")
+        .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+        .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0)));
 
-    @Test
-    public void testGet_ReturnsNull_WhenClientThrowsNotFoundException() {
-        doThrow(UserNotFoundException.class).when(mIdp).adminGetUser(any());
+    IaasUser expected
+        = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+    assertEquals(expected, user);
 
-        assertNull(client.get("USERNAME"));
-    }
+    verify(mIdp).adminUpdateUserAttributes(any());
+  }
 
-    @Test
-    public void testAdd_AddsAndReturnsUser() {
-        doAnswer(
-                        inv -> {
-                            AdminCreateUserRequest req =
-                                    inv.getArgument(0, AdminCreateUserRequest.class);
+  @Test
+  public void testDelete_ReturnsTrue_WhenNoExceptionIsThrown() {
+    doAnswer(inv -> {
+      AdminDeleteUserResult result = new AdminDeleteUserResult();
+      result.setSdkResponseMetadata(mockResponseMetadata());
+      return result;
+    }).when(mIdp).adminDeleteUser(any());
 
-                            assertEquals(
-                                    List.of(DeliveryMediumType.EMAIL.toString()),
-                                    req.getDesiredDeliveryMediums());
-                            UserType userType =
-                                    new UserType()
-                                            .withAttributes(req.getUserAttributes())
-                                            .withUserCreateDate(new Date(100, 0, 1))
-                                            .withUserLastModifiedDate(new Date(100, 1, 2))
-                                            .withUsername(req.getUsername());
-                            return new AdminCreateUserResult().withUser(userType);
-                        })
-                .when(mIdp)
-                .adminCreateUser(any());
+    assertTrue(client.delete("USERNAME"));
+  }
 
-        IaasUser user =
-                client.add(
-                        new IaasUser(
-                                "USERNAME",
-                                "EMAIL",
-                                null,
-                                LocalDateTime.of(2000, 1, 1, 0, 0),
-                                LocalDateTime.of(2000, 2, 2, 0, 0)));
+  @Test
+  public void testDelete_ReturnsFalse_WhenUserNotFoundExceptionIsThrown() {
+    doThrow(UserNotFoundException.class).when(mIdp).adminDeleteUser(any());
 
-        IaasUser expected =
-                new IaasUser(
-                        null,
-                        "EMAIL",
-                        null,
-                        LocalDateTime.of(2000, 1, 1, 0, 0),
-                        LocalDateTime.of(2000, 2, 2, 0, 0));
-        assertEquals(expected, user);
-    }
+    assertFalse(client.delete("USERNAME"));
+  }
 
-    @Test
-    public void testUpdate_UpdatesAttributesAndReturnsUser() {
-        class AttributeSupplier implements Supplier<List<AttributeType>> {
-            private List<AttributeType> attributes;
+  @Test
+  public void testExists_ReturnsTrue_WhenGetIsNotNull() {
+    client = spy(client);
+    doReturn(new IaasUser()).when(client).get("USERNAME");
 
-            @Override
-            public List<AttributeType> get() {
-                return this.attributes;
-            }
+    assertTrue(client.exists("USERNAME"));
+  }
 
-            public final void setAttributes(List<AttributeType> attributes) {
-                this.attributes = attributes;
-            }
-        }
+  @Test
+  public void testExists_ReturnsFalse_WhenGetIsNull() {
+    client = spy(client);
+    doReturn(null).when(client).get("USERNAME");
 
-        AttributeSupplier attributesSupplier = new AttributeSupplier();
-        doAnswer(
-                        inv -> {
-                            AdminUpdateUserAttributesRequest req =
-                                    inv.getArgument(0, AdminUpdateUserAttributesRequest.class);
-                            attributesSupplier.setAttributes(req.getUserAttributes());
-                            return new AdminUpdateUserAttributesResult();
-                        })
-                .when(mIdp)
-                .adminUpdateUserAttributes(any());
+    assertFalse(client.exists("USERNAME"));
+  }
 
-        doAnswer(
-                        inv -> {
-                            AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
-                            return new AdminGetUserResult()
-                                    .withUserAttributes(attributesSupplier.get())
-                                    .withUserCreateDate(new Date(100, 0, 1))
-                                    .withUserLastModifiedDate(new Date(100, 1, 2))
-                                    .withUsername(req.getUsername());
-                        })
-                .when(mIdp)
-                .adminGetUser(any());
+  @Test
+  public void testPut_CallsAdd_WhenExistIsFalse() {
+    client = spy(client);
+    doReturn(false).when(client).exists("USERNAME");
 
-        IaasUser user =
-                client.update(
-                        new IaasUser(
-                                "USERNAME",
-                                "EMAIL",
-                                null,
-                                LocalDateTime.of(2000, 1, 1, 0, 0),
-                                LocalDateTime.of(2000, 2, 2, 0, 0)));
+    doAnswer(inv -> inv.getArgument(0, IaasUser.class)).when(client).add(any());
 
-        IaasUser expected =
-                new IaasUser(
-                        null,
-                        "EMAIL",
-                        null,
-                        LocalDateTime.of(2000, 1, 1, 0, 0),
-                        LocalDateTime.of(2000, 2, 2, 0, 0));
-        assertEquals(expected, user);
+    IaasUser user = client.put(new IaasUser("USERNAME"));
 
-        verify(mIdp).adminUpdateUserAttributes(any());
-    }
+    IaasUser expected = new IaasUser().setId("USERNAME");
+    assertEquals(expected, user);
+  }
 
-    @Test
-    public void testDelete_ReturnsTrue_WhenNoExceptionIsThrown() {
-        assertTrue(client.delete("USERNAME"));
-    }
+  @Test
+  public void testPut_CallsUpdate_WhenExistIsTrue() {
+    client = spy(client);
+    doReturn(true).when(client).exists("USER_EMAIL");
 
-    @Test
-    public void testDelete_ReturnsFalse_WhenUserNotFoundExceptionIsThrown() {
-        doThrow(UserNotFoundException.class).when(mIdp).adminDeleteUser(any());
+    doAnswer(inv -> inv.getArgument(0, IaasUser.class)).when(client).update(any());
 
-        assertFalse(client.delete("USERNAME"));
-    }
+    IaasUser user = client.put(new IaasUser().setId("USERNAME").setEmail("USER_EMAIL"));
 
-    @Test
-    public void testExists_ReturnsTrue_WhenGetIsNotNull() {
-        client = spy(client);
-        doReturn(new IaasUser()).when(client).get("USERNAME");
-
-        assertTrue(client.exists("USERNAME"));
-    }
-
-    @Test
-    public void testExists_ReturnsFalse_WhenGetIsNull() {
-        client = spy(client);
-        doReturn(null).when(client).get("USERNAME");
-
-        assertFalse(client.exists("USERNAME"));
-    }
-
-    @Test
-    public void testPut_CallsAdd_WhenExistIsFalse() {
-        client = spy(client);
-        doReturn(false).when(client).exists("USERNAME");
-
-        doAnswer(inv -> inv.getArgument(0, IaasUser.class)).when(client).add(any());
-
-        IaasUser user = client.put(new IaasUser("USERNAME"));
-
-        IaasUser expected = new IaasUser("USERNAME");
-        assertEquals(expected, user);
-    }
-
-    @Test
-    public void testPut_CallsUpdate_WhenExistIsTrue() {
-        client = spy(client);
-        doReturn(true).when(client).exists("USER_EMAIL");
-
-        doAnswer(inv -> inv.getArgument(0, IaasUser.class)).when(client).update(any());
-
-        IaasUser user = client.put(new IaasUser("USERNAME", "USER_EMAIL", null, null, null));
-
-        IaasUser expected = new IaasUser("USERNAME", "USER_EMAIL", null, null, null);
-        assertEquals(expected, user);
-    }
+    IaasUser expected = new IaasUser().setId("USERNAME").setEmail("USER_EMAIL");
+    assertEquals(expected, user);
+  }
 }

@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UtilAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(UtilityProvider.class)
-    public UtilityProvider utilityProvider() {
-        return new ThreadLocalUtilityProvider();
-    }
+  @Bean
+  @ConditionalOnMissingBean(UtilityProvider.class)
+  public UtilityProvider utilityProvider() {
+    return new ThreadLocalUtilityProvider();
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(BlockingAsyncExecutor.class)
-    public BlockingAsyncExecutor executor() {
-        return new BlockingAsyncExecutor();
-    }
+  @Bean
+  @ConditionalOnMissingBean(BlockingAsyncExecutor.class)
+  public BlockingAsyncExecutor executor() {
+    return new BlockingAsyncExecutor();
+  }
 }

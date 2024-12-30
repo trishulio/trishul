@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
@@ -19,108 +18,104 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TemporaryImageSrcDecoratorTest {
-    private TemporaryImageSrcDecorator decorator;
+  private TemporaryImageSrcDecorator decorator;
 
-    private IaasObjectStoreFileController mController;
+  private IaasObjectStoreFileController mController;
 
-    @BeforeEach
-    public void init() {
-        mController = mock(IaasObjectStoreFileController.class);
+  @BeforeEach
+  public void init() {
+    mController = mock(IaasObjectStoreFileController.class);
 
-        decorator = new TemporaryImageSrcDecorator(mController);
-    }
+    decorator = new TemporaryImageSrcDecorator(mController);
+  }
 
-    @Test
-    public void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
-        doAnswer(
-                        inv ->
-                                inv.getArgument(0, Set.class).stream()
-                                        .map(uri -> new IaasObjectStoreFileDto((URI) uri))
-                                        .toList())
-                .when(mController)
-                .getAll(anySet());
+  @Test
+  public void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
+    doAnswer(inv -> inv.getArgument(0, Set.class).stream()
+        .map(uri -> new IaasObjectStoreFileDto((URI) uri)).toList()).when(mController)
+            .getAll(anySet());
 
-        List<DecoratedEntity> entities =
-                List.of(
-                        new DecoratedEntity(URI.create("http://localhost/2")),
-                        new DecoratedEntity(URI.create("http://localhost/1")));
+    List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/2")),
+        new DecoratedEntity(URI.create("http://localhost/1")));
 
-        decorator.decorate(entities);
+    decorator.decorate(entities);
 
-        List<DecoratedEntity> expected =
-                List.of(
-                        new DecoratedEntity(
-                                URI.create("http://localhost/2"),
-                                new IaasObjectStoreFileDto(URI.create("http://localhost/2"))),
-                        new DecoratedEntity(
-                                URI.create("http://localhost/1"),
-                                new IaasObjectStoreFileDto(URI.create("http://localhost/1"))));
+    List<DecoratedEntity> expected = List.of(
+        new DecoratedEntity(URI.create("http://localhost/2"),
+            new IaasObjectStoreFileDto(URI.create("http://localhost/2"))),
+        new DecoratedEntity(URI.create("http://localhost/1"),
+            new IaasObjectStoreFileDto(URI.create("http://localhost/1"))));
 
-        assertEquals(expected, entities);
-    }
+    assertEquals(expected, entities);
+  }
 
-    @Test
-    public void testDecorate_DoesNothing_WhenExceptionIsThrown() {
-        doThrow(RuntimeException.class).when(mController).getAll(any());
+  @Test
+  public void testDecorate_DoesNothing_WhenExceptionIsThrown() {
+    doThrow(RuntimeException.class).when(mController).getAll(any());
 
-        List<DummyDto> dtos = List.of(new DummyDto(1L), new DummyDto(2L));
+    List<DummyDto> dtos = List.of(new DummyDto(1L), new DummyDto(2L));
 
-        decorator.decorate(dtos);
+    decorator.decorate(dtos);
 
-        List<DummyDto> expected = List.of(new DummyDto(1L), new DummyDto(2L));
-        assertEquals(expected, dtos);
-    }
+    List<DummyDto> expected = List.of(new DummyDto(1L), new DummyDto(2L));
+    assertEquals(expected, dtos);
+  }
 }
 
-class DecoratedEntity extends BaseModel implements DecoratedIaasObjectStoreFileAccessor {
-    private URI imageSrc;
-    private IaasObjectStoreFileDto objectStoreFile;
 
-    public DecoratedEntity(URI imageSrc) {
-        this.imageSrc = imageSrc;
-    }
+class DecoratedEntity extends BaseModel
+    implements DecoratedIaasObjectStoreFileAccessor<DecoratedEntity> {
+  private URI imageSrc;
+  private IaasObjectStoreFileDto objectStoreFile;
 
-    public DecoratedEntity(URI imageSrc, IaasObjectStoreFileDto objectStoreFile) {
-        this.imageSrc = imageSrc;
-        this.objectStoreFile = objectStoreFile;
-    }
+  public DecoratedEntity(URI imageSrc) {
+    this.imageSrc = imageSrc;
+  }
 
-    @Override
-    public URI getImageSrc() {
-        return imageSrc;
-    }
+  public DecoratedEntity(URI imageSrc, IaasObjectStoreFileDto objectStoreFile) {
+    this.imageSrc = imageSrc;
+    this.objectStoreFile = objectStoreFile;
+  }
 
-    @Override
-    public final void setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
-        this.objectStoreFile = objectStoreFile;
-    }
+  @Override
+  public URI getImageSrc() {
+    return imageSrc;
+  }
+
+  @Override
+  public final DecoratedEntity setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+    this.objectStoreFile = objectStoreFile;
+    return this;
+  }
 }
 
-class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor {
-    private Long id;
-    private URI imageSrc;
-    private IaasObjectStoreFileDto objectStoreFile;
 
-    public DummyDto(Long id, URI imageSrc) {
-        this(id);
-        this.imageSrc = imageSrc;
-    }
+class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor<DummyDto> {
+  private Long id;
+  private URI imageSrc;
+  private IaasObjectStoreFileDto objectStoreFile;
 
-    public DummyDto(Long id) {
-        this.id = id;
-    }
+  public DummyDto(Long id, URI imageSrc) {
+    this(id);
+    this.imageSrc = imageSrc;
+  }
 
-    public Long getId() {
-        return this.id;
-    }
+  public DummyDto(Long id) {
+    this.id = id;
+  }
 
-    @Override
-    public URI getImageSrc() {
-        return this.imageSrc;
-    }
+  public Long getId() {
+    return this.id;
+  }
 
-    @Override
-    public final void setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
-        this.objectStoreFile = objectStoreFile;
-    }
+  @Override
+  public URI getImageSrc() {
+    return this.imageSrc;
+  }
+
+  @Override
+  public final DummyDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+    this.objectStoreFile = objectStoreFile;
+    return this;
+  }
 }

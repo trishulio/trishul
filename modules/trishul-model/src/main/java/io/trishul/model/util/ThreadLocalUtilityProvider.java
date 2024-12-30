@@ -4,19 +4,19 @@ import io.trishul.model.validator.UtilityProvider;
 import io.trishul.model.validator.Validator;
 
 public class ThreadLocalUtilityProvider implements UtilityProvider {
-    private final InheritableThreadLocal<Validator> validatorCache;
+  private final InheritableThreadLocal<Validator> validatorCache;
 
-    public ThreadLocalUtilityProvider() {
-        this.validatorCache = new InheritableThreadLocal<>();
-    }
+  public ThreadLocalUtilityProvider() {
+    this.validatorCache = new InheritableThreadLocal<>();
+  }
 
-    @Override
-    public Validator getValidator() {
-        return this.validatorCache.get();
-    }
+  @Override
+  public Validator getValidator() {
+    return this.validatorCache.get();
+  }
 
-    @Override
-    public final void setValidator(Validator validator) {
-        this.validatorCache.set(validator);
-    }
+  @Override
+  public final void setValidator(Validator validator) {
+    this.validatorCache.set(validator);
+  }
 }

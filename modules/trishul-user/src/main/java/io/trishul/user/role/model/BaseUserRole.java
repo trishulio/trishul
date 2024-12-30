@@ -1,9 +1,9 @@
 package io.trishul.user.role.model;
 
-public interface BaseUserRole {
-    final String ATTR_NAME = "name";
+public interface BaseUserRole<T extends BaseUserRole<T>> {
+  final String ATTR_NAME = "name";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 }

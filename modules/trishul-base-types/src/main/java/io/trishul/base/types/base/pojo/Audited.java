@@ -2,15 +2,15 @@ package io.trishul.base.types.base.pojo;
 
 import java.time.LocalDateTime;
 
-public interface Audited {
-    final String ATTR_CREATED_AT = "createdAt";
-    final String ATTR_LAST_UPDATED = "lastUpdated";
+public interface Audited<T extends Audited<T>> {
+  final String ATTR_CREATED_AT = "createdAt";
+  final String ATTR_LAST_UPDATED = "lastUpdated";
 
-    LocalDateTime getCreatedAt();
+  LocalDateTime getCreatedAt();
 
-    void setCreatedAt(LocalDateTime createdAt);
+  T setCreatedAt(LocalDateTime createdAt);
 
-    LocalDateTime getLastUpdated();
+  LocalDateTime getLastUpdated();
 
-    void setLastUpdated(LocalDateTime lastUpdated);
+  T setLastUpdated(LocalDateTime lastUpdated);
 }

@@ -11,10 +11,10 @@ import java.io.IOException;
 import javax.measure.Unit;
 
 public class UnitDeserializer extends JsonDeserializer<Unit<?>> {
-    @Override
-    public Unit<?> deserialize(JsonParser p, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-        JsonNode node = p.getCodec().readTree(p);
-        return QuantityUnitMapper.INSTANCE.fromSymbol(node.get(UnitDto.ATTR_SYMBOL).asText());
-    }
+  @Override
+  public Unit<?> deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    JsonNode node = p.getCodec().readTree(p);
+    return QuantityUnitMapper.INSTANCE.fromSymbol(node.get(UnitDto.ATTR_SYMBOL).asText());
+  }
 }

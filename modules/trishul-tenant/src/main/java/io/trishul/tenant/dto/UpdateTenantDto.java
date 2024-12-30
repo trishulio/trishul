@@ -1,53 +1,58 @@
 package io.trishul.tenant.dto;
 
-import io.trishul.model.base.dto.BaseDto;
-import jakarta.validation.constraints.NotBlank;
 import java.net.URL;
 import java.util.UUID;
+import io.trishul.model.base.dto.BaseDto;
+import jakarta.validation.constraints.NotBlank;
 
 public class UpdateTenantDto extends BaseDto {
-    private UUID id;
+  private UUID id;
 
-    @NotBlank private String name;
+  @NotBlank
+  private String name;
 
-    @NotBlank private URL url;
+  @NotBlank
+  private URL url;
 
-    public UpdateTenantDto() {
-        super();
-    }
+  public UpdateTenantDto() {
+    super();
+  }
 
-    public UpdateTenantDto(UUID id) {
-        this();
-        setId(id);
-    }
+  public UpdateTenantDto(UUID id) {
+    this();
+    setId(id);
+  }
 
-    public UpdateTenantDto(UUID id, String name, URL url) {
-        this(id);
-        setName(name);
-        setUrl(url);
-    }
+  public UpdateTenantDto(UUID id, String name, URL url) {
+    this(id);
+    setName(name);
+    setUrl(url);
+  }
 
-    public UUID getId() {
-        return id;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public final void setId(UUID id) {
-        this.id = id;
-    }
+  public final UpdateTenantDto setId(UUID id) {
+    this.id = id;
+    return this;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public final void setName(String name) {
-        this.name = name;
-    }
+  public final UpdateTenantDto setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public URL getUrl() {
-        return url;
-    }
+  public URL getUrl() {
+    return url;
+  }
 
-    public final void setUrl(URL url) {
-        this.url = url;
-    }
+  public final UpdateTenantDto setUrl(URL url) {
+    this.url = url;
+    return this;
+  }
 }

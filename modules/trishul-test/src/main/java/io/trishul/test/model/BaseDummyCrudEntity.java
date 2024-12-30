@@ -1,14 +1,14 @@
 package io.trishul.test.model;
 
-public interface BaseDummyCrudEntity {
-    final String ATTR_EXCLUDED_VALUE = "excludedValue";
-    final String ATTR_VALUE = "value";
+public interface BaseDummyCrudEntity<T extends BaseDummyCrudEntity<T>> {
+  final String ATTR_EXCLUDED_VALUE = "excludedValue";
+  final String ATTR_VALUE = "value";
 
-    String getExcludedValue();
+  String getExcludedValue();
 
-    void setExcludedValue(String excludedValue);
+  T setExcludedValue(String excludedValue);
 
-    String getValue();
+  String getValue();
 
-    void setValue(String value);
+  T setValue(String value);
 }

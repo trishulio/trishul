@@ -10,16 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TenantRepository
-        extends JpaRepository<Tenant, UUID>,
-                JpaSpecificationExecutor<Tenant>,
-                ExtendedRepository<UUID> {
-    @Override
-    @Query("select count(i) > 0 from tenant t where t.id in (:ids)")
-    boolean existsByIds(Iterable<UUID> ids);
+public interface TenantRepository extends JpaRepository<Tenant, UUID>,
+    JpaSpecificationExecutor<Tenant>, ExtendedRepository<UUID> {
+  @Override
+  @Query("select count(i) > 0 from tenant t where t.id in (:ids)")
+  boolean existsByIds(Iterable<UUID> ids);
 
-    @Override
-    @Modifying
-    @Query("delete from tenant t where t.id in (:ids)")
-    int deleteByIds(Iterable<UUID> ids);
+  @Override
+  @Modifying
+  @Query("delete from tenant t where t.id in (:ids)")
+  int deleteByIds(Iterable<UUID> ids);
 }

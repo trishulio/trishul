@@ -2,25 +2,25 @@ package io.trishul.iaas.auth.session.context;
 
 import java.time.LocalDateTime;
 
-public interface BaseIaasAuthorization {
-    final String ATTR_ACCESS_KEY_ID = "accessKeyId";
-    final String ATTR_ACCESS_SECRET_KEY = "accessSecretKey";
-    final String ATTR_SESSION_TOKEN = "sessionToken";
-    final String ATTR_EXPIRATION = "expiration";
+public interface BaseIaasAuthorization<T extends BaseIaasAuthorization<T>> {
+  final String ATTR_ACCESS_KEY_ID = "accessKeyId";
+  final String ATTR_ACCESS_SECRET_KEY = "accessSecretKey";
+  final String ATTR_SESSION_TOKEN = "sessionToken";
+  final String ATTR_EXPIRATION = "expiration";
 
-    String getAccessKeyId();
+  String getAccessKeyId();
 
-    void setAccessKeyId(String accessKeyId);
+  T setAccessKeyId(String accessKeyId);
 
-    String getAccessSecretKey();
+  String getAccessSecretKey();
 
-    void setAccessSecretKey(String accessSecretKey);
+  T setAccessSecretKey(String accessSecretKey);
 
-    String getSessionToken();
+  String getSessionToken();
 
-    void setSessionToken(String sessionToken);
+  T setSessionToken(String sessionToken);
 
-    LocalDateTime getExpiration();
+  LocalDateTime getExpiration();
 
-    void setExpiration(LocalDateTime Expiration);
+  T setExpiration(LocalDateTime Expiration);
 }

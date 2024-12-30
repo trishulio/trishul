@@ -1,7 +1,7 @@
 package io.trishul.tenant.entity;
 
-public interface TenantAccessor {
-    Tenant getTenant();
+public interface TenantAccessor<T extends TenantAccessor<T>> {
+  Tenant getTenant();
 
-    void setTenant(Tenant tenant);
+  T setTenant(Tenant tenant);
 }

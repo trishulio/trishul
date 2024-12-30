@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface CriteriaJoin {
-    public JoinType type() default JoinType.INNER;
+  public JoinType type() default JoinType.INNER;
 }

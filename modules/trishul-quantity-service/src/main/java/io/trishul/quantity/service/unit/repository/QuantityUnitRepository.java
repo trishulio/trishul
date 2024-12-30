@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public interface QuantityUnitRepository
-        extends JpaRepository<UnitEntity, String>, JpaSpecificationExecutor<UnitEntity> {
-    Optional<UnitEntity> findBySymbol(String symbol);
+    extends JpaRepository<UnitEntity, String>, JpaSpecificationExecutor<UnitEntity> {
+  Optional<UnitEntity> findBySymbol(String symbol);
 }

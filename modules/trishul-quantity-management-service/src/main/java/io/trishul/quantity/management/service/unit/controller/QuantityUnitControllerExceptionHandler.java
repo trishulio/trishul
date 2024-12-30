@@ -13,21 +13,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class QuantityUnitControllerExceptionHandler {
-    private static final Logger log =
-            LoggerFactory.getLogger(QuantityUnitControllerExceptionHandler.class);
+  @SuppressWarnings("unused")
+  private static final Logger log
+      = LoggerFactory.getLogger(QuantityUnitControllerExceptionHandler.class);
 
-    @ExceptionHandler(value = {IncompatibleQuantityUnitException.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorResponse incompatibleQuantityUnitException(
-            IncompatibleQuantityUnitException e, HttpServletRequest request) {
-        ErrorResponse response =
-                new ErrorResponse(
-                        LocalDateTime.now(),
-                        HttpStatus.BAD_REQUEST.value(),
-                        HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                        e.getMessage(),
-                        request.getRequestURI());
+  @ExceptionHandler(value = {IncompatibleQuantityUnitException.class})
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ErrorResponse incompatibleQuantityUnitException(IncompatibleQuantityUnitException e,
+      HttpServletRequest request) {
+    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+        HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), request.getRequestURI());
 
-        return response;
-    }
+    return response;
+  }
 }

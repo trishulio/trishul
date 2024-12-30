@@ -7,31 +7,27 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class TenantIaasVfsResourceMapper {
-    public static final TenantIaasVfsResourceMapper INSTANCE = new TenantIaasVfsResourceMapper();
+  public static final TenantIaasVfsResourceMapper INSTANCE = new TenantIaasVfsResourceMapper();
 
-    protected TenantIaasVfsResourceMapper() {}
+  protected TenantIaasVfsResourceMapper() {}
 
-    public List<TenantIaasVfsResources> fromComponents(
-            List<IaasObjectStore> objectStores, List<IaasPolicy> policies) {
-        int objectStoreCount = objectStores.size();
-        boolean areSameSize = objectStoreCount == policies.size();
+  public List<TenantIaasVfsResources> fromComponents(List<IaasObjectStore> objectStores,
+      List<IaasPolicy> policies) {
+    int objectStoreCount = objectStores.size();
+    boolean areSameSize = objectStoreCount == policies.size();
 
-        if (!areSameSize) {
-            throw new IllegalArgumentException("Resource Lists are not of the same size");
-        }
-
-        // TODO: Assumes that the objectStores and policies are ordered.
-        Iterator<IaasObjectStore> objectStoresIterator = objectStores.iterator();
-        Iterator<IaasPolicy> policiesIterator = policies.iterator();
-
-        List<TenantIaasVfsResources> resources =
-                Stream.generate(
-                                () ->
-                                        new TenantIaasVfsResources(
-                                                objectStoresIterator.next(),
-                                                policiesIterator.next()))
-                        .limit(objectStoreCount)
-                        .toList();
-        return resources;
+    if (!areSameSize) {
+      throw new IllegalArgumentException("Resource Lists are not of the same size");
     }
+
+    // TODO: Assumes that the objectStores and policies are ordered.
+    Iterator<IaasObjectStore> objectStoresIterator = objectStores.iterator();
+    Iterator<IaasPolicy> policiesIterator = policies.iterator();
+
+    List<TenantIaasVfsResources> resources = Stream
+        .generate(
+            () -> new TenantIaasVfsResources(objectStoresIterator.next(), policiesIterator.next()))
+        .limit(objectStoreCount).toList();
+    return resources;
+  }
 }

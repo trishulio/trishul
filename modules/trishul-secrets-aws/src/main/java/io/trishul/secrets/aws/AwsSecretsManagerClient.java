@@ -17,113 +17,117 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsSecretsManagerClient implements SecretsManager<String, String> {
-    private final AWSSecretsManager client;
+  private final AWSSecretsManager client;
 
-    private static final Logger logger = LoggerFactory.getLogger(AwsSecretsManagerClient.class);
+  private static final Logger log = LoggerFactory.getLogger(AwsSecretsManagerClient.class);
 
-    public AwsSecretsManagerClient(AWSSecretsManager client) {
-        this.client = client;
+  public AwsSecretsManagerClient(AWSSecretsManager client) {
+    this.client = client;
+  }
+
+  @Override
+  public String get(String secretId) throws IOException {
+    GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
+    GetSecretValueResult result;
+
+    try {
+      String secret = null;
+      result = client.getSecretValue(getSecretRequest);
+      if (result != null && result.getSecretString() != null) {
+        secret = result.getSecretString();
+      }
+
+      return secret;
+
+    } catch (ResourceNotFoundException e) {
+      return null;
+    } catch (InvalidRequestException | InvalidParameterException e) {
+      log.error("Error geting secret value for secretId: {}", secretId);
+      throw new IOException(e);
+    }
+  }
+
+  @Override
+  public Boolean exists(String secretId) throws IOException {
+    GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
+    GetSecretValueResult getSecretValueResult = null;
+    Boolean secretExists = false;
+
+    try {
+      getSecretValueResult = client.getSecretValue(getSecretRequest);
+      if (getSecretValueResult != null && getSecretValueResult.getSecretString() != null) {
+        secretExists = true;
+      }
+    } catch (ResourceNotFoundException e) {
+      secretExists = false;
+    } catch (InvalidRequestException | InvalidParameterException e) {
+      log.error("Error checking if secret exists for secretId: {}", secretId);
+      throw new IOException(e);
     }
 
-    @Override
-    public String get(String secretId) throws IOException {
-        GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
-        GetSecretValueResult result;
+    return secretExists;
+  }
 
-        try {
-            String secret = null;
-            result = client.getSecretValue(getSecretRequest);
-            if (result != null && result.getSecretString() != null) {
-                secret = result.getSecretString();
-            }
+  @Override
+  public void put(String secretId, String secret) throws IOException {
+    Boolean secretExists = this.exists(secretId);
 
-            return secret;
+    if (!secretExists) {
+      this.create(secretId, secret);
+    } else {
+      PutSecretValueRequest updateSecretRequest
+          = new PutSecretValueRequest().withSecretId(secretId).withSecretString(secret);
 
-        } catch (ResourceNotFoundException e) {
-            return null;
-        } catch (InvalidRequestException | InvalidParameterException e) {
-            logger.error("Error geting secret value for secretId: {}", secretId);
-            throw new IOException(e);
-        }
+      try {
+        client.putSecretValue(updateSecretRequest);
+      } catch (InvalidRequestException | InvalidParameterException e) {
+        log.error("Error updating secret with secretId: {}", secretId);
+        throw new IOException(e);
+      }
+    }
+  }
+
+  @Override
+  public void create(String secretId, String secret) throws IOException {
+    CreateSecretRequest createSecretRequest
+        = new CreateSecretRequest().withName(secretId).withSecretString(secret);
+
+    try {
+      client.createSecret(createSecretRequest);
+    } catch (InvalidRequestException | InvalidParameterException e) {
+      log.error("Error createing secret with secretId: {}", secretId);
+      throw new IOException(e);
+    }
+  }
+
+  @Override
+  public void update(String secretId, String secret) throws IOException {
+    UpdateSecretRequest updateSecretRequest
+        = new UpdateSecretRequest().withSecretId(secretId).withSecretString(secret);
+
+    try {
+      client.updateSecret(updateSecretRequest);
+    } catch (InvalidRequestException | InvalidParameterException e) {
+      log.error("Error updating secret with secretId: {}", secretId);
+      throw new IOException(e);
+    }
+  }
+
+  @Override
+  public boolean remove(String secretId) throws IOException {
+    boolean success = false;
+    try {
+      DeleteSecretRequest req = new DeleteSecretRequest().withSecretId(secretId);
+      DeleteSecretResult result = client.deleteSecret(req);
+
+      log.info("Successfully deleted SecretID: {} with RequestId: {}", secretId,
+          result.getSdkResponseMetadata().getRequestId());
+
+      success = true;
+    } catch (ResourceNotFoundException e) {
+      log.error("Error deleting secret: {}", secretId);
     }
 
-    @Override
-    public Boolean exists(String secretId) throws IOException {
-        GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
-        GetSecretValueResult getSecretValueResult = null;
-        Boolean secretExists = false;
-
-        try {
-            getSecretValueResult = client.getSecretValue(getSecretRequest);
-            if (getSecretValueResult != null && getSecretValueResult.getSecretString() != null) {
-                secretExists = true;
-            }
-        } catch (ResourceNotFoundException e) {
-            secretExists = false;
-        } catch (InvalidRequestException | InvalidParameterException e) {
-            logger.error("Error checking if secret exists for secretId: {}", secretId);
-            throw new IOException(e);
-        }
-
-        return secretExists;
-    }
-
-    @Override
-    public void put(String secretId, String secret) throws IOException {
-        Boolean secretExists = this.exists(secretId);
-
-        if (!secretExists) {
-            this.create(secretId, secret);
-        } else {
-            PutSecretValueRequest updateSecretRequest =
-                    new PutSecretValueRequest().withSecretId(secretId).withSecretString(secret);
-
-            try {
-                client.putSecretValue(updateSecretRequest);
-            } catch (InvalidRequestException | InvalidParameterException e) {
-                logger.error("Error updating secret with secretId: {}", secretId);
-                throw new IOException(e);
-            }
-        }
-    }
-
-    @Override
-    public void create(String secretId, String secret) throws IOException {
-        CreateSecretRequest createSecretRequest =
-                new CreateSecretRequest().withName(secretId).withSecretString(secret);
-
-        try {
-            client.createSecret(createSecretRequest);
-        } catch (InvalidRequestException | InvalidParameterException e) {
-            logger.error("Error createing secret with secretId: {}", secretId);
-            throw new IOException(e);
-        }
-    }
-
-    @Override
-    public void update(String secretId, String secret) throws IOException {
-        UpdateSecretRequest updateSecretRequest =
-                new UpdateSecretRequest().withSecretId(secretId).withSecretString(secret);
-
-        try {
-            client.updateSecret(updateSecretRequest);
-        } catch (InvalidRequestException | InvalidParameterException e) {
-            logger.error("Error updating secret with secretId: {}", secretId);
-            throw new IOException(e);
-        }
-    }
-
-    @Override
-    public boolean remove(String secretId) throws IOException {
-        boolean success = false;
-        try {
-            DeleteSecretRequest req = new DeleteSecretRequest().withSecretId(secretId);
-            DeleteSecretResult result = client.deleteSecret(req);
-            success = true;
-        } catch (ResourceNotFoundException e) {
-            logger.error("Error deleting secret: {}", secretId);
-        }
-
-        return success;
-    }
+    return success;
+  }
 }

@@ -1,5 +1,5 @@
 package io.trishul.base.types.base.pojo;
 
-public interface VersionAccessor extends Versioned {
-    void setVersion(Integer version);
+public interface VersionAccessor<T extends VersionAccessor<T>> extends Versioned {
+  T setVersion(Integer version);
 }

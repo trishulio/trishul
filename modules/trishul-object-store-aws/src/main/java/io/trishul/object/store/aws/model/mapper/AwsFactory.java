@@ -11,28 +11,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsFactory {
-    private static final Logger logger = LoggerFactory.getLogger(AwsFactory.class);
+  @SuppressWarnings("unused")
+  private static final Logger logg = LoggerFactory.getLogger(AwsFactory.class);
 
-    public AmazonS3 s3Client(String region, String s3AccessKeyId, String s3Secret) {
-        BasicAWSCredentials basicAwsCredentials = new BasicAWSCredentials(s3AccessKeyId, s3Secret);
-        AWSCredentialsProvider credsProvider =
-                new AWSStaticCredentialsProvider(basicAwsCredentials);
+  public AmazonS3 s3Client(String region, String s3AccessKeyId, String s3Secret) {
+    BasicAWSCredentials basicAwsCredentials = new BasicAWSCredentials(s3AccessKeyId, s3Secret);
+    AWSCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(basicAwsCredentials);
 
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(region)
-                .withCredentials(credsProvider)
-                .build();
-    }
+    return AmazonS3ClientBuilder.standard().withRegion(region).withCredentials(credsProvider)
+        .build();
+  }
 
-    public AmazonS3 s3Client(
-            String region, String s3AccessKeyId, String s3Secret, String sessionToken) {
-        AWSCredentials awsCreds =
-                new BasicSessionCredentials(s3AccessKeyId, s3Secret, sessionToken);
-        AWSCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(awsCreds);
+  public AmazonS3 s3Client(String region, String s3AccessKeyId, String s3Secret,
+      String sessionToken) {
+    AWSCredentials awsCreds = new BasicSessionCredentials(s3AccessKeyId, s3Secret, sessionToken);
+    AWSCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(awsCreds);
 
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(region)
-                .withCredentials(credsProvider)
-                .build();
-    }
+    return AmazonS3ClientBuilder.standard().withRegion(region).withCredentials(credsProvider)
+        .build();
+  }
 }

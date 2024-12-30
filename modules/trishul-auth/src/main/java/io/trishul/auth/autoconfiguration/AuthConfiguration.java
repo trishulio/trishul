@@ -14,22 +14,22 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
 public class AuthConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(ContextHolder.class)
-    public ContextHolder ctxHolder() {
-        return new ThreadLocalContextHolder();
-    }
+  @Bean
+  @ConditionalOnMissingBean(ContextHolder.class)
+  public ContextHolder ctxHolder() {
+    return new ThreadLocalContextHolder();
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(ContextHolderFilter.class)
-    public Filter ctxHolderFilter(ContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
-        return new ContextHolderFilter((ThreadLocalContextHolder) ctxHolder, ctxBuilder);
-    }
+  @Bean
+  @ConditionalOnMissingBean(ContextHolderFilter.class)
+  public Filter ctxHolderFilter(ContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
+    return new ContextHolderFilter((ThreadLocalContextHolder) ctxHolder, ctxBuilder);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(JwtDecoder.class)
-    public JwtDecoder decoder(OAuth2ResourceServerProperties props) {
-        String jwkUri = props.getJwt().getJwkSetUri();
-        return NimbusJwtDecoder.withJwkSetUri(jwkUri).build();
-    }
+  @Bean
+  @ConditionalOnMissingBean(JwtDecoder.class)
+  public JwtDecoder decoder(OAuth2ResourceServerProperties props) {
+    String jwkUri = props.getJwt().getJwkSetUri();
+    return NimbusJwtDecoder.withJwkSetUri(jwkUri).build();
+  }
 }

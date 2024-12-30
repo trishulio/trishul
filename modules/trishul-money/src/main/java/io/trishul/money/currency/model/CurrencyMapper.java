@@ -8,29 +8,29 @@ import org.slf4j.LoggerFactory;
 
 @Mapper
 public abstract class CurrencyMapper {
-    @SuppressWarnings("unused")
-    private static final Logger log = LoggerFactory.getLogger(CurrencyMapper.class);
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(CurrencyMapper.class);
 
-    public static final CurrencyMapper INSTANCE = Mappers.getMapper(CurrencyMapper.class);
+  public static final CurrencyMapper INSTANCE = Mappers.getMapper(CurrencyMapper.class);
 
-    public Currency toEntity(String code) {
-        Currency entity = null;
-        CurrencyUnit unit = toUnit(code);
-        if (unit != null) {
-            entity = toEntity(unit);
-        }
-
-        return entity;
+  public Currency toEntity(String code) {
+    Currency entity = null;
+    CurrencyUnit unit = toUnit(code);
+    if (unit != null) {
+      entity = toEntity(unit);
     }
 
-    public CurrencyUnit toUnit(String code) {
-        CurrencyUnit unit = null;
-        if (code != null) {
-            unit = CurrencyUnit.of(code);
-        }
+    return entity;
+  }
 
-        return unit;
+  public CurrencyUnit toUnit(String code) {
+    CurrencyUnit unit = null;
+    if (code != null) {
+      unit = CurrencyUnit.of(code);
     }
 
-    public abstract Currency toEntity(CurrencyUnit unit);
+    return unit;
+  }
+
+  public abstract Currency toEntity(CurrencyUnit unit);
 }

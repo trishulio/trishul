@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsAutoConfiguration {
 
-    @Bean
-    public PrincipalContextBuilder ctxBuilder() {
-        return new CognitoPrincipalContextBuilder();
-    }
+  @Bean
+  public PrincipalContextBuilder ctxBuilder() {
+    return new CognitoPrincipalContextBuilder();
+  }
 }

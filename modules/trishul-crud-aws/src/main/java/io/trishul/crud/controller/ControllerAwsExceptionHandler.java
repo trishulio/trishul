@@ -1,26 +1,21 @@
 package io.trishul.crud.controller;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
-import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.convert.ConversionFailedException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.amazonaws.AmazonServiceException;
+
 @RestControllerAdvice
 public class ControllerAwsExceptionHandler {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(ControllerAwsExceptionHandler.class);
 
     @ExceptionHandler(value = { AmazonServiceException.class })

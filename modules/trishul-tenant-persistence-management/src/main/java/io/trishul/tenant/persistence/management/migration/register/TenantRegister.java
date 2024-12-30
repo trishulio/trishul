@@ -1,13 +1,14 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
 import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.entity.TenantData;
 
 public interface TenantRegister {
-    void add(Tenant tenant);
+  void add(TenantData tenant);
 
-    void put(Tenant tenant);
+  void put(TenantData tenant);
 
-    void remove(Tenant tenant);
+  void remove(TenantData tenant);
 
-    boolean exists(Tenant tenant);
+  boolean exists(TenantData tenant);
 }

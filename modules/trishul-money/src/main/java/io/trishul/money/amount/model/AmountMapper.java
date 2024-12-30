@@ -7,9 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = {TaxMapper.class, MoneyMapper.class})
 public interface AmountMapper {
-    final AmountMapper INSTANCE = Mappers.getMapper(AmountMapper.class);
+  final AmountMapper INSTANCE = Mappers.getMapper(AmountMapper.class);
 
-    AmountDto toDto(Amount amount);
+  AmountDto toDto(Amount amount);
 
-    Amount fromDto(AmountDto dto);
+  Amount fromDto(AmountDto dto);
 }

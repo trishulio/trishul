@@ -1,9 +1,9 @@
 package io.trishul.user.model;
 
-public interface UserAccessor {
-    final String ATTR_USER = "user";
+public interface UserAccessor<T extends UserAccessor<T>> {
+  final String ATTR_USER = "user";
 
-    User getUser();
+  User getUser();
 
-    void setUser(User user);
+  T setUser(User user);
 }

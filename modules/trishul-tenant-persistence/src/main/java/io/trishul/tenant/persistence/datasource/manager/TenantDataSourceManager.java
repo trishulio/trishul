@@ -6,5 +6,5 @@ import java.util.UUID;
 import javax.sql.DataSource;
 
 public interface TenantDataSourceManager {
-    DataSource getDataSource(UUID tenantId) throws SQLException, IOException;
+  DataSource getDataSource(UUID tenantId) throws SQLException, IOException;
 }

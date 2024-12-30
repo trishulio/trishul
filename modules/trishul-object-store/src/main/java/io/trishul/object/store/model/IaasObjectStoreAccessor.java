@@ -1,7 +1,7 @@
 package io.trishul.object.store.model;
 
-public interface IaasObjectStoreAccessor {
-    IaasObjectStore getIaasObjectStore();
+public interface IaasObjectStoreAccessor<T extends IaasObjectStoreAccessor<T>> {
+  IaasObjectStore getIaasObjectStore();
 
-    void setIaasObjectStore(IaasObjectStore tenantObjectStore);
+  T setIaasObjectStore(IaasObjectStore tenantObjectStore);
 }

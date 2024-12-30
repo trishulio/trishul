@@ -1,9 +1,9 @@
 package io.trishul.user.model;
 
-public interface AssignedToAccessor {
-    final String ATTR_ASSIGNED_TO = "assignedTo";
+public interface AssignedToAccessor<T extends AssignedToAccessor<T>> {
+  final String ATTR_ASSIGNED_TO = "assignedTo";
 
-    User getAssignedTo();
+  User getAssignedTo();
 
-    void setAssignedTo(User user);
+  T setAssignedTo(User user);
 }

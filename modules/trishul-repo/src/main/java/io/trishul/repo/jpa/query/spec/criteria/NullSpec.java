@@ -7,9 +7,8 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public class NullSpec extends BaseModel implements CriteriaSpec<Integer> {
-    @Override
-    public Expression<Integer> getExpression(
-            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return cb.nullLiteral(Integer.class);
-    }
+  @Override
+  public Expression<Integer> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    return cb.nullLiteral(Integer.class);
+  }
 }

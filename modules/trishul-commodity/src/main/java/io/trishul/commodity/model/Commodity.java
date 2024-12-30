@@ -4,7 +4,7 @@ import javax.measure.Quantity;
 import org.joda.money.Money;
 
 public interface Commodity {
-    Money getPrice();
+  Money getPrice();
 
-    Quantity<?> getQuantity();
+  Quantity<?> getQuantity();
 }

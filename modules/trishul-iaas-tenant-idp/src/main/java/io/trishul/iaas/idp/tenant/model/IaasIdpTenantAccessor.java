@@ -1,7 +1,7 @@
 package io.trishul.iaas.idp.tenant.model;
 
-public interface IaasIdpTenantAccessor {
-    IaasIdpTenant getIdpTenant();
+public interface IaasIdpTenantAccessor<T extends IaasIdpTenantAccessor<T>> {
+  IaasIdpTenant getIdpTenant();
 
-    void setIdpTenant(IaasIdpTenant idpTenant);
+  T setIdpTenant(IaasIdpTenant idpTenant);
 }

@@ -10,12 +10,12 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = LocalDateTimeMapper.class)
 public interface AwsIaasObjectStoreMapper extends IaasEntityMapper<Bucket, IaasObjectStore> {
-    final AwsIaasObjectStoreMapper INSTANCE = Mappers.getMapper(AwsIaasObjectStoreMapper.class);
+  final AwsIaasObjectStoreMapper INSTANCE = Mappers.getMapper(AwsIaasObjectStoreMapper.class);
 
-    @Override
-    @Mapping(ignore = true, target = IaasObjectStore.ATTR_ID) // Name is the ID
-    @Mapping(source = "name", target = IaasObjectStore.ATTR_NAME)
-    @Mapping(source = "creationDate", target = IaasObjectStore.ATTR_CREATED_AT)
-    @Mapping(ignore = true, target = IaasObjectStore.ATTR_LAST_UPDATED)
-    IaasObjectStore fromIaasEntity(Bucket bucket);
+  @Override
+  @Mapping(ignore = true, target = IaasObjectStore.ATTR_ID) // Name is the ID
+  @Mapping(source = "name", target = IaasObjectStore.ATTR_NAME)
+  @Mapping(source = "creationDate", target = IaasObjectStore.ATTR_CREATED_AT)
+  @Mapping(ignore = true, target = IaasObjectStore.ATTR_LAST_UPDATED)
+  IaasObjectStore fromIaasEntity(Bucket bucket);
 }

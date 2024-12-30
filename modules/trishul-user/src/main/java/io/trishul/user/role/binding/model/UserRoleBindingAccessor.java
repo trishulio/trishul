@@ -2,8 +2,8 @@ package io.trishul.user.role.binding.model;
 
 import java.util.List;
 
-public interface UserRoleBindingAccessor {
-    List<UserRoleBinding> getRoleBindings();
+public interface UserRoleBindingAccessor<T extends UserRoleBindingAccessor<T>> {
+  List<UserRoleBinding> getRoleBindings();
 
-    void setRoleBindings(List<UserRoleBinding> roleBindings);
+  T setRoleBindings(List<UserRoleBinding> roleBindings);
 }

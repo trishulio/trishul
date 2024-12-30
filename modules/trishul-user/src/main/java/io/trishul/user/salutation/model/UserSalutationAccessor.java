@@ -1,9 +1,9 @@
 package io.trishul.user.salutation.model;
 
-public interface UserSalutationAccessor {
-    final String ATTR_SALUTATION = "salutation";
+public interface UserSalutationAccessor<T extends UserSalutationAccessor<T>> {
+  final String ATTR_SALUTATION = "salutation";
 
-    UserSalutation getSalutation();
+  UserSalutation getSalutation();
 
-    void setSalutation(UserSalutation salutation);
+  T setSalutation(UserSalutation salutation);
 }

@@ -28,64 +28,62 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
 public class HibernateAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(MultiTenantConnectionProvider.class)
-    public MultiTenantConnectionProvider<String> multiTenantConnectionProvider(
-            TenantDataSourceManager tenantDataSourceManager, DataSource adminDataSource) {
-        MultiTenantConnectionProvider<String> multiTenantConnectionProvider =
-                new TenantConnectionProviderPool(tenantDataSourceManager, adminDataSource);
-        return multiTenantConnectionProvider;
-    }
+  @Bean
+  @ConditionalOnMissingBean(MultiTenantConnectionProvider.class)
+  public MultiTenantConnectionProvider<String> multiTenantConnectionProvider(
+      TenantDataSourceManager tenantDataSourceManager, DataSource adminDataSource) {
+    MultiTenantConnectionProvider<String> multiTenantConnectionProvider
+        = new TenantConnectionProviderPool(tenantDataSourceManager, adminDataSource);
+    return multiTenantConnectionProvider;
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(CurrentTenantIdentifierResolver.class)
-    public CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver(
-            TenantIdProvider tenantIdProvider) {
-        CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver =
-                new TenantIdentifierResolver(tenantIdProvider);
-        return currentTenantIdentifierResolver;
-    }
+  @Bean
+  @ConditionalOnMissingBean(CurrentTenantIdentifierResolver.class)
+  public CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver(
+      TenantIdProvider tenantIdProvider) {
+    CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver
+        = new TenantIdentifierResolver(tenantIdProvider);
+    return currentTenantIdentifierResolver;
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(JpaVendorAdapter.class)
-    public JpaVendorAdapter jpaVendorAdapter() {
-        return new HibernateJpaVendorAdapter();
-    }
+  @Bean
+  @ConditionalOnMissingBean(JpaVendorAdapter.class)
+  public JpaVendorAdapter jpaVendorAdapter() {
+    return new HibernateJpaVendorAdapter();
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(LocalContainerEntityManagerFactoryBean.class)
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            JpaVendorAdapter jpaVendorAdapter,
-            DataSourceManager dataSourceManager,
-            MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
-            CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver) {
-        LocalContainerEntityManagerFactoryBean entityManagerFactory =
-                new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(dataSourceManager.getAdminDataSource());
-        entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactory.setPackagesToScan(
-                "io.company.brewcraft.model"); // TODO: need to be integrated with some
-        // interface
-        // that an application will implement
+  @Bean
+  @ConditionalOnMissingBean(LocalContainerEntityManagerFactoryBean.class)
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+      JpaVendorAdapter jpaVendorAdapter, DataSourceManager dataSourceManager,
+      MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
+      CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory
+        = new LocalContainerEntityManagerFactoryBean();
+    entityManagerFactory.setDataSource(dataSourceManager.getAdminDataSource());
+    entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
+    entityManagerFactory.setPackagesToScan("io.company.brewcraft.model"); // TODO: need to be
+                                                                          // integrated with some
+    // interface
+    // that an application will implement
 
-        Map<String, Object> jpaProperties = new HashMap<>();
-        jpaProperties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-        jpaProperties.put(
-                Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
-        jpaProperties.put(
-                Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
+    Map<String, Object> jpaProperties = new HashMap<>();
+    jpaProperties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+    jpaProperties.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
+    jpaProperties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER,
+        currentTenantIdentifierResolver);
 
-        entityManagerFactory.setJpaPropertyMap(jpaProperties);
-        return entityManagerFactory;
-    }
+    entityManagerFactory.setJpaPropertyMap(jpaProperties);
+    return entityManagerFactory;
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(PlatformTransactionManager.class)
-    public PlatformTransactionManager transactionManager(
-            LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-        PlatformTransactionManager transactionManager =
-                new JpaTransactionManager(entityManagerFactory.getObject());
+  @Bean
+  @ConditionalOnMissingBean(PlatformTransactionManager.class)
+  public PlatformTransactionManager transactionManager(
+      LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+    PlatformTransactionManager transactionManager
+        = new JpaTransactionManager(entityManagerFactory.getObject());
 
-        return transactionManager;
-    }
+    return transactionManager;
+  }
 }

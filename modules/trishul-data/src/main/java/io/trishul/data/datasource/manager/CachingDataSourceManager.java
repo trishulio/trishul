@@ -14,41 +14,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CachingDataSourceManager implements DataSourceManager {
-    private static final Logger log = LoggerFactory.getLogger(CachingDataSourceManager.class);
+  private static final Logger log = LoggerFactory.getLogger(CachingDataSourceManager.class);
 
-    private final LoadingCache<DataSourceConfiguration, DataSource> cache;
-    private final DataSource adminDs;
+  private final LoadingCache<DataSourceConfiguration, DataSource> cache;
+  private final DataSource adminDs;
 
-    public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dsBuilder) {
-        this.adminDs = adminDs;
-        this.cache =
-                CacheBuilder.newBuilder()
-                        .build(
-                                new CacheLoader<DataSourceConfiguration, DataSource>() {
-                                    @Override
-                                    public DataSource load(
-                                            @Nonnull DataSourceConfiguration dsConfig)
-                                            throws Exception {
-                                        log.debug(
-                                                "Loading new datasource for schema: {}",
-                                                dsConfig.getSchemaName());
+  public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dsBuilder) {
+    this.adminDs = adminDs;
+    this.cache
+        = CacheBuilder.newBuilder().build(new CacheLoader<DataSourceConfiguration, DataSource>() {
+          @Override
+          public DataSource load(@Nonnull DataSourceConfiguration dsConfig) throws Exception {
+            log.debug("Loading new datasource for schema: {}", dsConfig.getSchemaName());
 
-                                        DataSource ds =
-                                                dsBuilder
-                                                        .clear()
-                                                        .url(dsConfig.getUrl().toString())
-                                                        .schema(dsConfig.getSchemaName())
-                                                        .username(dsConfig.getUserName())
-                                                        .password(dsConfig.getPassword())
-                                                        .poolSize(dsConfig.getPoolSize())
-                                                        .autoCommit(dsConfig.isAutoCommit())
-                                                        .build();
-                                        return ds;
-                                    }
-                                });
-    }
+            DataSource ds = dsBuilder.clear().url(dsConfig.getUrl().toString())
+                .schema(dsConfig.getSchemaName()).username(dsConfig.getUserName())
+                .password(dsConfig.getPassword()).poolSize(dsConfig.getPoolSize())
+                .autoCommit(dsConfig.isAutoCommit()).build();
+            return ds;
+          }
+        });
+  }
 
-    @Override
+  @Override
     public DataSource getDataSource(DataSourceConfiguration dsConfig)
             throws SQLException, IOException {
         DataSource ds = null;
@@ -73,8 +61,8 @@ public class CachingDataSourceManager implements DataSourceManager {
         return ds;
     }
 
-    @Override
-    public DataSource getAdminDataSource() {
-        return this.adminDs;
-    }
+  @Override
+  public DataSource getAdminDataSource() {
+    return this.adminDs;
+  }
 }

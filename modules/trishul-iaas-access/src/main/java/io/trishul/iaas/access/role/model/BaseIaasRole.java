@@ -2,35 +2,35 @@ package io.trishul.iaas.access.role.model;
 
 import java.time.LocalDateTime;
 
-public interface BaseIaasRole {
-    final String ATTR_NAME = "name";
-    final String ATTR_DESCRIPTION = "description";
-    final String ATTR_ASSUME_POLICY_DOCUMENT = "assumePolicyDocument";
-    final String ATTR_IAAS_RESOURCE_NAME = "iaasResourceName";
-    final String ATTR_IAAS_ID = "iaasId";
-    final String ATTR_LAST_USED = "lastUsed";
+public interface BaseIaasRole<T extends BaseIaasRole<T>> {
+  final String ATTR_NAME = "name";
+  final String ATTR_DESCRIPTION = "description";
+  final String ATTR_ASSUME_POLICY_DOCUMENT = "assumePolicyDocument";
+  final String ATTR_IAAS_RESOURCE_NAME = "iaasResourceName";
+  final String ATTR_IAAS_ID = "iaasId";
+  final String ATTR_LAST_USED = "lastUsed";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 
-    String getDescription();
+  String getDescription();
 
-    void setDescription(String description);
+  T setDescription(String description);
 
-    String getAssumePolicyDocument();
+  String getAssumePolicyDocument();
 
-    void setAssumePolicyDocument(String assumePolicyDocument);
+  T setAssumePolicyDocument(String assumePolicyDocument);
 
-    String getIaasResourceName();
+  String getIaasResourceName();
 
-    void setIaasResourceName(String iaasResourceName);
+  T setIaasResourceName(String iaasResourceName);
 
-    String getIaasId();
+  String getIaasId();
 
-    void setIaasId(String iaasId);
+  T setIaasId(String iaasId);
 
-    LocalDateTime getLastUsed();
+  LocalDateTime getLastUsed();
 
-    void setLastUsed(LocalDateTime lastUsed);
+  T setLastUsed(LocalDateTime lastUsed);
 }

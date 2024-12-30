@@ -2,33 +2,32 @@ package io.trishul.quantity.unit.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class UnitDtoTest {
-    private UnitDto dto;
+  private UnitDto dto;
 
-    @BeforeEach
-    public void init() {
-        dto = new UnitDto();
-    }
+  @BeforeEach
+  public void init() {
+    dto = new UnitDto();
+  }
 
-    @Test
-    public void testNoArgConstructor() {
-        assertNull(dto.getSymbol());
-    }
+  @Test
+  public void testNoArgConstructor() {
+    assertNull(dto.getSymbol());
+  }
 
-    @Test
-    public void testAllArgConstructor() {
-        dto = new UnitDto("SYMBOL");
+  @Test
+  public void testAllArgConstructor() {
+    dto = new UnitDto("SYMBOL");
 
-        assertEquals("SYMBOL", dto.getSymbol());
-    }
+    assertEquals("SYMBOL", dto.getSymbol());
+  }
 
-    @Test
-    public void testAccessSymbol() {
-        dto.setSymbol("SYMBOL_1");
-        assertEquals("SYMBOL_1", dto.getSymbol());
-    }
+  @Test
+  public void testAccessSymbol() {
+    dto.setSymbol("SYMBOL_1");
+    assertEquals("SYMBOL_1", dto.getSymbol());
+  }
 }

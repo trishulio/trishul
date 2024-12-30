@@ -1,75 +1,76 @@
 package io.trishul.user.status;
 
-import io.trishul.model.base.dto.BaseDto;
 import java.time.LocalDateTime;
+import io.trishul.model.base.dto.BaseDto;
 
 public class UserStatusDto extends BaseDto {
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
-    private LocalDateTime lastUpdated;
+  private LocalDateTime lastUpdated;
 
-    private Integer version;
+  private Integer version;
 
-    public UserStatusDto() {}
+  public UserStatusDto() {}
 
-    public UserStatusDto(Long id) {
-        setId(id);
-    }
+  public UserStatusDto(Long id) {
+    setId(id);
+  }
 
-    public UserStatusDto(
-            Long id,
-            String name,
-            LocalDateTime createdAt,
-            LocalDateTime lastUpdated,
-            Integer version) {
-        this(id);
-        setName(name);
-        setCreatedAt(createdAt);
-        setLastUpdated(lastUpdated);
-        setVersion(version);
-    }
+  public UserStatusDto(Long id, String name, LocalDateTime createdAt, LocalDateTime lastUpdated,
+      Integer version) {
+    this(id);
+    setName(name);
+    setCreatedAt(createdAt);
+    setLastUpdated(lastUpdated);
+    setVersion(version);
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public final void setId(Long id) {
-        this.id = id;
-    }
+  public final UserStatusDto setId(Long id) {
+    this.id = id;
+    return this;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public final void setName(String name) {
-        this.name = name;
-    }
+  public final UserStatusDto setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
 
-    public final void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+  public final UserStatusDto setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
+  public LocalDateTime getLastUpdated() {
+    return lastUpdated;
+  }
 
-    public final void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+  public final UserStatusDto setLastUpdated(LocalDateTime lastUpdated) {
+    this.lastUpdated = lastUpdated;
+    return this;
+  }
 
-    public Integer getVersion() {
-        return version;
-    }
+  public Integer getVersion() {
+    return version;
+  }
 
-    public final void setVersion(Integer version) {
-        this.version = version;
-    }
+  public final UserStatusDto setVersion(Integer version) {
+    this.version = version;
+    return this;
+  }
 }

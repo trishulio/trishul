@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
 import java.lang.reflect.Method;
@@ -27,69 +26,53 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class UserSalutationServiceTest {
-    private UserSalutationService userSalutationService;
+  private UserSalutationService userSalutationService;
 
-    private UserSalutationRepository userSalutationRepository;
+  private UserSalutationRepository userSalutationRepository;
 
-    @BeforeEach
-    public void init() {
-        userSalutationRepository = Mockito.mock(UserSalutationRepository.class);
-        userSalutationService = new UserSalutationService(userSalutationRepository);
+  @BeforeEach
+  public void init() {
+    userSalutationRepository = Mockito.mock(UserSalutationRepository.class);
+    userSalutationService = new UserSalutationService(userSalutationRepository);
+  }
+
+  @Test
+  public void testGetSalutations_returnsSalutations() throws Exception {
+    Page<UserSalutation> expectedSalutationsPage = new PageImpl<>(List.of(new UserSalutation(1L,
+        "MR", LocalDateTime.of(2018, 1, 2, 3, 4), LocalDateTime.of(2019, 1, 2, 3, 4), 1)));
+
+    final ArgumentCaptor<Specification<UserSalutation>> specificationCaptor
+        = ArgumentCaptor.forClass(Specification.class);
+
+    when(userSalutationRepository.findAll(specificationCaptor.capture(),
+        eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
+            .thenReturn(expectedSalutationsPage);
+
+    Page<UserSalutation> actualSalutationsPage
+        = userSalutationService.getSalutations(null, new TreeSet<>(List.of("id")), true, 0, 100);
+
+    assertEquals(List.of(new UserSalutation(1L, "MR", LocalDateTime.of(2018, 1, 2, 3, 4),
+        LocalDateTime.of(2019, 1, 2, 3, 4), 1)), actualSalutationsPage.getContent());
+
+    // TODO: Pending testing for the specification
+    // specificationCaptor.getValue();
+  }
+
+  @Test
+  public void testUserSalutationService_classIsTransactional() throws Exception {
+    Transactional transactional
+        = userSalutationService.getClass().getAnnotation(Transactional.class);
+
+    assertNotNull(transactional);
+    assertEquals(transactional.isolation(), Isolation.DEFAULT);
+    assertEquals(transactional.propagation(), Propagation.REQUIRED);
+  }
+
+  @Test
+  public void testUserSalutationService_methodsAreNotTransactional() throws Exception {
+    Method[] methods = userSalutationService.getClass().getMethods();
+    for (Method method : methods) {
+      assertFalse(method.isAnnotationPresent(Transactional.class));
     }
-
-    @Test
-    public void testGetSalutations_returnsSalutations() throws Exception {
-        Page<UserSalutation> expectedSalutationsPage =
-                new PageImpl<>(
-                        List.of(
-                                new UserSalutation(
-                                        1L,
-                                        "MR",
-                                        LocalDateTime.of(2018, 1, 2, 3, 4),
-                                        LocalDateTime.of(2019, 1, 2, 3, 4),
-                                        1)));
-
-        final ArgumentCaptor<Specification<UserSalutation>> specificationCaptor =
-                ArgumentCaptor.forClass(Specification.class);
-
-        when(userSalutationRepository.findAll(
-                        specificationCaptor.capture(),
-                        eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
-                .thenReturn(expectedSalutationsPage);
-
-        Page<UserSalutation> actualSalutationsPage =
-                userSalutationService.getSalutations(
-                        null, new TreeSet<>(List.of("id")), true, 0, 100);
-
-        assertEquals(
-                List.of(
-                        new UserSalutation(
-                                1L,
-                                "MR",
-                                LocalDateTime.of(2018, 1, 2, 3, 4),
-                                LocalDateTime.of(2019, 1, 2, 3, 4),
-                                1)),
-                actualSalutationsPage.getContent());
-
-        // TODO: Pending testing for the specification
-        // specificationCaptor.getValue();
-    }
-
-    @Test
-    public void testUserSalutationService_classIsTransactional() throws Exception {
-        Transactional transactional =
-                userSalutationService.getClass().getAnnotation(Transactional.class);
-
-        assertNotNull(transactional);
-        assertEquals(transactional.isolation(), Isolation.DEFAULT);
-        assertEquals(transactional.propagation(), Propagation.REQUIRED);
-    }
-
-    @Test
-    public void testUserSalutationService_methodsAreNotTransactional() throws Exception {
-        Method[] methods = userSalutationService.getClass().getMethods();
-        for (Method method : methods) {
-            assertFalse(method.isAnnotationPresent(Transactional.class));
-        }
-    }
+  }
 }

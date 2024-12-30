@@ -1,50 +1,51 @@
 package io.trishul.user.model;
 
+import java.net.URI;
+import java.util.List;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutationAccessor;
 import io.trishul.user.status.UserStatusAccessor;
-import java.net.URI;
-import java.util.List;
 
-public interface BaseUser extends UserStatusAccessor, UserSalutationAccessor {
-    final String ATTR_DISPLAY_NAME = "displayName";
-    final String ATTR_FIRST_NAME = "firstName";
-    final String ATTR_LAST_NAME = "lastName";
-    final String ATTR_EMAIL = "email";
-    final String ATTR_IMAGE_SRC = "imageSrc";
-    final String ATTR_PHONE_NUMBER = "phoneNumber";
-    final String ATTR_USER_NAME = "userName";
-    final String ATTR_ROLES = "roles";
+public interface BaseUser<T extends BaseUser<T>>
+    extends UserStatusAccessor<T>, UserSalutationAccessor<T> {
+  final String ATTR_DISPLAY_NAME = "displayName";
+  final String ATTR_FIRST_NAME = "firstName";
+  final String ATTR_LAST_NAME = "lastName";
+  final String ATTR_EMAIL = "email";
+  final String ATTR_IMAGE_SRC = "imageSrc";
+  final String ATTR_PHONE_NUMBER = "phoneNumber";
+  final String ATTR_USER_NAME = "userName";
+  final String ATTR_ROLES = "roles";
 
-    String getDisplayName();
+  String getDisplayName();
 
-    void setDisplayName(String displayName);
+  T setDisplayName(String displayName);
 
-    String getFirstName();
+  String getFirstName();
 
-    void setFirstName(String firstName);
+  T setFirstName(String firstName);
 
-    String getLastName();
+  String getLastName();
 
-    void setLastName(String lastName);
+  T setLastName(String lastName);
 
-    String getEmail();
+  String getEmail();
 
-    void setEmail(String email);
+  T setEmail(String email);
 
-    URI getImageSrc();
+  URI getImageSrc();
 
-    void setImageSrc(URI imageSrc);
+  T setImageSrc(URI imageSrc);
 
-    String getPhoneNumber();
+  String getPhoneNumber();
 
-    void setPhoneNumber(String phoneNumber);
+  T setPhoneNumber(String phoneNumber);
 
-    String getUserName();
+  String getUserName();
 
-    void setUserName(String userName);
+  T setUserName(String userName);
 
-    List<UserRole> getRoles();
+  List<UserRole> getRoles();
 
-    void setRoles(List<UserRole> roles);
+  T setRoles(List<UserRole> roles);
 }

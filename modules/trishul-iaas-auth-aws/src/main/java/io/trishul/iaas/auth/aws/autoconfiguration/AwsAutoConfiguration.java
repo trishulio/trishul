@@ -16,40 +16,36 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsAutoConfiguration {
 
-    @Bean
-    public AwsFactory awsFactory() {
-        return new AwsFactory();
-    }
+  @Bean
+  public AwsFactory awsFactory() {
+    return new AwsFactory();
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AmazonCognitoIdentity.class)
-    public AmazonCognitoIdentity cognitoIdentity(
-            AwsFactory awsFactory,
-            @Value("${aws.cognito.region}") String region,
-            @Value("${aws.cognito.access-key}") final String accessKeyId,
-            @Value("${aws.cognito.access-secret}") final String accessSecretKey) {
-        return awsFactory.getAwsCognitoIdentityClient(region, accessKeyId, accessSecretKey);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AmazonCognitoIdentity.class)
+  public AmazonCognitoIdentity cognitoIdentity(AwsFactory awsFactory,
+      @Value("${aws.cognito.region}") String region,
+      @Value("${aws.cognito.access-key}") final String accessKeyId,
+      @Value("${aws.cognito.access-secret}") final String accessSecretKey) {
+    return awsFactory.getAwsCognitoIdentityClient(region, accessKeyId, accessSecretKey);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AwsCognitoIdentityClient.class)
-    public AwsCognitoIdentityClient cognitoIdentityClient(
-            AmazonCognitoIdentity cognitoIdentity,
-            @Value("${app.iaas.credentials.expiry.duration}")
-                    long credentialsExpiryDurationSeconds) {
-        AwsCognitoIdentityClient cognitoIdentityClient =
-                new AwsCognitoIdentitySdkWrapper(cognitoIdentity);
+  @Bean
+  @ConditionalOnMissingBean(AwsCognitoIdentityClient.class)
+  public AwsCognitoIdentityClient cognitoIdentityClient(AmazonCognitoIdentity cognitoIdentity,
+      @Value("${app.iaas.credentials.expiry.duration}") long credentialsExpiryDurationSeconds) {
+    AwsCognitoIdentityClient cognitoIdentityClient
+        = new AwsCognitoIdentitySdkWrapper(cognitoIdentity);
 
-        return new CachedAwsCognitoIdentityClient(
-                cognitoIdentityClient, credentialsExpiryDurationSeconds);
-    }
+    return new CachedAwsCognitoIdentityClient(cognitoIdentityClient,
+        credentialsExpiryDurationSeconds);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(IaasAuthorizationFetcher.class)
-    public IaasAuthorizationFetcher iaasAuthorizationFetch(
-            AwsCognitoIdentityClient identityClient,
-            @Value("${aws.cognito.user-pool.url}") String userPoolUrl) {
-        return new AwsResourceCredentialsFetcher(
-                identityClient, AwsIdentityCredentialsMapper.INSTANCE, userPoolUrl);
-    }
+  @Bean
+  @ConditionalOnMissingBean(IaasAuthorizationFetcher.class)
+  public IaasAuthorizationFetcher iaasAuthorizationFetch(AwsCognitoIdentityClient identityClient,
+      @Value("${aws.cognito.user-pool.url}") String userPoolUrl) {
+    return new AwsResourceCredentialsFetcher(identityClient, AwsIdentityCredentialsMapper.INSTANCE,
+        userPoolUrl);
+  }
 }

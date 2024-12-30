@@ -4,37 +4,32 @@ import io.trishul.user.model.BaseUser;
 import java.util.List;
 
 public class TenantIaasUserMapper {
-    public static final TenantIaasUserMapper INSTANCE = new TenantIaasUserMapper();
+  public static final TenantIaasUserMapper INSTANCE = new TenantIaasUserMapper();
 
-    protected TenantIaasUserMapper() {}
+  protected TenantIaasUserMapper() {}
 
-    @SuppressWarnings("unchecked")
-    public <IdpUser extends BaseIaasUser, BU extends BaseUser> List<IdpUser> fromUsers(
-            List<BU> users) {
-        List<IdpUser> idpUsers = null;
+  @SuppressWarnings("unchecked")
+  public <IdpUser extends BaseIaasUser<IdpUser>, BU extends BaseUser<BU>> List<IdpUser> fromUsers(
+      List<BU> users) {
+    List<IdpUser> idpUsers = null;
 
-        if (users != null) {
-            idpUsers = users.stream().map(user -> (IdpUser) fromUser(user)).toList();
-        }
-
-        return idpUsers;
+    if (users != null) {
+      idpUsers = users.stream().map(user -> (IdpUser) fromUser(user)).toList();
     }
 
-    @SuppressWarnings("unchecked")
-    public <IdpUser extends BaseIaasUser, BU extends BaseUser> IdpUser fromUser(BU user) {
-        IdpUser idpUser = null;
+    return idpUsers;
+  }
 
-        if (user != null) {
-            idpUser =
-                    (IdpUser)
-                            new IaasUser(
-                                    user.getUserName(),
-                                    user.getEmail(),
-                                    user.getPhoneNumber(),
-                                    null,
-                                    null);
-        }
+  @SuppressWarnings("unchecked")
+  public <IdpUser extends BaseIaasUser<IdpUser>, BU extends BaseUser<BU>> IdpUser fromUser(
+      BU user) {
+    IdpUser idpUser = null;
 
-        return idpUser;
+    if (user != null) {
+      idpUser = (IdpUser) new IaasUser().setId(user.getUserName()).setEmail(user.getEmail())
+          .setPhoneNumber(user.getPhoneNumber());
     }
+
+    return idpUser;
+  }
 }

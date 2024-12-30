@@ -12,16 +12,16 @@ import org.mapstruct.TargetType;
  * https://github.com/mapstruct/mapstruct/issues/469
  */
 public class CycleAvoidingMappingContext {
-    private final Map<Object, Object> knownInstances = new IdentityHashMap<>();
+  private final Map<Object, Object> knownInstances = new IdentityHashMap<>();
 
-    @SuppressWarnings("unchecked")
-    @BeforeMapping
-    public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType) {
-        return (T) knownInstances.get(source);
-    }
+  @SuppressWarnings("unchecked")
+  @BeforeMapping
+  public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType) {
+    return (T) knownInstances.get(source);
+  }
 
-    @BeforeMapping
-    public void storeMappedInstance(Object source, @MappingTarget Object target) {
-        knownInstances.put(source, target);
-    }
+  @BeforeMapping
+  public void storeMappedInstance(Object source, @MappingTarget Object target) {
+    knownInstances.put(source, target);
+  }
 }

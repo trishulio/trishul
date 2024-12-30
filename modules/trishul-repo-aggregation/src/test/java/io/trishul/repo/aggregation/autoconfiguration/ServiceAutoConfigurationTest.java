@@ -2,26 +2,25 @@ package io.trishul.repo.aggregation.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
-
 import io.trishul.repo.aggregation.repo.AggregationRepository;
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ServiceAutoConfigurationTest {
-    private ServiceAutoConfiguration config;
+  private ServiceAutoConfiguration config;
 
-    @BeforeEach
-    public void init() {
-        config = new ServiceAutoConfiguration();
-    }
+  @BeforeEach
+  public void init() {
+    config = new ServiceAutoConfiguration();
+  }
 
-    @Test
-    public void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
-        QueryResolver mResolver = mock(QueryResolver.class);
+  @Test
+  public void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
+    QueryResolver mResolver = mock(QueryResolver.class);
 
-        AggregationRepository aggrRepo = config.aggregationRepository(mResolver);
+    AggregationRepository aggrRepo = config.aggregationRepository(mResolver);
 
-        assertSame(AggregationRepository.class, aggrRepo.getClass());
-    }
+    assertSame(AggregationRepository.class, aggrRepo.getClass());
+  }
 }

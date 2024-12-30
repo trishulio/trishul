@@ -1,9 +1,9 @@
 package io.trishul.user.status;
 
-public interface UserStatusAccessor {
-    final String ATTR_STATUS = "status";
+public interface UserStatusAccessor<T extends UserStatusAccessor<T>> {
+  final String ATTR_STATUS = "status";
 
-    UserStatus getStatus();
+  UserStatus getStatus();
 
-    void setStatus(UserStatus status);
+  T setStatus(UserStatus status);
 }

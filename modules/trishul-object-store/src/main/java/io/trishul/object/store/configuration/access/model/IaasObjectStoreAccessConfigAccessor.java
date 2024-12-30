@@ -1,8 +1,8 @@
 package io.trishul.object.store.configuration.access.model;
 
-public interface IaasObjectStoreAccessConfigAccessor {
+public interface IaasObjectStoreAccessConfigAccessor<T extends IaasObjectStoreAccessConfigAccessor<T>> {
 
-    IaasObjectStoreAccessConfig getIaasObjectStoreAccessConfig();
+  IaasObjectStoreAccessConfig getIaasObjectStoreAccessConfig();
 
-    void setIaasObjectStoreAccessConfig(IaasObjectStoreAccessConfig iaasObjectStoreAccessConfig);
+  T setIaasObjectStoreAccessConfig(IaasObjectStoreAccessConfig iaasObjectStoreAccessConfig);
 }

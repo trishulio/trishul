@@ -6,20 +6,20 @@ import io.trishul.user.role.model.UserRoleAccessor;
 import java.util.Collection;
 
 public class UserRoleBindingRefresher
-        implements Refresher<UserRoleBinding, UserRoleBindingAccessor> {
-    private final Refresher<UserRole, UserRoleAccessor> userRoleRefresher;
+    implements Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> {
+  private final Refresher<UserRole, UserRoleAccessor<?>> userRoleRefresher;
 
-    public UserRoleBindingRefresher(Refresher<UserRole, UserRoleAccessor> userRoleRefresher) {
-        this.userRoleRefresher = userRoleRefresher;
-    }
+  public UserRoleBindingRefresher(Refresher<UserRole, UserRoleAccessor<?>> userRoleRefresher) {
+    this.userRoleRefresher = userRoleRefresher;
+  }
 
-    @Override
-    public void refresh(Collection<UserRoleBinding> bindings) {
-        userRoleRefresher.refreshAccessors(bindings);
-    }
+  @Override
+  public void refresh(Collection<UserRoleBinding> bindings) {
+    userRoleRefresher.refreshAccessors(bindings);
+  }
 
-    @Override
-    public void refreshAccessors(Collection<? extends UserRoleBindingAccessor> accessors) {
-        // NOTE: Not needed at this time
-    }
+  @Override
+  public void refreshAccessors(Collection<? extends UserRoleBindingAccessor<?>> accessors) {
+    // NOTE: Not needed at this time
+  }
 }

@@ -7,14 +7,14 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public class QueryLiteral<T> extends BaseModel implements CriteriaSpec<T> {
-    private final T value;
+  private final T value;
 
-    public QueryLiteral(T value) {
-        this.value = value;
-    }
+  public QueryLiteral(T value) {
+    this.value = value;
+  }
 
-    @Override
-    public Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return cb.literal(value);
-    }
+  @Override
+  public Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    return cb.literal(value);
+  }
 }

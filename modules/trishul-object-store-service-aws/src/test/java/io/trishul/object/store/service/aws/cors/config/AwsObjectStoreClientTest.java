@@ -9,7 +9,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
@@ -24,163 +23,135 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class AwsObjectStoreClientTest {
-    private AwsObjectStoreClient client;
+  private AwsObjectStoreClient client;
 
-    private AmazonS3 s3;
+  private AmazonS3 s3;
 
-    @BeforeEach
-    public void init() {
-        s3 = mock(AmazonS3.class);
-        client = new AwsObjectStoreClient(s3, AwsIaasObjectStoreMapper.INSTANCE);
-    }
+  @BeforeEach
+  public void init() {
+    s3 = mock(AmazonS3.class);
+    client = new AwsObjectStoreClient(s3, AwsIaasObjectStoreMapper.INSTANCE);
+  }
 
-    @Test
-    public void testGet_ReturnsBucketWithName() {
-        doReturn(List.of(new Bucket("B1"), new Bucket("B2")))
-                .when(s3)
-                .listBuckets(any(ListBucketsRequest.class));
+  @Test
+  public void testGet_ReturnsBucketWithName() {
+    doReturn(List.of(new Bucket("B1"), new Bucket("B2"))).when(s3)
+        .listBuckets(any(ListBucketsRequest.class));
 
-        IaasObjectStore objectStore = client.get("B1");
+    IaasObjectStore objectStore = client.get("B1");
 
-        IaasObjectStore expected = new IaasObjectStore("B1");
-        assertEquals(expected, objectStore);
-    }
+    IaasObjectStore expected = new IaasObjectStore("B1");
+    assertEquals(expected, objectStore);
+  }
 
-    @Test
-    public void testDelete_ReturnsTrue_WhenEntityExists() {
-        doAnswer(
-                        inv -> {
-                            assertEquals(
-                                    "B1",
-                                    inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
-                            return null;
-                        })
-                .when(s3)
-                .deleteBucket(any(DeleteBucketRequest.class));
+  @Test
+  public void testDelete_ReturnsTrue_WhenEntityExists() {
+    doAnswer(inv -> {
+      assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
+      return null;
+    }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
 
-        assertTrue(client.delete("B1"));
+    assertTrue(client.delete("B1"));
 
-        verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
-    }
+    verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
+  }
 
-    @Test
-    @Disabled(
-            "This test is disabled because of TODO: manually validate the AmazonS3Exception is only thrown when bucket is failed to be delete because it's not there. If that's true, enable this test.")
-    public void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
-        doAnswer(
-                        inv -> {
-                            assertEquals(
-                                    "B1",
-                                    inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
-                            throw new AmazonS3Exception("Cannot delete B1");
-                        })
-                .when(s3)
-                .deleteBucket(any(DeleteBucketRequest.class));
+  @Test
+  @Disabled("This test is disabled because of TODO: manually validate the AmazonS3Exception is only thrown when bucket is failed to be delete because it's not there. If that's true, enable this test.")
+  public void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
+    doAnswer(inv -> {
+      assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
+      throw new AmazonS3Exception("Cannot delete B1");
+    }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
 
-        assertFalse(client.delete("B1"));
+    assertFalse(client.delete("B1"));
 
-        verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
-    }
+    verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
+  }
 
-    @Test
-    public void testAdd_ReturnsCreatedBucket() {
-        doAnswer(
-                        inv -> {
-                            CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
-                            return new Bucket(req.getBucketName());
-                        })
-                .when(s3)
-                .createBucket(any(CreateBucketRequest.class));
+  @Test
+  public void testAdd_ReturnsCreatedBucket() {
+    doAnswer(inv -> {
+      CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
+      return new Bucket(req.getBucketName());
+    }).when(s3).createBucket(any(CreateBucketRequest.class));
 
-        IaasObjectStore objectStore = client.add(new IaasObjectStore("B1"));
+    IaasObjectStore objectStore = client.add(new IaasObjectStore("B1"));
 
-        IaasObjectStore expected = new IaasObjectStore("B1");
-        assertEquals(expected, objectStore);
-    }
+    IaasObjectStore expected = new IaasObjectStore("B1");
+    assertEquals(expected, objectStore);
+  }
 
-    @Test
-    public void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
-        doReturn(true).when(s3).doesBucketExistV2("B1");
+  @Test
+  public void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
+    doReturn(true).when(s3).doesBucketExistV2("B1");
 
-        assertTrue(client.exists("B1"));
-    }
+    assertTrue(client.exists("B1"));
+  }
 
-    @Test
-    public void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
-        doReturn(false).when(s3).doesBucketExistV2("B1");
+  @Test
+  public void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
+    doReturn(false).when(s3).doesBucketExistV2("B1");
 
-        assertFalse(client.exists("B1"));
-    }
+    assertFalse(client.exists("B1"));
+  }
 
-    @Test
-    public void testPut_CallsAdd_WhenExistIsFalse() {
-        doReturn(false).when(s3).doesBucketExistV2("B1");
+  @Test
+  public void testPut_CallsAdd_WhenExistIsFalse() {
+    doReturn(false).when(s3).doesBucketExistV2("B1");
 
-        doAnswer(
-                        inv -> {
-                            CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
-                            return new Bucket(req.getBucketName());
-                        })
-                .when(s3)
-                .createBucket(any(CreateBucketRequest.class));
+    doAnswer(inv -> {
+      CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
+      return new Bucket(req.getBucketName());
+    }).when(s3).createBucket(any(CreateBucketRequest.class));
 
-        IaasObjectStore objectStore = client.put(new IaasObjectStore("B1"));
+    IaasObjectStore objectStore = client.put(new IaasObjectStore("B1"));
 
-        IaasObjectStore expected = new IaasObjectStore("B1");
-        assertEquals(expected, objectStore);
-    }
+    IaasObjectStore expected = new IaasObjectStore("B1");
+    assertEquals(expected, objectStore);
+  }
 
-    @Test
-    public void testPut_CallsGet_WhenExistIsTrue() {
-        doReturn(true).when(s3).doesBucketExistV2("B1");
+  @Test
+  public void testPut_CallsGet_WhenExistIsTrue() {
+    doReturn(true).when(s3).doesBucketExistV2("B1");
 
-        doReturn(List.of(new Bucket("B1"), new Bucket("B2")))
-                .when(s3)
-                .listBuckets(any(ListBucketsRequest.class));
+    doReturn(List.of(new Bucket("B1"), new Bucket("B2"))).when(s3)
+        .listBuckets(any(ListBucketsRequest.class));
 
-        IaasObjectStore objectStore = client.put(new IaasObjectStore("B1"));
+    IaasObjectStore objectStore = client.put(new IaasObjectStore("B1"));
 
-        IaasObjectStore expected = new IaasObjectStore("B1");
-        assertEquals(expected, objectStore);
-    }
+    IaasObjectStore expected = new IaasObjectStore("B1");
+    assertEquals(expected, objectStore);
+  }
 
-    @Test
-    public void testCaching_SingleThreaded_CacheIsCleanedWhenMutationOperationIsPerformed() {
-        doReturn(List.of(new Bucket("B1"), new Bucket("B2"), new Bucket("B3")))
-                .when(s3)
-                .listBuckets(any(ListBucketsRequest.class));
+  @Test
+  public void testCaching_SingleThreaded_CacheIsCleanedWhenMutationOperationIsPerformed() {
+    doReturn(List.of(new Bucket("B1"), new Bucket("B2"), new Bucket("B3"))).when(s3)
+        .listBuckets(any(ListBucketsRequest.class));
 
-        assertEquals(new IaasObjectStore("B1"), client.get("B1"));
-        assertEquals(new IaasObjectStore("B2"), client.get("B2"));
-        assertEquals(new IaasObjectStore("B3"), client.get("B3"));
-        verify(s3, times(1)).listBuckets(any(ListBucketsRequest.class));
+    assertEquals(new IaasObjectStore("B1"), client.get("B1"));
+    assertEquals(new IaasObjectStore("B2"), client.get("B2"));
+    assertEquals(new IaasObjectStore("B3"), client.get("B3"));
+    verify(s3, times(1)).listBuckets(any(ListBucketsRequest.class));
 
-        // Testing that add operation resets cache
-        doAnswer(
-                        inv -> {
-                            CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
-                            return new Bucket(req.getBucketName());
-                        })
-                .when(s3)
-                .createBucket(any(CreateBucketRequest.class));
-        client.add(new IaasObjectStore("B1"));
+    // Testing that add operation resets cache
+    doAnswer(inv -> {
+      CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
+      return new Bucket(req.getBucketName());
+    }).when(s3).createBucket(any(CreateBucketRequest.class));
+    client.add(new IaasObjectStore("B1"));
 
-        assertEquals(new IaasObjectStore("B1"), client.get("B1"));
-        verify(s3, times(2)).listBuckets(any(ListBucketsRequest.class));
+    assertEquals(new IaasObjectStore("B1"), client.get("B1"));
+    verify(s3, times(2)).listBuckets(any(ListBucketsRequest.class));
 
-        // Testing that delete operation resets cache.
-        doAnswer(
-                        inv -> {
-                            assertEquals(
-                                    "B1",
-                                    inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
-                            return null;
-                        })
-                .when(s3)
-                .deleteBucket(any(DeleteBucketRequest.class));
-        client.delete("B1");
+    // Testing that delete operation resets cache.
+    doAnswer(inv -> {
+      assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
+      return null;
+    }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
+    client.delete("B1");
 
-        assertEquals(new IaasObjectStore("B1"), client.get("B1"));
-        verify(s3, times(3)).listBuckets(any(ListBucketsRequest.class));
-    }
+    assertEquals(new IaasObjectStore("B1"), client.get("B1"));
+    verify(s3, times(3)).listBuckets(any(ListBucketsRequest.class));
+  }
 }

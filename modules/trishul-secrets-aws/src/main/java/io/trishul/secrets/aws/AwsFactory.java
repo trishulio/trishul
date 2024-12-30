@@ -10,22 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsFactory {
-    @SuppressWarnings("unused")
-    private static final Logger log = LoggerFactory.getLogger(AwsFactory.class);
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(AwsFactory.class);
 
-    public AWSSecretsManager secretsMgrClient(
-            String region, String url, String accessKeyId, String accessSecretKey) {
-        AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
-        AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);
+  public AWSSecretsManager secretsMgrClient(String region, String url, String accessKeyId,
+      String accessSecretKey) {
+    AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
+    AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);
 
-        AwsClientBuilder.EndpointConfiguration endpointConfig =
-                new AwsClientBuilder.EndpointConfiguration(url, region);
-        AWSSecretsManager client =
-                AWSSecretsManagerClientBuilder.standard()
-                        .withEndpointConfiguration(endpointConfig)
-                        .withCredentials(credsProvider)
-                        .build();
+    AwsClientBuilder.EndpointConfiguration endpointConfig
+        = new AwsClientBuilder.EndpointConfiguration(url, region);
+    AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
+        .withEndpointConfiguration(endpointConfig).withCredentials(credsProvider).build();
 
-        return client;
-    }
+    return client;
+  }
 }

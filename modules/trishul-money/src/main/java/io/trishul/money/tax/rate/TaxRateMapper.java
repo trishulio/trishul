@@ -6,9 +6,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface TaxRateMapper {
-    final TaxRateMapper INSTANCE = Mappers.getMapper(TaxRateMapper.class);
+  final TaxRateMapper INSTANCE = Mappers.getMapper(TaxRateMapper.class);
 
-    TaxRateDto toDto(TaxRate taxRate);
+  TaxRateDto toDto(TaxRate taxRate);
 
-    TaxRate fromDto(TaxRateDto dto);
+  TaxRate fromDto(TaxRateDto dto);
 }

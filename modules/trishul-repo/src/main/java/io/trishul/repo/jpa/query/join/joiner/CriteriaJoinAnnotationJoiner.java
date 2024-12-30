@@ -17,56 +17,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class CriteriaJoinAnnotationJoiner implements JpaJoiner {
-    @SuppressWarnings("unused")
-    private static final Logger log = LoggerFactory.getLogger(CriteriaJoinAnnotationJoiner.class);
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(CriteriaJoinAnnotationJoiner.class);
 
-    public static Set<Class<?>> COMPOUND_ENTITY_ANNOTATIONS =
-            ImmutableSet.of(
-                    OneToMany.class,
-                    ManyToOne.class,
-                    Embedded.class,
-                    JoinColumn.class,
-                    CriteriaJoin.class);
+  public static Set<Class<?>> COMPOUND_ENTITY_ANNOTATIONS = ImmutableSet.of(OneToMany.class,
+      ManyToOne.class, Embedded.class, JoinColumn.class, CriteriaJoin.class);
 
-    @Override
-    public <X, Y> From<X, Y> join(From<X, Y> join, String fieldName) {
-        Field field =
-                FieldUtils.getAllFieldsList(join.getJavaType()).stream()
-                        .filter(f -> f.getName().equals(fieldName))
-                        .findFirst()
-                        .orElseThrow();
-        CriteriaJoin cj = field.getAnnotation(CriteriaJoin.class);
-        JoinType jt = JoinType.INNER;
-        if (cj != null && cj.type() != null) {
-            jt = cj.type();
-        }
-
-        return join.join(fieldName, jt);
+  @Override
+  public <X, Y> From<X, Y> join(From<X, Y> join, String fieldName) {
+    Field field = FieldUtils.getAllFieldsList(join.getJavaType()).stream()
+        .filter(f -> f.getName().equals(fieldName)).findFirst().orElseThrow();
+    CriteriaJoin cj = field.getAnnotation(CriteriaJoin.class);
+    JoinType jt = JoinType.INNER;
+    if (cj != null && cj.type() != null) {
+      jt = cj.type();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <X, Y> Path<X> get(From<X, Y> join, String fieldName) {
-        Path<X> attribute = null;
-        Field field =
-                FieldUtils.getAllFieldsList(join.getJavaType()).stream()
-                        .filter(f -> f.getName().equals(fieldName))
-                        .findFirst()
-                        .orElseThrow();
+    return join.join(fieldName, jt);
+  }
 
-        if (isBasicField(field)) {
-            attribute = join.get(fieldName);
-        } else {
-            attribute = (Path<X>) this.join(join, fieldName);
-        }
+  @SuppressWarnings("unchecked")
+  @Override
+  public <X, Y> Path<X> get(From<X, Y> join, String fieldName) {
+    Path<X> attribute = null;
+    Field field = FieldUtils.getAllFieldsList(join.getJavaType()).stream()
+        .filter(f -> f.getName().equals(fieldName)).findFirst().orElseThrow();
 
-        return attribute;
+    if (isBasicField(field)) {
+      attribute = join.get(fieldName);
+    } else {
+      attribute = (Path<X>) this.join(join, fieldName);
     }
 
-    private boolean isBasicField(Field field) {
-        return !Arrays.stream(field.getAnnotations())
-                .anyMatch(
-                        annotation ->
-                                COMPOUND_ENTITY_ANNOTATIONS.contains(annotation.annotationType()));
-    }
+    return attribute;
+  }
+
+  private boolean isBasicField(Field field) {
+    return !Arrays.stream(field.getAnnotations())
+        .anyMatch(annotation -> COMPOUND_ENTITY_ANNOTATIONS.contains(annotation.annotationType()));
+  }
 }

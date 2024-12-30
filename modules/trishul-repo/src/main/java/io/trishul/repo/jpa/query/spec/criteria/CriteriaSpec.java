@@ -6,5 +6,5 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 
 public interface CriteriaSpec<T> {
-    Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb);
+  Expression<T> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb);
 }

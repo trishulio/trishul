@@ -16,33 +16,31 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 public class ContextHolderFilter implements Filter {
-    private final ThreadLocalContextHolder ctxHolder;
-    private final Supplier<SecurityContext> securityCtxSupplier;
-    private final PrincipalContextBuilder ctxBuilder;
+  private final ThreadLocalContextHolder ctxHolder;
+  private final Supplier<SecurityContext> securityCtxSupplier;
+  private final PrincipalContextBuilder ctxBuilder;
 
-    public ContextHolderFilter(
-            ThreadLocalContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
-        this(() -> SecurityContextHolder.getContext(), ctxHolder, ctxBuilder);
-    }
+  public ContextHolderFilter(ThreadLocalContextHolder ctxHolder,
+      PrincipalContextBuilder ctxBuilder) {
+    this(() -> SecurityContextHolder.getContext(), ctxHolder, ctxBuilder);
+  }
 
-    protected ContextHolderFilter(
-            Supplier<SecurityContext> securityCtxSupplier,
-            ThreadLocalContextHolder ctxHolder,
-            PrincipalContextBuilder ctxBuilder) {
-        this.securityCtxSupplier = securityCtxSupplier;
-        this.ctxHolder = ctxHolder;
-        this.ctxBuilder = ctxBuilder;
-    }
+  protected ContextHolderFilter(Supplier<SecurityContext> securityCtxSupplier,
+      ThreadLocalContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
+    this.securityCtxSupplier = securityCtxSupplier;
+    this.ctxHolder = ctxHolder;
+    this.ctxBuilder = ctxBuilder;
+  }
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        setPrincipalContext();
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    setPrincipalContext();
 
-        chain.doFilter(request, response);
-    }
+    chain.doFilter(request, response);
+  }
 
-    private void setPrincipalContext() {
+  private void setPrincipalContext() {
         SecurityContext ctx = securityCtxSupplier.get();
         Authentication auth = ctx.getAuthentication();
         Object principal = auth.getPrincipal();

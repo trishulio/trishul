@@ -13,37 +13,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AwsFactory {
-    private static final Logger logger = LoggerFactory.getLogger(AwsFactory.class);
+  private static final Logger log = LoggerFactory.getLogger(AwsFactory.class);
 
-    public AWSCognitoIdentityProvider getIdentityProvider(
-            final String cognitoRegion,
-            String cognitoUrl,
-            String cognitoAccessKeyId,
-            String cognitoAccessSecretKey) {
-        logger.debug("Creating an instance of AwsCognitoIdp");
-        final AwsClientBuilder.EndpointConfiguration endpointConfig =
-                new AwsClientBuilder.EndpointConfiguration(cognitoUrl, cognitoRegion);
-        final AWSCognitoIdentityProviderClientBuilder idpClientBuilder =
-                AWSCognitoIdentityProviderClient.builder()
-                        .withEndpointConfiguration(endpointConfig);
-        BasicAWSCredentials basicAwsCredentials =
-                new BasicAWSCredentials(cognitoAccessKeyId, cognitoAccessSecretKey);
-        idpClientBuilder.withCredentials(new AWSStaticCredentialsProvider(basicAwsCredentials));
+  public AWSCognitoIdentityProvider getIdentityProvider(final String cognitoRegion,
+      String cognitoUrl, String cognitoAccessKeyId, String cognitoAccessSecretKey) {
+    log.debug("Creating an instance of AwsCognitoIdp");
+    final AwsClientBuilder.EndpointConfiguration endpointConfig
+        = new AwsClientBuilder.EndpointConfiguration(cognitoUrl, cognitoRegion);
+    final AWSCognitoIdentityProviderClientBuilder idpClientBuilder
+        = AWSCognitoIdentityProviderClient.builder().withEndpointConfiguration(endpointConfig);
+    BasicAWSCredentials basicAwsCredentials
+        = new BasicAWSCredentials(cognitoAccessKeyId, cognitoAccessSecretKey);
+    idpClientBuilder.withCredentials(new AWSStaticCredentialsProvider(basicAwsCredentials));
 
-        AWSCognitoIdentityProvider awsCognitoIdp = idpClientBuilder.build();
+    AWSCognitoIdentityProvider awsCognitoIdp = idpClientBuilder.build();
 
-        return awsCognitoIdp;
-    }
+    return awsCognitoIdp;
+  }
 
-    public AmazonCognitoIdentity getAwsCognitoIdentityClient(
-            String region, String accessKeyId, String accessSecretKey) {
-        AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
-        AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);
-        AmazonCognitoIdentity cognitoIdentityClient =
-                AmazonCognitoIdentityClientBuilder.standard()
-                        .withCredentials(credsProvider)
-                        .withRegion(region)
-                        .build();
-        return cognitoIdentityClient;
-    }
+  public AmazonCognitoIdentity getAwsCognitoIdentityClient(String region, String accessKeyId,
+      String accessSecretKey) {
+    AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
+    AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);
+    AmazonCognitoIdentity cognitoIdentityClient = AmazonCognitoIdentityClientBuilder.standard()
+        .withCredentials(credsProvider).withRegion(region).build();
+    return cognitoIdentityClient;
+  }
 }

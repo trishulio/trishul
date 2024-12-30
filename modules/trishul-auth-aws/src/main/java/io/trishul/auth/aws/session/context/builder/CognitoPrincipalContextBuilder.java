@@ -7,8 +7,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 public class CognitoPrincipalContextBuilder implements PrincipalContextBuilder {
 
-    @Override
-    public PrincipalContext build(Jwt jwt) {
-        return new CognitoPrincipalContext(jwt);
-    }
+  @Override
+  public PrincipalContext build(Jwt jwt) {
+    return new CognitoPrincipalContext(jwt);
+  }
 }

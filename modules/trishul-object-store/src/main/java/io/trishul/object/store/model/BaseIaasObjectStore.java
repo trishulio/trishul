@@ -1,9 +1,9 @@
 package io.trishul.object.store.model;
 
-public interface BaseIaasObjectStore {
-    final String ATTR_NAME = "name";
+public interface BaseIaasObjectStore<T extends BaseIaasObjectStore<T>> {
+  final String ATTR_NAME = "name";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 }

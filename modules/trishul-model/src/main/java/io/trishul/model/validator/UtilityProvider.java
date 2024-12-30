@@ -1,7 +1,7 @@
 package io.trishul.model.validator;
 
 public interface UtilityProvider {
-    Validator getValidator();
+  Validator getValidator();
 
-    void setValidator(Validator validator);
+  void setValidator(Validator validator);
 }

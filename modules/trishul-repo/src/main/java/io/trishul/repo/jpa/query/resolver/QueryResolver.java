@@ -18,48 +18,44 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 
 public class QueryResolver {
-    @SuppressWarnings("unused")
-    private static Logger log = LoggerFactory.getLogger(QueryResolver.class);
+  @SuppressWarnings("unused")
+  private static Logger log = LoggerFactory.getLogger(QueryResolver.class);
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public QueryResolver(EntityManager em) {
-        this.em = em;
+  public QueryResolver(EntityManager em) {
+    this.em = em;
+  }
+
+  public <R, T> TypedQuery<R> buildQuery(Class<T> entityClz, Class<R> returnClz,
+      SelectClauseBuilder selector, GroupByClauseBuilder grouper, Specification<T> spec,
+      Pageable pageable) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<R> cq = cb.createQuery(returnClz);
+
+    Root<T> root = cq.from(entityClz);
+
+    cq.where(spec.toPredicate(root, cq, cb));
+
+    List<Selection<?>> selectAttrs = selector.getSelectClause(root, cq, cb);
+    cq.multiselect(selectAttrs);
+
+    if (grouper != null) {
+      List<Expression<?>> groupByAttrs = grouper.getGroupByClause(root, cq, cb);
+      cq.groupBy(groupByAttrs);
     }
 
-    public <R, T> TypedQuery<R> buildQuery(
-            Class<T> entityClz,
-            Class<R> returnClz,
-            SelectClauseBuilder selector,
-            GroupByClauseBuilder grouper,
-            Specification<T> spec,
-            Pageable pageable) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<R> cq = cb.createQuery(returnClz);
-
-        Root<T> root = cq.from(entityClz);
-
-        cq.where(spec.toPredicate(root, cq, cb));
-
-        List<Selection<?>> selectAttrs = selector.getSelectClause(root, cq, cb);
-        cq.multiselect(selectAttrs);
-
-        if (grouper != null) {
-            List<Expression<?>> groupByAttrs = grouper.getGroupByClause(root, cq, cb);
-            cq.groupBy(groupByAttrs);
-        }
-
-        if (pageable != null) {
-            List<Order> orders = QueryUtils.toOrders(pageable.getSort(), root, cb);
-            cq.orderBy(orders);
-        }
-
-        TypedQuery<R> q = em.createQuery(cq);
-
-        if (pageable != null) {
-            q.setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize());
-        }
-
-        return q;
+    if (pageable != null) {
+      List<Order> orders = QueryUtils.toOrders(pageable.getSort(), root, cb);
+      cq.orderBy(orders);
     }
+
+    TypedQuery<R> q = em.createQuery(cq);
+
+    if (pageable != null) {
+      q.setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize());
+    }
+
+    return q;
+  }
 }

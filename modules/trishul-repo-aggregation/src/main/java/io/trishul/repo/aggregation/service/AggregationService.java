@@ -1,7 +1,6 @@
 package io.trishul.repo.aggregation.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
-
 import io.trishul.repo.aggregation.repo.AggregationRepository;
 import io.trishul.repo.aggregation.service.function.AggregationFunction;
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
@@ -17,50 +16,41 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AggregationService {
-    private final AggregationRepository aggrRepo;
+  private final AggregationRepository aggrRepo;
 
-    public AggregationService(AggregationRepository aggrRepo) {
-        this.aggrRepo = aggrRepo;
-    }
+  public AggregationService(AggregationRepository aggrRepo) {
+    this.aggrRepo = aggrRepo;
+  }
 
-    public <T> Page<T> getAggregation(
-            Class<T> clazz,
-            Specification<T> spec,
-            AggregationFunction aggrFn,
-            PathProvider aggrField,
-            PathProvider[] groupBy,
-            SortedSet<String> sort,
-            boolean orderAscending,
-            int page,
-            int size) {
-        final PageRequest pageable = pageRequest(sort, orderAscending, page, size);
+  public <T> Page<T> getAggregation(Class<T> clazz, Specification<T> spec,
+      AggregationFunction aggrFn, PathProvider aggrField, PathProvider[] groupBy,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    final PageRequest pageable = pageRequest(sort, orderAscending, page, size);
 
-        final SelectClauseBuilder selector = new SelectClauseBuilder();
-        final GroupByClauseBuilder grouper = new GroupByClauseBuilder();
+    final SelectClauseBuilder selector = new SelectClauseBuilder();
+    final GroupByClauseBuilder grouper = new GroupByClauseBuilder();
 
-        Arrays.stream(groupBy)
-                .forEach(
-                        col -> {
-                            selector.select(col);
-                            grouper.groupBy(col);
-                        });
+    Arrays.stream(groupBy).forEach(col -> {
+      selector.select(col);
+      grouper.groupBy(col);
+    });
 
-        selector.select(aggrFn.getAggregation(aggrField));
+    selector.select(aggrFn.getAggregation(aggrField));
 
-        List<T> content = this.aggrRepo.getAggregation(clazz, selector, grouper, spec, pageable);
-        Long total = this.getResultCount(clazz, grouper, spec);
+    List<T> content = this.aggrRepo.getAggregation(clazz, selector, grouper, spec, pageable);
+    Long total = this.getResultCount(clazz, grouper, spec);
 
-        return new PageImpl<>(content, pageable, total);
-    }
+    return new PageImpl<>(content, pageable, total);
+  }
 
-    public <T> Long getResultCount(
-            Class<T> clazz, GroupByClauseBuilder groupBy, Specification<T> spec) {
-        /**
-         * Wrapper for the AggregationRepository's getResultCount method. The wrapper doesn't use
-         * pageable to get the total number of rows. To minimize the data fetched from DB in the
-         * Repo layer, the selection uses a null-literal as a value
-         */
-        SelectClauseBuilder selector = new SelectClauseBuilder().select(new NullSpec());
-        return this.aggrRepo.getResultCount(clazz, selector, groupBy, spec, null);
-    }
+  public <T> Long getResultCount(Class<T> clazz, GroupByClauseBuilder groupBy,
+      Specification<T> spec) {
+    /**
+     * Wrapper for the AggregationRepository's getResultCount method. The wrapper doesn't use
+     * pageable to get the total number of rows. To minimize the data fetched from DB in the Repo
+     * layer, the selection uses a null-literal as a value
+     */
+    SelectClauseBuilder selector = new SelectClauseBuilder().select(new NullSpec());
+    return this.aggrRepo.getResultCount(clazz, selector, groupBy, spec, null);
+  }
 }

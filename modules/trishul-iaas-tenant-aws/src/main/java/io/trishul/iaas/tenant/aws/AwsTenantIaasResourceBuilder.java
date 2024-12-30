@@ -21,142 +21,113 @@ import io.trishul.object.store.model.IaasObjectStore;
 import java.util.List;
 
 public class AwsTenantIaasResourceBuilder
-        implements TenantIaasResourceBuilder, TenantObjectStoreResourceBuilder {
-    private final AwsDocumentTemplates templates;
+    implements TenantIaasResourceBuilder, TenantObjectStoreResourceBuilder {
+  private final AwsDocumentTemplates templates;
 
-    private final List<String> allowedHeaders;
-    private final List<String> allowedMethods;
-    private final List<String> allowedOrigins;
-    private final boolean blockPublicAcls;
-    private final boolean ignorePublicAcls;
-    private final boolean blockPublicPolicy;
-    private final boolean restrictPublicBuckets;
+  private final List<String> allowedHeaders;
+  private final List<String> allowedMethods;
+  private final List<String> allowedOrigins;
+  private final boolean blockPublicAcls;
+  private final boolean ignorePublicAcls;
+  private final boolean blockPublicPolicy;
+  private final boolean restrictPublicBuckets;
 
-    public AwsTenantIaasResourceBuilder(
-            AwsDocumentTemplates templates,
-            List<String> allowedHeaders,
-            List<String> allowedMethods,
-            List<String> allowedOrigins,
-            boolean blockPublicAcls,
-            boolean ignorePublicAcls,
-            boolean blockPublicPolicy,
-            boolean restrictPublicBuckets) {
-        this.templates = templates;
-        this.allowedHeaders = allowedHeaders;
-        this.allowedMethods = allowedMethods;
-        this.allowedOrigins = allowedOrigins;
-        this.blockPublicAcls = blockPublicAcls;
-        this.ignorePublicAcls = ignorePublicAcls;
-        this.blockPublicPolicy = blockPublicPolicy;
-        this.restrictPublicBuckets = restrictPublicBuckets;
-    }
+  public AwsTenantIaasResourceBuilder(AwsDocumentTemplates templates, List<String> allowedHeaders,
+      List<String> allowedMethods, List<String> allowedOrigins, boolean blockPublicAcls,
+      boolean ignorePublicAcls, boolean blockPublicPolicy, boolean restrictPublicBuckets) {
+    this.templates = templates;
+    this.allowedHeaders = allowedHeaders;
+    this.allowedMethods = allowedMethods;
+    this.allowedOrigins = allowedOrigins;
+    this.blockPublicAcls = blockPublicAcls;
+    this.ignorePublicAcls = ignorePublicAcls;
+    this.blockPublicPolicy = blockPublicPolicy;
+    this.restrictPublicBuckets = restrictPublicBuckets;
+  }
 
-    @Override
-    public String getRoleId(String iaasIdpTenantId) {
-        return this.templates.getTenantIaasRoleName(iaasIdpTenantId);
-    }
+  @Override
+  public String getRoleId(String iaasIdpTenantId) {
+    return this.templates.getTenantIaasRoleName(iaasIdpTenantId);
+  }
 
-    @Override
-    public <R extends BaseIaasRole, T extends BaseIaasIdpTenant> R buildRole(T iaasIdpTenant) {
-        String iaasIdpTenantId = iaasIdpTenant.getName();
-        @SuppressWarnings("unchecked")
-        R role = (R) new IaasRole();
-        role.setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
-        role.setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId));
-        role.setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
+  @Override
+  public BaseIaasRole<?> buildRole(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
+    return new IaasRole()
+    .setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId))
+    .setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId))
+    .setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
+  }
 
-        return role;
-    }
 
-    @Override
-    public String getVfsPolicyId(String iaasIdpTenantId) {
-        return this.templates.getTenantVfsPolicyName(iaasIdpTenantId);
-    }
+  @Override
+  public String getVfsPolicyId(String iaasIdpTenantId) {
+    return this.templates.getTenantVfsPolicyName(iaasIdpTenantId);
+  }
 
-    @Override
-    public <P extends BaseIaasPolicy, T extends BaseIaasIdpTenant> P buildVfsPolicy(
-            T iaasIdpTenant) {
-        String iaasIdpTenantId = iaasIdpTenant.getName();
-        @SuppressWarnings("unchecked")
-        P policy = (P) new IaasPolicy();
-        policy.setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId));
-        policy.setDescription(this.templates.getTenantVfsPolicyDescription(iaasIdpTenantId));
-        policy.setDocument(this.templates.getTenantBucketPolicyDoc(iaasIdpTenantId));
+  @Override
+  public BaseIaasPolicy<?> buildVfsPolicy(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
 
-        return policy;
-    }
+    return new IaasPolicy()
+    .setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+    .setDescription(this.templates.getTenantVfsPolicyDescription(iaasIdpTenantId))
+    .setDocument(this.templates.getTenantBucketPolicyDoc(iaasIdpTenantId));
+  }
 
-    @Override
-    public String getObjectStoreId(String iaasIdpTenantId) {
-        return this.templates.getTenantVfsBucketName(iaasIdpTenantId);
-    }
+  @Override
+  public String getObjectStoreId(String iaasIdpTenantId) {
+    return this.templates.getTenantVfsBucketName(iaasIdpTenantId);
+  }
 
-    @Override
-    public <O extends BaseIaasObjectStore, T extends BaseIaasIdpTenant> O buildObjectStore(
-            T iaasIdpTenant) {
-        String iaasIdpTenantId = iaasIdpTenant.getName();
-        @SuppressWarnings("unchecked")
-        O objectStore = (O) new IaasObjectStore();
-        objectStore.setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
+  @Override
+  public BaseIaasObjectStore<?> buildObjectStore(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
+    return new IaasObjectStore()
+    .setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
+  }
 
-        return objectStore;
-    }
+  @Override
+  public IaasRolePolicyAttachmentId buildVfsAttachmentId(String iaasIdpTenantId) {
+    return new IaasRolePolicyAttachmentId()
+    .setPolicyId(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+    .setRoleId(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
+  }
 
-    @Override
-    public IaasRolePolicyAttachmentId buildVfsAttachmentId(String iaasIdpTenantId) {
-        IaasRolePolicyAttachmentId id = new IaasRolePolicyAttachmentId();
-        id.setPolicyId(this.templates.getTenantVfsPolicyName(iaasIdpTenantId));
-        id.setRoleId(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
+  @Override
+  public BaseIaasRolePolicyAttachment<?> buildAttachment(IaasRole role, IaasPolicy policy) {
+    return new IaasRolePolicyAttachment()
+    .setIaasRole(role)
+    .setIaasPolicy(policy);
+  }
 
-        return id;
-    }
+  @Override
+  public IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    List<String> sanitizedOrigins
+        = allowedOrigins.stream().map(o -> o.replaceAll("/*$", "")).toList();
 
-    @Override
-    public <A extends BaseIaasRolePolicyAttachment> A buildAttachment(
-            IaasRole role, IaasPolicy policy) {
-        @SuppressWarnings("unchecked")
-        A attachment = (A) new IaasRolePolicyAttachment();
+    CORSRule corsRule = new CORSRule().withAllowedHeaders(allowedHeaders)
+        .withAllowedMethods(
+            allowedMethods.stream().map(method -> AllowedMethods.valueOf(method)).toList())
+        .withAllowedOrigins(sanitizedOrigins);
 
-        attachment.setIaasRole(role);
-        attachment.setIaasPolicy(policy);
+    List<CORSRule> corsRules = List.of(corsRule);
 
-        return attachment;
-    }
+    String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
 
-    @Override
-    public <T extends BaseIaasIdpTenant>
-            IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(T iaasIdpTenant) {
-        List<String> sanitizedOrigins =
-                allowedOrigins.stream().map(o -> o.replaceAll("/*$", "")).toList();
+    return new IaasObjectStoreCorsConfiguration(bucketName,
+        new BucketCrossOriginConfiguration(corsRules));
+  }
 
-        CORSRule corsRule =
-                new CORSRule()
-                        .withAllowedHeaders(allowedHeaders)
-                        .withAllowedMethods(
-                                allowedMethods.stream()
-                                        .map(method -> AllowedMethods.valueOf(method))
-                                        .toList())
-                        .withAllowedOrigins(sanitizedOrigins);
+  @Override
+  public IaasObjectStoreAccessConfig buildPublicAccessBlock(
+    BaseIaasIdpTenant<?> iaasIdpTenant) {
+    PublicAccessBlockConfiguration publicAccessBlockConfiguration
+        = new PublicAccessBlockConfiguration().withBlockPublicAcls(blockPublicAcls)
+            .withBlockPublicPolicy(blockPublicPolicy).withIgnorePublicAcls(ignorePublicAcls)
+            .withRestrictPublicBuckets(restrictPublicBuckets);
 
-        List<CORSRule> corsRules = List.of(corsRule);
-
-        String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
-
-        return new IaasObjectStoreCorsConfiguration(
-                bucketName, new BucketCrossOriginConfiguration(corsRules));
-    }
-
-    @Override
-    public <T extends BaseIaasIdpTenant> IaasObjectStoreAccessConfig buildPublicAccessBlock(
-            T iaasIdpTenant) {
-        PublicAccessBlockConfiguration publicAccessBlockConfiguration =
-                new PublicAccessBlockConfiguration()
-                        .withBlockPublicAcls(blockPublicAcls)
-                        .withBlockPublicPolicy(blockPublicPolicy)
-                        .withIgnorePublicAcls(ignorePublicAcls)
-                        .withRestrictPublicBuckets(restrictPublicBuckets);
-
-        String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
-        return new IaasObjectStoreAccessConfig(bucketName, publicAccessBlockConfiguration);
-    }
+    String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
+    return new IaasObjectStoreAccessConfig(bucketName, publicAccessBlockConfiguration);
+  }
 }

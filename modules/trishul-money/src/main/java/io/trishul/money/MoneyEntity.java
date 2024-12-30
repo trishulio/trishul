@@ -1,5 +1,6 @@
 package io.trishul.money;
 
+import java.math.BigDecimal;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.currency.model.Currency;
 import jakarta.persistence.Column;
@@ -7,40 +8,41 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
 
 @Embeddable
 public class MoneyEntity extends BaseEntity {
-    public static final String FIELD_CURRENCY = "currency";
-    public static final String FIELD_AMOUNT = "amount";
+  public static final String FIELD_CURRENCY = "currency";
+  public static final String FIELD_AMOUNT = "amount";
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "currency_id", referencedColumnName = "numeric_code")
-    private Currency currency;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "currency_id", referencedColumnName = "numeric_code")
+  private Currency currency;
 
-    @Column(name = "amount", precision = 20, scale = 4)
-    private BigDecimal amount;
+  @Column(name = "amount", precision = 20, scale = 4)
+  private BigDecimal amount;
 
-    public MoneyEntity() {}
+  public MoneyEntity() {}
 
-    public MoneyEntity(Currency currency, BigDecimal amount) {
-        setCurrency(currency);
-        setAmount(amount);
-    }
+  public MoneyEntity(Currency currency, BigDecimal amount) {
+    setCurrency(currency);
+    setAmount(amount);
+  }
 
-    public Currency getCurrency() {
-        return currency;
-    }
+  public Currency getCurrency() {
+    return currency;
+  }
 
-    public final void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
+  public final MoneyEntity setCurrency(Currency currency) {
+    this.currency = currency;
+    return this;
+  }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+  public BigDecimal getAmount() {
+    return amount;
+  }
 
-    public final void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+  public final MoneyEntity setAmount(BigDecimal amount) {
+    this.amount = amount;
+    return this;
+  }
 }

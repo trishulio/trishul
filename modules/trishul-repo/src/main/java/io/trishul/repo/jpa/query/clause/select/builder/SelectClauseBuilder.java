@@ -12,42 +12,41 @@ import jakarta.persistence.criteria.Selection;
 import java.util.List;
 
 public class SelectClauseBuilder extends BaseModel {
-    private final ColumnSpecAccumulator accumulator;
+  private final ColumnSpecAccumulator accumulator;
 
-    public SelectClauseBuilder() {
-        this(new ColumnSpecAccumulator());
+  public SelectClauseBuilder() {
+    this(new ColumnSpecAccumulator());
+  }
+
+  protected SelectClauseBuilder(ColumnSpecAccumulator accumulator) {
+    this.accumulator = accumulator;
+  }
+
+  public SelectClauseBuilder select(PathProvider provider) {
+    if (provider != null) {
+      select(provider.getPath());
     }
 
-    protected SelectClauseBuilder(ColumnSpecAccumulator accumulator) {
-        this.accumulator = accumulator;
+    return this;
+  }
+
+  public SelectClauseBuilder select(String... paths) {
+    if (paths != null) {
+      select(new ColumnSpec<>(paths));
     }
 
-    public SelectClauseBuilder select(PathProvider provider) {
-        if (provider != null) {
-            select(provider.getPath());
-        }
+    return this;
+  }
 
-        return this;
+  public SelectClauseBuilder select(CriteriaSpec<?> spec) {
+    if (spec != null) {
+      this.accumulator.add(spec);
     }
 
-    public SelectClauseBuilder select(String... paths) {
-        if (paths != null) {
-            select(new ColumnSpec<>(paths));
-        }
+    return this;
+  }
 
-        return this;
-    }
-
-    public SelectClauseBuilder select(CriteriaSpec<?> spec) {
-        if (spec != null) {
-            this.accumulator.add(spec);
-        }
-
-        return this;
-    }
-
-    public List<Selection<?>> getSelectClause(
-            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return this.accumulator.getColumns(root, cq, cb);
-    }
+  public List<Selection<?>> getSelectClause(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    return this.accumulator.getColumns(root, cq, cb);
+  }
 }

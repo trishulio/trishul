@@ -3,7 +3,6 @@ package io.trishul.repo.jpa.query.join.joiner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-
 import io.trishul.model.base.entity.CriteriaJoin;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.JoinColumn;
@@ -17,136 +16,143 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CriteriaJoinAnnotationJoinerTest {
-    class Entity {
-        @JoinColumn
-        @CriteriaJoin(type = JoinType.LEFT)
-        private Child left;
+  class Entity {
+    @JoinColumn
+    @CriteriaJoin(type = JoinType.LEFT)
+    private Child left;
 
-        @JoinColumn
-        @CriteriaJoin(type = JoinType.RIGHT)
-        private Child right;
+    @JoinColumn
+    @CriteriaJoin(type = JoinType.RIGHT)
+    private Child right;
 
-        @JoinColumn
-        @CriteriaJoin(type = JoinType.INNER)
-        private Child inner;
+    @JoinColumn
+    @CriteriaJoin(type = JoinType.INNER)
+    private Child inner;
 
-        @JoinColumn @CriteriaJoin private Child difault;
+    @JoinColumn
+    @CriteriaJoin
+    private Child difault;
 
-        @ManyToOne private Child manyToOne;
-        @OneToMany private Child oneToMany;
-        @Embedded private Child embedded;
-        @JoinColumn private Child joinColumn;
+    @ManyToOne
+    private Child manyToOne;
+    @OneToMany
+    private Child oneToMany;
+    @Embedded
+    private Child embedded;
+    @JoinColumn
+    private Child joinColumn;
 
-        @SuppressWarnings("unused")
-        private Child get;
-    }
+    @SuppressWarnings("unused")
+    private Child get;
+  }
 
-    class Child {}
+  class Child {
+  }
 
-    private JpaJoiner cjProcessor;
+  private JpaJoiner cjProcessor;
 
-    private From<?, Entity> mEntity;
+  private From<?, Entity> mEntity;
 
-    @BeforeEach
-    public void init() {
-        mEntity = mock(From.class);
-        doReturn(Entity.class).when(mEntity).getJavaType();
+  @BeforeEach
+  public void init() {
+    mEntity = mock(From.class);
+    doReturn(Entity.class).when(mEntity).getJavaType();
 
-        this.cjProcessor = new CriteriaJoinAnnotationJoiner();
-    }
+    this.cjProcessor = new CriteriaJoinAnnotationJoiner();
+  }
 
-    @Test
-    public void testJoin_PerformsALeftJoin_WhenAnnotationValueIsLeft() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("left", JoinType.LEFT);
+  @Test
+  public void testJoin_PerformsALeftJoin_WhenAnnotationValueIsLeft() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("left", JoinType.LEFT);
 
-        From<?, ?> join = this.cjProcessor.join(mEntity, "left");
+    From<?, ?> join = this.cjProcessor.join(mEntity, "left");
 
-        assertEquals(mJoin, join);
-    }
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testJoin_PerformsARightJoin_WhenAnnotationValueIsRight() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("right", JoinType.RIGHT);
+  @Test
+  public void testJoin_PerformsARightJoin_WhenAnnotationValueIsRight() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("right", JoinType.RIGHT);
 
-        From<?, ?> join = this.cjProcessor.join(mEntity, "right");
+    From<?, ?> join = this.cjProcessor.join(mEntity, "right");
 
-        assertEquals(mJoin, join);
-    }
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsInner() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("inner", JoinType.INNER);
+  @Test
+  public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsInner() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("inner", JoinType.INNER);
 
-        From<?, ?> join = this.cjProcessor.join(mEntity, "inner");
+    From<?, ?> join = this.cjProcessor.join(mEntity, "inner");
 
-        assertEquals(mJoin, join);
-    }
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsNotProvided() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("difault", JoinType.INNER);
+  @Test
+  public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsNotProvided() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("difault", JoinType.INNER);
 
-        From<?, ?> join = this.cjProcessor.join(mEntity, "difault");
+    From<?, ?> join = this.cjProcessor.join(mEntity, "difault");
 
-        assertEquals(mJoin, join);
-    }
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testJoin_PerformsAInnerJoinOperation_WhenAnnotationIsMissing() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("get", JoinType.INNER);
+  @Test
+  public void testJoin_PerformsAInnerJoinOperation_WhenAnnotationIsMissing() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("get", JoinType.INNER);
 
-        From<?, ?> join = this.cjProcessor.join(mEntity, "get");
+    From<?, ?> join = this.cjProcessor.join(mEntity, "get");
 
-        assertEquals(mJoin, join);
-    }
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testGet_DelegatesToJoinMethod_WhenEntityIsManyToOne() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("manyToOne", JoinType.INNER);
+  @Test
+  public void testGet_DelegatesToJoinMethod_WhenEntityIsManyToOne() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("manyToOne", JoinType.INNER);
 
-        Path<?> join = this.cjProcessor.get(mEntity, "manyToOne");
-        assertEquals(mJoin, join);
-    }
+    Path<?> join = this.cjProcessor.get(mEntity, "manyToOne");
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testGet_DelegatesToJoinMethod_WhenEntityIsOnetoMany() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("oneToMany", JoinType.INNER);
+  @Test
+  public void testGet_DelegatesToJoinMethod_WhenEntityIsOnetoMany() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("oneToMany", JoinType.INNER);
 
-        Path<?> join = this.cjProcessor.get(mEntity, "oneToMany");
-        assertEquals(mJoin, join);
-    }
+    Path<?> join = this.cjProcessor.get(mEntity, "oneToMany");
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testGet_DelegatesToJoinMethod_WhenEntityIsEmbedded() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("embedded", JoinType.INNER);
+  @Test
+  public void testGet_DelegatesToJoinMethod_WhenEntityIsEmbedded() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("embedded", JoinType.INNER);
 
-        Path<?> join = this.cjProcessor.get(mEntity, "embedded");
-        assertEquals(mJoin, join);
-    }
+    Path<?> join = this.cjProcessor.get(mEntity, "embedded");
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testGet_DelegatesToJoinMethod_WhenEntityIsJoinColumn() {
-        Join<?, ?> mJoin = mock(Join.class);
-        doReturn(mJoin).when(mEntity).join("joinColumn", JoinType.INNER);
+  @Test
+  public void testGet_DelegatesToJoinMethod_WhenEntityIsJoinColumn() {
+    Join<?, ?> mJoin = mock(Join.class);
+    doReturn(mJoin).when(mEntity).join("joinColumn", JoinType.INNER);
 
-        Path<?> join = this.cjProcessor.get(mEntity, "joinColumn");
-        assertEquals(mJoin, join);
-    }
+    Path<?> join = this.cjProcessor.get(mEntity, "joinColumn");
+    assertEquals(mJoin, join);
+  }
 
-    @Test
-    public void testGet_PerformsGetOnEntity_WhenEntityIsBasic() {
-        Path<?> mJoin = mock(Path.class);
-        doReturn(mJoin).when(mEntity).get("get");
+  @Test
+  public void testGet_PerformsGetOnEntity_WhenEntityIsBasic() {
+    Path<?> mJoin = mock(Path.class);
+    doReturn(mJoin).when(mEntity).get("get");
 
-        Path<?> join = this.cjProcessor.get(mEntity, "get");
-        assertEquals(mJoin, join);
-    }
+    Path<?> join = this.cjProcessor.get(mEntity, "get");
+    assertEquals(mJoin, join);
+  }
 }

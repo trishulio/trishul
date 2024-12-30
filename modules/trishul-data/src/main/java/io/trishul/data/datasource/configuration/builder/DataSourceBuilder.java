@@ -4,31 +4,31 @@ import javax.sql.DataSource;
 
 // TODO: Rename to DataSourceConfigurationBuilder
 public interface DataSourceBuilder {
-    DataSource build();
+  DataSource build();
 
-    DataSourceBuilder username(String username);
+  DataSourceBuilder username(String username);
 
-    DataSourceBuilder password(String password);
+  DataSourceBuilder password(String password);
 
-    DataSourceBuilder url(String url);
+  DataSourceBuilder url(String url);
 
-    DataSourceBuilder schema(String schema);
+  DataSourceBuilder schema(String schema);
 
-    DataSourceBuilder poolSize(int size);
+  DataSourceBuilder poolSize(int size);
 
-    DataSourceBuilder autoCommit(boolean autoCommit);
+  DataSourceBuilder autoCommit(boolean autoCommit);
 
-    String username();
+  String username();
 
-    String password();
+  String password();
 
-    String url();
+  String url();
 
-    String schema();
+  String schema();
 
-    int poolSize();
+  int poolSize();
 
-    boolean autoCommit();
+  boolean autoCommit();
 
-    DataSourceBuilder clear();
+  DataSourceBuilder clear();
 }

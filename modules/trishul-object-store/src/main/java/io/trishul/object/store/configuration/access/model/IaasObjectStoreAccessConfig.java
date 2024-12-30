@@ -4,58 +4,62 @@ import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
 
-public class IaasObjectStoreAccessConfig extends BaseEntity implements CrudEntity<String> {
+public class IaasObjectStoreAccessConfig extends BaseEntity
+    implements CrudEntity<String, IaasObjectStoreAccessConfig> {
 
-    private String objectStoreName;
+  private String objectStoreName;
 
-    private PublicAccessBlockConfiguration publicAccessBlockConfig;
+  private PublicAccessBlockConfiguration publicAccessBlockConfig;
 
-    public IaasObjectStoreAccessConfig() {
-        super();
-    }
+  public IaasObjectStoreAccessConfig() {
+    super();
+  }
 
-    public IaasObjectStoreAccessConfig(String id) {
-        this();
-        setId(id);
-    }
+  public IaasObjectStoreAccessConfig(String id) {
+    this();
+    setId(id);
+  }
 
-    public IaasObjectStoreAccessConfig(
-            String objectStoreName, PublicAccessBlockConfiguration publicAccessBlockConfig) {
-        this();
-        this.objectStoreName = objectStoreName;
-        this.publicAccessBlockConfig = publicAccessBlockConfig;
-    }
+  public IaasObjectStoreAccessConfig(String objectStoreName,
+      PublicAccessBlockConfiguration publicAccessBlockConfig) {
+    this();
+    this.objectStoreName = objectStoreName;
+    this.publicAccessBlockConfig = publicAccessBlockConfig;
+  }
 
-    @Override
-    public final void setId(String id) {
-        setObjectStoreName(id);
-    }
+  @Override
+  public final IaasObjectStoreAccessConfig setId(String id) {
+    setObjectStoreName(id);
+    return this;
+  }
 
-    @Override
-    public String getId() {
-        return getObjectStoreName();
-    }
+  @Override
+  public String getId() {
+    return getObjectStoreName();
+  }
 
-    public String getObjectStoreName() {
-        return objectStoreName;
-    }
+  public String getObjectStoreName() {
+    return objectStoreName;
+  }
 
-    public final void setObjectStoreName(String objectStoreName) {
-        this.objectStoreName = objectStoreName;
-    }
+  public final IaasObjectStoreAccessConfig setObjectStoreName(String objectStoreName) {
+    this.objectStoreName = objectStoreName;
+    return this;
+  }
 
-    public PublicAccessBlockConfiguration getPublicAccessBlockConfig() {
-        return publicAccessBlockConfig;
-    }
+  public PublicAccessBlockConfiguration getPublicAccessBlockConfig() {
+    return publicAccessBlockConfig;
+  }
 
-    public final void setPublicAccessBlockConfig(
-            PublicAccessBlockConfiguration publicAccessBlockConfig) {
-        this.publicAccessBlockConfig = publicAccessBlockConfig;
-    }
+  public final IaasObjectStoreAccessConfig setPublicAccessBlockConfig(
+      PublicAccessBlockConfiguration publicAccessBlockConfig) {
+    this.publicAccessBlockConfig = publicAccessBlockConfig;
+    return this;
+  }
 
-    @Override
-    public Integer getVersion() {
-        // Not implemented due to lack of use-case
-        return null;
-    }
+  @Override
+  public Integer getVersion() {
+    // Not implemented due to lack of use-case
+    return null;
+  }
 }

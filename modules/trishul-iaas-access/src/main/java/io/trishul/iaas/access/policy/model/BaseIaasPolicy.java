@@ -1,29 +1,29 @@
 package io.trishul.iaas.access.policy.model;
 
-public interface BaseIaasPolicy {
-    final String ATTR_NAME = "name";
-    final String ATTR_DOCUMENT = "document";
-    final String ATTR_DESCRIPTION = "description";
-    final String ATTR_IAAS_ID = "iaasId";
-    final String ATTR_IAAS_RESOURCE_NAME = "iaasResourceName";
+public interface BaseIaasPolicy<T extends BaseIaasPolicy<T>> {
+  final String ATTR_NAME = "name";
+  final String ATTR_DOCUMENT = "document";
+  final String ATTR_DESCRIPTION = "description";
+  final String ATTR_IAAS_ID = "iaasId";
+  final String ATTR_IAAS_RESOURCE_NAME = "iaasResourceName";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 
-    String getDocument();
+  String getDocument();
 
-    void setDocument(String document);
+  T setDocument(String document);
 
-    String getDescription();
+  String getDescription();
 
-    void setDescription(String description);
+  T setDescription(String description);
 
-    String getIaasId();
+  String getIaasId();
 
-    void setIaasId(String iaasId);
+  T setIaasId(String iaasId);
 
-    String getIaasResourceName();
+  String getIaasResourceName();
 
-    void setIaasResourceName(String iaasResourceName);
+  T setIaasResourceName(String iaasResourceName);
 }

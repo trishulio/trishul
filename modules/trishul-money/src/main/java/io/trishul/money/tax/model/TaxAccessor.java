@@ -1,5 +1,5 @@
 package io.trishul.money.tax.model;
 
-public interface TaxAccessor extends TaxSupplier {
-    void setTax(Tax tax);
+public interface TaxAccessor<T extends TaxAccessor<T>> extends TaxSupplier {
+  T setTax(Tax tax);
 }

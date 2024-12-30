@@ -1,9 +1,9 @@
 package io.trishul.user.salutation.model;
 
-public interface BaseUserSalutation {
-    final String ATTR_TITLE = "title";
+public interface BaseUserSalutation<T extends BaseUserSalutation<T>> {
+  final String ATTR_TITLE = "title";
 
-    String getTitle();
+  String getTitle();
 
-    void setTitle(String title);
+  T setTitle(String title);
 }

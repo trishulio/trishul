@@ -1,9 +1,9 @@
 package io.trishul.user.status;
 
-public interface BaseUserStatus {
-    final String ATTR_NAME = "name";
+public interface BaseUserStatus<T extends BaseUserStatus<T>> {
+  final String ATTR_NAME = "name";
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  T setName(String name);
 }

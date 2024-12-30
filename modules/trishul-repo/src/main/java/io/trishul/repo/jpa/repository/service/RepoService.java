@@ -13,42 +13,36 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
 public interface RepoService<ID, E extends Identified<ID>, A> {
-    public static PageRequest pageRequest(
-            SortedSet<String> sort, boolean orderAscending, int page, int size) {
-        Sort sortBy = Sort.unsorted();
-        if (sort != null && !sort.isEmpty()) {
-            sortBy =
-                    Sort.by(
-                            orderAscending ? Direction.ASC : Direction.DESC,
-                            sort.toArray(String[]::new));
-        }
-
-        return PageRequest.of(page, size, sortBy);
+  public static PageRequest pageRequest(SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
+    Sort sortBy = Sort.unsorted();
+    if (sort != null && !sort.isEmpty()) {
+      sortBy
+          = Sort.by(orderAscending ? Direction.ASC : Direction.DESC, sort.toArray(String[]::new));
     }
 
-    boolean exists(Set<ID> ids);
+    return PageRequest.of(page, size, sortBy);
+  }
 
-    boolean exists(ID id);
+  boolean exists(Set<ID> ids);
 
-    E get(ID id);
+  boolean exists(ID id);
 
-    Page<E> getAll(
-            Specification<E> spec,
-            SortedSet<String> sort,
-            boolean orderAscending,
-            int page,
-            int size);
+  E get(ID id);
 
-    List<E> getAll(Specification<E> spec);
+  Page<E> getAll(Specification<E> spec, SortedSet<String> sort, boolean orderAscending, int page,
+      int size);
 
-    List<E> getByIds(Collection<? extends Identified<ID>> idProviders);
+  List<E> getAll(Specification<E> spec);
 
-    List<E> getByAccessorIds(
-            Collection<? extends A> accessors, Function<A, ? extends Identified<ID>> entityGetter);
+  List<E> getByIds(Collection<? extends Identified<ID>> idProviders);
 
-    List<E> saveAll(List<E> entities);
+  List<E> getByAccessorIds(Collection<? extends A> accessors,
+      Function<A, ? extends Identified<ID>> entityGetter);
 
-    long delete(Set<ID> ids);
+  List<E> saveAll(List<E> entities);
 
-    long delete(ID id);
+  long delete(Set<ID> ids);
+
+  long delete(ID id);
 }

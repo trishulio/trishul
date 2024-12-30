@@ -12,42 +12,42 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 
 public class GroupByClauseBuilder extends BaseModel {
-    private final ColumnSpecAccumulator accumulator;
+  private final ColumnSpecAccumulator accumulator;
 
-    public GroupByClauseBuilder() {
-        this(new ColumnSpecAccumulator());
+  public GroupByClauseBuilder() {
+    this(new ColumnSpecAccumulator());
+  }
+
+  protected GroupByClauseBuilder(ColumnSpecAccumulator accumulator) {
+    this.accumulator = accumulator;
+  }
+
+  public GroupByClauseBuilder groupBy(PathProvider provider) {
+    if (provider != null) {
+      groupBy(provider.getPath());
     }
 
-    protected GroupByClauseBuilder(ColumnSpecAccumulator accumulator) {
-        this.accumulator = accumulator;
+    return this;
+  }
+
+  public GroupByClauseBuilder groupBy(String... paths) {
+    if (paths != null) {
+      groupBy(new ColumnSpec<>(paths));
     }
 
-    public GroupByClauseBuilder groupBy(PathProvider provider) {
-        if (provider != null) {
-            groupBy(provider.getPath());
-        }
+    return this;
+  }
 
-        return this;
+  public GroupByClauseBuilder groupBy(CriteriaSpec<?> spec) {
+    if (spec != null) {
+      this.accumulator.add(spec);
     }
 
-    public GroupByClauseBuilder groupBy(String... paths) {
-        if (paths != null) {
-            groupBy(new ColumnSpec<>(paths));
-        }
+    return this;
+  }
 
-        return this;
-    }
-
-    public GroupByClauseBuilder groupBy(CriteriaSpec<?> spec) {
-        if (spec != null) {
-            this.accumulator.add(spec);
-        }
-
-        return this;
-    }
-
-    public List<Expression<?>> getGroupByClause(
-            Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        return this.accumulator.getColumns(root, cq, cb);
-    }
+  public List<Expression<?>> getGroupByClause(Root<?> root, CriteriaQuery<?> cq,
+      CriteriaBuilder cb) {
+    return this.accumulator.getColumns(root, cq, cb);
+  }
 }

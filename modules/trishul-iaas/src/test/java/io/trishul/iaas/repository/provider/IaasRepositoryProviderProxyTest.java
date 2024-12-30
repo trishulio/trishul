@@ -7,12 +7,10 @@ import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
-import io.trishul.test.types.LongSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,76 +18,68 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class IaasRepositoryProviderProxyTest {
-    private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity> proxy;
-    private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity>
-            mDelegate;
-    private IaasRepositoryProvider<
-                    Long, DummyCrudEntity, BaseDummyCrudEntity, UpdateDummyCrudEntity>
-            mProvider;
+  private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> proxy;
+  private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mDelegate;
+  private IaasRepositoryProvider<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mProvider;
 
-    @BeforeEach
-    public void init() {
-        mProvider = mock(DummyCrudEntityIaasRepositoryProvider.class);
+  @BeforeEach
+  public void init() {
+    mProvider = mock(DummyCrudEntityIaasRepositoryProvider.class);
 
-        mDelegate = mock(DummyCrudEntityIaasRepository.class);
-        doReturn(mDelegate).when(mProvider).getIaasRepository();
+    mDelegate = mock(DummyCrudEntityIaasRepository.class);
+    doReturn(mDelegate).when(mProvider).getIaasRepository();
 
-        proxy = new IaasRepositoryProviderProxy<>(mProvider);
-    }
+    proxy = new IaasRepositoryProviderProxy<>(mProvider);
+  }
 
-    @Test
-    public void testGet_ReturnsValueFromDelegate() {
-        doAnswer(
-                        inv ->
-                                inv.getArgument(0, LongSet.class).stream()
-                                        .map(id -> new DummyCrudEntity(id))
-                                        .toList())
-                .when(mDelegate)
-                .get(anySet());
+  @Test
+  public void testGet_ReturnsValueFromDelegate() {
+    doAnswer(inv -> inv.getArgument(0, Set.class).stream().map(id -> new DummyCrudEntity((Long) id))
+        .toList()).when(mDelegate).get(anySet());
 
-        List<DummyCrudEntity> entities = proxy.get(Set.of(1L, 2L));
+    List<DummyCrudEntity> entities = proxy.get(Set.of(1L, 2L));
 
-        List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
+    List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
 
-        assertThat(entities).hasSameElementsAs(expected);
-    }
+    assertThat(entities).hasSameElementsAs(expected);
+  }
 
-    @Test
-    public void testAdd_ReturnsValueFromDelegate() {
-        doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).add(anyList());
+  @Test
+  public void testAdd_ReturnsValueFromDelegate() {
+    doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).add(anyList());
 
-        List<DummyCrudEntity> entities =
-                proxy.add(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
+    List<DummyCrudEntity> entities
+        = proxy.add(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
 
-        List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
+    List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
 
-        assertEquals(expected, entities);
-    }
+    assertEquals(expected, entities);
+  }
 
-    @Test
-    public void testPut_ReturnsValueFromDelegate() {
-        doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).put(anyList());
+  @Test
+  public void testPut_ReturnsValueFromDelegate() {
+    doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).put(anyList());
 
-        List<DummyCrudEntity> entities =
-                proxy.put(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
+    List<DummyCrudEntity> entities
+        = proxy.put(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
 
-        List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
+    List<DummyCrudEntity> expected = List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L));
 
-        assertEquals(expected, entities);
-    }
+    assertEquals(expected, entities);
+  }
 
-    @Test
-    public void testDelete_ReturnsValueFromDelegate() {
-        doReturn(99L).when(mDelegate).delete(Set.of(1L, 2L));
+  @Test
+  public void testDelete_ReturnsValueFromDelegate() {
+    doReturn(99L).when(mDelegate).delete(Set.of(1L, 2L));
 
-        long count = proxy.delete(Set.of(1L, 2L));
-        assertEquals(99L, count);
-    }
+    long count = proxy.delete(Set.of(1L, 2L));
+    assertEquals(99L, count);
+  }
 
-    @Test
-    public void testExists_ReturnsValueFromDelegate() {
-        doReturn(Map.of(1L, false, 2L, true)).when(mDelegate).exists(Set.of(1L, 2L));
+  @Test
+  public void testExists_ReturnsValueFromDelegate() {
+    doReturn(Map.of(1L, false, 2L, true)).when(mDelegate).exists(Set.of(1L, 2L));
 
-        assertEquals(Map.of(1L, false, 2L, true), proxy.exists(Set.of(1L, 2L)));
-    }
+    assertEquals(Map.of(1L, false, 2L, true), proxy.exists(Set.of(1L, 2L)));
+  }
 }

@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface UserRoleBindingRepository
-        extends JpaRepository<UserRoleBinding, Long>, JpaSpecificationExecutor<UserRoleBinding> {}
+    extends JpaRepository<UserRoleBinding, Long>, JpaSpecificationExecutor<UserRoleBinding> {
+}

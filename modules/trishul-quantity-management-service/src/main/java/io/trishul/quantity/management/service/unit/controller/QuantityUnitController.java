@@ -22,40 +22,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/quantity/units")
 public class QuantityUnitController extends BaseController {
-    private static final Logger log = LoggerFactory.getLogger(QuantityUnitController.class);
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(QuantityUnitController.class);
 
-    private final QuantityUnitService quantityUnitService;
+  private final QuantityUnitService quantityUnitService;
 
-    private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
+  private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
 
-    public QuantityUnitController(QuantityUnitService quantityUnitService, AttributeFilter filter) {
-        super(filter);
-        this.quantityUnitService = quantityUnitService;
-    }
+  public QuantityUnitController(QuantityUnitService quantityUnitService, AttributeFilter filter) {
+    super(filter);
+    this.quantityUnitService = quantityUnitService;
+  }
 
-    @GetMapping(
-            value = "",
-            consumes = MediaType.ALL_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public PageDto<UnitDto> getUnits(
-            @RequestParam(required = false) Set<String> symbols,
-            @RequestParam(name = PROPNAME_SORT_BY, defaultValue = UnitEntity.FIELD_SYMBOL)
-                    SortedSet<String> sort,
-            @RequestParam(name = PROPNAME_ORDER_ASC, defaultValue = VALUE_DEFAULT_ORDER_ASC)
-                    boolean orderAscending,
-            @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX)
-                    int page,
-            @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE)
-                    int size) {
-        Page<UnitEntity> unitsPage =
-                quantityUnitService.getUnits(symbols, sort, orderAscending, page, size);
+  @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<UnitDto> getUnits(@RequestParam(required = false) Set<String> symbols,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = UnitEntity.FIELD_SYMBOL) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size) {
+    Page<UnitEntity> unitsPage
+        = quantityUnitService.getUnits(symbols, sort, orderAscending, page, size);
 
-        List<UnitDto> userRoles =
-                unitsPage.stream().map(unit -> quantityUnitMapper.toDto(unit)).toList();
+    List<UnitDto> userRoles
+        = unitsPage.stream().map(unit -> quantityUnitMapper.toDto(unit)).toList();
 
-        PageDto<UnitDto> dto =
-                new PageDto<>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
+    PageDto<UnitDto> dto
+        = new PageDto<>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
 
-        return dto;
-    }
+    return dto;
+  }
 }

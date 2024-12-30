@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PrincipalContext {
-    UUID getGroupId();
+  UUID getGroupId();
 
-    String getUsername();
+  String getUsername();
 
-    List<String> getRoles();
+  List<String> getRoles();
 }

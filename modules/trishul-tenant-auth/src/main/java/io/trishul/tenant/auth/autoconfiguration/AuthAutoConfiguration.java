@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AuthAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(TenantIdProvider.class)
-    public TenantIdProvider tenantIdProvider(ContextHolder ctxHolder, AdminTenant adminTenant) {
-        return new ContextHolderTenantIdProvider(ctxHolder, adminTenant);
-    }
+  @Bean
+  @ConditionalOnMissingBean(TenantIdProvider.class)
+  public TenantIdProvider tenantIdProvider(ContextHolder ctxHolder, AdminTenant adminTenant) {
+    return new ContextHolderTenantIdProvider(ctxHolder, adminTenant);
+  }
 }

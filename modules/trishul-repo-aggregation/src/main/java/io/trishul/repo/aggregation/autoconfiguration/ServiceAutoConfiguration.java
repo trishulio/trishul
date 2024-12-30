@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean(AggregationRepository.class)
-    public AggregationRepository aggregationRepository(QueryResolver queryResolver) {
-        return new AggregationRepository(queryResolver);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AggregationRepository.class)
+  public AggregationRepository aggregationRepository(QueryResolver queryResolver) {
+    return new AggregationRepository(queryResolver);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AggregationService.class)
-    public AggregationService aggregationService(AggregationRepository aggregationRepository) {
-        return new AggregationService(aggregationRepository);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AggregationService.class)
+  public AggregationService aggregationService(AggregationRepository aggregationRepository) {
+    return new AggregationService(aggregationRepository);
+  }
 }

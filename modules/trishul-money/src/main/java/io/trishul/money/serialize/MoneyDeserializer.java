@@ -13,15 +13,15 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 public class MoneyDeserializer extends JsonDeserializer<Money> {
-    @Override
-    public Money deserialize(JsonParser p, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-        JsonNode node = p.getCodec().readTree(p);
+  @Override
+  public Money deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    JsonNode node = p.getCodec().readTree(p);
 
-        CurrencyUnit currency =
-                CurrencyMapper.INSTANCE.toUnit(node.get(MoneyDto.ATTR_CURRENCY).asText());
-        BigDecimal amount = new BigDecimal(node.get(MoneyDto.ATTR_AMOUNT).asText());
+    CurrencyUnit currency
+        = CurrencyMapper.INSTANCE.toUnit(node.get(MoneyDto.ATTR_CURRENCY).asText());
+    BigDecimal amount = new BigDecimal(node.get(MoneyDto.ATTR_AMOUNT).asText());
 
-        return Money.of(currency, amount);
-    }
+    return Money.of(currency, amount);
+  }
 }

@@ -7,25 +7,25 @@ import io.trishul.tenant.entity.TenantIdProvider;
 import java.util.UUID;
 
 public class ContextHolderTenantIdProvider implements TenantIdProvider {
-    private final ContextHolder ctxHolder;
-    private final UUID defaultTenantId;
+  private final ContextHolder ctxHolder;
+  private final UUID defaultTenantId;
 
-    public ContextHolderTenantIdProvider(ContextHolder ctxHolder, AdminTenant adminTenant) {
-        this.ctxHolder = ctxHolder;
-        this.defaultTenantId = adminTenant.getId();
+  public ContextHolderTenantIdProvider(ContextHolder ctxHolder, AdminTenant adminTenant) {
+    this.ctxHolder = ctxHolder;
+    this.defaultTenantId = adminTenant.getId();
+  }
+
+  @Override
+  public UUID getTenantId() {
+    UUID currentTenantId = this.defaultTenantId;
+
+    PrincipalContext ctx = this.ctxHolder.getPrincipalContext();
+    UUID tenantId = ctx.getGroupId();
+
+    if (tenantId != null) {
+      currentTenantId = tenantId;
     }
 
-    @Override
-    public UUID getTenantId() {
-        UUID currentTenantId = this.defaultTenantId;
-
-        PrincipalContext ctx = this.ctxHolder.getPrincipalContext();
-        UUID tenantId = ctx.getGroupId();
-
-        if (tenantId != null) {
-            currentTenantId = tenantId;
-        }
-
-        return currentTenantId;
-    }
+    return currentTenantId;
+  }
 }

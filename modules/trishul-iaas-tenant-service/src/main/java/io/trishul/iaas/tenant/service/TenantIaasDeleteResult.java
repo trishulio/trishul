@@ -6,43 +6,44 @@ import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class TenantIaasDeleteResult extends BaseModel {
-    private TenantIaasAuthDeleteResult auth;
-    private TenantIaasIdpDeleteResult idp;
-    private TenantIaasVfsDeleteResult vfs;
+  private TenantIaasAuthDeleteResult auth;
+  private TenantIaasIdpDeleteResult idp;
+  private TenantIaasVfsDeleteResult vfs;
 
-    public TenantIaasDeleteResult() {}
+  public TenantIaasDeleteResult() {}
 
-    public TenantIaasDeleteResult(
-            TenantIaasAuthDeleteResult auth,
-            TenantIaasIdpDeleteResult idp,
-            TenantIaasVfsDeleteResult vfs) {
-        this();
-        setAuth(auth);
-        setIdp(idp);
-        setVfs(vfs);
-    }
+  public TenantIaasDeleteResult(TenantIaasAuthDeleteResult auth, TenantIaasIdpDeleteResult idp,
+      TenantIaasVfsDeleteResult vfs) {
+    this();
+    setAuth(auth);
+    setIdp(idp);
+    setVfs(vfs);
+  }
 
-    public TenantIaasAuthDeleteResult getAuth() {
-        return auth;
-    }
+  public TenantIaasAuthDeleteResult getAuth() {
+    return auth;
+  }
 
-    public final void setAuth(TenantIaasAuthDeleteResult auth) {
-        this.auth = auth;
-    }
+  public final TenantIaasDeleteResult setAuth(TenantIaasAuthDeleteResult auth) {
+    this.auth = auth;
+    return this;
+  }
 
-    public TenantIaasIdpDeleteResult getIdp() {
-        return idp;
-    }
+  public TenantIaasIdpDeleteResult getIdp() {
+    return idp;
+  }
 
-    public final void setIdp(TenantIaasIdpDeleteResult idp) {
-        this.idp = idp;
-    }
+  public final TenantIaasDeleteResult setIdp(TenantIaasIdpDeleteResult idp) {
+    this.idp = idp;
+    return this;
+  }
 
-    public TenantIaasVfsDeleteResult getVfs() {
-        return vfs;
-    }
+  public TenantIaasVfsDeleteResult getVfs() {
+    return vfs;
+  }
 
-    public final void setVfs(TenantIaasVfsDeleteResult vfs) {
-        this.vfs = vfs;
-    }
+  public final TenantIaasDeleteResult setVfs(TenantIaasVfsDeleteResult vfs) {
+    this.vfs = vfs;
+    return this;
+  }
 }

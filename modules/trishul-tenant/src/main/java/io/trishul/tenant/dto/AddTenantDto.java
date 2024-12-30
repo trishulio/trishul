@@ -1,36 +1,40 @@
 package io.trishul.tenant.dto;
 
+import java.net.URL;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
-import java.net.URL;
 
 public class AddTenantDto extends BaseDto {
-    @NotBlank private String name;
+  @NotBlank
+  private String name;
 
-    @NotBlank private URL url;
+  @NotBlank
+  private URL url;
 
-    public AddTenantDto() {
-        super();
-    }
+  public AddTenantDto() {
+    super();
+  }
 
-    public AddTenantDto(String name, URL url) {
-        setName(name);
-        setUrl(url);
-    }
+  public AddTenantDto(String name, URL url) {
+    setName(name);
+    setUrl(url);
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public final void setName(String name) {
-        this.name = name;
-    }
+  public final AddTenantDto setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public URL getUrl() {
-        return url;
-    }
+  public URL getUrl() {
+    return url;
+  }
 
-    public final void setUrl(URL url) {
-        this.url = url;
-    }
+  public final AddTenantDto setUrl(URL url) {
+    this.url = url;
+    return this;
+  }
 }

@@ -8,15 +8,15 @@ import javax.measure.Unit;
 
 @SuppressWarnings("rawtypes")
 public class UnitSerializer extends JsonSerializer<Unit> {
-    @Override
-    public void serialize(Unit value, JsonGenerator gen, SerializerProvider serializers)
-            throws IOException {
-        if (value == null) {
-            gen.writeNull();
-        } else {
-            gen.writeStartObject();
-            gen.writeStringField("symbol", value.getSymbol());
-            gen.writeEndObject();
-        }
+  @Override
+  public void serialize(Unit value, JsonGenerator gen, SerializerProvider serializers)
+      throws IOException {
+    if (value == null) {
+      gen.writeNull();
+    } else {
+      gen.writeStartObject();
+      gen.writeStringField("symbol", value.getSymbol());
+      gen.writeEndObject();
     }
+  }
 }

@@ -3,17 +3,18 @@ package io.trishul.iaas.idp.tenant.model;
 import io.trishul.model.base.pojo.BaseModel;
 
 public class TenantIaasIdpDeleteResult extends BaseModel {
-    private long idpTenant;
+  private long idpTenant;
 
-    public TenantIaasIdpDeleteResult(long idpTenant) {
-        this.idpTenant = idpTenant;
-    }
+  public TenantIaasIdpDeleteResult(long idpTenant) {
+    this.idpTenant = idpTenant;
+  }
 
-    public long getIdpTenant() {
-        return idpTenant;
-    }
+  public long getIdpTenant() {
+    return idpTenant;
+  }
 
-    public final void setIdpTenant(long idpTenant) {
-        this.idpTenant = idpTenant;
-    }
+  public final TenantIaasIdpDeleteResult setIdpTenant(long idpTenant) {
+    this.idpTenant = idpTenant;
+    return this;
+  }
 }

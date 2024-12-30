@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ServiceAutoConfiguration {
-    @Bean
-    public LockService lockService() {
-        return new LockService();
-    }
+  @Bean
+  public LockService lockService() {
+    return new LockService();
+  }
 }

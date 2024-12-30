@@ -7,23 +7,23 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TenantRefresher implements Refresher<Tenant, TenantAccessor> {
-    @SuppressWarnings("unused")
-    private static final Logger log = LoggerFactory.getLogger(TenantRefresher.class);
+public class TenantRefresher implements Refresher<Tenant, TenantAccessor<?>> {
+  @SuppressWarnings("unused")
+  private static final Logger log = LoggerFactory.getLogger(TenantRefresher.class);
 
-    private final AccessorRefresher<UUID, TenantAccessor, Tenant> refresher;
+  private final AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher;
 
-    public TenantRefresher(AccessorRefresher<UUID, TenantAccessor, Tenant> refresher) {
-        this.refresher = refresher;
-    }
+  public TenantRefresher(AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher) {
+    this.refresher = refresher;
+  }
 
-    @Override
-    public void refresh(Collection<Tenant> tenants) {
-        // Nothing to refresh
-    }
+  @Override
+  public void refresh(Collection<Tenant> tenants) {
+    // Nothing to refresh
+  }
 
-    @Override
-    public void refreshAccessors(Collection<? extends TenantAccessor> accessors) {
-        this.refresher.refreshAccessors(accessors);
-    }
+  @Override
+  public void refreshAccessors(Collection<? extends TenantAccessor<?>> accessors) {
+    this.refresher.refreshAccessors(accessors);
+  }
 }
