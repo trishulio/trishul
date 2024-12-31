@@ -24,7 +24,8 @@ public class TenantIaasIdpTenantMapper {
     List<? extends BaseIaasIdpTenant<?>> idpTenants = null;
 
     if (tenants != null) {
-      idpTenants = tenants.stream().map(tenant -> (BaseIaasIdpTenant<?>) fromTenant(tenant)).toList();
+      idpTenants
+          = tenants.stream().map(tenant -> (BaseIaasIdpTenant<?>) fromTenant(tenant)).toList();
     }
 
     return idpTenants;

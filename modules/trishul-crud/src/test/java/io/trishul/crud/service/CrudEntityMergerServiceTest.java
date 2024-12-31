@@ -22,12 +22,12 @@ public class CrudEntityMergerServiceTest {
   private UtilityProvider mUtilProvider;
 
   @BeforeEach
-  public  void init() {
+  public void init() {
     this.mLockService = new LockService();
     this.mUtilProvider = new MockUtilProvider();
 
-    this.service = new CrudEntityMergerService<>(
-        this.mUtilProvider, this.mLockService, BaseDummyCrudEntity.class, UpdateDummyCrudEntity.class, DummyCrudEntity.class,
+    this.service = new CrudEntityMergerService<>(this.mUtilProvider, this.mLockService,
+        BaseDummyCrudEntity.class, UpdateDummyCrudEntity.class, DummyCrudEntity.class,
         Set.of(BaseDummyCrudEntity.ATTR_EXCLUDED_VALUE));
   }
 
@@ -57,7 +57,7 @@ public class CrudEntityMergerServiceTest {
 
   @Test
   public void testGetPutEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenUpdatesAreNotNull() {
-    final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
+    final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L).setVersion(1));
     final List<UpdateDummyCrudEntity<?>> updates = List.of(
         new DummyCrudEntity().setId(1L).setValue("VALUE").setExcludedValue("EXCLUDED_VALUE")
             .setVersion(1),
@@ -89,7 +89,7 @@ public class CrudEntityMergerServiceTest {
 
     OptimisticLockException exception = assertThrows(OptimisticLockException.class,
         () -> this.service.getPutEntities(existing, updates));
-    assertEquals("Cannot update entity of version with: null with update payload of version: 1",
+    assertEquals("Cannot update entity of version: null with update payload of version: 1",
         exception.getMessage());
   }
 
@@ -124,12 +124,12 @@ public class CrudEntityMergerServiceTest {
     ValidationException exception1 = assertThrows(ValidationException.class,
         () -> this.service.getPatchEntities(existing, patches));
     assertEquals(
-        "1. No existing DummyCrudEntity found with Id: 2.\n2. No existing DummyCrudEntity found with Id: 3.",
+        "1. Cannot apply the patch with Id: 2 to an existing entity as it does not exist\n2. Cannot apply the patch with Id: 3 to an existing entity as it does not exist\n",
         exception1.getMessage());
     ValidationException exception2 = assertThrows(ValidationException.class,
         () -> this.service.getPatchEntities(null, patches));
     assertEquals(
-        "1. No existing DummyCrudEntity found with Id: 2.\n2. No existing DummyCrudEntity found with Id: 3.",
+        "1. Cannot apply the patch with Id: 2 to an existing entity as it does not exist\n2. Cannot apply the patch with Id: 3 to an existing entity as it does not exist\n",
         exception2.getMessage());
   }
 
@@ -141,7 +141,7 @@ public class CrudEntityMergerServiceTest {
 
     OptimisticLockException exception = assertThrows(OptimisticLockException.class,
         () -> this.service.getPatchEntities(existing, patches));
-    assertEquals("Cannot update entity of version with: null with update payload of version: 1",
+    assertEquals("Cannot update entity of version: null with update payload of version: 1",
         exception.getMessage());
   }
 
@@ -161,15 +161,15 @@ public class CrudEntityMergerServiceTest {
 
   @Test
   public void testGetPatchEntities_AppliesUpdateToEntityWithNullId_WhenPatchIdIsNull() {
-    final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setValue("OLD_VALUE")
+    final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity(1L).setValue("OLD_VALUE")
         .setExcludedValue("OLD_EXCLUDED_VALUE").setVersion(1));
     final List<UpdateDummyCrudEntity<?>> patches = List.of(
-        new DummyCrudEntity().setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1));
+        new DummyCrudEntity(1L).setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1));
 
     List<DummyCrudEntity> entities = this.service.getPatchEntities(existing, patches);
 
     final List<DummyCrudEntity> expected
-        = List.of(new DummyCrudEntity().setValue("VALUE").setVersion(1));
+        = List.of(new DummyCrudEntity(1L).setValue("VALUE").setVersion(1));
     assertEquals(expected, entities);
   }
 }

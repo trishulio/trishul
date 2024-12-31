@@ -13,6 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import java.util.HashMap;
 import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.CreateRoleRequest;
@@ -24,7 +25,9 @@ import com.amazonaws.services.identitymanagement.model.GetRoleResult;
 import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
 import com.amazonaws.services.identitymanagement.model.Role;
 import com.amazonaws.services.identitymanagement.model.UpdateAssumeRolePolicyRequest;
+import com.amazonaws.services.identitymanagement.model.UpdateAssumeRolePolicyResult;
 import com.amazonaws.services.identitymanagement.model.UpdateRoleRequest;
+import com.amazonaws.services.identitymanagement.model.UpdateRoleResult;
 import io.trishul.iaas.access.role.model.IaasRole;
 
 public class AwsIamRoleClientTest {
@@ -105,6 +108,13 @@ public class AwsIamRoleClientTest {
       Role role = new Role().withRoleName(req.getRoleName());
       return new GetRoleResult().withRole(role);
     }).when(mAwsIamClient).getRole(any());
+
+    doReturn(new UpdateRoleResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+        .when(mAwsIamClient).updateRole(any());
+
+    doReturn(new UpdateAssumeRolePolicyResult()
+        .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
+            .updateAssumeRolePolicy(any());
 
     IaasRole role = client.update(new IaasRole().setId("ROLE_1").setDescription("DESCRIPTION_1")
         .setAssumePolicyDocument("DOCUMENT_1"));

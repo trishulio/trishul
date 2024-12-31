@@ -23,7 +23,8 @@ public interface TenantObjectStoreResourceBuilder {
 
   BaseIaasRolePolicyAttachment<?> buildAttachment(IaasRole role, IaasPolicy policy);
 
-  IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(BaseIaasIdpTenant<?> iaasIdpTenant);
+  IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(
+      BaseIaasIdpTenant<?> iaasIdpTenant);
 
   IaasObjectStoreAccessConfig buildPublicAccessBlock(BaseIaasIdpTenant<?> iaasIdpTenant);
 }

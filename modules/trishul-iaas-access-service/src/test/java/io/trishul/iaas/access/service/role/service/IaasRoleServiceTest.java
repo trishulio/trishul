@@ -232,14 +232,11 @@ public class IaasRoleServiceTest {
 
     doAnswer(inv -> {
       Iterator<String> it = inv.getArgument(0, Set.class).iterator();
-      it.next();
-      it.next();
-
       return List.of(
-          new IaasRole("ROLE_1", "DESCRIPION_1", "DOCUMENT_1", "IAAS_RES_NAME_1", "IAAS_ID_1",
+          new IaasRole(it.next(), "DESCRIPION_1", "DOCUMENT_1", "IAAS_RES_NAME_1", "IAAS_ID_1",
               LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2001, 1, 1, 0, 0),
               LocalDateTime.of(2002, 1, 1, 0, 0)),
-          new IaasRole("ROLE_2", "DESCRIPION_2", "DOCUMENT_2", "IAAS_RES_NAME_2", "IAAS_ID_2",
+          new IaasRole(it.next(), "DESCRIPION_2", "DOCUMENT_2", "IAAS_RES_NAME_2", "IAAS_ID_2",
               LocalDateTime.of(2000, 2, 1, 0, 0), LocalDateTime.of(2001, 2, 1, 0, 0),
               LocalDateTime.of(2002, 2, 1, 0, 0)));
     }).when(mIaasRepo).get(anySet());
@@ -249,9 +246,9 @@ public class IaasRoleServiceTest {
             .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2002, 1, 1, 0, 0)),
-        new IaasRole().setAssumePolicyDocument("ROLE_2").setDescription("DESCRIPION_2_UPDATED")
-            .setIaasResourceName("IAAS_ID_2_UPDATED")
-            .setCreatedAt(LocalDateTime.of(2000, 2, 1, 0, 0))
+        new IaasRole().setId("ROLE_2").setDescription("DESCRIPION_2_UPDATED")
+            .setAssumePolicyDocument("DOCUMENT_2").setIaasResourceName("IAAS_RES_NAME_2")
+            .setIaasId("IAAS_ID_2_UPDATED").setCreatedAt(LocalDateTime.of(2000, 2, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2001, 2, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2002, 2, 1, 0, 0)));
 

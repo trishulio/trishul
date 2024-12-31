@@ -12,18 +12,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
 import com.amazonaws.services.cognitoidp.model.AdminListGroupsForUserRequest;
 import com.amazonaws.services.cognitoidp.model.AdminListGroupsForUserResult;
 import com.amazonaws.services.cognitoidp.model.AdminRemoveUserFromGroupRequest;
+import com.amazonaws.services.cognitoidp.model.AdminRemoveUserFromGroupResult;
 import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -131,6 +134,9 @@ public class AwsIaasUserTenantMembershipClientTest {
 
   @Test
   public void testDelete_ReturnsTrue_WhenRemoveUserFromGroupIsCalled() {
+    doReturn(new AdminRemoveUserFromGroupResult()
+        .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mIdp)
+            .adminRemoveUserFromGroup(any(AdminRemoveUserFromGroupRequest.class));
     boolean b = client.delete(new IaasUserTenantMembershipId("USER_1", "T1"));
 
     assertTrue(b);

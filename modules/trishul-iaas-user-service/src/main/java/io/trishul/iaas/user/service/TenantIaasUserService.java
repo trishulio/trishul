@@ -41,7 +41,8 @@ public class TenantIaasUserService {
     String tenantId = this.tenantIdProvider.getTenantId().toString();
 
     @SuppressWarnings("unchecked")
-    List<? extends UpdateIaasUser<?>> updates = (List<? extends UpdateIaasUser<?>>) userMapper.fromUsers(users);
+    List<? extends UpdateIaasUser<?>> updates
+        = (List<? extends UpdateIaasUser<?>>) userMapper.fromUsers(users);
 
     List<IaasUser> iaasUsers = this.userService.put(updates);
     List<IaasUserTenantMembership> memberships = iaasUsers.stream()

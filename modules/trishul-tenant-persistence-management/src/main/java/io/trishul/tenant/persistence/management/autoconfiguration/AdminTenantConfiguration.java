@@ -2,13 +2,10 @@ package io.trishul.tenant.persistence.management.autoconfiguration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantData;
-
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

@@ -14,10 +14,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.AttachRolePolicyRequest;
+import com.amazonaws.services.identitymanagement.model.AttachRolePolicyResult;
 import com.amazonaws.services.identitymanagement.model.AttachedPolicy;
 import com.amazonaws.services.identitymanagement.model.DetachRolePolicyRequest;
+import com.amazonaws.services.identitymanagement.model.DetachRolePolicyResult;
 import com.amazonaws.services.identitymanagement.model.ListAttachedRolePoliciesRequest;
 import com.amazonaws.services.identitymanagement.model.ListAttachedRolePoliciesResult;
 import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
@@ -25,6 +28,7 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.model.IaasRole;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,6 +80,9 @@ public class AwsIamRolePolicyAttachmentClientTest {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mArnMapper)
         .getPolicyArn(anyString());
 
+    doReturn(
+        new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
     IaasRolePolicyAttachment addition
         = new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1"));
     IaasRolePolicyAttachment attachment = client.add(addition);
@@ -108,6 +115,10 @@ public class AwsIamRolePolicyAttachmentClientTest {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mArnMapper)
         .getPolicyArn(anyString());
 
+    doReturn(
+        new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
+
     IaasRolePolicyAttachment attachment = client
         .put(new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1")));
 
@@ -137,6 +148,9 @@ public class AwsIamRolePolicyAttachmentClientTest {
 
   @Test
   public void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
+    doReturn(
+        new DetachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+            .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
     assertTrue(client.delete(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
 
     verify(mAwsClient, times(1)).detachRolePolicy(
@@ -177,6 +191,14 @@ public class AwsIamRolePolicyAttachmentClientTest {
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleCPoliciesPartion2))
         .when(mAwsClient).listAttachedRolePolicies(
             new ListAttachedRolePoliciesRequest().withRoleName("ROLE_C").withMarker("MARKER"));
+
+    doReturn(
+        new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
+
+    doReturn(
+        new DetachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+            .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
 
     IaasRolePolicyAttachment roleAPolicy1
         = client.get(new IaasRolePolicyAttachmentId("ROLE_A", "POLICY_1A"));

@@ -121,9 +121,7 @@ public class ReflectionManipulator {
 
       for (final PropertyDescriptor pd : pds) {
         final Method getter = pd.getReadMethod();
-        final Method setter = pd.getWriteMethod();
-
-        if (getter == null || setter == null) {
+        if (getter == null) {
           continue;
         }
 
@@ -131,7 +129,7 @@ public class ReflectionManipulator {
 
         if (pass) {
           final Object value = getter.invoke(o2);
-          setter.invoke(o1, value);
+          invokeSetter(o1, pd, value);
         }
       }
     } catch (final IntrospectionException e) {
@@ -177,8 +175,7 @@ public class ReflectionManipulator {
           = Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors();
       for (final PropertyDescriptor pd : pds) {
         if (props.containsKey(pd.getName())) {
-          final Method setter = pd.getWriteMethod();
-          setter.invoke(obj, props.get(pd.getName()));
+          invokeSetter(obj, pd, props.get(pd.getName()));
         }
       }
     } catch (final IntrospectionException e) {
@@ -204,5 +201,39 @@ public class ReflectionManipulator {
   private void handleException(String msg, Exception e) {
     log.error(msg);
     throw new RuntimeException(msg, e);
+  }
+
+  // TODO: add unit tests
+  public void invokeSetter(Object o, PropertyDescriptor pd, Object value) {
+    try {
+      Class<?> clazz = o.getClass();
+      String propertyName = pd.getName();
+
+      String writeMethodName = null;
+
+      Method readMethod = pd.getReadMethod();
+      if (readMethod != null) {
+        String readMethodName = readMethod.getName();
+        writeMethodName = readMethodName.replace("get", "set");
+      } else {
+        writeMethodName
+            = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+      }
+
+      try {
+        Method writeMethod = clazz.getMethod(writeMethodName, pd.getPropertyType());
+        writeMethod.invoke(o, value);
+      } catch (NoSuchMethodException e) {
+        log.info("No setter method found for property: {}", propertyName);
+      }
+    } catch (final ReflectiveOperationException e) {
+      final String msg
+          = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      this.handleException(msg, e);
+    } catch (IllegalArgumentException e) {
+      final String msg = String
+          .format("Failed to access the value using dynamic method because: %s", e.getMessage());
+      this.handleException(msg, e);
+    }
   }
 }

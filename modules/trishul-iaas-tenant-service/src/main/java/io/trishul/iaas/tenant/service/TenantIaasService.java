@@ -61,7 +61,8 @@ public class TenantIaasService {
 
   public List<TenantIaasResources> put(List<? extends UpdateTenant<?>> tenants) {
     @SuppressWarnings("unchecked")
-    List<? extends UpdateIaasIdpTenant<?>> idpTenants = (List<? extends UpdateIaasIdpTenant<?>>) mapper.fromTenants(tenants);
+    List<? extends UpdateIaasIdpTenant<?>> idpTenants
+        = (List<? extends UpdateIaasIdpTenant<?>>) mapper.fromTenants(tenants);
 
     List<TenantIaasAuthResources> authResources = this.authService.put(idpTenants);
 

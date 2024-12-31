@@ -53,10 +53,9 @@ public class AwsTenantIaasResourceBuilder
   @Override
   public BaseIaasRole<?> buildRole(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
-    return new IaasRole()
-    .setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId))
-    .setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId))
-    .setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
+    return new IaasRole().setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId))
+        .setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId))
+        .setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
   }
 
 
@@ -69,10 +68,9 @@ public class AwsTenantIaasResourceBuilder
   public BaseIaasPolicy<?> buildVfsPolicy(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
 
-    return new IaasPolicy()
-    .setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
-    .setDescription(this.templates.getTenantVfsPolicyDescription(iaasIdpTenantId))
-    .setDocument(this.templates.getTenantBucketPolicyDoc(iaasIdpTenantId));
+    return new IaasPolicy().setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+        .setDescription(this.templates.getTenantVfsPolicyDescription(iaasIdpTenantId))
+        .setDocument(this.templates.getTenantBucketPolicyDoc(iaasIdpTenantId));
   }
 
   @Override
@@ -83,26 +81,24 @@ public class AwsTenantIaasResourceBuilder
   @Override
   public BaseIaasObjectStore<?> buildObjectStore(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
-    return new IaasObjectStore()
-    .setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
+    return new IaasObjectStore().setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
   }
 
   @Override
   public IaasRolePolicyAttachmentId buildVfsAttachmentId(String iaasIdpTenantId) {
     return new IaasRolePolicyAttachmentId()
-    .setPolicyId(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
-    .setRoleId(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
+        .setPolicyId(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+        .setRoleId(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
   }
 
   @Override
   public BaseIaasRolePolicyAttachment<?> buildAttachment(IaasRole role, IaasPolicy policy) {
-    return new IaasRolePolicyAttachment()
-    .setIaasRole(role)
-    .setIaasPolicy(policy);
+    return new IaasRolePolicyAttachment().setIaasRole(role).setIaasPolicy(policy);
   }
 
   @Override
-  public IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(BaseIaasIdpTenant<?> iaasIdpTenant) {
+  public IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(
+      BaseIaasIdpTenant<?> iaasIdpTenant) {
     List<String> sanitizedOrigins
         = allowedOrigins.stream().map(o -> o.replaceAll("/*$", "")).toList();
 
@@ -120,8 +116,7 @@ public class AwsTenantIaasResourceBuilder
   }
 
   @Override
-  public IaasObjectStoreAccessConfig buildPublicAccessBlock(
-    BaseIaasIdpTenant<?> iaasIdpTenant) {
+  public IaasObjectStoreAccessConfig buildPublicAccessBlock(BaseIaasIdpTenant<?> iaasIdpTenant) {
     PublicAccessBlockConfiguration publicAccessBlockConfiguration
         = new PublicAccessBlockConfiguration().withBlockPublicAcls(blockPublicAcls)
             .withBlockPublicPolicy(blockPublicPolicy).withIgnorePublicAcls(ignorePublicAcls)

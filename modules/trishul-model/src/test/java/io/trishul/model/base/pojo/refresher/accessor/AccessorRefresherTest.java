@@ -119,6 +119,8 @@ public class AccessorRefresherTest {
     EntityNotFoundException exception
         = assertThrows(EntityNotFoundException.class, () -> refresher.refreshAccessors(consumers));
 
-    assertEquals("Cannot find all Entitys in Id-Set: [1, 2, 3]. Only found the ones with Ids: [3, 1]", exception.getMessage());
+    assertEquals(
+        "Cannot find all Entitys in Id-Set: [1, 2, 3]. Only found the ones with Ids: [3, 1]",
+        exception.getMessage());
   }
 }

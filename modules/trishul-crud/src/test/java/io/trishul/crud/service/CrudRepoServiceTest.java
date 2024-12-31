@@ -132,10 +132,21 @@ public class CrudRepoServiceTest {
     final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
     doReturn(mEntities).when(this.mRepo).findAllById(Set.of(1L));
 
-    class DummyDummyCrudEntityAccessor implements DummyCrudEntityAccessor<DummyDummyCrudEntityAccessor> {
+    class DummyDummyCrudEntityAccessor
+        implements DummyCrudEntityAccessor<DummyDummyCrudEntityAccessor> {
+      private final DummyCrudEntity entity;
+
+      public DummyDummyCrudEntityAccessor(Long crudEntityId) {
+        this(new DummyCrudEntity(crudEntityId));
+      }
+
+      public DummyDummyCrudEntityAccessor(DummyCrudEntity entity) {
+        this.entity = entity;
+      }
+
       @Override
       public DummyCrudEntity getDummyCrudEntity() {
-        return null;
+        return this.entity;
       }
 
       @Override
@@ -145,14 +156,11 @@ public class CrudRepoServiceTest {
     }
 
     final List<? extends DummyCrudEntityAccessor<?>> accessors
-        = List.of(new DummyDummyCrudEntityAccessor(),
-            new DummyDummyCrudEntityAccessor(), new DummyDummyCrudEntityAccessor());
+        = new ArrayList<>(List.of(new DummyDummyCrudEntityAccessor(1L),
+            new DummyDummyCrudEntityAccessor(new DummyCrudEntity()),
+            new DummyDummyCrudEntityAccessor((DummyCrudEntity) null)));
 
-            accessors.add(null);
-
-    doReturn(new DummyCrudEntity(1L)).when(accessors.get(0)).getDummyCrudEntity();
-    doReturn(new DummyCrudEntity()).when(accessors.get(1)).getDummyCrudEntity();
-    doReturn(null).when(accessors.get(2)).getDummyCrudEntity();
+    accessors.add(null);
 
     final List<DummyCrudEntity> entities
         = this.service.getByAccessorIds(accessors, accessor -> accessor.getDummyCrudEntity());

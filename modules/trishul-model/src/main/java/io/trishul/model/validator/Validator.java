@@ -18,9 +18,6 @@ public class Validator {
     this.errors = new ArrayList<>(0);
   }
 
-  // public void rule(Supplier<Boolean> test, String err) {
-  // rule(test.get(), err);
-  // }
   public boolean hasErrors() {
     return !this.errors.isEmpty();
   }
@@ -65,13 +62,6 @@ public class Validator {
       }
     }
   }
-
-  // public void assertion(Supplier<Boolean> test, Class<? extends
-  // RuntimeException> clazz,
-  // Object... args) {
-  // boolean pass = test.get();
-  // assertion(pass, clazz, args);
-  // }
 
   private static String concatIntoNumberedList(List<String> msgs) {
     StringBuilder sb = new StringBuilder();

@@ -91,7 +91,8 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   }
 
   @Override
-  public List<IaasRolePolicyAttachment> add(List<? extends BaseIaasRolePolicyAttachment<?>> additions) {
+  public List<IaasRolePolicyAttachment> add(
+      List<? extends BaseIaasRolePolicyAttachment<?>> additions) {
     if (additions == null) {
       return null;
     }
@@ -103,7 +104,8 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   }
 
   @Override
-  public List<IaasRolePolicyAttachment> put(List<? extends UpdateIaasRolePolicyAttachment<?>> updates) {
+  public List<IaasRolePolicyAttachment> put(
+      List<? extends UpdateIaasRolePolicyAttachment<?>> updates) {
     if (updates == null) {
       return null;
     }
@@ -114,7 +116,8 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   }
 
   @Override
-  public List<IaasRolePolicyAttachment> patch(List<? extends UpdateIaasRolePolicyAttachment<?>> updates) {
+  public List<IaasRolePolicyAttachment> patch(
+      List<? extends UpdateIaasRolePolicyAttachment<?>> updates) {
     if (updates == null) {
       return null;
     }

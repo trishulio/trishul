@@ -11,6 +11,7 @@ import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.base.types.base.pojo.UpdatableEntity;
 import io.trishul.model.validator.UtilityProvider;
 import io.trishul.model.validator.Validator;
+
 public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE extends UpdatableEntity<ID, ?>>
     extends BaseService implements EntityMergerService<ID, E, BE, UE> {
   @SuppressWarnings("unused")
@@ -29,14 +30,16 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
       Class<? extends BE> baseEntityCls, Class<? extends UE> updateEntityCls, Class<E> entityCls,
       Set<String> excludeProps) {
     this.utilProvider = utilProvider;
-    this.baseEntityCls = (Class<BE>) baseEntityCls; // Unsafe cast. If the cast fails, update the passed arguments
-    this.updateEntityCls = (Class<UE>) updateEntityCls; // Unsafe cast. If the cast fails, update the passed arguments
+    this.baseEntityCls = (Class<BE>) baseEntityCls; // Unsafe cast. If the cast fails, update the
+                                                    // passed arguments
+    this.updateEntityCls = (Class<UE>) updateEntityCls; // Unsafe cast. If the cast fails, update
+                                                        // the passed arguments
     this.entityCls = entityCls;
     this.excludeProps = excludeProps;
     this.lockService = lockService;
   }
 
-@Override
+  @Override
   public List<E> getAddEntities(List<? extends BE> additions) {
     if (additions == null) {
       return null;

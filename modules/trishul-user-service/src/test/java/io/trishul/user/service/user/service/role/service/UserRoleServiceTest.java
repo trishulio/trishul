@@ -231,6 +231,6 @@ public class UserRoleServiceTest {
 
     EntityNotFoundException exception
         = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
-    assertEquals("Cannot find all objects in Id-Set: [3, 4]", exception.getMessage());
+    assertEquals("Cannot find userRoles with Ids: [3, 4]", exception.getMessage());
   }
 }

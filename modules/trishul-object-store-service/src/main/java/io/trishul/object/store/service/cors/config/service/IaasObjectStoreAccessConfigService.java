@@ -91,7 +91,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements
   }
 
   @Override
-  public List<IaasObjectStoreAccessConfig> add(List<? extends IaasObjectStoreAccessConfig> additions) {
+  public List<IaasObjectStoreAccessConfig> add(
+      List<? extends IaasObjectStoreAccessConfig> additions) {
     if (additions == null) {
       return null;
     }
@@ -103,7 +104,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements
   }
 
   @Override
-  public List<IaasObjectStoreAccessConfig> put(List<? extends IaasObjectStoreAccessConfig> updates) {
+  public List<IaasObjectStoreAccessConfig> put(
+      List<? extends IaasObjectStoreAccessConfig> updates) {
     if (updates == null) {
       return null;
     }
@@ -115,7 +117,8 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements
   }
 
   @Override
-  public List<IaasObjectStoreAccessConfig> patch(List<? extends IaasObjectStoreAccessConfig> updates) {
+  public List<IaasObjectStoreAccessConfig> patch(
+      List<? extends IaasObjectStoreAccessConfig> updates) {
     if (updates == null) {
       return null;
     }

@@ -316,6 +316,8 @@ public class TenantServiceTest {
 
     EntityNotFoundException exception
         = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
-    assertEquals("Cannot find tenants with Ids: [3, 4]", exception.getMessage());
+    assertEquals(
+        "Cannot find tenants with Ids: [00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004]",
+        exception.getMessage());
   }
 }

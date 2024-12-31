@@ -57,8 +57,10 @@ public class TenantIaasAuthService {
     List<UpdateIaasRole<?>> roleUpdates = new ArrayList<>(idpTenants.size());
 
     idpTenants.forEach(idpTenant -> {
-      // Hack: The returned type is IaasRole and hence can be casted. If that changes, split up the buildRole
-      // into two methods on the resourceBuilder. The buildRole is used in this class for the add method.
+      // Hack: The returned type is IaasRole and hence can be casted. If that changes, split up the
+      // buildRole
+      // into two methods on the resourceBuilder. The buildRole is used in this class for the add
+      // method.
       UpdateIaasRole<?> role = (UpdateIaasRole<?>) this.resourceBuilder.buildRole(idpTenant);
 
       roleUpdates.add(role);

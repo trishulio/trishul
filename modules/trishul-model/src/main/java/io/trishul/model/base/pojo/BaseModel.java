@@ -8,25 +8,6 @@ public abstract class BaseModel {
   private static final ReflectionManipulator util = ReflectionManipulator.INSTANCE;
   private static final JsonMapper jsonMapper = JsonMapper.INSTANCE;
 
-  public BaseModel() {}
-
-  // protected BaseModel(ReflectionManipulator util,JsonMapper jsonMapper) {
-  // // Note: This prevents the tests from running in parallel (project-wide).
-  // // This constructor is used in unit tests to inject mock values. However,
-  // // since these are static values, that means the mocks are injected at the
-  // // class level. If tests are being run in parallel, a call to this
-  // constructor
-  // // will replace these instances with mocks and cause the other tests to fail.
-  // // We currently don't run tests in parallel so it's fine.
-  // // Recommendation: BaseModel being an abstract should not have unit-tests in
-  // the
-  // // first place. The logic should be tested by the subclasses themselves. But
-  // I
-  // // am leaving them now because they tests some common edge cases.
-  // BaseModel.util=util;
-  // BaseModel.jsonMapper=jsonMapper;
-  // }
-
   public void outerJoin(Object other) {
     util.copy(this, other, pd -> pd.getReadMethod().invoke(other) != null);
   }

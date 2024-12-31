@@ -1,6 +1,7 @@
 package io.trishul.iaas.access.aws;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,9 +24,11 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.CreatePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.CreatePolicyResult;
 import com.amazonaws.services.identitymanagement.model.CreatePolicyVersionRequest;
+import com.amazonaws.services.identitymanagement.model.CreatePolicyVersionResult;
 import com.amazonaws.services.identitymanagement.model.DeletePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.DeletePolicyResult;
 import com.amazonaws.services.identitymanagement.model.DeletePolicyVersionRequest;
+import com.amazonaws.services.identitymanagement.model.DeletePolicyVersionResult;
 import com.amazonaws.services.identitymanagement.model.GetPolicyRequest;
 import com.amazonaws.services.identitymanagement.model.GetPolicyResult;
 import com.amazonaws.services.identitymanagement.model.ListPolicyVersionsRequest;
@@ -164,6 +167,15 @@ public class AwsIamPolicyClientTest {
 
       return new ListPolicyVersionsResult().withVersions(versions);
     }).when(mAwsIamClient).listPolicyVersions(any());
+
+    doReturn(
+        new CreatePolicyVersionResult().withPolicyVersion(new PolicyVersion().withVersionId("V1"))
+            .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
+                .createPolicyVersion(any(CreatePolicyVersionRequest.class));
+
+    doReturn(new DeletePolicyVersionResult()
+        .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
+            .deletePolicyVersion(any(DeletePolicyVersionRequest.class));
 
     IaasPolicy policy = client.update(new IaasPolicy().setName("POLICY_1").setDocument("DOCUMENT_1")
         .setDescription("DESCRIPTION_1").setIaasResourceName("IAAS_RES_1").setIaasId("IAAS_ID_1")

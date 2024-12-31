@@ -42,7 +42,8 @@ public class TenantService
   private final MigrationManager migrationManager;
   private final TenantIaasService iaasService;
 
-  public TenantService(TenantData adminTenant, RepoService<UUID, Tenant, TenantAccessor<?>> repoService,
+  public TenantService(TenantData adminTenant,
+      RepoService<UUID, Tenant, TenantAccessor<?>> repoService,
       EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> entityMergerService,
       TenantRepository tenantRepository, MigrationManager migrationManager,
       TenantIaasService iaasService) {
