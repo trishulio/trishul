@@ -27,6 +27,7 @@
         <module>modules/trishul-data-management</module>
         <module>modules/trishul-jdbc</module>
         <module>modules/trishul-object-store-file</module>
+        <module>modules/trishul-api</module>
         <module>modules/trishul-crud</module>
         <module>modules/trishul-repo-aggregation</module>
         <module>modules/trishul-object-store-file-service</module>
@@ -90,7 +91,7 @@
         <org.owasp.dependency.check.version>11.1.1</org.owasp.dependency.check.version>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.8.1</org.apache.maven.plugin.compiler.version>
-        <org.apache.maven.jar.plugin.version>3.2.0</org.apache.maven.jar.plugin.version>
+        <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
     </properties>
 
@@ -230,6 +231,12 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-object-store-file</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
