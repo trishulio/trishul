@@ -45,5 +45,9 @@
             <groupId>io.trishul</groupId>
             <artifactId>trishul-secrets</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

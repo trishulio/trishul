@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-crud</artifactId>
-    <description>Crud</description>
+    <artifactId>trishul-api</artifactId>
+    <description>API</description>
     <packaging>jar</packaging>
 
 
@@ -19,22 +19,23 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-test</artifactId>
+            <artifactId>trishul-model</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-repo</artifactId>
+            <artifactId>trishul-test-bom</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-object-store-file</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>io.trishul</groupId>
-            <artifactId>trishul-api</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 </project>
