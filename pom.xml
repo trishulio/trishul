@@ -459,6 +459,13 @@
     </dependencyManagement>
 
     <build>
+        <testResources>
+            <!-- Packaging the test resources in final JAR so it can be imported by the application -->
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -480,7 +487,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>${org.apache.maven.jar.plugin.version}</version>
+                    <version>${org.apache.maven.plugin.version}</version>
                     <configuration>
                         <archive>
                             <manifest>
@@ -492,6 +499,33 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${org.apache.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>copy-test-resources</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>resources</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <!-- Include test resources -->
+                                    <resource>
+                                        <directory>${project.basedir}/src/test/resources</directory>
+                                        <includes>
+                                            <include>*-application-test.properties</include>
+                                        </includes>
+                                        <filtering>false</filtering>
+                                    </resource>
+                                </resources>
+                                <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.marvinformatics.formatter</groupId>
@@ -555,7 +589,7 @@
                     <configuration>
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
-                        <excludeProperties>org.mapstruct.version,org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.jar.plugin.version</excludeProperties>
+                        <excludeProperties>org.mapstruct.version,org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version</excludeProperties>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -587,6 +621,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
