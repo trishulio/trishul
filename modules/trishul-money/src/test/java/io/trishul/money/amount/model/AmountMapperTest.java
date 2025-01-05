@@ -1,13 +1,11 @@
 package io.trishul.money.amount.model;
 
 import java.math.BigDecimal;
-
 import org.joda.money.Money;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import io.trishul.money.dto.MoneyDto;
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.amount.dto.TaxAmountDto;

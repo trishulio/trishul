@@ -6,7 +6,6 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import io.trishul.money.serialize.Register;
 
 public class TaxAmountTest {
@@ -87,7 +86,9 @@ public class TaxAmountTest {
   public void testDeepClone_ReturnsEqualsEntity() {
     Register.init();
     assertEquals(new TaxAmount(), (new TaxAmount()).deepClone());
-    assertEquals(new TaxAmount(Money.parse("CAD 0")), (new TaxAmount(Money.parse("CAD 0"))).deepClone());
-    assertEquals(new TaxAmount(Money.parse("CAD 10")), (new TaxAmount(Money.parse("CAD 10"))).deepClone());
+    assertEquals(new TaxAmount(Money.parse("CAD 0")),
+        (new TaxAmount(Money.parse("CAD 0"))).deepClone());
+    assertEquals(new TaxAmount(Money.parse("CAD 10")),
+        (new TaxAmount(Money.parse("CAD 10"))).deepClone());
   }
 }

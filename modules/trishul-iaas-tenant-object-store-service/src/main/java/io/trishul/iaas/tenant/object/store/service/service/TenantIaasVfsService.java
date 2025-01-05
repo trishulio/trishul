@@ -125,12 +125,10 @@ public class TenantIaasVfsService {
     List<UpdateIaasPolicy<?>> policiesUpdates = new ArrayList<>(tenants.size());
 
     tenants.forEach(tenant -> {
-      UpdateIaasObjectStore<?> objectStore
-          = this.resourceBuilder.buildObjectStore(tenant);
+      UpdateIaasObjectStore<?> objectStore = this.resourceBuilder.buildObjectStore(tenant);
       objectStoreUpdates.add(objectStore);
 
-      UpdateIaasPolicy<?> policy
-          = this.resourceBuilder.buildVfsPolicy(tenant);
+      UpdateIaasPolicy<?> policy = this.resourceBuilder.buildVfsPolicy(tenant);
       policiesUpdates.add(policy);
     });
 

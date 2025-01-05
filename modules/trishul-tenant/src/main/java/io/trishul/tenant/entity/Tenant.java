@@ -3,12 +3,9 @@ package io.trishul.tenant.entity;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;

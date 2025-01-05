@@ -1,10 +1,8 @@
 package io.trishul.iaas.access.role.attachment.policy;
 
 import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
