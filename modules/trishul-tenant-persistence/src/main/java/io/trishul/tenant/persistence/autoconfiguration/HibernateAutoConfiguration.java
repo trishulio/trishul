@@ -6,6 +6,7 @@ import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
+import jakarta.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -80,9 +81,13 @@ public class HibernateAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(PlatformTransactionManager.class)
   public PlatformTransactionManager transactionManager(
-      LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-    PlatformTransactionManager transactionManager
-        = new JpaTransactionManager(entityManagerFactory.getObject());
+      LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+    EntityManagerFactory entityManagerFactory = entityManagerFactoryBean.getObject();
+    if (entityManagerFactory == null) {
+      throw new IllegalStateException("EntityManagerFactory returned null");
+    }
+
+    PlatformTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
 
     return transactionManager;
   }

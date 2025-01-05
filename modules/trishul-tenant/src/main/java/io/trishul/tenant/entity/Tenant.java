@@ -1,6 +1,14 @@
 package io.trishul.tenant.entity;
 
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
@@ -9,11 +17,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.UUID;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "tenant")
 @Table(name = "TENANT")
@@ -137,5 +140,10 @@ public class Tenant extends BaseEntity
   public Integer getVersion() {
     // Versioning not implemented due to lack of use-case
     return null;
+  }
+
+  public Tenant setVersion(Integer version) {
+    // Versioning not implemented due to lack of use-case
+    return this;
   }
 }

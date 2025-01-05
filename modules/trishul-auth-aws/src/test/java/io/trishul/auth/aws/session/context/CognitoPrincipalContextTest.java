@@ -23,7 +23,7 @@ public class CognitoPrincipalContextTest {
     doReturn("USERNAME_1").when(mJwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
     doReturn("SCOPE_1 SCOPE_2").when(mJwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
 
-    ctx = new CognitoPrincipalContext(mJwt);
+    ctx = CognitoPrincipalContext.fromJwt(mJwt);
   }
 
   @Test
@@ -36,7 +36,7 @@ public class CognitoPrincipalContextTest {
     doReturn("SCOPE_1 SCOPE_2").when(mJwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
 
     IllegalArgumentException exception
-        = assertThrows(IllegalArgumentException.class, () -> new CognitoPrincipalContext(mJwt));
+        = assertThrows(IllegalArgumentException.class, () -> CognitoPrincipalContext.fromJwt(mJwt));
 
     assertEquals("Each user should only belong to a single cognito group. Instead found 2",
         exception.getMessage());

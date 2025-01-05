@@ -15,11 +15,11 @@ public class TenantIaasIdpResources extends BaseModel {
   }
 
   public BaseIaasIdpTenant<?> getIaasIdpTenant() {
-    return idpTenant;
+    return idpTenant == null ? null : idpTenant.deepClone();
   }
 
   public final TenantIaasIdpResources setIaasIdpTenant(IaasIdpTenant idpTenant) {
-    this.idpTenant = idpTenant;
+    this.idpTenant = idpTenant == null ? null : idpTenant.deepClone();
     return this;
   }
 }

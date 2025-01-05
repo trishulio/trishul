@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class MockJsonGenerator extends JsonGenerator {
@@ -82,9 +83,6 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeStartObject() throws IOException {
-    if (buffer.length() > 1
-        && Set.of(']', '}').contains(this.buffer.charAt(this.buffer.length() - 1))) {
-    }
     this.buffer.append("{");
   }
 
@@ -125,7 +123,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeRawUTF8String(byte[] text, int offset, int length) throws IOException {
-    String s = new String(text, offset, length);
+    String s = new String(text, offset, length, StandardCharsets.UTF_8);
     this.buffer.append(String.format("\"%s\"", s));
   }
 
@@ -142,7 +140,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeRaw(String text, int offset, int len) throws IOException {
-    String s = new String(text.getBytes(), offset, len);
+    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len);
     this.buffer.append(String.format("\"%s\"", s));
   }
 
@@ -165,7 +163,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeRawValue(String text, int offset, int len) throws IOException {
-    String s = new String(text.getBytes(), offset, len);
+    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len);
     this.buffer.append(String.format("\"%s\"", s));
   }
 

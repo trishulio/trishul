@@ -1,5 +1,6 @@
 package io.trishul.auth.aws.session.context;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -13,16 +14,34 @@ public class CognitoPrincipalContext implements PrincipalContext {
   public static final String ATTRIBUTE_EMAIL = "email";
   public static final String ATTRIBUTE_EMAIL_VERIFIED = "email_verified";
 
-  private UUID groupId;
-  private String username;
-  private List<String> roles;
+  private final UUID groupId;
+  private final String username;
+  private final List<String> roles;
 
-  public CognitoPrincipalContext(Jwt jwt) {
-    if (jwt != null) {
-      setUsername(jwt);
-      setGroupId(jwt);
-      setRoles(jwt);
+  private CognitoPrincipalContext(UUID groupId, String username, List<String> roles) {
+    this.groupId = groupId;
+    this.username = username;
+    this.roles = roles == null ? null : new ArrayList<>(roles);
+  }
+
+  public static CognitoPrincipalContext fromJwt(Jwt jwt) {
+    if (jwt == null) {
+      throw new IllegalArgumentException("Jwt cannot be null");
     }
+
+    String username = jwt.getClaimAsString(CLAIM_USERNAME);
+    List<String> roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
+
+    List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
+    if (groups.size() > 1) {
+      String msg = String.format(
+          "Each user should only belong to a single cognito group. Instead found %s",
+          groups.size());
+      throw new IllegalArgumentException(msg);
+    }
+
+    UUID groupId = UUID.fromString(groups.get(0));
+    return new CognitoPrincipalContext(groupId, username, roles);
   }
 
   @Override
@@ -37,30 +56,6 @@ public class CognitoPrincipalContext implements PrincipalContext {
 
   @Override
   public List<String> getRoles() {
-    return this.roles;
-  }
-
-  private CognitoPrincipalContext setUsername(Jwt jwt) {
-    this.username = jwt.getClaimAsString(CLAIM_USERNAME);
-    return this;
-  }
-
-  private CognitoPrincipalContext setRoles(Jwt jwt) {
-    this.roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
-    return this;
-  }
-
-  private CognitoPrincipalContext setGroupId(Jwt jwt) {
-    List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
-    if (groups.size() > 1) {
-      String msg = String.format(
-          "Each user should only belong to a single cognito group. Instead found %s",
-          groups.size());
-      throw new IllegalArgumentException(msg);
-    }
-
-    String sGroupId = groups.get(0);
-    this.groupId = UUID.fromString(sGroupId);
-    return this;
+    return new ArrayList<>(this.roles);
   }
 }

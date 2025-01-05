@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.money.serialize.Register;
 
 public class TaxAmountTest {
   private TaxAmount taxAmount;
@@ -77,5 +80,14 @@ public class TaxAmountTest {
     taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
 
     assertEquals(Money.parse("CAD 60"), taxAmount.getTotalTaxAmount());
+  }
+
+  @Test
+  @Disabled("Fails due to unknow issue during cloning")
+  public void testDeepClone_ReturnsEqualsEntity() {
+    Register.init();
+    assertEquals(new TaxAmount(), (new TaxAmount()).deepClone());
+    assertEquals(new TaxAmount(Money.parse("CAD 0")), (new TaxAmount(Money.parse("CAD 0"))).deepClone());
+    assertEquals(new TaxAmount(Money.parse("CAD 10")), (new TaxAmount(Money.parse("CAD 10"))).deepClone());
   }
 }

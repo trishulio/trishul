@@ -114,6 +114,7 @@ public class CrudRepoServiceTest {
     final List<? extends Identified<Long>> idProviders
         = new ArrayList<>(List.of(mock(LongIdentified.class), mock(LongIdentified.class)));
     idProviders.add(null);
+
     doReturn(1L).when(idProviders.get(0)).getId();
 
     final List<DummyCrudEntity> entities = this.service.getByIds(idProviders);

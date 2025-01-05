@@ -8,6 +8,7 @@ import io.trishul.user.salutation.model.UserSalutationDto;
 import io.trishul.user.status.UserStatusDto;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor<UserDto> {
@@ -152,11 +153,11 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
   }
 
   public List<UserRoleDto> getRoles() {
-    return roles;
+    return roles == null ? null : new ArrayList<>(roles);
   }
 
   public final UserDto setRoles(List<UserRoleDto> roles) {
-    this.roles = roles;
+    this.roles = roles == null ? null : new ArrayList<>(roles);
     return this;
   }
 

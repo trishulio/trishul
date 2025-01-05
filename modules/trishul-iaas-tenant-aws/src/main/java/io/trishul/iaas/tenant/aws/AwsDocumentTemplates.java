@@ -2,29 +2,54 @@
 package io.trishul.iaas.tenant.aws;
 
 public class AwsDocumentTemplates {
-  private static final String POLICY_DOC_TENANT_BUCKET = "{\n"
-      + "    \"Version\": \"2012-10-17\",\n" + "    \"Statement\": [\n" + "        {\n"
-      + "            \"Sid\": \"VisualEditor0\",\n" + "            \"Effect\": \"Allow\",\n"
-      + "            \"Action\": [\n" + "                \"s3:DeleteObjectTagging\",\n"
-      + "                \"s3:ListBucketMultipartUploads\",\n"
-      + "                \"s3:GetJobTagging\",\n" + "                \"s3:DeleteObjectVersion\",\n"
-      + "                \"s3:RestoreObject\",\n" + "                \"s3:PutJobTagging\",\n"
-      + "                \"s3:ListBucket\",\n"
-      + "                \"s3:ListMultipartUploadParts\",\n" + "                \"s3:PutObject\",\n"
-      + "                \"s3:GetObject\",\n" + "                \"s3:DeleteJobTagging\",\n"
-      + "                \"s3:DescribeJob\",\n" + "                \"s3:GetObjectTagging\",\n"
-      + "                \"s3:PutObjectTagging\",\n" + "                \"s3:DeleteObject\",\n"
-      + "                \"s3:GetBucketLocation\"\n" + "            ],\n"
-      + "            \"Resource\": \"arn:aws:s3:::%s/*\"\n" + "        }\n" + "    ]\n" + "}";
+  private static final String POLICY_DOC_TENANT_BUCKET = """
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "VisualEditor0",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:DeleteObjectTagging",
+                      "s3:ListBucketMultipartUploads",
+                      "s3:GetJobTagging",
+                      "s3:DeleteObjectVersion",
+                      "s3:RestoreObject",
+                      "s3:PutJobTagging",
+                      "s3:ListBucket",
+                      "s3:ListMultipartUploadParts",
+                      "s3:PutObject",
+                      "s3:GetObject",
+                      "s3:DeleteJobTagging",
+                      "s3:DescribeJob",
+                      "s3:GetObjectTagging",
+                      "s3:PutObjectTagging",
+                      "s3:DeleteObject",
+                      "s3:GetBucketLocation"
+                  ],
+                  "Resource": "arn:aws:s3:::%s/*"
+              }
+          ]
+      }""";
 
-  private static final String POLICY_DOC_COGNITO_ID_ASSUME_ROLE
-      = "{\n" + "  \"Version\": \"2012-10-17\",\n" + "  \"Statement\": [\n" + "    {\n"
-          + "      \"Effect\": \"Allow\",\n" + "      \"Principal\": {\n"
-          + "        \"Federated\": \"cognito-identity.amazonaws.com\"\n" + "      },\n"
-          + "      \"Action\": \"sts:AssumeRoleWithWebIdentity\",\n" + "      \"Condition\": {\n"
-          + "        \"StringEquals\": {\n"
-          + "          \"cognito-identity.amazonaws.com:aud\": \"%s\"\n" + "        }\n"
-          + "      }\n" + "    }\n" + "  ]\n" + "}";
+  private static final String POLICY_DOC_COGNITO_ID_ASSUME_ROLE = """
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Principal": {
+                      "Federated": "cognito-identity.amazonaws.com"
+                  },
+                  "Action": "sts:AssumeRoleWithWebIdentity",
+                  "Condition": {
+                      "StringEquals": {
+                          "cognito-identity.amazonaws.com:aud": "%s"
+                      }
+                  }
+              }
+          ]
+      }""";
 
   private static final String BUCKET_NAME_TENANT_VFS = "t-%s-vfs";
 

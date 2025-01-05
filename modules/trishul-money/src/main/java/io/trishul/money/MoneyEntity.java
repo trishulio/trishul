@@ -8,9 +8,14 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import io.trishul.money.serialize.Register;
 
 @Embeddable
 public class MoneyEntity extends BaseEntity {
+  static {
+    Register.init();
+  }
+
   public static final String FIELD_CURRENCY = "currency";
   public static final String FIELD_AMOUNT = "amount";
 
@@ -29,11 +34,11 @@ public class MoneyEntity extends BaseEntity {
   }
 
   public Currency getCurrency() {
-    return currency;
+    return currency == null ? null : currency.deepClone();
   }
 
   public final MoneyEntity setCurrency(Currency currency) {
-    this.currency = currency;
+    this.currency = currency == null ? null : currency.deepClone();
     return this;
   }
 

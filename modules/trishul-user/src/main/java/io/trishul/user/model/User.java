@@ -210,12 +210,12 @@ public class User extends BaseEntity
 
   @Override
   public UserStatus getStatus() {
-    return status;
+    return status == null ? null : status.deepClone();
   }
 
   @Override
   public final User setStatus(UserStatus status) {
-    this.status = status;
+    this.status = status == null ? null : status.deepClone();
     return this;
   }
 
@@ -291,17 +291,17 @@ public class User extends BaseEntity
    * @return
    */
   public List<UserRoleBinding> getRoleBindings() {
-    return this.roleBindings;
+    return new ArrayList<>(this.roleBindings);
   }
 
   @Override
   public UserSalutation getSalutation() {
-    return salutation;
+    return salutation == null ? null : salutation.deepClone();
   }
 
   @Override
   public final User setSalutation(UserSalutation salutation) {
-    this.salutation = salutation;
+    this.salutation = salutation == null ? null : salutation.deepClone();
     return this;
   }
 

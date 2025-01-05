@@ -44,4 +44,12 @@ public class CurrencyTest {
     final String json = "{\"numericCode\":1234,\"code\":\"CAD\"}";
     JSONAssert.assertEquals(json, currency.toString(), JSONCompareMode.NON_EXTENSIBLE);
   }
+
+  @Test
+  public void testDeepClone_ReturnsEqualsInstance() {
+    assertEquals(new Currency(), (new Currency()).deepClone());
+
+    assertEquals(new Currency("CAD"), (new Currency("CAD")).deepClone());
+    assertEquals(new Currency(111, "CAD"), (new Currency(111, "CAD")).deepClone());
+  }
 }

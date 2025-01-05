@@ -7,9 +7,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import io.trishul.quantity.serialize.Register;
 
 @Embeddable
 public class QuantityEntity extends BaseEntity {
+  static {
+    Register.init();
+  }
+
   public static final String FIELD_UNIT = "unit";
   public static final String FIELD_VALUE = "value";
 

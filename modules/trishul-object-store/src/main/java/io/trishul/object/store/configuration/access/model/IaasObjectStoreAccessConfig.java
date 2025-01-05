@@ -24,7 +24,8 @@ public class IaasObjectStoreAccessConfig extends BaseEntity
       PublicAccessBlockConfiguration publicAccessBlockConfig) {
     this();
     this.objectStoreName = objectStoreName;
-    this.publicAccessBlockConfig = publicAccessBlockConfig;
+    this.publicAccessBlockConfig
+        = publicAccessBlockConfig == null ? null : publicAccessBlockConfig.clone();
   }
 
   @Override
@@ -48,12 +49,13 @@ public class IaasObjectStoreAccessConfig extends BaseEntity
   }
 
   public PublicAccessBlockConfiguration getPublicAccessBlockConfig() {
-    return publicAccessBlockConfig;
+    return publicAccessBlockConfig == null ? null : publicAccessBlockConfig.clone();
   }
 
   public final IaasObjectStoreAccessConfig setPublicAccessBlockConfig(
       PublicAccessBlockConfiguration publicAccessBlockConfig) {
-    this.publicAccessBlockConfig = publicAccessBlockConfig;
+    this.publicAccessBlockConfig
+        = publicAccessBlockConfig == null ? null : publicAccessBlockConfig.clone();
     return this;
   }
 

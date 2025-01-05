@@ -126,11 +126,11 @@ public class TenantIaasVfsService {
 
     tenants.forEach(tenant -> {
       UpdateIaasObjectStore<?> objectStore
-          = (UpdateIaasObjectStore<?>) this.resourceBuilder.buildObjectStore(tenant);
+          = this.resourceBuilder.buildObjectStore(tenant);
       objectStoreUpdates.add(objectStore);
 
       UpdateIaasPolicy<?> policy
-          = (UpdateIaasPolicy<?>) this.resourceBuilder.buildVfsPolicy(tenant);
+          = this.resourceBuilder.buildVfsPolicy(tenant);
       policiesUpdates.add(policy);
     });
 
@@ -141,7 +141,7 @@ public class TenantIaasVfsService {
 
     List<? extends UpdateIaasRolePolicyAttachment<?>> attachmentUpdates
         = tenants.stream().map(tenant -> this.resourceBuilder.buildAttachment(tenant.getIaasRole(),
-            policiesIterator.next())).map(o -> (UpdateIaasRolePolicyAttachment<?>) o).toList();
+            policiesIterator.next())).toList();
 
     List<IaasRolePolicyAttachment> attachments
         = this.rolePolicyAttachmentService.put(attachmentUpdates);

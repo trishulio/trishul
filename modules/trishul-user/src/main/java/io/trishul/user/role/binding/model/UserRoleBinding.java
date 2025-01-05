@@ -93,12 +93,12 @@ public class UserRoleBinding extends BaseEntity
 
   @Override
   public UserRole getRole() {
-    return role;
+    return role == null ? null : role.deepClone();
   }
 
   @Override
   public final UserRoleBinding setRole(UserRole userRole) {
-    this.role = userRole;
+    this.role = userRole == null ? null : userRole.deepClone();
     return this;
   }
 

@@ -20,7 +20,7 @@ public final class CriteriaJoinAnnotationJoiner implements JpaJoiner {
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(CriteriaJoinAnnotationJoiner.class);
 
-  public static Set<Class<?>> COMPOUND_ENTITY_ANNOTATIONS = ImmutableSet.of(OneToMany.class,
+  public static final Set<Class<?>> COMPOUND_ENTITY_ANNOTATIONS = ImmutableSet.of(OneToMany.class,
       ManyToOne.class, Embedded.class, JoinColumn.class, CriteriaJoin.class);
 
   @Override

@@ -4,20 +4,17 @@ import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
 import com.amazonaws.services.s3.model.CORSRule;
 import com.amazonaws.services.s3.model.CORSRule.AllowedMethods;
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
-import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
-import io.trishul.iaas.access.role.attachment.policy.BaseIaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
-import io.trishul.iaas.access.role.model.BaseIaasRole;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
 import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
-import io.trishul.object.store.model.BaseIaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStore;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AwsTenantIaasResourceBuilder
@@ -36,9 +33,9 @@ public class AwsTenantIaasResourceBuilder
       List<String> allowedMethods, List<String> allowedOrigins, boolean blockPublicAcls,
       boolean ignorePublicAcls, boolean blockPublicPolicy, boolean restrictPublicBuckets) {
     this.templates = templates;
-    this.allowedHeaders = allowedHeaders;
-    this.allowedMethods = allowedMethods;
-    this.allowedOrigins = allowedOrigins;
+    this.allowedHeaders = allowedHeaders == null ? null : new ArrayList<>(allowedHeaders);
+    this.allowedMethods = allowedMethods == null ? null : new ArrayList<>(allowedMethods);
+    this.allowedOrigins = allowedOrigins == null ? null : new ArrayList<>(allowedOrigins);
     this.blockPublicAcls = blockPublicAcls;
     this.ignorePublicAcls = ignorePublicAcls;
     this.blockPublicPolicy = blockPublicPolicy;
@@ -51,7 +48,7 @@ public class AwsTenantIaasResourceBuilder
   }
 
   @Override
-  public BaseIaasRole<?> buildRole(BaseIaasIdpTenant<?> iaasIdpTenant) {
+  public IaasRole buildRole(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
     return new IaasRole().setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId))
         .setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId))
@@ -65,7 +62,7 @@ public class AwsTenantIaasResourceBuilder
   }
 
   @Override
-  public BaseIaasPolicy<?> buildVfsPolicy(BaseIaasIdpTenant<?> iaasIdpTenant) {
+  public IaasPolicy buildVfsPolicy(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
 
     return new IaasPolicy().setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
@@ -79,7 +76,7 @@ public class AwsTenantIaasResourceBuilder
   }
 
   @Override
-  public BaseIaasObjectStore<?> buildObjectStore(BaseIaasIdpTenant<?> iaasIdpTenant) {
+  public IaasObjectStore buildObjectStore(BaseIaasIdpTenant<?> iaasIdpTenant) {
     String iaasIdpTenantId = iaasIdpTenant.getName();
     return new IaasObjectStore().setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
   }
@@ -92,7 +89,7 @@ public class AwsTenantIaasResourceBuilder
   }
 
   @Override
-  public BaseIaasRolePolicyAttachment<?> buildAttachment(IaasRole role, IaasPolicy policy) {
+  public IaasRolePolicyAttachment buildAttachment(IaasRole role, IaasPolicy policy) {
     return new IaasRolePolicyAttachment().setIaasRole(role).setIaasPolicy(policy);
   }
 

@@ -1,4 +1,40 @@
 <FindBugsFilter>
     <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Or>
+            <Parameter type="io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator"/>
+            <Parameter type="io.trishul.crud.service.CrudService"/>
+            <Parameter type="com.amazonaws*"/>
+            <Parameter type="*Client"/>
+            <Parameter type="javax.sql.DataSource"/>
+            <Parameter type="*Executor"/>
+            <Parameter type="*Configuration"/>
+            <Parameter type="*Wrapper"/>
+            <Parameter type="*Filter"/>
+            <Parameter type="*Service"/>
+            <Parameter type="*Controller"/>
+            <Parameter type="*Repo"/>
+            <Parameter type="*Repository"/>
+            <Parameter type="*Provider"/>
+            <Parameter type="*Manager"/>
+            <Parameter type="*Calculator"/>
+            <Parameter type="*Delegate"/>
+        </Or>
+    </Match>
+    <Match>
+        <Bug pattern="DMI_COLLECTION_OF_URLS"/>
+        <Class name="*Controller"/>
+    </Match>
+    <Match>
+        <Bug pattern="DMI_COLLECTION_OF_URLS"/>
+        <Class name="io.trishul.tenant.service.service.TenantService"/>
+    </Match>
+    <Match>
+        <Bug pattern="*"/>
+        <Class name="io.trishul.test.*Mock.*"/>
+    </Match>
+    <Match>
+        <Bug pattern="*"/>
+        <Class name="io.trishul.dialect.postgres.PostgresJdbcDialectSql"/>
     </Match>
 </FindBugsFilter>

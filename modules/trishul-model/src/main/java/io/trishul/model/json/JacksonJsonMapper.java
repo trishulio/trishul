@@ -30,6 +30,7 @@ public class JacksonJsonMapper implements JsonMapper {
 
   public void registerModule() {
     this.mapper.registerModule(module);
+    this.module = new SimpleModule();
   }
 
   @Override

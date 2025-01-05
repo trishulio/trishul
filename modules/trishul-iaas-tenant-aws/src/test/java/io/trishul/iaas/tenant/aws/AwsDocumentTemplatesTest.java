@@ -1,8 +1,12 @@
 package io.trishul.iaas.tenant.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 public class AwsDocumentTemplatesTest {
   private AwsDocumentTemplates templates;
@@ -13,37 +17,60 @@ public class AwsDocumentTemplatesTest {
   }
 
   @Test
-  public void testGetTenantBucketPolicyDoc() {
-    assertEquals("{\n" + "    \"Version\": \"2012-10-17\",\n" + "    \"Statement\": [\n"
-        + "        {\n" + "            \"Sid\": \"VisualEditor0\",\n"
-        + "            \"Effect\": \"Allow\",\n" + "            \"Action\": [\n"
-        + "                \"s3:DeleteObjectTagging\",\n"
-        + "                \"s3:ListBucketMultipartUploads\",\n"
-        + "                \"s3:GetJobTagging\",\n"
-        + "                \"s3:DeleteObjectVersion\",\n"
-        + "                \"s3:RestoreObject\",\n" + "                \"s3:PutJobTagging\",\n"
-        + "                \"s3:ListBucket\",\n"
-        + "                \"s3:ListMultipartUploadParts\",\n"
-        + "                \"s3:PutObject\",\n" + "                \"s3:GetObject\",\n"
-        + "                \"s3:DeleteJobTagging\",\n" + "                \"s3:DescribeJob\",\n"
-        + "                \"s3:GetObjectTagging\",\n"
-        + "                \"s3:PutObjectTagging\",\n" + "                \"s3:DeleteObject\",\n"
-        + "                \"s3:GetBucketLocation\"\n" + "            ],\n"
-        + "            \"Resource\": \"arn:aws:s3:::t-T1-vfs/*\"\n" + "        }\n" + "    ]\n"
-        + "}", templates.getTenantBucketPolicyDoc("T1"));
+  public void testGetTenantBucketPolicyDoc() throws JSONException {
+        JSONAssert.assertEquals("""
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "VisualEditor0",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:DeleteObjectTagging",
+                      "s3:ListBucketMultipartUploads",
+                      "s3:GetJobTagging",
+                      "s3:DeleteObjectVersion",
+                      "s3:RestoreObject",
+                      "s3:PutJobTagging",
+                      "s3:ListBucket",
+                      "s3:ListMultipartUploadParts",
+                      "s3:PutObject",
+                      "s3:GetObject",
+                      "s3:DeleteJobTagging",
+                      "s3:DescribeJob",
+                      "s3:GetObjectTagging",
+                      "s3:PutObjectTagging",
+                      "s3:DeleteObject",
+                      "s3:GetBucketLocation"
+                  ],
+                  "Resource": "arn:aws:s3:::t-T1-vfs/*"
+              }
+          ]
+        } 
+        """, templates.getTenantBucketPolicyDoc("T1"), JSONCompareMode.NON_EXTENSIBLE);
   }
 
   @Test
-  public void testGetCognitoIdAssumeRolePolicyDoc() {
-    assertEquals(
-        "{\n" + "  \"Version\": \"2012-10-17\",\n" + "  \"Statement\": [\n" + "    {\n"
-            + "      \"Effect\": \"Allow\",\n" + "      \"Principal\": {\n"
-            + "        \"Federated\": \"cognito-identity.amazonaws.com\"\n" + "      },\n"
-            + "      \"Action\": \"sts:AssumeRoleWithWebIdentity\",\n" + "      \"Condition\": {\n"
-            + "        \"StringEquals\": {\n"
-            + "          \"cognito-identity.amazonaws.com:aud\": \"COGNITO_ID_POOL_ID\"\n"
-            + "        }\n" + "      }\n" + "    }\n" + "  ]\n" + "}",
-        templates.getCognitoIdAssumeRolePolicyDoc());
+  public void testGetCognitoIdAssumeRolePolicyDoc() throws JSONException {
+    JSONAssert.assertEquals("""
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Federated": "cognito-identity.amazonaws.com"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                    "StringEquals": {
+                        "cognito-identity.amazonaws.com:aud": "COGNITO_ID_POOL_ID"
+                    }
+                }
+            }
+        ]
+      }
+    """, templates.getCognitoIdAssumeRolePolicyDoc(), JSONCompareMode.NON_EXTENSIBLE);
   }
 
   @Test

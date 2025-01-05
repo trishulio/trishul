@@ -19,10 +19,7 @@ public class RootUtil {
 
   public <X, Y> Path<X> getPath(From<?, ?> root, String[] paths) {
     if (paths == null || paths.length <= 0) {
-      String msg
-          = String.format("No field names provided: %s", paths == null ? null : paths.toString());
-      log.error(msg);
-      throw new IllegalArgumentException(msg);
+      throw new IllegalArgumentException("Paths cannot be null or empty");
     }
 
     @SuppressWarnings("unchecked")

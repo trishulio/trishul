@@ -1,13 +1,15 @@
 package io.trishul.iaas.access.role.attachment.policy;
 
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.model.base.entity.BaseEntity;
-import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IaasRolePolicyAttachment extends BaseEntity
     implements UpdateIaasRolePolicyAttachment<IaasRolePolicyAttachment>,
@@ -75,23 +77,23 @@ public class IaasRolePolicyAttachment extends BaseEntity
 
   @Override
   public IaasRole getIaasRole() {
-    return this.role;
+    return this.role == null ? null : this.role.deepClone();
   }
 
   @Override
   public final IaasRolePolicyAttachment setIaasRole(IaasRole role) {
-    this.role = role;
+    this.role = role == null ? null : role.deepClone();
     return this;
   }
 
   @Override
   public IaasPolicy getIaasPolicy() {
-    return this.policy;
+    return this.policy == null ? null : this.policy.deepClone();
   }
 
   @Override
   public final IaasRolePolicyAttachment setIaasPolicy(IaasPolicy policy) {
-    this.policy = policy;
+    this.policy = policy == null ? null : policy.deepClone();
     return this;
   }
 
@@ -121,5 +123,10 @@ public class IaasRolePolicyAttachment extends BaseEntity
   public Integer getVersion() {
     // Versioning not implemented due to lack of use-case
     return null;
+  }
+
+  public IaasRolePolicyAttachment setVersion(Integer version) {
+    // Versioning not implemented due to lack of use-case
+    return this;
   }
 }

@@ -19,9 +19,7 @@ public interface AwsGroupTypeMapper extends IaasEntityMapper<GroupType, IaasIdpT
   @Mapping(target = IaasIdpTenant.ATTR_DESCRIPTION, source = "description")
   @Mapping(target = IaasIdpTenant.ATTR_LAST_UPDATED, source = "lastModifiedDate")
   @Mapping(target = IaasIdpTenant.ATTR_VERSION, ignore = true)
-  @Mapping(target = IaasIdpTenant.ATTR_IAAS_ROLE, ignore = true) // TODO: If there's a use-case
-                                                                 // implement a mapper
-  // from Role ARN to
-  // IaasRole
+  @Mapping(target = IaasIdpTenant.ATTR_IAAS_ROLE, ignore = true)
+  // TODO: If there's a use-case implement a mapper from Role ARN to IaasRole
   IaasIdpTenant fromIaasEntity(GroupType entity);
 }

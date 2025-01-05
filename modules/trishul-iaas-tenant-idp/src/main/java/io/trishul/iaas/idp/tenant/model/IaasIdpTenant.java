@@ -1,10 +1,11 @@
 package io.trishul.iaas.idp.tenant.model;
 
+import java.time.LocalDateTime;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.model.base.pojo.BaseModel;
-import java.time.LocalDateTime;
 
 // TODO: Rename all the tenant stuff in the IdpTenant as IdpGroup
 public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<IaasIdpTenant>,
@@ -68,12 +69,12 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
 
   @Override
   public IaasRole getIaasRole() {
-    return this.role;
+    return this.role == null ? null : this.role.deepClone();
   }
 
   @Override
   public final IaasIdpTenant setIaasRole(IaasRole role) {
-    this.role = role;
+    this.role = role == null ? null : role.deepClone();
     return this;
   }
 
@@ -103,5 +104,10 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   public Integer getVersion() {
     // Versioning not implemented due to lack of use-case
     return null;
+  }
+
+  public IaasIdpTenant setVersion(Integer version) {
+    // Versioning not implemented due to lack of use-case
+    return this;
   }
 }

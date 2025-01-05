@@ -16,11 +16,11 @@ public class TenantIaasAuthResources extends BaseModel {
   }
 
   public IaasRole getRole() {
-    return role;
+    return role == null ? null : role.deepClone();
   }
 
   public final TenantIaasAuthResources setRole(IaasRole role) {
-    this.role = role;
+    this.role = role == null ? null : role.deepClone();
     return this;
   }
 }

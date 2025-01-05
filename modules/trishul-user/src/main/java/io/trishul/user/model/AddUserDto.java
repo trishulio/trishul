@@ -1,6 +1,7 @@
 package io.trishul.user.model;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.Email;
@@ -128,11 +129,11 @@ public class AddUserDto extends BaseDto {
   }
 
   public List<Long> getRoleIds() {
-    return roleIds;
+    return roleIds == null ? null : new ArrayList<>(roleIds);
   }
 
   public final AddUserDto setRoleIds(List<Long> roleIds) {
-    this.roleIds = roleIds;
+    this.roleIds = roleIds == null ? null : new ArrayList<>(roleIds);
     return this;
   }
 

@@ -17,20 +17,20 @@ public class TenantIaasVfsResources extends BaseModel {
   }
 
   public IaasObjectStore getObjectStore() {
-    return objectStore;
+    return objectStore == null ? null : objectStore.deepClone();
   }
 
   public TenantIaasVfsResources setObjectStore(IaasObjectStore objectStore) {
-    this.objectStore = objectStore;
+    this.objectStore = objectStore == null ? null : objectStore.deepClone();
     return this;
   }
 
   public IaasPolicy getPolicy() {
-    return policy;
+    return policy == null ? null : policy.deepClone();
   }
 
   public TenantIaasVfsResources setPolicy(IaasPolicy policy) {
-    this.policy = policy;
+    this.policy = policy == null ? null : policy.deepClone();
     return this;
   }
 }

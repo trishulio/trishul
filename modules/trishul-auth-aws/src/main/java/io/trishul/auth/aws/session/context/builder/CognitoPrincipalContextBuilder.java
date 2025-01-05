@@ -9,6 +9,6 @@ public class CognitoPrincipalContextBuilder implements PrincipalContextBuilder {
 
   @Override
   public PrincipalContext build(Jwt jwt) {
-    return new CognitoPrincipalContext(jwt);
+    return CognitoPrincipalContext.fromJwt(jwt);
   }
 }

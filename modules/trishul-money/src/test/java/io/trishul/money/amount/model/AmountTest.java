@@ -28,6 +28,7 @@ public class AmountTest {
 
     assertEquals(Money.parse("CAD 110"), amount.getTotal());
     assertEquals(Money.parse("CAD 100"), amount.getSubTotal());
-    assertEquals(new TaxAmount(Money.parse("CAD 10")), amount.getTaxAmount());
+    TaxAmount expected = new TaxAmount(Money.parse("CAD 10"));
+    assertEquals(expected, amount.getTaxAmount());
   }
 }

@@ -19,6 +19,7 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
   @Mapping(target = Tenant.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = Tenant.ATTR_CREATED_AT, ignore = true)
   @Mapping(target = Tenant.ATTR_IS_READY, ignore = true)
+  @Mapping(target = Tenant.ATTR_VERSION, ignore = true)
   Tenant fromUpdateDto(UpdateTenantDto dto);
 
   @Override

@@ -1,11 +1,13 @@
 package io.trishul.object.store.model;
 
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
-import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore<IaasObjectStore>,
     CrudEntity<String, IaasObjectStore>, Audited<IaasObjectStore> {
@@ -79,5 +81,10 @@ public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore
   public Integer getVersion() {
     // Versioning not implemented due to lack of use-case
     return null;
+  }
+
+  public IaasObjectStore setVersion(Integer version) {
+    // Versioning not implemented due to lack of use-case
+    return this;
   }
 }

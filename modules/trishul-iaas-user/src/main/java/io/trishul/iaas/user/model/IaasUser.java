@@ -102,4 +102,9 @@ public class IaasUser extends BaseEntity
     // Not implemented due to lack of use-case
     return null;
   }
+
+  public IaasUser setVersion(Integer version) {
+    // Not implemented due to lack of use-case
+    return this;
+  }
 }

@@ -22,7 +22,7 @@ public class PageDtoTest {
 
   @Test
   public void testNoArgConstructor() {
-    assertNull(dto.getContent());
+    assertTrue(dto.getContent().isEmpty());
     assertEquals(0, dto.getTotalPages());
     assertEquals(0L, dto.getTotalElements());
   }
@@ -38,7 +38,7 @@ public class PageDtoTest {
 
   @Test
   public void testAccessContent() {
-    assertNull(dto.getContent());
+    assertTrue(dto.getContent().isEmpty());
     dto.setContent(List.of(new DummyDto()));
     assertEquals(List.of(new DummyDto()), dto.getContent());
   }

@@ -1,5 +1,7 @@
 package io.trishul.repo.jpa.repository.model.dto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import io.trishul.model.base.dto.BaseDto;
@@ -10,21 +12,21 @@ public class PageDto<T extends BaseDto> extends BaseDto implements Iterable<T> {
   private int totalPages;
 
   public PageDto() {
-    this(null, 0, 0);
+    this(Collections.emptyList(), 0, 0);
   }
 
   public PageDto(List<T> content, int totalPages, long totalElements) {
-    this.content = content;
+    this.content = Collections.unmodifiableList(content);
     this.totalPages = totalPages;
     this.totalElements = totalElements;
   }
 
   public List<T> getContent() {
-    return content;
+    return content == null ? null : new ArrayList<>(content);
   }
 
   public final PageDto<T> setContent(List<T> content) {
-    this.content = content;
+    this.content = Collections.unmodifiableList(content);
     return this;
   }
 
