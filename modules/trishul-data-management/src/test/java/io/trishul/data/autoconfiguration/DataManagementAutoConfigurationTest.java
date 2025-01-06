@@ -28,13 +28,13 @@ public class DataManagementAutoConfigurationTest {
 
   @Test
   public void testDsBuilder_ReturnsRoutingDataSourceBuilder() {
-    DataSourceBuilder builder = config.dsBuilder();
+    DataSourceBuilder builder = config.dataSourceBuilder();
     assertTrue(builder instanceof HikariDataSourceBuilder);
   }
 
   @Test
   public void testTenantDsManager_ReturnsContextHolderDsManager() {
-    TenantDataSourceManager mgr = config.tenantDsManager(null, null);
+    TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null);
     assertTrue(mgr instanceof TenantDataSourceManagerWrapper);
   }
 

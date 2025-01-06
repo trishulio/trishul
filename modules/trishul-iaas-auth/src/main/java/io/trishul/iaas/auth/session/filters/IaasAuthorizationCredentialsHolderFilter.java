@@ -11,14 +11,14 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
 public class IaasAuthorizationCredentialsHolderFilter implements Filter {
-  private final ThreadLocalIaasAuthorizationCredentialsHolder ctxHolder;
-  private final IaasAuthorizationCredentialsBuilder credentialsBuilder;
+  private final ThreadLocalIaasAuthorizationCredentialsHolder iaasAuthorizationCredentialsHolder;
+  private final IaasAuthorizationCredentialsBuilder iaasAuthorizationCredentialsBuilder;
 
   public IaasAuthorizationCredentialsHolderFilter(
-      ThreadLocalIaasAuthorizationCredentialsHolder ctxHolder,
-      IaasAuthorizationCredentialsBuilder credentialsBuilder) {
-    this.ctxHolder = ctxHolder;
-    this.credentialsBuilder = credentialsBuilder;
+      ThreadLocalIaasAuthorizationCredentialsHolder iaasAuthorizationCredentialsHolder,
+      IaasAuthorizationCredentialsBuilder iaasAuthorizationCredentialsBuilder) {
+    this.iaasAuthorizationCredentialsHolder = iaasAuthorizationCredentialsHolder;
+    this.iaasAuthorizationCredentialsBuilder = iaasAuthorizationCredentialsBuilder;
   }
 
   @Override
@@ -31,8 +31,8 @@ public class IaasAuthorizationCredentialsHolderFilter implements Filter {
 
   private IaasAuthorizationCredentialsHolderFilter setIaasAuthorizationCredentialsContext(
       ServletRequest request) {
-    IaasAuthorizationCredentials creds = this.credentialsBuilder.build(request);
-    this.ctxHolder.setIaasAuthorizationCredentials(creds);
+    IaasAuthorizationCredentials creds = this.iaasAuthorizationCredentialsBuilder.build(request);
+    this.iaasAuthorizationCredentialsHolder.setIaasAuthorizationCredentials(creds);
     return this;
   }
 }

@@ -25,7 +25,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
 
-  private EntityManagerFactory entityManagerFactoryMock;
+  private EntityManagerFactory mEntityManagerFactory;
 
   private JpaVendorAdapter jpaVendorAdapterMock;
 
@@ -42,7 +42,7 @@ public class TenantPersistenceAutoConfigurationTest {
   @BeforeEach
   public void init() {
     localContainerEntityManagerFactoryBeanMock = mock(LocalContainerEntityManagerFactoryBean.class);
-    entityManagerFactoryMock = mock(EntityManagerFactory.class);
+    mEntityManagerFactory = mock(EntityManagerFactory.class);
     jpaVendorAdapterMock = mock(HibernateJpaVendorAdapter.class);
     dataSourceManageMock = mock(DataSourceManager.class);
     multiTenantConnectionProviderMock = mock(TenantConnectionProviderPool.class);
@@ -71,10 +71,10 @@ public class TenantPersistenceAutoConfigurationTest {
   @Test
   public void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
     when(localContainerEntityManagerFactoryBeanMock.getObject())
-        .thenReturn(entityManagerFactoryMock);
+        .thenReturn(mEntityManagerFactory);
 
     PlatformTransactionManager platformTransactionManager
-        = hibernateAutoConfiguration.transactionManager(localContainerEntityManagerFactoryBeanMock);
+        = hibernateAutoConfiguration.platformTransactionManager(localContainerEntityManagerFactoryBeanMock);
 
     assertTrue(platformTransactionManager instanceof JpaTransactionManager);
   }
@@ -91,7 +91,7 @@ public class TenantPersistenceAutoConfigurationTest {
     when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
-        = hibernateAutoConfiguration.entityManagerFactory(jpaVendorAdapterMock,
+        = hibernateAutoConfiguration.localContainerEntityManagerFactoryBean(jpaVendorAdapterMock,
             dataSourceManageMock, multiTenantConnectionProviderMock,
             currentTenantIdentifierResolverMock);
 

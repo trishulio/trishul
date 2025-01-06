@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 public class ContextHolderFilterTest {
   private Filter filter;
 
-  private ThreadLocalContextHolder mCtxHolder;
+  private ThreadLocalContextHolder mcontextHolder;
   private SecurityContext mSecurityCtx;
   private PrincipalContextBuilder mPrincipalContextBuilder;
 
@@ -36,7 +36,7 @@ public class ContextHolderFilterTest {
 
   @BeforeEach
   public void init() {
-    mCtxHolder = new ThreadLocalContextHolder();
+    mcontextHolder = new ThreadLocalContextHolder();
     mSecurityCtx = mock(SecurityContext.class);
     mPrincipalContextBuilder = mock(PrincipalContextBuilder.class);
 
@@ -44,7 +44,7 @@ public class ContextHolderFilterTest {
     mRes = mock(HttpServletResponse.class);
     mChain = mock(FilterChain.class);
 
-    filter = new ContextHolderFilter(() -> mSecurityCtx, mCtxHolder, mPrincipalContextBuilder);
+    filter = new ContextHolderFilter(() -> mSecurityCtx, mcontextHolder, mPrincipalContextBuilder);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class ContextHolderFilterTest {
 
     filter.doFilter(mReq, mRes, mChain);
 
-    PrincipalContext ctx = mCtxHolder.getPrincipalContext();
+    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
 
     assertSame(mCtx, ctx);
     verify(mChain).doFilter(mReq, mRes);
@@ -74,7 +74,7 @@ public class ContextHolderFilterTest {
 
     filter.doFilter(mReq, mRes, mChain);
 
-    PrincipalContext ctx = mCtxHolder.getPrincipalContext();
+    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
 
     assertNull(ctx);
     verify(mChain).doFilter(mReq, mRes);

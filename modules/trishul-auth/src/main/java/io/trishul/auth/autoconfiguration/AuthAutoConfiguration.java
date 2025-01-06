@@ -16,19 +16,19 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 public class AuthAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(ContextHolder.class)
-  public ContextHolder ctxHolder() {
+  public ContextHolder contextHolder() {
     return new ThreadLocalContextHolder();
   }
 
   @Bean
   @ConditionalOnMissingBean(ContextHolderFilter.class)
-  public Filter ctxHolderFilter(ContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
-    return new ContextHolderFilter((ThreadLocalContextHolder) ctxHolder, ctxBuilder);
+  public Filter contextHolderFilter(ContextHolder contextHolder, PrincipalContextBuilder principalContextBuilder) {
+    return new ContextHolderFilter((ThreadLocalContextHolder) contextHolder, principalContextBuilder);
   }
 
   @Bean
   @ConditionalOnMissingBean(JwtDecoder.class)
-  public JwtDecoder decoder(OAuth2ResourceServerProperties props) {
+  public JwtDecoder jwtDecoder(OAuth2ResourceServerProperties props) {
     String jwkUri = props.getJwt().getJwkSetUri();
     return NimbusJwtDecoder.withJwkSetUri(jwkUri).build();
   }

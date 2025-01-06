@@ -12,7 +12,7 @@ public class AuthAwsAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(PrincipalContextBuilder.class)
-  public PrincipalContextBuilder ctxBuilder() {
+  public PrincipalContextBuilder principalContextBuilder() {
     return new CognitoPrincipalContextBuilder();
   }
 }

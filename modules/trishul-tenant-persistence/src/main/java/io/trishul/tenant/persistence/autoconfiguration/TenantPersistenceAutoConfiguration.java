@@ -55,15 +55,15 @@ public class TenantPersistenceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(LocalContainerEntityManagerFactoryBean.class)
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+  public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(
       JpaVendorAdapter jpaVendorAdapter, DataSourceManager dataSourceManager,
       MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
       CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver) {
-    LocalContainerEntityManagerFactoryBean entityManagerFactory
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
         = new LocalContainerEntityManagerFactoryBean();
-    entityManagerFactory.setDataSource(dataSourceManager.getAdminDataSource());
-    entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
-    entityManagerFactory.setPackagesToScan("io.company.brewcraft.model"); // TODO: need to be
+    localContainerEntityManagerFactoryBean.setDataSource(dataSourceManager.getAdminDataSource());
+    localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+    localContainerEntityManagerFactoryBean.setPackagesToScan("io.company.brewcraft.model"); // TODO: need to be
                                                                           // integrated with some
     // interface
     // that an application will implement
@@ -74,21 +74,21 @@ public class TenantPersistenceAutoConfiguration {
     jpaProperties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER,
         currentTenantIdentifierResolver);
 
-    entityManagerFactory.setJpaPropertyMap(jpaProperties);
-    return entityManagerFactory;
+    localContainerEntityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
+    return localContainerEntityManagerFactoryBean;
   }
 
   @Bean
   @ConditionalOnMissingBean(PlatformTransactionManager.class)
-  public PlatformTransactionManager transactionManager(
-      LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-    EntityManagerFactory entityManagerFactory = entityManagerFactoryBean.getObject();
-    if (entityManagerFactory == null) {
+  public PlatformTransactionManager platformTransactionManager(
+      LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanBean) {
+    EntityManagerFactory localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBeanBean.getObject();
+    if (localContainerEntityManagerFactoryBean == null) {
       throw new IllegalStateException("EntityManagerFactory returned null");
     }
 
-    PlatformTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
+    PlatformTransactionManager platformTransactionManager = new JpaTransactionManager(localContainerEntityManagerFactoryBean);
 
-    return transactionManager;
+    return platformTransactionManager;
   }
 }

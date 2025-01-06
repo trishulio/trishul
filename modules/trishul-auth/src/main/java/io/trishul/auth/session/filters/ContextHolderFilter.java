@@ -16,20 +16,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 public class ContextHolderFilter implements Filter {
-  private final ThreadLocalContextHolder ctxHolder;
+  private final ThreadLocalContextHolder contextHolder;
   private final Supplier<SecurityContext> securityCtxSupplier;
-  private final PrincipalContextBuilder ctxBuilder;
+  private final PrincipalContextBuilder principalContextBuilder;
 
-  public ContextHolderFilter(ThreadLocalContextHolder ctxHolder,
-      PrincipalContextBuilder ctxBuilder) {
-    this(() -> SecurityContextHolder.getContext(), ctxHolder, ctxBuilder);
+  public ContextHolderFilter(ThreadLocalContextHolder contextHolder,
+      PrincipalContextBuilder principalContextBuilder) {
+    this(() -> SecurityContextHolder.getContext(), contextHolder, principalContextBuilder);
   }
 
   protected ContextHolderFilter(Supplier<SecurityContext> securityCtxSupplier,
-      ThreadLocalContextHolder ctxHolder, PrincipalContextBuilder ctxBuilder) {
+      ThreadLocalContextHolder contextHolder, PrincipalContextBuilder principalContextBuilder) {
     this.securityCtxSupplier = securityCtxSupplier;
-    this.ctxHolder = ctxHolder;
-    this.ctxBuilder = ctxBuilder;
+    this.contextHolder = contextHolder;
+    this.principalContextBuilder = principalContextBuilder;
   }
 
   @Override
@@ -46,8 +46,8 @@ public class ContextHolderFilter implements Filter {
         Object principal = auth.getPrincipal();
         PrincipalContext principalCtx = null;
         if (principal instanceof Jwt jwt) {
-            principalCtx = this.ctxBuilder.build(jwt);
+            principalCtx = this.principalContextBuilder.build(jwt);
         }
-        this.ctxHolder.setContext(principalCtx);
+        this.contextHolder.setContext(principalCtx);
     }
 }

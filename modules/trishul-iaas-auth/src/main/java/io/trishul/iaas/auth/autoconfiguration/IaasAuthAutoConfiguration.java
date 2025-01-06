@@ -14,22 +14,22 @@ public class IaasAuthAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasAuthorizationCredentialsHolder.class)
-  public IaasAuthorizationCredentialsHolder ctxHolder() {
+  public IaasAuthorizationCredentialsHolder iaasAuthorizationCredentialsHolder() {
     return new ThreadLocalIaasAuthorizationCredentialsHolder();
   }
 
   @Bean
   @ConditionalOnMissingBean(IaasAuthorizationCredentialsBuilder.class)
-  public IaasAuthorizationCredentialsBuilder credentialsBuilder() {
+  public IaasAuthorizationCredentialsBuilder iaasAuthorizationCredentialsBuilder() {
     return new IaasAuthorizationCredentialsBuilder();
   }
 
   @Bean
   @ConditionalOnMissingBean(IaasAuthorizationCredentialsHolderFilter.class)
   public IaasAuthorizationCredentialsHolderFilter iaasAuthorizationCredentialsHolderFilter(
-      IaasAuthorizationCredentialsHolder ctxHolder,
-      IaasAuthorizationCredentialsBuilder credentialsBuilder) {
+      IaasAuthorizationCredentialsHolder iaasAuthorizationCredentialsHolder,
+      IaasAuthorizationCredentialsBuilder iaasAuthorizationCredentialsBuilder) {
     return new IaasAuthorizationCredentialsHolderFilter(
-        (ThreadLocalIaasAuthorizationCredentialsHolder) ctxHolder, credentialsBuilder);
+        (ThreadLocalIaasAuthorizationCredentialsHolder) iaasAuthorizationCredentialsHolder, iaasAuthorizationCredentialsBuilder);
   }
 }

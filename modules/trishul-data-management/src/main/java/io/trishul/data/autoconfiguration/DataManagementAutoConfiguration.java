@@ -43,7 +43,7 @@ public class DataManagementAutoConfiguration {
   @Bean
   @Qualifier("adminDs")
   @ConditionalOnMissingBean(DataSourceConfiguration.class)
-  public DataSourceConfiguration adminDs(@Value("${spring.datasource.url}") String jdbcUrl,
+  public DataSourceConfiguration adminDataSourceConfiguration(@Value("${spring.datasource.url}") String jdbcUrl,
       @Value("${app.config.ds.db-name}") String dbName,
       @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix,
       @Value("${app.config.tenant.admin.ds.schema.migration}") String schemaMigrationScriptPath,
@@ -62,7 +62,7 @@ public class DataManagementAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(DataSourceConfigurationProvider.class)
   public DataSourceConfigurationProvider<UUID> tenantDsConfigProvider(
-      DataSourceConfiguration adminDsConfig, TenantData adminTenant,
+      DataSourceConfiguration adminDataSourceConfiguration, TenantData adminTenant,
       DataSourceConfigurationManager dsConfigMgr, SecretsManager<String, String> secretsManager,
       @Value("${spring.datasource.url}") String jdbcUrl,
       @Value("${app.config.ds.db-name}") String dbName,
@@ -74,7 +74,7 @@ public class DataManagementAutoConfiguration {
     GlobalDataSourceConfiguration globalTenantDsConfig = new ImmutableGlobalDataSourceConfiguration(
         uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
 
-    return new TenantDataSourceConfigurationProvider(adminDsConfig, adminTenant,
+    return new TenantDataSourceConfigurationProvider(adminDataSourceConfiguration, adminTenant,
         globalTenantDsConfig, dsConfigMgr, secretsManager);
   }
 
@@ -87,21 +87,21 @@ public class DataManagementAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DataSourceManager.class)
-  public DataSourceManager dataSourceManager(DataSource adminDs, DataSourceBuilder dsBuilder) {
-    DataSourceManager mgr = new CachingDataSourceManager(adminDs, dsBuilder);
+  public DataSourceManager dataSourceManager(DataSource adminDs, DataSourceBuilder dataSourceBuilder) {
+    DataSourceManager mgr = new CachingDataSourceManager(adminDs, dataSourceBuilder);
     return mgr;
   }
 
   @Bean
   @ConditionalOnMissingBean(DataSourceBuilder.class)
-  public DataSourceBuilder dsBuilder() {
+  public DataSourceBuilder dataSourceBuilder() {
     DataSourceBuilder builder = new HikariDataSourceBuilder();
     return builder;
   }
 
   @Bean
   @ConditionalOnMissingBean(TenantDataSourceManager.class)
-  public TenantDataSourceManager tenantDsManager(DataSourceManager dataSourceManager,
+  public TenantDataSourceManager tenantDataSourceManager(DataSourceManager dataSourceManager,
       DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
     TenantDataSourceManager mgr = new TenantDataSourceManagerWrapper(dataSourceManager,
         (TenantDataSourceConfigurationProvider) tenantDsConfigProvider);
@@ -118,9 +118,9 @@ public class DataManagementAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(TransactionTemplate.class)
   public TransactionTemplate transactionTemplate(DataSourceManager dataSourceManager) {
-    PlatformTransactionManager transactionManager
+    PlatformTransactionManager platformTransactionManager
         = new DataSourceTransactionManager(dataSourceManager.getAdminDataSource());
-    TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+    TransactionTemplate transactionTemplate = new TransactionTemplate(platformTransactionManager);
     return transactionTemplate;
   }
 }

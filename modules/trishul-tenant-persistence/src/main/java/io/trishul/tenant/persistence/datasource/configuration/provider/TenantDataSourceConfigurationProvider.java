@@ -17,17 +17,17 @@ import javax.annotation.Nonnull;
 public class TenantDataSourceConfigurationProvider
     implements DataSourceConfigurationProvider<UUID> {
   private final LoadingCache<UUID, DataSourceConfiguration> cache;
-  private final DataSourceConfiguration adminDsConfig;
+  private final DataSourceConfiguration adminDataSourceConfiguration;
 
-  public TenantDataSourceConfigurationProvider(DataSourceConfiguration adminDsConfig,
+  public TenantDataSourceConfigurationProvider(DataSourceConfiguration adminDataSourceConfiguration,
       TenantData adminTenant, GlobalDataSourceConfiguration globalTenantDsConfig,
       DataSourceConfigurationManager dsConfigMgr, SecretsManager<String, String> secretsManager) {
-    this.adminDsConfig = adminDsConfig;
+    this.adminDataSourceConfiguration = adminDataSourceConfiguration;
 
     this.cache = CacheBuilder.newBuilder().build(new CacheLoader<UUID, DataSourceConfiguration>() {
       @Override
       public DataSourceConfiguration load(@Nonnull UUID tenantId) throws Exception {
-        DataSourceConfiguration config = adminDsConfig;
+        DataSourceConfiguration config = adminDataSourceConfiguration;
 
         if (!adminTenant.getId().equals(tenantId)) {
           String fqName = dsConfigMgr.getFqName(globalTenantDsConfig.getSchemaPrefix(), tenantId);
@@ -54,6 +54,6 @@ public class TenantDataSourceConfigurationProvider
 
   @Override
   public DataSourceConfiguration getAdminConfiguration() {
-    return this.adminDsConfig;
+    return this.adminDataSourceConfiguration;
   }
 }

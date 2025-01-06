@@ -35,8 +35,8 @@ public class IaasAuthAwsFactory {
       String accessSecretKey) {
     AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
     AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);
-    AmazonCognitoIdentity cognitoIdentityClient = AmazonCognitoIdentityClientBuilder.standard()
+    AmazonCognitoIdentity amazonCognitoIdentity = AmazonCognitoIdentityClientBuilder.standard()
         .withCredentials(credsProvider).withRegion(region).build();
-    return cognitoIdentityClient;
+    return amazonCognitoIdentity;
   }
 }

@@ -39,26 +39,26 @@ public class IaasObjectStoreFileController extends BaseController {
 
   private final CrudControllerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>, IaasObjectStoreFileDto, AddIaasObjectStoreFileDto, UpdateIaasObjectStoreFileDto> controller;
 
-  private final IaasObjectStoreFileService objectStoreFileService;
+  private final IaasObjectStoreFileService iaasObjectStoreFileService;
 
   protected IaasObjectStoreFileController(
       CrudControllerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>, IaasObjectStoreFileDto, AddIaasObjectStoreFileDto, UpdateIaasObjectStoreFileDto> controller,
-      IaasObjectStoreFileService objectStoreFileService) {
+      IaasObjectStoreFileService iaasObjectStoreFileService) {
     this.controller = controller;
-    this.objectStoreFileService = objectStoreFileService;
+    this.iaasObjectStoreFileService = iaasObjectStoreFileService;
   }
 
   @Autowired
-  public IaasObjectStoreFileController(IaasObjectStoreFileService objectStoreFileService,
+  public IaasObjectStoreFileController(IaasObjectStoreFileService iaasObjectStoreFileService,
       AttributeFilter filter) {
     this(new CrudControllerService<>(filter, IaasObjectStoreFileMapper.INSTANCE,
-        objectStoreFileService, "IaasObjectStoreFile"), objectStoreFileService);
+    iaasObjectStoreFileService, "IaasObjectStoreFile"), iaasObjectStoreFileService);
   }
 
   @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public List<IaasObjectStoreFileDto> getAll(@RequestParam(name = "files") Set<URI> files) {
-    final List<IaasObjectStoreFile> objectStoreFiles = this.objectStoreFileService.getAll(files);
+    final List<IaasObjectStoreFile> objectStoreFiles = this.iaasObjectStoreFileService.getAll(files);
 
     return objectStoreFiles.stream().map(IaasObjectStoreFileMapper.INSTANCE::toDto).toList();
   }

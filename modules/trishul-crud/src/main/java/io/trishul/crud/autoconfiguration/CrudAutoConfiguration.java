@@ -25,7 +25,7 @@ public class CrudAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(BlockingAsyncExecutor.class)
-  public BlockingAsyncExecutor executor() {
+  public BlockingAsyncExecutor blockingAsyncExecutor() {
     return new BlockingAsyncExecutor();
   }
 }

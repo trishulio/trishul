@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
 public class TenantPersistenceManagementAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(Tenant.class)
-  public TenantData adminTenant(@Value("${app.config.tenant.admin.id}") String id,
+  public TenantData tenantData(@Value("${app.config.tenant.admin.id}") String id,
       @Value("${app.config.tenant.admin.name}") String name) throws MalformedURLException {
     UUID adminId = UUID.fromString(id);
 
@@ -52,35 +52,35 @@ public class TenantPersistenceManagementAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DataSourceQueryRunner.class)
-  public DataSourceQueryRunner dsQueryRunner(DataSourceManager dsManager) {
+  public DataSourceQueryRunner dataSourceQueryRunner(DataSourceManager dsManager) {
     return new DataSourceQueryRunner(dsManager);
   }
 
   @Bean
   @ConditionalOnMissingBean(TenantRegister.class)
-  public TenantRegister tenantRegister(DataSourceQueryRunner dsQueryRunner,
+  public TenantRegister tenantRegister(DataSourceQueryRunner dataSourceQueryRunner,
       DataSourceConfigurationProvider<UUID> tenantDsConfigProvider,
-      DataSourceConfiguration adminDsConfig, SecretsManager<String, String> secretMgr,
+      DataSourceConfiguration adminDataSourceConfiguration, SecretsManager<String, String> secretMgr,
       JdbcDialect dialect, RandomGenerator randomGen) {
-    TenantUserRegister userReg = new TenantUserRegister(dsQueryRunner,
-        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDsConfig, secretMgr,
+    TenantUserRegister userReg = new TenantUserRegister(dataSourceQueryRunner,
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDataSourceConfiguration, secretMgr,
         dialect, randomGen);
     TenantSchemaRegister schemaReg = new TenantSchemaRegister(
-        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, dsQueryRunner, dialect);
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, dataSourceQueryRunner, dialect);
 
     return new UnifiedTenantRegister(userReg, schemaReg);
   }
 
   @Bean
   @ConditionalOnMissingBean(MigrationManager.class)
-  public MigrationManager migrationMgr(TenantRegister tenantRegister,
-      MigrationRegister migrationReg) {
-    return new SequentialMigrationManager(tenantRegister, migrationReg);
+  public MigrationManager migrationManager(TenantRegister tenantRegister,
+      MigrationRegister migrationRegister) {
+    return new SequentialMigrationManager(tenantRegister, migrationRegister);
   }
 
   @Bean
   @ConditionalOnMissingBean(MigrationRegister.class)
-  public MigrationRegister migrationReg(TenantDataSourceManager dsMgr,
+  public MigrationRegister migrationRegister(TenantDataSourceManager dsMgr,
       DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
     return new FlywayTenantMigrationRegister(dsMgr, tenantDsConfigProvider);
   }

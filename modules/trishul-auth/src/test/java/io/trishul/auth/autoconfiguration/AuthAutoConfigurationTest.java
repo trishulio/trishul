@@ -15,8 +15,8 @@ public class AuthAutoConfigurationTest {
   }
 
   @Test
-  public void testCtxHolder_ReturnsInstanceOfTypeThreadLocalContextHolder() {
-    ContextHolder holder = config.ctxHolder();
+  public void testcontextHolder_ReturnsInstanceOfTypeThreadLocalContextHolder() {
+    ContextHolder holder = config.contextHolder();
     assertTrue(holder instanceof ThreadLocalContextHolder);
   }
 }

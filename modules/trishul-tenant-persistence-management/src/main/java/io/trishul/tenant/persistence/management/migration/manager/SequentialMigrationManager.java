@@ -14,11 +14,11 @@ public class SequentialMigrationManager implements MigrationManager {
   private static final Logger log = LoggerFactory.getLogger(SequentialMigrationManager.class);
 
   private final TenantRegister tenantReg;
-  private final MigrationRegister migrationReg;
+  private final MigrationRegister migrationRegister;
 
   public SequentialMigrationManager(TenantRegister register, MigrationRegister mgr) {
     this.tenantReg = register;
-    this.migrationReg = mgr;
+    this.migrationRegister = mgr;
   }
 
   @Override
@@ -26,7 +26,7 @@ public class SequentialMigrationManager implements MigrationManager {
     tenantReg.put(tenant);
 
     log.info("Applying migration to tenant: {}", tenant.getId());
-    migrationReg.migrate(tenant);
+    migrationRegister.migrate(tenant);
   }
 
   @Override

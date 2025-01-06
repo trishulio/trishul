@@ -36,13 +36,13 @@ public class TenantPersistenceManagementAutoConfigurationTest {
 
   @Test
   public void testMigrationMgr_ReturnsInstanceOfSequentialMigrationManager() {
-    MigrationManager mgr = config.migrationMgr(null, null);
+    MigrationManager mgr = config.migrationManager(null, null);
     assertTrue(mgr instanceof SequentialMigrationManager);
   }
 
   @Test
   public void testMigrationRegister_ReturnsInstanceOfFlywayMigrationRegister() {
-    MigrationRegister register = config.migrationReg(null, null);
+    MigrationRegister register = config.migrationRegister(null, null);
     assertTrue(register instanceof FlywayTenantMigrationRegister);
   }
 }

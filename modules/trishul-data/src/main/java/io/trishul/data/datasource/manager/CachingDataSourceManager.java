@@ -19,7 +19,7 @@ public class CachingDataSourceManager implements DataSourceManager {
   private final LoadingCache<DataSourceConfiguration, DataSource> cache;
   private final DataSource adminDs;
 
-  public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dsBuilder) {
+  public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dataSourceBuilder) {
     this.adminDs = adminDs;
     this.cache
         = CacheBuilder.newBuilder().build(new CacheLoader<DataSourceConfiguration, DataSource>() {
@@ -27,7 +27,7 @@ public class CachingDataSourceManager implements DataSourceManager {
           public DataSource load(@Nonnull DataSourceConfiguration dsConfig) throws Exception {
             log.debug("Loading new datasource for schema: {}", dsConfig.getSchemaName());
 
-            DataSource ds = dsBuilder.clear().url(dsConfig.getUrl().toString())
+            DataSource ds = dataSourceBuilder.clear().url(dsConfig.getUrl().toString())
                 .schema(dsConfig.getSchemaName()).username(dsConfig.getUserName())
                 .password(dsConfig.getPassword()).poolSize(dsConfig.getPoolSize())
                 .autoCommit(dsConfig.isAutoCommit()).build();

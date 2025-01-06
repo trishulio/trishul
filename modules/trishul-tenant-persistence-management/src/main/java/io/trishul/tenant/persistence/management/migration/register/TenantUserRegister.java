@@ -21,18 +21,18 @@ public class TenantUserRegister implements TenantRegister {
 
   private final DataSourceQueryRunner runner;
   private final DataSourceConfigurationProvider<UUID> configMgr;
-  private final DataSourceConfiguration adminDsConfig;
+  private final DataSourceConfiguration adminDataSourceConfiguration;
   private final SecretsManager<String, String> secretMgr;
   private final JdbcDialect dialect;
   private final RandomGenerator randGen;
 
-  public TenantUserRegister(DataSourceQueryRunner dsQueryRunner,
+  public TenantUserRegister(DataSourceQueryRunner dataSourceQueryRunner,
       TenantDataSourceConfigurationProvider tenantDsConfigProvider,
-      DataSourceConfiguration adminDsConfig, SecretsManager<String, String> secretMgr,
+      DataSourceConfiguration adminDataSourceConfiguration, SecretsManager<String, String> secretMgr,
       JdbcDialect dialect, RandomGenerator randGen) {
-    this.runner = dsQueryRunner;
+    this.runner = dataSourceQueryRunner;
     this.configMgr = tenantDsConfigProvider;
-    this.adminDsConfig = adminDsConfig;
+    this.adminDataSourceConfiguration = adminDataSourceConfiguration;
     this.secretMgr = secretMgr;
     this.dialect = dialect;
     this.randGen = randGen;
@@ -72,7 +72,7 @@ public class TenantUserRegister implements TenantRegister {
     DataSourceConfiguration config = this.configMgr.getConfiguration(tenant.getId());
 
     runner.query(conn -> {
-      dialect.reassignOwnedByTo(conn, config.getUserName(), adminDsConfig.getUserName());
+      dialect.reassignOwnedByTo(conn, config.getUserName(), adminDataSourceConfiguration.getUserName());
       dialect.dropOwnedBy(conn, config.getUserName());
       dialect.dropUser(conn, config.getUserName());
       conn.commit();

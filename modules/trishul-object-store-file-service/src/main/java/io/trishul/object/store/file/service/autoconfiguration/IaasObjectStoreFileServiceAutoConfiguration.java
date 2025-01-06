@@ -22,7 +22,7 @@ import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 public class IaasObjectStoreFileServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreFileService.class)
-  public IaasObjectStoreFileService objectStoreFileService(UtilityProvider utilProvider,
+  public IaasObjectStoreFileService iaasObjectStoreFileService(UtilityProvider utilProvider,
       LockService lockService, BlockingAsyncExecutor executor,
       IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> iaasObjectStoreFileClientProvider) {
     final EntityMergerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> entityMergerService
