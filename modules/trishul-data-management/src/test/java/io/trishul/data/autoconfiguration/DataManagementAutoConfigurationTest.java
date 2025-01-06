@@ -12,12 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class DataAutoConfigurationTest {
-  private DataAutoConfiguration config;
+public class DataManagementAutoConfigurationTest {
+  private DataManagementAutoConfiguration config;
 
   @BeforeEach
   public void init() {
-    config = new DataAutoConfiguration();
+    config = new DataManagementAutoConfiguration();
   }
 
   @Test

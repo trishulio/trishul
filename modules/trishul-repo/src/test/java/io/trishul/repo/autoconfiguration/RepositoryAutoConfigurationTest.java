@@ -7,12 +7,12 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RepositoryConfigurationTest {
-  private RepositoryConfiguration repoConf;
+public class RepositoryAutoConfigurationTest {
+  private RepositoryAutoConfiguration repoConf;
 
   @BeforeEach
   public void init() {
-    repoConf = new RepositoryConfiguration();
+    repoConf = new RepositoryAutoConfiguration();
   }
 
   @Test

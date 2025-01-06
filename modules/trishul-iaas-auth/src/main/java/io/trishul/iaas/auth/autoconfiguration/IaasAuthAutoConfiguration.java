@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class IaasAuthorizationAutoConfiguration {
+public class IaasAuthAutoConfiguration {
 
   @Bean
   public IaasAuthorizationCredentialsHolder ctxHolder() {

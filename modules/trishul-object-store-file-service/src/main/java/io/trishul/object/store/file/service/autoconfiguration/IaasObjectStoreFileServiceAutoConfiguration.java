@@ -19,7 +19,7 @@ import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 
 @Configuration
-public class IaasObjectStoreAutoConfiguration {
+public class IaasObjectStoreFileServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreFileService.class)
   public IaasObjectStoreFileService objectStoreFileService(UtilityProvider utilProvider,

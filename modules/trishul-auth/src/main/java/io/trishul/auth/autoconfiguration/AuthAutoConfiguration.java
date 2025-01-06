@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
-public class AuthConfiguration {
+public class AuthAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(ContextHolder.class)
   public ContextHolder ctxHolder() {

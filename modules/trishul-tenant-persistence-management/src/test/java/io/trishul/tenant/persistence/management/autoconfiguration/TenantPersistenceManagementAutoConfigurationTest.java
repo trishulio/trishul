@@ -13,12 +13,12 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MigrationAutoConfigurationTest {
-  private MigrationAutoConfiguration config;
+public class TenantPersistenceManagementAutoConfigurationTest {
+  private TenantPersistenceManagementAutoConfiguration config;
 
   @BeforeEach
   public void init() {
-    config = new MigrationAutoConfiguration();
+    config = new TenantPersistenceManagementAutoConfiguration();
   }
 
   @Test

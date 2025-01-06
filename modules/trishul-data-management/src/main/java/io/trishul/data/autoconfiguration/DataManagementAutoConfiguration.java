@@ -33,7 +33,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import io.trishul.tenant.entity.TenantData;
 
 @Configuration
-public class DataAutoConfiguration {
+public class DataManagementAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(DataSourceConfigurationManager.class)
   public DataSourceConfigurationManager dataSourceConfigurationManager() {

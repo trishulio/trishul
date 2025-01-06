@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AuthAutoConfiguration {
+public class TenantAuthAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(TenantIdProvider.class)
   public TenantIdProvider tenantIdProvider(ContextHolder ctxHolder, AdminTenant adminTenant) {

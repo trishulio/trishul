@@ -15,7 +15,7 @@ import io.trishul.object.store.file.service.aws.factory.AwsFactory;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 
 @Configuration
-public class AwsObjectStoreServiceAutoConfiguration {
+public class ObjectStoreFileServiceAwsAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasRepositoryProvider.class)

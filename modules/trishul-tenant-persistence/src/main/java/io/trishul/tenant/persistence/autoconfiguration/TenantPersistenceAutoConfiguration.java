@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
-public class HibernateAutoConfiguration {
+public class TenantPersistenceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(MultiTenantConnectionProvider.class)
   public MultiTenantConnectionProvider<String> multiTenantConnectionProvider(

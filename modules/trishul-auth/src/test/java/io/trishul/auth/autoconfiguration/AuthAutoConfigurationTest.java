@@ -6,12 +6,12 @@ import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AuthConfigurationTest {
-  private AuthConfiguration config;
+public class AuthAutoConfigurationTest {
+  private AuthAutoConfiguration config;
 
   @BeforeEach
   public void init() {
-    config = new AuthConfiguration();
+    config = new AuthAutoConfiguration();
   }
 
   @Test

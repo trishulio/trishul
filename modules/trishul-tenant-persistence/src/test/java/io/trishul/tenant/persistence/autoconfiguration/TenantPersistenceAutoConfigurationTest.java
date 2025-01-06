@@ -22,7 +22,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-public class HibernateAutoConfigurationTest {
+public class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
 
   private EntityManagerFactory entityManagerFactoryMock;
@@ -37,7 +37,7 @@ public class HibernateAutoConfigurationTest {
 
   private DataSource dataSourceMock;
 
-  private HibernateAutoConfiguration hibernateAutoConfiguration;
+  private TenantPersistenceAutoConfiguration hibernateAutoConfiguration;
 
   @BeforeEach
   public void init() {
@@ -49,7 +49,7 @@ public class HibernateAutoConfigurationTest {
     currentTenantIdentifierResolverMock = mock(TenantIdentifierResolver.class);
     dataSourceMock = mock(DataSource.class);
 
-    hibernateAutoConfiguration = new HibernateAutoConfiguration();
+    hibernateAutoConfiguration = new TenantPersistenceAutoConfiguration();
   }
 
   @Test
