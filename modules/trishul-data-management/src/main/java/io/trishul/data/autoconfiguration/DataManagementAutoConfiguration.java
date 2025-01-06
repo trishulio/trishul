@@ -14,7 +14,6 @@ import io.trishul.dialect.JdbcDialect;
 import io.trishul.dialect.postgres.PostgresJdbcDialect;
 import io.trishul.dialect.postgres.PostgresJdbcDialectSql;
 import io.trishul.secrets.SecretsManager;
-import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;

@@ -2,7 +2,6 @@ package io.trishul.tenant.persistence.management.migration.register;
 
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
-import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import java.io.IOException;

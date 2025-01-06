@@ -1,7 +1,6 @@
 package io.trishul.repo.jpa.repository.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.trishul.model.base.dto.BaseDto;
 import java.util.Iterator;

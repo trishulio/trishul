@@ -4,7 +4,6 @@ import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
 import io.trishul.dialect.JdbcDialect;
-import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 import java.util.UUID;
