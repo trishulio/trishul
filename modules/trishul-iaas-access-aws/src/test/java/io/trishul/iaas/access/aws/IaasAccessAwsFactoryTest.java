@@ -18,8 +18,8 @@
 // import com.amazonaws.services.s3.AmazonS3;
 // import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 
-// public class AwsFactoryTest {
-// private AwsFactory factory;
+// public class IaasAccessAwsFactoryTest {
+// private IaasAccessAwsFactory factory;
 
 // @BeforeEach
 // public void init() {

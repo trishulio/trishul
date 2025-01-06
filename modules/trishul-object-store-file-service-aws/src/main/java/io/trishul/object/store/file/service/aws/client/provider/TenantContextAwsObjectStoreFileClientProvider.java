@@ -16,7 +16,7 @@ import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.aws.client.AwsS3FileClient;
-import io.trishul.object.store.file.service.aws.factory.AwsFactory;
+import io.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactory;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import jakarta.annotation.Nonnull;
 import java.net.URI;
@@ -36,7 +36,7 @@ public class TenantContextAwsObjectStoreFileClientProvider implements
 
   public TenantContextAwsObjectStoreFileClientProvider(String region,
       IaasObjectStoreNameProvider bucketNameProvider, ContextHolderAuthorizationFetcher authFetcher,
-      AwsFactory awsFactory, Long getPresignUrlDuration) {
+      ObjectStoreFileServiceAwsFactory awsFactory, Long getPresignUrlDuration) {
     this.region = region;
     this.authFetcher = authFetcher;
     this.bucketNameProvider = bucketNameProvider;

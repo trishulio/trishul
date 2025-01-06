@@ -9,9 +9,9 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientB
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AwsFactory {
+public class IaasAccessAwsFactory {
   @SuppressWarnings("unused")
-  private static final Logger logg = LoggerFactory.getLogger(AwsFactory.class);
+  private static final Logger logg = LoggerFactory.getLogger(IaasAccessAwsFactory.class);
 
   public AmazonIdentityManagement iamClient(String iamAccessKeyId, String iamSecret) {
     BasicAWSCredentials basicAwsCredentials = new BasicAWSCredentials(iamAccessKeyId, iamSecret);

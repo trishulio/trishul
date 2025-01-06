@@ -11,7 +11,7 @@ import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
-import io.trishul.object.store.file.service.aws.factory.AwsFactory;
+import io.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactory;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -25,13 +25,13 @@ public class TenantContextAwsObjectStoreFileClientProviderTest {
 
   private ContextHolderAuthorizationFetcher mAuthFetcher;
   private IaasObjectStoreNameProvider mBucketNameProvider;
-  private AwsFactory mFactory;
+  private ObjectStoreFileServiceAwsFactory mFactory;
 
   @BeforeEach
   public void init() {
     mAuthFetcher = mock(ContextHolderAuthorizationFetcher.class);
     mBucketNameProvider = mock(IaasObjectStoreNameProvider.class);
-    mFactory = mock(AwsFactory.class);
+    mFactory = mock(ObjectStoreFileServiceAwsFactory.class);
 
     provider = new TenantContextAwsObjectStoreFileClientProvider("REGION", mBucketNameProvider,
         mAuthFetcher, mFactory, 1000L);

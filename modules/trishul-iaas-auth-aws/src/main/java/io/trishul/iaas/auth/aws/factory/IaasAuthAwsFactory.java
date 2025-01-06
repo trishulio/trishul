@@ -12,8 +12,8 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AwsFactory {
-  private static final Logger log = LoggerFactory.getLogger(AwsFactory.class);
+public class IaasAuthAwsFactory {
+  private static final Logger log = LoggerFactory.getLogger(IaasAuthAwsFactory.class);
 
   public AWSCognitoIdentityProvider getIdentityProvider(final String cognitoRegion,
       String cognitoUrl, String cognitoAccessKeyId, String cognitoAccessSecretKey) {

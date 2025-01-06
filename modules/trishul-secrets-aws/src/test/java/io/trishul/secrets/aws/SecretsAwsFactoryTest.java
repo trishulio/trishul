@@ -9,12 +9,12 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsFactoryTest {
-  private AwsFactory factory;
+public class SecretsAwsFactoryTest {
+  private SecretsAwsFactory factory;
 
   @BeforeEach
   public void init() {
-    factory = new AwsFactory();
+    factory = new SecretsAwsFactory();
   }
 
   @Test
