@@ -3,14 +3,15 @@ package io.trishul.iaas.tenant.aws;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import io.trishul.iaas.tenant.TenantContextIaasObjectStoreNameProvider;
+
+import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import io.trishul.tenant.entity.TenantIdProvider;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TenantContextAwsBucketNameProviderTest {
-  private TenantContextIaasObjectStoreNameProvider provider;
+  private IaasObjectStoreNameProvider provider;
 
   private AwsDocumentTemplates mTemplates;
   private TenantIdProvider mTenantIdProvider;

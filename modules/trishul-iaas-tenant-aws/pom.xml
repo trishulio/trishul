@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-object-store-service</artifactId>
+            <artifactId>trishul-object-store-file-service</artifactId>
         </dependency>
     </dependencies>
 </project>
