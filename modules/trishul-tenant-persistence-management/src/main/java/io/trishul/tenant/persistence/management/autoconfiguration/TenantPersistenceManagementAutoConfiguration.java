@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-
 import io.trishul.base.types.util.random.RandomGenerator;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
@@ -26,7 +25,6 @@ import io.trishul.tenant.persistence.management.migration.register.TenantRegiste
 import io.trishul.tenant.persistence.management.migration.register.TenantSchemaRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantUserRegister;
 import io.trishul.tenant.persistence.management.migration.register.UnifiedTenantRegister;
-
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -43,7 +41,8 @@ public class TenantPersistenceManagementAutoConfiguration {
 
     return new AdminTenant(adminId, name, new URL("http://localhost/"));
   }
-    @Bean
+
+  @Bean
   @ConditionalOnMissingBean(RandomGenerator.class)
   public RandomGenerator randomGenerator() throws NoSuchAlgorithmException {
     SecureRandom random = SecureRandom.getInstanceStrong();
@@ -60,13 +59,14 @@ public class TenantPersistenceManagementAutoConfiguration {
   @ConditionalOnMissingBean(TenantRegister.class)
   public TenantRegister tenantRegister(DataSourceQueryRunner dataSourceQueryRunner,
       DataSourceConfigurationProvider<UUID> tenantDsConfigProvider,
-      DataSourceConfiguration adminDataSourceConfiguration, SecretsManager<String, String> secretMgr,
-      JdbcDialect dialect, RandomGenerator randomGen) {
+      DataSourceConfiguration adminDataSourceConfiguration,
+      SecretsManager<String, String> secretMgr, JdbcDialect dialect, RandomGenerator randomGen) {
     TenantUserRegister userReg = new TenantUserRegister(dataSourceQueryRunner,
-        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminDataSourceConfiguration, secretMgr,
-        dialect, randomGen);
-    TenantSchemaRegister schemaReg = new TenantSchemaRegister(
-        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, dataSourceQueryRunner, dialect);
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider,
+        adminDataSourceConfiguration, secretMgr, dialect, randomGen);
+    TenantSchemaRegister schemaReg
+        = new TenantSchemaRegister((TenantDataSourceConfigurationProvider) tenantDsConfigProvider,
+            dataSourceQueryRunner, dialect);
 
     return new UnifiedTenantRegister(userReg, schemaReg);
   }

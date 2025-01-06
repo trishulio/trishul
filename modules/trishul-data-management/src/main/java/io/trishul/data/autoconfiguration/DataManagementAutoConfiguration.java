@@ -43,7 +43,8 @@ public class DataManagementAutoConfiguration {
   @Bean
   @Qualifier("adminDs")
   @ConditionalOnMissingBean(DataSourceConfiguration.class)
-  public DataSourceConfiguration adminDataSourceConfiguration(@Value("${spring.datasource.url}") String jdbcUrl,
+  public DataSourceConfiguration adminDataSourceConfiguration(
+      @Value("${spring.datasource.url}") String jdbcUrl,
       @Value("${app.config.ds.db-name}") String dbName,
       @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix,
       @Value("${app.config.tenant.admin.ds.schema.migration}") String schemaMigrationScriptPath,
@@ -87,7 +88,8 @@ public class DataManagementAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DataSourceManager.class)
-  public DataSourceManager dataSourceManager(DataSource adminDs, DataSourceBuilder dataSourceBuilder) {
+  public DataSourceManager dataSourceManager(DataSource adminDs,
+      DataSourceBuilder dataSourceBuilder) {
     DataSourceManager mgr = new CachingDataSourceManager(adminDs, dataSourceBuilder);
     return mgr;
   }

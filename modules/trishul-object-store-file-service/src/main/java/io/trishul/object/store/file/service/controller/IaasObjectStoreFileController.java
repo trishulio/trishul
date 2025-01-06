@@ -52,13 +52,14 @@ public class IaasObjectStoreFileController extends BaseController {
   public IaasObjectStoreFileController(IaasObjectStoreFileService iaasObjectStoreFileService,
       AttributeFilter filter) {
     this(new CrudControllerService<>(filter, IaasObjectStoreFileMapper.INSTANCE,
-    iaasObjectStoreFileService, "IaasObjectStoreFile"), iaasObjectStoreFileService);
+        iaasObjectStoreFileService, "IaasObjectStoreFile"), iaasObjectStoreFileService);
   }
 
   @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public List<IaasObjectStoreFileDto> getAll(@RequestParam(name = "files") Set<URI> files) {
-    final List<IaasObjectStoreFile> objectStoreFiles = this.iaasObjectStoreFileService.getAll(files);
+    final List<IaasObjectStoreFile> objectStoreFiles
+        = this.iaasObjectStoreFileService.getAll(files);
 
     return objectStoreFiles.stream().map(IaasObjectStoreFileMapper.INSTANCE::toDto).toList();
   }

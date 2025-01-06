@@ -63,8 +63,10 @@ public class TenantPersistenceAutoConfiguration {
         = new LocalContainerEntityManagerFactoryBean();
     localContainerEntityManagerFactoryBean.setDataSource(dataSourceManager.getAdminDataSource());
     localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-    localContainerEntityManagerFactoryBean.setPackagesToScan("io.company.brewcraft.model"); // TODO: need to be
-                                                                          // integrated with some
+    localContainerEntityManagerFactoryBean.setPackagesToScan("io.company.brewcraft.model"); // TODO:
+                                                                                            // need
+                                                                                            // to be
+    // integrated with some
     // interface
     // that an application will implement
 
@@ -82,12 +84,14 @@ public class TenantPersistenceAutoConfiguration {
   @ConditionalOnMissingBean(PlatformTransactionManager.class)
   public PlatformTransactionManager platformTransactionManager(
       LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanBean) {
-    EntityManagerFactory localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBeanBean.getObject();
+    EntityManagerFactory localContainerEntityManagerFactoryBean
+        = localContainerEntityManagerFactoryBeanBean.getObject();
     if (localContainerEntityManagerFactoryBean == null) {
       throw new IllegalStateException("EntityManagerFactory returned null");
     }
 
-    PlatformTransactionManager platformTransactionManager = new JpaTransactionManager(localContainerEntityManagerFactoryBean);
+    PlatformTransactionManager platformTransactionManager
+        = new JpaTransactionManager(localContainerEntityManagerFactoryBean);
 
     return platformTransactionManager;
   }

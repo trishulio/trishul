@@ -28,8 +28,8 @@ public class TenantUserRegister implements TenantRegister {
 
   public TenantUserRegister(DataSourceQueryRunner dataSourceQueryRunner,
       TenantDataSourceConfigurationProvider tenantDsConfigProvider,
-      DataSourceConfiguration adminDataSourceConfiguration, SecretsManager<String, String> secretMgr,
-      JdbcDialect dialect, RandomGenerator randGen) {
+      DataSourceConfiguration adminDataSourceConfiguration,
+      SecretsManager<String, String> secretMgr, JdbcDialect dialect, RandomGenerator randGen) {
     this.runner = dataSourceQueryRunner;
     this.configMgr = tenantDsConfigProvider;
     this.adminDataSourceConfiguration = adminDataSourceConfiguration;
@@ -72,7 +72,8 @@ public class TenantUserRegister implements TenantRegister {
     DataSourceConfiguration config = this.configMgr.getConfiguration(tenant.getId());
 
     runner.query(conn -> {
-      dialect.reassignOwnedByTo(conn, config.getUserName(), adminDataSourceConfiguration.getUserName());
+      dialect.reassignOwnedByTo(conn, config.getUserName(),
+          adminDataSourceConfiguration.getUserName());
       dialect.dropOwnedBy(conn, config.getUserName());
       dialect.dropUser(conn, config.getUserName());
       conn.commit();

@@ -33,7 +33,8 @@ public class IaasAuthAwsAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AwsCognitoIdentityClient.class)
-  public AwsCognitoIdentityClient awsCognitoIdentityClient(AmazonCognitoIdentity amazonCognitoIdentity,
+  public AwsCognitoIdentityClient awsCognitoIdentityClient(
+      AmazonCognitoIdentity amazonCognitoIdentity,
       @Value("${app.iaas.credentials.expiry.duration}") long credentialsExpiryDurationSeconds) {
     AwsCognitoIdentityClient awsCognitoIdentityClient
         = new AwsCognitoIdentitySdkWrapper(amazonCognitoIdentity);

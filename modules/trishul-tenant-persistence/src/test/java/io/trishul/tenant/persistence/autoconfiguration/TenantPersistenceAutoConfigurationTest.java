@@ -70,11 +70,10 @@ public class TenantPersistenceAutoConfigurationTest {
 
   @Test
   public void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
-    when(localContainerEntityManagerFactoryBeanMock.getObject())
-        .thenReturn(mEntityManagerFactory);
+    when(localContainerEntityManagerFactoryBeanMock.getObject()).thenReturn(mEntityManagerFactory);
 
-    PlatformTransactionManager platformTransactionManager
-        = hibernateAutoConfiguration.platformTransactionManager(localContainerEntityManagerFactoryBeanMock);
+    PlatformTransactionManager platformTransactionManager = hibernateAutoConfiguration
+        .platformTransactionManager(localContainerEntityManagerFactoryBeanMock);
 
     assertTrue(platformTransactionManager instanceof JpaTransactionManager);
   }

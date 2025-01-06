@@ -22,8 +22,10 @@ public class AuthAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(ContextHolderFilter.class)
-  public Filter contextHolderFilter(ContextHolder contextHolder, PrincipalContextBuilder principalContextBuilder) {
-    return new ContextHolderFilter((ThreadLocalContextHolder) contextHolder, principalContextBuilder);
+  public Filter contextHolderFilter(ContextHolder contextHolder,
+      PrincipalContextBuilder principalContextBuilder) {
+    return new ContextHolderFilter((ThreadLocalContextHolder) contextHolder,
+        principalContextBuilder);
   }
 
   @Bean
