@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CrudAutoConfiguration {
   @Bean
+  @ConditionalOnMissingBean(LockService.class)
   public LockService lockService() {
     return new LockService();
   }

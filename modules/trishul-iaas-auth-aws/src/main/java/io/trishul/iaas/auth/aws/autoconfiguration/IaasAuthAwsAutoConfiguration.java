@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class IaasAuthAwsAutoConfiguration {
 
   @Bean
+  @ConditionalOnMissingBean(AwsFactory.class)
   public AwsFactory awsFactory() {
     return new AwsFactory();
   }
