@@ -48,18 +48,18 @@
 // }
 
 // @Test
-// public void testSecretsMgrClient() throws URISyntaxException,
+// public void testSecretsManager() throws URISyntaxException,
 // IllegalAccessException {
-// AWSSecretsManager secretsMgr = factory.secretsMgrClient("REGION", "URL",
+// AWSSecretsManager secretsManager = factory.secretsManager("REGION", "URL",
 // "ACCESS_KEY_ID",
 // "ACCESS_SECRET_KEY");
 
 // final AWSCredentialsProvider awsCredentialsProvider =
 // (AWSCredentialsProvider)
-// FieldUtils.readField(secretsMgr, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(secretsMgr, "endpoint",
+// FieldUtils.readField(secretsManager, "awsCredentialsProvider", true);
+// final URI endpoint = (URI) FieldUtils.readField(secretsManager, "endpoint",
 // true);
-// final String region = (String) FieldUtils.readField(secretsMgr,
+// final String region = (String) FieldUtils.readField(secretsManager,
 // "signingRegion", true);
 
 // assertEquals(new URI("https://URL"), endpoint);

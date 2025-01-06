@@ -26,7 +26,6 @@
             <groupId>io.trishul</groupId>
             <artifactId>trishul-secrets</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-secretsmanager</artifactId>

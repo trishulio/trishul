@@ -13,7 +13,7 @@ public class SecretsAwsFactory {
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(SecretsAwsFactory.class);
 
-  public AWSSecretsManager secretsMgrClient(String region, String url, String accessKeyId,
+  public AWSSecretsManager secretsManager(String region, String url, String accessKeyId,
       String accessSecretKey) {
     AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);
     AWSStaticCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(creds);

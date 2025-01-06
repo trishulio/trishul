@@ -28,7 +28,7 @@ public class TenantDataSourceConfigurationProviderTest {
   private TenantData mAdminTenant;
   private GlobalDataSourceConfiguration mGlobalDsConfig;
   private DataSourceConfigurationManager mConfigMgr;
-  private SecretsManager<String, String> mSecretsMgr;
+  private SecretsManager<String, String> mSecretsManager;
 
   @BeforeEach
   public void init() throws URISyntaxException, MalformedURLException {
@@ -37,13 +37,13 @@ public class TenantDataSourceConfigurationProviderTest {
     mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
         "MIGRATION_PATH", "SCHEMA_", 10, false);
     mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",
-        mGlobalDsConfig, mSecretsMgr);
+        mGlobalDsConfig, mSecretsManager);
     mConfigMgr
         = new DataSourceConfigurationManager();interface StringSecretsManager extends SecretsManager<String,String>{}
-    mSecretsMgr = mock(StringSecretsManager.class);
+    mSecretsManager = mock(StringSecretsManager.class);
 
     dsProvider = new TenantDataSourceConfigurationProvider(mAdminConfig, mAdminTenant,
-        mGlobalDsConfig, mConfigMgr, mSecretsMgr);
+        mGlobalDsConfig, mConfigMgr, mSecretsManager);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class TenantDataSourceConfigurationProviderTest {
         = new LazyTenantDataSourceConfiguration("SCHEMA_00000000_0000_0000_0000_000000000001",
             new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
                 "MIGRATION_PATH", "SCHEMA_", 10, false),
-            mSecretsMgr);
+            mSecretsManager);
 
     assertNotSame(mAdminConfig, config);
     assertEquals(expected, config);

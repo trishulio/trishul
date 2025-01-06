@@ -16,12 +16,12 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AwsSecretsManagerClient implements SecretsManager<String, String> {
+public class AwsSecretsManager implements SecretsManager<String, String> {
   private final AWSSecretsManager client;
 
-  private static final Logger log = LoggerFactory.getLogger(AwsSecretsManagerClient.class);
+  private static final Logger log = LoggerFactory.getLogger(AwsSecretsManager.class);
 
-  public AwsSecretsManagerClient(AWSSecretsManager client) {
+  public AwsSecretsManager(AWSSecretsManager client) {
     this.client = client;
   }
 

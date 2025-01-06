@@ -50,14 +50,14 @@ public class DataManagementAutoConfiguration {
       @Value("${app.config.tenant.admin.ds.schema.migration}") String schemaMigrationScriptPath,
       @Value("${spring.datasource.hikari.maximumPoolSize}") int poolSize,
       @Value("${spring.datasource.hikari.auto-commit}") boolean autoCommit,
-      SecretsManager<String, String> secretsMgr,
+      SecretsManager<String, String> secretsManager,
       DataSourceConfigurationManager dataSourceConfigurationManager, TenantData adminTenant) {
     URI uri = URI.create(jdbcUrl);
     GlobalDataSourceConfiguration globalConfig = new ImmutableGlobalDataSourceConfiguration(uri,
         dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
     String fqName = dataSourceConfigurationManager.getFqName(schemaPrefix, adminTenant.getId());
 
-    return new LazyTenantDataSourceConfiguration(fqName, globalConfig, secretsMgr);
+    return new LazyTenantDataSourceConfiguration(fqName, globalConfig, secretsManager);
   }
 
   @Bean

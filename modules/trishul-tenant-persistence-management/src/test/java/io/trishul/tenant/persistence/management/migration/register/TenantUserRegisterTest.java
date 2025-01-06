@@ -35,14 +35,14 @@ public class TenantUserRegisterTest {
   private TenantDataSourceConfigurationProvider mConfigProvider;
   private DataSourceConfiguration mConfig;
   private DataSourceConfiguration mAdminDsConfig;
-  private SecretsManager<String, String> mSecretsMgr;
+  private SecretsManager<String, String> mSecretsManager;
   private JdbcDialect mDialect;
   private RandomGenerator mRand;
 
   @BeforeEach
   public void init() {
     mQueryRunner = mock(DataSourceQueryRunner.class);
-    mSecretsMgr = mock(SecretsManager.class);
+    mSecretsManager = mock(SecretsManager.class);
     mDialect = mock(JdbcDialect.class);
     mRand = mock(RandomGenerator.class);
 
@@ -58,7 +58,7 @@ public class TenantUserRegisterTest {
     doReturn(mConfig).when(mConfigProvider)
         .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    register = new TenantUserRegister(mQueryRunner, mConfigProvider, mAdminDsConfig, mSecretsMgr,
+    register = new TenantUserRegister(mQueryRunner, mConfigProvider, mAdminDsConfig, mSecretsManager,
         mDialect, mRand);
   }
 
@@ -75,11 +75,11 @@ public class TenantUserRegisterTest {
 
     register.add(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    InOrder order = inOrder(mDialect, mSecretsMgr);
+    InOrder order = inOrder(mDialect, mSecretsManager);
     order.verify(mDialect).createUser(mConn, "USERNAME", "PASSWORD");
     order.verify(mDialect).grantPrivilege(mConn, "CONNECT", "DATABASE", "DBNAME", "USERNAME");
     order.verify(mDialect).grantPrivilege(mConn, "CREATE", "DATABASE", "DBNAME", "USERNAME");
-    order.verify(mSecretsMgr).put("SCHEMA", "PASSWORD");
+    order.verify(mSecretsManager).put("SCHEMA", "PASSWORD");
   }
 
   @Test
@@ -118,11 +118,11 @@ public class TenantUserRegisterTest {
 
     register.remove(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    InOrder order = inOrder(mDialect, mSecretsMgr);
+    InOrder order = inOrder(mDialect, mSecretsManager);
     order.verify(mDialect).reassignOwnedByTo(mConn, "USERNAME", "ADMIN");
     order.verify(mDialect).dropOwnedBy(mConn, "USERNAME");
     order.verify(mDialect).dropUser(mConn, "USERNAME");
-    order.verify(mSecretsMgr).remove("SCHEMA");
+    order.verify(mSecretsManager).remove("SCHEMA");
   }
 
   @Test

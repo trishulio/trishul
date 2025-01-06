@@ -14,16 +14,16 @@ import io.trishul.secrets.SecretsManager;
 public class LazyTenantDataSourceConfigurationTest {
   private DataSourceConfiguration config;
 
-  private SecretsManager<String, String> mSecretsMgr;
+  private SecretsManager<String, String> mSecretsManager;
 
   @BeforeEach
   public void init() throws URISyntaxException {
-    mSecretsMgr = mock(SecretsManager.class);
+    mSecretsManager = mock(SecretsManager.class);
 
     config = new LazyTenantDataSourceConfiguration("FQ_TENANT_ID",
         new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName",
             "MIGRATION_PATH", "SCHEMA_", 10, false),
-        mSecretsMgr);
+        mSecretsManager);
   }
 
   @Test
@@ -33,7 +33,7 @@ public class LazyTenantDataSourceConfigurationTest {
 
   @Test
   public void testGetPassword_ReturnsPasswordFromSecretsManager() throws IOException {
-    doReturn("PASSWORD").when(mSecretsMgr).get("FQ_TENANT_ID");
+    doReturn("PASSWORD").when(mSecretsManager).get("FQ_TENANT_ID");
 
     assertEquals("PASSWORD", config.getPassword());
   }
