@@ -1,15 +1,11 @@
 // TODO: Figure out if this is a tenant module class or data module class
 package io.trishul.tenant.persistence.autoconfiguration;
 
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.tenant.entity.TenantIdProvider;
-import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
-import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
-import jakarta.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.sql.DataSource;
+
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -25,6 +21,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.entity.TenantIdProvider;
+import io.trishul.tenant.persistence.config.PackageScanConfig;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
+import jakarta.persistence.EntityManagerFactory;
+import org.apache.commons.lang3.ArrayUtils;
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
@@ -53,22 +57,18 @@ public class TenantPersistenceAutoConfiguration {
     return new HibernateJpaVendorAdapter();
   }
 
-  @Bean
+  @Bean(name = "entityManagerFactory") // entityManagerFactory name is required for Spring
   @ConditionalOnMissingBean(LocalContainerEntityManagerFactoryBean.class)
   public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(
       JpaVendorAdapter jpaVendorAdapter, DataSourceManager dataSourceManager,
       MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
-      CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver) {
+      CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver,
+      PackageScanConfig packageScanConfig) {
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
         = new LocalContainerEntityManagerFactoryBean();
     localContainerEntityManagerFactoryBean.setDataSource(dataSourceManager.getAdminDataSource());
     localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-    localContainerEntityManagerFactoryBean.setPackagesToScan("io.company.brewcraft.model"); // TODO:
-                                                                                            // need
-                                                                                            // to be
-    // integrated with some
-    // interface
-    // that an application will implement
+    localContainerEntityManagerFactoryBean.setPackagesToScan(ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "io.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
     jpaProperties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");

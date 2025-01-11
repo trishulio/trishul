@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.persistence.config.PackageScanConfig;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
@@ -37,7 +38,7 @@ public class TenantPersistenceAutoConfigurationTest {
 
   private DataSource dataSourceMock;
 
-  private TenantPersistenceAutoConfiguration hibernateAutoConfiguration;
+  private TenantPersistenceAutoConfiguration tenantPersistenceAutoConfiguration;
 
   @BeforeEach
   public void init() {
@@ -49,13 +50,13 @@ public class TenantPersistenceAutoConfigurationTest {
     currentTenantIdentifierResolverMock = mock(TenantIdentifierResolver.class);
     dataSourceMock = mock(DataSource.class);
 
-    hibernateAutoConfiguration = new TenantPersistenceAutoConfiguration();
+    tenantPersistenceAutoConfiguration = new TenantPersistenceAutoConfiguration();
   }
 
   @Test
   public void testMultiTenantConnectionProvider_ReturnsInstanceOfTenantConnectionProvider() {
     MultiTenantConnectionProvider<String> multiTenantConnectionProvider
-        = hibernateAutoConfiguration.multiTenantConnectionProvider(null, null);
+        = tenantPersistenceAutoConfiguration.multiTenantConnectionProvider(null, null);
 
     assertTrue(multiTenantConnectionProvider instanceof TenantConnectionProviderPool);
   }
@@ -63,7 +64,7 @@ public class TenantPersistenceAutoConfigurationTest {
   @Test
   public void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
     CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver
-        = hibernateAutoConfiguration.currentTenantIdentifierResolver(null);
+        = tenantPersistenceAutoConfiguration.currentTenantIdentifierResolver(null);
 
     assertTrue(currentTenantIdentifierResolver instanceof TenantIdentifierResolver);
   }
@@ -72,7 +73,7 @@ public class TenantPersistenceAutoConfigurationTest {
   public void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
     when(localContainerEntityManagerFactoryBeanMock.getObject()).thenReturn(mEntityManagerFactory);
 
-    PlatformTransactionManager platformTransactionManager = hibernateAutoConfiguration
+    PlatformTransactionManager platformTransactionManager = tenantPersistenceAutoConfiguration
         .platformTransactionManager(localContainerEntityManagerFactoryBeanMock);
 
     assertTrue(platformTransactionManager instanceof JpaTransactionManager);
@@ -80,7 +81,7 @@ public class TenantPersistenceAutoConfigurationTest {
 
   @Test
   public void testJpaVendorAdapter_ReturnsHibernateJpaVendorAdapter() {
-    JpaVendorAdapter jpaVendorAdapter = hibernateAutoConfiguration.jpaVendorAdapter();
+    JpaVendorAdapter jpaVendorAdapter = tenantPersistenceAutoConfiguration.jpaVendorAdapter();
 
     assertTrue(jpaVendorAdapter instanceof HibernateJpaVendorAdapter);
   }
@@ -89,10 +90,17 @@ public class TenantPersistenceAutoConfigurationTest {
   public void testLocalContainerEntityManagerFactoryBean() {
     when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
+    PackageScanConfig packageScanConfig = new PackageScanConfig() {
+      @Override
+      public String[] getEntityPackagesToScan() {
+        return new String[] {"package1"};
+      }
+    };
+
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
-        = hibernateAutoConfiguration.localContainerEntityManagerFactoryBean(jpaVendorAdapterMock,
+        = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(jpaVendorAdapterMock,
             dataSourceManageMock, multiTenantConnectionProviderMock,
-            currentTenantIdentifierResolverMock);
+            currentTenantIdentifierResolverMock, packageScanConfig);
 
     assertSame(dataSourceMock, localContainerEntityManagerFactoryBean.getDataSource());
     assertSame(jpaVendorAdapterMock, localContainerEntityManagerFactoryBean.getJpaVendorAdapter());
