@@ -1,21 +1,32 @@
 package io.trishul.quantity.model;
 
-import io.trishul.quantity.model.dto.QuantityDto;
-import io.trishul.quantity.unit.QuantityUnitMapper;
 import java.math.BigDecimal;
+
 import javax.measure.Quantity;
 import javax.measure.Unit;
+
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import io.trishul.quantity.model.dto.QuantityDto;
+import io.trishul.quantity.unit.QuantityUnitMapper;
 import tec.uom.se.quantity.Quantities;
 
 @Mapper(uses = {QuantityUnitMapper.class})
 public abstract class QuantityMapper {
   public static final QuantityMapper INSTANCE = Mappers.getMapper(QuantityMapper.class);
 
-  @Mapping(source = "unit.symbol", target = "symbol")
-  public abstract QuantityDto toDto(Quantity<?> quantity);
+  public QuantityDto toDto(Quantity<?> quantity) {
+    QuantityDto dto = null;
+    if (quantity != null) {
+      dto = new QuantityDto();
+      String unitSymbol = QuantityUnitMapper.INSTANCE.toSymbol(quantity.getUnit());
+      dto.setSymbol(unitSymbol);
+      dto.setValue(parseNumber(quantity.getValue()));
+    }
+
+    return dto;
+  }
 
   public abstract QuantityEntity toEntity(Quantity<?> quantity);
 
