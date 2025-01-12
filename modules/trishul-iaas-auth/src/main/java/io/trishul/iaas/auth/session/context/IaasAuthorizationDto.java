@@ -2,7 +2,6 @@
 package io.trishul.iaas.auth.session.context;
 
 import java.time.LocalDateTime;
-
 import io.trishul.model.base.dto.BaseDto;
 
 public class IaasAuthorizationDto extends BaseDto {

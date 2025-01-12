@@ -1,7 +1,6 @@
 package io.trishul.iaas.auth.session.context;
 
 import java.time.LocalDateTime;
-
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.model.base.pojo.BaseModel;
 

@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
-
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.aws.AwsIaasPolicyMapper;
 import io.trishul.iaas.access.aws.AwsIaasRoleMapper;
@@ -29,40 +27,46 @@ import io.trishul.iaas.client.IaasClient;
 
 @Configuration
 public class IaasAccessAwsAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(IaasAccessAwsFactory.class)
-    public IaasAccessAwsFactory iaasAccessAwsFactory() {
-        return new IaasAccessAwsFactory();
-    }
+  @Bean
+  @ConditionalOnMissingBean(IaasAccessAwsFactory.class)
+  public IaasAccessAwsFactory iaasAccessAwsFactory() {
+    return new IaasAccessAwsFactory();
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AmazonIdentityManagement.class)
-    public AmazonIdentityManagement iamClient(IaasAccessAwsFactory iaasAccessAwsFactory, @Value("${aws.iam.access-key}") String iamAccessKeyId, @Value("${aws.iam.access-secret}") String iamSecret) {
-        return iaasAccessAwsFactory.iamClient(iamAccessKeyId, iamSecret);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AmazonIdentityManagement.class)
+  public AmazonIdentityManagement iamClient(IaasAccessAwsFactory iaasAccessAwsFactory,
+      @Value("${aws.iam.access-key}") String iamAccessKeyId,
+      @Value("${aws.iam.access-secret}") String iamSecret) {
+    return iaasAccessAwsFactory.iamClient(iamAccessKeyId, iamSecret);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AwsArnMapper.class)
-    public AwsArnMapper arnMapper(@Value("${aws.deployment.accountId}") String accountId, @Value("${aws.deployment.parition}") String partition) {
-        return new AwsArnMapper(accountId, partition);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AwsArnMapper.class)
+  public AwsArnMapper arnMapper(@Value("${aws.deployment.accountId}") String accountId,
+      @Value("${aws.deployment.parition}") String partition) {
+    return new AwsArnMapper(accountId, partition);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AwsIamPolicyClient.class)
-    public IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasPolicyClient(AmazonIdentityManagement awsIamClient, AwsArnMapper awsMapper) {
-        return new AwsIamPolicyClient(awsIamClient, awsMapper, AwsIaasPolicyMapper.INSTANCE);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AwsIamPolicyClient.class)
+  public IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasPolicyClient(
+      AmazonIdentityManagement awsIamClient, AwsArnMapper awsMapper) {
+    return new AwsIamPolicyClient(awsIamClient, awsMapper, AwsIaasPolicyMapper.INSTANCE);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AwsIamRoleClient.class)
-    public IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> iaasRoleClient(AmazonIdentityManagement awsIamClient) {
-        return new AwsIamRoleClient(awsIamClient, AwsIaasRoleMapper.INSTANCE);
-    }
+  @Bean
+  @ConditionalOnMissingBean(AwsIamRoleClient.class)
+  public IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> iaasRoleClient(
+      AmazonIdentityManagement awsIamClient) {
+    return new AwsIamRoleClient(awsIamClient, AwsIaasRoleMapper.INSTANCE);
+  }
 
-    @Bean
-    @ConditionalOnMissingBean(AwsIamRolePolicyAttachmentClient.class)
-    public IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> awsIamRolePolicyClientClient(AmazonIdentityManagementClient iamClient, AwsArnMapper arnMapper) {
-        return new AwsIamRolePolicyAttachmentClient(iamClient, arnMapper);
-    }    
+  @Bean
+  @ConditionalOnMissingBean(AwsIamRolePolicyAttachmentClient.class)
+  public IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> awsIamRolePolicyClientClient(
+      AmazonIdentityManagementClient iamClient, AwsArnMapper arnMapper) {
+    return new AwsIamRolePolicyAttachmentClient(iamClient, arnMapper);
+  }
 }
 

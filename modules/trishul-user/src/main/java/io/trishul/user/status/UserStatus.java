@@ -1,12 +1,9 @@
 package io.trishul.user.status;
 
 import java.time.LocalDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.model.base.entity.BaseEntity;
 import jakarta.persistence.Column;

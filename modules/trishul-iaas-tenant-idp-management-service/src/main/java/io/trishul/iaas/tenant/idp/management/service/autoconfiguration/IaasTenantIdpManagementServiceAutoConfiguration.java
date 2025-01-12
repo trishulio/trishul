@@ -3,7 +3,6 @@ package io.trishul.iaas.tenant.idp.management.service.autoconfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
@@ -27,31 +26,29 @@ import io.trishul.model.validator.UtilityProvider;
 public class IaasTenantIdpManagementServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasIdpTenantService.class)
-  public IaasIdpTenantService iaasIdpTenantService(
-    UtilityProvider utilProvider,    
-    LockService lockService,
-    BlockingAsyncExecutor executor,
-    IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasIdpTenantClient
-  ) {
-    EntityMergerService<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> entityMergerService = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasIdpTenant.class, UpdateIaasIdpTenant.class, IaasIdpTenant.class, java.util.Set.of());
-    IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasRepo = new BulkIaasClient<>(executor, iaasIdpTenantClient);
+  public IaasIdpTenantService iaasIdpTenantService(UtilityProvider utilProvider,
+      LockService lockService, BlockingAsyncExecutor executor,
+      IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasIdpTenantClient) {
+    EntityMergerService<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> entityMergerService
+        = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasIdpTenant.class,
+            UpdateIaasIdpTenant.class, IaasIdpTenant.class, java.util.Set.of());
+    IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasRepo
+        = new BulkIaasClient<>(executor, iaasIdpTenantClient);
 
     return new IaasIdpTenantService(entityMergerService, iaasRepo);
   }
 
   @Bean
   @ConditionalOnMissingBean(TenantIaasIdpService.class)
-  public TenantIaasIdpService tenantIaasIdpService(
-    IaasIdpTenantService iaasIdpTenantService
-  ) {
+  public TenantIaasIdpService tenantIaasIdpService(IaasIdpTenantService iaasIdpTenantService) {
     return new TenantIaasIdpService(iaasIdpTenantService, TenantIaasIdpResourcesMapper.INSTANCE);
   }
-  
+
   @Bean
   @ConditionalOnMissingBean(TenantIaasAuthService.class)
   public TenantIaasAuthService tenantIaasAuthService(IaasRoleService roleService,
-    TenantIaasResourceBuilder resourceBuilder
-  ) {
-      return new TenantIaasAuthService(TenantIaasAuthResourceMapper.INSTANCE, roleService, resourceBuilder);
+      TenantIaasResourceBuilder resourceBuilder) {
+    return new TenantIaasAuthService(TenantIaasAuthResourceMapper.INSTANCE, roleService,
+        resourceBuilder);
   }
 }

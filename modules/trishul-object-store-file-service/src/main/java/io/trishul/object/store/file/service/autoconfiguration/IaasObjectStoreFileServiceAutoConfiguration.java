@@ -2,11 +2,9 @@ package io.trishul.object.store.file.service.autoconfiguration;
 
 import java.net.URI;
 import java.util.Set;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
@@ -24,11 +22,12 @@ import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
 
 @Configuration
 public class IaasObjectStoreFileServiceAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean(TemporaryImageSrcDecorator.class)
-    public TemporaryImageSrcDecorator temporaryImageSrcDecorator(IaasObjectStoreFileController objectStoreFileController) {
-        return new TemporaryImageSrcDecorator(objectStoreFileController);
-    }
+  @Bean
+  @ConditionalOnMissingBean(TemporaryImageSrcDecorator.class)
+  public TemporaryImageSrcDecorator temporaryImageSrcDecorator(
+      IaasObjectStoreFileController objectStoreFileController) {
+    return new TemporaryImageSrcDecorator(objectStoreFileController);
+  }
 
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreFileService.class)

@@ -1,11 +1,11 @@
 package io.trishul.repo.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class RepositoryAutoConfigurationTest {
   private RepositoryAutoConfiguration repoConf;

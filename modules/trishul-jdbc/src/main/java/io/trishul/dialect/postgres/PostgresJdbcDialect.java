@@ -1,10 +1,10 @@
 package io.trishul.dialect.postgres;
 
-import io.trishul.dialect.JdbcDialect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import io.trishul.dialect.JdbcDialect;
 
 public class PostgresJdbcDialect implements JdbcDialect {
   private final PostgresJdbcDialectSql pgSql;

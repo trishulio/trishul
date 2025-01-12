@@ -1,13 +1,10 @@
 package io.trishul.quantity.model;
 
 import java.math.BigDecimal;
-
 import javax.measure.Quantity;
 import javax.measure.Unit;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-
 import io.trishul.quantity.model.dto.QuantityDto;
 import io.trishul.quantity.unit.QuantityUnitMapper;
 import tec.uom.se.quantity.Quantities;

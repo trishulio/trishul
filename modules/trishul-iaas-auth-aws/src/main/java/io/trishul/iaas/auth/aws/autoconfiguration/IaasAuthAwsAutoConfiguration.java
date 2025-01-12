@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-
 import io.trishul.iaas.auth.aws.client.AwsCognitoIdentityClient;
 import io.trishul.iaas.auth.aws.client.AwsCognitoIdentitySdkWrapper;
 import io.trishul.iaas.auth.aws.client.AwsIdentityCredentialsMapper;
@@ -36,10 +34,14 @@ public class IaasAuthAwsAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AWSCognitoIdentityProvider.class)
-  public AWSCognitoIdentityProvider awsCognitoIdpProvider(IaasAuthAwsFactory awsFactory, @Value("${aws.cognito.region}") final String cognitoRegion, @Value("${aws.cognito.url}") final String cognitoUrl,
-            @Value("${aws.cognito.access-key}") final String cognitoAccessKeyId, @Value("${aws.cognito.access-secret}") final String cognitoAccessSecretKey) {
-        return awsFactory.getIdentityProvider(cognitoRegion, cognitoUrl, cognitoAccessKeyId, cognitoAccessSecretKey);
-    }
+  public AWSCognitoIdentityProvider awsCognitoIdpProvider(IaasAuthAwsFactory awsFactory,
+      @Value("${aws.cognito.region}") final String cognitoRegion,
+      @Value("${aws.cognito.url}") final String cognitoUrl,
+      @Value("${aws.cognito.access-key}") final String cognitoAccessKeyId,
+      @Value("${aws.cognito.access-secret}") final String cognitoAccessSecretKey) {
+    return awsFactory.getIdentityProvider(cognitoRegion, cognitoUrl, cognitoAccessKeyId,
+        cognitoAccessSecretKey);
+  }
 
   @Bean
   @ConditionalOnMissingBean(AwsCognitoIdentityClient.class)

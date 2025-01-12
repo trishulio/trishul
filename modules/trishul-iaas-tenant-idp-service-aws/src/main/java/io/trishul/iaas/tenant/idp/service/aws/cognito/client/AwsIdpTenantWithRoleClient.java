@@ -2,7 +2,6 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.CreateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.CreateGroupResult;
@@ -14,7 +13,6 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupResult;
-
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
@@ -36,8 +34,8 @@ public class AwsIdpTenantWithRoleClient
 
   private final IaasRoleService roleService;
 
-  public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider awsCognitoIdpProvider, String userPoolId,
-      IaasEntityMapper<GroupType, IaasIdpTenant> mapper, AwsArnMapper arnMapper,
+  public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider awsCognitoIdpProvider,
+      String userPoolId, IaasEntityMapper<GroupType, IaasIdpTenant> mapper, AwsArnMapper arnMapper,
       IaasRoleService roleService) {
     this.awsCognitoIdpProvider = awsCognitoIdpProvider;
     this.userPoolId = userPoolId;

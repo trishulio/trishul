@@ -55,6 +55,7 @@
         <module>modules/trishul-iaas-tenant-aws</module>
         <module>modules/trishul-iaas-tenant-idp</module>
         <module>modules/trishul-iaas-tenant-object-store</module>
+        <module>modules/trishul-iaas-tenant-object-store-aws</module>
         <module>modules/trishul-iaas-tenant-object-store-service</module>
         <module>modules/trishul-iaas-tenant-idp-management-service</module>
         <module>modules/trishul-iaas-tenant-idp-service-aws</module>
@@ -70,9 +71,8 @@
         <java.version>17</java.version>
         <!-- spring-boot-starter-parent version is explicitly specified. Update it if this is updated -->
         <org.springframework.boot.version>3.4.1</org.springframework.boot.version>
-        <org.springframework.security.version>2.6.0</org.springframework.security.version>
         <org.springdoc.openapi.version>1.5.12</org.springdoc.openapi.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <javax.measure.version>2.0</javax.measure.version>
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
@@ -98,7 +98,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
     </parent>
 
     <dependencies>
@@ -404,6 +404,12 @@
 
             <dependency>
                 <groupId>io.trishul</groupId>
+                <artifactId>trishul-iaas-tenant-object-store-aws</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-object-store-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -561,7 +567,6 @@
                         <effort>max</effort>
                         <threshold>low</threshold>
                         <xmlOutput>true</xmlOutput>
-                        <!-- TODO: Debt. Get rid of all violations -->
                         <failOnError>false</failOnError>
                         <plugins>
                             <plugin>
@@ -589,7 +594,7 @@
                     <configuration>
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
-                        <excludeProperties>org.mapstruct.version,org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version</excludeProperties>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -630,16 +635,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-            <!-- <plugin>
-                <groupId>com.marvinformatics.formatter</groupId>
-                <artifactId>formatter-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin> -->
-            <!-- TODO: Disabled temporarily for faster builds -->
-            <!-- <plugin>
+                <version>${checkstyle.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
             </plugin>
@@ -651,7 +652,10 @@
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin>
-         -->
+            <plugin>
+                <groupId>com.marvinformatics.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

@@ -3,7 +3,6 @@ package io.trishul.iaas.tenant.aws;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import io.trishul.tenant.entity.TenantIdProvider;
 import java.util.UUID;

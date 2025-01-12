@@ -1,27 +1,27 @@
 package io.trishul.tenant.persistence.autoconfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.tenant.persistence.config.PackageScanConfig;
-import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
-import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
-import jakarta.persistence.EntityManagerFactory;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.persistence.config.PackageScanConfig;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
+import jakarta.persistence.EntityManagerFactory;
 
 public class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
@@ -90,16 +90,11 @@ public class TenantPersistenceAutoConfigurationTest {
   public void testLocalContainerEntityManagerFactoryBean() {
     when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
-    PackageScanConfig packageScanConfig = new PackageScanConfig() {
-      @Override
-      public String[] getEntityPackagesToScan() {
-        return new String[] {"package1"};
-      }
-    };
+    PackageScanConfig packageScanConfig = () -> new String[] {"package1"};
 
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
-        = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(jpaVendorAdapterMock,
-            dataSourceManageMock, multiTenantConnectionProviderMock,
+        = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(
+            jpaVendorAdapterMock, dataSourceManageMock, multiTenantConnectionProviderMock,
             currentTenantIdentifierResolverMock, packageScanConfig);
 
     assertSame(dataSourceMock, localContainerEntityManagerFactoryBean.getDataSource());

@@ -1,7 +1,6 @@
 package io.trishul.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
 import jakarta.persistence.Column;

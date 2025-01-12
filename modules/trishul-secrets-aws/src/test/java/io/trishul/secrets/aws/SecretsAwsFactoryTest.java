@@ -22,8 +22,8 @@ public class SecretsAwsFactoryTest {
     AWSSecretsManager secretsManager
         = factory.secretsManager("REGION", "URL", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
 
-    final AWSCredentialsProvider awsCredentialsProvider
-        = (AWSCredentialsProvider) FieldUtils.readField(secretsManager, "awsCredentialsProvider", true);
+    final AWSCredentialsProvider awsCredentialsProvider = (AWSCredentialsProvider) FieldUtils
+        .readField(secretsManager, "awsCredentialsProvider", true);
     final URI endpoint = (URI) FieldUtils.readField(secretsManager, "endpoint", true);
     final String region = (String) FieldUtils.readField(secretsManager, "signingRegion", true);
 

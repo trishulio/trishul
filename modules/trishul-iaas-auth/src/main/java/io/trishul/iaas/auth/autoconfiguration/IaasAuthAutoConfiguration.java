@@ -3,7 +3,6 @@ package io.trishul.iaas.auth.autoconfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
 import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentialsBuilder;
 import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
@@ -38,7 +37,8 @@ public class IaasAuthAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(ContextHolderAuthorizationFetcher.class)
-  public ContextHolderAuthorizationFetcher contextHolderAuthorizationFetcher(IaasAuthorizationFetcher fetcher, 
+  public ContextHolderAuthorizationFetcher contextHolderAuthorizationFetcher(
+      IaasAuthorizationFetcher fetcher,
       IaasAuthorizationCredentialsHolder iaasAuthorizationCredentialsHolder) {
     return new ContextHolderAuthorizationFetcher(fetcher, iaasAuthorizationCredentialsHolder);
   }

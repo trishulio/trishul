@@ -58,8 +58,8 @@ public class TenantUserRegisterTest {
     doReturn(mConfig).when(mConfigProvider)
         .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    register = new TenantUserRegister(mQueryRunner, mConfigProvider, mAdminDsConfig, mSecretsManager,
-        mDialect, mRand);
+    register = new TenantUserRegister(mQueryRunner, mConfigProvider, mAdminDsConfig,
+        mSecretsManager, mDialect, mRand);
   }
 
   @Test
