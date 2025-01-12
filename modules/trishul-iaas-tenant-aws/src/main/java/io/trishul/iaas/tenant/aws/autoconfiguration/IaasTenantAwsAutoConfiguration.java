@@ -31,14 +31,8 @@ public class IaasTenantAwsAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(TenantIaasResourceBuilder.class)
+    @ConditionalOnMissingBean({TenantIaasResourceBuilder.class, TenantObjectStoreResourceBuilder.class})
     public TenantIaasResourceBuilder tenantIaasResourceBuilder(AwsDocumentTemplates awsDocumentTemplates, @Value("#{'${aws.s3.config.cors.allowed.headers}'.split(';')}") List<String> allowedHeaders, @Value("#{'${aws.s3.config.cors.allowed.methods}'.split(';')}") List<String> allowedMethods, @Value("#{'${aws.s3.config.cors.allowed.origins}'.split(';')}") List<String> allowedOrigins, @Value("${aws.s3.config.access.public.acls.block}") boolean blockPublicAcls, @Value("${aws.s3.config.access.public.acls.ignore}") boolean ignorePublicAcls, @Value("${aws.s3.config.access.public.policy.block}") boolean blockPublicPolicy, @Value("${aws.s3.config.access.public.buckets.restrict}") boolean restrictPublicBuckets) {
         return new AwsTenantIaasResourceBuilder(awsDocumentTemplates, allowedHeaders, allowedMethods, allowedOrigins, blockPublicAcls, ignorePublicAcls, blockPublicPolicy, restrictPublicBuckets);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(TenantObjectStoreResourceBuilder.class)
-    public TenantObjectStoreResourceBuilder tenantObjectStoreResourceBuilder(AwsTenantIaasResourceBuilder tenantIaasResourceBuilder) {
-        return tenantIaasResourceBuilder;
     }
 }

@@ -1,13 +1,27 @@
 package io.trishul.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+
+@Entity(name = "dummycrudentity")
+@Table(name = "dummycrudentity")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class DummyCrudEntity extends BaseEntity
     implements CrudEntity<Long, DummyCrudEntity>, UpdateDummyCrudEntity<DummyCrudEntity> {
+  @Id
   private Long id;
+  @Column
   private String value;
+  @Column
   private String excludedValue;
+  @Column
   private Integer version;
 
   public DummyCrudEntity() {}

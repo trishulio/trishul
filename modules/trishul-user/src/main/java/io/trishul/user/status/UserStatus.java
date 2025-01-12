@@ -1,6 +1,12 @@
 package io.trishul.user.status;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.model.base.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -11,9 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import java.time.LocalDateTime;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "user_status")
 @Table

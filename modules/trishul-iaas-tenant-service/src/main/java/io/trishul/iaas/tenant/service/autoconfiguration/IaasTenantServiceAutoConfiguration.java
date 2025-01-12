@@ -14,11 +14,8 @@ import io.trishul.iaas.tenant.service.TenantIaasService;
 public class IaasTenantServiceAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(TenantIaasService.class)
-    public TenantIaasService tenantIaasService( // TODO: Create beans for all these params
-        TenantIaasAuthService authService, TenantIaasIdpService idpService,
-      TenantIaasVfsService vfsService, TenantIaasIdpTenantMapper mapper
-    ) {
-        return new TenantIaasService(authService, idpService, vfsService, mapper);
+    public TenantIaasService tenantIaasService(TenantIaasAuthService authService, TenantIaasIdpService idpService, TenantIaasVfsService vfsService) {
+        return new TenantIaasService(authService, idpService, vfsService, TenantIaasIdpTenantMapper.INSTANCE);
     }
     
 }

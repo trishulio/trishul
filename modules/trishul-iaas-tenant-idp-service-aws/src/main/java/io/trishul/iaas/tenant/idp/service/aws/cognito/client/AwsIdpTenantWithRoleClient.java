@@ -2,6 +2,7 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.CreateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.CreateGroupResult;
@@ -13,6 +14,7 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupResult;
+
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.IaasRoleAccessor;
@@ -27,17 +29,17 @@ public class AwsIdpTenantWithRoleClient
     implements IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> {
   private static final Logger log = LoggerFactory.getLogger(AwsIdpTenantWithRoleClient.class);
 
-  private final AWSCognitoIdentityProvider idp;
+  private final AWSCognitoIdentityProvider awsCognitoIdpProvider;
   private final String userPoolId;
   private final IaasEntityMapper<GroupType, IaasIdpTenant> mapper;
   private final AwsArnMapper arnMapper;
 
   private final IaasRoleService roleService;
 
-  public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider idp, String userPoolId,
+  public AwsIdpTenantWithRoleClient(AWSCognitoIdentityProvider awsCognitoIdpProvider, String userPoolId,
       IaasEntityMapper<GroupType, IaasIdpTenant> mapper, AwsArnMapper arnMapper,
       IaasRoleService roleService) {
-    this.idp = idp;
+    this.awsCognitoIdpProvider = awsCognitoIdpProvider;
     this.userPoolId = userPoolId;
     this.mapper = mapper;
     this.arnMapper = arnMapper;
@@ -51,7 +53,7 @@ public class AwsIdpTenantWithRoleClient
     GetGroupRequest request = new GetGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
 
     try {
-      GetGroupResult result = this.idp.getGroup(request);
+      GetGroupResult result = this.awsCognitoIdpProvider.getGroup(request);
       tenant = this.mapper.fromIaasEntity(result.getGroup());
       setRole(tenant, result.getGroup().getRoleArn());
 
@@ -67,7 +69,7 @@ public class AwsIdpTenantWithRoleClient
     CreateGroupRequest request = new CreateGroupRequest().withDescription(entity.getDescription())
         .withGroupName(entity.getName()).withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
 
-    CreateGroupResult result = this.idp.createGroup(request);
+    CreateGroupResult result = this.awsCognitoIdpProvider.createGroup(request);
 
     IaasIdpTenant tenant = mapper.fromIaasEntity(result.getGroup());
     setRole(tenant, result.getGroup().getRoleArn());
@@ -92,7 +94,7 @@ public class AwsIdpTenantWithRoleClient
         = new DeleteGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
 
     try {
-      DeleteGroupResult result = this.idp.deleteGroup(request);
+      DeleteGroupResult result = this.awsCognitoIdpProvider.deleteGroup(request);
       log.info("Deleted Cognito group. GroupName: {}, UserPoolId: {}, RequestId: {}", id,
           userPoolId, result.getSdkResponseMetadata().getRequestId());
 
@@ -113,7 +115,7 @@ public class AwsIdpTenantWithRoleClient
     UpdateGroupRequest request = new UpdateGroupRequest().withDescription(entity.getDescription())
         .withGroupName(entity.getName()).withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
 
-    UpdateGroupResult result = this.idp.updateGroup(request);
+    UpdateGroupResult result = this.awsCognitoIdpProvider.updateGroup(request);
 
     IaasIdpTenant tenant = mapper.fromIaasEntity(result.getGroup());
     setRole(tenant, result.getGroup().getRoleArn());
