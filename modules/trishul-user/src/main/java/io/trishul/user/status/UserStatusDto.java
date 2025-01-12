@@ -33,7 +33,7 @@ public class UserStatusDto extends BaseDto {
     return id;
   }
 
-  public final UserStatusDto setId(Long id) {
+  public UserStatusDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -42,7 +42,7 @@ public class UserStatusDto extends BaseDto {
     return name;
   }
 
-  public final UserStatusDto setName(String name) {
+  public UserStatusDto setName(String name) {
     this.name = name;
     return this;
   }
@@ -51,7 +51,7 @@ public class UserStatusDto extends BaseDto {
     return createdAt;
   }
 
-  public final UserStatusDto setCreatedAt(LocalDateTime createdAt) {
+  public UserStatusDto setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -60,7 +60,7 @@ public class UserStatusDto extends BaseDto {
     return lastUpdated;
   }
 
-  public final UserStatusDto setLastUpdated(LocalDateTime lastUpdated) {
+  public UserStatusDto setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -69,7 +69,7 @@ public class UserStatusDto extends BaseDto {
     return version;
   }
 
-  public final UserStatusDto setVersion(Integer version) {
+  public UserStatusDto setVersion(Integer version) {
     this.version = version;
     return this;
   }

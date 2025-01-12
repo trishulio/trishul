@@ -1,8 +1,10 @@
 package io.trishul.iaas.access.role.model;
 
 import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
@@ -49,7 +51,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setId(String id) {
+  public IaasRole setId(String id) {
     setName(id);
     return this;
   }
@@ -60,7 +62,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setName(String name) {
+  public IaasRole setName(String name) {
     this.name = name;
     return this;
   }
@@ -71,7 +73,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setDescription(String description) {
+  public IaasRole setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -82,7 +84,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setAssumePolicyDocument(String assumePolicyDocument) {
+  public IaasRole setAssumePolicyDocument(String assumePolicyDocument) {
     this.assumePolicyDocument = assumePolicyDocument;
     return this;
   }
@@ -93,7 +95,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setIaasResourceName(String iaasResourceName) {
+  public IaasRole setIaasResourceName(String iaasResourceName) {
     this.iaasResourceName = iaasResourceName;
     return this;
   }
@@ -104,7 +106,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setIaasId(String iaasId) {
+  public IaasRole setIaasId(String iaasId) {
     this.iaasId = iaasId;
     return this;
   }
@@ -115,7 +117,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setLastUsed(LocalDateTime lastUsed) {
+  public IaasRole setLastUsed(LocalDateTime lastUsed) {
     this.lastUsed = lastUsed;
     return this;
   }
@@ -126,7 +128,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasRole setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -137,7 +139,7 @@ public class IaasRole extends BaseEntity
   }
 
   @Override
-  public final IaasRole setCreatedAt(LocalDateTime createdAt) {
+  public IaasRole setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }

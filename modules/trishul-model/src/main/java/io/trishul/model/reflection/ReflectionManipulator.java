@@ -39,7 +39,7 @@ public class ReflectionManipulator {
       return this.clazz;
     }
 
-    public final PropNameKey setClazz(Class<?> clazz) {
+    public PropNameKey setClazz(Class<?> clazz) {
       this.clazz = clazz;
       return this;
     }
@@ -48,7 +48,7 @@ public class ReflectionManipulator {
       return this.exclusions;
     }
 
-    public final PropNameKey setExclusions(Set<String> exclusions) {
+    public PropNameKey setExclusions(Set<String> exclusions) {
       this.exclusions = exclusions;
       return this;
     }

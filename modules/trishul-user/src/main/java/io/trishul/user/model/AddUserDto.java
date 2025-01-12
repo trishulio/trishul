@@ -60,7 +60,7 @@ public class AddUserDto extends BaseDto {
     return userName;
   }
 
-  public final AddUserDto setUserName(String userName) {
+  public AddUserDto setUserName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -69,7 +69,7 @@ public class AddUserDto extends BaseDto {
     return displayName;
   }
 
-  public final AddUserDto setDisplayName(String displayName) {
+  public AddUserDto setDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -78,7 +78,7 @@ public class AddUserDto extends BaseDto {
     return firstName;
   }
 
-  public final AddUserDto setFirstName(String firstName) {
+  public AddUserDto setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -87,7 +87,7 @@ public class AddUserDto extends BaseDto {
     return lastName;
   }
 
-  public final AddUserDto setLastName(String lastName) {
+  public AddUserDto setLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -96,7 +96,7 @@ public class AddUserDto extends BaseDto {
     return email;
   }
 
-  public final AddUserDto setEmail(String email) {
+  public AddUserDto setEmail(String email) {
     this.email = email;
     return this;
   }
@@ -105,7 +105,7 @@ public class AddUserDto extends BaseDto {
     return statusId;
   }
 
-  public final AddUserDto setStatusId(Long statusId) {
+  public AddUserDto setStatusId(Long statusId) {
     this.statusId = statusId;
     return this;
   }
@@ -114,7 +114,7 @@ public class AddUserDto extends BaseDto {
     return salutationId;
   }
 
-  public final AddUserDto setSalutationId(Long salutationId) {
+  public AddUserDto setSalutationId(Long salutationId) {
     this.salutationId = salutationId;
     return this;
   }
@@ -123,7 +123,7 @@ public class AddUserDto extends BaseDto {
     return phoneNumber;
   }
 
-  public final AddUserDto setPhoneNumber(String phoneNumber) {
+  public AddUserDto setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
@@ -132,7 +132,7 @@ public class AddUserDto extends BaseDto {
     return roleIds == null ? null : new ArrayList<>(roleIds);
   }
 
-  public final AddUserDto setRoleIds(List<Long> roleIds) {
+  public AddUserDto setRoleIds(List<Long> roleIds) {
     this.roleIds = roleIds == null ? null : new ArrayList<>(roleIds);
     return this;
   }
@@ -141,7 +141,7 @@ public class AddUserDto extends BaseDto {
     return imageSrc;
   }
 
-  public final AddUserDto setImageSrc(URI imageSrc) {
+  public AddUserDto setImageSrc(URI imageSrc) {
     this.imageSrc = imageSrc;
     return this;
   }

@@ -23,7 +23,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity
   }
 
   @Override
-  public final IaasObjectStoreCorsConfiguration setId(String id) {
+  public IaasObjectStoreCorsConfiguration setId(String id) {
     setBucketName(id);
     return this;
   }
@@ -37,7 +37,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity
     return bucketName;
   }
 
-  public final IaasObjectStoreCorsConfiguration setBucketName(String bucketName) {
+  public IaasObjectStoreCorsConfiguration setBucketName(String bucketName) {
     this.bucketName = bucketName;
     return this;
   }
@@ -46,7 +46,7 @@ public class IaasObjectStoreCorsConfiguration extends BaseEntity
     return bucketCrossOriginConfiguration;
   }
 
-  public final IaasObjectStoreCorsConfiguration setBucketCrossOriginConfiguration(
+  public IaasObjectStoreCorsConfiguration setBucketCrossOriginConfiguration(
       BucketCrossOriginConfiguration bucketCrossOriginConfiguration) {
     this.bucketCrossOriginConfiguration = bucketCrossOriginConfiguration;
     return this;

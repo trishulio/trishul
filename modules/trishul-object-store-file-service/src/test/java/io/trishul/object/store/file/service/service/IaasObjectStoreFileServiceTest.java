@@ -151,7 +151,7 @@ public class IaasObjectStoreFileServiceTest {
     class DummyIaasObjectStoreFileAccessor
         implements IaasObjectStoreFileAccessor<DummyIaasObjectStoreFileAccessor> {
       @Override
-      public final DummyIaasObjectStoreFileAccessor setObjectStoreFile(
+      public DummyIaasObjectStoreFileAccessor setObjectStoreFile(
           IaasObjectStoreFile attachment) {
         return this;
       }

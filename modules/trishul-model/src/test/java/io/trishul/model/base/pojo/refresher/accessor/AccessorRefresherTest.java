@@ -47,7 +47,7 @@ public class AccessorRefresherTest {
     }
 
     @Override
-    public final void setEntity(Entity entity) {
+    public void setEntity(Entity entity) {
       this.e = entity;
     }
   }

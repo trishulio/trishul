@@ -60,7 +60,7 @@ public class Amount extends BaseEntity {
   }
 
   @PrePersist
-  public final void setTotal() {
+  public void setTotal() {
     Money total = null;
 
     Money subTotal = getSubTotal();
@@ -82,7 +82,7 @@ public class Amount extends BaseEntity {
     return MoneyMapper.INSTANCE.fromEntity(subTotal);
   }
 
-  public final Amount setSubTotal(Money subTotal) {
+  public Amount setSubTotal(Money subTotal) {
     this.subTotal = MoneyMapper.INSTANCE.toEntity(subTotal);
     return this;
   }
@@ -91,7 +91,7 @@ public class Amount extends BaseEntity {
     return taxAmount;
   }
 
-  public final Amount setTaxAmount(TaxAmount taxAmount) {
+  public Amount setTaxAmount(TaxAmount taxAmount) {
     this.taxAmount = taxAmount;
     return this;
   }

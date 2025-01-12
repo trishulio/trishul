@@ -1,9 +1,17 @@
 package io.trishul.object.store.service;
 
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
@@ -13,22 +21,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import io.trishul.crud.service.LockService;
+
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.crud.service.LockService;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.object.store.model.BaseIaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStoreAccessor;
 import io.trishul.object.store.model.UpdateIaasObjectStore;
 import io.trishul.test.util.MockUtilProvider;
-import java.time.LocalDateTime;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class IaasObjectStoreServiceTest {
   private IaasObjectStoreService service;
@@ -149,7 +151,7 @@ public class IaasObjectStoreServiceTest {
     class DummyIaasObjectStoreAccessor
         implements IaasObjectStoreAccessor<DummyIaasObjectStoreAccessor> {
       @Override
-      public final DummyIaasObjectStoreAccessor setIaasObjectStore(IaasObjectStore attachment) {
+      public DummyIaasObjectStoreAccessor setIaasObjectStore(IaasObjectStore attachment) {
         return this;
       }
 

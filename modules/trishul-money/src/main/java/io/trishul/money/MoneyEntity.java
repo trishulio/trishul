@@ -37,7 +37,7 @@ public class MoneyEntity extends BaseEntity {
     return currency == null ? null : currency.deepClone();
   }
 
-  public final MoneyEntity setCurrency(Currency currency) {
+  public MoneyEntity setCurrency(Currency currency) {
     this.currency = currency == null ? null : currency.deepClone();
     return this;
   }
@@ -46,7 +46,7 @@ public class MoneyEntity extends BaseEntity {
     return amount;
   }
 
-  public final MoneyEntity setAmount(BigDecimal amount) {
+  public MoneyEntity setAmount(BigDecimal amount) {
     this.amount = amount;
     return this;
   }

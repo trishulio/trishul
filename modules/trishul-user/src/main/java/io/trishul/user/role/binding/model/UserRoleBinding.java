@@ -86,7 +86,7 @@ public class UserRoleBinding extends BaseEntity
   }
 
   @Override
-  public final UserRoleBinding setId(Long id) {
+  public UserRoleBinding setId(Long id) {
     this.id = id;
     return this;
   }
@@ -97,7 +97,7 @@ public class UserRoleBinding extends BaseEntity
   }
 
   @Override
-  public final UserRoleBinding setRole(UserRole userRole) {
+  public UserRoleBinding setRole(UserRole userRole) {
     this.role = userRole == null ? null : userRole.deepClone();
     return this;
   }
@@ -108,7 +108,7 @@ public class UserRoleBinding extends BaseEntity
   }
 
   @Override
-  public final UserRoleBinding setUser(User user) {
+  public UserRoleBinding setUser(User user) {
     this.user = user;
     return this;
   }
@@ -119,7 +119,7 @@ public class UserRoleBinding extends BaseEntity
   }
 
   @Override
-  public final UserRoleBinding setCreatedAt(LocalDateTime createdAt) {
+  public UserRoleBinding setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -130,7 +130,7 @@ public class UserRoleBinding extends BaseEntity
   }
 
   @Override
-  public final UserRoleBinding setLastUpdated(LocalDateTime lastUpdated) {
+  public UserRoleBinding setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -140,7 +140,7 @@ public class UserRoleBinding extends BaseEntity
     return version;
   }
 
-  public final UserRoleBinding setVersion(Integer version) {
+  public UserRoleBinding setVersion(Integer version) {
     this.version = version;
     return this;
   }

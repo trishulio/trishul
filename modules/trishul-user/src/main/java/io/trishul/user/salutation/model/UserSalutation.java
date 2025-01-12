@@ -62,7 +62,7 @@ public class UserSalutation extends BaseEntity
   }
 
   @Override
-  public final UserSalutation setId(Long id) {
+  public UserSalutation setId(Long id) {
     this.id = id;
     return this;
   }
@@ -73,7 +73,7 @@ public class UserSalutation extends BaseEntity
   }
 
   @Override
-  public final UserSalutation setTitle(String title) {
+  public UserSalutation setTitle(String title) {
     this.title = title;
     return this;
   }
@@ -84,7 +84,7 @@ public class UserSalutation extends BaseEntity
   }
 
   @Override
-  public final UserSalutation setCreatedAt(LocalDateTime createdAt) {
+  public UserSalutation setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -95,7 +95,7 @@ public class UserSalutation extends BaseEntity
   }
 
   @Override
-  public final UserSalutation setLastUpdated(LocalDateTime lastUpdated) {
+  public UserSalutation setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -105,7 +105,7 @@ public class UserSalutation extends BaseEntity
     return this.version;
   }
 
-  public final UserSalutation setVersion(Integer version) {
+  public UserSalutation setVersion(Integer version) {
     this.version = version;
     return this;
   }

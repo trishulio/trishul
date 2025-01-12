@@ -1,8 +1,10 @@
 package io.trishul.address.model;
 
 import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import io.trishul.model.base.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -54,7 +56,7 @@ public class Address extends BaseEntity {
     return addressLine1;
   }
 
-  public final Address setAddressLine1(String addressLine1) {
+  public Address setAddressLine1(String addressLine1) {
     this.addressLine1 = addressLine1;
     return this;
   }
@@ -63,7 +65,7 @@ public class Address extends BaseEntity {
     return addressLine2;
   }
 
-  public final Address setAddressLine2(String addressLine2) {
+  public Address setAddressLine2(String addressLine2) {
     this.addressLine2 = addressLine2;
     return this;
   }
@@ -72,7 +74,7 @@ public class Address extends BaseEntity {
     return country;
   }
 
-  public final Address setCountry(String country) {
+  public Address setCountry(String country) {
     this.country = country;
     return this;
   }
@@ -81,7 +83,7 @@ public class Address extends BaseEntity {
     return province;
   }
 
-  public final Address setProvince(String province) {
+  public Address setProvince(String province) {
     this.province = province;
     return this;
   }
@@ -90,7 +92,7 @@ public class Address extends BaseEntity {
     return city;
   }
 
-  public final Address setCity(String city) {
+  public Address setCity(String city) {
     this.city = city;
     return this;
   }
@@ -99,7 +101,7 @@ public class Address extends BaseEntity {
     return postalCode;
   }
 
-  public final Address setPostalCode(String postalCode) {
+  public Address setPostalCode(String postalCode) {
     this.postalCode = postalCode;
     return this;
   }
@@ -108,7 +110,7 @@ public class Address extends BaseEntity {
     return createdAt;
   }
 
-  public final Address setCreatedAt(LocalDateTime created) {
+  public Address setCreatedAt(LocalDateTime created) {
     this.createdAt = created;
     return this;
   }
@@ -117,7 +119,7 @@ public class Address extends BaseEntity {
     return lastUpdated;
   }
 
-  public final Address setLastUpdated(LocalDateTime lastUpdated) {
+  public Address setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

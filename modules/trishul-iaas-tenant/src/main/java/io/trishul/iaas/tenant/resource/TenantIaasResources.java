@@ -24,7 +24,7 @@ public class TenantIaasResources extends BaseModel {
     return authResources;
   }
 
-  public final TenantIaasResources setAuthResources(TenantIaasAuthResources authResources) {
+  public TenantIaasResources setAuthResources(TenantIaasAuthResources authResources) {
     this.authResources = authResources;
     return this;
   }
@@ -33,7 +33,7 @@ public class TenantIaasResources extends BaseModel {
     return idpResources;
   }
 
-  public final TenantIaasResources setIdpResources(TenantIaasIdpResources idpResources) {
+  public TenantIaasResources setIdpResources(TenantIaasIdpResources idpResources) {
     this.idpResources = idpResources;
     return this;
   }
@@ -42,7 +42,7 @@ public class TenantIaasResources extends BaseModel {
     return vfsResources;
   }
 
-  public final TenantIaasResources setVfsResources(TenantIaasVfsResources vfsResources) {
+  public TenantIaasResources setVfsResources(TenantIaasVfsResources vfsResources) {
     this.vfsResources = vfsResources;
     return this;
   }

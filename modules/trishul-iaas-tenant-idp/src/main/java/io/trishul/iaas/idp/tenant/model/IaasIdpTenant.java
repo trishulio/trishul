@@ -39,7 +39,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setId(String id) {
+  public IaasIdpTenant setId(String id) {
     setName(id);
     return this;
   }
@@ -50,7 +50,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setName(String name) {
+  public IaasIdpTenant setName(String name) {
     this.name = name;
     return this;
   }
@@ -61,7 +61,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setDescription(String description) {
+  public IaasIdpTenant setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -72,7 +72,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setIaasRole(IaasRole role) {
+  public IaasIdpTenant setIaasRole(IaasRole role) {
     this.role = role == null ? null : role.deepClone();
     return this;
   }
@@ -83,7 +83,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setCreatedAt(LocalDateTime createdAt) {
+  public IaasIdpTenant setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -94,7 +94,7 @@ public class IaasIdpTenant extends BaseModel implements UpdateIaasIdpTenant<Iaas
   }
 
   @Override
-  public final IaasIdpTenant setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasIdpTenant setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

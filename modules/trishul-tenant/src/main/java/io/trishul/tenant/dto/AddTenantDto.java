@@ -24,7 +24,7 @@ public class AddTenantDto extends BaseDto {
     return name;
   }
 
-  public final AddTenantDto setName(String name) {
+  public AddTenantDto setName(String name) {
     this.name = name;
     return this;
   }
@@ -33,7 +33,7 @@ public class AddTenantDto extends BaseDto {
     return url;
   }
 
-  public final AddTenantDto setUrl(URL url) {
+  public AddTenantDto setUrl(URL url) {
     this.url = url;
     return this;
   }

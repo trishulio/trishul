@@ -14,7 +14,7 @@ public class ThreadLocalContextHolder implements ContextHolder {
     return this.principalCtxContainer.get();
   }
 
-  public final ThreadLocalContextHolder setContext(PrincipalContext principalCtx) {
+  public ThreadLocalContextHolder setContext(PrincipalContext principalCtx) {
     this.principalCtxContainer.set(principalCtx);
     return this;
   }

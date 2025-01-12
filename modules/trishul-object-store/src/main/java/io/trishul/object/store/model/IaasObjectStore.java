@@ -32,7 +32,7 @@ public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore
   }
 
   @Override
-  public final IaasObjectStore setId(String id) {
+  public IaasObjectStore setId(String id) {
     setName(id);
     return this;
   }
@@ -48,7 +48,7 @@ public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore
   }
 
   @Override
-  public final IaasObjectStore setName(String name) {
+  public IaasObjectStore setName(String name) {
     this.name = name;
     return this;
   }
@@ -59,7 +59,7 @@ public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore
   }
 
   @Override
-  public final IaasObjectStore setCreatedAt(LocalDateTime createdAt) {
+  public IaasObjectStore setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -70,7 +70,7 @@ public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore
   }
 
   @Override
-  public final IaasObjectStore setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasObjectStore setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

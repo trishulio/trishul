@@ -46,12 +46,12 @@ public class PredicateSpecAccumulator {
     this.aggregations.add(spec);
   }
 
-  public final PredicateSpecAccumulator setIsNot(boolean isNot) {
+  public PredicateSpecAccumulator setIsNot(boolean isNot) {
     this.isNot = isNot;
     return this;
   }
 
-  public final PredicateSpecAccumulator setIsPredicate(Boolean isPredicate) {
+  public PredicateSpecAccumulator setIsPredicate(Boolean isPredicate) {
     this.isPredicate = isPredicate;
     return this;
   }

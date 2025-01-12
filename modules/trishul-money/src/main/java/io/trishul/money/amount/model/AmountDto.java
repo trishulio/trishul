@@ -28,7 +28,7 @@ public class AmountDto extends BaseDto {
     return total;
   }
 
-  public final AmountDto setTotal(MoneyDto total) {
+  public AmountDto setTotal(MoneyDto total) {
     this.total = total;
     return this;
   }
@@ -37,7 +37,7 @@ public class AmountDto extends BaseDto {
     return subTotal;
   }
 
-  public final AmountDto setSubTotal(MoneyDto subTotal) {
+  public AmountDto setSubTotal(MoneyDto subTotal) {
     this.subTotal = subTotal;
     return this;
   }
@@ -46,7 +46,7 @@ public class AmountDto extends BaseDto {
     return taxAmount;
   }
 
-  public final AmountDto setTaxAmount(TaxAmountDto taxAmount) {
+  public AmountDto setTaxAmount(TaxAmountDto taxAmount) {
     this.taxAmount = taxAmount;
     return this;
   }

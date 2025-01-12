@@ -26,7 +26,7 @@ public class UpdateUserRoleDto extends BaseDto {
     return id;
   }
 
-  public final UpdateUserRoleDto setId(Long id) {
+  public UpdateUserRoleDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -35,7 +35,7 @@ public class UpdateUserRoleDto extends BaseDto {
     return name;
   }
 
-  public final UpdateUserRoleDto setName(String name) {
+  public UpdateUserRoleDto setName(String name) {
     this.name = name;
     return this;
   }
@@ -44,7 +44,7 @@ public class UpdateUserRoleDto extends BaseDto {
     return version;
   }
 
-  public final UpdateUserRoleDto setVersion(Integer version) {
+  public UpdateUserRoleDto setVersion(Integer version) {
     this.version = version;
     return this;
   }

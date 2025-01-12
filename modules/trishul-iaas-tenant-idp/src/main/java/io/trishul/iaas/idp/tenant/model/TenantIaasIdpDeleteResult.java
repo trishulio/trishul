@@ -13,7 +13,7 @@ public class TenantIaasIdpDeleteResult extends BaseModel {
     return idpTenant;
   }
 
-  public final TenantIaasIdpDeleteResult setIdpTenant(long idpTenant) {
+  public TenantIaasIdpDeleteResult setIdpTenant(long idpTenant) {
     this.idpTenant = idpTenant;
     return this;
   }

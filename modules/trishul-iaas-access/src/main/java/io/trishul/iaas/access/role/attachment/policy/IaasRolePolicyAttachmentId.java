@@ -20,7 +20,7 @@ public class IaasRolePolicyAttachmentId extends BaseModel {
     return policyId;
   }
 
-  public final IaasRolePolicyAttachmentId setPolicyId(String policyId) {
+  public IaasRolePolicyAttachmentId setPolicyId(String policyId) {
     this.policyId = policyId;
     return this;
   }
@@ -29,7 +29,7 @@ public class IaasRolePolicyAttachmentId extends BaseModel {
     return roleId;
   }
 
-  public final IaasRolePolicyAttachmentId setRoleId(String roleId) {
+  public IaasRolePolicyAttachmentId setRoleId(String roleId) {
     this.roleId = roleId;
     return this;
   }

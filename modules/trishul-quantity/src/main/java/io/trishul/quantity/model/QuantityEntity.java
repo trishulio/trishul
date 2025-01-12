@@ -37,7 +37,7 @@ public class QuantityEntity extends BaseEntity {
     return unit;
   }
 
-  public final QuantityEntity setUnit(UnitEntity unit) {
+  public QuantityEntity setUnit(UnitEntity unit) {
     this.unit = unit;
     return this;
   }
@@ -46,7 +46,7 @@ public class QuantityEntity extends BaseEntity {
     return value;
   }
 
-  public final QuantityEntity setValue(BigDecimal value) {
+  public QuantityEntity setValue(BigDecimal value) {
     this.value = value;
     return this;
   }

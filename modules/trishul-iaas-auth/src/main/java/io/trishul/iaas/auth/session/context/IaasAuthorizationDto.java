@@ -2,6 +2,7 @@
 package io.trishul.iaas.auth.session.context;
 
 import java.time.LocalDateTime;
+
 import io.trishul.model.base.dto.BaseDto;
 
 public class IaasAuthorizationDto extends BaseDto {
@@ -26,7 +27,7 @@ public class IaasAuthorizationDto extends BaseDto {
     return accessKeyId;
   }
 
-  public final IaasAuthorizationDto setAccessKeyId(String accessKeyId) {
+  public IaasAuthorizationDto setAccessKeyId(String accessKeyId) {
     this.accessKeyId = accessKeyId;
     return this;
   }
@@ -35,7 +36,7 @@ public class IaasAuthorizationDto extends BaseDto {
     return accessSecretKey;
   }
 
-  public final IaasAuthorizationDto setAccessSecretKey(String accessSecretKey) {
+  public IaasAuthorizationDto setAccessSecretKey(String accessSecretKey) {
     this.accessSecretKey = accessSecretKey;
     return this;
   }
@@ -44,7 +45,7 @@ public class IaasAuthorizationDto extends BaseDto {
     return sessionToken;
   }
 
-  public final IaasAuthorizationDto setSessionToken(String sessionToken) {
+  public IaasAuthorizationDto setSessionToken(String sessionToken) {
     this.sessionToken = sessionToken;
     return this;
   }
@@ -53,7 +54,7 @@ public class IaasAuthorizationDto extends BaseDto {
     return expiration;
   }
 
-  public final IaasAuthorizationDto setExpiration(LocalDateTime expiration) {
+  public IaasAuthorizationDto setExpiration(LocalDateTime expiration) {
     this.expiration = expiration;
     return this;
   }

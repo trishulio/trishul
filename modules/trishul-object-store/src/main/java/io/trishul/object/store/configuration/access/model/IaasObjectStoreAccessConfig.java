@@ -29,7 +29,7 @@ public class IaasObjectStoreAccessConfig extends BaseEntity
   }
 
   @Override
-  public final IaasObjectStoreAccessConfig setId(String id) {
+  public IaasObjectStoreAccessConfig setId(String id) {
     setObjectStoreName(id);
     return this;
   }
@@ -43,7 +43,7 @@ public class IaasObjectStoreAccessConfig extends BaseEntity
     return objectStoreName;
   }
 
-  public final IaasObjectStoreAccessConfig setObjectStoreName(String objectStoreName) {
+  public IaasObjectStoreAccessConfig setObjectStoreName(String objectStoreName) {
     this.objectStoreName = objectStoreName;
     return this;
   }
@@ -52,7 +52,7 @@ public class IaasObjectStoreAccessConfig extends BaseEntity
     return publicAccessBlockConfig == null ? null : publicAccessBlockConfig.clone();
   }
 
-  public final IaasObjectStoreAccessConfig setPublicAccessBlockConfig(
+  public IaasObjectStoreAccessConfig setPublicAccessBlockConfig(
       PublicAccessBlockConfiguration publicAccessBlockConfig) {
     this.publicAccessBlockConfig
         = publicAccessBlockConfig == null ? null : publicAccessBlockConfig.clone();

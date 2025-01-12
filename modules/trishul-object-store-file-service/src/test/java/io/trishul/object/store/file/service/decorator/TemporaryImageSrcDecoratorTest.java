@@ -83,7 +83,7 @@ class DecoratedEntity extends BaseModel
   }
 
   @Override
-  public final DecoratedEntity setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+  public DecoratedEntity setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
     this.objectStoreFile = objectStoreFile;
     return this;
   }
@@ -114,7 +114,7 @@ class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor<D
   }
 
   @Override
-  public final DummyDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+  public DummyDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
     this.objectStoreFile = objectStoreFile;
     return this;
   }

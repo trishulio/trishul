@@ -16,7 +16,7 @@ public class ThreadLocalUtilityProvider implements UtilityProvider {
   }
 
   @Override
-  public final void setValidator(Validator validator) {
+  public void setValidator(Validator validator) {
     this.validatorCache.set(validator);
   }
 }

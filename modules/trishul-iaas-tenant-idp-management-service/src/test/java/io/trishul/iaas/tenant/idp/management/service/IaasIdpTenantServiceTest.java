@@ -149,7 +149,7 @@ public class IaasIdpTenantServiceTest {
 
     class DummyIaasIdpTenantAccessor implements IaasIdpTenantAccessor<DummyIaasIdpTenantAccessor> {
       @Override
-      public final DummyIaasIdpTenantAccessor setIdpTenant(IaasIdpTenant attachment) {
+      public DummyIaasIdpTenantAccessor setIdpTenant(IaasIdpTenant attachment) {
         return this;
       }
 

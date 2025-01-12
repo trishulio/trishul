@@ -20,7 +20,7 @@ public class IaasUserTenantMembershipId extends BaseEntity {
     return userId;
   }
 
-  public final IaasUserTenantMembershipId setUserId(String userId) {
+  public IaasUserTenantMembershipId setUserId(String userId) {
     this.userId = userId;
     return this;
   }
@@ -29,7 +29,7 @@ public class IaasUserTenantMembershipId extends BaseEntity {
     return tenantId;
   }
 
-  public final IaasUserTenantMembershipId setTenantId(String tenantId) {
+  public IaasUserTenantMembershipId setTenantId(String tenantId) {
     this.tenantId = tenantId;
     return this;
   }

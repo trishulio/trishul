@@ -43,7 +43,7 @@ public class DummyCrudEntity extends BaseEntity
   }
 
   @Override
-  public final DummyCrudEntity setId(Long id) {
+  public DummyCrudEntity setId(Long id) {
     this.id = id;
     return this;
   }
@@ -54,7 +54,7 @@ public class DummyCrudEntity extends BaseEntity
   }
 
   @Override
-  public final DummyCrudEntity setValue(String value) {
+  public DummyCrudEntity setValue(String value) {
     this.value = value;
     return this;
   }
@@ -64,7 +64,7 @@ public class DummyCrudEntity extends BaseEntity
     return this.version;
   }
 
-  public final DummyCrudEntity setVersion(Integer version) {
+  public DummyCrudEntity setVersion(Integer version) {
     this.version = version;
     return this;
   }
@@ -75,7 +75,7 @@ public class DummyCrudEntity extends BaseEntity
   }
 
   @Override
-  public final DummyCrudEntity setExcludedValue(String excludedValue) {
+  public DummyCrudEntity setExcludedValue(String excludedValue) {
     this.excludedValue = excludedValue;
     return this;
   }

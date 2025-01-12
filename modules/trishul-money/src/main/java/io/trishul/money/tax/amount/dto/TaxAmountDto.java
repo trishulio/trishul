@@ -37,7 +37,7 @@ public class TaxAmountDto extends BaseDto {
     return pstAmount;
   }
 
-  public final TaxAmountDto setPstAmount(MoneyDto pstAmount) {
+  public TaxAmountDto setPstAmount(MoneyDto pstAmount) {
     this.pstAmount = pstAmount;
     return this;
   }
@@ -46,7 +46,7 @@ public class TaxAmountDto extends BaseDto {
     return gstAmount;
   }
 
-  public final TaxAmountDto setGstAmount(MoneyDto gstAmount) {
+  public TaxAmountDto setGstAmount(MoneyDto gstAmount) {
     this.gstAmount = gstAmount;
     return this;
   }
@@ -55,7 +55,7 @@ public class TaxAmountDto extends BaseDto {
     return hstAmount;
   }
 
-  public final TaxAmountDto setHstAmount(MoneyDto hstAmount) {
+  public TaxAmountDto setHstAmount(MoneyDto hstAmount) {
     this.hstAmount = hstAmount;
     return this;
   }
@@ -64,7 +64,7 @@ public class TaxAmountDto extends BaseDto {
     return totalTaxAmount;
   }
 
-  public final TaxAmountDto setTotalTaxAmount(MoneyDto totalTaxAmount) {
+  public TaxAmountDto setTotalTaxAmount(MoneyDto totalTaxAmount) {
     this.totalTaxAmount = totalTaxAmount;
     return this;
   }

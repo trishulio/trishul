@@ -19,7 +19,7 @@ public class TaxRateDto extends BaseDto {
     return value;
   }
 
-  public final TaxRateDto setValue(BigDecimal value) {
+  public TaxRateDto setValue(BigDecimal value) {
     this.value = value;
     return this;
   }

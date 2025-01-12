@@ -5,7 +5,7 @@ import io.trishul.model.validator.Validator;
 
 public class MockUtilProvider implements UtilityProvider {
   @Override
-  public final void setValidator(Validator validator) {}
+  public void setValidator(Validator validator) {}
 
   @Override
   public Validator getValidator() {

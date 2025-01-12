@@ -1,8 +1,9 @@
 package io.trishul.iaas.auth.session.context;
 
+import java.time.LocalDateTime;
+
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.model.base.pojo.BaseModel;
-import java.time.LocalDateTime;
 
 public class IaasAuthorization extends BaseModel
     implements UpdateIaasAuthorization<IaasAuthorization>, Identified<String> {
@@ -35,7 +36,7 @@ public class IaasAuthorization extends BaseModel
   }
 
   @Override
-  public final IaasAuthorization setAccessKeyId(String accessKeyId) {
+  public IaasAuthorization setAccessKeyId(String accessKeyId) {
     this.accessKeyId = accessKeyId;
     return this;
   }
@@ -46,7 +47,7 @@ public class IaasAuthorization extends BaseModel
   }
 
   @Override
-  public final IaasAuthorization setAccessSecretKey(String accessSecretKey) {
+  public IaasAuthorization setAccessSecretKey(String accessSecretKey) {
     this.accessSecretKey = accessSecretKey;
     return this;
   }
@@ -57,7 +58,7 @@ public class IaasAuthorization extends BaseModel
   }
 
   @Override
-  public final IaasAuthorization setSessionToken(String sessionToken) {
+  public IaasAuthorization setSessionToken(String sessionToken) {
     this.sessionToken = sessionToken;
     return this;
   }
@@ -68,7 +69,7 @@ public class IaasAuthorization extends BaseModel
   }
 
   @Override
-  public final IaasAuthorization setExpiration(LocalDateTime expiration) {
+  public IaasAuthorization setExpiration(LocalDateTime expiration) {
     this.expiration = expiration;
     return this;
   }

@@ -123,7 +123,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setId(Long id) {
+  public User setId(Long id) {
     this.id = id;
     return this;
   }
@@ -134,7 +134,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setDisplayName(String displayName) {
+  public User setDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -145,7 +145,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setFirstName(String firstName) {
+  public User setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -156,7 +156,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setLastName(String lastName) {
+  public User setLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -167,7 +167,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setEmail(String email) {
+  public User setEmail(String email) {
     this.email = email;
     return this;
   }
@@ -188,7 +188,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setImageSrc(URI imageSrc) {
+  public User setImageSrc(URI imageSrc) {
     if (imageSrc != null) {
       this.imageSrc = imageSrc.toString();
     } else {
@@ -203,7 +203,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setPhoneNumber(String phoneNumber) {
+  public User setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
@@ -214,7 +214,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setStatus(UserStatus status) {
+  public User setStatus(UserStatus status) {
     this.status = status == null ? null : status.deepClone();
     return this;
   }
@@ -224,7 +224,7 @@ public class User extends BaseEntity
     return version;
   }
 
-  public final User setVersion(Integer version) {
+  public User setVersion(Integer version) {
     this.version = version;
     return this;
   }
@@ -235,13 +235,13 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setUserName(String userName) {
+  public User setUserName(String userName) {
     this.userName = userName;
     return this;
   }
 
   @Override
-  public final User setRoles(List<UserRole> roles) {
+  public User setRoles(List<UserRole> roles) {
     if (roles == null) {
       if (this.roleBindings != null) {
         this.roleBindings.clear();
@@ -300,7 +300,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setSalutation(UserSalutation salutation) {
+  public User setSalutation(UserSalutation salutation) {
     this.salutation = salutation == null ? null : salutation.deepClone();
     return this;
   }
@@ -311,7 +311,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setLastUpdated(LocalDateTime lastUpdated) {
+  public User setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -322,7 +322,7 @@ public class User extends BaseEntity
   }
 
   @Override
-  public final User setCreatedAt(LocalDateTime createdAt) {
+  public User setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }

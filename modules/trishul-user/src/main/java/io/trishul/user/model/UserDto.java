@@ -75,7 +75,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return id;
   }
 
-  public final UserDto setId(Long id) {
+  public UserDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -84,7 +84,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return userName;
   }
 
-  public final UserDto setUserName(String userName) {
+  public UserDto setUserName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -93,7 +93,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return displayName;
   }
 
-  public final UserDto setDisplayName(String displayName) {
+  public UserDto setDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -102,7 +102,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return firstName;
   }
 
-  public final UserDto setFirstName(String firstName) {
+  public UserDto setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -111,7 +111,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return lastName;
   }
 
-  public final UserDto setLastName(String lastName) {
+  public UserDto setLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -120,7 +120,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return email;
   }
 
-  public final UserDto setEmail(String email) {
+  public UserDto setEmail(String email) {
     this.email = email;
     return this;
   }
@@ -129,7 +129,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return status;
   }
 
-  public final UserDto setStatus(UserStatusDto status) {
+  public UserDto setStatus(UserStatusDto status) {
     this.status = status;
     return this;
   }
@@ -138,7 +138,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return salutation;
   }
 
-  public final UserDto setSalutation(UserSalutationDto salutation) {
+  public UserDto setSalutation(UserSalutationDto salutation) {
     this.salutation = salutation;
     return this;
   }
@@ -147,7 +147,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return phoneNumber;
   }
 
-  public final UserDto setPhoneNumber(String phoneNumber) {
+  public UserDto setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
@@ -156,7 +156,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return roles == null ? null : new ArrayList<>(roles);
   }
 
-  public final UserDto setRoles(List<UserRoleDto> roles) {
+  public UserDto setRoles(List<UserRoleDto> roles) {
     this.roles = roles == null ? null : new ArrayList<>(roles);
     return this;
   }
@@ -166,7 +166,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return this.imageSrc;
   }
 
-  public final UserDto setImageSrc(URI imageSrc) {
+  public UserDto setImageSrc(URI imageSrc) {
     this.imageSrc = imageSrc;
     return this;
   }
@@ -176,7 +176,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
   }
 
   @Override
-  public final UserDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
+  public UserDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
     this.objectStoreFile = objectStoreFile;
     return this;
   }
@@ -185,7 +185,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return createdAt;
   }
 
-  public final UserDto setCreatedAt(LocalDateTime createdAt) {
+  public UserDto setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -194,7 +194,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return lastUpdated;
   }
 
-  public final UserDto setLastUpdated(LocalDateTime lastUpdated) {
+  public UserDto setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -203,7 +203,7 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
     return version;
   }
 
-  public final UserDto setVersion(Integer version) {
+  public UserDto setVersion(Integer version) {
     this.version = version;
     return this;
   }

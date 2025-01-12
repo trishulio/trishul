@@ -61,7 +61,7 @@ public class Tenant extends BaseEntity
   }
 
   @PrePersist
-  public final void setId() {
+  public void setId() {
     if (this.id == null) {
       this.id = UUID.randomUUID();
     }
@@ -73,7 +73,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setId(UUID id) {
+  public Tenant setId(UUID id) {
     this.id = id;
     return this;
   }
@@ -84,7 +84,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setName(String name) {
+  public Tenant setName(String name) {
     this.name = name;
     return this;
   }
@@ -95,7 +95,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setUrl(URL url) {
+  public Tenant setUrl(URL url) {
     this.url = url;
     return this;
   }
@@ -106,7 +106,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setIsReady(Boolean isReady) {
+  public Tenant setIsReady(Boolean isReady) {
     this.isReady = isReady;
     return this;
   }
@@ -117,7 +117,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setCreatedAt(LocalDateTime createdAt) {
+  public Tenant setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -128,7 +128,7 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public final Tenant setLastUpdated(LocalDateTime lastUpdated) {
+  public Tenant setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

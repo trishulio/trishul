@@ -1,8 +1,10 @@
 package io.trishul.iaas.access.policy.model;
 
 import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
@@ -46,7 +48,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setId(String id) {
+  public IaasPolicy setId(String id) {
     setName(id);
     return this;
   }
@@ -57,7 +59,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setName(String name) {
+  public IaasPolicy setName(String name) {
     this.name = name;
     return this;
   }
@@ -68,7 +70,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setIaasId(String iaasId) {
+  public IaasPolicy setIaasId(String iaasId) {
     this.iaasId = iaasId;
     return this;
   }
@@ -79,7 +81,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setIaasResourceName(String iaasResourceName) {
+  public IaasPolicy setIaasResourceName(String iaasResourceName) {
     this.iaasResourceName = iaasResourceName;
     return this;
   }
@@ -90,7 +92,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setDocument(String document) {
+  public IaasPolicy setDocument(String document) {
     this.document = document;
     return this;
   }
@@ -101,7 +103,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setDescription(String description) {
+  public IaasPolicy setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -112,7 +114,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setCreatedAt(LocalDateTime createdAt) {
+  public IaasPolicy setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -123,7 +125,7 @@ public class IaasPolicy extends BaseEntity
   }
 
   @Override
-  public final IaasPolicy setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasPolicy setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

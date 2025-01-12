@@ -128,7 +128,7 @@ public class TenantServiceTest {
 
     class DummyTenantAccessor implements TenantAccessor<DummyTenantAccessor> {
       @Override
-      public final DummyTenantAccessor setTenant(Tenant tenant) {
+      public DummyTenantAccessor setTenant(Tenant tenant) {
         return this;
       }
 

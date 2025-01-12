@@ -16,7 +16,7 @@ public class AddUserRoleDto extends BaseDto {
     return name;
   }
 
-  public final AddUserRoleDto setName(String name) {
+  public AddUserRoleDto setName(String name) {
     this.name = name;
     return this;
   }

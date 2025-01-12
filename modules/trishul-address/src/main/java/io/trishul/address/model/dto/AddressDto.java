@@ -32,7 +32,7 @@ public class AddressDto {
     return id;
   }
 
-  public final AddressDto setId(Long id) {
+  public AddressDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -41,7 +41,7 @@ public class AddressDto {
     return addressLine1;
   }
 
-  public final AddressDto setAddressLine1(String addressLine1) {
+  public AddressDto setAddressLine1(String addressLine1) {
     this.addressLine1 = addressLine1;
     return this;
   }
@@ -50,7 +50,7 @@ public class AddressDto {
     return addressLine2;
   }
 
-  public final AddressDto setAddressLine2(String addressLine2) {
+  public AddressDto setAddressLine2(String addressLine2) {
     this.addressLine2 = addressLine2;
     return this;
   }
@@ -59,7 +59,7 @@ public class AddressDto {
     return country;
   }
 
-  public final AddressDto setCountry(String country) {
+  public AddressDto setCountry(String country) {
     this.country = country;
     return this;
   }
@@ -68,7 +68,7 @@ public class AddressDto {
     return province;
   }
 
-  public final AddressDto setProvince(String province) {
+  public AddressDto setProvince(String province) {
     this.province = province;
     return this;
   }
@@ -77,7 +77,7 @@ public class AddressDto {
     return city;
   }
 
-  public final AddressDto setCity(String city) {
+  public AddressDto setCity(String city) {
     this.city = city;
     return this;
   }
@@ -86,7 +86,7 @@ public class AddressDto {
     return postalCode;
   }
 
-  public final AddressDto setPostalCode(String postalCode) {
+  public AddressDto setPostalCode(String postalCode) {
     this.postalCode = postalCode;
     return this;
   }

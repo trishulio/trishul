@@ -37,7 +37,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setId(String id) {
+  public IaasUser setId(String id) {
     setEmail(id);
     return this;
   }
@@ -48,7 +48,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setUserName(String userName) {
+  public IaasUser setUserName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -59,7 +59,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setEmail(String email) {
+  public IaasUser setEmail(String email) {
     this.email = email;
     return this;
   }
@@ -70,7 +70,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setPhoneNumber(String phoneNumber) {
+  public IaasUser setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
@@ -81,7 +81,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setCreatedAt(LocalDateTime createdAt) {
+  public IaasUser setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -92,7 +92,7 @@ public class IaasUser extends BaseEntity
   }
 
   @Override
-  public final IaasUser setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasUser setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

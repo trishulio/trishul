@@ -65,7 +65,7 @@ public class UserStatus extends BaseEntity
   }
 
   @Override
-  public final UserStatus setId(Long id) {
+  public UserStatus setId(Long id) {
     this.id = id;
     return this;
   }
@@ -76,7 +76,7 @@ public class UserStatus extends BaseEntity
   }
 
   @Override
-  public final UserStatus setName(String name) {
+  public UserStatus setName(String name) {
     this.name = name;
     return this;
   }
@@ -87,7 +87,7 @@ public class UserStatus extends BaseEntity
   }
 
   @Override
-  public final UserStatus setCreatedAt(LocalDateTime createdAt) {
+  public UserStatus setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -98,7 +98,7 @@ public class UserStatus extends BaseEntity
   }
 
   @Override
-  public final UserStatus setLastUpdated(LocalDateTime lastUpdated) {
+  public UserStatus setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -108,7 +108,7 @@ public class UserStatus extends BaseEntity
     return this.version;
   }
 
-  public final UserStatus setVersion(Integer version) {
+  public UserStatus setVersion(Integer version) {
     this.version = version;
     return this;
   }

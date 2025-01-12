@@ -23,7 +23,7 @@ public class QuantityDto extends BaseDto {
     return this.value;
   }
 
-  public final QuantityDto setValue(BigDecimal value) {
+  public QuantityDto setValue(BigDecimal value) {
     if (value != null) {
       value = new BigDecimal(value.stripTrailingZeros().toPlainString());
     }
@@ -35,7 +35,7 @@ public class QuantityDto extends BaseDto {
     return symbol;
   }
 
-  public final QuantityDto setSymbol(String symbol) {
+  public QuantityDto setSymbol(String symbol) {
     if (symbol != null) {
       symbol = symbol.toLowerCase();
     }

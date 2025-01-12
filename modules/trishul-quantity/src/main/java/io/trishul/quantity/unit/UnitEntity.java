@@ -51,7 +51,7 @@ public class UnitEntity extends BaseEntity {
     return name;
   }
 
-  public final UnitEntity setName(String name) {
+  public UnitEntity setName(String name) {
     this.name = name;
     return this;
   }
@@ -60,7 +60,7 @@ public class UnitEntity extends BaseEntity {
     return symbol;
   }
 
-  public final UnitEntity setSymbol(String symbol) {
+  public UnitEntity setSymbol(String symbol) {
     this.symbol = symbol;
     return this;
   }
@@ -69,7 +69,7 @@ public class UnitEntity extends BaseEntity {
     return baseUnitEntity;
   }
 
-  public final UnitEntity setBaseUnitEntity(UnitEntity baseUnitEntity) {
+  public UnitEntity setBaseUnitEntity(UnitEntity baseUnitEntity) {
     this.baseUnitEntity = baseUnitEntity;
     return this;
   }

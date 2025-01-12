@@ -67,7 +67,7 @@ public class UpdateUserDto extends BaseDto {
     return id;
   }
 
-  public final UpdateUserDto setId(Long id) {
+  public UpdateUserDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -76,7 +76,7 @@ public class UpdateUserDto extends BaseDto {
     return userName;
   }
 
-  public final UpdateUserDto setUserName(String userName) {
+  public UpdateUserDto setUserName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -85,7 +85,7 @@ public class UpdateUserDto extends BaseDto {
     return displayName;
   }
 
-  public final UpdateUserDto setDisplayName(String displayName) {
+  public UpdateUserDto setDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
@@ -94,7 +94,7 @@ public class UpdateUserDto extends BaseDto {
     return firstName;
   }
 
-  public final UpdateUserDto setFirstName(String firstName) {
+  public UpdateUserDto setFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -103,7 +103,7 @@ public class UpdateUserDto extends BaseDto {
     return lastName;
   }
 
-  public final UpdateUserDto setLastName(String lastName) {
+  public UpdateUserDto setLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -112,7 +112,7 @@ public class UpdateUserDto extends BaseDto {
     return statusId;
   }
 
-  public final UpdateUserDto setStatusId(Long statusId) {
+  public UpdateUserDto setStatusId(Long statusId) {
     this.statusId = statusId;
     return this;
   }
@@ -121,7 +121,7 @@ public class UpdateUserDto extends BaseDto {
     return salutationId;
   }
 
-  public final UpdateUserDto setSalutationId(Long salutationId) {
+  public UpdateUserDto setSalutationId(Long salutationId) {
     this.salutationId = salutationId;
     return this;
   }
@@ -130,7 +130,7 @@ public class UpdateUserDto extends BaseDto {
     return phoneNumber;
   }
 
-  public final UpdateUserDto setPhoneNumber(String phoneNumber) {
+  public UpdateUserDto setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
   }
@@ -139,7 +139,7 @@ public class UpdateUserDto extends BaseDto {
     return roleIds == null ? null : new ArrayList<>(roleIds);
   }
 
-  public final UpdateUserDto setRoleIds(List<Long> roleIds) {
+  public UpdateUserDto setRoleIds(List<Long> roleIds) {
     this.roleIds = roleIds == null ? null : new ArrayList<>(roleIds);
     return this;
   }
@@ -148,7 +148,7 @@ public class UpdateUserDto extends BaseDto {
     return imageSrc;
   }
 
-  public final UpdateUserDto setImageSrc(URI imageSrc) {
+  public UpdateUserDto setImageSrc(URI imageSrc) {
     this.imageSrc = imageSrc;
     return this;
   }
@@ -157,7 +157,7 @@ public class UpdateUserDto extends BaseDto {
     return version;
   }
 
-  public final UpdateUserDto setVersion(Integer version) {
+  public UpdateUserDto setVersion(Integer version) {
     this.version = version;
     return this;
   }

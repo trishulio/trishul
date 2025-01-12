@@ -1,8 +1,10 @@
 package io.trishul.iaas.access.role.attachment.policy;
 
 import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
@@ -49,7 +51,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
   }
 
   @Override
-  public final IaasRolePolicyAttachment setId(IaasRolePolicyAttachmentId id) {
+  public IaasRolePolicyAttachment setId(IaasRolePolicyAttachmentId id) {
     if (id == null) {
       if (this.role != null) {
         this.role.setId(null);
@@ -79,7 +81,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
   }
 
   @Override
-  public final IaasRolePolicyAttachment setIaasRole(IaasRole role) {
+  public IaasRolePolicyAttachment setIaasRole(IaasRole role) {
     this.role = role == null ? null : role.deepClone();
     return this;
   }
@@ -90,7 +92,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
   }
 
   @Override
-  public final IaasRolePolicyAttachment setIaasPolicy(IaasPolicy policy) {
+  public IaasRolePolicyAttachment setIaasPolicy(IaasPolicy policy) {
     this.policy = policy == null ? null : policy.deepClone();
     return this;
   }
@@ -101,7 +103,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
   }
 
   @Override
-  public final IaasRolePolicyAttachment setCreatedAt(LocalDateTime createdAt) {
+  public IaasRolePolicyAttachment setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -112,7 +114,7 @@ public class IaasRolePolicyAttachment extends BaseEntity
   }
 
   @Override
-  public final IaasRolePolicyAttachment setLastUpdated(LocalDateTime lastUpdated) {
+  public IaasRolePolicyAttachment setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }

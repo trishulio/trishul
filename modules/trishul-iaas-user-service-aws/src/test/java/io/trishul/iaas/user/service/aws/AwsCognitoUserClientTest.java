@@ -113,7 +113,7 @@ public class AwsCognitoUserClientTest {
         return this.attributes;
       }
 
-      public final void setAttributes(List<AttributeType> attributes) {
+      public void setAttributes(List<AttributeType> attributes) {
         this.attributes = attributes;
       }
     }

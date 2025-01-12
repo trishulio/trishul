@@ -47,7 +47,7 @@ public class CollectionAccessorRefresherTest {
     }
 
     @Override
-    public final void setEntityList(List<Entity> entity) {
+    public void setEntityList(List<Entity> entity) {
       this.e = entity;
     }
   }

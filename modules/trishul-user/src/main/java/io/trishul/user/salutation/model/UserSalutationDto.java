@@ -33,7 +33,7 @@ public class UserSalutationDto extends BaseDto {
     return id;
   }
 
-  public final UserSalutationDto setId(Long id) {
+  public UserSalutationDto setId(Long id) {
     this.id = id;
     return this;
   }
@@ -42,7 +42,7 @@ public class UserSalutationDto extends BaseDto {
     return title;
   }
 
-  public final UserSalutationDto setTitle(String title) {
+  public UserSalutationDto setTitle(String title) {
     this.title = title;
     return this;
   }
@@ -51,7 +51,7 @@ public class UserSalutationDto extends BaseDto {
     return createdAt;
   }
 
-  public final UserSalutationDto setCreatedAt(LocalDateTime createdAt) {
+  public UserSalutationDto setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -60,7 +60,7 @@ public class UserSalutationDto extends BaseDto {
     return lastUpdated;
   }
 
-  public final UserSalutationDto setLastUpdated(LocalDateTime lastUpdated) {
+  public UserSalutationDto setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -69,7 +69,7 @@ public class UserSalutationDto extends BaseDto {
     return version;
   }
 
-  public final UserSalutationDto setVersion(Integer version) {
+  public UserSalutationDto setVersion(Integer version) {
     this.version = version;
     return this;
   }

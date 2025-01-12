@@ -33,7 +33,7 @@ public class UpdateTenantDto extends BaseDto {
     return id;
   }
 
-  public final UpdateTenantDto setId(UUID id) {
+  public UpdateTenantDto setId(UUID id) {
     this.id = id;
     return this;
   }
@@ -42,7 +42,7 @@ public class UpdateTenantDto extends BaseDto {
     return name;
   }
 
-  public final UpdateTenantDto setName(String name) {
+  public UpdateTenantDto setName(String name) {
     this.name = name;
     return this;
   }
@@ -51,7 +51,7 @@ public class UpdateTenantDto extends BaseDto {
     return url;
   }
 
-  public final UpdateTenantDto setUrl(URL url) {
+  public UpdateTenantDto setUrl(URL url) {
     this.url = url;
     return this;
   }

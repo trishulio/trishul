@@ -63,7 +63,7 @@ public class UserRole extends BaseEntity
   }
 
   @Override
-  public final UserRole setId(Long id) {
+  public UserRole setId(Long id) {
     this.id = id;
     return this;
   }
@@ -74,7 +74,7 @@ public class UserRole extends BaseEntity
   }
 
   @Override
-  public final UserRole setName(String name) {
+  public UserRole setName(String name) {
     this.name = name;
     return this;
   }
@@ -85,7 +85,7 @@ public class UserRole extends BaseEntity
   }
 
   @Override
-  public final UserRole setCreatedAt(LocalDateTime createdAt) {
+  public UserRole setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -96,7 +96,7 @@ public class UserRole extends BaseEntity
   }
 
   @Override
-  public final UserRole setLastUpdated(LocalDateTime lastUpdated) {
+  public UserRole setLastUpdated(LocalDateTime lastUpdated) {
     this.lastUpdated = lastUpdated;
     return this;
   }
@@ -106,7 +106,7 @@ public class UserRole extends BaseEntity
     return this.version;
   }
 
-  public final UserRole setVersion(Integer version) {
+  public UserRole setVersion(Integer version) {
     this.version = version;
     return this;
   }
