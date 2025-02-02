@@ -13,6 +13,12 @@ public class ContextHolderAuthorizationFetcher {
   }
 
   public IaasAuthorization fetch() {
+    IaasAuthorizationCredentials creds = this.credentialsHolder.getIaasAuthorizationCredentials();
+    if (creds == null) {
+      throw new RuntimeException(String.format("No token set for header: %s",
+          IaasAuthorizationCredentials.HEADER_NAME_IAAS_TOKEN));
+    }
+
     return this.fetcher.fetch(this.credentialsHolder.getIaasAuthorizationCredentials());
   }
 }
