@@ -594,7 +594,7 @@
                     <configuration>
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
-                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version</excludeProperties>
                     </configuration>
                 </plugin>
                 <plugin>
