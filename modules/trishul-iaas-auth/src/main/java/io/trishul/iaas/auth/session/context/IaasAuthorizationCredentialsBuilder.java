@@ -2,6 +2,7 @@ package io.trishul.iaas.auth.session.context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,12 +25,10 @@ public class IaasAuthorizationCredentialsBuilder {
     IaasAuthorizationCredentials creds = null;
     String iaasToken = r.getHeader(IaasAuthorizationCredentials.HEADER_NAME_IAAS_TOKEN);
 
+    // Don't throw exception when token is missing during authorization to support
+    // unauthenticated requests like /health
     if (iaasToken != null) {
       creds = new IaasAuthorizationCredentials(iaasToken);
-    } else {
-      // Don't throw exception when token is missing during authorization to support
-      // unauthenticated requests like /health
-      log.warn("No token set for header: {}", IaasAuthorizationCredentials.HEADER_NAME_IAAS_TOKEN);
     }
 
     return creds;
