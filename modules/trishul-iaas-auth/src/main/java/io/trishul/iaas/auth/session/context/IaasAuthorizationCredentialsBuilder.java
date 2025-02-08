@@ -2,7 +2,6 @@ package io.trishul.iaas.auth.session.context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 

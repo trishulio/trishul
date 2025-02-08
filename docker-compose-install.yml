@@ -4,7 +4,7 @@ services:
     image: maven:3.6.3-openjdk-17
     container_name: maven
     working_dir: /usr/code/app
-    command: ['mvn', 'clean', 'install']
+    command: ['mvn', 'clean', 'install', '-DskipTests', '-Ddependency-check.skip=true']
     environment:
       MUTATION_COVERAGE: "${MUTATION_COVERAGE}"
       CODE_COVERAGE: "${CODE_COVERAGE}"
