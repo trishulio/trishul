@@ -1,5 +1,17 @@
 package io.trishul.tenant.service.service;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
@@ -16,18 +28,6 @@ import io.trishul.tenant.persistence.management.migration.manager.MigrationManag
 import io.trishul.tenant.service.repository.TenantRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class TenantService
@@ -61,6 +61,7 @@ public class TenantService
     testTenants.add(adminTenant);
 
     // Mock data
+    // TODO: Remove the test tenant
     testTenants.add(new Tenant(UUID.fromString("eae07f11-4c9a-4a3b-8b23-9c05d695ab67")));
 
     this.migrationManager.migrateAll(testTenants);
