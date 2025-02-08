@@ -4,6 +4,7 @@ package io.trishul.tenant.persistence.autoconfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -25,7 +26,6 @@ import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionPr
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
-import org.apache.commons.lang3.ArrayUtils;
 
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
@@ -79,7 +79,7 @@ public class TenantPersistenceAutoConfiguration {
     return localContainerEntityManagerFactoryBean;
   }
 
-  @Bean
+  @Bean(name = "transactionManager") // transactionManager name is required for Spring
   @ConditionalOnMissingBean(PlatformTransactionManager.class)
   public PlatformTransactionManager platformTransactionManager(
       LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanBean) {
