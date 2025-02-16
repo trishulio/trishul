@@ -12,7 +12,13 @@ public class ThreadLocalUtilityProvider implements UtilityProvider {
 
   @Override
   public Validator getValidator() {
-    return this.validatorCache.get();
+    Validator validator = this.validatorCache.get();
+    if (validator == null) {
+      validator = new Validator();
+      this.validatorCache.set(validator);
+    }
+
+    return validator;
   }
 
   @Override
