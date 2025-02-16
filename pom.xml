@@ -77,7 +77,7 @@
         <javax.measure.version>2.0</javax.measure.version>
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
         <org.joda.money.version>1.0.1</org.joda.money.version>
-        <aws.sdk.version>1.12.780</aws.sdk.version>
+        <aws.sdk.version>1.12.781</aws.sdk.version>
         <org.jacoco.plugin.version>0.8.12</org.jacoco.plugin.version>
         <org.pitest.version>1.9.9</org.pitest.version>
         <org.pitest.junit5.plugin.version>0.15</org.pitest.junit5.plugin.version>
@@ -620,6 +620,7 @@
                         <failBuildOnCVSS>7</failBuildOnCVSS>
                         <suppressionFile>${maven.multiModuleProjectDirectory}/dependency-check-suppressions.xml</suppressionFile>
                         <dataDirectory>${maven.multiModuleProjectDirectory}/dependency-check-data</dataDirectory>
+                        <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
                     </configuration>
                 </plugin>
             </plugins>
