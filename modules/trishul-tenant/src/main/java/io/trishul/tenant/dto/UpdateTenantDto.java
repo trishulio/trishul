@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.UUID;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class UpdateTenantDto extends BaseDto {
   private UUID id;
@@ -11,7 +12,7 @@ public class UpdateTenantDto extends BaseDto {
   @NotBlank
   private String name;
 
-  @NotBlank
+  @NotNull
   private URL url;
 
   public UpdateTenantDto() {

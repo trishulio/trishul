@@ -3,12 +3,13 @@ package io.trishul.tenant.dto;
 import java.net.URL;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class AddTenantDto extends BaseDto {
   @NotBlank
   private String name;
 
-  @NotBlank
+  @NotNull
   private URL url;
 
   public AddTenantDto() {
