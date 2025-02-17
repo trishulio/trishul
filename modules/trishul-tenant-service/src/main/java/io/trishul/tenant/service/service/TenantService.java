@@ -15,6 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.iaas.tenant.resource.TenantIaasResources;
+import io.trishul.iaas.tenant.service.TenantIaasDeleteResult;
 import io.trishul.iaas.tenant.service.TenantIaasService;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
@@ -62,7 +64,7 @@ public class TenantService
 
     // Mock data
     // TODO: Remove the test tenant
-    testTenants.add(new Tenant(UUID.fromString("eae07f11-4c9a-4a3b-8b23-9c05d695ab67")));
+    testTenants.add(new Tenant(UUID.fromString("ce625d7c-b638-43f3-885b-a1426539916a")));
 
     this.migrationManager.migrateAll(testTenants);
   }
@@ -93,7 +95,8 @@ public class TenantService
 
     long deleteCount = this.repoService.delete(ids);
 
-    this.iaasService.delete(ids);
+    TenantIaasDeleteResult result = this.iaasService.delete(ids);
+    log.info("Deleted tenants: {}", result);
 
     return deleteCount;
   }
@@ -129,7 +132,8 @@ public class TenantService
     List<Tenant> tenants = this.repoService.saveAll(entities);
 
     this.migrationManager.migrateAll(tenants);
-    this.iaasService.put(tenants);
+    List<TenantIaasResources> addedTenantIaasResources = this.iaasService.put(tenants);
+    log.info("Added tenants: {}", addedTenantIaasResources);
 
     tenants.forEach(tenant -> tenant.setIsReady(true));
     return this.repoService.saveAll(tenants);
@@ -147,7 +151,8 @@ public class TenantService
     List<Tenant> tenants = this.repoService.saveAll(updated);
 
     this.migrationManager.migrateAll(tenants);
-    this.iaasService.put(tenants);
+    List<TenantIaasResources> updatedTenantIaasResources = this.iaasService.put(tenants);
+    log.info("Updated tenants: {}", updatedTenantIaasResources);
 
     tenants.forEach(tenant -> tenant.setIsReady(true));
     return this.repoService.saveAll(tenants);
@@ -176,7 +181,8 @@ public class TenantService
     List<Tenant> tenants = this.repoService.saveAll(updated);
 
     this.migrationManager.migrateAll(tenants);
-    this.iaasService.put(tenants);
+    List<TenantIaasResources> updatedTenantIaasResources = this.iaasService.put(tenants);
+    log.info("Patched tenants: {}", updatedTenantIaasResources);
 
     tenants.forEach(tenant -> tenant.setIsReady(true));
     return this.repoService.saveAll(tenants);
