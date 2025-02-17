@@ -41,5 +41,12 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <!-- This is set to runtime because hsqldb is needed during the integration test phase -->
+            <!-- The integration phase is used to start an instance of application for consumption by the openapi plugin -->
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>
