@@ -640,7 +640,7 @@
                     <configuration>
                         <apiDocsUrl>${env.APP_URL}/api-docs</apiDocsUrl>
                         <outputFileName>openapi.json</outputFileName>
-                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <outputDirectory>${project.basedir}</outputDirectory>
                     </configuration>
                 </plugin>
                 <plugin>
