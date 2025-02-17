@@ -4,15 +4,24 @@ services:
     image: maven:3.6.3-openjdk-17
     container_name: maven
     working_dir: /usr/code/app
-    command: ['mvn', 'clean', 'install', '-DskipTests', '-Ddependency-check.skip=true']
+    command: ['mvn', 'clean', 'install']
     environment:
-      MUTATION_COVERAGE: "${MUTATION_COVERAGE}"
-      CODE_COVERAGE: "${CODE_COVERAGE}"
-      SONARQUBE: "${SONARQUBE}"
+      ENABLE_TESTS: "${ENABLE_TESTS}"
+      ENABLE_CODE_COVERAGE: "${ENABLE_CODE_COVERAGE}"
+      ENABLE_MUTATION_COVERAGE: "${ENABLE_MUTATION_COVERAGE}"
+      ENABLE_CHECKSTYLE: "${ENABLE_CHECKSTYLE}"
+      ENABLE_VERSION_BUMP: "${ENABLE_VERSION_BUMP}"
+      ENABLE_SONARQUBE: "${ENABLE_SONARQUBE}"
+      ENABLE_DEPENDENCY_CHECK: "${ENABLE_DEPENDENCY_CHECK}"
+      ENABLE_SPOTBUGS: "${ENABLE_SPOTBUGS}"
+      SPOTBUGS_FAIL_ON_ERROR: "${SPOTBUGS_FAIL_ON_ERROR}"
+      ENABLE_FORMATTING: "${ENABLE_FORMATTING}"
+      APP_URL: "${APP_URL}"
       SONARQUBE_HOST_URL: "${SONARQUBE_HOST_URL}"
       SONARQUBE_LOGIN: "${SONARQUBE_LOGIN}"
       SONARQUBE_PROJECT_KEY: "${SONARQUBE_PROJECT_KEY}"
       NVD_API_KEY: "${NVD_API_KEY}"
+      ENABLE_OPENAPI_SPEC_GENERATION: "${ENABLE_OPENAPI_SPEC_GENERATION}"
     volumes:
       - ${PWD}:/usr/code/app
       - ${HOME}/.m2/:/root/.m2
