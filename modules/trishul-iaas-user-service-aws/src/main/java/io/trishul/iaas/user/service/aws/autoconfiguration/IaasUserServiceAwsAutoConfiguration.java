@@ -18,9 +18,10 @@ public class IaasUserServiceAwsAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(AwsCognitoUserClient.class)
   public IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> awsUserClient(
-      AWSCognitoIdentityProvider idp, @Value("${aws.cognito.user-pool.id}") String userPoolId) {
-    return new AwsCognitoUserClient(idp, userPoolId, AwsCognitoAdminGetUserResultMapper.INSTANCE,
-        AwsCognitoUserMapper.INSTANCE);
+      AWSCognitoIdentityProvider idp, @Value("${aws.cognito.user-pool.id}") String userPoolId,
+      @Value("${aws.cognito.user-pool.user.password.temporary}") String temporaryUserPassword) {
+    return new AwsCognitoUserClient(idp, userPoolId, temporaryUserPassword,
+        AwsCognitoAdminGetUserResultMapper.INSTANCE, AwsCognitoUserMapper.INSTANCE);
   }
 
 }

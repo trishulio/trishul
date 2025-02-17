@@ -43,7 +43,7 @@ public class AwsCognitoUserClientTest {
   @BeforeEach
   public void init() {
     mIdp = mock(AWSCognitoIdentityProvider.class);
-    client = new AwsCognitoUserClient(mIdp, "USER_POOL_ID",
+    client = new AwsCognitoUserClient(mIdp, "USER_POOL_ID", "TEMPORARY_PASSWORD",
         AwsCognitoAdminGetUserResultMapper.INSTANCE, AwsCognitoUserMapper.INSTANCE);
   }
 
