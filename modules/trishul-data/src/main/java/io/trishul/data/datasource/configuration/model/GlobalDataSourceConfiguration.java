@@ -7,7 +7,7 @@ public interface GlobalDataSourceConfiguration {
 
   String getDbName();
 
-  String getMigrationScriptPath();
+  MigrationConfiguration[] getMigrationConfigurations();
 
   String getSchemaPrefix();
 

@@ -1,22 +1,5 @@
 package io.trishul.data.autoconfiguration;
 
-import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
-import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
-import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
-import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
-import io.trishul.data.datasource.configuration.model.ImmutableGlobalDataSourceConfiguration;
-import io.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfiguration;
-import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
-import io.trishul.data.datasource.manager.CachingDataSourceManager;
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.dialect.JdbcDialect;
-import io.trishul.dialect.postgres.PostgresJdbcDialect;
-import io.trishul.dialect.postgres.PostgresJdbcDialectSql;
-import io.trishul.secrets.SecretsManager;
-import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 import java.net.URI;
 import java.util.UUID;
 import javax.sql.DataSource;
@@ -29,7 +12,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
+import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
+import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.ImmutableGlobalDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.MigrationConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import io.trishul.data.datasource.manager.CachingDataSourceManager;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.dialect.JdbcDialect;
+import io.trishul.dialect.postgres.PostgresJdbcDialect;
+import io.trishul.dialect.postgres.PostgresJdbcDialectSql;
+import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.TenantData;
+import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 
 @Configuration
 public class DataManagementAutoConfiguration {
@@ -46,14 +47,16 @@ public class DataManagementAutoConfiguration {
       @Value("${spring.datasource.url}") String jdbcUrl,
       @Value("${app.config.ds.db-name}") String dbName,
       @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix,
-      @Value("${app.config.tenant.admin.ds.schema.migration}") String schemaMigrationScriptPath,
+      @Value("${app.config.tenant.admin.ds.schema.migration.configs}") String schemaMigrationScriptConfigsStr,
       @Value("${spring.datasource.hikari.maximumPoolSize}") int poolSize,
       @Value("${spring.datasource.hikari.auto-commit}") boolean autoCommit,
       SecretsManager<String, String> secretsManager,
       DataSourceConfigurationManager dataSourceConfigurationManager, TenantData adminTenant) {
     URI uri = URI.create(jdbcUrl);
+    MigrationConfiguration[] migrationConfigs
+        = MigrationConfiguration.from(schemaMigrationScriptConfigsStr);
     GlobalDataSourceConfiguration globalConfig = new ImmutableGlobalDataSourceConfiguration(uri,
-        dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
+        dbName, migrationConfigs, schemaPrefix, poolSize, autoCommit);
     String fqName = dataSourceConfigurationManager.getFqName(schemaPrefix, adminTenant.getId());
 
     return new LazyTenantDataSourceConfiguration(fqName, globalConfig, secretsManager);
@@ -67,12 +70,14 @@ public class DataManagementAutoConfiguration {
       @Value("${spring.datasource.url}") String jdbcUrl,
       @Value("${app.config.ds.db-name}") String dbName,
       @Value("${app.config.tenant.ds.schema.prefix}") String schemaPrefix,
-      @Value("${app.config.tenant.ds.schema.migration}") String schemaMigrationScriptPath,
+      @Value("${app.config.tenant.ds.schema.migration.configs}") String schemaMigrationScriptConfigsStr,
       @Value("${app.config.tenant.ds.pool.size}") int poolSize,
       @Value("${app.config.tenant.ds.db.auto-commit}") boolean autoCommit) {
     URI uri = URI.create(jdbcUrl);
+    MigrationConfiguration[] migrationConfigs
+        = MigrationConfiguration.from(schemaMigrationScriptConfigsStr);
     GlobalDataSourceConfiguration globalTenantDsConfig = new ImmutableGlobalDataSourceConfiguration(
-        uri, dbName, schemaMigrationScriptPath, schemaPrefix, poolSize, autoCommit);
+        uri, dbName, migrationConfigs, schemaPrefix, poolSize, autoCommit);
 
     return new TenantDataSourceConfigurationProvider(adminDataSourceConfiguration, adminTenant,
         globalTenantDsConfig, dsConfigMgr, secretsManager);

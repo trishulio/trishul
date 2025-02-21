@@ -4,6 +4,4 @@ import io.trishul.tenant.entity.TenantData;
 
 public interface MigrationRegister {
   void migrate(TenantData tenant);
-
-  boolean isMigrated(TenantData tenant);
 }

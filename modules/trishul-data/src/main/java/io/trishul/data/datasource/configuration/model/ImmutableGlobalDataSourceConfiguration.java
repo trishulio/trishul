@@ -7,17 +7,18 @@ public class ImmutableGlobalDataSourceConfiguration extends BaseModel
     implements GlobalDataSourceConfiguration {
   private final URI url;
   private final String dbName;
-  private final String migrationScriptPath;
+  private final MigrationConfiguration[] migrationConfigurations;
   private final String schemaPrefix;
   private final int poolSize;
   private final boolean autoCommit;
 
-  public ImmutableGlobalDataSourceConfiguration(URI url, String dbName, String migrationScriptPath,
-      String schemaPrefix, int poolSize, boolean autoCommit) {
+  public ImmutableGlobalDataSourceConfiguration(URI url, String dbName,
+      MigrationConfiguration[] migrationConfigurations, String schemaPrefix, int poolSize,
+      boolean autoCommit) {
     this.url = url;
     this.dbName = dbName;
     this.schemaPrefix = schemaPrefix;
-    this.migrationScriptPath = migrationScriptPath;
+    this.migrationConfigurations = migrationConfigurations;
     this.poolSize = poolSize;
     this.autoCommit = autoCommit;
   }
@@ -33,8 +34,8 @@ public class ImmutableGlobalDataSourceConfiguration extends BaseModel
   }
 
   @Override
-  public String getMigrationScriptPath() {
-    return migrationScriptPath;
+  public MigrationConfiguration[] getMigrationConfigurations() {
+    return migrationConfigurations;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.MigrationConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
@@ -37,33 +38,30 @@ public class FlywayTenantMigrationRegister implements MigrationRegister {
   public void migrate(TenantData tenant) {
     DataSourceConfiguration config = this.dataSourceConfigProvider.getConfiguration(tenant.getId());
 
-    try {
-      Flyway fw = provider.config().locations(config.getMigrationScriptPath())
-          .schemas(config.getSchemaName()).dataSource(dsMgr.getDataSource(tenant.getId())).load();
-      fw.migrate();
-    } catch (SQLException | IOException e) {
-      log.error("Failed to get the data-source for tenant: {}", tenant.getId());
-      throw new RuntimeException(e);
+    for (MigrationConfiguration migrationConfig : config.getMigrationConfigurations()) {
+      try {
+        FluentConfiguration flywayConfig = provider.config().schemas(config.getSchemaName())
+            .baselineOnMigrate(true).dataSource(dsMgr.getDataSource(tenant.getId()))
+            .locations(migrationConfig.getMigrationScriptPath());
 
-    } catch (FlywayException e) {
-      log.error("Failed to migrate tenant: {}", tenant.getId());
-      throw new RuntimeException(e);
-    }
-  }
+        String schemaHistoryTableName = migrationConfig.getMigrationHistoryTableName();
+        if (schemaHistoryTableName != null) {
+          flywayConfig.table(schemaHistoryTableName);
+        }
 
-  @Override
-  public boolean isMigrated(TenantData tenant) {
-    DataSourceConfiguration config = this.dataSourceConfigProvider.getConfiguration(tenant.getId());
+        log.debug("Trying the migration config: scriptPath={}, historyTable={}, tenantId={}",
+            flywayConfig.getLocations()[0], flywayConfig.getTable(), tenant.getId());
 
-    try {
-      Flyway fw = provider.config().locations(config.getMigrationScriptPath())
-          .schemas(config.getSchemaName()).dataSource(dsMgr.getDataSource(tenant.getId())).load();
+        Flyway fw = flywayConfig.load();
+        fw.migrate();
+      } catch (SQLException | IOException e) {
+        log.error("Failed to get the data-source for tenant: {}", tenant.getId());
+        throw new RuntimeException(e);
 
-      return fw.info().applied().length == fw.info().all().length;
-
-    } catch (SQLException | IOException e) {
-      log.error("Failed to get the data-source for tenant: {}", tenant.getId());
-      throw new RuntimeException(e);
+      } catch (FlywayException e) {
+        log.error("Failed to migrate tenant: {}", tenant.getId());
+        throw new RuntimeException(e);
+      }
     }
   }
 }

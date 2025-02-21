@@ -57,44 +57,6 @@ public class FlywayTenantMigrationRegisterTest {
     verify(mFw).migrate();
   }
 
-  @Test
-  public void testIsMigrated_ReturnsTrue_WhenAllScriptsAreApplied() {
-    MigrationInfoService mInfo = mock(MigrationInfoService.class);
-
-    MigrationInfo[] mApplied = new MigrationInfo[3];
-    doReturn(mApplied).when(mInfo).applied();
-
-    MigrationInfo[] mAll = new MigrationInfo[3];
-    doReturn(mAll).when(mInfo).all();
-
-    Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
-    doReturn(mInfo).when(mFw).info();
-
-    boolean b
-        = register.isMigrated(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-
-    assertTrue(b);
-  }
-
-  @Test
-  public void testIsMigrated_ReturnsFalse_WhenAllScriptsAreNotApplied() {
-    MigrationInfoService mInfo = mock(MigrationInfoService.class);
-
-    MigrationInfo[] mApplied = new MigrationInfo[3];
-    doReturn(mApplied).when(mInfo).applied();
-
-    MigrationInfo[] mAll = new MigrationInfo[5];
-    doReturn(mAll).when(mInfo).all();
-
-    Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
-    doReturn(mInfo).when(mFw).info();
-
-    boolean b
-        = register.isMigrated(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
-
-    assertFalse(b);
-  }
-
   private Flyway mockFlyway(FluentConfiguration config, String schemas, String location,
       DataSource ds) {
     Flyway mFw = mock(Flyway.class);

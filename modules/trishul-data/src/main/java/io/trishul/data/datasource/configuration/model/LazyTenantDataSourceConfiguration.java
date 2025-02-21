@@ -77,8 +77,8 @@ public class LazyTenantDataSourceConfiguration extends BaseModel
   }
 
   @Override
-  public String getMigrationScriptPath() {
-    return this.globalConfig.getMigrationScriptPath();
+  public MigrationConfiguration[] getMigrationConfigurations() {
+    return this.globalConfig.getMigrationConfigurations();
   }
 
   @Override
