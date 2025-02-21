@@ -32,14 +32,14 @@ public class TenantServiceAutoConfiguration {
   public TenantService tenantService(LockService lockService, TenantRepository tenantRepository,
       MigrationManager migrationManager, TenantRegister tenantRegister,
       TenantIaasService tenantIaasService, Refresher<Tenant, TenantAccessor<?>> tenantRefresher,
-      UtilityProvider utilProvider, TenantData adminTenant) {
+      UtilityProvider utilProvider) {
     RepoService<UUID, Tenant, TenantAccessor<?>> repoService
         = new CrudRepoService<>(tenantRepository, tenantRefresher);
     EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> updateService
         = new CrudEntityMergerService<>(utilProvider, lockService, BaseTenant.class,
             UpdateTenant.class, Tenant.class, Set.of(""));
 
-    final TenantService tenantService = new TenantService(adminTenant, repoService, updateService,
+    final TenantService tenantService = new TenantService(repoService, updateService,
         tenantRepository, migrationManager, tenantIaasService);
     return tenantService;
   }

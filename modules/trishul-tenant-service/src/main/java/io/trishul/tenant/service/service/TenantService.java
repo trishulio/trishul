@@ -1,7 +1,6 @@
 package io.trishul.tenant.service.service;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -24,11 +23,9 @@ import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantAccessor;
-import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -37,36 +34,21 @@ public class TenantService
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(TenantService.class);
 
-  private final TenantData adminTenant;
   private final RepoService<UUID, Tenant, TenantAccessor<?>> repoService;
   private final EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> entityMergerService;
   private final TenantRepository tenantRepository;
   private final MigrationManager migrationManager;
   private final TenantIaasService iaasService;
 
-  public TenantService(TenantData adminTenant,
-      RepoService<UUID, Tenant, TenantAccessor<?>> repoService,
+  public TenantService(RepoService<UUID, Tenant, TenantAccessor<?>> repoService,
       EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> entityMergerService,
       TenantRepository tenantRepository, MigrationManager migrationManager,
       TenantIaasService iaasService) {
-    this.adminTenant = adminTenant;
     this.repoService = repoService;
     this.entityMergerService = entityMergerService;
     this.tenantRepository = tenantRepository;
     this.migrationManager = migrationManager;
     this.iaasService = iaasService;
-  }
-
-  @PostConstruct
-  public void migrateTenants() {
-    List<TenantData> testTenants = new ArrayList<>();
-    testTenants.add(adminTenant);
-
-    // Mock data
-    // TODO: Remove the test tenant
-    testTenants.add(new Tenant(UUID.fromString("ce625d7c-b638-43f3-885b-a1426539916a")));
-
-    this.migrationManager.migrateAll(testTenants);
   }
 
   public Page<Tenant> getAll(Set<UUID> ids, Set<String> names, Set<URL> urls, Boolean isReady,

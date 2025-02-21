@@ -35,7 +35,6 @@ import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantAccessor;
-import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;
@@ -44,7 +43,6 @@ import io.trishul.test.util.MockUtilProvider;
 public class TenantServiceTest {
   private TenantService service;
 
-  private TenantData mAdminTenant;
   private RepoService<UUID, Tenant, TenantAccessor<?>> mRepoService;
   private TenantRepository mTenantRepo;
   private MigrationManager mMigrationMgr;
@@ -53,7 +51,6 @@ public class TenantServiceTest {
 
   @BeforeEach
   public void init() {
-    mAdminTenant = mock(Tenant.class);
     mTenantRepo = mock(TenantRepository.class);
 
     mMigrationMgr = mock(MigrationManager.class);
@@ -67,8 +64,8 @@ public class TenantServiceTest {
         = new CrudEntityMergerService<>(new MockUtilProvider(), mLockService, BaseTenant.class,
             UpdateTenant.class, Tenant.class, Set.of("createdAt"));
 
-    this.service = new TenantService(mAdminTenant, mRepoService, mMergerService, mTenantRepo,
-        mMigrationMgr, mIaasService);
+    this.service
+        = new TenantService(mRepoService, mMergerService, mTenantRepo, mMigrationMgr, mIaasService);
   }
 
   @Test
