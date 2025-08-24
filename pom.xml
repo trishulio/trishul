@@ -78,7 +78,7 @@
         <javax.measure.version>2.0</javax.measure.version>
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
         <org.joda.money.version>1.0.1</org.joda.money.version>
-        <aws.sdk.version>1.12.782</aws.sdk.version>
+        <aws.sdk.version>1.12.788</aws.sdk.version>
         <org.jacoco.plugin.version>0.8.12</org.jacoco.plugin.version>
         <org.pitest.version>1.9.9</org.pitest.version>
         <org.pitest.junit5.plugin.version>1.2.1</org.pitest.junit5.plugin.version>

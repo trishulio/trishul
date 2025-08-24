@@ -13,7 +13,6 @@ import com.amazonaws.services.cognitoidp.model.AdminUpdateUserAttributesRequest;
 import com.amazonaws.services.cognitoidp.model.AdminUpdateUserAttributesResult;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 import com.amazonaws.services.cognitoidp.model.DeliveryMediumType;
-import com.amazonaws.services.cognitoidp.model.MessageActionType;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UserType;
 import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
@@ -32,14 +31,12 @@ public class AwsCognitoUserClient
   private final IaasEntityMapper<AdminGetUserResult, IaasUser> resultMapper;
 
   private final String userPoolId;
-  private final String temporaryUserPassword;
 
   public AwsCognitoUserClient(AWSCognitoIdentityProvider idp, String userPoolId,
-      String temporaryUserPassword, IaasEntityMapper<AdminGetUserResult, IaasUser> resultMapper,
+      IaasEntityMapper<AdminGetUserResult, IaasUser> resultMapper,
       IaasEntityMapper<UserType, IaasUser> userTypeMapper) {
     this.idp = idp;
     this.userPoolId = userPoolId;
-    this.temporaryUserPassword = temporaryUserPassword;
     this.resultMapper = resultMapper;
     this.userTypeMapper = userTypeMapper;
   }
@@ -65,18 +62,10 @@ public class AwsCognitoUserClient
     attributes[0] = new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL)
         .withValue(addition.getEmail());
     attributes[1] = new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL_VERIFIED)
-        .withValue("true"); // TODO:
-    // Do
-    // we
-    // need
-    // to
-    // change
-    // this?
+        .withValue("true");
 
     final AdminCreateUserRequest request = new AdminCreateUserRequest().withUserPoolId(userPoolId)
-        .withUsername(addition.getEmail()).withDesiredDeliveryMediums(DeliveryMediumType.EMAIL)
-        .withUserAttributes(attributes).withTemporaryPassword(temporaryUserPassword)
-        .withMessageAction(MessageActionType.SUPPRESS);
+        .withUsername(addition.getEmail()).withDesiredDeliveryMediums(DeliveryMediumType.EMAIL);
     final AdminCreateUserResult result = this.idp.adminCreateUser(request);
     return userTypeMapper.fromIaasEntity(result.getUser());
   }
