@@ -14,6 +14,9 @@ HELM=helm
 install:
 	docker-compose -f docker-compose-install.yml run --rm install
 
+compile:
+	docker-compose -f docker-compose-install.yml run --rm compile
+
 containerize:
 	docker build -t ${REGISTRY}/${APP_NAME}:${VERSION} .
 
