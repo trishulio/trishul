@@ -13,7 +13,6 @@ import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import io.trishul.model.validator.UtilityProvider;
 import io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.user.model.AssignedToAccessor;
@@ -49,12 +48,11 @@ import io.trishul.user.status.UserStatusRefresher;
 public class UserServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(UserService.class)
-  public UserService userService(UtilityProvider utilProvider, LockService lockService,
-      UserRepository userRepository, Refresher<User, UserAccessor<?>> userRefresher,
-      TenantIaasUserService tenantIaasUserService) {
+  public UserService userService(LockService lockService, UserRepository userRepository,
+      Refresher<User, UserAccessor<?>> userRefresher, TenantIaasUserService tenantIaasUserService) {
     final EntityMergerService<Long, User, BaseUser<?>, UpdateUser<?>> updateService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseUser.class, UpdateUser.class,
-            User.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, BaseUser.class, UpdateUser.class, User.class,
+            Set.of());
     final RepoService<Long, User, UserAccessor<?>> repoService
         = new CrudRepoService<>(userRepository, userRefresher);
     return new UserService(updateService, repoService, userRepository, tenantIaasUserService);
@@ -62,12 +60,12 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(UserRoleService.class)
-  public UserRoleService userRoleService(UtilityProvider utilProvider, LockService lockService,
+  public UserRoleService userRoleService(LockService lockService,
       UserRoleRepository userRoleRepository,
       Refresher<UserRole, UserRoleAccessor<?>> userRoleRefresher) {
     final EntityMergerService<Long, UserRole, BaseUserRole<?>, UpdateUserRole<?>> updateService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseUserRole.class,
-            UpdateUserRole.class, UserRole.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, BaseUserRole.class, UpdateUserRole.class,
+            UserRole.class, Set.of());
     final RepoService<Long, UserRole, UserRoleAccessor<?>> repoService
         = new CrudRepoService<>(userRoleRepository, userRoleRefresher);
     return new UserRoleService(updateService, repoService);

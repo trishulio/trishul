@@ -9,25 +9,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.trishul.base.types.validator.ValidationException;
-import io.trishul.model.validator.UtilityProvider;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
-import io.trishul.test.util.MockUtilProvider;
 import jakarta.persistence.OptimisticLockException;
 
 public class CrudEntityMergerServiceTest {
   private EntityMergerService<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> service;
   private LockService mLockService;
-  private UtilityProvider mUtilProvider;
 
   @BeforeEach
   public void init() {
     this.mLockService = new LockService();
-    this.mUtilProvider = new MockUtilProvider();
 
-    this.service = new CrudEntityMergerService<>(this.mUtilProvider, this.mLockService,
-        BaseDummyCrudEntity.class, UpdateDummyCrudEntity.class, DummyCrudEntity.class,
+    this.service = new CrudEntityMergerService<>(this.mLockService, BaseDummyCrudEntity.class,
+        UpdateDummyCrudEntity.class, DummyCrudEntity.class,
         Set.of(BaseDummyCrudEntity.ATTR_EXCLUDED_VALUE));
   }
 

@@ -24,19 +24,17 @@ import io.trishul.iaas.client.BulkIaasClient;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.model.executor.BlockingAsyncExecutor;
-import io.trishul.model.validator.UtilityProvider;
 
 @Configuration
 public class IaasAccessServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasRoleService.class)
-  public IaasRoleService iaasRoleService(UtilityProvider utilProvider, LockService lockService,
-      BlockingAsyncExecutor executor,
+  public IaasRoleService iaasRoleService(LockService lockService, BlockingAsyncExecutor executor,
       IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> iaasRoleClient) {
     EntityMergerService<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasRole.class,
-            UpdateIaasRole.class, IaasRole.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, BaseIaasRole.class, UpdateIaasRole.class,
+            IaasRole.class, Set.of());
     IaasRepository<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasRoleClient);
 
@@ -45,12 +43,12 @@ public class IaasAccessServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasPolicyService.class)
-  public IaasPolicyService iaasPolicyService(UtilityProvider utilProvider, LockService lockService,
+  public IaasPolicyService iaasPolicyService(LockService lockService,
       BlockingAsyncExecutor executor,
       IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasPolicyClient) {
     EntityMergerService<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasPolicy.class,
-            UpdateIaasPolicy.class, IaasPolicy.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, BaseIaasPolicy.class, UpdateIaasPolicy.class,
+            IaasPolicy.class, Set.of());
     IaasRepository<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasPolicyClient);
 
@@ -59,13 +57,12 @@ public class IaasAccessServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasRolePolicyAttachmentService.class)
-  public IaasRolePolicyAttachmentService iaasRolePolicyAttachmentService(
-      UtilityProvider utilProvider, LockService lockService, BlockingAsyncExecutor executor,
+  public IaasRolePolicyAttachmentService iaasRolePolicyAttachmentService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> iaasRolePolicyAttachmentClient) {
     EntityMergerService<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> updateService
-        = new CrudEntityMergerService<>(utilProvider, lockService,
-            BaseIaasRolePolicyAttachment.class, UpdateIaasRolePolicyAttachment.class,
-            IaasRolePolicyAttachment.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, BaseIaasRolePolicyAttachment.class,
+            UpdateIaasRolePolicyAttachment.class, IaasRolePolicyAttachment.class, Set.of());
     IaasRepository<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasRolePolicyAttachmentClient);
     return new IaasRolePolicyAttachmentService(updateService, iaasRepo);

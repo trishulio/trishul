@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.base.types.base.pojo.UpdatableEntity;
-import io.trishul.model.validator.UtilityProvider;
 import io.trishul.model.validator.Validator;
 
 public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE extends UpdatableEntity<ID, ?>>
@@ -17,7 +16,6 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(CrudEntityMergerService.class);
 
-  private final UtilityProvider utilProvider;
   private final LockService lockService;
 
   private final Class<BE> baseEntityCls;
@@ -26,10 +24,8 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
   private final Set<String> excludeProps;
 
   @SuppressWarnings("unchecked")
-  public CrudEntityMergerService(UtilityProvider utilProvider, LockService lockService,
-      Class<? extends BE> baseEntityCls, Class<? extends UE> updateEntityCls, Class<E> entityCls,
-      Set<String> excludeProps) {
-    this.utilProvider = utilProvider;
+  public CrudEntityMergerService(LockService lockService, Class<? extends BE> baseEntityCls,
+      Class<? extends UE> updateEntityCls, Class<E> entityCls, Set<String> excludeProps) {
     this.baseEntityCls = (Class<BE>) baseEntityCls; // Unsafe cast. If the cast fails, update the
                                                     // passed arguments
     this.updateEntityCls = (Class<UE>) updateEntityCls; // Unsafe cast. If the cast fails, update
@@ -58,7 +54,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
       return new ArrayList<>(0);
     }
 
-    final Validator validator = this.utilProvider.getValidator();
+    final Validator validator = new Validator();
 
     existingItems = existingItems != null ? existingItems : new ArrayList<>(0);
     final Map<ID, E> idToItemLookup
@@ -86,7 +82,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
 
   @Override
   public List<E> getPatchEntities(List<E> existingItems, List<? extends UE> patches) {
-    final Validator validator = this.utilProvider.getValidator();
+    final Validator validator = new Validator();
 
     List<E> targetItems = null;
     patches = patches == null ? new ArrayList<>() : patches;

@@ -11,7 +11,6 @@ import io.trishul.iaas.client.BulkIaasClient;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.model.executor.BlockingAsyncExecutor;
-import io.trishul.model.validator.UtilityProvider;
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
 import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
 import io.trishul.object.store.model.BaseIaasObjectStore;
@@ -25,11 +24,11 @@ import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsCo
 public class IaasObjectStoreAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreService.class)
-  public IaasObjectStoreService iaasObjectStoreService(UtilityProvider utilProvider,
-      LockService lockService, BlockingAsyncExecutor executor,
+  public IaasObjectStoreService iaasObjectStoreService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> iaasObjectStoreClient) {
     EntityMergerService<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasObjectStore.class,
+        = new CrudEntityMergerService<>(lockService, BaseIaasObjectStore.class,
             UpdateIaasObjectStore.class, IaasObjectStore.class, Set.of());
     IaasRepository<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasObjectStoreClient);
@@ -38,13 +37,13 @@ public class IaasObjectStoreAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreCorsConfigService.class)
-  public IaasObjectStoreCorsConfigService iaasObjectStoreCorsConfigService(
-      UtilityProvider utilProvider, LockService lockService, BlockingAsyncExecutor executor,
+  public IaasObjectStoreCorsConfigService iaasObjectStoreCorsConfigService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> iaasObjectStoreCorsConfigClient) {
     EntityMergerService<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService,
+        = new CrudEntityMergerService<>(lockService, IaasObjectStoreCorsConfiguration.class,
             IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class,
-            IaasObjectStoreCorsConfiguration.class, Set.of());
+            Set.of());
     IaasRepository<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> iaasRepo
         = new BulkIaasClient<>(executor, iaasObjectStoreCorsConfigClient);
 
@@ -53,13 +52,12 @@ public class IaasObjectStoreAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IaasObjectStoreAccessConfigService.class)
-  public IaasObjectStoreAccessConfigService iaasPublicAccessBlockService(
-      UtilityProvider utilProvider, LockService lockService, BlockingAsyncExecutor executor,
+  public IaasObjectStoreAccessConfigService iaasPublicAccessBlockService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasObjectStoreAccessConfigClient) {
     EntityMergerService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService,
-            IaasObjectStoreAccessConfig.class, IaasObjectStoreAccessConfig.class,
-            IaasObjectStoreAccessConfig.class, Set.of());
+        = new CrudEntityMergerService<>(lockService, IaasObjectStoreAccessConfig.class,
+            IaasObjectStoreAccessConfig.class, IaasObjectStoreAccessConfig.class, Set.of());
     IaasRepository<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> iaasRepo
         = new BulkIaasClient<>(executor, iaasObjectStoreAccessConfigClient);
 

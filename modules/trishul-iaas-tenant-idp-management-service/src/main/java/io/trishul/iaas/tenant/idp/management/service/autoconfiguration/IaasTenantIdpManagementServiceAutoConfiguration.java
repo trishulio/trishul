@@ -20,17 +20,16 @@ import io.trishul.iaas.tenant.idp.management.service.TenantIaasAuthService;
 import io.trishul.iaas.tenant.idp.management.service.TenantIaasIdpService;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.model.executor.BlockingAsyncExecutor;
-import io.trishul.model.validator.UtilityProvider;
 
 @Configuration
 public class IaasTenantIdpManagementServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasIdpTenantService.class)
-  public IaasIdpTenantService iaasIdpTenantService(UtilityProvider utilProvider,
-      LockService lockService, BlockingAsyncExecutor executor,
+  public IaasIdpTenantService iaasIdpTenantService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasIdpTenantClient) {
     EntityMergerService<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> entityMergerService
-        = new CrudEntityMergerService<>(utilProvider, lockService, BaseIaasIdpTenant.class,
+        = new CrudEntityMergerService<>(lockService, BaseIaasIdpTenant.class,
             UpdateIaasIdpTenant.class, IaasIdpTenant.class, java.util.Set.of());
     IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasIdpTenantClient);
