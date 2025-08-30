@@ -71,7 +71,7 @@
         <java.version>17</java.version>
         <!-- spring-boot-starter-parent version is explicitly specified. Update it if this is updated -->
         <org.springframework.boot.version>3.4.1</org.springframework.boot.version>
-        <org.springdoc.openapi.webmvc.version>3.0.0-M1</org.springdoc.openapi.webmvc.version>
+        <org.springdoc.openapi.webmvc.version>2.8.5</org.springdoc.openapi.webmvc.version>
         <org.springdoc.openapi.maven.plugin.version>1.4</org.springdoc.openapi.maven.plugin.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
@@ -602,7 +602,7 @@
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
                         <!-- Tech debt -->
-                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version</excludeProperties>
                     </configuration>
                 </plugin>
                 <plugin>
