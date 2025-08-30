@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.sql.Connection;
 
 public class CachingDataSourceManager implements DataSourceManager {
   private static final Logger log = LoggerFactory.getLogger(CachingDataSourceManager.class);
@@ -21,11 +22,24 @@ public class CachingDataSourceManager implements DataSourceManager {
 
   public CachingDataSourceManager(DataSource adminDs, DataSourceBuilder dataSourceBuilder) {
     this.adminDs = adminDs;
+
     this.cache
         = CacheBuilder.newBuilder().build(new CacheLoader<DataSourceConfiguration, DataSource>() {
           @Override
           public DataSource load(@Nonnull DataSourceConfiguration dsConfig) throws Exception {
             log.debug("Loading new datasource for schema: {}", dsConfig.getSchemaName());
+            log.debug("Datasource config: {}", dsConfig);
+
+            try (Connection connection = adminDs.getConnection()) {
+              String schema = connection.getSchema();
+              if (schema != null && schema.equals(dsConfig.getSchemaName())) {
+                return adminDs;
+              }
+            } catch (SQLException e) {
+              log.error("Error getting schema from admin datasource", e);
+              throw e;
+            }
+
 
             DataSource ds = dataSourceBuilder.clear().url(dsConfig.getUrl().toString())
                 .schema(dsConfig.getSchemaName()).username(dsConfig.getUserName())
