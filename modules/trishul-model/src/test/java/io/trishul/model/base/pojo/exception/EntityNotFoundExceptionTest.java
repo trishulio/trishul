@@ -1,6 +1,7 @@
 package io.trishul.model.base.pojo.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 
@@ -39,5 +40,27 @@ public class EntityNotFoundExceptionTest {
   public void testConstructor_StringStringString() {
     EntityNotFoundException exception = new EntityNotFoundException("EntityTest", "FIELD", "ID");
     assertEquals("EntityTest not found with FIELD: ID", exception.getMessage());
+  }
+
+  @Test
+  public void testAssertion_DoesNotThrow_WhenConditionIsTrue() {
+    // Should not throw any exception
+    EntityNotFoundException.assertion(true, "EntityTest", "id", "123");
+  }
+
+  @Test
+  public void testAssertion_ThrowsException_WhenConditionIsFalse() {
+    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+        () -> EntityNotFoundException.assertion(false, "EntityTest", "id", "123"));
+    
+    assertEquals("EntityTest not found with id: 123", exception.getMessage());
+  }
+
+  @Test
+  public void testAssertion_ThrowsExceptionWithCustomField_WhenConditionIsFalse() {
+    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+        () -> EntityNotFoundException.assertion(false, "User", "email", "test@example.com"));
+    
+    assertEquals("User not found with email: test@example.com", exception.getMessage());
   }
 }

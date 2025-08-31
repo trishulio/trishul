@@ -8,6 +8,7 @@ import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import io.trishul.model.base.pojo.exception.IllegalArgExceptionTest;
 
 @Embeddable
 public class Tax extends BaseEntity {
@@ -46,9 +47,7 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setGstRate(TaxRate gstRate) {
-    Validator.assertion(
-        !TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())),
-        IllegalArgumentException.class, "Cannot set GST when HST is present. Remove HST");
+    IllegalArgException.assertion(!TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())), "Cannot set GST when HST is present. Remove HST");
     this.gstRate = gstRate;
     return this;
   }
@@ -58,9 +57,7 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setPstRate(TaxRate pstRate) {
-    Validator.assertion(
-        !TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())),
-        IllegalArgumentException.class, "Cannot set PST when HST is present. Remove HST");
+    IllegalArgException.assertion(!TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())), "Cannot set PST when HST is present. Remove HST");
     this.pstRate = pstRate;
     return this;
   }
@@ -71,10 +68,8 @@ public class Tax extends BaseEntity {
 
   public Tax setHstRate(TaxRate hstRate) {
     if (TaxRate.isSet(hstRate)) {
-      Validator.assertion(!TaxRate.isSet(getPstRate()), IllegalArgumentException.class,
-          "Cannot set HST when PST is present. Remove PST");
-      Validator.assertion(!TaxRate.isSet(getGstRate()), IllegalArgumentException.class,
-          "Cannot set HST when GST is present. Remove GST");
+      IllegalArgException.assertion(!TaxRate.isSet(getPstRate()), "Cannot set HST when PST is present. Remove PST");
+      IllegalArgException.assertion(!TaxRate.isSet(getGstRate()), "Cannot set HST when GST is present. Remove GST");
     }
     this.hstRate = hstRate;
     return this;

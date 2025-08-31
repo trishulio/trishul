@@ -5,6 +5,12 @@ import java.text.MessageFormat;
 public class EntityNotFoundException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
+  public static void assertion(boolean condition, String entity, String field, String value) {
+    if (!condition) {
+      throw new EntityNotFoundException(entity, field, value);
+    }
+  }
+
   public EntityNotFoundException(String msg) {
     super(msg);
   }

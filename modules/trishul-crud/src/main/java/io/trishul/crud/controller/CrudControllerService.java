@@ -1,6 +1,5 @@
 package io.trishul.crud.controller;
 
-import static io.trishul.model.validator.Validator.assertion;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
@@ -56,7 +55,7 @@ public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, U
 
   public EntityDto get(ID id, Set<String> attributes) {
     Entity e = this.service.get(id);
-    assertion(e != null, EntityNotFoundException.class, this.entityName, id.toString());
+    EntityNotFoundException.assertion(e != null, this.entityName, "id", id.toString());
 
     EntityDto dto = mapper.toDto(e);
     this.filter(dto, attributes);
