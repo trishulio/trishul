@@ -83,7 +83,6 @@
         <org.pitest.version>1.9.9</org.pitest.version>
         <org.pitest.junit5.plugin.version>1.2.1</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.0.0.4389</org.sonarsource.scanner.version>
-        <jakarta.servlet.servlet-api.version>4.0.1</jakarta.servlet.servlet-api.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
         <spotless.version>2.44.0.BETA4</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
