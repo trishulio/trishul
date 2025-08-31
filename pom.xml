@@ -92,6 +92,7 @@
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.8.1</org.apache.maven.plugin.compiler.version>
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
+        <org.apache.maven.plugin.antrun.version>3.1.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
     </properties>
 
@@ -641,6 +642,28 @@
                         <outputFileName>openapi.json</outputFileName>
                         <outputDir>${project.basedir}/api</outputDir>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${org.apache.maven.plugin.antrun.version}</version>
+                    <executions>
+                        <execution>
+                        <id>replace-host-url</id>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <target>
+                            <replaceregexp file="${project.basedir}/api/openapi.json"
+                                            match="${env.APP_URL}"
+                                            replace="/"
+                                            byline="true"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
