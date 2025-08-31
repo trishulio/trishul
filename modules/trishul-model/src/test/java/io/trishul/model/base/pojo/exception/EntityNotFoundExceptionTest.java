@@ -52,7 +52,7 @@ public class EntityNotFoundExceptionTest {
   public void testAssertion_ThrowsException_WhenConditionIsFalse() {
     EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
         () -> EntityNotFoundException.assertion(false, "EntityTest", "id", "123"));
-    
+
     assertEquals("EntityTest not found with id: 123", exception.getMessage());
   }
 
@@ -60,7 +60,7 @@ public class EntityNotFoundExceptionTest {
   public void testAssertion_ThrowsExceptionWithCustomField_WhenConditionIsFalse() {
     EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
         () -> EntityNotFoundException.assertion(false, "User", "email", "test@example.com"));
-    
+
     assertEquals("User not found with email: test@example.com", exception.getMessage());
   }
 }

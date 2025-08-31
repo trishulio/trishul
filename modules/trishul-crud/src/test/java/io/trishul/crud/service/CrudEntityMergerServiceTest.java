@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import io.trishul.base.types.validator.ValidationException;
+import io.trishul.model.base.exception.ValidationException;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;

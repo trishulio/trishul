@@ -1,14 +1,13 @@
 package io.trishul.money.tax.model;
 
 import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.validator.Validator;
 import io.trishul.money.tax.rate.TaxRate;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import io.trishul.model.base.pojo.exception.IllegalArgExceptionTest;
+import io.trishul.model.base.exception.IllegalArgException;
 
 @Embeddable
 public class Tax extends BaseEntity {
@@ -47,7 +46,9 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setGstRate(TaxRate gstRate) {
-    IllegalArgException.assertion(!TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())), "Cannot set GST when HST is present. Remove HST");
+    IllegalArgException.assertion(
+        !TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())),
+        "Cannot set GST when HST is present. Remove HST");
     this.gstRate = gstRate;
     return this;
   }
@@ -57,7 +58,9 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setPstRate(TaxRate pstRate) {
-    IllegalArgException.assertion(!TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())), "Cannot set PST when HST is present. Remove HST");
+    IllegalArgException.assertion(
+        !TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())),
+        "Cannot set PST when HST is present. Remove HST");
     this.pstRate = pstRate;
     return this;
   }
@@ -68,8 +71,10 @@ public class Tax extends BaseEntity {
 
   public Tax setHstRate(TaxRate hstRate) {
     if (TaxRate.isSet(hstRate)) {
-      IllegalArgException.assertion(!TaxRate.isSet(getPstRate()), "Cannot set HST when PST is present. Remove PST");
-      IllegalArgException.assertion(!TaxRate.isSet(getGstRate()), "Cannot set HST when GST is present. Remove GST");
+      IllegalArgException.assertion(!TaxRate.isSet(getPstRate()),
+          "Cannot set HST when PST is present. Remove PST");
+      IllegalArgException.assertion(!TaxRate.isSet(getGstRate()),
+          "Cannot set HST when GST is present. Remove GST");
     }
     this.hstRate = hstRate;
     return this;

@@ -171,8 +171,8 @@ public class CachingDataSourceManagerTest {
     SQLException expectedException = new SQLException("Connection failed");
     when(mAdminDs.getConnection()).thenThrow(expectedException);
 
-    SQLException thrownException = assertThrows(SQLException.class,
-        () -> dataSourceManager.getDataSource(mDsConfig));
+    SQLException thrownException
+        = assertThrows(SQLException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
     assertEquals(expectedException, thrownException);
   }
@@ -194,8 +194,8 @@ public class CachingDataSourceManagerTest {
     when(mDsConfig.isAutoCommit()).thenReturn(false);
     when(mDataSourceBuilder.build()).thenThrow(builderException);
 
-    RuntimeException thrownException = assertThrows(RuntimeException.class,
-        () -> dataSourceManager.getDataSource(mDsConfig));
+    RuntimeException thrownException
+        = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
     assertEquals(builderException, thrownException.getCause());
   }
@@ -217,8 +217,8 @@ public class CachingDataSourceManagerTest {
     when(mDsConfig.isAutoCommit()).thenReturn(false);
     when(mDataSourceBuilder.build()).thenThrow(builderException);
 
-    RuntimeException thrownException = assertThrows(RuntimeException.class,
-        () -> dataSourceManager.getDataSource(mDsConfig));
+    RuntimeException thrownException
+        = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
     assertEquals(builderException, thrownException.getCause());
   }
@@ -240,8 +240,8 @@ public class CachingDataSourceManagerTest {
     when(mDsConfig.isAutoCommit()).thenReturn(false);
     when(mDataSourceBuilder.build()).thenThrow(expectedException);
 
-    RuntimeException thrownException = assertThrows(RuntimeException.class,
-        () -> dataSourceManager.getDataSource(mDsConfig));
+    RuntimeException thrownException
+        = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
     assertEquals(expectedException, thrownException.getCause());
   }
@@ -250,7 +250,7 @@ public class CachingDataSourceManagerTest {
   public void testGetDataSource_CreatesDifferentDataSources_ForDifferentConfigurations()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
-    
+
     // First configuration
     DataSourceConfiguration mDsConfig1 = mock(DataSourceConfiguration.class);
     String tenantSchemaName1 = "tenant_schema_1";
