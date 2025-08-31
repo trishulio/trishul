@@ -64,10 +64,9 @@ public class IaasObjectStoreFileController extends BaseController {
     return objectStoreFiles.stream().map(IaasObjectStoreFileMapper.INSTANCE::toDto).toList();
   }
 
-  @GetMapping(value = "/{file}", consumes = MediaType.ALL_VALUE,
+  @GetMapping(value = "/{fileId}", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public IaasObjectStoreFileDto getIaasObjectStoreFile(
-      @PathVariable(required = true, name = "fileId") URI fileId,
+  public IaasObjectStoreFileDto getIaasObjectStoreFile(@PathVariable(required = true) URI fileId,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
     return this.controller.get(fileId, attributes);
