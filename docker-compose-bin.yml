@@ -1,10 +1,8 @@
-version: "3.3"
 services:
-  install:
+  mvn:
     image: maven:3.6.3-openjdk-17
-    container_name: maven_install
+    container_name: mvn
     working_dir: ${PWD}
-    command: ['mvn', 'clean', 'install']
     environment:
       ENABLE_TESTS: "${ENABLE_TESTS}"
       ENABLE_CODE_COVERAGE: "${ENABLE_CODE_COVERAGE}"
@@ -22,18 +20,6 @@ services:
       SONARQUBE_PROJECT_KEY: "${SONARQUBE_PROJECT_KEY}"
       NVD_API_KEY: "${NVD_API_KEY}"
       ENABLE_OPENAPI_SPEC_GENERATION: "${ENABLE_OPENAPI_SPEC_GENERATION}"
-    volumes:
-      - ${PWD}:${PWD}
-      - ${HOME}/.m2/:/root/.m2
-
-  compile:
-    image: maven:3.6.3-openjdk-17
-    container_name: maven_compile
-    working_dir: ${PWD}
-    command: ['mvn', 'compile', '-T', '1C', '-q']
-    environment:
-      ENABLE_CHECKSTYLE: "${ENABLE_CHECKSTYLE}"
-      ENABLE_FORMATTING: "${ENABLE_FORMATTING}"
     volumes:
       - ${PWD}:${PWD}
       - ${HOME}/.m2/:/root/.m2

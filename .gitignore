@@ -33,5 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 
-*.env
 dependency-check-data/
