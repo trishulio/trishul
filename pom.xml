@@ -87,7 +87,7 @@
         <spotless.version>2.44.0.BETA4</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <spotbugs.version>4.8.6.6</spotbugs.version>
-        <com.marvinformatics.formatter.plugin.version>2.2.0</com.marvinformatics.formatter.plugin.version>
+        <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
         <org.owasp.dependency.check.version>11.1.1</org.owasp.dependency.check.version>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.8.1</org.apache.maven.plugin.compiler.version>
@@ -541,22 +541,23 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>com.marvinformatics.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <version>${com.marvinformatics.formatter.plugin.version}</version>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless.version}</version>
+                    <configuration>
+                        <java>
+                            <removeUnusedImports/>
+                        </java>
+                    </configuration>
                     <executions>
                         <execution>
-                            <id>format</id>
+                            <id>spotless-apply</id>
                             <phase>validate</phase>
                             <goals>
-                                <goal>format</goal>
+                                <goal>apply</goal>
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <configFile>${maven.multiModuleProjectDirectory}/java.xml</configFile>
-                        <removeUnusedImports>true</removeUnusedImports>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
@@ -746,6 +747,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -909,24 +914,6 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>formatting</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>env.ENABLE_FORMATTING</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.marvinformatics.formatter</groupId>
-                        <artifactId>formatter-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
