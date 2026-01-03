@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class})
+@Mapper(uses = { UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class })
 public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, UpdateUserDto> {
   UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
@@ -43,7 +43,6 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = "roleBindings", ignore = true)
   @Mapping(target = User.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = User.ATTR_CREATED_AT, ignore = true)
-  @Mapping(target = User.ATTR_EMAIL, ignore = true)
   @Mapping(target = User.ATTR_STATUS, source = "statusId")
   @Mapping(target = User.ATTR_SALUTATION, source = "salutationId")
   @Mapping(target = User.ATTR_ROLES, source = "roleIds")

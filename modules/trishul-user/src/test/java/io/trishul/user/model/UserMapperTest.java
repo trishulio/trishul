@@ -56,11 +56,11 @@ public class UserMapperTest {
   @Test
   public void testFromUpdateDto_ReturnsEntity_WhenUpdateUserDtoIsNotNull() {
     UpdateUserDto dto = new UpdateUserDto(1L, "userName", "displayName", "firstName", "lastName",
-        1L, 2L, "phoneNumber", URI.create("imageSrc"), List.of(10L), 1);
+        "email", 1L, 2L, "phoneNumber", URI.create("imageSrc"), List.of(10L), 1);
 
     User user = mapper.fromUpdateDto(dto);
 
-    User expected = new User(1L, "userName", "displayName", "firstName", "lastName", null,
+    User expected = new User(1L, "userName", "displayName", "firstName", "lastName", "email",
         "phoneNumber", URI.create("imageSrc"), new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(10L)), null, null, 1);
 

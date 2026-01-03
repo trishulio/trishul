@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.validation.NullOrNotBlank;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -22,6 +23,10 @@ public class UpdateUserDto extends BaseDto {
 
   @NullOrNotBlank
   private String lastName;
+
+  @NullOrNotBlank
+  @Email
+  private String email;
 
   private Long statusId;
 
@@ -48,13 +53,14 @@ public class UpdateUserDto extends BaseDto {
   }
 
   public UpdateUserDto(Long id, String userName, String displayName, String firstName,
-      String lastName, Long statusId, Long salutationId, String phoneNumber, URI imageSrc,
+      String lastName, String email, Long statusId, Long salutationId, String phoneNumber, URI imageSrc,
       List<Long> roleIds, @NotNull Integer version) {
     this(id);
     setUserName(userName);
     setDisplayName(displayName);
     setFirstName(firstName);
     setLastName(lastName);
+    setEmail(email);
     setStatusId(statusId);
     setSalutationId(salutationId);
     setPhoneNumber(phoneNumber);
@@ -105,6 +111,15 @@ public class UpdateUserDto extends BaseDto {
 
   public UpdateUserDto setLastName(String lastName) {
     this.lastName = lastName;
+    return this;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public UpdateUserDto setEmail(String email) {
+    this.email = email;
     return this;
   }
 
