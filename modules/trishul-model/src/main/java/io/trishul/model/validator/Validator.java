@@ -29,7 +29,7 @@ public class Validator {
 
   public void raiseErrors() {
     String err = concatIntoNumberedList(this.errors);
-    ValidationException.assertion(!this.errors.isEmpty(), err);
+    ValidationException.assertion(this.errors.isEmpty(), err);
   }
 
   private static String concatIntoNumberedList(List<String> msgs) {

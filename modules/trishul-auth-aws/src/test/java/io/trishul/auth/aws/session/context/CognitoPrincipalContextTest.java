@@ -1,7 +1,6 @@
 package io.trishul.auth.aws.session.context;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import io.trishul.auth.session.context.PrincipalContext;
@@ -27,24 +26,18 @@ public class CognitoPrincipalContextTest {
   }
 
   @Test
-  public void testConstructor_ThrowsError_WhenMultipleGroupValuesArePresent() {
+  public void testGetTenantIds_ReturnsAllGroupValuesInJwt() {
     mJwt = mock(Jwt.class);
     doReturn(Arrays.asList("00000000-0000-0000-0000-000000000001",
         "00000000-0000-0000-0000-000000000002")).when(mJwt)
-            .getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+        .getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
     doReturn("USERNAME_1").when(mJwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
     doReturn("SCOPE_1 SCOPE_2").when(mJwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
 
-    IllegalArgumentException exception
-        = assertThrows(IllegalArgumentException.class, () -> CognitoPrincipalContext.fromJwt(mJwt));
+    ctx = CognitoPrincipalContext.fromJwt(mJwt);
 
-    assertEquals("Each user should only belong to a single cognito group. Instead found 2",
-        exception.getMessage());
-  }
-
-  @Test
-  public void testGetGroupId_ReturnsTheFirstGroupValueInJwt_WhenSingleGroupIsPresent() {
-    assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000001"), ctx.getGroupId());
+    assertEquals(Arrays.asList(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+        UUID.fromString("00000000-0000-0000-0000-000000000002")), ctx.getTenantIds());
   }
 
   @Test

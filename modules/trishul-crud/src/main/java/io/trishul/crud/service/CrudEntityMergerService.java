@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.base.types.base.pojo.UpdatableEntity;
+import io.trishul.model.reflection.ReflectionManipulator;
 import io.trishul.model.validator.Validator;
 
 public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE extends UpdatableEntity<ID, ?>>
@@ -24,8 +25,10 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
   private final Set<String> excludeProps;
 
   @SuppressWarnings("unchecked")
-  public CrudEntityMergerService(LockService lockService, Class<? extends BE> baseEntityCls,
-      Class<? extends UE> updateEntityCls, Class<E> entityCls, Set<String> excludeProps) {
+  public CrudEntityMergerService(ReflectionManipulator util, LockService lockService,
+      Class<? extends BE> baseEntityCls, Class<? extends UE> updateEntityCls, Class<E> entityCls,
+      Set<String> excludeProps) {
+    super(util);
     this.baseEntityCls = (Class<BE>) baseEntityCls; // Unsafe cast. If the cast fails, update the
                                                     // passed arguments
     this.updateEntityCls = (Class<UE>) updateEntityCls; // Unsafe cast. If the cast fails, update
@@ -33,6 +36,12 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
     this.entityCls = entityCls;
     this.excludeProps = excludeProps;
     this.lockService = lockService;
+  }
+
+  public CrudEntityMergerService(LockService lockService, Class<? extends BE> baseEntityCls,
+      Class<? extends UE> updateEntityCls, Class<E> entityCls, Set<String> excludeProps) {
+    this(ReflectionManipulator.INSTANCE, lockService, baseEntityCls, updateEntityCls, entityCls,
+        excludeProps);
   }
 
   @Override
@@ -57,8 +66,8 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
     final Validator validator = new Validator();
 
     existingItems = existingItems != null ? existingItems : new ArrayList<>(0);
-    final Map<ID, E> idToItemLookup
-        = existingItems.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
+    final Map<ID, E> idToItemLookup = existingItems.stream()
+        .collect(Collectors.toMap(item -> item.getId(), item -> item));
 
     final List<E> targetItems = updates.stream().map(update -> {
       final E item = this.newEntity();
@@ -87,8 +96,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
     List<E> targetItems = null;
     patches = patches == null ? new ArrayList<>() : patches;
 
-    final Map<ID, UE> idToItemLookup
-        = patches.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
+    final Map<ID, UE> idToItemLookup = patches.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
 
     if (existingItems != null) {
       targetItems = existingItems.stream().map(existing -> {

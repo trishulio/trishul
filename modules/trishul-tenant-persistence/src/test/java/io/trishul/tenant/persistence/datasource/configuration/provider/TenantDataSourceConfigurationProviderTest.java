@@ -9,6 +9,7 @@ import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.ImmutableGlobalDataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.MigrationConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.AdminTenant;
@@ -35,11 +36,12 @@ public class TenantDataSourceConfigurationProviderTest {
     mAdminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"), "ADMIN",
         new URL("http://localhost/"));
     mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
-        "MIGRATION_PATH", "SCHEMA_", 10, false);
+        MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false);
     mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",
         mGlobalDsConfig, mSecretsManager);
-    mConfigMgr
-        = new DataSourceConfigurationManager();interface StringSecretsManager extends SecretsManager<String,String>{}
+    mConfigMgr = new DataSourceConfigurationManager();
+    interface StringSecretsManager extends SecretsManager<String, String> {
+    }
     mSecretsManager = mock(StringSecretsManager.class);
 
     dsProvider = new TenantDataSourceConfigurationProvider(mAdminConfig, mAdminTenant,
@@ -48,22 +50,20 @@ public class TenantDataSourceConfigurationProviderTest {
 
   @Test
   public void testGetConfiguration_ReturnsAdminConfig_WhenIdMatchesAdminId() {
-    DataSourceConfiguration config
-        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+    DataSourceConfiguration config = dsProvider
+        .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
     assertSame(mAdminConfig, config);
   }
 
   @Test
   public void testGetConfiguration_ReturnsLazyTenantConfig_WhenIdIsNotTenantId()
       throws URISyntaxException {
-    DataSourceConfiguration config
-        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    DataSourceConfiguration config = dsProvider
+        .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    DataSourceConfiguration expected
-        = new LazyTenantDataSourceConfiguration("SCHEMA_00000000_0000_0000_0000_000000000001",
-            new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
-                "MIGRATION_PATH", "SCHEMA_", 10, false),
-            mSecretsManager);
+    DataSourceConfiguration expected = new LazyTenantDataSourceConfiguration(
+        "SCHEMA_00000000_0000_0000_0000_000000000001",
+        mGlobalDsConfig, mSecretsManager);
 
     assertNotSame(mAdminConfig, config);
     assertEquals(expected, config);

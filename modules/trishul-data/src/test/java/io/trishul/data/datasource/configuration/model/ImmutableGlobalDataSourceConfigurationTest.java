@@ -12,7 +12,7 @@ public class ImmutableGlobalDataSourceConfigurationTest {
   @BeforeEach
   public void init() throws URISyntaxException {
     dsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName",
-        "MIGRATION_PATH", "SCHEMA_PREFIX", 10, true);
+        MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_PREFIX", 10, true);
   }
 
   @Test
@@ -26,8 +26,10 @@ public class ImmutableGlobalDataSourceConfigurationTest {
   }
 
   @Test
-  public void testGetMigrationScriptPath_ReturnsMigrationScriptPath() {
-    assertEquals("MIGRATION_PATH", dsConfig.getMigrationScriptPath());
+  public void testGetMigrationConfigurations_ReturnsMigrationConfigurations() {
+    assertEquals(1, dsConfig.getMigrationConfigurations().length);
+    assertEquals("MIGRATION_PATH",
+        dsConfig.getMigrationConfigurations()[0].getMigrationScriptPath());
   }
 
   @Test

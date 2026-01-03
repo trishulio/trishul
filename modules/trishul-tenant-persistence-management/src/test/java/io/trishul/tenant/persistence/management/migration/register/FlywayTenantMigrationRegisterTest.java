@@ -1,9 +1,13 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.model.MigrationConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
@@ -12,6 +16,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +33,7 @@ public class FlywayTenantMigrationRegisterTest {
   @BeforeEach
   public void init() throws SQLException, IOException {
     mConfig = mock(DataSourceConfiguration.class);
-    doReturn("MIGRATION_PATH").when(mConfig).getMigrationScriptPath();
+    doReturn(MigrationConfiguration.from("MIGRATION_PATH")).when(mConfig).getMigrationConfigurations();
     doReturn("SCHEMA").when(mConfig).getSchemaName();
 
     mConfigProvider = mock(DataSourceConfigurationProvider.class);
@@ -57,9 +62,13 @@ public class FlywayTenantMigrationRegisterTest {
       DataSource ds) {
     Flyway mFw = mock(Flyway.class);
     doReturn(mFw).when(config).load();
-    doReturn(config).when(config).locations(location);
-    doReturn(config).when(config).schemas(schemas);
-    doReturn(config).when(config).dataSource(ds);
+    doReturn(config).when(config).locations(anyString());
+    doReturn(config).when(config).schemas(anyString());
+    doReturn(config).when(config).dataSource(any(DataSource.class));
+    doReturn(config).when(config).baselineOnMigrate(anyBoolean());
+    doReturn(config).when(config).table(anyString());
+    doReturn(new Location[] { new Location("LOCATION") }).when(config).getLocations();
+    doReturn("TABLE").when(config).getTable();
 
     return mFw;
   }

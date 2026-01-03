@@ -60,7 +60,7 @@ public class ReflectionManipulator {
 
     @Override
     public int hashCode() {
-      return super.hashCode();
+      return HashCodeBuilder.reflectionHashCode(this);
     }
   }
 
@@ -93,20 +93,19 @@ public class ReflectionManipulator {
       }
     });
 
-    this.propNamesCacheWithExclusions
-        = CacheBuilder.newBuilder().build(new CacheLoader<PropNameKey, Set<String>>() {
-          @Override
-          public Set<String> load(@Nonnull PropNameKey key) throws Exception {
-            Set<String> propNames = ReflectionManipulator.this.propNamesCache.get(key.getClazz());
+    this.propNamesCacheWithExclusions = CacheBuilder.newBuilder().build(new CacheLoader<PropNameKey, Set<String>>() {
+      @Override
+      public Set<String> load(@Nonnull PropNameKey key) throws Exception {
+        Set<String> propNames = ReflectionManipulator.this.propNamesCache.get(key.getClazz());
 
-            if (key.getExclusions() != null) {
-              propNames = propNames.stream().filter(prop -> !key.getExclusions().contains(prop))
-                  .collect(ImmutableSet.toImmutableSet());
-            }
+        if (key.getExclusions() != null) {
+          propNames = propNames.stream().filter(prop -> !key.getExclusions().contains(prop))
+              .collect(ImmutableSet.toImmutableSet());
+        }
 
-            return propNames;
-          }
-        });
+        return propNames;
+      }
+    });
   }
 
   public void copy(Object o1, Object o2,
@@ -116,8 +115,7 @@ public class ReflectionManipulator {
     }
 
     try {
-      final PropertyDescriptor[] pds
-          = Introspector.getBeanInfo(o2.getClass(), Object.class).getPropertyDescriptors();
+      final PropertyDescriptor[] pds = Introspector.getBeanInfo(o2.getClass(), Object.class).getPropertyDescriptors();
 
       for (final PropertyDescriptor pd : pds) {
         final Method getter = pd.getReadMethod();
@@ -140,8 +138,7 @@ public class ReflectionManipulator {
           .format("Failed to access the value using dynamic method because: %s", e.getMessage());
       this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
-      final String msg
-          = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
       this.handleException(msg, e);
     }
   }
@@ -171,8 +168,7 @@ public class ReflectionManipulator {
       final Constructor<T> constructor = clazz.getConstructor();
       obj = constructor.newInstance();
 
-      final PropertyDescriptor[] pds
-          = Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors();
+      final PropertyDescriptor[] pds = Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors();
       for (final PropertyDescriptor pd : pds) {
         if (props.containsKey(pd.getName())) {
           invokeSetter(obj, pd, props.get(pd.getName()));
@@ -186,8 +182,7 @@ public class ReflectionManipulator {
           .format("Failed to access the value using dynamic method because: %s", e.getMessage());
       this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
-      final String msg
-          = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
       this.handleException(msg, e);
     }
 
@@ -216,8 +211,7 @@ public class ReflectionManipulator {
         String readMethodName = readMethod.getName();
         writeMethodName = readMethodName.replace("get", "set");
       } else {
-        writeMethodName
-            = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+        writeMethodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
       }
 
       try {
@@ -227,8 +221,7 @@ public class ReflectionManipulator {
         log.info("No setter method found for property: {}", propertyName);
       }
     } catch (final ReflectiveOperationException e) {
-      final String msg
-          = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
       this.handleException(msg, e);
     } catch (IllegalArgumentException e) {
       final String msg = String

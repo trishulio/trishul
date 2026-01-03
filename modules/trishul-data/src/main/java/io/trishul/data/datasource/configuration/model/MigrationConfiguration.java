@@ -1,8 +1,9 @@
 package io.trishul.data.datasource.configuration.model;
 
+import io.trishul.model.base.pojo.BaseModel;
 import java.util.Arrays;
 
-public class MigrationConfiguration {
+public class MigrationConfiguration extends BaseModel {
   private final String migrationHistoryTableName;
   private final String migrationScriptPath;
 

@@ -22,7 +22,7 @@ public class LazyTenantDataSourceConfigurationTest {
 
     config = new LazyTenantDataSourceConfiguration("FQ_TENANT_ID",
         new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName",
-            "MIGRATION_PATH", "SCHEMA_", 10, false),
+            MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false),
         mSecretsManager);
   }
 
@@ -65,7 +65,8 @@ public class LazyTenantDataSourceConfigurationTest {
 
   @Test
   public void testGetMigrationScript_ReturnsGlobalMigrationScriptPath() {
-    assertEquals("MIGRATION_PATH", config.getMigrationScriptPath());
+    assertEquals(1, config.getMigrationConfigurations().length);
+    assertEquals("MIGRATION_PATH", config.getMigrationConfigurations()[0].getMigrationScriptPath());
   }
 
   @Test
