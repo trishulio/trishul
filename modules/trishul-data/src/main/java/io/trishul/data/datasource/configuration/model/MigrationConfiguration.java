@@ -25,7 +25,8 @@ public class MigrationConfiguration {
       String schemaHistoryTableName, schemaMigrationScriptPath;
 
       if (config.length <= 0 || config.length > 2) {
-        throw new IllegalArgumentException("Invalid schema migration script config: " + configStr);
+        throw new IllegalArgumentException(
+            String.format("Invalid schema migration script config: %s", configStr));
       } else if (config.length == 1) {
         schemaHistoryTableName = null;
         schemaMigrationScriptPath = config[0];

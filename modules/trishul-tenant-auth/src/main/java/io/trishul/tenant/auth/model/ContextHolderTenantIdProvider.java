@@ -19,13 +19,7 @@ public class ContextHolderTenantIdProvider implements TenantIdProvider {
   public UUID getTenantId() {
     UUID currentTenantId = this.defaultTenantId;
 
-    PrincipalContext ctx = this.contextHolder.getPrincipalContext();
-
-    UUID tenantId = null;
-    if (ctx != null) {
-      tenantId = ctx.getGroupId();
-    }
-
+    UUID tenantId = this.contextHolder.getSessionTenantId();
     if (tenantId != null) {
       currentTenantId = tenantId;
     }

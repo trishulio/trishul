@@ -1,5 +1,6 @@
 package io.trishul.auth.session.context.holder;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
@@ -53,6 +54,16 @@ public class ThreadLocalContextHolderTest {
     });
 
     CompletableFuture.allOf(op1, op2, op3).get();
+  }
+
+  @Test
+  public void testClear_RemovesValuesFromThreadLocal() {
+    PrincipalContext mCtx = mock(PrincipalContext.class);
+    holder.setContext(mCtx);
+    holder.clear();
+
+    assertNull(holder.getPrincipalContext());
+    assertNull(holder.getSessionTenantId());
   }
 
   private CompletableFuture<Void> runAsync(CheckedRunnable<Exception> runnable) {

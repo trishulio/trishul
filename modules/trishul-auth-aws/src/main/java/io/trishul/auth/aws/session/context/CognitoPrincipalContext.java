@@ -2,9 +2,12 @@ package io.trishul.auth.aws.session.context;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.security.oauth2.jwt.Jwt;
+
 import io.trishul.auth.session.context.PrincipalContext;
 
 public class CognitoPrincipalContext implements PrincipalContext {
@@ -14,14 +17,14 @@ public class CognitoPrincipalContext implements PrincipalContext {
   public static final String ATTRIBUTE_EMAIL = "email";
   public static final String ATTRIBUTE_EMAIL_VERIFIED = "email_verified";
 
-  private final UUID groupId;
+  private final List<UUID> tenantIds;
   private final String username;
   private final List<String> roles;
 
-  private CognitoPrincipalContext(UUID groupId, String username, List<String> roles) {
-    this.groupId = groupId;
+  private CognitoPrincipalContext(List<UUID> tenantIds, String username, List<String> roles) {
+    this.tenantIds = tenantIds != null ? new ArrayList<>(tenantIds) : Collections.emptyList();
     this.username = username;
-    this.roles = roles == null ? null : new ArrayList<>(roles);
+    this.roles = roles != null ? new ArrayList<>(roles) : Collections.emptyList();
   }
 
   public static CognitoPrincipalContext fromJwt(Jwt jwt) {
@@ -33,20 +36,9 @@ public class CognitoPrincipalContext implements PrincipalContext {
     List<String> roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
 
     List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
-    if (groups.size() > 1) {
-      String msg = String.format(
-          "Each user should only belong to a single cognito group. Instead found %s",
-          groups.size());
-      throw new IllegalArgumentException(msg);
-    }
+    List<UUID> tenantIds = groups.stream().map(UUID::fromString).collect(Collectors.toList());
 
-    UUID groupId = UUID.fromString(groups.get(0));
-    return new CognitoPrincipalContext(groupId, username, roles);
-  }
-
-  @Override
-  public UUID getGroupId() {
-    return this.groupId;
+    return new CognitoPrincipalContext(tenantIds, username, roles);
   }
 
   @Override
@@ -57,5 +49,10 @@ public class CognitoPrincipalContext implements PrincipalContext {
   @Override
   public List<String> getRoles() {
     return new ArrayList<>(this.roles);
+  }
+
+  @Override
+  public List<UUID> getTenantIds() {
+    return new ArrayList<>(this.tenantIds);
   }
 }

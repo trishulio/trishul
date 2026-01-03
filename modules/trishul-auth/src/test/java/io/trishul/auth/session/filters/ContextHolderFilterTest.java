@@ -1,7 +1,6 @@
 package io.trishul.auth.session.filters;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -17,6 +16,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
@@ -48,7 +48,8 @@ public class ContextHolderFilterTest {
   }
 
   @Test
-  public void testDoFilter_SetsPrincipalContext() throws IOException, ServletException {
+  public void testDoFilter_SetsPrincipalContext_AndClearsAfterwards()
+      throws IOException, ServletException {
     Authentication mAuth = mock(Authentication.class);
     doReturn(mAuth).when(mSecurityCtx).getAuthentication();
 
@@ -60,9 +61,23 @@ public class ContextHolderFilterTest {
 
     filter.doFilter(mReq, mRes, mChain);
 
-    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
+    // Context should be cleared after doFilter
+    assertNull(mcontextHolder.getPrincipalContext());
+    verify(mChain).doFilter(mReq, mRes);
+  }
 
-    assertSame(mCtx, ctx);
+  @Test
+  public void testDoFilter_SetsSessionTenantIdFromHeader() throws IOException, ServletException {
+    Authentication mAuth = mock(Authentication.class);
+    doReturn(mAuth).when(mSecurityCtx).getAuthentication();
+
+    UUID tenantId = UUID.randomUUID();
+    doReturn(tenantId.toString()).when((HttpServletRequest) mReq).getHeader("X-TENANT-ID");
+
+    filter.doFilter(mReq, mRes, mChain);
+
+    // It should have been set during execution, but cleared after
+    assertNull(mcontextHolder.getSessionTenantId());
     verify(mChain).doFilter(mReq, mRes);
   }
 

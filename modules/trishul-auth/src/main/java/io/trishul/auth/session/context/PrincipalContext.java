@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PrincipalContext {
-  UUID getGroupId();
+  /**
+   * @return List of all tenant IDs the user belongs to
+   */
+  List<UUID> getTenantIds();
 
   String getUsername();
 

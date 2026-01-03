@@ -64,7 +64,7 @@ public class AwsIamRolePolicyAttachmentClient implements
 
     } catch (ExecutionException e) {
       throw new RuntimeException(
-          "Failed to fetch all the attachedPolicies because " + e.getMessage(), e);
+          String.format("Failed to fetch all the attachedPolicies because %s", e.getMessage()), e);
     }
   }
 
