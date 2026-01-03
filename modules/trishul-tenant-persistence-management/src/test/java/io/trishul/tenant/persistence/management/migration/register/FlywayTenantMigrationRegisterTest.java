@@ -66,6 +66,7 @@ public class FlywayTenantMigrationRegisterTest {
     doReturn(config).when(config).schemas(anyString());
     doReturn(config).when(config).dataSource(any(DataSource.class));
     doReturn(config).when(config).baselineOnMigrate(anyBoolean());
+    doReturn(config).when(config).baselineVersion(anyString());
     doReturn(config).when(config).table(anyString());
     doReturn(new Location[] { new Location("LOCATION") }).when(config).getLocations();
     doReturn("TABLE").when(config).getTable();

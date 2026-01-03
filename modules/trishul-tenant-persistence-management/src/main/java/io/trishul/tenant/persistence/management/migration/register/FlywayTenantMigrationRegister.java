@@ -41,7 +41,8 @@ public class FlywayTenantMigrationRegister implements MigrationRegister {
     for (MigrationConfiguration migrationConfig : config.getMigrationConfigurations()) {
       try {
         FluentConfiguration flywayConfig = provider.config().schemas(config.getSchemaName())
-            .baselineOnMigrate(true).dataSource(dsMgr.getDataSource(tenant.getId()))
+            .baselineOnMigrate(true).baselineVersion("0")
+            .dataSource(dsMgr.getDataSource(tenant.getId()))
             .locations(migrationConfig.getMigrationScriptPath());
 
         String schemaHistoryTableName = migrationConfig.getMigrationHistoryTableName();
@@ -65,7 +66,6 @@ public class FlywayTenantMigrationRegister implements MigrationRegister {
     }
   }
 }
-
 
 interface FluentConfigProvider {
   FluentConfiguration config();
