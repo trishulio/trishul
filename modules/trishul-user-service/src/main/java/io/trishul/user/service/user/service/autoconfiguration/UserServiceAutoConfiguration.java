@@ -1,10 +1,13 @@
 package io.trishul.user.service.user.service.autoconfiguration;
 
 import java.util.Set;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+
+import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.base.types.base.pojo.OwnedByAccessor;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.service.CrudEntityMergerService;
@@ -38,6 +41,7 @@ import io.trishul.user.service.user.service.repository.role.repository.UserRoleR
 import io.trishul.user.service.user.service.role.service.UserRoleService;
 import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
 import io.trishul.user.service.user.service.salutation.service.UserSalutationService;
+import io.trishul.user.service.user.service.service.AccountService;
 import io.trishul.user.service.user.service.service.UserService;
 import io.trishul.user.service.user.service.status.repository.UserStatusRepository;
 import io.trishul.user.status.UserStatus;
@@ -56,6 +60,13 @@ public class UserServiceAutoConfiguration {
     final RepoService<Long, User, UserAccessor<?>> repoService
         = new CrudRepoService<>(userRepository, userRefresher);
     return new UserService(updateService, repoService, userRepository, tenantIaasUserService);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(AccountService.class)
+  public AccountService accountService(UserRepository userRepository,
+      ContextHolder contextHolder) {
+    return new AccountService(userRepository, contextHolder);
   }
 
   @Bean
