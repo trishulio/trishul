@@ -30,6 +30,7 @@ public class UserTest {
 
     assertEquals(1L, user.getId());
     assertEquals("USER_NAME", user.getUserName());
+    assertNull(user.getIaasUsername());
     assertEquals("DISPLAY_NAME", user.getDisplayName());
     assertEquals("FIRST_NAME", user.getFirstName());
     assertEquals("LAST_NAME", user.getLastName());
@@ -56,6 +57,13 @@ public class UserTest {
     assertNull(user.getUserName());
     user.setUserName("userName");
     assertEquals("userName", user.getUserName());
+  }
+
+  @Test
+  public void testAccessIaasUsername() {
+    assertNull(user.getIaasUsername());
+    user.setIaasUsername("iaasUsername");
+    assertEquals("iaasUsername", user.getIaasUsername());
   }
 
   @Test

@@ -1,0 +1,2 @@
+-- Add iaas_username column to _USER table
+ALTER TABLE _USER ADD COLUMN IAAS_USERNAME VARCHAR(255);

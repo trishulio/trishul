@@ -26,6 +26,7 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = User.ATTR_ROLES, ignore = true)
   @Mapping(target = User.ATTR_IMAGE_SRC, ignore = true)
   @Mapping(target = User.ATTR_PHONE_NUMBER, ignore = true)
+  @Mapping(target = "iaasUsername", ignore = true)
   User fromDto(Long id);
 
   @Override
@@ -37,6 +38,7 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = User.ATTR_STATUS, source = "statusId")
   @Mapping(target = User.ATTR_SALUTATION, source = "salutationId")
   @Mapping(target = User.ATTR_ROLES, source = "roleIds")
+  @Mapping(target = "iaasUsername", ignore = true)
   User fromAddDto(AddUserDto addUserDto);
 
   @Override
@@ -46,6 +48,7 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = User.ATTR_STATUS, source = "statusId")
   @Mapping(target = User.ATTR_SALUTATION, source = "salutationId")
   @Mapping(target = User.ATTR_ROLES, source = "roleIds")
+  @Mapping(target = "iaasUsername", ignore = true)
   User fromUpdateDto(UpdateUserDto updateUserDto);
 
   @Override

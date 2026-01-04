@@ -1,7 +1,19 @@
 package io.trishul.user.model;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
@@ -24,15 +36,6 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Email;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "user")
 @Table(name = "_user")
@@ -44,8 +47,11 @@ public class User extends BaseEntity
   @SequenceGenerator(name = "user_generator", sequenceName = "user_sequence", allocationSize = 1)
   private Long id;
 
-  @Column(name = "user_name", unique = true)
+  @Column(name = "user_name")
   private String userName;
+
+  @Column(name = "iaas_username", updatable = false)
+  private String iaasUsername;
 
   @Column(name = "display_name")
   private String displayName;
@@ -237,6 +243,17 @@ public class User extends BaseEntity
   @Override
   public User setUserName(String userName) {
     this.userName = userName;
+    return this;
+  }
+
+  @Override
+  public String getIaasUsername() {
+    return iaasUsername;
+  }
+
+  @Override
+  public User setIaasUsername(String iaasUsername) {
+    this.iaasUsername = iaasUsername;
     return this;
   }
 

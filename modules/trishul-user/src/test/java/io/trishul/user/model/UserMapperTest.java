@@ -87,6 +87,20 @@ public class UserMapperTest {
         LocalDateTime.of(2000, 1, 1, 0, 0), 1);
 
     assertEquals(expected, dto);
+    assertNull(dto.getIaasUsername());
+  }
+
+  @Test
+  public void testToDto_MapsIaasUsername_WhenEntityHasValue() {
+    User user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
+        "PHONE_NUMBER", URI.create("IMAGE_SRC"), new UserStatus(1L), new UserSalutation(2L),
+        List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),
+        LocalDateTime.of(2000, 1, 1, 0, 0), 1);
+    user.setIaasUsername("iaasUsername");
+
+    UserDto dto = mapper.toDto(user);
+
+    assertEquals("iaasUsername", dto.getIaasUsername());
   }
 
   @Test

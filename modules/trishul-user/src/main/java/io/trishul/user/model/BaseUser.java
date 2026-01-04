@@ -15,6 +15,7 @@ public interface BaseUser<T extends BaseUser<T>>
   final String ATTR_IMAGE_SRC = "imageSrc";
   final String ATTR_PHONE_NUMBER = "phoneNumber";
   final String ATTR_USER_NAME = "userName";
+  final String ATTR_IAAS_USERNAME = "iaasUsername";
   final String ATTR_ROLES = "roles";
 
   String getDisplayName();
@@ -44,6 +45,10 @@ public interface BaseUser<T extends BaseUser<T>>
   String getUserName();
 
   T setUserName(String userName);
+
+  String getIaasUsername();
+
+  ? setIaasUsername(String iaasUsername);
 
   List<UserRole> getRoles();
 

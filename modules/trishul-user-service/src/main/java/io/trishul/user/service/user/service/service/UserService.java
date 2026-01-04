@@ -1,9 +1,23 @@
 package io.trishul.user.service.user.service.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.exception.EntityNotFoundException;
@@ -17,15 +31,6 @@ import io.trishul.user.role.model.UserRole;
 import io.trishul.user.service.user.service.repository.UserRepository;
 import io.trishul.user.status.UserStatus;
 import jakarta.transaction.Transactional;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class UserService extends BaseService
@@ -113,8 +118,25 @@ public class UserService extends BaseService
 
     List<User> users = this.repoService.saveAll(entities);
 
-    List<IaasUserTenantMembership> updatedIaasUsers = this.iaasService.put(users);
-    log.info("Added users: {}", updatedIaasUsers);
+    List<IaasUserTenantMembership> updatedIaasUserMemberships = this.iaasService.put(users);
+    
+    // Create a map of email to IaasUser for efficient lookup
+    Map<String, IaasUser> iaasUserMap = updatedIaasUserMemberships.stream()
+        .map(IaasUserTenantMembership::getUser)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toMap(IaasUser::getId, iaasUser -> iaasUser));
+    
+    // Update users with IaasUsername
+    users.forEach(user -> {
+      IaasUser iaasUser = iaasUserMap.get(user.getEmail());
+      if (iaasUser != null) {
+        user.setIaasUsername(iaasUser.getUserName());
+      }
+    });
+
+    users = this.repoService.saveAll(users);
+    
+    log.info("Added users: {}", users.size());
 
     return users;
   }

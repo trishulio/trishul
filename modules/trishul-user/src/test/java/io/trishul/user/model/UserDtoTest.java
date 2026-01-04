@@ -29,6 +29,7 @@ public class UserDtoTest {
 
     assertEquals(1L, dto.getId());
     assertEquals("USER_NAME", dto.getUserName());
+    assertNull(dto.getIaasUsername());
     assertEquals("DISPLAY_NAME", dto.getDisplayName());
     assertEquals("FIRST_NAME", dto.getFirstName());
     assertEquals("LAST_NAME", dto.getLastName());
@@ -56,6 +57,13 @@ public class UserDtoTest {
     assertNull(dto.getUserName());
     dto.setUserName("userName");
     assertEquals("userName", dto.getUserName());
+  }
+
+  @Test
+  public void testAccessIaasUsername() {
+    assertNull(dto.getIaasUsername());
+    dto.setIaasUsername("iaasUsername");
+    assertEquals("iaasUsername", dto.getIaasUsername());
   }
 
   @Test

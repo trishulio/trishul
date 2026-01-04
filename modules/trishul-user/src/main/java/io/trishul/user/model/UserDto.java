@@ -16,6 +16,8 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
 
   private String userName;
 
+  private String iaasUsername;
+
   private String displayName;
 
   private String firstName;
@@ -86,6 +88,15 @@ public class UserDto extends BaseDto implements DecoratedIaasObjectStoreFileAcce
 
   public UserDto setUserName(String userName) {
     this.userName = userName;
+    return this;
+  }
+
+  public String getIaasUsername() {
+    return iaasUsername;
+  }
+
+  public UserDto setIaasUsername(String iaasUsername) {
+    this.iaasUsername = iaasUsername;
     return this;
   }
 

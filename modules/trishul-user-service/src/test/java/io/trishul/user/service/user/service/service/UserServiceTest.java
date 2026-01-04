@@ -168,6 +168,7 @@ public class UserServiceTest {
   @Test
   public void testAdd_AddsUserAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
+    doAnswer(inv -> List.of()).when(this.iaasService).put(anyList());
 
     final BaseUser<?> user1 = new User(1L);
     final BaseUser<?> user2 = new User();
@@ -177,7 +178,7 @@ public class UserServiceTest {
     final List<User> expected = List.of(new User(1L), new User());
 
     assertEquals(expected, added);
-    verify(this.mRepoService, times(1)).saveAll(added);
+    verify(this.mRepoService, times(2)).saveAll(any());
   }
 
   @Test
