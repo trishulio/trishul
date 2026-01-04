@@ -48,7 +48,7 @@ public interface BaseUser<T extends BaseUser<T>>
 
   String getIaasUsername();
 
-  ? setIaasUsername(String iaasUsername);
+  T setIaasUsername(String iaasUsername);
 
   List<UserRole> getRoles();
 

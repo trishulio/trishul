@@ -23,6 +23,8 @@ public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
   public DataSource getDataSource(UUID tenantId) throws SQLException, IOException {
     DataSource ds = this.dsMgr.getAdminDataSource();
 
+    // TODO: Check if tenantId is same as Admin, then also return admin DS. No point
+    // creating duplicate adminDS
     if (tenantId != null) {
       DataSourceConfiguration config = this.dsConfigMgr.getConfiguration(tenantId);
 

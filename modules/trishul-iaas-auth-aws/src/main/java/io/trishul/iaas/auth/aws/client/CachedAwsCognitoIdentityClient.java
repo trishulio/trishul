@@ -28,8 +28,9 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
           }
         });
 
-    this.getIdentityId
-        = CacheBuilder.newBuilder().build(new CacheLoader<GetIdentityIdArgs, String>() {
+    this.getIdentityId = CacheBuilder.newBuilder()
+        .expireAfterWrite(Duration.ofSeconds(credentialsExpiryDurationSeconds))
+        .build(new CacheLoader<GetIdentityIdArgs, String>() {
           @Override
           public String load(@Nonnull GetIdentityIdArgs key) throws Exception {
             return cognitoIdClient.getIdentityId(key.identityPoolId, key.logins);
@@ -80,7 +81,6 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
   }
 }
 
-
 class GetIdentityPoolsArgs extends BaseModel {
   int pageSize;
 
@@ -88,7 +88,6 @@ class GetIdentityPoolsArgs extends BaseModel {
     this.pageSize = pageSize;
   }
 }
-
 
 class GetIdentityIdArgs extends BaseModel {
   String identityPoolId;
@@ -100,7 +99,6 @@ class GetIdentityIdArgs extends BaseModel {
     this.logins = logins;
   }
 }
-
 
 class GetCredentialsForIdentityIdArgs extends BaseModel {
   String identityId;
