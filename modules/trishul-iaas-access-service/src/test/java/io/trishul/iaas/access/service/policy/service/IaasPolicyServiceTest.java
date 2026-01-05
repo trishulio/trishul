@@ -241,10 +241,14 @@ public class IaasPolicyServiceTest {
     }).when(mIaasRepo).get(anySet());
 
     List<UpdateIaasPolicy<?>> updates = List.of(
-        new IaasPolicy("POLICY_1", null, null, "RES_NAME_1_UPDATED", "RES_ID_1_UPDATED",
-            LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2001, 1, 1, 0, 0)),
-        new IaasPolicy("POLICY_2", "DOCUMENT_2_UPDATED", "DESCRIPTION_2_UPDATED", null, null,
-            LocalDateTime.of(2000, 2, 1, 0, 0), LocalDateTime.of(2001, 2, 1, 0, 0)));
+        new IaasPolicy().setId("POLICY_1")
+            .setIaasResourceName("RES_NAME_1_UPDATED").setIaasId("RES_ID_1_UPDATED")
+            .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)),
+        new IaasPolicy().setId("POLICY_2").setDocument("DOCUMENT_2_UPDATED")
+            .setDescription("DESCRIPTION_2_UPDATED").setIaasResourceName(null).setIaasId(null)
+            .setCreatedAt(LocalDateTime.of(2000, 2, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 2, 1, 0, 0)));
 
     List<IaasPolicy> attachments = service.patch(updates);
 

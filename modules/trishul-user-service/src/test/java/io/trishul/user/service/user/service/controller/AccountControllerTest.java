@@ -25,7 +25,7 @@ public class AccountControllerTest {
   @Test
   public void testGetCurrentUser_ReturnsUserDtoFromService() {
     User user = new User(1L, "john.doe", "John Doe", "John", "Doe", "john.doe@example.com",
-        "5551234567", URI.create("http://example.com/avatar.jpg"), null, null, List.of(),
+        "5551234567", URI.create("http://example.com/avatar.jpg"), null, null, null, List.of(),
         null, null, null);
     user.setIaasUsername("iaas_john.doe");
 
@@ -44,7 +44,7 @@ public class AccountControllerTest {
   @Test
   public void testGetCurrentUser_ReturnsMappedDtoWithIaasUsername() {
     User user = new User(2L, "jane.smith", "Jane Smith", "Jane", "Smith", "jane.smith@example.com",
-        "5559876543", URI.create("http://example.com/jane.jpg"), null, null, List.of(),
+        "5559876543", URI.create("http://example.com/jane.jpg"), null, null, null, List.of(),
         null, null, null);
     user.setIaasUsername("iaas_jane.smith");
 
@@ -61,7 +61,7 @@ public class AccountControllerTest {
   @Test
   public void testGetCurrentUser_IgnoresAttributeParameter() {
     User user = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, List.of(),
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
         null, null, null);
     user.setIaasUsername("iaas_user1");
 

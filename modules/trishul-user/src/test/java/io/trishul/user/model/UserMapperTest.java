@@ -41,9 +41,11 @@ public class UserMapperTest {
 
     User user = mapper.fromAddDto(dto);
 
-    User expected = new User(null, "userName", "displayName", "firstName", "lastName", "email",
-        "phoneNumber", URI.create("imageSrc"), new UserStatus(1L), new UserSalutation(2L),
-        List.of(new UserRole(10L)), null, null, null);
+    User expected = new User().setUserName("userName").setDisplayName("displayName")
+        .setFirstName("firstName").setLastName("lastName").setEmail("email")
+        .setPhoneNumber("phoneNumber").setImageSrc(URI.create("imageSrc")).setIaasUsername(null)
+        .setStatus(new UserStatus(1L)).setSalutation(new UserSalutation(2L))
+        .setRoles(List.of(new UserRole(10L)));
 
     assertEquals(expected, user);
   }
@@ -60,9 +62,11 @@ public class UserMapperTest {
 
     User user = mapper.fromUpdateDto(dto);
 
-    User expected = new User(1L, "userName", "displayName", "firstName", "lastName", "email",
-        "phoneNumber", URI.create("imageSrc"), new UserStatus(1L), new UserSalutation(2L),
-        List.of(new UserRole(10L)), null, null, 1);
+    User expected = new User().setId(1L).setUserName("userName").setDisplayName("displayName")
+        .setFirstName("firstName").setLastName("lastName").setEmail("email")
+        .setPhoneNumber("phoneNumber").setImageSrc(URI.create("imageSrc")).setIaasUsername(null)
+        .setStatus(new UserStatus(1L)).setSalutation(new UserSalutation(2L))
+        .setRoles(List.of(new UserRole(10L))).setVersion(1);
 
     assertEquals(expected, user);
   }
@@ -75,7 +79,7 @@ public class UserMapperTest {
   @Test
   public void testToDto_ReturnsDto_WhenEntityIsNotNull() {
     User user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
-        "PHONE_NUMBER", URI.create("IMAGE_SRC"), new UserStatus(1L), new UserSalutation(2L),
+        "PHONE_NUMBER", URI.create("IMAGE_SRC"), null, new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),
         LocalDateTime.of(2000, 1, 1, 0, 0), 1);
 
@@ -93,7 +97,7 @@ public class UserMapperTest {
   @Test
   public void testToDto_MapsIaasUsername_WhenEntityHasValue() {
     User user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
-        "PHONE_NUMBER", URI.create("IMAGE_SRC"), new UserStatus(1L), new UserSalutation(2L),
+        "PHONE_NUMBER", URI.create("IMAGE_SRC"), null, new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),
         LocalDateTime.of(2000, 1, 1, 0, 0), 1);
     user.setIaasUsername("iaasUsername");

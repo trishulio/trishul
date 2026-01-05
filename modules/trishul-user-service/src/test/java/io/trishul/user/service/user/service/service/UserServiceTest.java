@@ -195,11 +195,11 @@ public class UserServiceTest {
     final UpdateUser<?> user2 = new User(2L);
 
     User existingUser1 = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", null, null, null, List.of(), null, null, null);
+        "1234567890", null, null, null, null, List.of(), null, null, null);
     existingUser1.setIaasUsername("iaas_user1");
     
     User existingUser2 = new User(2L, "user2", "User Two", "User", "Two", "user2@example.com",
-        "0987654321", null, null, null, List.of(), null, null, null);
+        "0987654321", null, null, null, null, List.of(), null, null, null);
     existingUser2.setIaasUsername("iaas_user2");
 
     doReturn(List.of(existingUser1, existingUser2)).when(this.mRepoService)
@@ -244,7 +244,7 @@ public class UserServiceTest {
     final UpdateUser<?> userUpdate = new User(1L);
 
     User existingUser = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", null, null, null, List.of(), null, null, null);
+        "1234567890", null, null, null, null, List.of(), null, null, null);
     existingUser.setIaasUsername("original_iaas_username");
 
     doReturn(List.of(existingUser)).when(this.mRepoService).getByIds(List.of(userUpdate));

@@ -18,7 +18,7 @@ public class UserRoleBindingTest {
 
   @Test
   public void testAllArgConstructor_SetsAllFields() {
-    binding = new UserRoleBinding(1L, new UserRole(10L), new User(100L));
+    binding = new UserRoleBinding().setId(1L).setRole(new UserRole(10L)).setUser(new User(100L));
 
     assertEquals(1L, binding.getId());
     assertEquals(new UserRole(10L), binding.getRole());

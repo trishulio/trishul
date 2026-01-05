@@ -85,12 +85,16 @@ public class TenantIaasUserServiceTest {
         .getTenantId();
 
     List<User> users = List.of(
-        new User(1L, "USERNAME_1", null, null, null, "example-1@localhost", "phone-number-1", null,
-            null, null, null, LocalDateTime.of(2000, 1, 1, 0, 0),
-            LocalDateTime.of(2000, 1, 1, 0, 0), null),
-        new User(2L, "USERNAME_2", null, null, null, "example-2@localhost", "phone-number-2", null,
-            null, null, null, LocalDateTime.of(2001, 1, 1, 0, 0),
-            LocalDateTime.of(2001, 1, 1, 0, 0), null));
+        new User().setId(1L).setUserName("USERNAME_1")
+            .setLastName(null).setEmail("example-1@localhost").setPhoneNumber("phone-number-1")
+            .setImageSrc(null).setIaasUsername(null).setStatus(null).setSalutation(null)
+            .setRoles(null).setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0)).setVersion(null),
+        new User().setId(2L).setUserName("USERNAME_2")
+            .setLastName(null).setEmail("example-2@localhost").setPhoneNumber("phone-number-2")
+            .setImageSrc(null).setIaasUsername(null).setStatus(null).setSalutation(null)
+            .setRoles(null).setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)).setVersion(null));
 
     long count = service.delete(users);
 

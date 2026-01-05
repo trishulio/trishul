@@ -48,9 +48,9 @@ public class UserRefresherTest {
 
     userRefresher.refresh(users);
 
-    List<UserRoleBinding> expected
-        = List.of(new UserRoleBinding(null, new UserRole(10L), users.get(0)),
-            new UserRoleBinding(null, new UserRole(20L), users.get(1)));
+    List<UserRoleBinding> expected = List.of(
+        new UserRoleBinding().setRole(new UserRole(10L)).setUser(users.get(0)),
+        new UserRoleBinding().setRole(new UserRole(20L)).setUser(users.get(1)));
     verify(mRoleBindingRefresher, times(1)).refresh(expected);
 
     verify(mStatusRefresher, times(1)).refreshAccessors(users);

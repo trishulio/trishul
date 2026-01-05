@@ -34,7 +34,7 @@ public class AccountServiceTest {
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
     User expectedUser = new User(1L, "john.doe", "John Doe", "John", "Doe",
-        "john.doe@example.com", "5551234567", null, null, null, List.of(), null, null, null);
+        "john.doe@example.com", "5551234567", null, null, null, null, List.of(), null, null, null);
     expectedUser.setIaasUsername("iaas_john.doe");
 
     doReturn(List.of(expectedUser)).when(mRepository).findAll(any(Specification.class));
@@ -53,9 +53,9 @@ public class AccountServiceTest {
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
     User user1 = new User(1L, "test.user", "Test User 1", "Test", "User 1",
-        "test1@example.com", "1111111111", null, null, null, List.of(), null, null, null);
+        "test1@example.com", "1111111111", null, null, null, null, List.of(), null, null, null);
     User user2 = new User(2L, "test.user", "Test User 2", "Test", "User 2",
-        "test2@example.com", "2222222222", null, null, null, List.of(), null, null, null);
+        "test2@example.com", "2222222222", null, null, null, null, List.of(), null, null, null);
 
     doReturn(List.of(user1, user2)).when(mRepository).findAll(any(Specification.class));
 
@@ -117,7 +117,7 @@ public class AccountServiceTest {
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
     User expectedUser = new User(2L, "jane.smith", "Jane Smith", "Jane", "Smith",
-        "jane.smith@example.com", "5559876543", null, null, null, List.of(), null, null, null);
+        "jane.smith@example.com", "5559876543", null, null, null, null, List.of(), null, null, null);
     expectedUser.setIaasUsername("iaas_jane.smith");
 
     doReturn(List.of(expectedUser)).when(mRepository).findAll(any(Specification.class));

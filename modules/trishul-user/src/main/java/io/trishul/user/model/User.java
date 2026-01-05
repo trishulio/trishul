@@ -105,8 +105,9 @@ public class User extends BaseEntity
   }
 
   public User(Long id, String userName, String displayName, String firstName, String lastName,
-      String email, String phoneNumber, URI imageSrc, UserStatus status, UserSalutation salutation,
-      List<UserRole> roles, LocalDateTime createdAt, LocalDateTime lastUpdated, Integer version) {
+      String email, String phoneNumber, URI imageSrc, String iaasUsername, UserStatus status,
+      UserSalutation salutation, List<UserRole> roles, LocalDateTime createdAt,
+      LocalDateTime lastUpdated, Integer version) {
     this(id);
     setUserName(userName);
     setDisplayName(displayName);

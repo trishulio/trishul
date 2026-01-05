@@ -38,7 +38,7 @@ public class UserControllerTest {
   public void testGetAllUsers_ReturnsDtosFromController() {
     doReturn(new PageImpl<>(
         List.of(new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-            "1234567890", URI.create("http://example.com/image.jpg"), null, null,
+            "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
             List.of(), null, null, null))))
             .when(mService).getUsers(Set.of(1L), Set.of(2L), Set.of("user1"), Set.of("User One"),
                 Set.of("user1@example.com"), Set.of("1234567890"), Set.of(1L), Set.of(2L),
@@ -51,7 +51,7 @@ public class UserControllerTest {
             .when(mCrudController).getAll(
                 new PageImpl<>(
                     List.of(new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-                        "1234567890", URI.create("http://example.com/image.jpg"), null, null,
+                        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
                         List.of(), null, null, null))),
                 Set.of(""));
 
