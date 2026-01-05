@@ -25,6 +25,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.iaas.user.model.IaasUser;
+import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.repository.service.RepoService;
@@ -188,21 +190,87 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testPut_UpdatesUserAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
-    doAnswer(inv -> inv.getArgument(1)).when(this.mMergerService).getPutEntities(any(), any());
-
+  public void testPut_UpdatesUserAndSyncsWithIaasAndSavesToRepo_WhenUpdatesAreNotNull() {
     final UpdateUser<?> user1 = new User(1L);
     final UpdateUser<?> user2 = new User(2L);
 
-    doReturn(List.of(new User(1L), new User(2L))).when(this.mRepoService)
+    User existingUser1 = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
+        "1234567890", null, null, null, List.of(), null, null, null);
+    existingUser1.setIaasUsername("iaas_user1");
+    
+    User existingUser2 = new User(2L, "user2", "User Two", "User", "Two", "user2@example.com",
+        "0987654321", null, null, null, List.of(), null, null, null);
+    existingUser2.setIaasUsername("iaas_user2");
+
+    doReturn(List.of(existingUser1, existingUser2)).when(this.mRepoService)
         .getByIds(List.of(user1, user2));
 
-    final List<User> updated = this.service.put(List.of(user1, user2, new User()));
+    // Mock merger to return the existing users
+    doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getPutEntities(any(), any());
 
-    final List<User> expected = List.of(new User(1L), new User(2L), new User());
+    // Mock iaasService.put() to return updated memberships with IaasUser information
+    IaasUserTenantMembership membership1 = new IaasUserTenantMembership();
+    IaasUser iaasUser1 = new IaasUser();
+    iaasUser1.setId("user1@example.com");
+    iaasUser1.setUserName("iaas_user1_updated");
+    membership1.setUser(iaasUser1);
+    
+    IaasUserTenantMembership membership2 = new IaasUserTenantMembership();
+    IaasUser iaasUser2 = new IaasUser();
+    iaasUser2.setId("user2@example.com");
+    iaasUser2.setUserName("iaas_user2");
+    membership2.setUser(iaasUser2);
 
-    assertEquals(expected, updated);
-    verify(this.mRepoService, times(1)).saveAll(updated);
+    doAnswer(inv -> List.of(membership1, membership2)).when(this.iaasService)
+        .put(anyList());
+
+    // Mock repoService.saveAll() to return users after iaasUsername is set
+    doAnswer(inv -> {
+      List<User> users = inv.getArgument(0);
+      return users;
+    }).when(this.mRepoService).saveAll(anyList());
+
+    final List<User> updated = this.service.put(List.of(user1, user2));
+
+    assertEquals(2, updated.size());
+    assertEquals("iaas_user1_updated", updated.get(0).getIaasUsername());
+    assertEquals("iaas_user2", updated.get(1).getIaasUsername());
+    verify(this.iaasService, times(1)).put(anyList());
+    verify(this.mRepoService, times(1)).saveAll(anyList());
+  }
+
+  @Test
+  public void testPut_PreservesIaasUsername_WhenNotProvidedInUpdateDto() {
+    final UpdateUser<?> userUpdate = new User(1L);
+
+    User existingUser = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
+        "1234567890", null, null, null, List.of(), null, null, null);
+    existingUser.setIaasUsername("original_iaas_username");
+
+    doReturn(List.of(existingUser)).when(this.mRepoService).getByIds(List.of(userUpdate));
+
+    // Mock merger to return the existing user
+    doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getPutEntities(any(), any());
+
+    // Mock iaasService.put() returning the same username
+    IaasUserTenantMembership membership = new IaasUserTenantMembership();
+    IaasUser iaasUser = new IaasUser();
+    iaasUser.setId("user1@example.com");
+    iaasUser.setUserName("original_iaas_username");
+    membership.setUser(iaasUser);
+
+    doAnswer(inv -> List.of(membership)).when(this.iaasService).put(anyList());
+
+    // Mock repoService.saveAll() to return users with iaasUsername set
+    doAnswer(inv -> {
+      List<User> users = inv.getArgument(0);
+      return users;
+    }).when(this.mRepoService).saveAll(anyList());
+
+    final List<User> updated = this.service.put(List.of(userUpdate));
+
+    assertEquals(1, updated.size());
+    assertEquals("original_iaas_username", updated.get(0).getIaasUsername());
   }
 
   @Test

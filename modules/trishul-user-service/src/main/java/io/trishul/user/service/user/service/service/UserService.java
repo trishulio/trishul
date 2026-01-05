@@ -150,6 +150,20 @@ public class UserService extends BaseService
     final List<User> existing = this.repoService.getByIds(updates);
     final List<User> updated = this.entityMergerService.getPutEntities(existing, updates);
 
+    List<IaasUserTenantMembership> updatedIaasUserMemberships = this.iaasService.put(updated);
+    
+    Map<String, IaasUser> iaasUserMap = updatedIaasUserMemberships.stream()
+        .map(IaasUserTenantMembership::getUser)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toMap(IaasUser::getId, iaasUser -> iaasUser));
+
+    updated.forEach(user -> {
+      IaasUser iaasUser = iaasUserMap.get(user.getEmail());
+      if (iaasUser != null) {
+        user.setIaasUsername(iaasUser.getUserName());
+      }
+    });
+
     List<User> users = this.repoService.saveAll(updated);
 
     return users;
