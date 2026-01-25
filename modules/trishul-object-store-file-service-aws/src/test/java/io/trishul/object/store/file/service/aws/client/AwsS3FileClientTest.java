@@ -111,8 +111,8 @@ class AwsS3FileClientTest {
 
     assertTrue(client.delete(URI.create("file.txt")));
 
-    assertEquals(captor.getValue().getBucketName(), "BUCKET_NAME");
-    assertEquals(captor.getValue().getKey(), "file.txt");
+    assertEquals("BUCKET_NAME", captor.getValue().getBucketName());
+    assertEquals("file.txt", captor.getValue().getKey());
     verify(mS3, times(1)).deleteObject(any(DeleteObjectRequest.class));
   }
 

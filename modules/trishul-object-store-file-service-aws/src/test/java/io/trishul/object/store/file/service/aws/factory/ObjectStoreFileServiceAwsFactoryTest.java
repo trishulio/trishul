@@ -29,8 +29,8 @@ class ObjectStoreFileServiceAwsFactoryTest {
 
     assertEquals(new URI("https://s3.REGION.amazonaws.com"), endpoint);
     assertEquals("REGION", region);
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(), "ACCESS_KEY_ID");
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(), "ACCESS_SECRET_KEY");
+    assertEquals("ACCESS_KEY_ID", awsCredentialsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals("ACCESS_SECRET_KEY", awsCredentialsProvider.getCredentials().getAWSSecretKey());
     assertEquals(
         ((BasicSessionCredentials) awsCredentialsProvider.getCredentials()).getSessionToken(),
         "SESSION_TOKEN");

@@ -148,7 +148,7 @@ public class ReflectionManipulator {
 
   public Set<String> getPropertyNames(Class<?> clazz, Set<String> exclusions) {
     if (clazz == null) {
-      return null;
+      return Collections.emptySet();
     }
 
     final PropNameKey key = new PropNameKey(clazz, exclusions);

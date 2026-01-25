@@ -47,7 +47,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
   @Override
   public List<E> getAddEntities(List<? extends BE> additions) {
     if (additions == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     return additions.stream().map(addition -> {

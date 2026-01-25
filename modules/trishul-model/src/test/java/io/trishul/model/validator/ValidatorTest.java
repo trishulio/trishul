@@ -3,9 +3,10 @@ package io.trishul.model.validator;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import io.trishul.model.base.exception.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.model.base.exception.ValidationException;
 
 class ValidatorTest {
   private Validator validator;
@@ -18,7 +19,7 @@ class ValidatorTest {
   @Test
   void testRule_SetsMsgAsError_WhenConditionIsFalse() {
     validator.rule(false, "This is an error message: %s", "TEST");
-    ValidationException exception = assertThrows(ValidationException.class,
+    assertThrows(ValidationException.class,
         () -> validator.raiseErrors(), "1. This is an error message: TEST");
   }
 

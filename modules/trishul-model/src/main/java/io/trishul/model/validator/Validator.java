@@ -2,6 +2,7 @@ package io.trishul.model.validator;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import io.trishul.model.base.exception.ValidationException;
 
 public class Validator {

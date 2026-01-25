@@ -16,15 +16,15 @@ public class Tax extends BaseEntity {
   public static final String FIELD_PST_RATE = "pstRate";
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "gst_rate"))})
+  @AttributeOverride(name = "value", column = @Column(name = "gst_rate"))
   private TaxRate gstRate;
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "pst_rate"))})
+  @AttributeOverride(name = "value", column = @Column(name = "pst_rate"))
   private TaxRate pstRate;
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "value", column = @Column(name = "hst_rate"))})
+  @AttributeOverride(name = "value", column = @Column(name = "hst_rate"))
   private TaxRate hstRate;
 
   public Tax() {

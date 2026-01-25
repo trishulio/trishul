@@ -88,7 +88,7 @@ public class IaasIdpTenantService extends BaseService implements
   @Override
   public List<IaasIdpTenant> add(List<? extends BaseIaasIdpTenant<?>> additions) {
     if (additions == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     List<IaasIdpTenant> policies = this.entityMergerService.getAddEntities(additions);
@@ -99,7 +99,7 @@ public class IaasIdpTenantService extends BaseService implements
   @Override
   public List<IaasIdpTenant> put(List<? extends UpdateIaasIdpTenant<?>> updates) {
     if (updates == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     List<IaasIdpTenant> updated = this.entityMergerService.getPutEntities(null, updates);
@@ -110,7 +110,7 @@ public class IaasIdpTenantService extends BaseService implements
   @Override
   public List<IaasIdpTenant> patch(List<? extends UpdateIaasIdpTenant<?>> updates) {
     if (updates == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     List<IaasIdpTenant> existing = this.getByIds(updates);

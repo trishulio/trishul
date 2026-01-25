@@ -59,7 +59,7 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
   @Override
   public List<E> getByIds(Collection<? extends Identified<ID>> idProviders) {
     if (idProviders == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     final Set<ID> ids = idProviders.stream().filter(Objects::nonNull)
@@ -72,7 +72,7 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
   public List<E> getByAccessorIds(Collection<? extends A> accessors,
       Function<A, ? extends Identified<ID>> entityGetter) {
     if (accessors == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     final Set<ID> ids = accessors.stream().filter(Objects::nonNull)

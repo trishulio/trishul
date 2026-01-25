@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import io.trishul.auth.session.context.PrincipalContext;

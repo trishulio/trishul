@@ -49,11 +49,4 @@ class CognitoPrincipalContextTest {
   void testGetRoles_ReturnsTheCognitoScopes() {
     assertEquals(Arrays.asList("SCOPE_1", "SCOPE_2"), ctx.getRoles());
   }
-
-  // TODO: Move this test to where this code was moved to
-  // @Test
-  // public void testGetIaasLogin_ReturnsIaasToken() {
-  // assertEquals(new IaasAuthorizationCredentials(IAAS_TOKEN),
-  // ctx.getIaasLogin());
-  // }
 }

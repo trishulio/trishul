@@ -54,9 +54,6 @@ class QuantityUnitServiceImplTest {
         = quantityUnitService.getUnits(null, new TreeSet<>(List.of("id")), true, 0, 100);
 
     assertEquals(List.of(new UnitEntity("g", "g")), actualUnitsPage.getContent());
-
-    // TODO: Pending testing for the specification
-    // specificationCaptor.getValue();
   }
 
   @Test

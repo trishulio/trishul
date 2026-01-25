@@ -22,19 +22,17 @@ public class Amount extends BaseEntity {
   public static final String FIELD_TAX_AMOUNT = "taxAmount";
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "total_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity total;
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "amount", column = @Column(name = "sub_total_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "sub_total_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "sub_total_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity subTotal;
 
   @Embedded

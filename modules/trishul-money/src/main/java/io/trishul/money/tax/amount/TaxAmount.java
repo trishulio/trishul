@@ -25,32 +25,31 @@ public class TaxAmount extends BaseEntity {
   public static final String FIELD_TOTAL_TAX_AMOUNT = "totalTaxAmount";
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "amount", column = @Column(name = "pst_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "pst_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "pst_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity pstAmount;
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "amount", column = @Column(name = "gst_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "gst_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "gst_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity gstAmount;
 
   @Embedded
-  @AttributeOverrides({@AttributeOverride(name = "amount", column = @Column(name = "hst_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "hst_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "hst_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity hstAmount;
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "amount", column = @Column(name = "total_tax_amount"))})
-  @AssociationOverrides({@AssociationOverride(name = "currency",
+  @AttributeOverride(name = "amount", column = @Column(name = "total_tax_amount"))
+  @AssociationOverride(name = "currency",
       joinColumns = @JoinColumn(name = "total_tax_amount_currency_code",
-          referencedColumnName = "numeric_code"))})
+          referencedColumnName = "numeric_code"))
   private MoneyEntity totalTaxAmount;
 
   public TaxAmount() {

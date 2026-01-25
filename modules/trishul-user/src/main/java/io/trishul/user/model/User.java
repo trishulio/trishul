@@ -296,7 +296,7 @@ public class User extends BaseEntity
   @Override
   public List<UserRole> getRoles() {
     if (this.roleBindings == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     return this.roleBindings.stream().map(UserRoleAccessor::getRole).toList();

@@ -53,9 +53,6 @@ class UserSalutationServiceTest {
 
     assertEquals(List.of(new UserSalutation(1L, "MR", LocalDateTime.of(2018, 1, 2, 3, 4),
         LocalDateTime.of(2019, 1, 2, 3, 4), 1)), actualSalutationsPage.getContent());
-
-    // TODO: Pending testing for the specification
-    // specificationCaptor.getValue();
   }
 
   @Test
@@ -64,8 +61,8 @@ class UserSalutationServiceTest {
         = userSalutationService.getClass().getAnnotation(Transactional.class);
 
     assertNotNull(transactional);
-    assertEquals(transactional.isolation(), Isolation.DEFAULT);
-    assertEquals(transactional.propagation(), Propagation.REQUIRED);
+    assertEquals(Isolation.DEFAULT, transactional.isolation());
+    assertEquals(Propagation.REQUIRED, transactional.propagation());
   }
 
   @Test

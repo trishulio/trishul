@@ -30,8 +30,8 @@ class IaasAuthAwsFactoryTest {
 
     assertEquals(new URI("https://URL"), endpoint);
     assertEquals("REGION", region);
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(), "ACCESS_KEY_ID");
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(), "ACCESS_SECRET_KEY");
+    assertEquals("ACCESS_KEY_ID", awsCredentialsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals("ACCESS_SECRET_KEY", awsCredentialsProvider.getCredentials().getAWSSecretKey());
   }
 
   @Test
@@ -46,7 +46,7 @@ class IaasAuthAwsFactoryTest {
 
     assertEquals(new URI("https://cognito-identity.REGION.amazonaws.com"), endpoint);
     assertEquals("REGION", region);
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(), "ACCESS_KEY_ID");
-    assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(), "ACCESS_SECRET_KEY");
+    assertEquals("ACCESS_KEY_ID", awsCredentialsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals("ACCESS_SECRET_KEY", awsCredentialsProvider.getCredentials().getAWSSecretKey());
   }
 }
