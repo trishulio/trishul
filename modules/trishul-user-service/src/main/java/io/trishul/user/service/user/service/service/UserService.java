@@ -58,12 +58,12 @@ public class UserService extends BaseService
       Set<Long> salutationIds, Set<String> roles, int page, int size, SortedSet<String> sort,
       boolean orderAscending) {
     final Specification<User> spec
-        = WhereClauseBuilder.builder().in(User.ATTR_ID, ids).not().in(User.ATTR_ID, excludeIds)
-            .in(User.ATTR_USER_NAME, userNames).in(User.ATTR_DISPLAY_NAME, displayNames)
-            .in(User.ATTR_EMAIL, emails).in(User.ATTR_PHONE_NUMBER, phoneNumbers)
-            .in(new String[] {User.ATTR_STATUS, UserStatus.ATTR_ID}, statusIds)
-            .in(new String[] {User.ATTR_SALUTATION, UserStatus.ATTR_ID}, salutationIds)
-            .in(new String[] {User.ATTR_ROLES, UserRole.ATTR_ID}, roles).build();
+        = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids).not().in(Identified.ATTR_ID, excludeIds)
+            .in(BaseUser.ATTR_USER_NAME, userNames).in(BaseUser.ATTR_DISPLAY_NAME, displayNames)
+            .in(BaseUser.ATTR_EMAIL, emails).in(BaseUser.ATTR_PHONE_NUMBER, phoneNumbers)
+            .in(new String[] {UserStatusAccessor.ATTR_STATUS, Identified.ATTR_ID}, statusIds)
+            .in(new String[] {UserSalutationAccessor.ATTR_SALUTATION, Identified.ATTR_ID}, salutationIds)
+            .in(new String[] {BaseUser.ATTR_ROLES, Identified.ATTR_ID}, roles).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

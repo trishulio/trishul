@@ -40,8 +40,8 @@ public class UserRoleService extends BaseService implements
 
   public Page<UserRole> getUserRoles(Set<Long> ids, Set<Long> excludeIds, Set<String> names,
       SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    final Specification<UserRole> spec = WhereClauseBuilder.builder().in(UserRole.ATTR_ID, ids)
-        .not().in(UserRole.ATTR_ID, excludeIds).like(UserRole.ATTR_NAME, names).build();
+    final Specification<UserRole> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids)
+        .not().in(Identified.ATTR_ID, excludeIds).like(BaseUserRole.ATTR_NAME, names).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

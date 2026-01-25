@@ -53,9 +53,9 @@ public class TenantService
 
   public Page<Tenant> getAll(Set<UUID> ids, Set<String> names, Set<URL> urls, Boolean isReady,
       SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    Specification<Tenant> spec = WhereClauseBuilder.builder().in(new String[] {Tenant.ATTR_ID}, ids)
-        .in(new String[] {Tenant.ATTR_NAME}, names).in(new String[] {Tenant.ATTR_URL}, urls)
-        .is(new String[] {Tenant.ATTR_IS_READY}, isReady).build();
+    Specification<Tenant> spec = WhereClauseBuilder.builder().in(new String[] {Identified.ATTR_ID}, ids)
+        .in(new String[] {TenantData.ATTR_NAME}, names).in(new String[] {TenantData.ATTR_URL}, urls)
+        .is(new String[] {TenantData.ATTR_IS_READY}, isReady).build();
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }
 

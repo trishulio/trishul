@@ -22,7 +22,7 @@ public class UserSalutationService extends BaseService {
 
   public Page<UserSalutation> getSalutations(Set<Long> ids, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {
-    Specification<UserSalutation> spec = WhereClauseBuilder.builder().in(User.ATTR_ID, ids).build();
+    Specification<UserSalutation> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids).build();
     Page<UserSalutation> userSalutations
         = userSalutationRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
 

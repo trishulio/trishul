@@ -13,14 +13,14 @@ public interface AwsIaasRoleMapper extends IaasEntityMapper<Role, IaasRole> {
   final AwsIaasRoleMapper INSTANCE = Mappers.getMapper(AwsIaasRoleMapper.class);
 
   @Override
-  @Mapping(ignore = true, target = IaasRole.ATTR_ID)
-  @Mapping(source = "roleName", target = IaasRole.ATTR_NAME)
-  @Mapping(source = "description", target = IaasRole.ATTR_DESCRIPTION)
-  @Mapping(source = "assumeRolePolicyDocument", target = IaasRole.ATTR_ASSUME_POLICY_DOCUMENT)
-  @Mapping(source = "arn", target = IaasRole.ATTR_IAAS_RESOURCE_NAME)
-  @Mapping(source = "roleId", target = IaasRole.ATTR_IAAS_ID)
-  @Mapping(source = "roleLastUsed.lastUsedDate", target = IaasRole.ATTR_LAST_USED)
-  @Mapping(source = "createDate", target = IaasRole.ATTR_CREATED_AT)
-  @Mapping(ignore = true, target = IaasRole.ATTR_LAST_UPDATED)
+  @Mapping(ignore = true, target = Identified.ATTR_ID)
+  @Mapping(source = "roleName", target = BaseIaasRole.ATTR_NAME)
+  @Mapping(source = "description", target = BaseIaasRole.ATTR_DESCRIPTION)
+  @Mapping(source = "assumeRolePolicyDocument", target = BaseIaasRole.ATTR_ASSUME_POLICY_DOCUMENT)
+  @Mapping(source = "arn", target = BaseIaasRole.ATTR_IAAS_RESOURCE_NAME)
+  @Mapping(source = "roleId", target = BaseIaasRole.ATTR_IAAS_ID)
+  @Mapping(source = "roleLastUsed.lastUsedDate", target = BaseIaasRole.ATTR_LAST_USED)
+  @Mapping(source = "createDate", target = Audited.ATTR_CREATED_AT)
+  @Mapping(ignore = true, target = Audited.ATTR_LAST_UPDATED)
   IaasRole fromIaasEntity(Role role);
 }

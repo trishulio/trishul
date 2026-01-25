@@ -8,10 +8,10 @@ import org.mapstruct.factory.Mappers;
 public interface UserStatusMapper {
   UserStatusMapper INSTANCE = Mappers.getMapper(UserStatusMapper.class);
 
-  @Mapping(target = UserStatus.ATTR_NAME, ignore = true)
-  @Mapping(target = UserStatus.ATTR_CREATED_AT, ignore = true)
-  @Mapping(target = UserStatus.ATTR_LAST_UPDATED, ignore = true)
-  @Mapping(target = UserStatus.ATTR_VERSION, ignore = true)
+  @Mapping(target = BaseUserStatus.ATTR_NAME, ignore = true)
+  @Mapping(target = Audited.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = Audited.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = Versioned.ATTR_VERSION, ignore = true)
   UserStatus fromDto(Long id);
 
   UserStatusDto toDto(UserStatus status);

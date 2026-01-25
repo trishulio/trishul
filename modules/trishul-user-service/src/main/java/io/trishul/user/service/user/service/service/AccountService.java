@@ -47,7 +47,7 @@ public class AccountService {
     }
 
     final Specification<User> spec = WhereClauseBuilder.builder()
-        .is(User.ATTR_IAAS_USERNAME, username)
+        .is(BaseUser.ATTR_IAAS_USERNAME, username)
         .build();
 
     List<User> users = userRepository.findAll(spec);

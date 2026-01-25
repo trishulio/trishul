@@ -36,7 +36,7 @@ public class IaasObjectStoreFileServiceAutoConfiguration {
     final EntityMergerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> entityMergerService
         = new CrudEntityMergerService<>(lockService, BaseIaasObjectStoreFile.class,
             UpdateIaasObjectStoreFile.class, IaasObjectStoreFile.class,
-            Set.of(IaasObjectStoreFile.ATTR_MIN_VALID_UNTIL));
+            Set.of(BaseIaasObjectStoreFile.ATTR_MIN_VALID_UNTIL));
     IaasRepository<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> iaasRepo
         = new IaasRepositoryProviderProxy<>(iaasObjectStoreFileClientProvider);
 

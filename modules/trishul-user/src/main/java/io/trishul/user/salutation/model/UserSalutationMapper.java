@@ -8,10 +8,10 @@ import org.mapstruct.factory.Mappers;
 public interface UserSalutationMapper {
   UserSalutationMapper INSTANCE = Mappers.getMapper(UserSalutationMapper.class);
 
-  @Mapping(target = UserSalutation.ATTR_TITLE, ignore = true)
-  @Mapping(target = UserSalutation.ATTR_CREATED_AT, ignore = true)
-  @Mapping(target = UserSalutation.ATTR_LAST_UPDATED, ignore = true)
-  @Mapping(target = UserSalutation.ATTR_VERSION, ignore = true)
+  @Mapping(target = BaseUserSalutation.ATTR_TITLE, ignore = true)
+  @Mapping(target = Audited.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = Audited.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = Versioned.ATTR_VERSION, ignore = true)
   UserSalutation fromDto(Long id);
 
   UserSalutationDto toDto(UserSalutation salutation);

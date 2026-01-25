@@ -70,9 +70,9 @@ public class TenantPersistenceAutoConfiguration {
         ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "io.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
-    jpaProperties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-    jpaProperties.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
-    jpaProperties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER,
+    jpaProperties.put(JdbcSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+    jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
+    jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,
         currentTenantIdentifierResolver);
 
     localContainerEntityManagerFactoryBean.setJpaPropertyMap(jpaProperties);

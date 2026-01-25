@@ -16,17 +16,17 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
   TenantDto toDto(Tenant invoice);
 
   @Override
-  @Mapping(target = Tenant.ATTR_LAST_UPDATED, ignore = true)
-  @Mapping(target = Tenant.ATTR_CREATED_AT, ignore = true)
-  @Mapping(target = Tenant.ATTR_IS_READY, ignore = true)
-  @Mapping(target = Tenant.ATTR_VERSION, ignore = true)
+  @Mapping(target = Audited.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = Audited.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = TenantData.ATTR_IS_READY, ignore = true)
+  @Mapping(target = Versioned.ATTR_VERSION, ignore = true)
   Tenant fromUpdateDto(UpdateTenantDto dto);
 
   @Override
-  @Mapping(target = Tenant.ATTR_ID, ignore = true)
-  @Mapping(target = Tenant.ATTR_VERSION, ignore = true)
-  @Mapping(target = Tenant.ATTR_LAST_UPDATED, ignore = true)
-  @Mapping(target = Tenant.ATTR_CREATED_AT, ignore = true)
-  @Mapping(target = Tenant.ATTR_IS_READY, ignore = true)
+  @Mapping(target = Identified.ATTR_ID, ignore = true)
+  @Mapping(target = Versioned.ATTR_VERSION, ignore = true)
+  @Mapping(target = Audited.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = Audited.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = TenantData.ATTR_IS_READY, ignore = true)
   Tenant fromAddDto(AddTenantDto dto);
 }
