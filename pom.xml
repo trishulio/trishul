@@ -814,9 +814,10 @@
                 </property>
             </activation>
             <properties>
+                <sonar.projectName>${env.SONARQUBE_PROJECT_NAME}</sonar.projectName>
                 <sonar.host.url>${env.SONARQUBE_HOST_URL}</sonar.host.url>
                 <sonar.projectKey>${env.SONARQUBE_PROJECT_KEY}</sonar.projectKey>
-                <sonar.login>${env.SONARQUBE_LOGIN}</sonar.login>
+                <sonar.token>${env.SONARQUBE_TOKEN}</sonar.token>
             </properties>
             <build>
                 <plugins>
