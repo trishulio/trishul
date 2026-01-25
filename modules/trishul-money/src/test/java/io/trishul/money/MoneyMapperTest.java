@@ -9,51 +9,51 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MoneyMapperTest {
+class MoneyMapperTest {
   MoneyMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = MoneyMapper.INSTANCE;
   }
 
   @Test
-  public void testToDto_ReturnsMoneyDto_WhenMoneyIsNotNull() {
+  void testToDto_ReturnsMoneyDto_WhenMoneyIsNotNull() {
     MoneyDto dto = mapper.toDto(Money.parse("USD 100"));
     assertEquals("USD", dto.getCurrency());
     assertEquals(new BigDecimal("100"), dto.getAmount());
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenMoneyIsNull() {
+  void testToDto_ReturnsNull_WhenMoneyIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testFromDto_ReturnsMoney_WhenDtoIsNotNull() {
+  void testFromDto_ReturnsMoney_WhenDtoIsNotNull() {
     Money money = mapper.fromDto(new MoneyDto("CAD", new BigDecimal(123)));
     assertEquals(Money.parse("CAD 123"), money);
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testFromEntity_ReturnsMoney_WhenEntityIsNotNull() {
+  void testFromEntity_ReturnsMoney_WhenEntityIsNotNull() {
     MoneyEntity entity = new MoneyEntity(new Currency(124, "CAD"), new BigDecimal("10"));
 
     assertEquals(Money.parse("CAD 10"), mapper.fromEntity(entity));
   }
 
   @Test
-  public void testFromEntity_ReturnsNull_WhenEntityIsNull() {
+  void testFromEntity_ReturnsNull_WhenEntityIsNull() {
     assertNull(mapper.fromEntity(null));
   }
 
   @Test
-  public void testToEntity_ReturnsEntity_WhenPojoIsNotNull() {
+  void testToEntity_ReturnsEntity_WhenPojoIsNotNull() {
     Money money = Money.parse("CAD 10");
 
     MoneyEntity entity = mapper.toEntity(money);
@@ -61,7 +61,7 @@ public class MoneyMapperTest {
   }
 
   @Test
-  public void testToEntity_ReturnsNull_WhenPojoIsNull() {
+  void testToEntity_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toEntity(null));
   }
 }

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class JpaJoinerCachingProxyTest {
+class JpaJoinerCachingProxyTest {
   class Entity {
   }
 
@@ -26,14 +26,14 @@ public class JpaJoinerCachingProxyTest {
   private JpaJoinerLocalCache mCache;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCache = mock(JpaJoinerLocalCache.class);
     mDelegate = mock(CriteriaJoinAnnotationJoiner.class);
     joiner = new JpaJoinerCachingProxy(mCache, mDelegate);
   }
 
   @Test
-  public void testJoin_ReturnsFromCache_AndPassesSupplierWithCallToDelegate() {
+  void testJoin_ReturnsFromCache_AndPassesSupplierWithCallToDelegate() {
     ArgumentCaptor<Supplier<Path<Entity>>> captor = ArgumentCaptor.forClass(Supplier.class);
 
     From<Object, Entity> mFrom = mock(From.class);
@@ -50,7 +50,7 @@ public class JpaJoinerCachingProxyTest {
   }
 
   @Test
-  public void testGet_ReturnsFromCache_AndPassesSupplierWithCallToDelegate() {
+  void testGet_ReturnsFromCache_AndPassesSupplierWithCallToDelegate() {
     ArgumentCaptor<Supplier<Path<Entity>>> captor = ArgumentCaptor.forClass(Supplier.class);
 
     From<Object, Entity> mFrom = mock(From.class);

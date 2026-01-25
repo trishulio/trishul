@@ -17,7 +17,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserRefresherTest {
+class UserRefresherTest {
   private AccessorRefresher<Long, UserAccessor<?>, User> mRefresher;
   private AccessorRefresher<Long, AssignedToAccessor<?>, User> mAssignedToRefresher;
   private AccessorRefresher<Long, OwnedByAccessor<User>, User> mOwnedByRefresher;
@@ -28,7 +28,7 @@ public class UserRefresherTest {
   private UserRefresher userRefresher;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mRefresher = mock(AccessorRefresher.class);
     mAssignedToRefresher = mock(AccessorRefresher.class);
     mOwnedByRefresher = mock(AccessorRefresher.class);
@@ -40,7 +40,7 @@ public class UserRefresherTest {
   }
 
   @Test
-  public void testRefresh_RefreshedChildEntitiesAndBindings() {
+  void testRefresh_RefreshedChildEntitiesAndBindings() {
     List<User> users = List.of(new User(1L), new User(2L));
 
     users.get(0).setRoles(List.of(new UserRole(10L)));
@@ -58,7 +58,7 @@ public class UserRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_CallsAccessorRefresher() {
+  void testRefreshAccessors_CallsAccessorRefresher() {
     UserAccessor<?> accessor = mock(UserAccessor.class);
     userRefresher.refreshAccessors(List.of(accessor));
 
@@ -66,7 +66,7 @@ public class UserRefresherTest {
   }
 
   @Test
-  public void testAssignedToRefreshAccessors_CallsAccessorRefresher() {
+  void testAssignedToRefreshAccessors_CallsAccessorRefresher() {
     AssignedToAccessor<?> accessor = mock(AssignedToAccessor.class);
     userRefresher.refreshAssignedToAccessors(List.of(accessor));
 
@@ -74,7 +74,7 @@ public class UserRefresherTest {
   }
 
   @Test
-  public void testOwnedByRefreshAccessors_CallsAccessorRefresher() {
+  void testOwnedByRefreshAccessors_CallsAccessorRefresher() {
     OwnedByAccessor<User> accessor = mock(OwnedByAccessor.class);
     userRefresher.refreshOwnedByAccessors(List.of(accessor));
 

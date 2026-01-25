@@ -30,20 +30,20 @@ import com.amazonaws.services.identitymanagement.model.UpdateRoleRequest;
 import com.amazonaws.services.identitymanagement.model.UpdateRoleResult;
 import io.trishul.iaas.access.role.model.IaasRole;
 
-public class AwsIamRoleClientTest {
+class AwsIamRoleClientTest {
   private AwsIamRoleClient client;
 
   private AmazonIdentityManagement mAwsIamClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAwsIamClient = mock(AmazonIdentityManagement.class);
 
     client = new AwsIamRoleClient(mAwsIamClient, AwsIaasRoleMapper.INSTANCE);
   }
 
   @Test
-  public void testGet_ReturnsPolicyFromAwsRequest() {
+  void testGet_ReturnsPolicyFromAwsRequest() {
     doAnswer(inv -> {
       GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
       Role role = new Role().withRoleName(req.getRoleName());
@@ -56,7 +56,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenDeleteRequestSucceeds() {
+  void testDelete_ReturnsTrue_WhenDeleteRequestSucceeds() {
     ResponseMetadata mResponseMetadata = mock(ResponseMetadata.class);
     doReturn("REQUEST_ID").when(mResponseMetadata).getRequestId();
     DeleteRoleResult mResult = new DeleteRoleResult();
@@ -71,7 +71,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
+  void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
     DeleteRoleRequest request = new DeleteRoleRequest().withRoleName("ROLE");
 
     doThrow(NoSuchEntityException.class).when(mAwsIamClient).deleteRole(request);
@@ -80,7 +80,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedRole() {
+  void testAdd_ReturnsAddedRole() {
     doAnswer(inv -> {
       CreateRoleRequest req = inv.getArgument(0, CreateRoleRequest.class);
 
@@ -102,7 +102,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testUpdate_ReturnsUpdateRole() {
+  void testUpdate_ReturnsUpdateRole() {
     doAnswer(inv -> {
       GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
       Role role = new Role().withRoleName(req.getRoleName());
@@ -130,7 +130,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsObject() {
+  void testExists_ReturnsTrue_WhenGetReturnsObject() {
     doAnswer(inv -> {
       GetRoleRequest req = inv.getArgument(0, GetRoleRequest.class);
       Role role = new Role().withRoleName(req.getRoleName());
@@ -141,14 +141,14 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     doThrow(NoSuchEntityException.class).when(mAwsIamClient).getRole(any(GetRoleRequest.class));
 
     assertFalse(client.exists("ROLE"));
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistIsFalse() {
+  void testPut_CallsAdd_WhenExistIsFalse() {
     client = spy(client);
     doReturn(false).when(client).exists("ROLE_1");
 
@@ -158,7 +158,7 @@ public class AwsIamRoleClientTest {
   }
 
   @Test
-  public void testPut_CallsUpdate_WhenExistIsTrue() {
+  void testPut_CallsUpdate_WhenExistIsTrue() {
     client = spy(client);
     doReturn(true).when(client).exists("ROLE_1");
 

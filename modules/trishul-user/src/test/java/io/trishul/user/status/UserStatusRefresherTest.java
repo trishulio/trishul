@@ -8,26 +8,26 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
-public class UserStatusRefresherTest {
+class UserStatusRefresherTest {
   private AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> mRefresher;
 
   private UserStatusRefresher userStatusRefresher;
 
   @BeforeEach
   @SuppressWarnings("unchecked")
-  public void init() {
+  void init() {
     mRefresher = mock(AccessorRefresher.class);
 
     userStatusRefresher = new UserStatusRefresher(mRefresher);
   }
 
   @Test
-  public void testRefresh_DoesNothing() {
+  void testRefresh_DoesNothing() {
     userStatusRefresher.refresh(null);
   }
 
   @Test
-  public void testRefreshAccessors_CallsAccessorRefresher() {
+  void testRefreshAccessors_CallsAccessorRefresher() {
     UserStatusAccessor<?> accessor = mock(UserStatusAccessor.class);
     List<UserStatusAccessor<?>> accessors = List.of(accessor);
 

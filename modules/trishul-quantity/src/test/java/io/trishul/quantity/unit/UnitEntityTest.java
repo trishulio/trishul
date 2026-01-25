@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-public class UnitEntityTest {
+class UnitEntityTest {
   private UnitEntity unit;
 
   @BeforeEach
-  public void init() {
+  void init() {
     unit = new UnitEntity();
   }
 
   @Test
-  public void testArgConstructor_String() {
+  void testArgConstructor_String() {
     unit = new UnitEntity("g");
 
     assertEquals("g", unit.getSymbol());
@@ -26,7 +26,7 @@ public class UnitEntityTest {
   }
 
   @Test
-  public void testArgConstructor_StringString() {
+  void testArgConstructor_StringString() {
     unit = new UnitEntity("g", "gram");
 
     assertEquals("g", unit.getSymbol());
@@ -35,7 +35,7 @@ public class UnitEntityTest {
   }
 
   @Test
-  public void testAllArgsConstructor() {
+  void testAllArgsConstructor() {
     unit = new UnitEntity("g", "gram", new UnitEntity("g"));
     assertEquals("g", unit.getSymbol());
     assertEquals("gram", unit.getName());
@@ -43,28 +43,28 @@ public class UnitEntityTest {
   }
 
   @Test
-  public void testAccessSymbol() {
+  void testAccessSymbol() {
     assertNull(unit.getSymbol());
     unit.setSymbol("g");
     assertEquals("g", unit.getSymbol());
   }
 
   @Test
-  public void testAccessName() {
+  void testAccessName() {
     assertNull(unit.getName());
     unit.setName("Kilogram");
     assertEquals("Kilogram", unit.getName());
   }
 
   @Test
-  public void testGetSetBaseUnitEntity() {
+  void testGetSetBaseUnitEntity() {
     assertNull(unit.getBaseUnitEntity());
     unit.setBaseUnitEntity(new UnitEntity("g", "gram"));
     assertEquals(new UnitEntity("g", "gram"), unit.getBaseUnitEntity());
   }
 
   @Test
-  public void testToString_ReturnsJsonifiedString() throws JSONException {
+  void testToString_ReturnsJsonifiedString() throws JSONException {
     unit = new UnitEntity("KG", "Kilogram");
 
     final String json = "{\"symbol\":\"KG\",\"name\":\"Kilogram\"}";

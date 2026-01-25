@@ -14,28 +14,28 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserMapperTest {
+class UserMapperTest {
   private UserMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = UserMapper.INSTANCE;
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenIdIsNull() {
+  void testFromDto_ReturnsNull_WhenIdIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testFromDto_ReturnsPojo_WhenIdIsNotNull() {
+  void testFromDto_ReturnsPojo_WhenIdIsNotNull() {
     User expected = new User(1L);
 
     assertEquals(expected, mapper.fromDto(1L));
   }
 
   @Test
-  public void testFromAddDto_ReturnsEntity_WhenAddDtoIsNotNull() {
+  void testFromAddDto_ReturnsEntity_WhenAddDtoIsNotNull() {
     AddUserDto dto = new AddUserDto("userName", "displayName", "firstName", "lastName", "email", 1L,
         2L, "phoneNumber", URI.create("imageSrc"), List.of(10L));
 
@@ -51,12 +51,12 @@ public class UserMapperTest {
   }
 
   @Test
-  public void testFromAddDto_ReturnsNull_WhenAddDtoIsNull() {
+  void testFromAddDto_ReturnsNull_WhenAddDtoIsNull() {
     assertNull(mapper.fromAddDto((AddUserDto) null));
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsEntity_WhenUpdateUserDtoIsNotNull() {
+  void testFromUpdateDto_ReturnsEntity_WhenUpdateUserDtoIsNotNull() {
     UpdateUserDto dto = new UpdateUserDto(1L, "userName", "displayName", "firstName", "lastName",
         "email", 1L, 2L, "phoneNumber", URI.create("imageSrc"), List.of(10L), 1);
 
@@ -72,12 +72,12 @@ public class UserMapperTest {
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsNull_WhenUpdateUserDtoIsNull() {
+  void testFromUpdateDto_ReturnsNull_WhenUpdateUserDtoIsNull() {
     assertNull(mapper.fromUpdateDto((UpdateUserDto) null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenEntityIsNotNull() {
+  void testToDto_ReturnsDto_WhenEntityIsNotNull() {
     User user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
         "PHONE_NUMBER", URI.create("IMAGE_SRC"), null, new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),
@@ -108,7 +108,7 @@ public class UserMapperTest {
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto(null));
   }
 }

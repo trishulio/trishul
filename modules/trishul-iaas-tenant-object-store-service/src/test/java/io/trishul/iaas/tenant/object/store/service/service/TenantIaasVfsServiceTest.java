@@ -29,7 +29,7 @@ import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
 
-public class TenantIaasVfsServiceTest {
+class TenantIaasVfsServiceTest {
   private TenantIaasVfsService service;
 
   private TenantIaasVfsResourceMapper mResMapper;
@@ -41,7 +41,7 @@ public class TenantIaasVfsServiceTest {
   private TenantObjectStoreResourceBuilder mBuilder;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mResMapper = mock(TenantIaasVfsResourceMapper.class);
     mPolicyService = mock(IaasPolicyService.class);
     mObjectStoreService = mock(IaasObjectStoreService.class);
@@ -156,7 +156,7 @@ public class TenantIaasVfsServiceTest {
   }
 
   @Test
-  public void testDelete_DelegatesDelete_WhenIdpTenantsAreNotNull() {
+  void testDelete_DelegatesDelete_WhenIdpTenantsAreNotNull() {
     Set<String> iaasIdpTenantIds = Set.of("T1", "T2");
 
     doReturn(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_ID_1")).when(mBuilder)

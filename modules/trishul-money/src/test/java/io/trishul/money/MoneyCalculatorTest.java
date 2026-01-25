@@ -11,28 +11,28 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MoneyCalculatorTest {
+class MoneyCalculatorTest {
   private MoneyCalculator calculator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     calculator = MoneyCalculator.INSTANCE;
   }
 
   @Test
-  public void testTotal_ReturnsNull_WhenCollectionIsNull() {
+  void testTotal_ReturnsNull_WhenCollectionIsNull() {
     Money total = calculator.total(null);
     assertNull(total);
   }
 
   @Test
-  public void testTotal_ReturnsNull_WhenCollectionIsEmpty() {
+  void testTotal_ReturnsNull_WhenCollectionIsEmpty() {
     Money total = calculator.total(Collections.emptyList());
     assertNull(total);
   }
 
   @Test
-  public void testTotal_IgnoresNullSuppliersInCollection() {
+  void testTotal_IgnoresNullSuppliersInCollection() {
     List<MoneySupplier> suppliers = new ArrayList<>();
     suppliers.add(() -> Money.parse("CAD 10"));
     suppliers.add(null);
@@ -42,7 +42,7 @@ public class MoneyCalculatorTest {
   }
 
   @Test
-  public void testTotal_IgnoresSupplierInCollectionWithNullAmounts() {
+  void testTotal_IgnoresSupplierInCollectionWithNullAmounts() {
     List<MoneySupplier> suppliers = List.of(() -> null, () -> Money.parse("CAD 10"), () -> null);
 
     Money total = calculator.total(suppliers);
@@ -50,7 +50,7 @@ public class MoneyCalculatorTest {
   }
 
   @Test
-  public void testTotal_ReturnsTotalOfTheSameCurrency() {
+  void testTotal_ReturnsTotalOfTheSameCurrency() {
     List<MoneySupplier> suppliers = List.of(() -> Money.parse("CAD 10"),
         () -> Money.parse("CAD 20"), () -> Money.parse("CAD 30"));
 
@@ -59,7 +59,7 @@ public class MoneyCalculatorTest {
   }
 
   @Test
-  public void testTotal_ThrowsCurrencyMistMatchException_WhenDifferentCurrenciesAreSupplied() {
+  void testTotal_ThrowsCurrencyMistMatchException_WhenDifferentCurrenciesAreSupplied() {
     List<MoneySupplier> suppliers = List.of(() -> Money.parse("CAD 10"),
         () -> Money.parse("USD 20"), () -> Money.parse("INR 30"));
 
@@ -68,17 +68,17 @@ public class MoneyCalculatorTest {
   }
 
   @Test
-  public void testTotalAmount_ReturnsNull_WhenArgIsNull() {
+  void testTotalAmount_ReturnsNull_WhenArgIsNull() {
     assertNull(calculator.totalAmount(null));
   }
 
   @Test
-  public void testTotalAmount_ReturnsNull_WhenListIsEmpty() {
+  void testTotalAmount_ReturnsNull_WhenListIsEmpty() {
     assertNull(calculator.totalAmount(List.of()));
   }
 
   @Test
-  public void testTotalAmount_ReturnsNull_WhenListHasNullElements() {
+  void testTotalAmount_ReturnsNull_WhenListHasNullElements() {
     List<Money> nulls = new ArrayList<>();
     nulls.add(null);
     nulls.add(null);
@@ -87,7 +87,7 @@ public class MoneyCalculatorTest {
   }
 
   @Test
-  public void testTotalAmount_ReturnsSum_WhenArgHasNonNullMoney() {
+  void testTotalAmount_ReturnsSum_WhenArgHasNonNullMoney() {
     List<Money> monies = new ArrayList<>();
     monies.add(null);
     monies.add(Money.parse("CAD 5"));

@@ -19,7 +19,7 @@ import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapper;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 
-public class TenantIaasAuthServiceTest {
+class TenantIaasAuthServiceTest {
   private TenantIaasAuthService service;
 
   private TenantIaasAuthResourceMapper mMapper;
@@ -27,7 +27,7 @@ public class TenantIaasAuthServiceTest {
   private TenantIaasResourceBuilder mResourceBuilder;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mMapper = TenantIaasAuthResourceMapper.INSTANCE;
     mRoleService = mock(IaasRoleService.class);
     mResourceBuilder = mock(TenantIaasResourceBuilder.class);
@@ -36,7 +36,7 @@ public class TenantIaasAuthServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAuthResourceWithComponents() {
+  void testGet_ReturnsAuthResourceWithComponents() {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_NAME").when(mResourceBuilder)
         .getRoleId(anyString());
 
@@ -53,7 +53,7 @@ public class TenantIaasAuthServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsResourcesFromAddedRoles() {
+  void testAdd_ReturnsResourcesFromAddedRoles() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mRoleService).add(anyList());
     doAnswer(inv -> new IaasRole(inv.getArgument(0, IaasIdpTenant.class).getId()))
         .when(mResourceBuilder).buildRole(any(IaasIdpTenant.class));
@@ -69,7 +69,7 @@ public class TenantIaasAuthServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsResourcesFromPutRoles() {
+  void testPut_ReturnsResourcesFromPutRoles() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mRoleService).put(anyList());
     doAnswer(inv -> new IaasRole(inv.getArgument(0, IaasIdpTenant.class).getId()))
         .when(mResourceBuilder).buildRole(any(IaasIdpTenant.class));
@@ -85,7 +85,7 @@ public class TenantIaasAuthServiceTest {
   }
 
   @Test
-  public void testDelete_ReturnsDeleteResultWithCounts() {
+  void testDelete_ReturnsDeleteResultWithCounts() {
     doAnswer(inv -> inv.getArgument(0, String.class)).when(mResourceBuilder).getRoleId(anyString());
     doAnswer(inv -> (long) inv.getArgument(0, Set.class).size()).when(mRoleService)
         .delete(anySet());

@@ -23,7 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-public class ContextHolderFilterTest {
+class ContextHolderFilterTest {
   private Filter filter;
 
   private ThreadLocalContextHolder mcontextHolder;
@@ -35,7 +35,7 @@ public class ContextHolderFilterTest {
   private FilterChain mChain;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mcontextHolder = new ThreadLocalContextHolder();
     mSecurityCtx = mock(SecurityContext.class);
     mPrincipalContextBuilder = mock(PrincipalContextBuilder.class);
@@ -82,7 +82,7 @@ public class ContextHolderFilterTest {
   }
 
   @Test
-  public void testDoFilter_SetsNull_WhenPrincipalIsNull() throws IOException, ServletException {
+  void testDoFilter_SetsNull_WhenPrincipalIsNull() throws IOException, ServletException {
     Authentication mAuth = mock(Authentication.class);
     doReturn(mAuth).when(mSecurityCtx).getAuthentication();
     doReturn(null).when(mAuth).getPrincipal();

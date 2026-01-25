@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasAuthorizationTest {
+class IaasAuthorizationTest {
   private IaasAuthorization authorization;
 
   @BeforeEach
-  public void init() {
+  void init() {
     authorization = new IaasAuthorization();
   }
 
   @Test
-  public void testNoArgConstructor_SetsNull() {
+  void testNoArgConstructor_SetsNull() {
     assertNull(authorization.getAccessKeyId());
     assertNull(authorization.getAccessSecretKey());
     assertNull(authorization.getExpiration());
@@ -23,7 +23,7 @@ public class IaasAuthorizationTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     authorization = new IaasAuthorization("ACCESS_KEY_ID", "ACCESS_SECRET_KEY", "SESSION_TOKEN",
         LocalDateTime.of(2000, 1, 1, 0, 0));
 
@@ -34,26 +34,26 @@ public class IaasAuthorizationTest {
   }
 
   @Test
-  public void testGetSetAccessKeyId() {
+  void testGetSetAccessKeyId() {
     authorization.setAccessKeyId("ACCESS_KEY_ID");
     assertEquals("ACCESS_KEY_ID", authorization.getAccessKeyId());
     assertEquals("ACCESS_KEY_ID", authorization.getId());
   }
 
   @Test
-  public void testGetSetAccessSecretKey() {
+  void testGetSetAccessSecretKey() {
     authorization.setAccessSecretKey("ACCESS_SECRET_KEY");
     assertEquals("ACCESS_SECRET_KEY", authorization.getAccessSecretKey());
   }
 
   @Test
-  public void testGetSetSessionToken() {
+  void testGetSetSessionToken() {
     authorization.setSessionToken("SESSION_TOKEN");
     assertEquals("SESSION_TOKEN", authorization.getSessionToken());
   }
 
   @Test
-  public void testGetSetExpiration() {
+  void testGetSetExpiration() {
     authorization.setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), authorization.getExpiration());
   }

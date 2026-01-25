@@ -18,20 +18,20 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsCognitoIdentitySdkWrapperTest {
+class AwsCognitoIdentitySdkWrapperTest {
   private AwsCognitoIdentityClient client;
 
   private AmazonCognitoIdentity mAws;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAws = mock(AmazonCognitoIdentity.class);
 
     client = new AwsCognitoIdentitySdkWrapper(mAws);
   }
 
   @Test
-  public void testGetIdentityPools_ReturnsPoolsWithAllItems_WhenMaxItemValueIsMore() {
+  void testGetIdentityPools_ReturnsPoolsWithAllItems_WhenMaxItemValueIsMore() {
     List<IdentityPoolShortDescription> page1 = List.of(
         new IdentityPoolShortDescription().withIdentityPoolId("POOL_ID_1")
             .withIdentityPoolName("POOL_NAME_1"),
@@ -77,7 +77,7 @@ public class AwsCognitoIdentitySdkWrapperTest {
   }
 
   @Test
-  public void testGetIdentityPools_ReturnsPoolsWithNItems_WhenMaxItemValueIsLess() {
+  void testGetIdentityPools_ReturnsPoolsWithNItems_WhenMaxItemValueIsLess() {
     List<IdentityPoolShortDescription> page1 = List.of(
         new IdentityPoolShortDescription().withIdentityPoolId("POOL_ID_1")
             .withIdentityPoolName("POOL_NAME_1"),
@@ -109,7 +109,7 @@ public class AwsCognitoIdentitySdkWrapperTest {
   }
 
   @Test
-  public void testGetIdentityId_ReturnsIdentityId() {
+  void testGetIdentityId_ReturnsIdentityId() {
     doReturn(new GetIdResult().withIdentityId("IDENTITY_ID")).when(mAws)
         .getId(new GetIdRequest().withIdentityPoolId("POOL_ID").withLogins(Map.of("K", "V")));
 
@@ -119,7 +119,7 @@ public class AwsCognitoIdentitySdkWrapperTest {
   }
 
   @Test
-  public void testGetCredentialsForIdentity_ReturnsCredentials() {
+  void testGetCredentialsForIdentity_ReturnsCredentials() {
     Credentials creds
         = new Credentials().withAccessKeyId("ACCESS_KEY_ID").withSecretKey("SECRET_KEY")
             .withSessionToken("SESSION_TOKEN").withExpiration(new Date(1, 1, 1));

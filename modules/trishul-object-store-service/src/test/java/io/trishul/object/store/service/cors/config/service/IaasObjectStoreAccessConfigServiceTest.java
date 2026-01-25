@@ -28,7 +28,7 @@ import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessC
 import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfigAccessor;
 import io.trishul.test.util.MockUtilProvider;
 
-public class IaasObjectStoreAccessConfigServiceTest {
+class IaasObjectStoreAccessConfigServiceTest {
   private IaasObjectStoreAccessConfigService service;
 
   private EntityMergerService<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> mMergerService;
@@ -36,7 +36,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = mock(LockService.class);
     mMergerService = spy(new CrudEntityMergerService<>(new MockUtilProvider(), mLockService,
         IaasObjectStoreAccessConfig.class, IaasObjectStoreAccessConfig.class,
@@ -47,7 +47,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllObjectStoreIdsExists() {
+  void testExists_ReturnsTrue_WhenAllObjectStoreIdsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -55,7 +55,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllObjectStoreIdsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllObjectStoreIdsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -63,7 +63,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(99L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
     long deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
 
@@ -71,7 +71,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
     long deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
 
@@ -79,7 +79,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsObjectStoreConfigFromRepo() {
+  void testGet_ReturnsObjectStoreConfigFromRepo() {
     IaasObjectStoreAccessConfig expected = new IaasObjectStoreAccessConfig();
     doAnswer(inv -> {
       return List.of(expected);
@@ -91,7 +91,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenNoObjectStoreConfigIsFound() {
+  void testGet_ReturnsNull_WhenNoObjectStoreConfigIsFound() {
     doReturn(new ArrayList<>()).when(mIaasRepo).get(anySet());
 
     IaasObjectStoreAccessConfig actual = service.get("BUCKET_1");
@@ -100,7 +100,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testGetAll_ReturnsObjectStoreConfigFromRepo() {
+  void testGetAll_ReturnsObjectStoreConfigFromRepo() {
     List<IaasObjectStoreAccessConfig> expected = List.of(new IaasObjectStoreAccessConfig());
     doAnswer(inv -> {
       return expected;
@@ -112,7 +112,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnObjectStoreConfigsFromRepo() {
+  void testGetByIds_ReturnObjectStoreConfigsFromRepo() {
     List<IaasObjectStoreAccessConfig> expected = List.of(new IaasObjectStoreAccessConfig());
     doAnswer(inv -> {
       return expected;
@@ -124,7 +124,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsObjectStoreConfigFromRepo() {
+  void testGetByAccessorIds_ReturnsObjectStoreConfigFromRepo() {
     List<IaasObjectStoreAccessConfig> expected = List.of(new IaasObjectStoreAccessConfig());
     doAnswer(inv -> {
       return expected;
@@ -172,7 +172,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -196,7 +196,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
@@ -224,7 +224,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

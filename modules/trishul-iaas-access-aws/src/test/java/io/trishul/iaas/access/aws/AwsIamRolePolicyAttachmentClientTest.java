@@ -33,14 +33,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIamRolePolicyAttachmentClientTest {
+class AwsIamRolePolicyAttachmentClientTest {
   private AwsIamRolePolicyAttachmentClient client;
 
   private AmazonIdentityManagement mAwsClient;
   private AwsArnMapper mArnMapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAwsClient = mock(AmazonIdentityManagement.class);
     mArnMapper = mock(AwsArnMapper.class);
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mArnMapper)
@@ -50,7 +50,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testGet_ReturnsPoliciesGeneratedFromFetchedRoleAndPolicies() {
+  void testGet_ReturnsPoliciesGeneratedFromFetchedRoleAndPolicies() {
     List<AttachedPolicy> attachedPolicies = List.of(new AttachedPolicy().withPolicyName("POLICY_1"),
         new AttachedPolicy().withPolicyName("POLICY_2"));
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(attachedPolicies)
@@ -67,7 +67,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testGet_ThrowsException_WhenCacheThrowsException() {
+  void testGet_ThrowsException_WhenCacheThrowsException() {
     doThrow(RuntimeException.class).when(mAwsClient)
         .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1"));
 
@@ -76,7 +76,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedAttachement() {
+  void testAdd_ReturnsAddedAttachement() {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mArnMapper)
         .getPolicyArn(anyString());
 
@@ -95,7 +95,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testPut_ReturnsEntity_WhenGetReturnsEntity() {
+  void testPut_ReturnsEntity_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1")))
         .when(client).get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1"));
@@ -108,7 +108,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testPut_ReturnsAddedEntity_WhenGetReturnNull() {
+  void testPut_ReturnsAddedEntity_WhenGetReturnNull() {
     client = spy(client);
     doReturn(null).when(client).get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1"));
 
@@ -130,7 +130,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     client = spy(client);
     doReturn(null).when(client).get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1"));
 
@@ -138,7 +138,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsEntity() {
+  void testExists_ReturnsTrue_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasRolePolicyAttachment()).when(client)
         .get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1"));
@@ -147,7 +147,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
+  void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
     doReturn(
         new DetachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
             .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
@@ -158,7 +158,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
+  void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
     doThrow(NoSuchEntityException.class).when(mAwsClient).detachRolePolicy(
         new DetachRolePolicyRequest().withPolicyArn("POLICY_1_ARN").withRoleName("ROLE_1"));
     assertFalse(client.delete(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
@@ -168,7 +168,7 @@ public class AwsIamRolePolicyAttachmentClientTest {
   }
 
   @Test
-  public void testCaching_SingleThreaded_CacheCleansUpAfterMutations() {
+  void testCaching_SingleThreaded_CacheCleansUpAfterMutations() {
     // Testing with large data sets to make sure mapping logic is not broken
     List<AttachedPolicy> roleAPolicies = List.of(new AttachedPolicy().withPolicyName("POLICY_1A"),
         new AttachedPolicy().withPolicyName("POLICY_2A"));

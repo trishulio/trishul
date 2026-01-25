@@ -4,21 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasIdpDeleteResultTest {
+class TenantIaasIdpDeleteResultTest {
   private TenantIaasIdpDeleteResult result;
 
   @BeforeEach
-  public void init() {
+  void init() {
     result = new TenantIaasIdpDeleteResult(10);
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     assertEquals(10, result.getIdpTenant());
   }
 
   @Test
-  public void testGetSetIdpTenant() {
+  void testGetSetIdpTenant() {
     result.setIdpTenant(1);
     assertEquals(1, result.getIdpTenant());
   }

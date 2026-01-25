@@ -22,7 +22,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantDataSourceConfigurationProviderTest {
+class TenantDataSourceConfigurationProviderTest {
   private DataSourceConfigurationProvider<UUID> dsProvider;
 
   private DataSourceConfiguration mAdminConfig;
@@ -32,7 +32,7 @@ public class TenantDataSourceConfigurationProviderTest {
   private SecretsManager<String, String> mSecretsManager;
 
   @BeforeEach
-  public void init() throws URISyntaxException, MalformedURLException {
+  void init() throws URISyntaxException, MalformedURLException {
     mAdminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"), "ADMIN",
         new URL("http://localhost/"));
     mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
@@ -49,14 +49,14 @@ public class TenantDataSourceConfigurationProviderTest {
   }
 
   @Test
-  public void testGetConfiguration_ReturnsAdminConfig_WhenIdMatchesAdminId() {
+  void testGetConfiguration_ReturnsAdminConfig_WhenIdMatchesAdminId() {
     DataSourceConfiguration config = dsProvider
         .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
     assertSame(mAdminConfig, config);
   }
 
   @Test
-  public void testGetConfiguration_ReturnsLazyTenantConfig_WhenIdIsNotTenantId()
+  void testGetConfiguration_ReturnsLazyTenantConfig_WhenIdIsNotTenantId()
       throws URISyntaxException {
     DataSourceConfiguration config = dsProvider
         .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
@@ -70,7 +70,7 @@ public class TenantDataSourceConfigurationProviderTest {
   }
 
   @Test
-  public void testGetAdminConfiguration_ReturnsAdminDsConfiguration() {
+  void testGetAdminConfiguration_ReturnsAdminDsConfiguration() {
     DataSourceConfiguration config = dsProvider.getAdminConfiguration();
 
     assertEquals(mAdminConfig, config);

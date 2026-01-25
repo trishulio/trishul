@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 @SuppressWarnings("unchecked")
-public class TenantUserRegisterTest {
+class TenantUserRegisterTest {
   private TenantRegister register;
 
   private DataSourceQueryRunner mQueryRunner;
@@ -40,7 +40,7 @@ public class TenantUserRegisterTest {
   private RandomGenerator mRand;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mQueryRunner = mock(DataSourceQueryRunner.class);
     mSecretsManager = mock(SecretsManager.class);
     mDialect = mock(JdbcDialect.class);
@@ -63,7 +63,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testAdd_CreatesUserAndSavesPassword() throws SQLException, IOException {
+  void testAdd_CreatesUserAndSavesPassword() throws SQLException, IOException {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedConsumer<Connection, Exception> consumer = inv.getArgument(0, CheckedConsumer.class);
@@ -83,7 +83,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testPut_DoesNothing_WhenExistReturnsTrue() {
+  void testPut_DoesNothing_WhenExistReturnsTrue() {
     register = spy(register);
 
     doReturn(true).when(register)
@@ -95,7 +95,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistsReturnsFalse() {
+  void testPut_CallsAdd_WhenExistsReturnsFalse() {
     register = spy(register);
 
     doReturn(false).when(register)
@@ -108,7 +108,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testRemove_DropsSchema_WhenRemoveIsCalled() throws IOException, SQLException {
+  void testRemove_DropsSchema_WhenRemoveIsCalled() throws IOException, SQLException {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedConsumer<Connection, Exception> consumer = inv.getArgument(0, CheckedConsumer.class);
@@ -126,7 +126,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenDialectReturnsTrue() throws IOException, SQLException {
+  void testExists_ReturnsTrue_WhenDialectReturnsTrue() throws IOException, SQLException {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedSupplier<Boolean, Connection, Exception> supplier
@@ -143,7 +143,7 @@ public class TenantUserRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenDialectReturnsFalse() throws IOException, SQLException {
+  void testExists_ReturnsFalse_WhenDialectReturnsFalse() throws IOException, SQLException {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedSupplier<Boolean, Connection, Exception> supplier

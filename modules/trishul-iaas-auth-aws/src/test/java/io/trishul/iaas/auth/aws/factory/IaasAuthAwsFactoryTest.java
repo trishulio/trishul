@@ -14,12 +14,12 @@ class IaasAuthAwsFactoryTest {
   private IaasAuthAwsFactory factory;
 
   @BeforeEach
-  public void init() {
+  void init() {
     factory = new IaasAuthAwsFactory();
   }
 
   @Test
-  public void testGetIdentityProvider() throws IllegalAccessException, URISyntaxException {
+  void testGetIdentityProvider() throws IllegalAccessException, URISyntaxException {
     AWSCognitoIdentityProvider idp
         = factory.getIdentityProvider("REGION", "URL", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
 

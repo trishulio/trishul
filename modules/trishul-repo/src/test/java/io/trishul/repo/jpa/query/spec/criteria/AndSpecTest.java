@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AndSpecTest {
+class AndSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<Boolean> mDelegate;
@@ -22,7 +22,7 @@ public class AndSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -33,7 +33,7 @@ public class AndSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsAndExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsAndExpressionOnDelegatePath() {
     Predicate mAndExpr = mock(Predicate.class);
     doReturn(mAndExpr).when(mCb).and((Predicate) mExpr);
 

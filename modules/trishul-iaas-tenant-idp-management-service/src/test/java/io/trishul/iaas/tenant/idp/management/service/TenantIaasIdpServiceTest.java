@@ -18,20 +18,20 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasIdpServiceTest {
+class TenantIaasIdpServiceTest {
   private TenantIaasIdpService service;
 
   private IaasIdpTenantService mIdpTenantService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIdpTenantService = mock(IaasIdpTenantService.class);
 
     service = new TenantIaasIdpService(mIdpTenantService, TenantIaasIdpResourcesMapper.INSTANCE);
   }
 
   @Test
-  public void testGet_ReturnsAuthResourcesFromComponents() {
+  void testGet_ReturnsAuthResourcesFromComponents() {
     doReturn(List.of(new IaasIdpTenant("T1"), new IaasIdpTenant("T2"))).when(mIdpTenantService)
         .getAll(Set.of("T1", "T2"));
 
@@ -45,7 +45,7 @@ public class TenantIaasIdpServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedAuthResourcesFromComponents() {
+  void testAdd_ReturnsAddedAuthResourcesFromComponents() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIdpTenantService).add(anyList());
 
     List<TenantIaasIdpResources> resources
@@ -60,7 +60,7 @@ public class TenantIaasIdpServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsPutAuthResourcesFromComponents() {
+  void testPut_ReturnsPutAuthResourcesFromComponents() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIdpTenantService).put(anyList());
 
     List<TenantIaasIdpResources> resources
@@ -75,7 +75,7 @@ public class TenantIaasIdpServiceTest {
   }
 
   @Test
-  public void testDelete_ReturnsDeleteResult() {
+  void testDelete_ReturnsDeleteResult() {
     doAnswer(inv -> (long) inv.getArgument(0, Set.class).size()).when(mIdpTenantService)
         .delete(anySet());
 
@@ -86,14 +86,14 @@ public class TenantIaasIdpServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenIdpReturnsTrue() {
+  void testExists_ReturnsTrue_WhenIdpReturnsTrue() {
     doReturn(true).when(mIdpTenantService).exist("T1");
 
     assertTrue(service.exist("T1"));
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenIdpReturnsFalse() {
+  void testExists_ReturnsFalse_WhenIdpReturnsFalse() {
     doReturn(false).when(mIdpTenantService).exist("T1");
 
     assertFalse(service.exist("T1"));

@@ -10,7 +10,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MinSpecTest {
+class MinSpecTest {
   private CriteriaSpec<?> spec;
 
   private CriteriaSpec<Number> mDelegate;
@@ -21,7 +21,7 @@ public class MinSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -32,7 +32,7 @@ public class MinSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsMinExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsMinExpressionOnDelegatePath() {
     Expression<Number> mMinExpr = mock(Expression.class);
     doReturn(mMinExpr).when(mCb).min(mExpr);
 

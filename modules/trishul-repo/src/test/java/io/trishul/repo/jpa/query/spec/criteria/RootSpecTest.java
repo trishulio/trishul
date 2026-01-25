@@ -8,7 +8,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RootSpecTest {
+class RootSpecTest {
   private CriteriaSpec<?> spec;
 
   private Root<?> mRoot;
@@ -16,14 +16,14 @@ public class RootSpecTest {
   private CriteriaQuery<?> mCq;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mRoot = mock(Root.class);
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
   }
 
   @Test
-  public void testGetAggregation_ReturnsRoot() {
+  void testGetAggregation_ReturnsRoot() {
     spec = new RootSpec<>();
 
     assertSame(mRoot, spec.getExpression(mRoot, mCq, mCb));

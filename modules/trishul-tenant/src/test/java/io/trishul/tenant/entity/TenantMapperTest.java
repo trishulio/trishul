@@ -12,21 +12,21 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantMapperTest {
+class TenantMapperTest {
   private TenantMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TenantMapper.INSTANCE;
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenPojoIsNotNull() throws MalformedURLException {
+  void testToDto_ReturnsDto_WhenPojoIsNotNull() throws MalformedURLException {
     Tenant tenant = new Tenant().setId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
         .setName("TENANT_1").setUrl(new URL("http://localhost/")).setIsReady(true)
         .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
@@ -42,12 +42,12 @@ public class TenantMapperTest {
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromUpdateDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromUpdateDto(null));
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
+  void testFromUpdateDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
     UpdateTenantDto dto
         = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
             new URL("http://localhost/"));
@@ -60,12 +60,12 @@ public class TenantMapperTest {
   }
 
   @Test
-  public void testFromAddDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromAddDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromAddDto(null));
   }
 
   @Test
-  public void testFromAddDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
+  void testFromAddDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
     AddTenantDto dto = new AddTenantDto("TENANT_1", new URL("http://localhost/"));
     Tenant tenant = mapper.fromAddDto(dto);
 

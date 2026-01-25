@@ -15,7 +15,7 @@ import jakarta.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CriteriaJoinAnnotationJoinerTest {
+class CriteriaJoinAnnotationJoinerTest {
   class Entity {
     @JoinColumn
     @CriteriaJoin(type = JoinType.LEFT)
@@ -54,7 +54,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   private From<?, Entity> mEntity;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mEntity = mock(From.class);
     doReturn(Entity.class).when(mEntity).getJavaType();
 
@@ -62,7 +62,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testJoin_PerformsALeftJoin_WhenAnnotationValueIsLeft() {
+  void testJoin_PerformsALeftJoin_WhenAnnotationValueIsLeft() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("left", JoinType.LEFT);
 
@@ -72,7 +72,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testJoin_PerformsARightJoin_WhenAnnotationValueIsRight() {
+  void testJoin_PerformsARightJoin_WhenAnnotationValueIsRight() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("right", JoinType.RIGHT);
 
@@ -82,7 +82,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsInner() {
+  void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsInner() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("inner", JoinType.INNER);
 
@@ -92,7 +92,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsNotProvided() {
+  void testJoin_PerformsAInnerJoin_WhenAnnotationValueIsNotProvided() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("difault", JoinType.INNER);
 
@@ -102,7 +102,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testJoin_PerformsAInnerJoinOperation_WhenAnnotationIsMissing() {
+  void testJoin_PerformsAInnerJoinOperation_WhenAnnotationIsMissing() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("get", JoinType.INNER);
 
@@ -112,7 +112,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testGet_DelegatesToJoinMethod_WhenEntityIsManyToOne() {
+  void testGet_DelegatesToJoinMethod_WhenEntityIsManyToOne() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("manyToOne", JoinType.INNER);
 
@@ -121,7 +121,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testGet_DelegatesToJoinMethod_WhenEntityIsOnetoMany() {
+  void testGet_DelegatesToJoinMethod_WhenEntityIsOnetoMany() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("oneToMany", JoinType.INNER);
 
@@ -130,7 +130,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testGet_DelegatesToJoinMethod_WhenEntityIsEmbedded() {
+  void testGet_DelegatesToJoinMethod_WhenEntityIsEmbedded() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("embedded", JoinType.INNER);
 
@@ -139,7 +139,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testGet_DelegatesToJoinMethod_WhenEntityIsJoinColumn() {
+  void testGet_DelegatesToJoinMethod_WhenEntityIsJoinColumn() {
     Join<?, ?> mJoin = mock(Join.class);
     doReturn(mJoin).when(mEntity).join("joinColumn", JoinType.INNER);
 
@@ -148,7 +148,7 @@ public class CriteriaJoinAnnotationJoinerTest {
   }
 
   @Test
-  public void testGet_PerformsGetOnEntity_WhenEntityIsBasic() {
+  void testGet_PerformsGetOnEntity_WhenEntityIsBasic() {
     Path<?> mJoin = mock(Path.class);
     doReturn(mJoin).when(mEntity).get("get");
 

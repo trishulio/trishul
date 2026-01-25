@@ -9,16 +9,16 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxMapperTest {
+class TaxMapperTest {
   private TaxMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TaxMapper.INSTANCE;
   }
 
   @Test
-  public void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
+  void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
 
     TaxDto dto
         = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
@@ -29,12 +29,12 @@ public class TaxMapperTest {
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenPojoIsNotNull() {
+  void testToDto_ReturnsDto_WhenPojoIsNotNull() {
     Tax tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
 
     TaxDto dto = mapper.toDto(tax);
@@ -45,7 +45,7 @@ public class TaxMapperTest {
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto(null));
   }
 }

@@ -9,21 +9,21 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIaasObjectStoreMapperTest {
+class AwsIaasObjectStoreMapperTest {
   private AwsIaasObjectStoreMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AwsIaasObjectStoreMapper.INSTANCE;
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
+  void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromIaasEntity(null));
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
+  void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
     Bucket bucket = new Bucket("B1");
     bucket.setCreationDate(new Date(1, 1, 1));
 

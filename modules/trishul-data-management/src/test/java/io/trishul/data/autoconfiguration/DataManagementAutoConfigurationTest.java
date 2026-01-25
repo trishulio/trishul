@@ -16,30 +16,30 @@ class DataManagementAutoConfigurationTest {
   private DataManagementAutoConfiguration config;
 
   @BeforeEach
-  public void init() {
+  void init() {
     config = new DataManagementAutoConfiguration();
   }
 
   @Test
-  public void testDataSourceManager_ReturnsSchemaBasedDataSourceManager() {
+  void testDataSourceManager_ReturnsSchemaBasedDataSourceManager() {
     DataSourceManager mgr = config.dataSourceManager(null, null);
     assertTrue(mgr instanceof CachingDataSourceManager);
   }
 
   @Test
-  public void testDsBuilder_ReturnsRoutingDataSourceBuilder() {
+  void testDsBuilder_ReturnsRoutingDataSourceBuilder() {
     DataSourceBuilder builder = config.dataSourceBuilder();
     assertTrue(builder instanceof HikariDataSourceBuilder);
   }
 
   @Test
-  public void testTenantDsManager_ReturnsContextHolderDsManager() {
+  void testTenantDsManager_ReturnsContextHolderDsManager() {
     TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null);
     assertTrue(mgr instanceof TenantDataSourceManagerWrapper);
   }
 
   @Test
-  public void testJdbcTemplate_ReturnsJdbcTemplate() {
+  void testJdbcTemplate_ReturnsJdbcTemplate() {
     DataSourceManager dataSourceManagerMock = Mockito.mock(CachingDataSourceManager.class);
     DataSource dataSourceMock = Mockito.mock(DataSource.class);
 
@@ -49,7 +49,7 @@ class DataManagementAutoConfigurationTest {
   }
 
   @Test
-  public void testTransactionTemplate_ReturnsTransactionTemplate() {
+  void testTransactionTemplate_ReturnsTransactionTemplate() {
     DataSourceManager dataSourceManagerMock = Mockito.mock(CachingDataSourceManager.class);
     DataSource dataSourceMock = Mockito.mock(DataSource.class);
 

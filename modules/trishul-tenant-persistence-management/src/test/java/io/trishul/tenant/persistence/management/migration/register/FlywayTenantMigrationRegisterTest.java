@@ -21,7 +21,7 @@ import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FlywayTenantMigrationRegisterTest {
+class FlywayTenantMigrationRegisterTest {
   private TenantDataSourceManager mDsMgr;
   private DataSource mDs;
   private FluentConfiguration mFwConfig;
@@ -31,7 +31,7 @@ public class FlywayTenantMigrationRegisterTest {
   private FlywayTenantMigrationRegister register;
 
   @BeforeEach
-  public void init() throws SQLException, IOException {
+  void init() throws SQLException, IOException {
     mConfig = mock(DataSourceConfiguration.class);
     doReturn(MigrationConfiguration.from("MIGRATION_PATH")).when(mConfig).getMigrationConfigurations();
     doReturn("SCHEMA").when(mConfig).getSchemaName();
@@ -50,7 +50,7 @@ public class FlywayTenantMigrationRegisterTest {
   }
 
   @Test
-  public void testMigrate_RunsFlywayOnTenantWithTenantsDataSource() {
+  void testMigrate_RunsFlywayOnTenantWithTenantsDataSource() {
     Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
 
     register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));

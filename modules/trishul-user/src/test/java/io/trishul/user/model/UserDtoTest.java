@@ -12,16 +12,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserDtoTest {
+class UserDtoTest {
   private UserDto dto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     dto = new UserDto();
   }
 
   @Test
-  public void testAllArgConstructor_SetsAllFields() {
+  void testAllArgConstructor_SetsAllFields() {
     dto = new UserDto(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
         "PHONE_NUMBER", URI.create("IMAGE_SRC"), new IaasObjectStoreFileDto(URI.create("file.txt")),
         new UserStatusDto(1L), new UserSalutationDto(2L), List.of(new UserRoleDto(3L)),
@@ -46,14 +46,14 @@ public class UserDtoTest {
   }
 
   @Test
-  public void testAccessId() {
+  void testAccessId() {
     assertNull(dto.getId());
     dto.setId(1L);
     assertEquals(1L, dto.getId());
   }
 
   @Test
-  public void testAccessUserName() {
+  void testAccessUserName() {
     assertNull(dto.getUserName());
     dto.setUserName("userName");
     assertEquals("userName", dto.getUserName());
@@ -67,42 +67,42 @@ public class UserDtoTest {
   }
 
   @Test
-  public void testAccessDisplayName() {
+  void testAccessDisplayName() {
     assertNull(dto.getDisplayName());
     dto.setDisplayName("displayName");
     assertEquals("displayName", dto.getDisplayName());
   }
 
   @Test
-  public void testAccessFirstName() {
+  void testAccessFirstName() {
     assertNull(dto.getFirstName());
     dto.setFirstName("firstName");
     assertEquals("firstName", dto.getFirstName());
   }
 
   @Test
-  public void testAccessLastName() {
+  void testAccessLastName() {
     assertNull(dto.getLastName());
     dto.setLastName("lastName");
     assertEquals("lastName", dto.getLastName());
   }
 
   @Test
-  public void testAccessEmail() {
+  void testAccessEmail() {
     assertNull(dto.getEmail());
     dto.setEmail("email");
     assertEquals("email", dto.getEmail());
   }
 
   @Test
-  public void testAccessImageSrc() {
+  void testAccessImageSrc() {
     assertNull(dto.getImageSrc());
     dto.setImageSrc(URI.create("imageSrc"));
     assertEquals(URI.create("imageSrc"), dto.getImageSrc());
   }
 
   @Test
-  public void testAccessObjectStoreFile() {
+  void testAccessObjectStoreFile() {
     assertNull(dto.getObjectStoreFile());
     dto.setObjectStoreFile(new IaasObjectStoreFileDto(URI.create("file.txt")));
 
@@ -110,28 +110,28 @@ public class UserDtoTest {
   }
 
   @Test
-  public void testAccessPhoneNumber() {
+  void testAccessPhoneNumber() {
     assertNull(dto.getPhoneNumber());
     dto.setPhoneNumber("phoneNumber");
     assertEquals("phoneNumber", dto.getPhoneNumber());
   }
 
   @Test
-  public void testAccessStatus() {
+  void testAccessStatus() {
     assertNull(dto.getStatus());
     dto.setStatus(new UserStatusDto(1L));
     assertEquals(new UserStatusDto(1L), dto.getStatus());
   }
 
   @Test
-  public void testAccessSalutation() {
+  void testAccessSalutation() {
     assertNull(dto.getSalutation());
     dto.setSalutation(new UserSalutationDto(1L));
     assertEquals(new UserSalutationDto(1L), dto.getSalutation());
   }
 
   @Test
-  public void testAccessRoles() {
+  void testAccessRoles() {
     assertNull(dto.getRoles());
     dto.setRoles(List.of(new UserRoleDto(1L), new UserRoleDto(2L)));
     assertEquals(List.of(new UserRoleDto(1L), new UserRoleDto(2L)), dto.getRoles());
@@ -141,21 +141,21 @@ public class UserDtoTest {
   }
 
   @Test
-  public void testAccessLastUpdated() {
+  void testAccessLastUpdated() {
     assertNull(dto.getLastUpdated());
     dto.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(1999, 1, 1, 0, 0), dto.getLastUpdated());
   }
 
   @Test
-  public void testAccessCreatedAt() {
+  void testAccessCreatedAt() {
     assertNull(dto.getCreatedAt());
     dto.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getCreatedAt());
   }
 
   @Test
-  public void testAccessVersion() {
+  void testAccessVersion() {
     assertNull(dto.getVersion());
     dto.setVersion(1);
     assertEquals(1, dto.getVersion());

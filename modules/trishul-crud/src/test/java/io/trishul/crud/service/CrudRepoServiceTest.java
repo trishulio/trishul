@@ -31,7 +31,7 @@ import io.trishul.test.model.DummyCrudEntityAccessor;
 import io.trishul.test.model.DummyCrudEntityRefresher;
 import io.trishul.test.repository.DummyCrudEntityRepository;
 
-public class CrudRepoServiceTest {
+class CrudRepoServiceTest {
   // Hack to mock instance of type Long parameterized Identified interface
   interface LongIdentified extends Identified<Long> {
   }
@@ -41,42 +41,42 @@ public class CrudRepoServiceTest {
   private RepoService<Long, DummyCrudEntity, DummyCrudEntityAccessor<?>> service;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mRepo = mock(DummyCrudEntityRepository.class);
     this.mRefresher = mock(DummyCrudEntityRefresher.class);
     this.service = new CrudRepoService<>(this.mRepo, this.mRefresher);
   }
 
   @Test
-  public void testExistsByIds_ReturnsTrue_WhenRepoExistsByIdsReturnTrue() {
+  void testExistsByIds_ReturnsTrue_WhenRepoExistsByIdsReturnTrue() {
     doReturn(true).when(this.mRepo).existsByIds(Set.of(1L, 2L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L)));
   }
 
   @Test
-  public void testExistsByIds_ReturnsFalse_WhenRepoExistsByIdsReturnFalse() {
+  void testExistsByIds_ReturnsFalse_WhenRepoExistsByIdsReturnFalse() {
     doReturn(false).when(this.mRepo).existsByIds(Set.of(1L, 2L));
 
     assertFalse(this.service.exists(Set.of(1L, 2L)));
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenRepoExistsByIdReturnTrue() {
+  void testExists_ReturnsTrue_WhenRepoExistsByIdReturnTrue() {
     doReturn(true).when(this.mRepo).existsById(1L);
 
     assertTrue(this.service.exists(1L));
   }
 
   @Test
-  public void testExistsById_ReturnsFalse_WhenRepoExistsByIdReturnFalse() {
+  void testExistsById_ReturnsFalse_WhenRepoExistsByIdReturnFalse() {
     doReturn(false).when(this.mRepo).existsByIds(Set.of(1L, 2L));
 
     assertFalse(this.service.exists(1L));
   }
 
   @Test
-  public void testGetAll_BuildsAPageRequestAndReturnsPageFromJpaRepository() {
+  void testGetAll_BuildsAPageRequestAndReturnsPageFromJpaRepository() {
     final Page<DummyCrudEntity> mPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
 
     final Specification<DummyCrudEntity> mSpec = mock(Specification.class);
@@ -92,7 +92,7 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGetAll_ReturnsListOfItemsWithMatchingSpec() {
+  void testGetAll_ReturnsListOfItemsWithMatchingSpec() {
     final Specification<DummyCrudEntity> mSpec = mock(Specification.class);
     doReturn(List.of(new DummyCrudEntity(1L))).when(this.mRepo).findAll(mSpec);
 
@@ -102,7 +102,7 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnsNull_WhenProvidersIsNull() {
+  void testGetByIds_ReturnsNull_WhenProvidersIsNull() {
     assertNull(this.service.getByIds(null));
   }
 
@@ -124,7 +124,7 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsNull_WhenAccessorsAreNull() {
+  void testGetByAccessorIds_ReturnsNull_WhenAccessorsAreNull() {
     assertNull(this.service.getByAccessorIds(null, accessor -> null));
   }
 
@@ -171,21 +171,21 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenRepoReturnsEmptyOptional() {
+  void testGet_ReturnsNull_WhenRepoReturnsEmptyOptional() {
     doReturn(Optional.empty()).when(this.mRepo).findById(1L);
 
     assertNull(this.service.get(1L));
   }
 
   @Test
-  public void testGet_ReturnsEntity_WhenRepoReturnsEntityOptional() {
+  void testGet_ReturnsEntity_WhenRepoReturnsEntityOptional() {
     doReturn(Optional.of(new DummyCrudEntity(1L))).when(this.mRepo).findById(1L);
 
     assertEquals(new DummyCrudEntity(1L), this.service.get(1L));
   }
 
   @Test
-  public void testSaveAll_CallSavesInRepositoryAndFlushes() {
+  void testSaveAll_CallSavesInRepositoryAndFlushes() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mRepo).saveAll(any());
 
     final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
@@ -200,14 +200,14 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testDeleteByIds_DelegatesToRepositoryAndReturnsDeleteCount() {
+  void testDeleteByIds_DelegatesToRepositoryAndReturnsDeleteCount() {
     doReturn(99).when(this.mRepo).deleteByIds(Set.of(1L, 2L));
 
     assertEquals(99L, this.service.delete(Set.of(1L, 2L)));
   }
 
   @Test
-  public void testDelete_ReturnsCountFromRepoDelete() {
+  void testDelete_ReturnsCountFromRepoDelete() {
     doReturn(1).when(mRepo).deleteOneById(1L);
 
     long count = this.service.delete(1L);

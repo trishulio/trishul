@@ -80,7 +80,7 @@ public class UserService extends BaseService
 
   @Override
   public List<User> getByAccessorIds(Collection<? extends UserAccessor<?>> accessors) {
-    return this.repoService.getByAccessorIds(accessors, accessor -> accessor.getUser());
+    return this.repoService.getByAccessorIds(accessors, UserAccessor::getUser);
   }
 
   @Override
@@ -179,8 +179,8 @@ public class UserService extends BaseService
 
     if (existing.size() != patches.size()) {
       final Set<Long> existingIds
-          = existing.stream().map(user -> user.getId()).collect(Collectors.toSet());
-      final Set<Long> nonExistingIds = patches.stream().map(patch -> patch.getId())
+          = existing.stream().map(Identified::getId).collect(Collectors.toSet());
+      final Set<Long> nonExistingIds = patches.stream().map(Identified::getId)
           .filter(patchId -> !existingIds.contains(patchId)).collect(Collectors.toSet());
 
       throw new EntityNotFoundException(

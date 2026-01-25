@@ -24,20 +24,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
-public class AwsPublicAccessBlockClientTest {
+class AwsPublicAccessBlockClientTest {
   private AwsPublicAccessBlockClient client;
 
   private AmazonS3 mAwsClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAwsClient = mock(AmazonS3.class);
 
     client = new AwsPublicAccessBlockClient(mAwsClient);
   }
 
   @Test
-  public void testGet_ReturnsIaasPublicAccessBlock() {
+  void testGet_ReturnsIaasPublicAccessBlock() {
     doReturn(new GetPublicAccessBlockResult()
         .withPublicAccessBlockConfiguration(new PublicAccessBlockConfiguration())).when(mAwsClient)
             .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
@@ -50,7 +50,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenClientThrowsException() {
+  void testGet_ReturnsNull_WhenClientThrowsException() {
     doThrow(AmazonS3Exception.class).when(mAwsClient)
         .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
 
@@ -58,7 +58,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedPublicAccessBlock() {
+  void testAdd_ReturnsAddedPublicAccessBlock() {
     client = spy(client);
     doReturn(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()))
         .when(client).get("BUCKET_1");
@@ -78,7 +78,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testPut_ReturnsEntity_WhenGetReturnsEntity() {
+  void testPut_ReturnsEntity_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()))
         .when(client).get("BUCKET_1");
@@ -92,7 +92,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     client = spy(client);
     doReturn(null).when(client).get("BUCKET_1");
 
@@ -100,7 +100,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsEntity() {
+  void testExists_ReturnsTrue_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()))
         .when(client).get("BUCKET_1");
@@ -109,7 +109,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
+  void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
     doReturn(null).when(mAwsClient)
         .deletePublicAccessBlock(new DeletePublicAccessBlockRequest().withBucketName("BUCKET_1"));
 
@@ -120,7 +120,7 @@ public class AwsPublicAccessBlockClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
+  void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
     doThrow(AmazonS3Exception.class).when(mAwsClient)
         .deletePublicAccessBlock(new DeletePublicAccessBlockRequest().withBucketName("BUCKET_1"));
     assertFalse(client.delete("BUCKET_1"));

@@ -25,19 +25,19 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class UserSalutationServiceTest {
+class UserSalutationServiceTest {
   private UserSalutationService userSalutationService;
 
   private UserSalutationRepository userSalutationRepository;
 
   @BeforeEach
-  public void init() {
+  void init() {
     userSalutationRepository = Mockito.mock(UserSalutationRepository.class);
     userSalutationService = new UserSalutationService(userSalutationRepository);
   }
 
   @Test
-  public void testGetSalutations_returnsSalutations() throws Exception {
+  void testGetSalutations_returnsSalutations() throws Exception {
     Page<UserSalutation> expectedSalutationsPage = new PageImpl<>(List.of(new UserSalutation(1L,
         "MR", LocalDateTime.of(2018, 1, 2, 3, 4), LocalDateTime.of(2019, 1, 2, 3, 4), 1)));
 
@@ -59,7 +59,7 @@ public class UserSalutationServiceTest {
   }
 
   @Test
-  public void testUserSalutationService_classIsTransactional() throws Exception {
+  void testUserSalutationService_classIsTransactional() throws Exception {
     Transactional transactional
         = userSalutationService.getClass().getAnnotation(Transactional.class);
 
@@ -69,7 +69,7 @@ public class UserSalutationServiceTest {
   }
 
   @Test
-  public void testUserSalutationService_methodsAreNotTransactional() throws Exception {
+  void testUserSalutationService_methodsAreNotTransactional() throws Exception {
     Method[] methods = userSalutationService.getClass().getMethods();
     for (Method method : methods) {
       assertFalse(method.isAnnotationPresent(Transactional.class));

@@ -31,7 +31,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasIdpTenantServiceTest {
+class IaasIdpTenantServiceTest {
   private IaasIdpTenantService service;
 
   private EntityMergerService<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> mMergerService;
@@ -39,7 +39,7 @@ public class IaasIdpTenantServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = mock(LockService.class);
     mMergerService = spy(
         new CrudEntityMergerService<>(new MockUtilProvider(), mLockService, BaseIaasIdpTenant.class,
@@ -50,7 +50,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -58,7 +58,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -66,7 +66,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -74,7 +74,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
+  void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -82,7 +82,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("TENANT_1", "TENANT_2"));
     long deleteCount = service.delete(Set.of("TENANT_1", "TENANT_2"));
 
@@ -90,7 +90,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("TENANT"));
 
     long deleteCount = service.delete("TENANT");
@@ -99,7 +99,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAttachmentFromRepo() {
+  void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -110,14 +110,14 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
+  void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
     doAnswer(inv -> List.of()).when(mIaasRepo).get(anySet());
 
     assertNull(service.get("TENANT"));
   }
 
   @Test
-  public void testGetAll_ReturnsAttachmentFromRepo() {
+  void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -129,7 +129,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnAttachmentsFromRepo() {
+  void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -142,7 +142,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
+  void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -191,7 +191,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsNull_WhenArgIsNull() {
+  void testAdd_ReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -221,7 +221,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsNull_WhenArgIsNull() {
+  void testPut_ReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
@@ -266,7 +266,7 @@ public class IaasIdpTenantServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsNull_WhenArgIsNull() {
+  void testPatch_ReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

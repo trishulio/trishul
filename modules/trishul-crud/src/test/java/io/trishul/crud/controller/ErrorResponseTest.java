@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
-public class ErrorResponseTest {
+class ErrorResponseTest {
   @Test
-  public void testErrorResponse_constructor() {
+  void testErrorResponse_constructor() {
     LocalDateTime localDateTime = LocalDateTime.now();
     int status = 400;
     String error = "error";

@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasRolePolicyAttachmentTest {
+class IaasRolePolicyAttachmentTest {
   private IaasRolePolicyAttachment attachment;
 
   @BeforeEach
-  public void init() {
+  void init() {
     attachment = new IaasRolePolicyAttachment();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(attachment.getId());
     assertNull(attachment.getIaasRole());
     assertNull(attachment.getIaasPolicy());
@@ -25,14 +25,14 @@ public class IaasRolePolicyAttachmentTest {
   }
 
   @Test
-  public void testIdConstructor() {
+  void testIdConstructor() {
     attachment = new IaasRolePolicyAttachment(new IaasRolePolicyAttachmentId("ROLE", "POLICY"));
 
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", "POLICY"), attachment.getId());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     attachment = new IaasRolePolicyAttachment(new IaasRole("ROLE"), new IaasPolicy("POLICY"));
 
     assertEquals(new IaasRole("ROLE"), attachment.getIaasRole());
@@ -40,40 +40,40 @@ public class IaasRolePolicyAttachmentTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     attachment.setId(new IaasRolePolicyAttachmentId("ROLE", "POLICY"));
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", "POLICY"), attachment.getId());
   }
 
   @Test
-  public void testSetId_SetsNull_WhenIdIsNull() {
+  void testSetId_SetsNull_WhenIdIsNull() {
     attachment.setId(null);
     assertNull(attachment.getId());
   }
 
   @Test
-  public void testGetSetIaasRole() {
+  void testGetSetIaasRole() {
     attachment.setIaasRole(new IaasRole("ROLE"));
 
     assertEquals(new IaasRole("ROLE"), attachment.getIaasRole());
   }
 
   @Test
-  public void testGetSetIaasPolicy() {
+  void testGetSetIaasPolicy() {
     attachment.setIaasPolicy(new IaasPolicy("POLICY"));
 
     assertEquals(new IaasPolicy("POLICY"), attachment.getIaasPolicy());
   }
 
   @Test
-  public void testGetSetLastUpdated() {
+  void testGetSetLastUpdated() {
     attachment.setLastUpdated(LocalDateTime.of(2000, 1, 1, 1, 1));
 
     assertEquals(LocalDateTime.of(2000, 1, 1, 1, 1), attachment.getLastUpdated());
   }
 
   @Test
-  public void testGetVersion() {
+  void testGetVersion() {
     assertNull(attachment.getVersion());
   }
 }

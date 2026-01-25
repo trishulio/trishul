@@ -8,16 +8,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasVfsResourceMapperTest {
+class TenantIaasVfsResourceMapperTest {
   private TenantIaasVfsResourceMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TenantIaasVfsResourceMapper.INSTANCE;
   }
 
   @Test
-  public void testFromComponents_ReturnsEntities_WhenListSizeIsSame() {
+  void testFromComponents_ReturnsEntities_WhenListSizeIsSame() {
     List<IaasObjectStore> objectStores
         = List.of(new IaasObjectStore("OS_1"), new IaasObjectStore("OS_2"));
     List<IaasPolicy> policies = List.of(new IaasPolicy("P1"), new IaasPolicy("P2"));
@@ -31,7 +31,7 @@ public class TenantIaasVfsResourceMapperTest {
   }
 
   @Test
-  public void testFromComponents_ThrowsException_WhenDifferentListLengths() {
+  void testFromComponents_ThrowsException_WhenDifferentListLengths() {
     List<IaasObjectStore> objectStores
         = List.of(new IaasObjectStore("OS_1"), new IaasObjectStore("OS_2"));
     List<IaasPolicy> policies = List.of(new IaasPolicy("P1"), new IaasPolicy("P2"));
@@ -45,7 +45,7 @@ public class TenantIaasVfsResourceMapperTest {
   }
 
   @Test
-  public void testFromComponents_ThrowsException_WhenComponentsAreNotSameSize() {
+  void testFromComponents_ThrowsException_WhenComponentsAreNotSameSize() {
     IllegalArgumentException exception1 = assertThrows(IllegalArgumentException.class,
         () -> mapper.fromComponents(List.of(), List.of(new IaasPolicy())));
     IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class,

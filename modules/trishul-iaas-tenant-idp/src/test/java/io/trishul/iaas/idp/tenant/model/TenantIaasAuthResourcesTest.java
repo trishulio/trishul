@@ -6,27 +6,27 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasAuthResourcesTest {
+class TenantIaasAuthResourcesTest {
   private TenantIaasAuthResources resources;
 
   @BeforeEach
-  public void init() {
+  void init() {
     resources = new TenantIaasAuthResources();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(resources.getRole());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     resources = new TenantIaasAuthResources(new IaasRole());
     assertEquals(new IaasRole(), resources.getRole());
   }
 
   @Test
-  public void testGetSetRole() {
+  void testGetSetRole() {
     resources.setRole(new IaasRole("ROLE"));
     assertEquals(new IaasRole("ROLE"), resources.getRole());
   }

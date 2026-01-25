@@ -14,7 +14,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CollectionAccessorRefresherTest {
+class CollectionAccessorRefresherTest {
   class Entity implements Identified<Long> {
     private final Long id;
 
@@ -56,7 +56,7 @@ public class CollectionAccessorRefresherTest {
   private Function<Iterable<Long>, List<Entity>> mEntityRetriever;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mEntityRetriever = mock(Function.class);
 
     refresher
@@ -65,17 +65,17 @@ public class CollectionAccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_DoesNothing_WhenAccessorsAreNull() {
+  void testRefreshAccessors_DoesNothing_WhenAccessorsAreNull() {
     refresher.refreshAccessors(null);
   }
 
   @Test
-  public void testRefreshAccessors_DoesNothing_WhenAccessorsAreEmptyCollection() {
+  void testRefreshAccessors_DoesNothing_WhenAccessorsAreEmptyCollection() {
     refresher.refreshAccessors(new ArrayList<>());
   }
 
   @Test
-  public void testRefreshAccessors_ReplacesConsumerEntitiesWithMatchingRepoEntities_() {
+  void testRefreshAccessors_ReplacesConsumerEntitiesWithMatchingRepoEntities_() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L), new Entity(2L), new Entity(5L), new Entity(4L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L, 4L, 5L));
@@ -99,7 +99,7 @@ public class CollectionAccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_IgnoresConsumerWithNullEntities() {
+  void testRefreshAccessors_IgnoresConsumerWithNullEntities() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));
@@ -122,7 +122,7 @@ public class CollectionAccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_IgnoresConsumerWithEntitiesContainingEmptyLists() {
+  void testRefreshAccessors_IgnoresConsumerWithEntitiesContainingEmptyLists() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));

@@ -20,19 +20,19 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BulkIaasClientTest {
+class BulkIaasClientTest {
   private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> bulkClient;
   private IaasClient<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mIaasClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIaasClient = mock(DummyCrudEntityIaasClient.class);
 
     bulkClient = new BulkIaasClient<>(new BlockingAsyncExecutor(), mIaasClient);
   }
 
   @Test
-  public void testGet_ReturnsIaasPoliciesFromAwsPolicies() {
+  void testGet_ReturnsIaasPoliciesFromAwsPolicies() {
     doAnswer(inv -> new DummyCrudEntity(inv.getArgument(0, Long.class))).when(mIaasClient)
         .get(anyLong());
 
@@ -44,7 +44,7 @@ public class BulkIaasClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedPolicies_WhenClientReturnsAddedPolicies() {
+  void testAdd_ReturnsAddedPolicies_WhenClientReturnsAddedPolicies() {
     doAnswer(inv -> inv.getArgument(0, DummyCrudEntity.class)).when(mIaasClient)
         .add(any(BaseDummyCrudEntity.class));
 
@@ -62,7 +62,7 @@ public class BulkIaasClientTest {
   }
 
   @Test
-  public void testPut_ReturnsPutedPolicies_WhenClientReturnsPutedPolicies() {
+  void testPut_ReturnsPutedPolicies_WhenClientReturnsPutedPolicies() {
     doAnswer(inv -> inv.getArgument(0, DummyCrudEntity.class)).when(mIaasClient)
         .put(any(UpdateDummyCrudEntity.class));
 
@@ -80,7 +80,7 @@ public class BulkIaasClientTest {
   }
 
   @Test
-  public void testDelete_CallsCountOfDeletedItems() {
+  void testDelete_CallsCountOfDeletedItems() {
     doReturn(true).when(mIaasClient).delete(1L);
     doReturn(false).when(mIaasClient).delete(2L);
     doReturn(true).when(mIaasClient).delete(3L);
@@ -92,7 +92,7 @@ public class BulkIaasClientTest {
   }
 
   @Test
-  public void testExists_ReturnsMaps() {
+  void testExists_ReturnsMaps() {
     doAnswer(inv -> {
       Long id = inv.getArgument(0, Long.class);
       return (id % 2 == 0) ? new DummyCrudEntity(id) : null;

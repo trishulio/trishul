@@ -17,13 +17,13 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasRepositoryProviderProxyTest {
+class IaasRepositoryProviderProxyTest {
   private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> proxy;
   private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mDelegate;
   private IaasRepositoryProvider<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mProvider;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mProvider = mock(DummyCrudEntityIaasRepositoryProvider.class);
 
     mDelegate = mock(DummyCrudEntityIaasRepository.class);
@@ -33,7 +33,7 @@ public class IaasRepositoryProviderProxyTest {
   }
 
   @Test
-  public void testGet_ReturnsValueFromDelegate() {
+  void testGet_ReturnsValueFromDelegate() {
     doAnswer(inv -> inv.getArgument(0, Set.class).stream().map(id -> new DummyCrudEntity((Long) id))
         .toList()).when(mDelegate).get(anySet());
 
@@ -45,7 +45,7 @@ public class IaasRepositoryProviderProxyTest {
   }
 
   @Test
-  public void testAdd_ReturnsValueFromDelegate() {
+  void testAdd_ReturnsValueFromDelegate() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).add(anyList());
 
     List<DummyCrudEntity> entities
@@ -57,7 +57,7 @@ public class IaasRepositoryProviderProxyTest {
   }
 
   @Test
-  public void testPut_ReturnsValueFromDelegate() {
+  void testPut_ReturnsValueFromDelegate() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).put(anyList());
 
     List<DummyCrudEntity> entities
@@ -69,7 +69,7 @@ public class IaasRepositoryProviderProxyTest {
   }
 
   @Test
-  public void testDelete_ReturnsValueFromDelegate() {
+  void testDelete_ReturnsValueFromDelegate() {
     doReturn(99L).when(mDelegate).delete(Set.of(1L, 2L));
 
     long count = proxy.delete(Set.of(1L, 2L));
@@ -77,7 +77,7 @@ public class IaasRepositoryProviderProxyTest {
   }
 
   @Test
-  public void testExists_ReturnsValueFromDelegate() {
+  void testExists_ReturnsValueFromDelegate() {
     doReturn(Map.of(1L, false, 2L, true)).when(mDelegate).exists(Set.of(1L, 2L));
 
     assertEquals(Map.of(1L, false, 2L, true), proxy.exists(Set.of(1L, 2L)));

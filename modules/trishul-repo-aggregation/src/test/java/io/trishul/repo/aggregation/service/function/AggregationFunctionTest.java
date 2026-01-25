@@ -13,9 +13,9 @@ import io.trishul.repo.jpa.query.spec.criteria.MinSpec;
 import io.trishul.repo.jpa.query.spec.criteria.SumSpec;
 import org.junit.jupiter.api.Test;
 
-public class AggregationFunctionTest {
+class AggregationFunctionTest {
   @Test
-  public void testGetAggregation_SumFunctionReturnsSumAggregation_WhenPathProviderIsNotNull() {
+  void testGetAggregation_SumFunctionReturnsSumAggregation_WhenPathProviderIsNotNull() {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"FIELD_1", "FIELD_2"}).when(mProvider).getPath();
 
@@ -25,7 +25,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_SumFunctionReturnsSumAggregation_WhenPathsArrayIsNotNull() {
+  void testGetAggregation_SumFunctionReturnsSumAggregation_WhenPathsArrayIsNotNull() {
     CriteriaSpec<? extends Number> spec
         = AggregationFunction.SUM.getAggregation("FIELD_1", "FIELD_2");
 
@@ -43,7 +43,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_CountFunctionReturnsCountAggregation_WhenPathsArrayIsNotNull() {
+  void testGetAggregation_CountFunctionReturnsCountAggregation_WhenPathsArrayIsNotNull() {
     CriteriaSpec<? extends Number> spec
         = AggregationFunction.COUNT.getAggregation("FIELD_1", "FIELD_2");
 
@@ -51,7 +51,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_AvgFunctionReturnsAvgAggregation_WhenPathProviderIsNotNull() {
+  void testGetAggregation_AvgFunctionReturnsAvgAggregation_WhenPathProviderIsNotNull() {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"FIELD_1", "FIELD_2"}).when(mProvider).getPath();
 
@@ -61,7 +61,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_AvgFunctionReturnsAvgAggregation_WhenPathsArrayIsNotNull() {
+  void testGetAggregation_AvgFunctionReturnsAvgAggregation_WhenPathsArrayIsNotNull() {
     CriteriaSpec<? extends Number> spec
         = AggregationFunction.AVG.getAggregation("FIELD_1", "FIELD_2");
 
@@ -69,7 +69,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_MaxFunctionReturnsMaxAggregation_WhenPathProviderIsNotNull() {
+  void testGetAggregation_MaxFunctionReturnsMaxAggregation_WhenPathProviderIsNotNull() {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"FIELD_1", "FIELD_2"}).when(mProvider).getPath();
 
@@ -79,7 +79,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_MaxFunctionReturnsMaxAggregation_WhenPathsArrayIsNotNull() {
+  void testGetAggregation_MaxFunctionReturnsMaxAggregation_WhenPathsArrayIsNotNull() {
     CriteriaSpec<? extends Number> spec
         = AggregationFunction.MAX.getAggregation("FIELD_1", "FIELD_2");
 
@@ -87,7 +87,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_MinFunctionReturnsMinAggregation_WhenPathProviderIsNotNull() {
+  void testGetAggregation_MinFunctionReturnsMinAggregation_WhenPathProviderIsNotNull() {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"FIELD_1", "FIELD_2"}).when(mProvider).getPath();
 
@@ -97,7 +97,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_MinFunctionReturnsMinAggregation_WhenPathsArrayIsNotNull() {
+  void testGetAggregation_MinFunctionReturnsMinAggregation_WhenPathsArrayIsNotNull() {
     CriteriaSpec<? extends Number> spec
         = AggregationFunction.MIN.getAggregation("FIELD_1", "FIELD_2");
 

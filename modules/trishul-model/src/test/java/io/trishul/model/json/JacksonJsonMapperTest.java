@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class JacksonJsonMapperTest {
+class JacksonJsonMapperTest {
   public static class TestData {
     private int x, y;
 
@@ -44,13 +44,13 @@ public class JacksonJsonMapperTest {
   private ObjectMapper mObjectMapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mObjectMapper = spy(new ObjectMapper());
     mapper = new JacksonJsonMapper(mObjectMapper);
   }
 
   @Test
-  public void testWriteString_ReturnsJson_WhenObjectIsNotNull() {
+  void testWriteString_ReturnsJson_WhenObjectIsNotNull() {
     TestData data = new TestData(10, 20);
     String json = mapper.writeString(data);
 
@@ -58,14 +58,14 @@ public class JacksonJsonMapperTest {
   }
 
   @Test
-  public void testWriteString_ReturnsNull_WhenObjectIsNull() {
+  void testWriteString_ReturnsNull_WhenObjectIsNull() {
     String json = mapper.writeString(null);
 
     assertEquals("null", json);
   }
 
   @Test
-  public void testRead_Returns() {
+  void testRead_Returns() {
     String json = "{\"x\":10,\"y\":20}";
 
     TestData data = mapper.readString(json, TestData.class);
@@ -159,7 +159,7 @@ public class JacksonJsonMapperTest {
   // }
 
   @Test
-  public void testLocalDateTimeDeserialization_ReturnsTimestamp_WhenStringIsNotNull() {
+  void testLocalDateTimeDeserialization_ReturnsTimestamp_WhenStringIsNotNull() {
     String json = "\"2020-12-31T12:00:00\"";
 
     LocalDateTime d = mapper.readString(json, LocalDateTime.class);
@@ -169,7 +169,7 @@ public class JacksonJsonMapperTest {
   }
 
   @Test
-  public void testLocalDateTimeSerialization_ReturnsISOTimestamp_WhenDateIsNotNull() {
+  void testLocalDateTimeSerialization_ReturnsISOTimestamp_WhenDateIsNotNull() {
     LocalDateTime date = LocalDateTime.of(2020, 12, 31, 12, 0, 0);
 
     String json = mapper.writeString(date);

@@ -19,7 +19,7 @@ public class MoneySerializer extends JsonSerializer<Money> {
       gen.writeStartObject();
       MoneyDto dto = MoneyMapper.INSTANCE.toDto(value);
       gen.writeStringField(MoneyDto.ATTR_CURRENCY, dto.getCurrency());
-      gen.writeNumberField(MoneyDto.ATTR_AMOUNT, (BigDecimal) dto.getAmount());
+      gen.writeNumberField(MoneyDto.ATTR_AMOUNT, dto.getAmount());
       gen.writeEndObject();
     }
   }

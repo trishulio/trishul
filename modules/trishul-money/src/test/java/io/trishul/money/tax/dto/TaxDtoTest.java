@@ -7,23 +7,23 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxDtoTest {
+class TaxDtoTest {
   private TaxDto tax;
 
   @BeforeEach
-  public void init() {
+  void init() {
     tax = new TaxDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(tax.getPstRate());
     assertNull(tax.getGstRate());
     assertNull(tax.getHstRate());
   }
 
   @Test
-  public void testPstGstConstructor() {
+  void testPstGstConstructor() {
     tax = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
 
     assertEquals(new TaxRateDto(new BigDecimal("1")), tax.getPstRate());
@@ -32,7 +32,7 @@ public class TaxDtoTest {
   }
 
   @Test
-  public void testHstConstructor() {
+  void testHstConstructor() {
     tax = new TaxDto(new TaxRateDto(new BigDecimal("1")));
 
     assertEquals(new TaxRateDto(new BigDecimal("1")), tax.getHstRate());
@@ -41,19 +41,19 @@ public class TaxDtoTest {
   }
 
   @Test
-  public void testGetSetGstRate() {
+  void testGetSetGstRate() {
     tax.setGstRate(new TaxRateDto(new BigDecimal("1")));
     assertEquals(new TaxRateDto(new BigDecimal("1")), tax.getGstRate());
   }
 
   @Test
-  public void testGetSetPstRate() {
+  void testGetSetPstRate() {
     tax.setPstRate(new TaxRateDto(new BigDecimal("1")));
     assertEquals(new TaxRateDto(new BigDecimal("1")), tax.getPstRate());
   }
 
   @Test
-  public void testGetSetHstRate() {
+  void testGetSetHstRate() {
     tax.setHstRate(new TaxRateDto(new BigDecimal("1")));
     assertEquals(new TaxRateDto(new BigDecimal("1")), tax.getHstRate());
   }

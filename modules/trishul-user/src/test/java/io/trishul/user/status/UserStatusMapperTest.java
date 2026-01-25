@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserStatusMapperTest {
+class UserStatusMapperTest {
   private UserStatusMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = UserStatusMapper.INSTANCE;
   }
 
   @Test
-  public void testFromDto_ReturnsStatus_WhenIdIsNotNull() {
+  void testFromDto_ReturnsStatus_WhenIdIsNotNull() {
     UserStatus status = mapper.fromDto(1L);
 
     UserStatus expected = new UserStatus(1L);
@@ -24,12 +24,12 @@ public class UserStatusMapperTest {
   }
 
   @Test
-  public void testFromDto_ReturnNull_WhenIdIsNull() {
+  void testFromDto_ReturnNull_WhenIdIsNull() {
     assertNull(mapper.fromDto((Long) null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenPojoIsNotNull() {
+  void testToDto_ReturnsDto_WhenPojoIsNotNull() {
     UserStatus status = new UserStatus(1L, "STATUS", LocalDateTime.of(1999, 1, 1, 0, 0),
         LocalDateTime.of(2000, 1, 1, 0, 0), 1);
 
@@ -42,7 +42,7 @@ public class UserStatusMapperTest {
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto(null));
   }
 }

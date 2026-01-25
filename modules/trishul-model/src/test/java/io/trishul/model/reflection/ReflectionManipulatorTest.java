@@ -13,7 +13,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ReflectionManipulatorTest {
+class ReflectionManipulatorTest {
   public static class TestData {
     public TestData() {}
 
@@ -45,29 +45,29 @@ public class ReflectionManipulatorTest {
   private ReflectionManipulator util;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.util = ReflectionManipulator.INSTANCE;
   }
 
   @Test
-  public void testEquals_ReturnsTrue_WhenBothArgsAreNull() {
+  void testEquals_ReturnsTrue_WhenBothArgsAreNull() {
     assertTrue(this.util.equals(null, null));
   }
 
   @Test
-  public void testEquals_ReturnsFalse_WhenArgIsNullAndTestDataIsNot() {
+  void testEquals_ReturnsFalse_WhenArgIsNullAndTestDataIsNot() {
     assertFalse(this.util.equals(new Object(), null));
     assertFalse(this.util.equals(null, new Object()));
   }
 
   @Test
-  public void testEquals_ReturnsTrue_WhenObjectsAreSame() {
+  void testEquals_ReturnsTrue_WhenObjectsAreSame() {
     final Object o = new Object();
     assertTrue(this.util.equals(o, o));
   }
 
   @Test
-  public void testEquals_ReturnsFalse_WhenObjectsAreNotEquals() {
+  void testEquals_ReturnsFalse_WhenObjectsAreNotEquals() {
     final TestData a = new TestData();
     final TestData b = new TestData();
     a.x = 10;
@@ -76,7 +76,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testHashCode_ReturnsSameHashCode_WhenObjectIsUnchanged() {
+  void testHashCode_ReturnsSameHashCode_WhenObjectIsUnchanged() {
     final TestData a = new TestData();
 
     int hashCode = util.hashCode(a);
@@ -86,7 +86,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testHashCode_ReturnsDifferentHashCode_WhenObjectPropertiesChange() {
+  void testHashCode_ReturnsDifferentHashCode_WhenObjectPropertiesChange() {
     final TestData a = new TestData();
 
     a.x = 0;
@@ -104,7 +104,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testHashCode_ReturnsSameHash_WhenDifferentObjectsHaveSamePropertyValues() {
+  void testHashCode_ReturnsSameHash_WhenDifferentObjectsHaveSamePropertyValues() {
     final TestData a = new TestData();
     final TestData b = new TestData();
     assertEquals(util.hashCode(a), util.hashCode(b));
@@ -119,7 +119,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testHashCode_ReturnsDifferentHashCode_WhenObjectsHaveDifferentPropertyValues() {
+  void testHashCode_ReturnsDifferentHashCode_WhenObjectsHaveDifferentPropertyValues() {
     final TestData a = new TestData();
     final TestData b = new TestData();
 
@@ -133,7 +133,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testOuterJoin_ThrowsException_WhenEitherObjectIsNull() {
+  void testOuterJoin_ThrowsException_WhenEitherObjectIsNull() {
     NullPointerException exception1
         = assertThrows(NullPointerException.class, () -> this.util.copy(null, null, pd -> true));
 
@@ -149,7 +149,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testOuterJoin_SkipsProperty_WhenGetterIsMissing() {
+  void testOuterJoin_SkipsProperty_WhenGetterIsMissing() {
     class TestDataWithoutGetter {
       TestDataWithoutGetter(int x) {
         this.x = x;
@@ -171,7 +171,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testOuterJoin_SkipsProperty_WhenSetterIsMissing() {
+  void testOuterJoin_SkipsProperty_WhenSetterIsMissing() {
     class TestDataWithoutSetter {
       TestDataWithoutSetter(int x) {
         this.x = x;
@@ -193,7 +193,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testOuterJoin_SkipsProperty_WhenPredicateReturnsFalse() {
+  void testOuterJoin_SkipsProperty_WhenPredicateReturnsFalse() {
     final TestData o1 = new TestData(10);
     final TestData o2 = new TestData(20);
 
@@ -215,12 +215,12 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testGetPropertyNames_ReturnsNull_WhenClassIsNull() {
+  void testGetPropertyNames_ReturnsNull_WhenClassIsNull() {
     assertNull(this.util.getPropertyNames(null, null));
   }
 
   @Test
-  public void testGetPropertyNames_ReturnsListOfPropertyNamesForTheGivenClass() {
+  void testGetPropertyNames_ReturnsListOfPropertyNamesForTheGivenClass() {
     final Set<String> props = this.util.getPropertyNames(TestData.class, null);
 
     assertEquals(Set.of("x", "y", "class"), props);
@@ -236,19 +236,19 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testConstruct_ReturnsNull_WhenClassIsNull() {
+  void testConstruct_ReturnsNull_WhenClassIsNull() {
     assertNull(this.util.construct(null));
   }
 
   @Test
-  public void testConstruct_ReturnsObjectOfGivenClass_WhenClassIsNotNull() {
+  void testConstruct_ReturnsObjectOfGivenClass_WhenClassIsNotNull() {
     final TestData o = this.util.construct(TestData.class);
 
     assertNotNull(o);
   }
 
   @Test
-  public void testConstruct_ReturnsObjectsWithValues_WhenClassAndPropertiesAreNotNull() {
+  void testConstruct_ReturnsObjectsWithValues_WhenClassAndPropertiesAreNotNull() {
     final TestData o = this.util.construct(TestData.class, Map.of("x", 1, "y", 2));
 
     assertEquals(1, o.getX());

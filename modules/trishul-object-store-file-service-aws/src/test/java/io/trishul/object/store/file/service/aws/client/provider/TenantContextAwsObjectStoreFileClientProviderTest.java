@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class TenantContextAwsObjectStoreFileClientProviderTest {
+class TenantContextAwsObjectStoreFileClientProviderTest {
   private TenantContextAwsObjectStoreFileClientProvider provider;
 
   private ContextHolderAuthorizationFetcher mAuthFetcher;
@@ -28,7 +28,7 @@ public class TenantContextAwsObjectStoreFileClientProviderTest {
   private ObjectStoreFileServiceAwsFactory mFactory;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAuthFetcher = mock(ContextHolderAuthorizationFetcher.class);
     mBucketNameProvider = mock(IaasObjectStoreNameProvider.class);
     mFactory = mock(ObjectStoreFileServiceAwsFactory.class);
@@ -38,7 +38,7 @@ public class TenantContextAwsObjectStoreFileClientProviderTest {
   }
 
   @Test
-  public void testGetIaasRepository_ReturnsClientFromTenantContext() {
+  void testGetIaasRepository_ReturnsClientFromTenantContext() {
     ArgumentCaptor<GeneratePresignedUrlRequest> captor
         = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 

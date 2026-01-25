@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-public class UnifiedTenantRegisterTest {
+class UnifiedTenantRegisterTest {
   private TenantRegister register;
 
   private TenantUserRegister mUserReg;
@@ -21,7 +21,7 @@ public class UnifiedTenantRegisterTest {
   private InOrder order;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mUserReg = mock(TenantUserRegister.class);
     mSchemaReg = mock(TenantSchemaRegister.class);
 
@@ -31,7 +31,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testAdd_CallsAddOnAllRegisters() {
+  void testAdd_CallsAddOnAllRegisters() {
     register.add(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
     order.verify(mUserReg, times(1))
@@ -41,7 +41,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testPut_CallsPutOnAllRegisters() {
+  void testPut_CallsPutOnAllRegisters() {
     register.put(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
     order.verify(mUserReg, times(1))
@@ -51,7 +51,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testRemove_CallsRemoveOnSchemaAndUserRegisters() {
+  void testRemove_CallsRemoveOnSchemaAndUserRegisters() {
     register.remove(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
     order.verify(mSchemaReg, times(1))
@@ -61,7 +61,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllRegisterExistsReturnTrue() {
+  void testExists_ReturnsTrue_WhenAllRegisterExistsReturnTrue() {
     doReturn(true).when(mUserReg)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     doReturn(true).when(mSchemaReg)
@@ -73,7 +73,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenUserRegisterExistsReturnFalse() {
+  void testExists_ReturnsFalse_WhenUserRegisterExistsReturnFalse() {
     doReturn(false).when(mUserReg)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     doReturn(true).when(mSchemaReg)
@@ -85,7 +85,7 @@ public class UnifiedTenantRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenSchemaRegisterExistsReturnFalse() {
+  void testExists_ReturnsFalse_WhenSchemaRegisterExistsReturnFalse() {
     doReturn(true).when(mUserReg)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     doReturn(false).when(mSchemaReg)

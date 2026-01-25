@@ -16,20 +16,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-public class QuantityUnitControllerTest {
+class QuantityUnitControllerTest {
   private QuantityUnitController quantityUnitController;
 
   private QuantityUnitService quantityUnitService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     quantityUnitService = mock(QuantityUnitService.class);
 
     quantityUnitController = new QuantityUnitController(quantityUnitService, new AttributeFilter());
   }
 
   @Test
-  public void testGetUnits() {
+  void testGetUnits() {
     Page<UnitEntity> mPage = new PageImpl<>(List.of(new UnitEntity("g", "g")));
 
     doReturn(mPage).when(quantityUnitService).getUnits(Set.of("g"), new TreeSet<>(List.of("id")),

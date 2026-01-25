@@ -276,7 +276,16 @@ def process_page(page_num):
 
 # Process page 1
 if __name__ == '__main__':
-    stats = process_page(1)
-    print(f'\n=== Overall Stats ===')
-    print(f'Fixed: {stats["fixed"]}')
-    print(f'Failed: {stats["failed"]}')
+    import sys
+    page_start = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+    page_end = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+    
+    total_stats = {'fixed': 0, 'failed': 0}
+    for page_num in range(page_start, page_end + 1):
+        stats = process_page(page_num)
+        total_stats['fixed'] += stats['fixed']
+        total_stats['failed'] += stats['failed']
+    
+    print(f'\n=== Overall Stats for Pages {page_start}-{page_end} ===')
+    print(f'Fixed: {total_stats["fixed"]}')
+    print(f'Failed: {total_stats["failed"]}')

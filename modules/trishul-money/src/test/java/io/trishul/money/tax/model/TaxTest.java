@@ -8,23 +8,23 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxTest {
+class TaxTest {
   private Tax tax;
 
   @BeforeEach
-  public void init() {
+  void init() {
     tax = new Tax();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(tax.getPstRate());
     assertNull(tax.getGstRate());
     assertNull(tax.getHstRate());
   }
 
   @Test
-  public void testPstGstConstructor() {
+  void testPstGstConstructor() {
     tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
 
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getPstRate());
@@ -33,7 +33,7 @@ public class TaxTest {
   }
 
   @Test
-  public void testHstConstructor() {
+  void testHstConstructor() {
     tax = new Tax(new TaxRate(new BigDecimal("1")));
 
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getHstRate());
@@ -42,13 +42,13 @@ public class TaxTest {
   }
 
   @Test
-  public void testGetSetGstRate() {
+  void testGetSetGstRate() {
     tax.setGstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getGstRate());
   }
 
   @Test
-  public void testSetGstRate_ThrowException_WhenHstIsPresent() {
+  void testSetGstRate_ThrowException_WhenHstIsPresent() {
     tax.setHstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setGstRate(null);
@@ -58,13 +58,13 @@ public class TaxTest {
   }
 
   @Test
-  public void testGetSetPstRate() {
+  void testGetSetPstRate() {
     tax.setPstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getPstRate());
   }
 
   @Test
-  public void testSetPstRate_ThrowException_WhenHstIsPresent() {
+  void testSetPstRate_ThrowException_WhenHstIsPresent() {
     tax.setHstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setPstRate(null);
@@ -74,13 +74,13 @@ public class TaxTest {
   }
 
   @Test
-  public void testGetSetHstRate() {
+  void testGetSetHstRate() {
     tax.setHstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getHstRate());
   }
 
   @Test
-  public void testSetHstRate_ThrowException_WhenPstIsPresent() {
+  void testSetHstRate_ThrowException_WhenPstIsPresent() {
     tax.setPstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setHstRate(null);
@@ -90,7 +90,7 @@ public class TaxTest {
   }
 
   @Test
-  public void testSetHstRate_ThrowException_WhenGstIsPresent() {
+  void testSetHstRate_ThrowException_WhenGstIsPresent() {
     tax.setGstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setHstRate(null);

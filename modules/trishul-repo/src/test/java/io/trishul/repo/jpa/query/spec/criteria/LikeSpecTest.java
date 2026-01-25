@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LikeSpecTest {
+class LikeSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<String> mDelegate;
@@ -22,7 +22,7 @@ public class LikeSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -33,7 +33,7 @@ public class LikeSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsLikeOnLowerCaseExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsLikeOnLowerCaseExpressionOnDelegatePath() {
     Expression<String> mLowerExpr = mock(Expression.class);
     doReturn(mLowerExpr).when(mCb).lower(mExpr);
 

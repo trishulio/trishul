@@ -10,7 +10,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MaxSpecTest {
+class MaxSpecTest {
   private CriteriaSpec<?> spec;
 
   private CriteriaSpec<Number> mDelegate;
@@ -21,7 +21,7 @@ public class MaxSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -32,7 +32,7 @@ public class MaxSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsMaxExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsMaxExpressionOnDelegatePath() {
     Expression<Number> mMaxExpr = mock(Expression.class);
     doReturn(mMaxExpr).when(mCb).max(mExpr);
 

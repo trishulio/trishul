@@ -8,23 +8,23 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import io.trishul.money.serialize.Register;
 
-public class TaxAmountTest {
+class TaxAmountTest {
   private TaxAmount taxAmount;
 
   @BeforeEach
-  public void init() {
+  void init() {
     taxAmount = new TaxAmount();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(taxAmount.getPstAmount());
     assertNull(taxAmount.getGstAmount());
     assertNull(taxAmount.getHstAmount());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
 
     assertEquals(Money.parse("CAD 10"), taxAmount.getPstAmount());
@@ -34,7 +34,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testGstPstConstructor() {
+  void testGstPstConstructor() {
     taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"));
 
     assertEquals(Money.parse("CAD 10"), taxAmount.getPstAmount());
@@ -43,7 +43,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testHstConstructor() {
+  void testHstConstructor() {
     taxAmount = new TaxAmount(Money.parse("CAD 10"));
 
     assertEquals(Money.parse("CAD 10"), taxAmount.getHstAmount());
@@ -51,7 +51,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testGetSetPstAmount() {
+  void testGetSetPstAmount() {
     taxAmount.setPstAmount(Money.parse("CAD 100"));
 
     assertEquals(Money.parse("CAD 100"), taxAmount.getPstAmount());
@@ -59,7 +59,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testGetSetGstAmount() {
+  void testGetSetGstAmount() {
     taxAmount.setGstAmount(Money.parse("CAD 100"));
 
     assertEquals(Money.parse("CAD 100"), taxAmount.getGstAmount());
@@ -67,7 +67,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testGetSetHstAmount() {
+  void testGetSetHstAmount() {
     taxAmount.setHstAmount(Money.parse("CAD 100"));
 
     assertEquals(Money.parse("CAD 100"), taxAmount.getHstAmount());
@@ -75,7 +75,7 @@ public class TaxAmountTest {
   }
 
   @Test
-  public void testGetTotalTaxAmount_ReturnsTotalMoney() {
+  void testGetTotalTaxAmount_ReturnsTotalMoney() {
     taxAmount = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"), Money.parse("CAD 30"));
 
     assertEquals(Money.parse("CAD 60"), taxAmount.getTotalTaxAmount());

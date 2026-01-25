@@ -6,28 +6,28 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserRoleMapperTest {
+class UserRoleMapperTest {
   private UserRoleMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = UserRoleMapper.INSTANCE;
   }
 
   @Test
-  public void testFromDto_CreatesRoleWithId_WhenIdIsNotNull() {
+  void testFromDto_CreatesRoleWithId_WhenIdIsNotNull() {
     UserRole role = mapper.fromDto(1L);
     UserRole expected = new UserRole().setId(1L);
     assertEquals(expected, role);
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenIdIsNull() {
+  void testFromDto_ReturnsNull_WhenIdIsNull() {
     assertNull(mapper.fromDto((Long) null));
   }
 
   @Test
-  public void testToDto_ReturnsRoleDto_WhenPojoIsNotNull() {
+  void testToDto_ReturnsRoleDto_WhenPojoIsNotNull() {
     UserRole role
         = new UserRole().setId(1L).setName("NAME").setCreatedAt(LocalDateTime.of(1999, 1, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0)).setVersion(1);
@@ -41,17 +41,17 @@ public class UserRoleMapperTest {
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsNull_WhenArgisNull() {
+  void testFromUpdateDto_ReturnsNull_WhenArgisNull() {
     assertNull(mapper.fromUpdateDto(null));
   }
 
   @Test
-  public void testFromUpdateDto_ReturnsPojo_WhenArgIsNotNll() {
+  void testFromUpdateDto_ReturnsPojo_WhenArgIsNotNll() {
     UpdateUserRoleDto arg = new UpdateUserRoleDto().setId(1L).setName("NAME").setVersion(1);
 
     UserRole expected = new UserRole().setId(1L).setName("NAME").setVersion(1);
@@ -60,12 +60,12 @@ public class UserRoleMapperTest {
   }
 
   @Test
-  public void testFromAddDto_ReturnsNull_WhenArgisNull() {
+  void testFromAddDto_ReturnsNull_WhenArgisNull() {
     assertNull(mapper.fromAddDto(null));
   }
 
   @Test
-  public void testFromAddDto_ReturnsPojo_WhenArgIsNotNll() {
+  void testFromAddDto_ReturnsPojo_WhenArgIsNotNll() {
     AddUserRoleDto arg = new AddUserRoleDto().setName("NAME");
     UserRole expected = new UserRole().setName("NAME");
     assertEquals(expected, mapper.fromAddDto(arg));

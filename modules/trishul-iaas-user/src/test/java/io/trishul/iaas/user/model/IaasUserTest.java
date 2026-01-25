@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasUserTest {
+class IaasUserTest {
   private IaasUser iaasUser;
 
   @BeforeEach
-  public void init() {
+  void init() {
     iaasUser = new IaasUser();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(iaasUser.getId());
     assertNull(iaasUser.getUserName());
     assertNull(iaasUser.getEmail());
@@ -26,7 +26,7 @@ public class IaasUserTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     iaasUser = new IaasUser("USERNAME", "EMAIL", "PHONE_NUMBER", LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));
 
@@ -39,37 +39,37 @@ public class IaasUserTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     iaasUser.setId("ID");
     assertEquals("ID", iaasUser.getId());
   }
 
   @Test
-  public void testGetSetUserName() {
+  void testGetSetUserName() {
     iaasUser.setUserName("USERNAME");
     assertEquals("USERNAME", iaasUser.getUserName());
   }
 
   @Test
-  public void testGetSetEmail() {
+  void testGetSetEmail() {
     iaasUser.setEmail("EMAIL");
     assertEquals("EMAIL", iaasUser.getEmail());
   }
 
   @Test
-  public void testGetSetPhoneNumber() {
+  void testGetSetPhoneNumber() {
     iaasUser.setPhoneNumber("PHONE_NUMBER");
     assertEquals("PHONE_NUMBER", iaasUser.getPhoneNumber());
   }
 
   @Test
-  public void testGetSetLastUpdated() {
+  void testGetSetLastUpdated() {
     iaasUser.setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), iaasUser.getLastUpdated());
   }
 
   @Test
-  public void testGetSetCreatedAt() {
+  void testGetSetCreatedAt() {
     iaasUser.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), iaasUser.getCreatedAt());
   }

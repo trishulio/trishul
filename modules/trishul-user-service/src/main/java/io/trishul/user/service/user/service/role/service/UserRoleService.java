@@ -58,7 +58,7 @@ public class UserRoleService extends BaseService implements
 
   @Override
   public List<UserRole> getByAccessorIds(Collection<? extends UserRoleAccessor<?>> accessors) {
-    return this.repoService.getByAccessorIds(accessors, accessor -> accessor.getRole());
+    return this.repoService.getByAccessorIds(accessors, UserRoleAccessor::getRole);
   }
 
   @Override
@@ -113,8 +113,8 @@ public class UserRoleService extends BaseService implements
     final List<UserRole> existing = this.repoService.getByIds(patches);
     if (existing.size() != patches.size()) {
       final Set<Long> existingIds
-          = existing.stream().map(userRole -> userRole.getId()).collect(Collectors.toSet());
-      final Set<Long> nonExistingIds = patches.stream().map(patch -> patch.getId())
+          = existing.stream().map(Identified::getId).collect(Collectors.toSet());
+      final Set<Long> nonExistingIds = patches.stream().map(Identified::getId)
           .filter(patchId -> !existingIds.contains(patchId)).collect(Collectors.toSet());
 
       throw new EntityNotFoundException(

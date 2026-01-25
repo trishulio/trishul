@@ -10,21 +10,21 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIaasRoleMapperTest {
+class AwsIaasRoleMapperTest {
   private AwsIaasRoleMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AwsIaasRoleMapper.INSTANCE;
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
+  void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromIaasEntity(null));
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsIaasEntity_WhenArgIsNotNull() {
+  void testFromIaasEntity_ReturnsIaasEntity_WhenArgIsNotNull() {
     Role role = new Role().withArn("ROLE_1_ARN").withAssumeRolePolicyDocument("ROLE_1_DOC")
         .withCreateDate(new Date(1, 1, 1)).withDescription("ROLE_1_DESCRIPTION")
         .withRoleId("ROLE_1_ID").withRoleName("ROLE_1_NAME")

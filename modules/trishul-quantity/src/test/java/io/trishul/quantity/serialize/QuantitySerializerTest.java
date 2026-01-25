@@ -11,25 +11,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 
-public class QuantitySerializerTest {
+class QuantitySerializerTest {
   private JsonSerializer<Quantity> serializer;
   private MockJsonGenerator mGen;
 
   @BeforeEach
-  public void init() {
+  void init() {
     serializer = new QuantitySerializer();
     mGen = new MockJsonGenerator();
   }
 
   @Test
-  public void testSerialize_ReturnNull_WhenValueIsNull() throws IOException {
+  void testSerialize_ReturnNull_WhenValueIsNull() throws IOException {
     serializer.serialize(null, mGen, null);
 
     assertEquals("null", mGen.json());
   }
 
   @Test
-  public void testSerialize_ReturnsJsonQuantity_WhenValueIsNotNull() throws IOException {
+  void testSerialize_ReturnsJsonQuantity_WhenValueIsNotNull() throws IOException {
     serializer.serialize(Quantities.getQuantity(new BigDecimal("10"), SupportedUnits.GRAM), mGen,
         null);
 

@@ -6,11 +6,11 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SequentialTaskSetTest {
+class SequentialTaskSetTest {
   private TaskSet tasks;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.tasks = new SequentialTaskSet();
   }
 
@@ -24,7 +24,7 @@ public class SequentialTaskSetTest {
   }
 
   @Test
-  public void testSubmit_ExecutesTheSupplierAndStoreException_WhenSupplierThrowsException() {
+  void testSubmit_ExecutesTheSupplierAndStoreException_WhenSupplierThrowsException() {
     RuntimeException e = new RuntimeException();
     tasks.submit(new Supplier<Void>() {
       @Override

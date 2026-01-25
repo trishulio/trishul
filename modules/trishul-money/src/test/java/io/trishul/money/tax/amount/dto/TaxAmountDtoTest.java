@@ -7,23 +7,23 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxAmountDtoTest {
+class TaxAmountDtoTest {
   private TaxAmountDto taxAmount;
 
   @BeforeEach
-  public void init() {
+  void init() {
     taxAmount = new TaxAmountDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(taxAmount.getPstAmount());
     assertNull(taxAmount.getGstAmount());
     assertNull(taxAmount.getHstAmount());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     taxAmount = new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10.00")),
         new MoneyDto("CAD", new BigDecimal("20.00")), new MoneyDto("CAD", new BigDecimal("30.00")),
         new MoneyDto("CAD", new BigDecimal("70.00")));
@@ -35,7 +35,7 @@ public class TaxAmountDtoTest {
   }
 
   @Test
-  public void testGstPstConstructor() {
+  void testGstPstConstructor() {
     taxAmount = new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10.00")),
         new MoneyDto("CAD", new BigDecimal("20.00")), new MoneyDto("CAD", new BigDecimal("30.00")));
 
@@ -45,7 +45,7 @@ public class TaxAmountDtoTest {
   }
 
   @Test
-  public void testHstConstructor() {
+  void testHstConstructor() {
     taxAmount = new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10.00")),
         new MoneyDto("CAD", new BigDecimal("10.00")));
 
@@ -54,28 +54,28 @@ public class TaxAmountDtoTest {
   }
 
   @Test
-  public void testGetSetPstAmount() {
+  void testGetSetPstAmount() {
     taxAmount.setPstAmount(new MoneyDto("CAD", new BigDecimal("100.00")));
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("100.00")), taxAmount.getPstAmount());
   }
 
   @Test
-  public void testGetSetGstAmount() {
+  void testGetSetGstAmount() {
     taxAmount.setGstAmount(new MoneyDto("CAD", new BigDecimal("100.00")));
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("100.00")), taxAmount.getGstAmount());
   }
 
   @Test
-  public void testGetSetHstAmount() {
+  void testGetSetHstAmount() {
     taxAmount.setHstAmount(new MoneyDto("CAD", new BigDecimal("100.00")));
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("100.00")), taxAmount.getHstAmount());
   }
 
   @Test
-  public void testGetTotalTaxAmountDto_ReturnsTotalMoney() {
+  void testGetTotalTaxAmountDto_ReturnsTotalMoney() {
     taxAmount = new TaxAmountDto();
     taxAmount.setTotalTaxAmount(new MoneyDto("CAD", new BigDecimal("60")));
 

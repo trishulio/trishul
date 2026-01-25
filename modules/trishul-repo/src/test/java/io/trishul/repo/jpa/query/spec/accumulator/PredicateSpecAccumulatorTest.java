@@ -18,19 +18,19 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PredicateSpecAccumulatorTest {
+class PredicateSpecAccumulatorTest {
   private PredicateSpecAccumulator accumulator;
 
   private List<CriteriaSpec<Boolean>> mAggregations;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAggregations = new ArrayList<>();
     accumulator = new PredicateSpecAccumulator(mAggregations);
   }
 
   @Test
-  public void testAdd_WrapsAggregationInAndSpecAndAddsItToTheList_WhenNotFlagIsNotSet() {
+  void testAdd_WrapsAggregationInAndSpecAndAddsItToTheList_WhenNotFlagIsNotSet() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
 
     accumulator.setIsNot(false);
@@ -41,7 +41,7 @@ public class PredicateSpecAccumulatorTest {
   }
 
   @Test
-  public void testAdd_WrapsAggregationInNotAndSpecAndAddsItToTheList_WhenNotFlagIsSet() {
+  void testAdd_WrapsAggregationInNotAndSpecAndAddsItToTheList_WhenNotFlagIsSet() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
 
     accumulator.setIsNot(true);
@@ -52,7 +52,7 @@ public class PredicateSpecAccumulatorTest {
   }
 
   @Test
-  public void testGetPredicates_CollectsAllSpecExpressionsAndReturnsArray() {
+  void testGetPredicates_CollectsAllSpecExpressionsAndReturnsArray() {
     CriteriaBuilder mCb = mock(CriteriaBuilder.class);
     CriteriaQuery<?> mCq = mock(CriteriaQuery.class);
     Root<?> mRoot = mock(Root.class);

@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 @SuppressWarnings("unchecked")
-public class AggregationRepositoryTest {
+class AggregationRepositoryTest {
   class TestEntity extends BaseModel {
     private Long id;
 
@@ -29,14 +29,14 @@ public class AggregationRepositoryTest {
   private AggregationRepository repo;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mResolver = mock(QueryResolver.class);
 
     repo = new AggregationRepository(mResolver);
   }
 
   @Test
-  public void testGetAggregation_ReturnsListOfResultsFromTypedQuery() {
+  void testGetAggregation_ReturnsListOfResultsFromTypedQuery() {
     SelectClauseBuilder mSelector = mock(SelectClauseBuilder.class);
     GroupByClauseBuilder mGroupBy = mock(GroupByClauseBuilder.class);
     Specification<TestEntity> mSpec = mock(Specification.class);
@@ -70,7 +70,7 @@ public class AggregationRepositoryTest {
   }
 
   @Test
-  public void testGetSingleAggregation_ReturnsSingleResultFromTypedQuery() {
+  void testGetSingleAggregation_ReturnsSingleResultFromTypedQuery() {
     SelectClauseBuilder mSelector = mock(SelectClauseBuilder.class);
     GroupByClauseBuilder mGroupBy = mock(GroupByClauseBuilder.class);
     Specification<TestEntity> mSpec = mock(Specification.class);
@@ -87,7 +87,7 @@ public class AggregationRepositoryTest {
   }
 
   @Test
-  public void testResultCount_ReturnsCountOfStream() {
+  void testResultCount_ReturnsCountOfStream() {
     SelectClauseBuilder mSelector = mock(SelectClauseBuilder.class);
     GroupByClauseBuilder mGroupBy = mock(GroupByClauseBuilder.class);
     Specification<TestEntity> mSpec = mock(Specification.class);

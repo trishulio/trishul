@@ -11,12 +11,12 @@ class RepositoryAutoConfigurationTest {
   private RepositoryAutoConfiguration repoConf;
 
   @BeforeEach
-  public void init() {
+  void init() {
     repoConf = new RepositoryAutoConfiguration();
   }
 
   @Test
-  public void testQueryResolver_ReturnsInstanceOfQueryResolver() {
+  void testQueryResolver_ReturnsInstanceOfQueryResolver() {
     EntityManager mEm = mock(EntityManager.class);
     QueryResolver queryResolver = repoConf.queryResolver(mEm);
 

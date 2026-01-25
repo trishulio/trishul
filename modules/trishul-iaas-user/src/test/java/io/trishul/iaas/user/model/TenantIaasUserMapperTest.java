@@ -12,21 +12,21 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasUserMapperTest {
+class TenantIaasUserMapperTest {
   private TenantIaasUserMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TenantIaasUserMapper.INSTANCE;
   }
 
   @Test
-  public void testFromUsers_ReturnsNull_WhenArgIsNull() {
+  void testFromUsers_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromUsers(null));
   }
 
   @Test
-  public void testFromUsers_ReturnsListOfIaasUser_WhenArgIsNotNull() {
+  void testFromUsers_ReturnsListOfIaasUser_WhenArgIsNotNull() {
     List<IaasUser> users = mapper.fromUsers(List.of(new User(1L, "USERNAME", "DISPLAY_NAME",
         "FIRST_NAME", "LAST_NAME", "EMAIL", "PHONE_NUMBER", URI.create("URI"), null, new UserStatus(1L),
         new UserSalutation(1L), List.of(new UserRole(1L)), LocalDateTime.of(2000, 1, 1, 0, 0),
@@ -38,12 +38,12 @@ public class TenantIaasUserMapperTest {
   }
 
   @Test
-  public void fromUser_ReturnsNull_WhenArgIsNull() {
+  void fromUser_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromUser(null));
   }
 
   @Test
-  public void testFromUser_ReturnsIaasUser_WhenArgIsNotNull() {
+  void testFromUser_ReturnsIaasUser_WhenArgIsNotNull() {
     User arg = new User().setId(1L).setUserName("USERNAME").setDisplayName("DISPLAY_NAME")
         .setFirstName("FIRST_NAME").setLastName("LAST_NAME").setEmail("EMAIL")
         .setPhoneNumber("PHONE_NUMBER").setImageSrc(URI.create("URI")).setStatus(new UserStatus(1L))

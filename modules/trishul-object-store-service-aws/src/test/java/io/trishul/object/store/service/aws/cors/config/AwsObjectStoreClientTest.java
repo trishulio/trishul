@@ -22,19 +22,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class AwsObjectStoreClientTest {
+class AwsObjectStoreClientTest {
   private AwsObjectStoreClient client;
 
   private AmazonS3 s3;
 
   @BeforeEach
-  public void init() {
+  void init() {
     s3 = mock(AmazonS3.class);
     client = new AwsObjectStoreClient(s3, AwsIaasObjectStoreMapper.INSTANCE);
   }
 
   @Test
-  public void testGet_ReturnsBucketWithName() {
+  void testGet_ReturnsBucketWithName() {
     doReturn(List.of(new Bucket("B1"), new Bucket("B2"))).when(s3)
         .listBuckets(any(ListBucketsRequest.class));
 
@@ -45,7 +45,7 @@ public class AwsObjectStoreClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenEntityExists() {
+  void testDelete_ReturnsTrue_WhenEntityExists() {
     doAnswer(inv -> {
       assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
       return null;
@@ -58,7 +58,7 @@ public class AwsObjectStoreClientTest {
 
   @Test
   @Disabled("This test is disabled because of TODO: manually validate the AmazonS3Exception is only thrown when bucket is failed to be delete because it's not there. If that's true, enable this test.")
-  public void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
+  void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
     doAnswer(inv -> {
       assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
       throw new AmazonS3Exception("Cannot delete B1");
@@ -70,7 +70,7 @@ public class AwsObjectStoreClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsCreatedBucket() {
+  void testAdd_ReturnsCreatedBucket() {
     doAnswer(inv -> {
       CreateBucketRequest req = inv.getArgument(0, CreateBucketRequest.class);
       return new Bucket(req.getBucketName());
@@ -83,21 +83,21 @@ public class AwsObjectStoreClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
+  void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
     doReturn(true).when(s3).doesBucketExistV2("B1");
 
     assertTrue(client.exists("B1"));
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
+  void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
     doReturn(false).when(s3).doesBucketExistV2("B1");
 
     assertFalse(client.exists("B1"));
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistIsFalse() {
+  void testPut_CallsAdd_WhenExistIsFalse() {
     doReturn(false).when(s3).doesBucketExistV2("B1");
 
     doAnswer(inv -> {
@@ -112,7 +112,7 @@ public class AwsObjectStoreClientTest {
   }
 
   @Test
-  public void testPut_CallsGet_WhenExistIsTrue() {
+  void testPut_CallsGet_WhenExistIsTrue() {
     doReturn(true).when(s3).doesBucketExistV2("B1");
 
     doReturn(List.of(new Bucket("B1"), new Bucket("B2"))).when(s3)
@@ -125,7 +125,7 @@ public class AwsObjectStoreClientTest {
   }
 
   @Test
-  public void testCaching_SingleThreaded_CacheIsCleanedWhenMutationOperationIsPerformed() {
+  void testCaching_SingleThreaded_CacheIsCleanedWhenMutationOperationIsPerformed() {
     doReturn(List.of(new Bucket("B1"), new Bucket("B2"), new Bucket("B3"))).when(s3)
         .listBuckets(any(ListBucketsRequest.class));
 

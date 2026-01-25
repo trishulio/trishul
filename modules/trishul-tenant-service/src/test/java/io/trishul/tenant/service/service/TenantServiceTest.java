@@ -40,7 +40,7 @@ import io.trishul.tenant.persistence.management.migration.manager.MigrationManag
 import io.trishul.tenant.service.repository.TenantRepository;
 import io.trishul.test.util.MockUtilProvider;
 
-public class TenantServiceTest {
+class TenantServiceTest {
   private TenantService service;
 
   private RepoService<UUID, Tenant, TenantAccessor<?>> mRepoService;
@@ -50,7 +50,7 @@ public class TenantServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mTenantRepo = mock(TenantRepository.class);
 
     mMigrationMgr = mock(MigrationManager.class);
@@ -69,7 +69,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec()
+  void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec()
       throws MalformedURLException {
     @SuppressWarnings("unchecked")
     final ArgumentCaptor<Specification<Tenant>> captor
@@ -96,7 +96,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testGetTenant_ReturnsTenantPojo_WhenRepoServiceReturnsOptionalWithEntity() {
+  void testGetTenant_ReturnsTenantPojo_WhenRepoServiceReturnsOptionalWithEntity() {
     doReturn(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")))
         .when(this.mRepoService).get(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
@@ -106,7 +106,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testGetByIds_CallsRepoService() {
+  void testGetByIds_CallsRepoService() {
     ArgumentCaptor<List<? extends Identified<UUID>>> captor = ArgumentCaptor.forClass(List.class);
 
     doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
@@ -119,7 +119,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_CallsRepoService() {
+  void testGetByAccessorIds_CallsRepoService() {
     ArgumentCaptor<Function<TenantAccessor<?>, Tenant>> captor
         = ArgumentCaptor.forClass(Function.class);
 
@@ -146,7 +146,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService)
         .exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
@@ -158,7 +158,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService)
         .exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
@@ -170,7 +170,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService)
         .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
@@ -178,7 +178,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService)
         .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
@@ -186,7 +186,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDeleteBulk_WhenTenantExists() {
+  void testDelete_CallsRepoServiceDeleteBulk_WhenTenantExists() {
     doReturn(10L).when(this.mRepoService)
         .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
@@ -200,7 +200,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDelete_WhenTenantExists() {
+  void testDelete_CallsRepoServiceDelete_WhenTenantExists() {
     doAnswer(inv -> {
       Set<UUID> ids = inv.getArgument(0, Set.class);
       return ids.stream().map(Tenant::new).peek(tenant -> tenant.setIsReady(true)).toList();
@@ -220,7 +220,7 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
+  void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     final BaseTenant<?> tenant1
         = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
     final BaseTenant<?> tenant2 = new Tenant();
@@ -237,13 +237,13 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
+  void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
     assertNull(this.service.add(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPut_UpdatesTenantAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
+  void testPut_UpdatesTenantAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
     final UpdateTenant<?> tenant1
         = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
     final UpdateTenant<?> tenant2
@@ -266,13 +266,13 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
+  void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
     assertNull(this.service.put(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPatch_PatchesTenantAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
+  void testPatch_PatchesTenantAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
     final UpdateTenant<?> tenant1
         = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
     final UpdateTenant<?> tenant2
@@ -295,13 +295,13 @@ public class TenantServiceTest {
   }
 
   @Test
-  public void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
+  void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
     assertNull(this.service.patch(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPatch_ThrowsNotFoundException_WhenAllTenantsDontExist() {
+  void testPatch_ThrowsNotFoundException_WhenAllTenantsDontExist() {
     final List<UpdateTenant<?>> updates
         = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
             new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),

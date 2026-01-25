@@ -6,21 +6,21 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxRateDtoTest {
+class TaxRateDtoTest {
   private TaxRateDto taxRate;
 
   @BeforeEach
-  public void init() {
+  void init() {
     taxRate = new TaxRateDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(taxRate.getValue());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     taxRate = new TaxRateDto(new BigDecimal("1"));
 
     assertEquals(new BigDecimal("1"), taxRate.getValue());

@@ -11,19 +11,19 @@ import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
 
-public class UserRoleBindingRefresherTest {
+class UserRoleBindingRefresherTest {
   private Refresher<UserRole, UserRoleAccessor<?>> mUserRoleRefresher;
 
   private Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> userRoleBindingRefresher;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mUserRoleRefresher = mock(Refresher.class);
     userRoleBindingRefresher = new UserRoleBindingRefresher(mUserRoleRefresher);
   }
 
   @Test
-  public void testRefresh_RefreshersChildEntities() {
+  void testRefresh_RefreshersChildEntities() {
     List<UserRoleBinding> bindings = List.of(new UserRoleBinding(1L), new UserRoleBinding(2L));
     userRoleBindingRefresher.refresh(bindings);
 
@@ -32,7 +32,7 @@ public class UserRoleBindingRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_DoesNothing() {
+  void testRefreshAccessors_DoesNothing() {
     List<UserRoleBindingAccessor<?>> accessors
         = List.of(mock(UserRoleBindingAccessor.class), mock(UserRoleBindingAccessor.class));
 

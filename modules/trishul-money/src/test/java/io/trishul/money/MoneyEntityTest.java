@@ -10,37 +10,37 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-public class MoneyEntityTest {
+class MoneyEntityTest {
   private MoneyEntity money;
 
   @BeforeEach
-  public void init() {
+  void init() {
     money = new MoneyEntity();
   }
 
   @Test
-  public void testAllArgsConstructor() {
+  void testAllArgsConstructor() {
     money = new MoneyEntity(new Currency(123, "CAD"), new BigDecimal("100"));
     assertEquals(new Currency(123, "CAD"), money.getCurrency());
     assertEquals(new BigDecimal("100"), money.getAmount());
   }
 
   @Test
-  public void testAccessAmount() {
+  void testAccessAmount() {
     assertNull(money.getAmount());
     money.setAmount(new BigDecimal("100"));
     assertEquals(new BigDecimal("100"), money.getAmount());
   }
 
   @Test
-  public void testAccessCurrency() {
+  void testAccessCurrency() {
     assertNull(money.getCurrency());
     money.setCurrency(new Currency(123, "CAD"));
     assertEquals(new Currency(123, "CAD"), money.getCurrency());
   }
 
   @Test
-  public void testToString_ReturnsJsonifiedString() throws JSONException {
+  void testToString_ReturnsJsonifiedString() throws JSONException {
     money = new MoneyEntity(new Currency(123, "CAD"), new BigDecimal("100"));
 
     final String json = "{\"currency\":{\"numericCode\":123,\"code\":\"CAD\"},\"amount\":100}";

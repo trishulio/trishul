@@ -16,22 +16,22 @@ import tec.uom.se.quantity.QuantityDimension;
 import tec.uom.se.unit.BaseUnit;
 import tec.uom.se.unit.Units;
 
-public class QuantityUnitMapperTest {
+class QuantityUnitMapperTest {
   private QuantityUnitMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = QuantityUnitMapper.INSTANCE;
   }
 
   @Test
-  public void testFromSymbol_ReturnsNull_WhenSymbolIsNull() {
+  void testFromSymbol_ReturnsNull_WhenSymbolIsNull() {
     assertNull(mapper.fromSymbol(null));
   }
 
   @Test
   @Disabled
-  public void testFromSymbol_ReturnsPojoMatchingSymbol_WhenSymbolIsNotNull() {
+  void testFromSymbol_ReturnsPojoMatchingSymbol_WhenSymbolIsNotNull() {
     assertSame(Units.AMPERE, mapper.fromSymbol("A"));
     assertSame(Units.BECQUEREL, mapper.fromSymbol(Units.BECQUEREL.toString()));
     assertSame(Units.CANDELA, mapper.fromSymbol("cd"));
@@ -80,7 +80,7 @@ public class QuantityUnitMapperTest {
   }
 
   @Test
-  public void testFromEntity_ReturnsPojo_WhenEntityIsNotNull() {
+  void testFromEntity_ReturnsPojo_WhenEntityIsNotNull() {
     mapper = spy(mapper);
     doReturn(Units.GRAM).when(mapper).fromSymbol("TEST_SYMBOL");
 
@@ -89,12 +89,12 @@ public class QuantityUnitMapperTest {
   }
 
   @Test
-  public void testFromEntity_ReturnsNull_WhenEntityIsNull() {
+  void testFromEntity_ReturnsNull_WhenEntityIsNull() {
     assertNull(mapper.fromEntity(null));
   }
 
   @Test
-  public void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
+  void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
     mapper = spy(mapper);
     doReturn(Units.GRAM).when(mapper).fromSymbol("TEST_SYMBOL");
 
@@ -103,38 +103,38 @@ public class QuantityUnitMapperTest {
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testToSymbol_ReturnsNull_WhenArgIsNull() {
+  void testToSymbol_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.toSymbol(null));
   }
 
   @Test
-  public void testToSymbol_ReturnsSymbol_WhenUnitIsNotNull() {
+  void testToSymbol_ReturnsSymbol_WhenUnitIsNotNull() {
     assertEquals(Units.GRAM.toString(), mapper.toSymbol(Units.GRAM));
     assertEquals("g", mapper.toSymbol(Units.GRAM));
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenPojoIsNull() {
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
     assertNull(mapper.toDto((Unit<?>) null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenPojoIsNotNull() {
+  void testToDto_ReturnsDto_WhenPojoIsNotNull() {
     assertEquals(new UnitDto("g"), mapper.toDto(Units.GRAM));
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenEntityIsNull() {
+  void testToDto_ReturnsNull_WhenEntityIsNull() {
     assertNull(mapper.toDto((UnitEntity) null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenEntityIsNotNull() {
+  void testToDto_ReturnsDto_WhenEntityIsNotNull() {
     assertEquals(new UnitDto("g"), mapper.toDto(new UnitEntity("g")));
   }
 }

@@ -5,21 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 
-public class EntityNotFoundExceptionTest {
+class EntityNotFoundExceptionTest {
   @Test
-  public void testConstructor_StringString_SetsId() {
+  void testConstructor_StringString_SetsId() {
     EntityNotFoundException exception = new EntityNotFoundException("EntityTest", "idTest");
     assertEquals("EntityTest not found with id: idTest", exception.getMessage());
   }
 
   @Test
-  public void testConstructor_StringObject_SetsNullIdWhenObjectIsNull() {
+  void testConstructor_StringObject_SetsNullIdWhenObjectIsNull() {
     EntityNotFoundException exception = new EntityNotFoundException("EntityTest", null);
     assertEquals("EntityTest not found with id: null", exception.getMessage());
   }
 
   @Test
-  public void testConstructor_StringObject_SetsIdStringWhenObjectIsNotNull() {
+  void testConstructor_StringObject_SetsIdStringWhenObjectIsNotNull() {
     class Id {
       String str;
 
@@ -37,7 +37,7 @@ public class EntityNotFoundExceptionTest {
   }
 
   @Test
-  public void testConstructor_StringStringString() {
+  void testConstructor_StringStringString() {
     EntityNotFoundException exception = new EntityNotFoundException("EntityTest", "FIELD", "ID");
     assertEquals("EntityTest not found with FIELD: ID", exception.getMessage());
   }

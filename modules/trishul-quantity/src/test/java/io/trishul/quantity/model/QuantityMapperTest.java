@@ -12,16 +12,16 @@ import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 
-public class QuantityMapperTest {
+class QuantityMapperTest {
   QuantityMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = QuantityMapper.INSTANCE;
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenQuantityIsNotNull() {
+  void testToDto_ReturnsDto_WhenQuantityIsNotNull() {
     QuantityDto dto
         = mapper.toDto(Quantities.getQuantity(new BigDecimal(100), SupportedUnits.GRAM));
 
@@ -30,12 +30,12 @@ public class QuantityMapperTest {
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenQuantityIsNull() {
+  void testToDto_ReturnsNull_WhenQuantityIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testToEntity_ReturnsEntity_WhenQuantityIsNotNull() {
+  void testToEntity_ReturnsEntity_WhenQuantityIsNotNull() {
     Quantity<?> qty = Quantities.getQuantity(new BigDecimal("10.00"), Units.AMPERE);
 
     QuantityEntity entity = mapper.toEntity(qty);
@@ -46,24 +46,24 @@ public class QuantityMapperTest {
   }
 
   @Test
-  public void testToEntity_ReturnsNull_WhenQuantityIsNull() {
+  void testToEntity_ReturnsNull_WhenQuantityIsNull() {
     assertNull(mapper.toEntity(null));
   }
 
   @Test
-  public void testFromDto_ReturnsQuantity_WhenDtoIsNotNull() {
+  void testFromDto_ReturnsQuantity_WhenDtoIsNotNull() {
     Quantity<?> quantity = mapper.fromDto(new QuantityDto("g", new BigDecimal(100)));
     assertEquals(SupportedUnits.GRAM, quantity.getUnit());
     assertEquals(new BigDecimal(100), quantity.getValue());
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenDtoIsNull() {
+  void testFromDto_ReturnsNull_WhenDtoIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testFromEntity_ReturnsNull_WhenEntityIsNotNull() {
+  void testFromEntity_ReturnsNull_WhenEntityIsNotNull() {
     assertNull(mapper.fromEntity(null));
   }
 }

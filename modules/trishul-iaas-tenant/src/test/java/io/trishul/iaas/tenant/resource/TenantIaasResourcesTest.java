@@ -11,18 +11,18 @@ import io.trishul.object.store.model.IaasObjectStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasResourcesTest {
+class TenantIaasResourcesTest {
   private TenantIaasResources resources;
 
   @BeforeEach
-  public void init() {
+  void init() {
     resources = new TenantIaasResources(new TenantIaasAuthResources(new IaasRole("ROLE")),
         new TenantIaasIdpResources(new IaasIdpTenant("T1")),
         new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY")));
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     assertEquals(new TenantIaasAuthResources(new IaasRole("ROLE")), resources.getAuthResources());
     assertEquals(new TenantIaasIdpResources(new IaasIdpTenant("T1")), resources.getIdpResources());
     assertEquals(
@@ -31,19 +31,19 @@ public class TenantIaasResourcesTest {
   }
 
   @Test
-  public void testGetSetAuthResources() {
+  void testGetSetAuthResources() {
     resources.setAuthResources(new TenantIaasAuthResources(new IaasRole("ROLE")));
     assertEquals(new TenantIaasAuthResources(new IaasRole("ROLE")), resources.getAuthResources());
   }
 
   @Test
-  public void testGetSetIdpResources() {
+  void testGetSetIdpResources() {
     resources.setIdpResources(new TenantIaasIdpResources(new IaasIdpTenant("T1")));
     assertEquals(new TenantIaasIdpResources(new IaasIdpTenant("T1")), resources.getIdpResources());
   }
 
   @Test
-  public void testGetSetVfsResources() {
+  void testGetSetVfsResources() {
     resources.setVfsResources(
         new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY")));
     assertEquals(

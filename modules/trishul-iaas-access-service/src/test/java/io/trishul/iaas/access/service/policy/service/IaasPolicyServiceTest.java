@@ -30,7 +30,7 @@ import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.util.MockUtilProvider;
 
-public class IaasPolicyServiceTest {
+class IaasPolicyServiceTest {
   private IaasPolicyService service;
 
   private EntityMergerService<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> mMergerService;
@@ -38,7 +38,7 @@ public class IaasPolicyServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = new LockService();
     mMergerService = spy(new CrudEntityMergerService<>(new MockUtilProvider(), mLockService,
         BaseIaasPolicy.class, UpdateIaasPolicy.class, IaasPolicy.class, Set.of("createdAt")));
@@ -48,7 +48,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -56,7 +56,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -64,7 +64,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -72,7 +72,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
+  void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -80,7 +80,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("POLICY_1", "POLICY_2"));
     long deleteCount = service.delete(Set.of("POLICY_1", "POLICY_2"));
 
@@ -88,7 +88,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("POLICY"));
 
     long deleteCount = service.delete("POLICY");
@@ -97,7 +97,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAttachmentFromRepo() {
+  void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -108,14 +108,14 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
+  void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
     doAnswer(inv -> List.of()).when(mIaasRepo).get(anySet());
 
     assertNull(service.get("POLICY"));
   }
 
   @Test
-  public void testGetAll_ReturnsAttachmentFromRepo() {
+  void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -127,7 +127,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnAttachmentsFromRepo() {
+  void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -140,7 +140,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
+  void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -192,7 +192,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsNull_WhenArgIsNull() {
+  void testAdd_ReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -220,7 +220,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsNull_WhenArgIsNull() {
+  void testPut_ReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
@@ -264,7 +264,7 @@ public class IaasPolicyServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsNull_WhenArgIsNull() {
+  void testPatch_ReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

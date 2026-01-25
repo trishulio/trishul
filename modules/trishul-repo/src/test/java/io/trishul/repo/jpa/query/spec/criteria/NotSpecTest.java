@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class NotSpecTest {
+class NotSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<Boolean> mDelegate;
@@ -22,7 +22,7 @@ public class NotSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -33,7 +33,7 @@ public class NotSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsNotExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsNotExpressionOnDelegatePath() {
     Predicate mNotExpr = mock(Predicate.class);
     doReturn(mNotExpr).when(mCb).not(mExpr);
 

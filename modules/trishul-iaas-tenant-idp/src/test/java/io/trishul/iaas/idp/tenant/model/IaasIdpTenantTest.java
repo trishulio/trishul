@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasIdpTenantTest {
+class IaasIdpTenantTest {
   private IaasIdpTenant idpTenant;
 
   @BeforeEach
-  public void init() {
+  void init() {
     idpTenant = new IaasIdpTenant();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(idpTenant.getId());
     assertNull(idpTenant.getName());
     assertNull(idpTenant.getDescription());
@@ -27,7 +27,7 @@ public class IaasIdpTenantTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     idpTenant = new IaasIdpTenant("ID", new IaasRole("ROLE"), "DESCRIPTION",
         LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
 
@@ -40,37 +40,37 @@ public class IaasIdpTenantTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     idpTenant.setId("ID");
     assertEquals("ID", idpTenant.getId());
   }
 
   @Test
-  public void testGetSetName() {
+  void testGetSetName() {
     idpTenant.setName("NAME");
     assertEquals("NAME", idpTenant.getName());
   }
 
   @Test
-  public void testGetSetDescription() {
+  void testGetSetDescription() {
     idpTenant.setDescription("DESCRIPTION");
     assertEquals("DESCRIPTION", idpTenant.getDescription());
   }
 
   @Test
-  public void testGetSetIaasRole() {
+  void testGetSetIaasRole() {
     idpTenant.setIaasRole(new IaasRole("ROLE"));
     assertEquals(new IaasRole("ROLE"), idpTenant.getIaasRole());
   }
 
   @Test
-  public void testGetSetCreatedAt() {
+  void testGetSetCreatedAt() {
     idpTenant.setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), idpTenant.getCreatedAt());
   }
 
   @Test
-  public void testGetSetLastUpdated() {
+  void testGetSetLastUpdated() {
     idpTenant.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), idpTenant.getLastUpdated());
   }

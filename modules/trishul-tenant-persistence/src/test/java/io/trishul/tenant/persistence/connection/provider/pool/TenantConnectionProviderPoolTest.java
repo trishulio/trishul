@@ -12,14 +12,14 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantConnectionProviderPoolTest {
+class TenantConnectionProviderPoolTest {
   private DataSource mAdminDs;
   private TenantDataSourceManager mDsMgr;
 
   private TenantConnectionProviderPool providerPool;
 
   @BeforeEach
-  public void init() throws SQLException {
+  void init() throws SQLException {
     mAdminDs = mock(DataSource.class);
     mDsMgr = mock(TenantDataSourceManager.class);
 
@@ -27,7 +27,7 @@ public class TenantConnectionProviderPoolTest {
   }
 
   @Test
-  public void testGetAnyConnectionProvider_ReturnsAdminConnectionProvider() throws SQLException {
+  void testGetAnyConnectionProvider_ReturnsAdminConnectionProvider() throws SQLException {
     Connection mConn = mock(Connection.class);
     doReturn(mConn).when(mAdminDs).getConnection();
 
@@ -37,7 +37,7 @@ public class TenantConnectionProviderPoolTest {
   }
 
   @Test
-  public void testSelectConnectionProvider_ReturnsConnectionProviderWithTenantDs()
+  void testSelectConnectionProvider_ReturnsConnectionProviderWithTenantDs()
       throws SQLException, IOException {
     DataSource mDs = mock(DataSource.class);
     doReturn(mDs).when(mDsMgr)

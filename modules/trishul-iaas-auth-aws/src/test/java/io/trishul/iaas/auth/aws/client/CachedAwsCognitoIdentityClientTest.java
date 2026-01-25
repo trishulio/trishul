@@ -18,20 +18,20 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CachedAwsCognitoIdentityClientTest {
+class CachedAwsCognitoIdentityClientTest {
   private AwsCognitoIdentityClient client;
 
   private AwsCognitoIdentityClient mDelegate;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mDelegate = mock(AwsCognitoIdentityClient.class);
 
     client = new CachedAwsCognitoIdentityClient(mDelegate, 1);
   }
 
   @Test
-  public void testGetIdentityPools_ReturnsCachedEntities() {
+  void testGetIdentityPools_ReturnsCachedEntities() {
     List<IdentityPoolShortDescription> ret = List.of(new IdentityPoolShortDescription()
         .withIdentityPoolId("POOL_ID").withIdentityPoolName("POOL_NAME"));
     doReturn(ret).when(mDelegate).getIdentityPools(1);
@@ -47,7 +47,7 @@ public class CachedAwsCognitoIdentityClientTest {
   }
 
   @Test
-  public void testGetIdentityPools_ThrowsException_WhenClientThrowsException() {
+  void testGetIdentityPools_ThrowsException_WhenClientThrowsException() {
     doThrow(RuntimeException.class).when(mDelegate).getIdentityPools(1);
 
     RuntimeException exception
@@ -55,7 +55,7 @@ public class CachedAwsCognitoIdentityClientTest {
   }
 
   @Test
-  public void testGetIdentityId_ReturnsCachedEntities() {
+  void testGetIdentityId_ReturnsCachedEntities() {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_" + inv.getArgument(1, Map.class).get("K"))
         .when(mDelegate).getIdentityId(anyString(), anyMap());
 
@@ -68,7 +68,7 @@ public class CachedAwsCognitoIdentityClientTest {
   }
 
   @Test
-  public void testGetIdentityId_ThrowsException_WhenClientThrowsException() {
+  void testGetIdentityId_ThrowsException_WhenClientThrowsException() {
     doThrow(RuntimeException.class).when(mDelegate).getIdentityId("IDENTITY_POOL_ID",
         Map.of("login", "creds"));
 
@@ -77,7 +77,7 @@ public class CachedAwsCognitoIdentityClientTest {
   }
 
   @Test
-  public void testGetCredentialsForIdentity_ReturnsCachedEntities() {
+  void testGetCredentialsForIdentity_ReturnsCachedEntities() {
     doReturn(new Credentials().withAccessKeyId("ACCESS_KEY_ID").withSecretKey("ACCESS_SECRET_KEY")
         .withSessionToken("SESSION_TOKEN")).when(mDelegate).getCredentialsForIdentity("POOL_ID",
             Map.of("K", "V"));
@@ -92,7 +92,7 @@ public class CachedAwsCognitoIdentityClientTest {
   }
 
   @Test
-  public void testGetCredentialsForIdentity_ThrowsException_WhenClientThrowsException() {
+  void testGetCredentialsForIdentity_ThrowsException_WhenClientThrowsException() {
     doThrow(RuntimeException.class).when(mDelegate).getCredentialsForIdentity("IDENTITY_POOL_ID",
         Map.of("login", "creds"));
 

@@ -11,12 +11,12 @@ class RepoAggregationAutoConfigurationTest {
   private RepoAggregationAutoConfiguration config;
 
   @BeforeEach
-  public void init() {
+  void init() {
     config = new RepoAggregationAutoConfiguration();
   }
 
   @Test
-  public void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
+  void testAggrRepo_ReturnsInstanceOfAggregationRepository() {
     QueryResolver mResolver = mock(QueryResolver.class);
 
     AggregationRepository aggrRepo = config.aggregationRepository(mResolver);

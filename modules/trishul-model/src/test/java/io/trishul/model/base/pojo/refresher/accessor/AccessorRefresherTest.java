@@ -14,7 +14,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccessorRefresherTest {
+class AccessorRefresherTest {
   class Entity implements Identified<Long> {
     private final Long id;
 
@@ -57,7 +57,7 @@ public class AccessorRefresherTest {
   private Function<Iterable<Long>, List<Entity>> mEntityRetriever;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mEntityRetriever = mock(Function.class);
 
     refresher = new AccessorRefresher<>(Entity.class, EntityAccessor::getEntity,
@@ -65,17 +65,17 @@ public class AccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_DoesNothing_WhenAccessorsAreNull() {
+  void testRefreshAccessors_DoesNothing_WhenAccessorsAreNull() {
     refresher.refreshAccessors(null);
   }
 
   @Test
-  public void testRefreshAccessors_DoesNothing_WhenAccessorsAreEmptyCollection() {
+  void testRefreshAccessors_DoesNothing_WhenAccessorsAreEmptyCollection() {
     refresher.refreshAccessors(new ArrayList<>());
   }
 
   @Test
-  public void testRefreshAccessors_ReplacesConsumerEntitiesWithMatchingRepoEntities_() {
+  void testRefreshAccessors_ReplacesConsumerEntitiesWithMatchingRepoEntities_() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L), new Entity(2L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L));
@@ -91,7 +91,7 @@ public class AccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_IgnoresConsumerWithNullEntities() {
+  void testRefreshAccessors_IgnoresConsumerWithNullEntities() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 3L));

@@ -9,21 +9,21 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIaasPolicyMapperTest {
+class AwsIaasPolicyMapperTest {
   private AwsIaasPolicyMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AwsIaasPolicyMapper.INSTANCE;
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
+  void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromIaasEntity(null));
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
+  void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
     Policy arg = new Policy().withArn("POLICY_ARN").withCreateDate(new Date(1, 1, 1))
         .withDescription("POLICY_DESCRIPTION").withPath("POLICY_PATH")
         .withPolicyId("POLICY_IAAS_ID").withPolicyName("POLICY_NAME")

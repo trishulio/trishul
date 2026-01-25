@@ -13,16 +13,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+class UserTest {
   private User user;
 
   @BeforeEach
-  public void init() {
+  void init() {
     user = new User();
   }
 
   @Test
-  public void testAllArgConstructor_SetsAllFields() {
+  void testAllArgConstructor_SetsAllFields() {
     user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
         "PHONE_NUMBER", URI.create("IMAGE_SRC"), null, new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),
@@ -46,14 +46,14 @@ public class UserTest {
   }
 
   @Test
-  public void testAccessId() {
+  void testAccessId() {
     assertNull(user.getId());
     user.setId(1L);
     assertEquals(1L, user.getId());
   }
 
   @Test
-  public void testAccessUserName() {
+  void testAccessUserName() {
     assertNull(user.getUserName());
     user.setUserName("userName");
     assertEquals("userName", user.getUserName());
@@ -67,63 +67,63 @@ public class UserTest {
   }
 
   @Test
-  public void testAccessDisplayName() {
+  void testAccessDisplayName() {
     assertNull(user.getDisplayName());
     user.setDisplayName("displayName");
     assertEquals("displayName", user.getDisplayName());
   }
 
   @Test
-  public void testAccessFirstName() {
+  void testAccessFirstName() {
     assertNull(user.getFirstName());
     user.setFirstName("firstName");
     assertEquals("firstName", user.getFirstName());
   }
 
   @Test
-  public void testAccessLastName() {
+  void testAccessLastName() {
     assertNull(user.getLastName());
     user.setLastName("lastName");
     assertEquals("lastName", user.getLastName());
   }
 
   @Test
-  public void testAccessEmail() {
+  void testAccessEmail() {
     assertNull(user.getEmail());
     user.setEmail("email");
     assertEquals("email", user.getEmail());
   }
 
   @Test
-  public void testAccessImageSrc() {
+  void testAccessImageSrc() {
     assertNull(user.getImageSrc());
     user.setImageSrc(URI.create("imageSrc"));
     assertEquals(URI.create("imageSrc"), user.getImageSrc());
   }
 
   @Test
-  public void testAccessPhoneNumber() {
+  void testAccessPhoneNumber() {
     assertNull(user.getPhoneNumber());
     user.setPhoneNumber("phoneNumber");
     assertEquals("phoneNumber", user.getPhoneNumber());
   }
 
   @Test
-  public void testAccessStatus() {
+  void testAccessStatus() {
     assertNull(user.getStatus());
     user.setStatus(new UserStatus(1L));
     assertEquals(new UserStatus(1L), user.getStatus());
   }
 
   @Test
-  public void testAccessSalutation() {
+  void testAccessSalutation() {
     assertNull(user.getSalutation());
     user.setSalutation(new UserSalutation(1L));
     assertEquals(new UserSalutation(1L), user.getSalutation());
   }
 
   @Test
-  public void testAccessRoles() {
+  void testAccessRoles() {
     assertNull(user.getRoles());
     user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
     assertEquals(List.of(new UserRole(1L), new UserRole(2L)), user.getRoles());
@@ -133,14 +133,14 @@ public class UserTest {
   }
 
   @Test
-  public void testAccessRoles_NullValues() {
+  void testAccessRoles_NullValues() {
     assertNull(user.getRoles());
     user.setRoles(null);
     assertNull(user.getRoles());
   }
 
   @Test
-  public void testAccessRoles_OverridesOldRoleAndAddNewOnes() {
+  void testAccessRoles_OverridesOldRoleAndAddNewOnes() {
     assertNull(user.getRoles());
     user.setRoles(List.of(new UserRole(1L)));
     assertEquals(List.of(new UserRole(1L)), user.getRoles());
@@ -153,7 +153,7 @@ public class UserTest {
   }
 
   @Test
-  public void testGetRoleBindings() {
+  void testGetRoleBindings() {
     assertNull(user.getRoles());
     user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
 
@@ -164,21 +164,21 @@ public class UserTest {
   }
 
   @Test
-  public void testAccessLastUpdated() {
+  void testAccessLastUpdated() {
     assertNull(user.getLastUpdated());
     user.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(1999, 1, 1, 0, 0), user.getLastUpdated());
   }
 
   @Test
-  public void testAccessCreatedAt() {
+  void testAccessCreatedAt() {
     assertNull(user.getCreatedAt());
     user.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), user.getCreatedAt());
   }
 
   @Test
-  public void testAccessVersion() {
+  void testAccessVersion() {
     assertNull(user.getVersion());
     user.setVersion(1);
     assertEquals(1, user.getVersion());

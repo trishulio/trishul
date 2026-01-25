@@ -5,27 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasIdpResourcesTest {
+class TenantIaasIdpResourcesTest {
   private TenantIaasIdpResources resources;
 
   @BeforeEach
-  public void init() {
+  void init() {
     resources = new TenantIaasIdpResources();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(resources.getIaasIdpTenant());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     resources = new TenantIaasIdpResources(new IaasIdpTenant());
     assertEquals(new IaasIdpTenant(), resources.getIaasIdpTenant());
   }
 
   @Test
-  public void testGetSetIdpTenant() {
+  void testGetSetIdpTenant() {
     resources.setIaasIdpTenant(new IaasIdpTenant("ROLE"));
     assertEquals(new IaasIdpTenant("ROLE"), resources.getIaasIdpTenant());
   }

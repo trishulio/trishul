@@ -100,7 +100,7 @@ public class TenantService
 
   @Override
   public List<Tenant> getByAccessorIds(Collection<? extends TenantAccessor<?>> accessors) {
-    return this.repoService.getByAccessorIds(accessors, accessor -> accessor.getTenant());
+    return this.repoService.getByAccessorIds(accessors, TenantAccessor::getTenant);
   }
 
   @Override
@@ -150,8 +150,8 @@ public class TenantService
 
     if (existing.size() != patches.size()) {
       final Set<UUID> existingIds
-          = existing.stream().map(tenant -> tenant.getId()).collect(Collectors.toSet());
-      final Set<UUID> nonExistingIds = patches.stream().map(patch -> patch.getId())
+          = existing.stream().map(Identified::getId).collect(Collectors.toSet());
+      final Set<UUID> nonExistingIds = patches.stream().map(Identified::getId)
           .filter(patchId -> !existingIds.contains(patchId)).collect(Collectors.toSet());
 
       throw new EntityNotFoundException(

@@ -10,20 +10,20 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ColumnSpecTest {
+class ColumnSpecTest {
   private Root<?> mRoot;
   private RootUtil mRootUtil;
 
   private ColumnSpec<String> column;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mRootUtil = mock(RootUtil.class);
     column = new ColumnSpec<>(mRootUtil, new String[] {"PATH_1", "PATH_2"});
   }
 
   @Test
-  public void testGetExpression_GetsPathWithJoin() {
+  void testGetExpression_GetsPathWithJoin() {
     Path<?> mPath = mock(Path.class);
     doReturn(mPath).when(mRootUtil).getPath(mRoot, new String[] {"PATH_1", "PATH_2"});
 

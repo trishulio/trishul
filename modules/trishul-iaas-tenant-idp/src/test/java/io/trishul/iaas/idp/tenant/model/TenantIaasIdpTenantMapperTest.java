@@ -11,21 +11,21 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasIdpTenantMapperTest {
+class TenantIaasIdpTenantMapperTest {
   private TenantIaasIdpTenantMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TenantIaasIdpTenantMapper.INSTANCE;
   }
 
   @Test
-  public void testFromTenants_ReturnsNull_WhenArgIsNull() {
+  void testFromTenants_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromTenants(null));
   }
 
   @Test
-  public void testFromTenants_ReturnsList_WhenArgIsNotNull() throws MalformedURLException {
+  void testFromTenants_ReturnsList_WhenArgIsNotNull() throws MalformedURLException {
     List<Tenant> tenants
         = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
             new URL("http://localhost/"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
@@ -39,7 +39,7 @@ public class TenantIaasIdpTenantMapperTest {
   }
 
   @Test
-  public void testFromTenants_ReturnsListWithNoId_WhenArgIsNotNull() {
+  void testFromTenants_ReturnsListWithNoId_WhenArgIsNotNull() {
     List<Tenant> tenants = List.of(new Tenant());
 
     List<? extends BaseIaasIdpTenant<?>> idpTenants = mapper.fromTenants(tenants);

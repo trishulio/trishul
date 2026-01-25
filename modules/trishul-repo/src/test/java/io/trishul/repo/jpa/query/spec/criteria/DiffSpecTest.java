@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unchecked")
-public class DiffSpecTest {
+class DiffSpecTest {
   private CriteriaSpec<?> spec;
 
   private CriteriaSpec<Double> mDelegateX;
@@ -25,7 +25,7 @@ public class DiffSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -40,7 +40,7 @@ public class DiffSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsDiffExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsDiffExpressionOnDelegatePath() {
     Expression<Double> mDiffExpr = mock(Expression.class);
     doReturn(mDiffExpr).when(mCb).diff(mExprX, mExprY);
 

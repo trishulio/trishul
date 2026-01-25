@@ -8,16 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
-public class IaasObjectStoreAccessConfigTest {
+class IaasObjectStoreAccessConfigTest {
   private IaasObjectStoreAccessConfig iaasObjectStoreAccessConfig;
 
   @BeforeEach
-  public void init() {
+  void init() {
     iaasObjectStoreAccessConfig = new IaasObjectStoreAccessConfig();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(iaasObjectStoreAccessConfig.getObjectStoreName());
     assertNull(iaasObjectStoreAccessConfig.getPublicAccessBlockConfig());
     assertNull(iaasObjectStoreAccessConfig.getId());
@@ -25,7 +25,7 @@ public class IaasObjectStoreAccessConfigTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     iaasObjectStoreAccessConfig
         = new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration());
 
@@ -35,13 +35,13 @@ public class IaasObjectStoreAccessConfigTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     iaasObjectStoreAccessConfig.setId("BUCKET_1");
     assertEquals("BUCKET_1", iaasObjectStoreAccessConfig.getId());
   }
 
   @Test
-  public void testGetSetBucketCrossOriginConfiguration() {
+  void testGetSetBucketCrossOriginConfiguration() {
     iaasObjectStoreAccessConfig.setPublicAccessBlockConfig(new PublicAccessBlockConfiguration());
 
     assertTrue(new ReflectionEquals(new PublicAccessBlockConfiguration())
@@ -49,7 +49,7 @@ public class IaasObjectStoreAccessConfigTest {
   }
 
   @Test
-  public void testGetVersion() {
+  void testGetVersion() {
     assertNull(iaasObjectStoreAccessConfig.getVersion());
   }
 }

@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasUserTenantMembershipTest {
+class IaasUserTenantMembershipTest {
   private IaasUserTenantMembership membership;
 
   @BeforeEach
-  public void init() {
+  void init() {
     membership = new IaasUserTenantMembership();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(membership.getId());
     assertNull(membership.getUser());
     assertNull(membership.getTenantId());
@@ -22,14 +22,14 @@ public class IaasUserTenantMembershipTest {
   }
 
   @Test
-  public void testIdConstructor() {
+  void testIdConstructor() {
     membership = new IaasUserTenantMembership(new IaasUserTenantMembershipId("USER", "TENANT"));
 
     assertEquals(new IaasUserTenantMembershipId("USER", "TENANT"), membership.getId());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     membership = new IaasUserTenantMembership(new IaasUser("USER"), "T1");
 
     assertEquals(new IaasUser("USER"), membership.getUser());
@@ -37,20 +37,20 @@ public class IaasUserTenantMembershipTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     membership.setId(new IaasUserTenantMembershipId("USER", "TENANT"));
     assertEquals(new IaasUserTenantMembershipId("USER", "TENANT"), membership.getId());
   }
 
   @Test
-  public void testGetSetUser() {
+  void testGetSetUser() {
     membership.setUser(new IaasUser("USER"));
 
     assertEquals(new IaasUser("USER"), membership.getUser());
   }
 
   @Test
-  public void testGetSetTenantId() {
+  void testGetSetTenantId() {
     membership.setTenantId("T1");
 
     assertEquals("T1", membership.getTenantId());

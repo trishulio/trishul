@@ -24,20 +24,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
-public class AwsCorsConfigClientTest {
+class AwsCorsConfigClientTest {
   private AwsCorsConfigClient client;
 
   private AmazonS3 mAwsClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAwsClient = mock(AmazonS3.class);
 
     client = new AwsCorsConfigClient(mAwsClient);
   }
 
   @Test
-  public void testGet_ReturnsIaasBucketCrossOriginConfiguration() {
+  void testGet_ReturnsIaasBucketCrossOriginConfiguration() {
     doReturn(new BucketCrossOriginConfiguration()).when(mAwsClient)
         .getBucketCrossOriginConfiguration(any(GetBucketCrossOriginConfigurationRequest.class));
 
@@ -49,7 +49,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenClientThrowsException() {
+  void testGet_ReturnsNull_WhenClientThrowsException() {
     doThrow(AmazonS3Exception.class).when(mAwsClient)
         .getBucketCrossOriginConfiguration(any(GetBucketCrossOriginConfigurationRequest.class));
 
@@ -57,7 +57,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedAttachement() {
+  void testAdd_ReturnsAddedAttachement() {
     client = spy(client);
     doReturn(new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()))
         .when(client).get("BUCKET_1");
@@ -77,7 +77,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testPut_ReturnsEntity_WhenGetReturnsEntity() {
+  void testPut_ReturnsEntity_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()))
         .when(client).get("BUCKET_1");
@@ -91,7 +91,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     client = spy(client);
     doReturn(null).when(client).get("BUCKET_1");
 
@@ -99,7 +99,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsEntity() {
+  void testExists_ReturnsTrue_WhenGetReturnsEntity() {
     client = spy(client);
     doReturn(new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()))
         .when(client).get("BUCKET_1");
@@ -108,7 +108,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
+  void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
     doNothing().when(mAwsClient).deleteBucketCrossOriginConfiguration(
         new DeleteBucketCrossOriginConfigurationRequest("BUCKET_1"));
 
@@ -121,7 +121,7 @@ public class AwsCorsConfigClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
+  void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
     doThrow(AmazonS3Exception.class).when(mAwsClient).deleteBucketCrossOriginConfiguration(
         any(DeleteBucketCrossOriginConfigurationRequest.class));
     assertFalse(client.delete("BUCKET_1"));

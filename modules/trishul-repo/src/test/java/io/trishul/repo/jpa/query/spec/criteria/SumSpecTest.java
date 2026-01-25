@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SumSpecTest {
+class SumSpecTest {
   private CriteriaSpec<?> spec;
 
   private CriteriaSpec<Number> mDelegate;
@@ -22,7 +22,7 @@ public class SumSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -33,7 +33,7 @@ public class SumSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsSumExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsSumExpressionOnDelegatePath() {
     Expression<Number> mSumExpr = mock(Expression.class);
     doReturn(mSumExpr).when(mCb).sum(mExpr);
 
@@ -42,7 +42,7 @@ public class SumSpecTest {
   }
 
   @Test
-  public void testConstructor_PathProvider_AddsSelectColumnWithPathFromProvider() {
+  void testConstructor_PathProvider_AddsSelectColumnWithPathFromProvider() {
     spec = new SumSpec<>(() -> new String[] {"PATH_1", "PATH_2"});
 
     SumSpec<Number> expected = new SumSpec<>(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}));
@@ -50,7 +50,7 @@ public class SumSpecTest {
   }
 
   @Test
-  public void testConstructor_String_AddsSelectColumnWithPathValues() {
+  void testConstructor_String_AddsSelectColumnWithPathValues() {
     spec = new SumSpec<>(new String[] {"PATH_1", "PATH_2"});
 
     SumSpec<Number> expected = new SumSpec<>(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}));

@@ -5,28 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UnitDtoTest {
+class UnitDtoTest {
   private UnitDto dto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     dto = new UnitDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(dto.getSymbol());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     dto = new UnitDto("SYMBOL");
 
     assertEquals("SYMBOL", dto.getSymbol());
   }
 
   @Test
-  public void testAccessSymbol() {
+  void testAccessSymbol() {
     dto.setSymbol("SYMBOL_1");
     assertEquals("SYMBOL_1", dto.getSymbol());
   }

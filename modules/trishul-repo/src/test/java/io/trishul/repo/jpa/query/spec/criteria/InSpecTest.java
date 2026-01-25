@@ -12,7 +12,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InSpecTest {
+class InSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<String> mDelegate;
@@ -23,7 +23,7 @@ public class InSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -34,7 +34,7 @@ public class InSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsInSpecExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsInSpecExpressionOnDelegatePath() {
     Expression<Boolean> mInExpr = mock(Predicate.class);
     doReturn(mInExpr).when(mExpr).in(Set.of("val1", "val2"));
 

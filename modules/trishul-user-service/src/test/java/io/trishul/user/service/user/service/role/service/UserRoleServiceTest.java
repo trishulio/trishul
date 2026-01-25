@@ -31,14 +31,14 @@ import io.trishul.user.role.model.UpdateUserRole;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
 
-public class UserRoleServiceTest {
+class UserRoleServiceTest {
   private UserRoleService service;
 
   private EntityMergerService<Long, UserRole, BaseUserRole<?>, UpdateUserRole<?>> mMergerService;
   private RepoService<Long, UserRole, UserRoleAccessor<?>> mRepoService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mMergerService = mock(EntityMergerService.class);
     this.mRepoService = mock(RepoService.class);
     doAnswer(inv -> inv.getArgument(0)).when(this.mRepoService).saveAll(anyList());
@@ -47,7 +47,7 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testGetUserRoles_ReturnsEntitiesFromRepoService_WithCustomSpec() {
+  void testGetUserRoles_ReturnsEntitiesFromRepoService_WithCustomSpec() {
     @SuppressWarnings("unchecked")
     final ArgumentCaptor<Specification<UserRole>> captor
         = ArgumentCaptor.forClass(Specification.class);
@@ -66,7 +66,7 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testGetUserRole_ReturnsUserRolePojo_WhenRepoServiceReturnsOptionalWithEntity() {
+  void testGetUserRole_ReturnsUserRolePojo_WhenRepoServiceReturnsOptionalWithEntity() {
     doReturn(new UserRole(1L)).when(this.mRepoService).get(1L);
 
     final UserRole userRole = this.service.get(1L);
@@ -75,7 +75,7 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testGetByIds_CallsRepoService() {
+  void testGetByIds_CallsRepoService() {
     ArgumentCaptor<List<? extends Identified<Long>>> captor = ArgumentCaptor.forClass(List.class);
 
     doReturn(List.of(new UserRole(1L))).when(mRepoService).getByIds(captor.capture());
@@ -85,7 +85,7 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_CallsRepoService() {
+  void testGetByAccessorIds_CallsRepoService() {
     ArgumentCaptor<Function<UserRoleAccessor<?>, UserRole>> captor
         = ArgumentCaptor.forClass(Function.class);
 
@@ -111,35 +111,35 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDeleteBulk_WhenUserRoleExists() {
+  void testDelete_CallsRepoServiceDeleteBulk_WhenUserRoleExists() {
     doReturn(123L).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
 
     final long count = this.service.delete(Set.of(1L, 2L, 3L));
@@ -147,13 +147,13 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDelete_WhenUserRoleExists() {
+  void testDelete_CallsRepoServiceDelete_WhenUserRoleExists() {
     this.service.delete(1L);
     verify(this.mRepoService).delete(1L);
   }
 
   @Test
-  public void testAdd_AddsUserRoleAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
+  void testAdd_AddsUserRoleAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
 
     final BaseUserRole<?> userRole1 = new UserRole(1L);
@@ -168,13 +168,13 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
+  void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
     assertNull(this.service.add(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPut_UpdatesUserRoleAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
+  void testPut_UpdatesUserRoleAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
     doAnswer(inv -> inv.getArgument(1)).when(this.mMergerService).getPutEntities(any(), any());
 
     final UpdateUserRole<?> userRole1 = new UserRole(1L);
@@ -192,13 +192,13 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
+  void testPut_DoesNotCallRepoServiceAndReturnsNull_WhenUpdatesAreNull() {
     assertNull(this.service.put(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPatch_PatchesUserRoleAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
+  void testPatch_PatchesUserRoleAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
     doAnswer(inv -> inv.getArgument(1)).when(this.mMergerService).getPatchEntities(any(), any());
 
     final UpdateUserRole<?> userRole1 = new UserRole(1L);
@@ -216,13 +216,13 @@ public class UserRoleServiceTest {
   }
 
   @Test
-  public void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
+  void testPatch_DoesNotCallRepoServiceAndReturnsNull_WhenPatchesAreNull() {
     assertNull(this.service.patch(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }
 
   @Test
-  public void testPatch_ThrowsNotFoundException_WhenAllUserRolesDontExist() {
+  void testPatch_ThrowsNotFoundException_WhenAllUserRolesDontExist() {
     doAnswer(inv -> inv.getArgument(1)).when(this.mMergerService).getPatchEntities(any(), any());
 
     final List<UpdateUserRole<?>> updates

@@ -11,16 +11,16 @@ import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ThreadLocalContextHolderTest {
+class ThreadLocalContextHolderTest {
   private ThreadLocalContextHolder holder;
 
   @BeforeEach
-  public void init() {
+  void init() {
     holder = new ThreadLocalContextHolder();
   }
 
   @Test
-  public void testAccessPrincipalContext_ReturnsTheTenantThatIsSetUsingMutator() {
+  void testAccessPrincipalContext_ReturnsTheTenantThatIsSetUsingMutator() {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     holder.setContext(mCtx);
 
@@ -29,7 +29,7 @@ public class ThreadLocalContextHolderTest {
   }
 
   @Test
-  public void testAccessPrincipalContext_ReturnsTheThreadsLocalContext()
+  void testAccessPrincipalContext_ReturnsTheThreadsLocalContext()
       throws InterruptedException, ExecutionException {
     CompletableFuture<Void> op1 = runAsync(() -> {
       PrincipalContext mCtx1 = mock(PrincipalContext.class);

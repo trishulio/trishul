@@ -35,13 +35,13 @@ import io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper;
 import io.trishul.iaas.user.aws.model.AwsCognitoUserMapper;
 import io.trishul.iaas.user.model.IaasUser;
 
-public class AwsCognitoUserClientTest {
+class AwsCognitoUserClientTest {
   private AwsCognitoUserClient client;
 
   private AWSCognitoIdentityProvider mIdp;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIdp = mock(AWSCognitoIdentityProvider.class);
     client = new AwsCognitoUserClient(mIdp, "USER_POOL_ID",
         AwsCognitoAdminGetUserResultMapper.INSTANCE, AwsCognitoUserMapper.INSTANCE);
@@ -54,7 +54,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testGet_ReturnsUserFromResult_WhenClientReturnsResult() {
+  void testGet_ReturnsUserFromResult_WhenClientReturnsResult() {
     doAnswer(inv -> {
       AdminGetUserRequest req = inv.getArgument(0, AdminGetUserRequest.class);
       return new AdminGetUserResult()
@@ -72,14 +72,14 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenClientThrowsNotFoundException() {
+  void testGet_ReturnsNull_WhenClientThrowsNotFoundException() {
     doThrow(UserNotFoundException.class).when(mIdp).adminGetUser(any());
 
     assertNull(client.get("USERNAME"));
   }
 
   @Test
-  public void testAdd_AddsAndReturnsUser() {
+  void testAdd_AddsAndReturnsUser() {
     doAnswer(inv -> {
       AdminCreateUserRequest req = inv.getArgument(0, AdminCreateUserRequest.class);
 
@@ -102,7 +102,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testUpdate_UpdatesAttributesAndReturnsUser() {
+  void testUpdate_UpdatesAttributesAndReturnsUser() {
     class AttributeSupplier implements Supplier<List<AttributeType>> {
       private List<AttributeType> attributes;
 
@@ -144,7 +144,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenNoExceptionIsThrown() {
+  void testDelete_ReturnsTrue_WhenNoExceptionIsThrown() {
     doAnswer(inv -> {
       AdminDeleteUserResult result = new AdminDeleteUserResult();
       result.setSdkResponseMetadata(mockResponseMetadata());
@@ -155,14 +155,14 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenUserNotFoundExceptionIsThrown() {
+  void testDelete_ReturnsFalse_WhenUserNotFoundExceptionIsThrown() {
     doThrow(UserNotFoundException.class).when(mIdp).adminDeleteUser(any());
 
     assertFalse(client.delete("USERNAME"));
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetIsNotNull() {
+  void testExists_ReturnsTrue_WhenGetIsNotNull() {
     client = spy(client);
     doReturn(new IaasUser()).when(client).get("USERNAME");
 
@@ -170,7 +170,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetIsNull() {
+  void testExists_ReturnsFalse_WhenGetIsNull() {
     client = spy(client);
     doReturn(null).when(client).get("USERNAME");
 
@@ -178,7 +178,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistIsFalse() {
+  void testPut_CallsAdd_WhenExistIsFalse() {
     client = spy(client);
     doReturn(false).when(client).exists("USERNAME");
 
@@ -191,7 +191,7 @@ public class AwsCognitoUserClientTest {
   }
 
   @Test
-  public void testPut_CallsUpdate_WhenExistIsTrue() {
+  void testPut_CallsUpdate_WhenExistIsTrue() {
     client = spy(client);
     doReturn(true).when(client).exists("USER_EMAIL");
 

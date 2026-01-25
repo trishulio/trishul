@@ -12,26 +12,26 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxCalculatorTest {
+class TaxCalculatorTest {
   private TaxCalculator calculator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     calculator = TaxCalculator.INSTANCE;
   }
 
   @Test
-  public void testGetTaxAmount_ReturnsNull_WhenTaxIsNull() {
+  void testGetTaxAmount_ReturnsNull_WhenTaxIsNull() {
     assertNull(calculator.getTaxAmount(null, Money.parse("CAD 10")));
   }
 
   @Test
-  public void testGetTaxAmount_ReturnsNull_WhenAmountIsNull() {
+  void testGetTaxAmount_ReturnsNull_WhenAmountIsNull() {
     assertNull(calculator.getTaxAmount(new Tax(), null));
   }
 
   @Test
-  public void testGetTaxAmount_ReturnsTaxAmount_WhenTaxAndAmountIsNotNull() {
+  void testGetTaxAmount_ReturnsTaxAmount_WhenTaxAndAmountIsNotNull() {
     Tax tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
     Money money = Money.parse("CAD 10");
 
@@ -42,17 +42,17 @@ public class TaxCalculatorTest {
   }
 
   @Test
-  public void testTotal_ReturnsNull_WhenTaxAmountsAreNull() {
+  void testTotal_ReturnsNull_WhenTaxAmountsAreNull() {
     assertNull(calculator.getTaxAmountTotal(null));
   }
 
   @Test
-  public void testTotal_ReturnsEmptyTaxAmount_WhenTaxAmountsAreEmpty() {
+  void testTotal_ReturnsEmptyTaxAmount_WhenTaxAmountsAreEmpty() {
     assertEquals(new TaxAmount(), calculator.getTaxAmountTotal(new ArrayList<>()));
   }
 
   @Test
-  public void testTotal_ReturnsTaxAmountWithTotals_WhenTaxAmountsAreNotEmpty() {
+  void testTotal_ReturnsTaxAmountWithTotals_WhenTaxAmountsAreNotEmpty() {
     List<TaxAmount> amounts = new ArrayList<>() {
       private static final long serialVersionUID = 1L;
 

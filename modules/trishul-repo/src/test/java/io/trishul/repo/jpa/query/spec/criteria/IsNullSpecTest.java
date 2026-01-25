@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IsNullSpecTest {
+class IsNullSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<?> mDelegate;
@@ -22,7 +22,7 @@ public class IsNullSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -34,7 +34,7 @@ public class IsNullSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsIsNullExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsIsNullExpressionOnDelegatePath() {
     Predicate mNullExpr = mock(Predicate.class);
     doReturn(mNullExpr).when(mCb).isNull(mExpr);
 

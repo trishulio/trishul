@@ -27,7 +27,7 @@ import io.trishul.iaas.tenant.resource.TenantIaasResources;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.tenant.entity.Tenant;
 
-public class TenantIaasServiceTest {
+class TenantIaasServiceTest {
   private TenantIaasService service;
 
   private TenantIaasAuthService mAuthService;
@@ -35,7 +35,7 @@ public class TenantIaasServiceTest {
   private TenantIaasVfsService mVfsService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAuthService = mock(TenantIaasAuthService.class);
     mIdpService = mock(TenantIaasIdpService.class);
     mVfsService = mock(TenantIaasVfsService.class);
@@ -45,7 +45,7 @@ public class TenantIaasServiceTest {
   }
 
   @Test
-  public void testGet_GetsAndReturnsListTenantIaasResourcesFromIndividualResources() {
+  void testGet_GetsAndReturnsListTenantIaasResourcesFromIndividualResources() {
     Set<String> iaasIdpTenantIds
         = Set.of("00000000-0000-0000-0000-000000000001", "00000000-0000-0000-0000-000000000002");
 
@@ -83,7 +83,7 @@ public class TenantIaasServiceTest {
   }
 
   @Test
-  public void testAdd_AddsAndReturnsListTenantIaasResourcesFromIndividualResources() {
+  void testAdd_AddsAndReturnsListTenantIaasResourcesFromIndividualResources() {
     List<TenantIaasAuthResources> authResources
         = List.of(new TenantIaasAuthResources(new IaasRole("T1_ROLE")),
             new TenantIaasAuthResources(new IaasRole("T2_ROLE")));
@@ -127,7 +127,7 @@ public class TenantIaasServiceTest {
   }
 
   @Test
-  public void testPut_PutsAndReturnsListTenantIaasResourcesFromIndividualResources() {
+  void testPut_PutsAndReturnsListTenantIaasResourcesFromIndividualResources() {
     List<TenantIaasAuthResources> authResources
         = List.of(new TenantIaasAuthResources(new IaasRole("T1_ROLE")),
             new TenantIaasAuthResources(new IaasRole("T2_ROLE")));
@@ -171,7 +171,7 @@ public class TenantIaasServiceTest {
   }
 
   @Test
-  public void testDelete_DeletesAndReturnsCombinedDeleteResult() {
+  void testDelete_DeletesAndReturnsCombinedDeleteResult() {
     Set<String> idpTenantIds
         = Set.of("00000000-0000-0000-0000-000000000001", "00000000-0000-0000-0000-000000000002");
 

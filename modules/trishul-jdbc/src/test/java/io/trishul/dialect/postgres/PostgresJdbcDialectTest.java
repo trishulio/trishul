@@ -13,19 +13,19 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PostgresJdbcDialectTest {
+class PostgresJdbcDialectTest {
   private JdbcDialect dialect;
 
   private PostgresJdbcDialectSql sql;
 
   @BeforeEach
-  public void init() {
+  void init() {
     sql = new PostgresJdbcDialectSql();
     dialect = new PostgresJdbcDialect(sql);
   }
 
   @Test
-  public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount1()
+  void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount1()
       throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.createSchemaIfNotExist("SCHEMA_NAME"), 1);
@@ -36,7 +36,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount0()
+  void testCreateSchemaIfNotExists_RunsCreateSchemaSqlAndReturnTrue_WhenPsReturnsCount0()
       throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.createSchemaIfNotExist("SCHEMA_NAME"), 0);
@@ -47,7 +47,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testCreateUser_RunsCreateUserSql() throws SQLException {
+  void testCreateUser_RunsCreateUserSql() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.createUser("TEST_USER", "TEST_PASS"), 1);
 
@@ -58,7 +58,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testGrantPrivilege_RunsGrantSql() throws SQLException {
+  void testGrantPrivilege_RunsGrantSql() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs
         = mockPs(mConn, sql.grantPrivilege("CONNECT", "DATABASE", "DB_1", "USER_1"), 1);
@@ -70,7 +70,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testUserExist_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
+  void testUserExist_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.userExist(), new Object[][] {{}});
 
@@ -82,7 +82,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testUserExist_ReturnsFalse_WhenResultSetHasNoResults() throws SQLException {
+  void testUserExist_ReturnsFalse_WhenResultSetHasNoResults() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.userExist(), new Object[][] {});
 
@@ -94,7 +94,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testSchemaExists_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
+  void testSchemaExists_ReturnsTrue_WhenResultSetHasResults() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.schemaExists(), new Object[][] {{}});
 
@@ -106,7 +106,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testSchemaExists_ReturnsFalse_WhenResultSetHasNoResults() throws SQLException {
+  void testSchemaExists_ReturnsFalse_WhenResultSetHasNoResults() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.schemaExists(), new Object[][] {});
 
@@ -118,7 +118,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testDropSchema_RunsDropSchemaSql() throws Exception {
+  void testDropSchema_RunsDropSchemaSql() throws Exception {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.dropSchema("SCHEMA_1"), 1);
 
@@ -129,7 +129,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testDropUser_RunsDropUserSql() throws SQLException {
+  void testDropUser_RunsDropUserSql() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.dropUser("USER_1"), 1);
 
@@ -140,7 +140,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testDropOwned_RunsDropOwnedSql() throws SQLException {
+  void testDropOwned_RunsDropOwnedSql() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.dropOwnedBy("OWNER"), 1);
 
@@ -151,7 +151,7 @@ public class PostgresJdbcDialectTest {
   }
 
   @Test
-  public void testReassignOwnedByTo_RunsReassignOwnedSql() throws SQLException {
+  void testReassignOwnedByTo_RunsReassignOwnedSql() throws SQLException {
     Connection mConn = mock(Connection.class);
     PreparedStatement mPs = mockPs(mConn, sql.reassignOwnedByTo("OWNER", "ASSIGNEE"), 1);
 

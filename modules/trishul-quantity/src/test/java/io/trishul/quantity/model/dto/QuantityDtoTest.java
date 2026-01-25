@@ -6,36 +6,36 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class QuantityDtoTest {
+class QuantityDtoTest {
   QuantityDto dto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     dto = new QuantityDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(dto.getSymbol());
     assertNull(dto.getValue());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     dto = new QuantityDto("g", new BigDecimal("100"));
     assertEquals("g", dto.getSymbol());
     assertEquals(new BigDecimal("100"), dto.getValue());
   }
 
   @Test
-  public void testAccessSymbol() {
+  void testAccessSymbol() {
     assertNull(dto.getSymbol());
     dto.setSymbol("g");
     assertEquals("g", dto.getSymbol());
   }
 
   @Test
-  public void testAccessValue() {
+  void testAccessValue() {
     assertNull(dto.getValue());
     dto.setValue(new BigDecimal("100"));
     assertEquals(new BigDecimal("100"), dto.getValue());

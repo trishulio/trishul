@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-public class AwsDocumentTemplatesTest {
+class AwsDocumentTemplatesTest {
   private AwsDocumentTemplates templates;
 
   @BeforeEach
-  public void init() {
+  void init() {
     templates = new AwsDocumentTemplates("COGNITO_ID_POOL_ID");
   }
 
@@ -73,27 +73,27 @@ public class AwsDocumentTemplatesTest {
   }
 
   @Test
-  public void testGetTenantVfsBucketName() {
+  void testGetTenantVfsBucketName() {
     assertEquals("t-T1-vfs", templates.getTenantVfsBucketName("T1"));
   }
 
   @Test
-  public void testGetTenantIaasRoleName() {
+  void testGetTenantIaasRoleName() {
     assertEquals("t-T1-iaas", templates.getTenantIaasRoleName("T1"));
   }
 
   @Test
-  public void testGetTenantVfsPolicyName() {
+  void testGetTenantVfsPolicyName() {
     assertEquals("t-T1-vfs", templates.getTenantVfsPolicyName("T1"));
   }
 
   @Test
-  public void testGetTenantVfsPolicyDescription() {
+  void testGetTenantVfsPolicyDescription() {
     assertEquals("File storage for tenant: T1", templates.getTenantVfsPolicyDescription("T1"));
   }
 
   @Test
-  public void testGetTenantIaasRoleDescription() {
+  void testGetTenantIaasRoleDescription() {
     assertEquals("Role assumed by tenant-users to gain access to the Iaas resources: T1",
         templates.getTenantIaasRoleDescription("T1"));
   }

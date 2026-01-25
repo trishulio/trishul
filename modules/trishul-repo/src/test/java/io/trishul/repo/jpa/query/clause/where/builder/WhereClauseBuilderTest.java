@@ -14,19 +14,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.jpa.domain.Specification;
 
 @SuppressWarnings({"unchecked"})
-public class WhereClauseBuilderTest {
+class WhereClauseBuilderTest {
   private WhereClauseBuilder builder;
 
   private WhereClauseBuilderDelegate mDelegate;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mDelegate = mock(WhereClauseBuilderDelegate.class);
     builder = new WhereClauseBuilderWrapper(mDelegate);
   }
 
   @Test
-  public void testBuilder_ReturnsANewInstanceOfCriteriaSpecBuilder() {
+  void testBuilder_ReturnsANewInstanceOfCriteriaSpecBuilder() {
     WhereClauseBuilder anotherBuilder = WhereClauseBuilder.builder();
 
     assertNotSame(builder, anotherBuilder);
@@ -36,7 +36,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testIsNull_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+  void testIsNull_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
     WhereClauseBuilder ret = builder.isNull("PATH");
 
     assertSame(builder, ret);
@@ -44,7 +44,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testIsNull_ArrayArrayArgs_DelegatesArguments() {
+  void testIsNull_ArrayArrayArgs_DelegatesArguments() {
     WhereClauseBuilder ret = builder.isNull(new String[] {"PATH"});
 
     assertSame(builder, ret);
@@ -52,7 +52,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testIn_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+  void testIn_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
     WhereClauseBuilder ret = builder.in("PATH", List.of("v1"));
 
     assertSame(builder, ret);
@@ -60,7 +60,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testIn_ArrayArrayArgs_DelegatesArguments() {
+  void testIn_ArrayArrayArgs_DelegatesArguments() {
     WhereClauseBuilder ret = builder.in(new String[] {"PATH"}, List.of("v1"));
 
     assertSame(builder, ret);
@@ -68,7 +68,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testLike_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+  void testLike_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
     WhereClauseBuilder ret = builder.like("PATH", Set.of("v1"));
 
     assertSame(builder, ret);
@@ -76,7 +76,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testLike_ArrayArrayArgs_DelegatesArguments() {
+  void testLike_ArrayArrayArgs_DelegatesArguments() {
     WhereClauseBuilder ret = builder.like(new String[] {"PATH"}, Set.of("v1"));
 
     assertSame(builder, ret);
@@ -95,7 +95,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public <T extends Comparable<T>> void testBetween_ArrayArrayArgs_DelegatesArguments() {
+  <T extends Comparable<T>> void testBetween_ArrayArrayArgs_DelegatesArguments() {
     T c1 = (T) mock(Comparable.class);
     T c2 = (T) mock(Comparable.class);
 
@@ -106,7 +106,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testNot_CallsNotOnDelegate() {
+  void testNot_CallsNotOnDelegate() {
     WhereClauseBuilder ret = builder.not();
 
     assertSame(builder, ret);
@@ -114,7 +114,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testPredicate_CallsPredicateOnDelegate() {
+  void testPredicate_CallsPredicateOnDelegate() {
     WhereClauseBuilder ret = builder.predicate(true);
 
     assertSame(builder, ret);
@@ -122,7 +122,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testNegatePredicate_CallsDelegateWithNull_WhenPredicateIsNull() {
+  void testNegatePredicate_CallsDelegateWithNull_WhenPredicateIsNull() {
     WhereClauseBuilder ret = builder.negatePredicate(null);
 
     assertSame(builder, ret);
@@ -130,7 +130,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testNegatePredicate_CallsDelegateWithFalse_WhenPredicateIsTrue() {
+  void testNegatePredicate_CallsDelegateWithFalse_WhenPredicateIsTrue() {
     WhereClauseBuilder ret = builder.negatePredicate(true);
 
     assertSame(builder, ret);
@@ -138,7 +138,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testNegatePredicate_CallsDelegateWithTrue_WhenPredicateIsFalse() {
+  void testNegatePredicate_CallsDelegateWithTrue_WhenPredicateIsFalse() {
     WhereClauseBuilder ret = builder.negatePredicate(false);
 
     assertSame(builder, ret);
@@ -146,7 +146,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public void testBuild_ReturnsSpecificationFromDelegate() {
+  void testBuild_ReturnsSpecificationFromDelegate() {
     Specification<Object> mSpec = mock(Specification.class);
     doReturn(mSpec).when(mDelegate).build();
 

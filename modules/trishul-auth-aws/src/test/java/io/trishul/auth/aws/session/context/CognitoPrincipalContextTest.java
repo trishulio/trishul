@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-public class CognitoPrincipalContextTest {
+class CognitoPrincipalContextTest {
   private PrincipalContext ctx;
   private Jwt mJwt;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mJwt = mock(Jwt.class);
     doReturn(Arrays.asList("00000000-0000-0000-0000-000000000001")).when(mJwt)
         .getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
@@ -41,12 +41,12 @@ public class CognitoPrincipalContextTest {
   }
 
   @Test
-  public void testGetUsername_ReturnsUserValue() {
+  void testGetUsername_ReturnsUserValue() {
     assertEquals("USERNAME_1", ctx.getUsername());
   }
 
   @Test
-  public void testGetRoles_ReturnsTheCognitoScopes() {
+  void testGetRoles_ReturnsTheCognitoScopes() {
     assertEquals(Arrays.asList("SCOPE_1", "SCOPE_2"), ctx.getRoles());
   }
 

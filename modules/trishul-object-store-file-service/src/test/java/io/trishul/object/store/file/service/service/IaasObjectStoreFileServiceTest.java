@@ -32,7 +32,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasObjectStoreFileServiceTest {
+class IaasObjectStoreFileServiceTest {
   private IaasObjectStoreFileService service;
 
   private EntityMergerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> mMergerService;
@@ -40,7 +40,7 @@ public class IaasObjectStoreFileServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = mock(LockService.class);
     mMergerService = spy(new CrudEntityMergerService<>(new MockUtilProvider(), mLockService,
         BaseIaasObjectStoreFile.class, UpdateIaasObjectStoreFile.class, IaasObjectStoreFile.class,
@@ -51,7 +51,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -59,7 +59,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -67,7 +67,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -75,7 +75,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
+  void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -83,7 +83,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of(URI.create("URI_1"), URI.create("URI_2")));
     long deleteCount = service.delete(Set.of(URI.create("URI_1"), URI.create("URI_2")));
 
@@ -91,7 +91,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of(URI.create("URI")));
 
     long deleteCount = service.delete(URI.create("URI"));
@@ -100,7 +100,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAttachmentFromRepo() {
+  void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -111,14 +111,14 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
+  void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
     doAnswer(inv -> List.of()).when(mIaasRepo).get(anySet());
 
     assertNull(service.get(URI.create("URI")));
   }
 
   @Test
-  public void testGetAll_ReturnsAttachmentFromRepo() {
+  void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -130,7 +130,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnAttachmentsFromRepo() {
+  void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -143,7 +143,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
+  void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
             .when(mIaasRepo).get(anySet());
@@ -193,7 +193,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -222,12 +222,12 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
   @Test
-  public void testPatch_ThrowsNotSupportedException() {
+  void testPatch_ThrowsNotSupportedException() {
     UnsupportedOperationException exception
         = assertThrows(UnsupportedOperationException.class, () -> service.patch(List.of()));
 
@@ -235,7 +235,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

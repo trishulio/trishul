@@ -26,14 +26,14 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class WhereClauseBuilderDelegateTest {
+class WhereClauseBuilderDelegateTest {
   private WhereClauseBuilderDelegate builder;
   private PredicateSpecAccumulator mAccumulator;
 
   private ArgumentCaptor<CriteriaSpec<Boolean>> captor;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAccumulator = mock(PredicateSpecAccumulator.class);
     captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
@@ -41,7 +41,7 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testIsNull_AddsIsNullSpecAndResetNotFlag() {
+  void testIsNull_AddsIsNullSpecAndResetNotFlag() {
     builder.isNull(new String[] {"layer-1"});
 
     CriteriaSpec<Boolean> expected = new IsNullSpec(new ColumnSpec<>(new String[] {"layer-1"}));
@@ -52,7 +52,7 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testIn_AddsInSpecAndResetNotFlag_WhenCollectionIsNotNull() {
+  void testIn_AddsInSpecAndResetNotFlag_WhenCollectionIsNotNull() {
     builder.in(new String[] {"layer-1"}, List.of("V1", "V2"));
 
     CriteriaSpec<Boolean> expected
@@ -64,14 +64,14 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testIn_AddsNothingAndResetNotFlag_WhenCollectionIsNull() {
+  void testIn_AddsNothingAndResetNotFlag_WhenCollectionIsNull() {
     builder.in(new String[] {"layer-1"}, null);
     verify(mAccumulator).setIsNot(false);
     verifyNoMoreInteractions(mAccumulator);
   }
 
   @Test
-  public void testLike_AddsLikeSpecAndResetFlag_WhenCollectionIsNotNull() {
+  void testLike_AddsLikeSpecAndResetFlag_WhenCollectionIsNotNull() {
     builder.like(new String[] {"layer-1"}, Set.of("V1", "V2"));
 
     verify(mAccumulator, times(2)).add(captor.capture());
@@ -86,14 +86,14 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testLike_AddsNothingAndResetFlag_WhenCollectionIsNull() {
+  void testLike_AddsNothingAndResetFlag_WhenCollectionIsNull() {
     builder.like(new String[] {"layer-1"}, null);
     verify(mAccumulator).setIsNot(false);
     verifyNoMoreInteractions(mAccumulator);
   }
 
   @Test
-  public void testBetween_AddsBetweenSpecAndResetFlag_WhenStartAndEndAreNotNull() {
+  void testBetween_AddsBetweenSpecAndResetFlag_WhenStartAndEndAreNotNull() {
     builder.between(new String[] {"layer-1"}, LocalDateTime.of(2000, 1, 1, 1, 1),
         LocalDateTime.of(2000, 1, 1, 1, 1));
 
@@ -107,14 +107,14 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testBetween_AddsNothingAndResetFlag_WhenStartAndEndAreNull() {
+  void testBetween_AddsNothingAndResetFlag_WhenStartAndEndAreNull() {
     builder.between(new String[] {"layer-1"}, null, null);
     verify(mAccumulator).setIsNot(false);
     verifyNoMoreInteractions(mAccumulator);
   }
 
   @Test
-  public void testPredicate_callsSetIsPredicate() {
+  void testPredicate_callsSetIsPredicate() {
     builder.predicate(true);
 
     verify(mAccumulator).setIsPredicate(true);

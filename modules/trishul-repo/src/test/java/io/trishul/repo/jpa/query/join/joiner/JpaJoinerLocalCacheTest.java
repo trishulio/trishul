@@ -12,16 +12,16 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class JpaJoinerLocalCacheTest {
+class JpaJoinerLocalCacheTest {
   private JpaJoinerLocalCache cache;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.cache = new JpaJoinerLocalCache();
   }
 
   @Test
-  public <X, Y> void testGet_CallsSupplier_WhenCacheIsMissing() {
+  <X, Y> void testGet_CallsSupplier_WhenCacheIsMissing() {
     Key<X, Y> mKey = mock(Key.class);
     Path<X> mPath = mock(Path.class);
     Supplier<Path<X>> mSupplier = mock(Supplier.class);
@@ -48,7 +48,7 @@ public class JpaJoinerLocalCacheTest {
   }
 
   @Test
-  public <X, Y> void testJoin_ReturnsCachedJoinFromLocalThread()
+  <X, Y> void testJoin_ReturnsCachedJoinFromLocalThread()
       throws InterruptedException, ExecutionException {
     Key<X, Y> mKey = mock(Key.class);
     Path<X> mPath = mock(Path.class);
@@ -67,7 +67,7 @@ public class JpaJoinerLocalCacheTest {
   }
 
   @Test
-  public <X, Y> void testJoin_ReturnsCachedJoinFromLocalThread_Multithreaded()
+  <X, Y> void testJoin_ReturnsCachedJoinFromLocalThread_Multithreaded()
       throws InterruptedException {
     Key<X, Y> mKey = mock(Key.class);
     Path<X> mPath = mock(Path.class);

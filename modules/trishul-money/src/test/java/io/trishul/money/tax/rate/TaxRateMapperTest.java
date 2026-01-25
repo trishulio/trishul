@@ -7,22 +7,22 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaxRateMapperTest {
+class TaxRateMapperTest {
 
   private TaxRateMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TaxRateMapper.INSTANCE;
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenArgIsNull() {
+  void testToDto_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenArgIsNotNull() {
+  void testToDto_ReturnsDto_WhenArgIsNotNull() {
     TaxRate rate = new TaxRate(new BigDecimal("10"));
 
     TaxRateDto dto = mapper.toDto(rate);
@@ -32,12 +32,12 @@ public class TaxRateMapperTest {
   }
 
   @Test
-  public void toFromDto_ReturnsNull_WhenArgIsNull() {
+  void toFromDto_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testFromDto_ReturnsPojo_WhenArgIsNotNull() {
+  void testFromDto_ReturnsPojo_WhenArgIsNotNull() {
     TaxRateDto dto = new TaxRateDto(new BigDecimal("10"));
 
     TaxRate rate = mapper.fromDto(dto);

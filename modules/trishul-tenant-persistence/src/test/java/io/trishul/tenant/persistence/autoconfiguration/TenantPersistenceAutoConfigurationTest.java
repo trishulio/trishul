@@ -41,7 +41,7 @@ class TenantPersistenceAutoConfigurationTest {
   private TenantPersistenceAutoConfiguration tenantPersistenceAutoConfiguration;
 
   @BeforeEach
-  public void init() {
+  void init() {
     localContainerEntityManagerFactoryBeanMock = mock(LocalContainerEntityManagerFactoryBean.class);
     mEntityManagerFactory = mock(EntityManagerFactory.class);
     jpaVendorAdapterMock = mock(HibernateJpaVendorAdapter.class);
@@ -54,7 +54,7 @@ class TenantPersistenceAutoConfigurationTest {
   }
 
   @Test
-  public void testMultiTenantConnectionProvider_ReturnsInstanceOfTenantConnectionProvider() {
+  void testMultiTenantConnectionProvider_ReturnsInstanceOfTenantConnectionProvider() {
     MultiTenantConnectionProvider<String> multiTenantConnectionProvider
         = tenantPersistenceAutoConfiguration.multiTenantConnectionProvider(null, null);
 
@@ -62,7 +62,7 @@ class TenantPersistenceAutoConfigurationTest {
   }
 
   @Test
-  public void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
+  void testCurrentTenantIdentifierResolver_ReturnsTenantIdentifierResolver() {
     CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver
         = tenantPersistenceAutoConfiguration.currentTenantIdentifierResolver(null);
 
@@ -70,7 +70,7 @@ class TenantPersistenceAutoConfigurationTest {
   }
 
   @Test
-  public void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
+  void testPlatformTransactionManager_ReturnsJpaTransactionManager() {
     when(localContainerEntityManagerFactoryBeanMock.getObject()).thenReturn(mEntityManagerFactory);
 
     PlatformTransactionManager platformTransactionManager = tenantPersistenceAutoConfiguration
@@ -80,14 +80,14 @@ class TenantPersistenceAutoConfigurationTest {
   }
 
   @Test
-  public void testJpaVendorAdapter_ReturnsHibernateJpaVendorAdapter() {
+  void testJpaVendorAdapter_ReturnsHibernateJpaVendorAdapter() {
     JpaVendorAdapter jpaVendorAdapter = tenantPersistenceAutoConfiguration.jpaVendorAdapter();
 
     assertTrue(jpaVendorAdapter instanceof HibernateJpaVendorAdapter);
   }
 
   @Test
-  public void testLocalContainerEntityManagerFactoryBean() {
+  void testLocalContainerEntityManagerFactoryBean() {
     when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
     PackageScanConfig packageScanConfig = () -> new String[] {"package1"};

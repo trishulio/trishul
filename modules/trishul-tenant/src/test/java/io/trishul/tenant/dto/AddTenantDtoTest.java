@@ -7,16 +7,16 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AddTenantDtoTest {
+class AddTenantDtoTest {
   private AddTenantDto tenantDto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     tenantDto = new AddTenantDto();
   }
 
   @Test
-  public void testAllArgConstructor() throws MalformedURLException {
+  void testAllArgConstructor() throws MalformedURLException {
     tenantDto = new AddTenantDto("NAME", new URL("http://localhost/"));
 
     assertEquals("NAME", tenantDto.getName());
@@ -24,14 +24,14 @@ public class AddTenantDtoTest {
   }
 
   @Test
-  public void testGetSetName() {
+  void testGetSetName() {
     String name = "testName";
     tenantDto.setName(name);
     assertSame(name, tenantDto.getName());
   }
 
   @Test
-  public void testGetSetUrl() throws MalformedURLException {
+  void testGetSetUrl() throws MalformedURLException {
     URL url = new URL("https://localhost/");
     tenantDto.setUrl(url);
     assertSame(url, tenantDto.getUrl());

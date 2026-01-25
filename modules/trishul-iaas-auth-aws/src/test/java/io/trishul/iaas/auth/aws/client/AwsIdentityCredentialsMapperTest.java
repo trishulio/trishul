@@ -9,21 +9,21 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIdentityCredentialsMapperTest {
+class AwsIdentityCredentialsMapperTest {
   private AwsIdentityCredentialsMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AwsIdentityCredentialsMapper.INSTANCE;
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
+  void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromIaasEntity(null));
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsEntity_WhenIaasEntityIsNull() {
+  void testFromIaasEntity_ReturnsEntity_WhenIaasEntityIsNull() {
     Credentials creds
         = new Credentials().withAccessKeyId("ACCESS_KEY_ID").withSecretKey("SECRET_KEY")
             .withSessionToken("SESSION_TOKEN").withExpiration(new Date(1, 1, 1));

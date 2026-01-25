@@ -8,16 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
-public class IaasObjectStoreCorsConfigurationTest {
+class IaasObjectStoreCorsConfigurationTest {
   private IaasObjectStoreCorsConfiguration config;
 
   @BeforeEach
-  public void init() {
+  void init() {
     config = new IaasObjectStoreCorsConfiguration();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(config.getBucketName());
     assertNull(config.getBucketCrossOriginConfiguration());
     assertNull(config.getId());
@@ -25,7 +25,7 @@ public class IaasObjectStoreCorsConfigurationTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     config = new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration());
 
     assertEquals("BUCKET_1", config.getBucketName());
@@ -34,13 +34,13 @@ public class IaasObjectStoreCorsConfigurationTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     config.setId("BUCKET_1");
     assertEquals("BUCKET_1", config.getId());
   }
 
   @Test
-  public void testGetSetBucketCrossOriginConfiguration() {
+  void testGetSetBucketCrossOriginConfiguration() {
     config.setBucketCrossOriginConfiguration(new BucketCrossOriginConfiguration());
 
     assertTrue(new ReflectionEquals(new BucketCrossOriginConfiguration())
@@ -48,7 +48,7 @@ public class IaasObjectStoreCorsConfigurationTest {
   }
 
   @Test
-  public void testGetVersion() {
+  void testGetVersion() {
     assertNull(config.getVersion());
   }
 }

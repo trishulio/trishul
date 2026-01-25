@@ -13,13 +13,13 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsResourceCredentialsFetcherTest {
+class AwsResourceCredentialsFetcherTest {
   private IaasAuthorizationFetcher fetcher;
 
   private AwsCognitoIdentityClient mIdentityClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIdentityClient = mock(AwsCognitoIdentityClient.class);
 
     fetcher = new AwsResourceCredentialsFetcher(mIdentityClient,
@@ -27,7 +27,7 @@ public class AwsResourceCredentialsFetcherTest {
   }
 
   @Test
-  public void testFetch_ReturnsCredentials() {
+  void testFetch_ReturnsCredentials() {
     doReturn(List.of(new IdentityPoolShortDescription().withIdentityPoolId("POOL_ID")))
         .when(mIdentityClient).getIdentityPools(1);
     doReturn("IDENTITY_ID").when(mIdentityClient).getIdentityId("POOL_ID",

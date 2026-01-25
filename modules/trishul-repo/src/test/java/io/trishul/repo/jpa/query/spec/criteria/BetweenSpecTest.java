@@ -12,7 +12,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BetweenSpecTest {
+class BetweenSpecTest {
   class MockComparable extends BaseModel implements Comparable<MockComparable> {
     private int value;
 
@@ -36,7 +36,7 @@ public class BetweenSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -47,7 +47,7 @@ public class BetweenSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsBetweenExpressionOnDelegatePath_WhenBothStartAndEndAreNotNull() {
+  void testGetExpression_ReturnsBetweenExpressionOnDelegatePath_WhenBothStartAndEndAreNotNull() {
     Predicate mBetweenExpr = mock(Predicate.class);
     doReturn(mBetweenExpr).when(mCb).between(mExpr, new MockComparable(1), new MockComparable(2));
 
@@ -56,7 +56,7 @@ public class BetweenSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsGreaterThanExpressionOnDelegatePath_WhenEndIsNull() {
+  void testGetExpression_ReturnsGreaterThanExpressionOnDelegatePath_WhenEndIsNull() {
     Predicate mBetweenExpr = mock(Predicate.class);
     doReturn(mBetweenExpr).when(mCb).greaterThanOrEqualTo(mExpr, new MockComparable(1));
 
@@ -65,7 +65,7 @@ public class BetweenSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsLessThanExpressionOnDelegatePath_WhenStartIsNull() {
+  void testGetExpression_ReturnsLessThanExpressionOnDelegatePath_WhenStartIsNull() {
     Predicate mBetweenExpr = mock(Predicate.class);
     doReturn(mBetweenExpr).when(mCb).lessThanOrEqualTo(mExpr, new MockComparable(2));
 
@@ -74,7 +74,7 @@ public class BetweenSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsTrueExpressionOnDelegatePath_WhenBothStartAndEndNotNull() {
+  void testGetExpression_ReturnsTrueExpressionOnDelegatePath_WhenBothStartAndEndNotNull() {
     Predicate mBetweenExpr = mock(Predicate.class);
     doReturn(mBetweenExpr).when(mCb).literal(true);
 

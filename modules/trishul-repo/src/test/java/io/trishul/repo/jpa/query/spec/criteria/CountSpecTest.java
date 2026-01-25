@@ -10,7 +10,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CountSpecTest {
+class CountSpecTest {
   private CriteriaSpec<?> spec;
 
   private CriteriaSpec<?> mDelegate;
@@ -21,7 +21,7 @@ public class CountSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -32,7 +32,7 @@ public class CountSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsCountExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsCountExpressionOnDelegatePath() {
     Expression<Double> mCountExpr = mock(Expression.class);
     doReturn(mCountExpr).when(mCb).count(mExpr);
 

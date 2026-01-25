@@ -4,16 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AddressDtoTest {
+class AddressDtoTest {
   private AddressDto addressDto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     addressDto = new AddressDto();
   }
 
   @Test
-  public void testConstructor() {
+  void testConstructor() {
     Long id = 1L;
     String addressLine1 = "addressLine1";
     String addressLine2 = "addressLine2";
@@ -35,43 +35,43 @@ public class AddressDtoTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     addressDto.setId(1L);
     assertSame(1L, addressDto.getId());
   }
 
   @Test
-  public void testGetSetAddressLine1() {
+  void testGetSetAddressLine1() {
     addressDto.setAddressLine1("line1");
     assertSame("line1", addressDto.getAddressLine1());
   }
 
   @Test
-  public void testGetSetAddressLine2() {
+  void testGetSetAddressLine2() {
     addressDto.setAddressLine2("line2");
     assertSame("line2", addressDto.getAddressLine2());
   }
 
   @Test
-  public void testGetSetCity() {
+  void testGetSetCity() {
     addressDto.setCity("city");
     assertSame("city", addressDto.getCity());
   }
 
   @Test
-  public void testGetSetCountry() {
+  void testGetSetCountry() {
     addressDto.setCountry("country");
     assertSame("country", addressDto.getCountry());
   }
 
   @Test
-  public void testGetSetProvince() {
+  void testGetSetProvince() {
     addressDto.setProvince("province");
     assertSame("province", addressDto.getProvince());
   }
 
   @Test
-  public void testGetPostalCode() {
+  void testGetPostalCode() {
     addressDto.setPostalCode("postalCode");
     assertSame("postalCode", addressDto.getPostalCode());
   }

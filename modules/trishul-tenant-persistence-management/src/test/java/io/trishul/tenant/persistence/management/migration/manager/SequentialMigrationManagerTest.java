@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import io.trishul.tenant.entity.TenantData;
 
-public class SequentialMigrationManagerTest {
+class SequentialMigrationManagerTest {
   private MigrationManager mgr;
 
   private TenantRegister mTenantReg;
   private MigrationRegister mMigrationReg;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mTenantReg = mock(TenantRegister.class);
     mMigrationReg = mock(MigrationRegister.class);
 
@@ -28,7 +28,7 @@ public class SequentialMigrationManagerTest {
   }
 
   @Test
-  public void testMigrate_PutsTenantInTenantRegisterAndMigrationRegister() {
+  void testMigrate_PutsTenantInTenantRegisterAndMigrationRegister() {
     mgr.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
     InOrder order = inOrder(mTenantReg, mMigrationReg);
@@ -39,7 +39,7 @@ public class SequentialMigrationManagerTest {
   }
 
   @Test
-  public void testMigrateAll_CallsMigrateOnAllTenants() {
+  void testMigrateAll_CallsMigrateOnAllTenants() {
     mgr = spy(mgr);
 
     List<TenantData> tenants

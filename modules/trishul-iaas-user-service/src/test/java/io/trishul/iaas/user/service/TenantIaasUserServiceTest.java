@@ -23,7 +23,7 @@ import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
 import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.user.model.User;
 
-public class TenantIaasUserServiceTest {
+class TenantIaasUserServiceTest {
   private TenantIaasUserService service;
 
   private IaasRepository<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> mUserService;
@@ -31,7 +31,7 @@ public class TenantIaasUserServiceTest {
   private TenantIdProvider mTenantIdProvider;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mUserService = mock(IaasRepository.class);
     mMembershipService = mock(IaasRepository.class);
     mTenantIdProvider = mock(TenantIdProvider.class);
@@ -41,7 +41,7 @@ public class TenantIaasUserServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsMembershipsAfterSavingUsersAndCreatingMemberships() {
+  void testPut_ReturnsMembershipsAfterSavingUsersAndCreatingMemberships() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mUserService).put(anyList());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mMembershipService).put(anyList());
 
@@ -72,7 +72,7 @@ public class TenantIaasUserServiceTest {
   }
 
   @Test
-  public void testDelete_RemovesMembershipAndDeletesUsers() {
+  void testDelete_RemovesMembershipAndDeletesUsers() {
     doReturn(55L).when(mMembershipService)
         .delete(Set.of(
             new IaasUserTenantMembershipId("example-1@localhost",

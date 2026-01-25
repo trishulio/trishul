@@ -42,8 +42,7 @@ public class PostgresJdbcDialectSql {
   private String placeholders(int count) {
     final String ph = "?,";
     String raw = ph.repeat(count);
-    String finul = raw.substring(0, raw.length() - 1);
-    return finul;
+    return raw.substring(0, raw.length() - 1);
   }
 
   private String f(String s, Object... args) {

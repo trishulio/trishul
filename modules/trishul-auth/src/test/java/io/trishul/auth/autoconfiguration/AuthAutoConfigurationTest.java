@@ -10,7 +10,7 @@ class AuthAutoConfigurationTest {
   private AuthAutoConfiguration config;
 
   @BeforeEach
-  public void init() {
+  void init() {
     config = new AuthAutoConfiguration();
   }
 

@@ -8,26 +8,26 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PageDtoTest {
+class PageDtoTest {
   class DummyDto extends BaseDto {
   }
 
   PageDto<DummyDto> dto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     dto = new PageDto<>();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertTrue(dto.getContent().isEmpty());
     assertEquals(0, dto.getTotalPages());
     assertEquals(0L, dto.getTotalElements());
   }
 
   @Test
-  public void testAllArgs() {
+  void testAllArgs() {
     List<DummyDto> content = List.of(new DummyDto());
     dto = new PageDto<>(content, 99, 999);
     assertEquals(List.of(new DummyDto()), dto.getContent());
@@ -36,26 +36,26 @@ public class PageDtoTest {
   }
 
   @Test
-  public void testAccessContent() {
+  void testAccessContent() {
     assertTrue(dto.getContent().isEmpty());
     dto.setContent(List.of(new DummyDto()));
     assertEquals(List.of(new DummyDto()), dto.getContent());
   }
 
   @Test
-  public void testAccessTotalElement() {
+  void testAccessTotalElement() {
     dto.setTotalElements(999);
     assertEquals(999, dto.getTotalElements());
   }
 
   @Test
-  public void testAccessTotalPages() {
+  void testAccessTotalPages() {
     dto.setTotalPages(99);
     assertEquals(99, dto.getTotalPages());
   }
 
   @Test
-  public void testIterator_ReturnsContentIterator() {
+  void testIterator_ReturnsContentIterator() {
     dto.setContent(List.of(new DummyDto()));
 
     Iterator<DummyDto> it = dto.iterator();

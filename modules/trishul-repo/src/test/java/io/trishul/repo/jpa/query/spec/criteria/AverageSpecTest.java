@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unchecked")
-public class AverageSpecTest {
+class AverageSpecTest {
   private CriteriaSpec<Double> spec;
 
   private CriteriaSpec<Double> mDelegate;
@@ -23,7 +23,7 @@ public class AverageSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -34,7 +34,7 @@ public class AverageSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsAverageExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsAverageExpressionOnDelegatePath() {
     Predicate mAvgExpr = mock(Predicate.class);
     doReturn(mAvgExpr).when(mCb).avg(mExpr);
 

@@ -10,21 +10,21 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantRefresherTest {
+class TenantRefresherTest {
   private TenantRefresher tenantRefresher;
 
   private AccessorRefresher<UUID, TenantAccessor<?>, Tenant> mRefresher;
 
   @SuppressWarnings("unchecked")
   @BeforeEach
-  public void init() {
+  void init() {
     mRefresher = mock(AccessorRefresher.class);
 
     tenantRefresher = new TenantRefresher(mRefresher);
   }
 
   @Test
-  public void testRefreshAccessors_CallsRefreshAccessor() {
+  void testRefreshAccessors_CallsRefreshAccessor() {
     List<TenantAccessor<?>> accessors
         = List.of(mock(TenantAccessor.class), mock(TenantAccessor.class));
 
@@ -34,7 +34,7 @@ public class TenantRefresherTest {
   }
 
   @Test
-  public void testRefresh_RefreshesSuppliers() {
+  void testRefresh_RefreshesSuppliers() {
     List<Tenant> entities
         = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
             new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));

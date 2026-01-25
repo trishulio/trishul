@@ -11,21 +11,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 
-public class CostCalculatorTest {
+class CostCalculatorTest {
   private CostCalculator calculator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     calculator = CostCalculator.INSTANCE;
   }
 
   @Test
-  public void testGetCost_ReturnsNull_WhenCommodityIsNull() {
+  void testGetCost_ReturnsNull_WhenCommodityIsNull() {
     assertNull(calculator.getCost(null));
   }
 
   @Test
-  public void testGetCost_ReturnsNull_WhenCommodityFieldsAreNull() {
+  void testGetCost_ReturnsNull_WhenCommodityFieldsAreNull() {
     Commodity commodity = new Commodity() {
       @Override
       public Quantity<?> getQuantity() {
@@ -41,7 +41,7 @@ public class CostCalculatorTest {
   }
 
   @Test
-  public void testGetCost_ReturnsNull_WhenQuantityIsNull() {
+  void testGetCost_ReturnsNull_WhenQuantityIsNull() {
     Commodity commodity = new Commodity() {
       @Override
       public Quantity<?> getQuantity() {
@@ -57,7 +57,7 @@ public class CostCalculatorTest {
   }
 
   @Test
-  public void testGetCost_ReturnsNull_WhenPriceIsNull() {
+  void testGetCost_ReturnsNull_WhenPriceIsNull() {
     Commodity commodity = new Commodity() {
       @Override
       public Quantity<?> getQuantity() {
@@ -73,7 +73,7 @@ public class CostCalculatorTest {
   }
 
   @Test
-  public void testGetCost_ReturnsCost_WhenNoFieldIsNulL() {
+  void testGetCost_ReturnsCost_WhenNoFieldIsNulL() {
     Commodity commodity = new Commodity() {
       @Override
       public Quantity<?> getQuantity() {

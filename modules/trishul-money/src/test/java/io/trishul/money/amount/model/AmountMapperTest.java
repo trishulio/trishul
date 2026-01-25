@@ -14,17 +14,17 @@ class AmountMapperTest {
   private AmountMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AmountMapper.INSTANCE;
   }
 
   @Test
-  public void testToDto_ReturnsNull_WhenArgIsNull() {
+  void testToDto_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.toDto(null));
   }
 
   @Test
-  public void testToDto_ReturnsDto_WhenArgIsNotNull() {
+  void testToDto_ReturnsDto_WhenArgIsNotNull() {
     Amount amount = new Amount(Money.parse("CAD 100"), new TaxAmount(Money.parse("CAD 10")));
 
     AmountDto dto = mapper.toDto(amount);
@@ -37,12 +37,12 @@ class AmountMapperTest {
   }
 
   @Test
-  public void testFromDto_ReturnsNull_WhenArgIsNull() {
+  void testFromDto_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromDto(null));
   }
 
   @Test
-  public void testFromDto_ReturnsPojo_WhenArgIsNotNull() {
+  void testFromDto_ReturnsPojo_WhenArgIsNotNull() {
     AmountDto dto = new AmountDto(new MoneyDto("CAD", new BigDecimal("110.00")),
         new MoneyDto("CAD", new BigDecimal("100.00")),
         new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10.00")),

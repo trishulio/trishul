@@ -7,34 +7,34 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasRolePolicyAttachmentIdTest {
+class IaasRolePolicyAttachmentIdTest {
   private IaasRolePolicyAttachmentId id;
 
   @BeforeEach
-  public void init() {
+  void init() {
     id = new IaasRolePolicyAttachmentId();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(id.getRoleId());
     assertNull(id.getPolicyId());
   }
 
   @Test
-  public void testIdArgConstructor() {
+  void testIdArgConstructor() {
     id = new IaasRolePolicyAttachmentId("ROLE", "POLICY");
     assertEquals("ROLE", id.getRoleId());
     assertEquals("POLICY", id.getPolicyId());
   }
 
   @Test
-  public void testBuild_ReturnsNull_WhenBothRoleAndPolicyIdAreNull() {
+  void testBuild_ReturnsNull_WhenBothRoleAndPolicyIdAreNull() {
     assertNull(IaasRolePolicyAttachmentId.build(null, null));
   }
 
   @Test
-  public void testBuild_ReturnsId_WhenArgIsNotNull() {
+  void testBuild_ReturnsId_WhenArgIsNotNull() {
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", "POLICY"),
         IaasRolePolicyAttachmentId.build(new IaasRole("ROLE"), new IaasPolicy("POLICY")));
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", null),

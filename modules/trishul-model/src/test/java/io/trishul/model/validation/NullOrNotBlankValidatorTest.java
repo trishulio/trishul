@@ -7,37 +7,37 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class NullOrNotBlankValidatorTest {
+class NullOrNotBlankValidatorTest {
   private NullOrNotBlankValidator validator;
 
   private ConstraintValidatorContext mockContext;
 
   @BeforeEach
-  public void init() {
+  void init() {
     validator = new NullOrNotBlankValidator();
     mockContext = mock(ConstraintValidatorContext.class);
   }
 
   @Test
-  public void testReturnsTrueWhenNull() {
+  void testReturnsTrueWhenNull() {
     boolean actual = validator.isValid(null, mockContext);
     assertTrue(actual);
   }
 
   @Test
-  public void testReturnsTrueWhenValidString() {
+  void testReturnsTrueWhenValidString() {
     boolean actual = validator.isValid("test", mockContext);
     assertTrue(actual);
   }
 
   @Test
-  public void testReturnsFalseWhenEmptyString() {
+  void testReturnsFalseWhenEmptyString() {
     boolean actual = validator.isValid("", mockContext);
     assertFalse(actual);
   }
 
   @Test
-  public void testReturnsFalseWhenEmptyStringWithWhiteSpace() {
+  void testReturnsFalseWhenEmptyStringWithWhiteSpace() {
     boolean actual = validator.isValid("      ", mockContext);
     assertFalse(actual);
   }

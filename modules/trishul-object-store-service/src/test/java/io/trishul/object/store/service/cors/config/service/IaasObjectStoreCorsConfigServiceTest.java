@@ -28,7 +28,7 @@ import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfi
 import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfigurationAccessor;
 import io.trishul.test.util.MockUtilProvider;
 
-public class IaasObjectStoreCorsConfigServiceTest {
+class IaasObjectStoreCorsConfigServiceTest {
   private IaasObjectStoreCorsConfigService service;
 
   private EntityMergerService<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> mMergerService;
@@ -36,7 +36,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = mock(LockService.class);
     mMergerService = spy(new CrudEntityMergerService<>(new MockUtilProvider(), mLockService,
         IaasObjectStoreCorsConfiguration.class, IaasObjectStoreCorsConfiguration.class,
@@ -47,7 +47,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -55,7 +55,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -63,7 +63,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -71,7 +71,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
+  void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -79,7 +79,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(99L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
     long deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
 
@@ -87,7 +87,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
     long deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
 
@@ -95,7 +95,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAttachmentFromRepo() {
+  void testGet_ReturnsAttachmentFromRepo() {
     IaasObjectStoreCorsConfiguration expected = new IaasObjectStoreCorsConfiguration();
     doAnswer(inv -> {
       return List.of(expected);
@@ -107,7 +107,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenNoAttachmentIsFound() {
+  void testGet_ReturnsNull_WhenNoAttachmentIsFound() {
     doReturn(new ArrayList<>()).when(mIaasRepo).get(anySet());
 
     IaasObjectStoreCorsConfiguration actual = service.get("BUCKET_1");
@@ -116,7 +116,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testGetAll_ReturnsAttachmentFromRepo() {
+  void testGetAll_ReturnsAttachmentFromRepo() {
     List<IaasObjectStoreCorsConfiguration> expected
         = List.of(new IaasObjectStoreCorsConfiguration());
     doAnswer(inv -> {
@@ -129,7 +129,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnAttachmentsFromRepo() {
+  void testGetByIds_ReturnAttachmentsFromRepo() {
     List<IaasObjectStoreCorsConfiguration> expected
         = List.of(new IaasObjectStoreCorsConfiguration());
     doAnswer(inv -> {
@@ -142,7 +142,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
+  void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     List<IaasObjectStoreCorsConfiguration> expected
         = List.of(new IaasObjectStoreCorsConfiguration());
     doAnswer(inv -> {
@@ -191,7 +191,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testAdd_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -215,7 +215,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPut_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
@@ -243,7 +243,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
+  void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

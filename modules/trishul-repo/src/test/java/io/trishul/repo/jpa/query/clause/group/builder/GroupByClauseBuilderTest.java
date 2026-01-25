@@ -18,18 +18,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class GroupByClauseBuilderTest {
+class GroupByClauseBuilderTest {
   private GroupByClauseBuilder grouper;
   private ColumnSpecAccumulator mAccumulator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAccumulator = mock(ColumnSpecAccumulator.class);
     grouper = new GroupByClauseBuilder(mAccumulator);
   }
 
   @Test
-  public void testGroupBy_PathProvider_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
+  void testGroupBy_PathProvider_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
     PathProvider mProvider = mock(PathProvider.class);
@@ -42,13 +42,13 @@ public class GroupByClauseBuilderTest {
   }
 
   @Test
-  public void testGroupBy_PathProvider_DoesNothign_WhenProviderIsNull() {
+  void testGroupBy_PathProvider_DoesNothign_WhenProviderIsNull() {
     grouper.groupBy((PathProvider) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testGroupBy_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
+  void testGroupBy_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
     grouper.groupBy(new String[] {"PATH_1", "PATH_2"});
@@ -58,13 +58,13 @@ public class GroupByClauseBuilderTest {
   }
 
   @Test
-  public void testGroupBy_StringArray_DoesNothing_WhenStringArrayIsNull() {
+  void testGroupBy_StringArray_DoesNothing_WhenStringArrayIsNull() {
     grouper.groupBy((String[]) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testGroupBy_CriteriaSpec_AddsTheSpec_WhenSpecIsNotNull() {
+  void testGroupBy_CriteriaSpec_AddsTheSpec_WhenSpecIsNotNull() {
     ArgumentCaptor<CriteriaSpec<?>> captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
     CriteriaSpec<?> mSpec = mock(CriteriaSpec.class);
@@ -75,13 +75,13 @@ public class GroupByClauseBuilderTest {
   }
 
   @Test
-  public void testGroupBy_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
+  void testGroupBy_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
     grouper.groupBy((CriteriaSpec<?>) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testGetSelectClause_ReturnsListOfSelectionFromAccumulator() {
+  void testGetSelectClause_ReturnsListOfSelectionFromAccumulator() {
     Root<?> mRoot = mock(Root.class);
     CriteriaBuilder mCb = mock(CriteriaBuilder.class);
     CriteriaQuery<?> mCq = mock(CriteriaQuery.class);

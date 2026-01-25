@@ -9,14 +9,14 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantContextAwsBucketNameProviderTest {
+class TenantContextAwsBucketNameProviderTest {
   private IaasObjectStoreNameProvider provider;
 
   private AwsDocumentTemplates mTemplates;
   private TenantIdProvider mTenantIdProvider;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mTemplates = mock(AwsDocumentTemplates.class);
     mTenantIdProvider = mock(TenantIdProvider.class);
     provider
@@ -24,7 +24,7 @@ public class TenantContextAwsBucketNameProviderTest {
   }
 
   @Test
-  public void testGetObjectStoreName_ReturnsDefaultBucketName_WhenPrincipalContextIsNull() {
+  void testGetObjectStoreName_ReturnsDefaultBucketName_WhenPrincipalContextIsNull() {
     assertEquals("DEFAULT_BUCKET", provider.getObjectStoreName());
   }
 
@@ -35,7 +35,7 @@ public class TenantContextAwsBucketNameProviderTest {
   }
 
   @Test
-  public void testGetObjectStoreName_ReturnsDefaultBucketName_WhenVfsBucketNameReturnsNull() {
+  void testGetObjectStoreName_ReturnsDefaultBucketName_WhenVfsBucketNameReturnsNull() {
     doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001")).when(mTenantIdProvider)
         .getTenantId();
 

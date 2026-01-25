@@ -14,12 +14,12 @@ class ObjectStoreAwsFactoryTest {
   private ObjectStoreAwsFactory factory;
 
   @BeforeEach
-  public void init() {
+  void init() {
     factory = new ObjectStoreAwsFactory();
   }
 
   @Test
-  public void testS3Client() throws IllegalAccessException, URISyntaxException {
+  void testS3Client() throws IllegalAccessException, URISyntaxException {
     AmazonS3 s3 = factory.s3Client("REGION", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY", "SESSION_TOKEN");
 
     final AWSCredentialsProvider awsCredentialsProvider

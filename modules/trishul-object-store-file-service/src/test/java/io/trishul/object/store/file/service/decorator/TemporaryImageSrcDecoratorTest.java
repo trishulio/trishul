@@ -17,20 +17,20 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TemporaryImageSrcDecoratorTest {
+class TemporaryImageSrcDecoratorTest {
   private TemporaryImageSrcDecorator decorator;
 
   private IaasObjectStoreFileController mController;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mController = mock(IaasObjectStoreFileController.class);
 
     decorator = new TemporaryImageSrcDecorator(mController);
   }
 
   @Test
-  public void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
+  void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
     doAnswer(inv -> inv.getArgument(0, Set.class).stream()
         .map(uri -> new IaasObjectStoreFileDto((URI) uri)).toList()).when(mController)
             .getAll(anySet());
@@ -50,7 +50,7 @@ public class TemporaryImageSrcDecoratorTest {
   }
 
   @Test
-  public void testDecorate_DoesNothing_WhenExceptionIsThrown() {
+  void testDecorate_DoesNothing_WhenExceptionIsThrown() {
     doThrow(RuntimeException.class).when(mController).getAll(any());
 
     List<DummyDto> dtos = List.of(new DummyDto(1L), new DummyDto(2L));

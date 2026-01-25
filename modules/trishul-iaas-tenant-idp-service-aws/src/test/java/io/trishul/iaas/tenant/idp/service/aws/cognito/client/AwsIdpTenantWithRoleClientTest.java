@@ -28,7 +28,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIdpTenantWithRoleClientTest {
+class AwsIdpTenantWithRoleClientTest {
   private AwsIdpTenantWithRoleClient client;
 
   private AWSCognitoIdentityProvider mIdp;
@@ -36,7 +36,7 @@ public class AwsIdpTenantWithRoleClientTest {
   private IaasRoleService mRoleService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIdp = mock(AWSCognitoIdentityProvider.class);
     mRoleService = mock(IaasRoleService.class);
     mArnMapper = mock(AwsArnMapper.class);
@@ -48,7 +48,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testGet_ReturnsTenantWithRole() {
+  void testGet_ReturnsTenantWithRole() {
     doAnswer(inv -> {
       GetGroupRequest req = inv.getArgument(0, GetGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -69,7 +69,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testAdd_AddsAndReturnsEntity() {
+  void testAdd_AddsAndReturnsEntity() {
     doAnswer(inv -> {
       CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -92,7 +92,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testUpdate_UpdatesAndReturnsEntity() {
+  void testUpdate_UpdatesAndReturnsEntity() {
     doAnswer(inv -> {
       UpdateGroupRequest req = inv.getArgument(0, UpdateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -115,7 +115,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testPut_CallsUpdate_WhenExistsReturnsTrue() {
+  void testPut_CallsUpdate_WhenExistsReturnsTrue() {
     client = spy(client);
     doReturn(true).when(client).exists("T1");
     doAnswer(inv -> inv.getArgument(0, IaasIdpTenant.class)).when(client)
@@ -130,7 +130,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistsReturnsFalse() {
+  void testPut_CallsAdd_WhenExistsReturnsFalse() {
     client = spy(client);
     doReturn(false).when(client).exists("T1");
     doAnswer(inv -> inv.getArgument(0, IaasIdpTenant.class)).when(client)
@@ -145,7 +145,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetIsNull() {
+  void testExists_ReturnsFalse_WhenGetIsNull() {
     client = spy(client);
     doReturn(null).when(client).get("T1");
 
@@ -153,7 +153,7 @@ public class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetIsNotNull() {
+  void testExists_ReturnsTrue_WhenGetIsNotNull() {
     client = spy(client);
     doReturn(new IaasIdpTenant()).when(client).get("T1");
 

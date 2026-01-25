@@ -27,19 +27,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class AwsS3FileClientTest {
+class AwsS3FileClientTest {
   private AwsS3FileClient client;
 
   private AmazonS3 mS3;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mS3 = mock(AmazonS3.class);
     client = new AwsS3FileClient(mS3, "BUCKET_NAME", LocalDateTimeMapper.INSTANCE, 1000);
   }
 
   @Test
-  public void testGet_ReturnsObjectStoreWithGetPresignedURL() throws MalformedURLException {
+  void testGet_ReturnsObjectStoreWithGetPresignedURL() throws MalformedURLException {
     ArgumentCaptor<GeneratePresignedUrlRequest> captor
         = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
@@ -59,7 +59,7 @@ public class AwsS3FileClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsObjectStoreWithPutPresignedURLAndRandomFileKey() {
+  void testAdd_ReturnsObjectStoreWithPutPresignedURLAndRandomFileKey() {
     ArgumentCaptor<GeneratePresignedUrlRequest> captor
         = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
@@ -80,7 +80,7 @@ public class AwsS3FileClientTest {
   }
 
   @Test
-  public void testPut_ReturnsObjectStoreWithPutPresignedURLAndGivenFileKey()
+  void testPut_ReturnsObjectStoreWithPutPresignedURLAndGivenFileKey()
       throws MalformedURLException {
     ArgumentCaptor<GeneratePresignedUrlRequest> captor
         = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
@@ -101,7 +101,7 @@ public class AwsS3FileClientTest {
   }
 
   @Test
-  public void testDelete_ReturnTrueAndCallsDelete_WhenExistsReturnTrue()
+  void testDelete_ReturnTrueAndCallsDelete_WhenExistsReturnTrue()
       throws MalformedURLException {
     ArgumentCaptor<DeleteObjectRequest> captor = ArgumentCaptor.forClass(DeleteObjectRequest.class);
     doNothing().when(mS3).deleteObject(captor.capture());
@@ -117,7 +117,7 @@ public class AwsS3FileClientTest {
   }
 
   @Test
-  public void testDelete_ReturnFalseAndDoNothing_WhenExistsReturnFalse()
+  void testDelete_ReturnFalseAndDoNothing_WhenExistsReturnFalse()
       throws MalformedURLException {
     client = spy(client);
     doReturn(false).when(client).exists(URI.create("file.txt"));
@@ -129,14 +129,14 @@ public class AwsS3FileClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
+  void testExists_ReturnsTrue_WhenS3ReturnsTrue() {
     doReturn(true).when(mS3).doesObjectExist("BUCKET_NAME", "file.txt");
 
     assertTrue(client.exists(URI.create("file.txt")));
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
+  void testExists_ReturnsFalse_WhenS3ReturnsFalse() {
     doReturn(false).when(mS3).doesObjectExist("BUCKET_NAME", "file.txt");
 
     assertFalse(client.exists(URI.create("file.txt")));

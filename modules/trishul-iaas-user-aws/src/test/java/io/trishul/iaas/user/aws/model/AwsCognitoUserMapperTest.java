@@ -11,21 +11,21 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsCognitoUserMapperTest {
+class AwsCognitoUserMapperTest {
   private AwsCognitoUserMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = AwsCognitoUserMapper.INSTANCE;
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
+  void testFromIaasEntity_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromIaasEntity(null));
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
+  void testFromIaasEntity_ReturnsEntity_WhenArgIsNotNull() {
     UserType user = new UserType()
         .withAttributes(new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL)
             .withValue("EMAIL"))
@@ -41,7 +41,7 @@ public class AwsCognitoUserMapperTest {
   }
 
   @Test
-  public void testFromIaasEntity_ReturnsEntityWithEmailSetFromUsername() {
+  void testFromIaasEntity_ReturnsEntityWithEmailSetFromUsername() {
     UserType user = new UserType().withUserCreateDate(new Date(100, 0, 1))
         .withUserLastModifiedDate(new Date(101, 0, 1)).withUsername("USERNAME");
 

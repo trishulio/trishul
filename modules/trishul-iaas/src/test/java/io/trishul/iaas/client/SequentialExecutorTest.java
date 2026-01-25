@@ -16,18 +16,18 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SequentialExecutorTest {
+class SequentialExecutorTest {
   private IaasRepository<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> seqClient;
   private IaasClient<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> mIaasClient;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIaasClient = mock(DummyCrudEntityIaasClient.class);
     seqClient = new SequentialExecutor<>(mIaasClient);
   }
 
   @Test
-  public void testGet_ReturnsResultListFromSequentialClientGet() {
+  void testGet_ReturnsResultListFromSequentialClientGet() {
     doAnswer(inv -> new DummyCrudEntity(inv.getArgument(0, Long.class))).when(mIaasClient)
         .get(anyLong());
 
@@ -39,7 +39,7 @@ public class SequentialExecutorTest {
   }
 
   @Test
-  public void testAdd_ReturnsResultListFromSequentialClientAdd() {
+  void testAdd_ReturnsResultListFromSequentialClientAdd() {
     doAnswer(inv -> inv.getArgument(0)).when(mIaasClient).add(any());
 
     List<DummyCrudEntity> entities
@@ -51,7 +51,7 @@ public class SequentialExecutorTest {
   }
 
   @Test
-  public void testPut_ReturnsResultListFromSequentialClientPut() {
+  void testPut_ReturnsResultListFromSequentialClientPut() {
     doAnswer(inv -> inv.getArgument(0)).when(mIaasClient).put(any());
 
     List<DummyCrudEntity> entities
@@ -63,7 +63,7 @@ public class SequentialExecutorTest {
   }
 
   @Test
-  public void testDelete_ReturnsCountOfDeleteTrue_FromClientDelete() {
+  void testDelete_ReturnsCountOfDeleteTrue_FromClientDelete() {
     doAnswer(inv -> inv.getArgument(0, Long.class) % 2 == 0).when(mIaasClient).delete(anyLong());
 
     assertEquals(3, seqClient.delete(Set.of(2L, 4L, 6L, 7L)));
@@ -71,7 +71,7 @@ public class SequentialExecutorTest {
   }
 
   @Test
-  public void testExists_ReturnsMapOfIdBoolean_FromClientExist() {
+  void testExists_ReturnsMapOfIdBoolean_FromClientExist() {
     doAnswer(inv -> {
       Long id = inv.getArgument(0, Long.class);
 

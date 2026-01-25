@@ -299,7 +299,7 @@ public class User extends BaseEntity
       return null;
     }
 
-    return this.roleBindings.stream().map(binding -> binding.getRole()).toList();
+    return this.roleBindings.stream().map(UserRoleAccessor::getRole).toList();
   }
 
   /**

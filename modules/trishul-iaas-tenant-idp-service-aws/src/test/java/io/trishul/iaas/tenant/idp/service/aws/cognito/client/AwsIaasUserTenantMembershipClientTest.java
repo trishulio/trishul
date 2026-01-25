@@ -32,20 +32,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AwsIaasUserTenantMembershipClientTest {
+class AwsIaasUserTenantMembershipClientTest {
   private AwsIaasUserTenantMembershipClient client;
 
   private AWSCognitoIdentityProvider mIdp;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mIdp = mock(AWSCognitoIdentityProvider.class);
 
     client = new AwsIaasUserTenantMembershipClient(mIdp, "USER_POOL");
   }
 
   @Test
-  public void testGet_ReturnsMembershipObjectsWithId_WhenExistingGroupIsFound() {
+  void testGet_ReturnsMembershipObjectsWithId_WhenExistingGroupIsFound() {
     doAnswer(inv -> {
       AdminListGroupsForUserRequest req = inv.getArgument(0, AdminListGroupsForUserRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -67,7 +67,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenNoExistingGroupMatchIsFound() {
+  void testGet_ReturnsNull_WhenNoExistingGroupMatchIsFound() {
     doAnswer(inv -> {
       AdminListGroupsForUserRequest req = inv.getArgument(0, AdminListGroupsForUserRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -86,7 +86,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testAdd_AddsUserToGroupAndReturnsMembership() {
+  void testAdd_AddsUserToGroupAndReturnsMembership() {
     doReturn(new AdminAddUserToGroupResult()).when(mIdp)
         .adminAddUserToGroup(any(AdminAddUserToGroupRequest.class));
 
@@ -101,7 +101,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testPut_AddsUserToGroupAndReturnsMembership_WhenExistingIsNull() {
+  void testPut_AddsUserToGroupAndReturnsMembership_WhenExistingIsNull() {
     client = spy(client);
     doReturn(null).when(client).get(new IaasUserTenantMembershipId("USER_1", "USER_1_TA"));
     doAnswer(inv -> inv.getArgument(0, IaasUserTenantMembership.class)).when(client).add(any());
@@ -117,7 +117,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testPut_DoesNothingAndReturnsExisting_WhenExistingIsNotNull() {
+  void testPut_DoesNothingAndReturnsExisting_WhenExistingIsNotNull() {
     client = spy(client);
     doAnswer(
         inv -> new IaasUserTenantMembership((inv.getArgument(0, IaasUserTenantMembershipId.class))))
@@ -133,7 +133,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenRemoveUserFromGroupIsCalled() {
+  void testDelete_ReturnsTrue_WhenRemoveUserFromGroupIsCalled() {
     doReturn(new AdminRemoveUserFromGroupResult()
         .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mIdp)
             .adminRemoveUserFromGroup(any(AdminRemoveUserFromGroupRequest.class));
@@ -145,7 +145,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenRemoveUserFromGroupIsCalled() {
+  void testDelete_ReturnsFalse_WhenRemoveUserFromGroupIsCalled() {
     doThrow(ResourceNotFoundException.class).when(mIdp)
         .adminRemoveUserFromGroup(new AdminRemoveUserFromGroupRequest().withGroupName("T1")
             .withUsername("USER_1").withUserPoolId("USER_POOL"));
@@ -155,7 +155,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsMembership() {
+  void testExists_ReturnsTrue_WhenGetReturnsMembership() {
     doAnswer(inv -> {
       AdminListGroupsForUserRequest req = inv.getArgument(0, AdminListGroupsForUserRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
@@ -173,7 +173,7 @@ public class AwsIaasUserTenantMembershipClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     doAnswer(inv -> {
       AdminListGroupsForUserRequest req = inv.getArgument(0, AdminListGroupsForUserRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());

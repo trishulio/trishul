@@ -6,26 +6,26 @@ import org.joda.money.CurrencyUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CurrencyMapperTest {
+class CurrencyMapperTest {
   private CurrencyMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = CurrencyMapper.INSTANCE;
   }
 
   @Test
-  public void testStringToEntity_ReturnsNull_WhenCodeIsNull() {
+  void testStringToEntity_ReturnsNull_WhenCodeIsNull() {
     assertNull(mapper.toEntity((String) null));
   }
 
   @Test
-  public void testUnitToEntity_ReturnsNull_WhenUnitIsNull() {
+  void testUnitToEntity_ReturnsNull_WhenUnitIsNull() {
     assertNull(mapper.toEntity((CurrencyUnit) null));
   }
 
   @Test
-  public void testStringToEntity_ReturnPojoFromCode_WhenCodeIsValid() {
+  void testStringToEntity_ReturnPojoFromCode_WhenCodeIsValid() {
     Currency cad = mapper.toEntity("CAD");
     assertEquals(new Currency(124, "CAD"), cad);
 
@@ -37,7 +37,7 @@ public class CurrencyMapperTest {
   }
 
   @Test
-  public void testUnitToEntity_ReturnsPojoFromUnit_WhenCodeAndNameAreValid() {
+  void testUnitToEntity_ReturnsPojoFromUnit_WhenCodeAndNameAreValid() {
     Currency cad = mapper.toEntity(CurrencyUnit.of("CAD"));
     assertEquals(new Currency(124, "CAD"), cad);
 

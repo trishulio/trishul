@@ -8,26 +8,26 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserSalutationRefresherTest {
+class UserSalutationRefresherTest {
   private AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> mRefresher;
 
   private UserSalutationRefresher userSalutationRefresher;
 
   @BeforeEach
   @SuppressWarnings("unchecked")
-  public void init() {
+  void init() {
     mRefresher = mock(AccessorRefresher.class);
 
     userSalutationRefresher = new UserSalutationRefresher(mRefresher);
   }
 
   @Test
-  public void testRefresh_DoesNothing() {
+  void testRefresh_DoesNothing() {
     userSalutationRefresher.refresh(null);
   }
 
   @Test
-  public void testRefreshAccessors_CallsAccessorRefresher() {
+  void testRefreshAccessors_CallsAccessorRefresher() {
     UserSalutationAccessor<?> accessor = mock(UserSalutationAccessor.class);
     List<UserSalutationAccessor<?>> accessors = List.of(accessor);
 

@@ -30,7 +30,7 @@ import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.test.util.MockUtilProvider;
 
-public class IaasRoleServiceTest {
+class IaasRoleServiceTest {
   private IaasRoleService service;
   private LockService mLockService;
   private EntityMergerService<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mMergerService;
@@ -38,7 +38,7 @@ public class IaasRoleServiceTest {
   private IaasRepository<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mIaasRepo;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mLockService = mock(LockService.class);
     mMergerService = spy(new CrudEntityMergerService<>(new MockUtilProvider(), mLockService,
         BaseIaasRole.class, UpdateIaasRole.class, IaasRole.class, Set.of("createdAt")));
@@ -49,7 +49,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExists_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -57,7 +57,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
+  void testExists_ReturnsFalse_WhenAllAttachmentsDoesNotExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -65,7 +65,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
+  void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());
 
@@ -73,7 +73,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
+  void testExist_ReturnsFalse_WhenAllAttachmentsDoesNotExist() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
         .exists(anySet());
 
@@ -81,7 +81,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testDelete_Set_CallsRepoDeleteWithIds() {
+  void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("TENANT_1", "TENANT_2"));
     long deleteCount = service.delete(Set.of("TENANT_1", "TENANT_2"));
 
@@ -89,7 +89,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testDelete_Id_CallsRepoDeleteWithIds() {
+  void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("TENANT"));
 
     long deleteCount = service.delete("TENANT");
@@ -98,7 +98,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsAttachmentFromRepo() {
+  void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List.of(new IaasRole((String) inv.getArgument(0, Set.class).iterator().next())))
         .when(mIaasRepo).get(anySet());
 
@@ -108,14 +108,14 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
+  void testGet_ReturnsNull_WhenRepoReturnsEmptyList() {
     doAnswer(inv -> List.of()).when(mIaasRepo).get(anySet());
 
     assertNull(service.get("TENANT"));
   }
 
   @Test
-  public void testGetAll_ReturnsAttachmentFromRepo() {
+  void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List.of(new IaasRole((String) inv.getArgument(0, Set.class).iterator().next())))
         .when(mIaasRepo).get(anySet());
 
@@ -126,7 +126,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnAttachmentsFromRepo() {
+  void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(inv -> List.of(new IaasRole((String) inv.getArgument(0, Set.class).iterator().next())))
         .when(mIaasRepo).get(anySet());
 
@@ -138,7 +138,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
+  void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List.of(new IaasRole((String) inv.getArgument(0, Set.class).iterator().next())))
         .when(mIaasRepo).get(anySet());
 
@@ -190,7 +190,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsNull_WhenArgIsNull() {
+  void testAdd_ReturnsNull_WhenArgIsNull() {
     assertNull(service.add(null));
   }
 
@@ -222,7 +222,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsNull_WhenArgIsNull() {
+  void testPut_ReturnsNull_WhenArgIsNull() {
     assertNull(service.put(null));
   }
 
@@ -267,7 +267,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsNull_WhenArgIsNull() {
+  void testPatch_ReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
   }
 }

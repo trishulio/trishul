@@ -7,23 +7,23 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AmountTest {
+class AmountTest {
   private Amount amount;
 
   @BeforeEach
-  public void init() {
+  void init() {
     amount = new Amount();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(amount.getSubTotal());
     assertNull(amount.getTotal());
     assertNull(amount.getTaxAmount());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     amount = new Amount(Money.parse("CAD 100"), new TaxAmount(Money.parse("CAD 10")));
 
     assertEquals(Money.parse("CAD 110"), amount.getTotal());

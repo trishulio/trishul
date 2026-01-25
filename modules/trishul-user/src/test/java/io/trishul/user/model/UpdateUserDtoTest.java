@@ -7,16 +7,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UpdateUserDtoTest {
+class UpdateUserDtoTest {
   private UpdateUserDto dto;
 
   @BeforeEach
-  public void init() {
+  void init() {
     dto = new UpdateUserDto();
   }
 
   @Test
-  public void testAllArgConstructor_SetsAllFields() {
+  void testAllArgConstructor_SetsAllFields() {
     dto = new UpdateUserDto(1L, "userName", "displayName", "firstName", "lastName", "email", 1L, 2L,
         "phoneNumber", URI.create("imageSrc"), List.of(10L), 1);
 
@@ -35,21 +35,21 @@ public class UpdateUserDtoTest {
   }
 
   @Test
-  public void testAccessDisplayName() {
+  void testAccessDisplayName() {
     assertNull(dto.getDisplayName());
     dto.setDisplayName("displayName");
     assertEquals("displayName", dto.getDisplayName());
   }
 
   @Test
-  public void testAccessFirstName() {
+  void testAccessFirstName() {
     assertNull(dto.getFirstName());
     dto.setFirstName("firstName");
     assertEquals("firstName", dto.getFirstName());
   }
 
   @Test
-  public void testAccessLastName() {
+  void testAccessLastName() {
     assertNull(dto.getLastName());
     dto.setLastName("lastName");
     assertEquals("lastName", dto.getLastName());
@@ -63,35 +63,35 @@ public class UpdateUserDtoTest {
   }
 
   @Test
-  public void testAccessStatusId() {
+  void testAccessStatusId() {
     assertNull(dto.getStatusId());
     dto.setStatusId(1L);
     assertEquals(1L, dto.getStatusId());
   }
 
   @Test
-  public void testAccessSalutationId() {
+  void testAccessSalutationId() {
     assertNull(dto.getSalutationId());
     dto.setSalutationId(10L);
     assertEquals(10L, dto.getSalutationId());
   }
 
   @Test
-  public void testAccessPhoneNumber() {
+  void testAccessPhoneNumber() {
     assertNull(dto.getPhoneNumber());
     dto.setPhoneNumber("phoneNumber");
     assertEquals("phoneNumber", dto.getPhoneNumber());
   }
 
   @Test
-  public void testAccessImageSrc() {
+  void testAccessImageSrc() {
     assertNull(dto.getImageSrc());
     dto.setImageSrc(URI.create("imageSrc"));
     assertEquals(URI.create("imageSrc"), dto.getImageSrc());
   }
 
   @Test
-  public void testAccessRoleIds() {
+  void testAccessRoleIds() {
     assertNull(dto.getRoleIds());
     dto.setRoleIds(List.of(10L));
     assertEquals(List.of(10L), dto.getRoleIds());
@@ -101,7 +101,7 @@ public class UpdateUserDtoTest {
   }
 
   @Test
-  public void testAccessVersion() {
+  void testAccessVersion() {
     assertNull(dto.getVersion());
     dto.setVersion(1);
     assertEquals(1, dto.getVersion());

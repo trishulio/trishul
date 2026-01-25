@@ -18,18 +18,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class SelectClauseBuilderTest {
+class SelectClauseBuilderTest {
   private SelectClauseBuilder selector;
   private ColumnSpecAccumulator mAccumulator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAccumulator = mock(ColumnSpecAccumulator.class);
     selector = new SelectClauseBuilder(mAccumulator);
   }
 
   @Test
-  public void testSelect_PathProvider_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
+  void testSelect_PathProvider_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
     PathProvider mProvider = mock(PathProvider.class);
@@ -42,13 +42,13 @@ public class SelectClauseBuilderTest {
   }
 
   @Test
-  public void testSelect_PathProvider_DoesNothign_WhenProviderIsNull() {
+  void testSelect_PathProvider_DoesNothign_WhenProviderIsNull() {
     selector.select((PathProvider) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testSelect_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
+  void testSelect_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
     selector.select(new String[] {"PATH_1", "PATH_2"});
@@ -58,13 +58,13 @@ public class SelectClauseBuilderTest {
   }
 
   @Test
-  public void testSelect_StringArray_DoesNothing_WhenStringArrayIsNull() {
+  void testSelect_StringArray_DoesNothing_WhenStringArrayIsNull() {
     selector.select((String[]) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testSelect_CriteriaSpec_AddsTheSpec_WhenSpecIsNotNull() {
+  void testSelect_CriteriaSpec_AddsTheSpec_WhenSpecIsNotNull() {
     ArgumentCaptor<CriteriaSpec<?>> captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
     CriteriaSpec<?> mSpec = mock(CriteriaSpec.class);
@@ -75,13 +75,13 @@ public class SelectClauseBuilderTest {
   }
 
   @Test
-  public void testSelect_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
+  void testSelect_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
     selector.select((CriteriaSpec<?>) null);
     verifyNoInteractions(mAccumulator);
   }
 
   @Test
-  public void testGetSelectClause_ReturnsListOfSelectionFromAccumulator() {
+  void testGetSelectClause_ReturnsListOfSelectionFromAccumulator() {
     Root<?> mRoot = mock(Root.class);
     CriteriaBuilder mCb = mock(CriteriaBuilder.class);
     CriteriaQuery<?> mCq = mock(CriteriaQuery.class);

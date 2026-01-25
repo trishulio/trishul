@@ -20,7 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
-public class AggregationServiceTest {
+class AggregationServiceTest {
   public static class TestEntity extends BaseModel {
     private Long id;
 
@@ -47,13 +47,13 @@ public class AggregationServiceTest {
   private AggregationRepository mRepo;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mRepo = mock(AggregationRepository.class);
     service = new AggregationService(mRepo);
   }
 
   @Test
-  public void getAggregations_ReturnsPageOfContentAndTotalCount() {
+  void getAggregations_ReturnsPageOfContentAndTotalCount() {
     Specification<TestEntity> mSpec = mock(Specification.class);
 
     SelectClauseBuilder selector = new SelectClauseBuilder().select("col_1").select("col_2")
@@ -77,7 +77,7 @@ public class AggregationServiceTest {
   }
 
   @Test
-  public void getResultCount_ReturnsCountOfRepoCount() {
+  void getResultCount_ReturnsCountOfRepoCount() {
     Specification<TestEntity> mSpec = mock(Specification.class);
     GroupByClauseBuilder groupBy = new GroupByClauseBuilder().groupBy("col_1").groupBy("col_2");
 

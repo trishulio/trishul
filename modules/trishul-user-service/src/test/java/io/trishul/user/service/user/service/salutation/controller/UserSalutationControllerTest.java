@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
-public class UserSalutationControllerTest {
+class UserSalutationControllerTest {
   private UserSalutationController userSalutationController;
 
   private UserSalutationService userSalutationService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     userSalutationService = mock(UserSalutationService.class);
 
     userSalutationController
@@ -31,7 +31,7 @@ public class UserSalutationControllerTest {
   }
 
   @Test
-  public void testGetMeasures() {
+  void testGetMeasures() {
     Page<UserSalutation> mPage = new PageImpl<>(List.of(new UserSalutation(1L, "MR",
         LocalDateTime.of(2018, 1, 2, 3, 4), LocalDateTime.of(2019, 1, 2, 3, 4), 1)));
 

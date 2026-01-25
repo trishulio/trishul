@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ColumnSpecAccumulatorTest {
+class ColumnSpecAccumulatorTest {
   private ColumnSpecAccumulator accumulator;
 
   private Root<?> mRoot = mock(Root.class);
@@ -21,12 +21,12 @@ public class ColumnSpecAccumulatorTest {
   private CriteriaQuery<?> mCq = mock(CriteriaQuery.class);
 
   @BeforeEach
-  public void init() {
+  void init() {
     accumulator = new ColumnSpecAccumulator();
   }
 
   @Test
-  public void testAdd_AddsSpecsToTheAccumulator_WhenSpecIsNotNull() {
+  void testAdd_AddsSpecsToTheAccumulator_WhenSpecIsNotNull() {
     CriteriaSpec<?> mSpec1 = mock(CriteriaSpec.class);
     Expression<?> mSelection1 = mock(Expression.class);
     doReturn(mSelection1).when(mSpec1).getExpression(mRoot, mCq, mCb);
@@ -39,7 +39,7 @@ public class ColumnSpecAccumulatorTest {
   }
 
   @Test
-  public void testAddSpec_DoesNotAddSpec_WhenSpecIsNull() {
+  void testAddSpec_DoesNotAddSpec_WhenSpecIsNull() {
     accumulator.add(null);
     accumulator.add(null);
     accumulator.add(null);

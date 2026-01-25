@@ -10,29 +10,29 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 
-public class IncompatibleQuantityUnitExceptionTest {
+class IncompatibleQuantityUnitExceptionTest {
   private Exception ex;
 
   @BeforeEach
-  public void init() {
+  void init() {
     ex = new IncompatibleQuantityUnitException();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(ex.getMessage());
     assertNull(ex.getCause());
   }
 
   @Test
-  public void testConstructor_String_SetsMessage() {
+  void testConstructor_String_SetsMessage() {
     ex = new IncompatibleQuantityUnitException("Message");
 
     assertEquals("Message", ex.getMessage());
   }
 
   @Test
-  public void testValidateUnit_ThrowsException_WhenUnitsAreIncompatible() {
+  void testValidateUnit_ThrowsException_WhenUnitsAreIncompatible() {
     BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
     doReturn(SupportedUnits.LITRE).when(accessor).getBaseQuantityUnit();
 
@@ -42,7 +42,7 @@ public class IncompatibleQuantityUnitExceptionTest {
   }
 
   @Test
-  public void testValidateUnit_DoesNothing_WhenUnitsAreNotIncompatible() {
+  void testValidateUnit_DoesNothing_WhenUnitsAreNotIncompatible() {
     BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
     doReturn(SupportedUnits.GRAM).when(accessor).getBaseQuantityUnit();
 
@@ -50,7 +50,7 @@ public class IncompatibleQuantityUnitExceptionTest {
   }
 
   @Test
-  public void testValidateCompatibleQuantities_ThrowsException_WhenUnitsAreIncompatible() {
+  void testValidateCompatibleQuantities_ThrowsException_WhenUnitsAreIncompatible() {
     IncompatibleQuantityUnitException exception
         = assertThrows(IncompatibleQuantityUnitException.class,
             () -> IncompatibleQuantityUnitException.validateCompatibleQuantities(
@@ -58,13 +58,13 @@ public class IncompatibleQuantityUnitExceptionTest {
   }
 
   @Test
-  public void testValidateCompatibleQuantities_DoesNothing_WhenUnitsAreNotIncompatible() {
+  void testValidateCompatibleQuantities_DoesNothing_WhenUnitsAreNotIncompatible() {
     IncompatibleQuantityUnitException.validateCompatibleQuantities(Quantities.getQuantity("10 g"),
         Quantities.getQuantity("10 g"));
   }
 
   @Test
-  public void testValidateExpectedUnit_ThrowsException_WhenUnitIsUnexpected() {
+  void testValidateExpectedUnit_ThrowsException_WhenUnitIsUnexpected() {
     IncompatibleQuantityUnitException exception
         = assertThrows(IncompatibleQuantityUnitException.class,
             () -> IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM,
@@ -72,7 +72,7 @@ public class IncompatibleQuantityUnitExceptionTest {
   }
 
   @Test
-  public void testValidateExpectedUnit_DoesNothing_WhenUnitIsExpected() {
+  void testValidateExpectedUnit_DoesNothing_WhenUnitIsExpected() {
     IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM,
         Quantities.getQuantity(100, SupportedUnits.GRAM));
   }

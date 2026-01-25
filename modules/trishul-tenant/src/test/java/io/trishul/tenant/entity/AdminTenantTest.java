@@ -8,28 +8,28 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AdminTenantTest {
+class AdminTenantTest {
   private TenantData adminTenant;
 
   @BeforeEach
-  public void init() throws MalformedURLException {
+  void init() throws MalformedURLException {
     adminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "ADMIN",
         new URL("http://localhost/"));
   }
 
   @Test
-  public void testGetId() {
+  void testGetId() {
     assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000001"), adminTenant.getId());
   }
 
 
   @Test
-  public void testGetSetIsReady() {
+  void testGetSetIsReady() {
     assertTrue(adminTenant.getIsReady());
   }
 
   @Test
-  public void testGetName() {
+  void testGetName() {
     assertEquals("ADMIN", adminTenant.getName());
   }
 

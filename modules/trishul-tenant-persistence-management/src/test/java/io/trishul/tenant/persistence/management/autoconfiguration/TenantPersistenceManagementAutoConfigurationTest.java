@@ -17,31 +17,31 @@ class TenantPersistenceManagementAutoConfigurationTest {
   private TenantPersistenceManagementAutoConfiguration config;
 
   @BeforeEach
-  public void init() {
+  void init() {
     config = new TenantPersistenceManagementAutoConfiguration();
   }
 
   @Test
-  public void testRandomGenerator_ReturnsInstanceOfRandonGeneratorImpl()
+  void testRandomGenerator_ReturnsInstanceOfRandonGeneratorImpl()
       throws NoSuchAlgorithmException {
     RandomGenerator rand = config.randomGenerator();
     assertTrue(rand instanceof RandomGeneratorImpl);
   }
 
   @Test
-  public void testTenantRegister_ReturnsInstanceOfFlywayTenantRegister() {
+  void testTenantRegister_ReturnsInstanceOfFlywayTenantRegister() {
     TenantRegister register = config.tenantRegister(null, null, null, null, null, null);
     assertTrue(register instanceof UnifiedTenantRegister);
   }
 
   @Test
-  public void testMigrationMgr_ReturnsInstanceOfSequentialMigrationManager() {
+  void testMigrationMgr_ReturnsInstanceOfSequentialMigrationManager() {
     MigrationManager mgr = config.migrationManager(null, null);
     assertTrue(mgr instanceof SequentialMigrationManager);
   }
 
   @Test
-  public void testMigrationRegister_ReturnsInstanceOfFlywayMigrationRegister() {
+  void testMigrationRegister_ReturnsInstanceOfFlywayMigrationRegister() {
     MigrationRegister register = config.migrationRegister(null, null);
     assertTrue(register instanceof FlywayTenantMigrationRegister);
   }

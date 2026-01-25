@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RootUtilTest {
+class RootUtilTest {
   class Layer0 {
     private Layer1 layer1;
   }
@@ -42,7 +42,7 @@ public class RootUtilTest {
   private JpaJoiner mJpaJoiner;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mJpaJoiner = mock(CriteriaJoinAnnotationJoiner.class);
     rootUtil = new RootUtil(mJpaJoiner);
 
@@ -69,7 +69,7 @@ public class RootUtilTest {
   }
 
   @Test
-  public void testGetPath_ReturnsDeepPathOnJoin_WhenPathIsNotNull() {
+  void testGetPath_ReturnsDeepPathOnJoin_WhenPathIsNotNull() {
     assertEquals(mPath0, rootUtil.getPath(mRoot, new String[] {"get"}));
     assertEquals(mPath1, rootUtil.getPath(mRoot, new String[] {"layer1", "get"}));
     assertEquals(mPath2, rootUtil.getPath(mRoot, new String[] {"layer1", "layer2", "get"}));
@@ -78,13 +78,13 @@ public class RootUtilTest {
   }
 
   @Test
-  public void testGetPath_ThrowException_WhenPathIsNull() {
+  void testGetPath_ThrowException_WhenPathIsNull() {
     IllegalArgumentException exception
         = assertThrows(IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, null));
   }
 
   @Test
-  public void testGetPath_ThrowException_WhenPathIsEmpty() {
+  void testGetPath_ThrowException_WhenPathIsEmpty() {
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
         () -> rootUtil.getPath(mRoot, new String[] {}));
   }

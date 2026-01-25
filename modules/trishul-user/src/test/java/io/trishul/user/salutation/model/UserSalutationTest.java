@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UserSalutationTest {
+class UserSalutationTest {
   private UserSalutation salutation;
 
   @BeforeEach
-  public void init() {
+  void init() {
     salutation = new UserSalutation();
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     salutation = new UserSalutation(1L, "TITLE", LocalDateTime.of(1999, 1, 1, 0, 0),
         LocalDateTime.of(2000, 1, 1, 0, 0), 1);
 
@@ -27,35 +27,35 @@ public class UserSalutationTest {
   }
 
   @Test
-  public void testAccessId() {
+  void testAccessId() {
     assertNull(salutation.getId());
     salutation.setId(1L);
     assertEquals(1L, salutation.getId());
   }
 
   @Test
-  public void testAccessTitle() {
+  void testAccessTitle() {
     assertNull(salutation.getTitle());
     salutation.setTitle("title");
     assertEquals("title", salutation.getTitle());
   }
 
   @Test
-  public void testAccessCreatedAt() {
+  void testAccessCreatedAt() {
     assertNull(salutation.getCreatedAt());
     salutation.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), salutation.getCreatedAt());
   }
 
   @Test
-  public void testAccessLastUpdated() {
+  void testAccessLastUpdated() {
     assertNull(salutation.getLastUpdated());
     salutation.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), salutation.getLastUpdated());
   }
 
   @Test
-  public void testAccessVersion() {
+  void testAccessVersion() {
     assertNull(salutation.getVersion());
     salutation.setVersion(1);
     assertEquals(1, salutation.getVersion());

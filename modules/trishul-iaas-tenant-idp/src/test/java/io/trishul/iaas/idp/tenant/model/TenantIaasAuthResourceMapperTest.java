@@ -6,16 +6,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasAuthResourceMapperTest {
+class TenantIaasAuthResourceMapperTest {
   private TenantIaasAuthResourceMapper mapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mapper = TenantIaasAuthResourceMapper.INSTANCE;
   }
 
   @Test
-  public void testFromComponents_ReturnsResourcesFromComponents() {
+  void testFromComponents_ReturnsResourcesFromComponents() {
     List<IaasRole> roles = List.of(new IaasRole("ROLE_1"));
 
     List<TenantIaasAuthResources> resources = mapper.fromComponents(roles);

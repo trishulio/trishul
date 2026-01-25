@@ -13,14 +13,14 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantDataSourceManagerWrapperTest {
+class TenantDataSourceManagerWrapperTest {
   private TenantDataSourceManagerWrapper tenantDsMgr;
 
   private DataSourceManager mDsMgr;
   private TenantDataSourceConfigurationProvider mConfigProvider;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mDsMgr = mock(DataSourceManager.class);
     mConfigProvider = mock(TenantDataSourceConfigurationProvider.class);
 
@@ -28,7 +28,7 @@ public class TenantDataSourceManagerWrapperTest {
   }
 
   @Test
-  public void testGetDataSource_ReturnsAdminDataSource_WhenTenantIdIsNull()
+  void testGetDataSource_ReturnsAdminDataSource_WhenTenantIdIsNull()
       throws SQLException, IOException {
     DataSource mDs = mock(DataSource.class);
     doReturn(mDs).when(mDsMgr).getAdminDataSource();
@@ -37,7 +37,7 @@ public class TenantDataSourceManagerWrapperTest {
   }
 
   @Test
-  public void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNull()
+  void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNull()
       throws SQLException, IOException {
     DataSourceConfiguration mConfig = mock(DataSourceConfiguration.class);
     doReturn(mConfig).when(mConfigProvider)

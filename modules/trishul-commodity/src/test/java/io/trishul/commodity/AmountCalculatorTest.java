@@ -18,16 +18,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 
-public class AmountCalculatorTest {
+class AmountCalculatorTest {
   private AmountCalculator calculator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     calculator = AmountCalculator.INSTANCE;
   }
 
   @Test
-  public void testGetAmount_ReturnsNull_WhenSubTotalIsNull() {
+  void testGetAmount_ReturnsNull_WhenSubTotalIsNull() {
     Good good = new Good() {
       @Override
       public Tax getTax() {
@@ -49,7 +49,7 @@ public class AmountCalculatorTest {
   }
 
   @Test
-  public void testGetAmount_ReturnsAmountWithNullTaxAmount_WhenTaxIsNull() {
+  void testGetAmount_ReturnsAmountWithNullTaxAmount_WhenTaxIsNull() {
     Good good = new Good() {
       @Override
       public Tax getTax() {
@@ -74,7 +74,7 @@ public class AmountCalculatorTest {
   }
 
   @Test
-  public void testGetAmount_ReturnsAmountt_WhenArgsAreNotNull() {
+  void testGetAmount_ReturnsAmountt_WhenArgsAreNotNull() {
     Good good = new Good() {
       @Override
       public Tax getTax() {
@@ -99,12 +99,12 @@ public class AmountCalculatorTest {
   }
 
   @Test
-  public void testGetTotal_ReturnsNull_WhenSuppliersAreNull() {
+  void testGetTotal_ReturnsNull_WhenSuppliersAreNull() {
     assertNull(calculator.getTotal(null));
   }
 
   @Test
-  public void testGetTotal_ReturnsEmptyAmountWithEmptyTaxes_WhenListIsEmpty() {
+  void testGetTotal_ReturnsEmptyAmountWithEmptyTaxes_WhenListIsEmpty() {
     Amount expected = new Amount();
     expected.setTaxAmount(new TaxAmount());
 
@@ -112,7 +112,7 @@ public class AmountCalculatorTest {
   }
 
   @Test
-  public void testGetTotal_ReturnsTotalOfAmounts() {
+  void testGetTotal_ReturnsTotalOfAmounts() {
     List<? extends AmountSupplier> suppliers = new ArrayList<>() {
       private static final long serialVersionUID = 1L;
 

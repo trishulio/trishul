@@ -7,22 +7,22 @@ import io.trishul.object.store.model.IaasObjectStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantIaasVfsResourcesTest {
+class TenantIaasVfsResourcesTest {
   private TenantIaasVfsResources resources;
 
   @BeforeEach
-  public void init() {
+  void init() {
     resources = new TenantIaasVfsResources();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(resources.getObjectStore());
     assertNull(resources.getPolicy());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     resources
         = new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY"));
 
@@ -31,14 +31,14 @@ public class TenantIaasVfsResourcesTest {
   }
 
   @Test
-  public void testGetSetObjectStore() {
+  void testGetSetObjectStore() {
     resources.setObjectStore(new IaasObjectStore("OBJECT_STORE"));
 
     assertEquals(new IaasObjectStore("OBJECT_STORE"), resources.getObjectStore());
   }
 
   @Test
-  public void testGetSetPolicy() {
+  void testGetSetPolicy() {
     resources.setPolicy(new IaasPolicy("POLICY"));
 
     assertEquals(new IaasPolicy("POLICY"), resources.getPolicy());

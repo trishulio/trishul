@@ -13,16 +13,16 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-public class TenantTest {
+class TenantTest {
   private Tenant tenant;
 
   @BeforeEach
-  public void init() {
+  void init() {
     tenant = new Tenant();
   }
 
   @Test
-  public void testAllArgConstructor() throws MalformedURLException {
+  void testAllArgConstructor() throws MalformedURLException {
     tenant = new Tenant(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"), "TENANT_1",
         new URL("http://localhost"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));
@@ -35,7 +35,7 @@ public class TenantTest {
   }
 
   @Test
-  public void testSetId_NoArgs_SetsRandomUuid_WhenIdIsNull() {
+  void testSetId_NoArgs_SetsRandomUuid_WhenIdIsNull() {
     assertNull(tenant.getId());
     tenant.setId();
 
@@ -44,7 +44,7 @@ public class TenantTest {
   }
 
   @Test
-  public void testSetId_NoArgs_DoesNothing_WhenIdIsSet() {
+  void testSetId_NoArgs_DoesNothing_WhenIdIsSet() {
     tenant.setId(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"));
 
     tenant.setId();
@@ -52,42 +52,42 @@ public class TenantTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     UUID id = UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9");
     tenant.setId(id);
     assertSame(id, tenant.getId());
   }
 
   @Test
-  public void testGetSetName() {
+  void testGetSetName() {
     String name = "testName";
     tenant.setName(name);
     assertSame(name, tenant.getName());
   }
 
   @Test
-  public void testGetSetUrl() throws MalformedURLException {
+  void testGetSetUrl() throws MalformedURLException {
     URL url = new URL("http://localhost");
     tenant.setUrl(url);
     assertSame(url, tenant.getUrl());
   }
 
   @Test
-  public void testGetSetCreated() {
+  void testGetSetCreated() {
     LocalDateTime created = LocalDateTime.now();
     tenant.setCreatedAt(created);
     assertSame(created, tenant.getCreatedAt());
   }
 
   @Test
-  public void testGetSetLastUpdated() {
+  void testGetSetLastUpdated() {
     LocalDateTime lastUpdated = LocalDateTime.now();
     tenant.setLastUpdated(lastUpdated);
     assertSame(lastUpdated, tenant.getLastUpdated());
   }
 
   @Test
-  public void testToString_ReturnsJsonifiedString() throws JSONException, MalformedURLException {
+  void testToString_ReturnsJsonifiedString() throws JSONException, MalformedURLException {
     tenant = new Tenant(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"), "TENANT_1",
         new URL("http://localhost"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));

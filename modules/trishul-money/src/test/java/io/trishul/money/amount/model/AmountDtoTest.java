@@ -8,23 +8,23 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AmountDtoTest {
+class AmountDtoTest {
   private AmountDto amount;
 
   @BeforeEach
-  public void init() {
+  void init() {
     amount = new AmountDto();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(amount.getSubTotal());
     assertNull(amount.getTaxAmount());
     assertNull(amount.getTotal());
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     amount = new AmountDto(new MoneyDto("CAD", new BigDecimal("10")),
         new MoneyDto("CAD", new BigDecimal("20")), new TaxAmountDto());
 
@@ -34,21 +34,21 @@ public class AmountDtoTest {
   }
 
   @Test
-  public void testGetSetTotal() {
+  void testGetSetTotal() {
     amount.setTotal(new MoneyDto("CAD", new BigDecimal("30")));
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("30")), amount.getTotal());
   }
 
   @Test
-  public void testGetSetSubTotal() {
+  void testGetSetSubTotal() {
     amount.setSubTotal(new MoneyDto("CAD", new BigDecimal("30")));
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("30")), amount.getSubTotal());
   }
 
   @Test
-  public void testGetSetTaxAmount() {
+  void testGetSetTaxAmount() {
     amount.setTaxAmount(new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10")),
         new MoneyDto("CAD", new BigDecimal("20"))));
 

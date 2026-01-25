@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unchecked")
-public class TenantSchemaRegisterTest {
+class TenantSchemaRegisterTest {
   private TenantRegister register;
 
   private TenantDataSourceConfigurationProvider mConfigProvider;
@@ -34,7 +34,7 @@ public class TenantSchemaRegisterTest {
   private JdbcDialect mDialect;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mConfig = mock(DataSourceConfiguration.class);
     doReturn("SCHEMA").when(mConfig).getSchemaName();
 
@@ -50,7 +50,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testAdd_RunsCreateSchema() throws Exception {
+  void testAdd_RunsCreateSchema() throws Exception {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedConsumer<Connection, Exception> consumer = inv.getArgument(1, CheckedConsumer.class);
@@ -65,7 +65,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testPut_RunsAdd_WhenExistIsFalse() throws Exception {
+  void testPut_RunsAdd_WhenExistIsFalse() throws Exception {
     register = spy(register);
     doReturn(false).when(register)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
@@ -79,7 +79,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testPut_DoesNothing_WhenExistIsTrue() throws Exception {
+  void testPut_DoesNothing_WhenExistIsTrue() throws Exception {
     register = spy(register);
     doReturn(true).when(register)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
@@ -88,7 +88,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testRemove_CallsDropSchema() throws Exception {
+  void testRemove_CallsDropSchema() throws Exception {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedConsumer<Connection, Exception> consumer = inv.getArgument(1, CheckedConsumer.class);
@@ -103,7 +103,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenDialectReturnsTrue() throws Exception {
+  void testExists_ReturnsTrue_WhenDialectReturnsTrue() throws Exception {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedSupplier<Boolean, Connection, Exception> supplier
@@ -121,7 +121,7 @@ public class TenantSchemaRegisterTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenDialectReturnsFalse() throws Exception {
+  void testExists_ReturnsFalse_WhenDialectReturnsFalse() throws Exception {
     Connection mConn = mock(Connection.class);
     doAnswer(inv -> {
       CheckedSupplier<Boolean, Connection, Exception> supplier

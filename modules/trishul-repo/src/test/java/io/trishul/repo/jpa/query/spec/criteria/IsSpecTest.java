@@ -11,7 +11,7 @@ import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IsSpecTest {
+class IsSpecTest {
   private CriteriaSpec<Boolean> spec;
 
   private CriteriaSpec<String> mDelegate;
@@ -22,7 +22,7 @@ public class IsSpecTest {
   private Root<?> mRoot;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mCb = mock(CriteriaBuilder.class);
     mCq = mock(CriteriaQuery.class);
     mRoot = mock(Root.class);
@@ -33,7 +33,7 @@ public class IsSpecTest {
   }
 
   @Test
-  public void testGetExpression_ReturnsIsSpecExpressionOnDelegatePath() {
+  void testGetExpression_ReturnsIsSpecExpressionOnDelegatePath() {
     Expression<Boolean> mIsExpr = mock(Predicate.class);
     doReturn(mIsExpr).when(mCb).equal(mExpr, "val1");
 

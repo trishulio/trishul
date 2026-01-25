@@ -38,14 +38,14 @@ import com.amazonaws.services.identitymanagement.model.Policy;
 import com.amazonaws.services.identitymanagement.model.PolicyVersion;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 
-public class AwsIamPolicyClientTest {
+class AwsIamPolicyClientTest {
   private AwsIamPolicyClient client;
 
   private AmazonIdentityManagement mAwsIamClient;
   private AwsArnMapper mAwsMapper;
 
   @BeforeEach
-  public void init() {
+  void init() {
     mAwsIamClient = mock(AmazonIdentityManagement.class);
     mAwsMapper = mock(AwsArnMapper.class);
     doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mAwsMapper)
@@ -57,7 +57,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testGet_ReturnsPolicyAndDefaultDocumentFromAwsRequest() {
+  void testGet_ReturnsPolicyAndDefaultDocumentFromAwsRequest() {
     doAnswer(inv -> {
       GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
       Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));
@@ -93,7 +93,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsTrue_WhenDeleteRequestSucceeds() {
+  void testDelete_ReturnsTrue_WhenDeleteRequestSucceeds() {
     doAnswer(inv -> {
       DeletePolicyResult result = new DeletePolicyResult();
       result.setSdkResponseMetadata(mockResponseMetadata());
@@ -106,7 +106,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
+  void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
     doThrow(NoSuchEntityException.class).when(mAwsIamClient)
         .deletePolicy(new DeletePolicyRequest().withPolicyArn("POLICY_ARN"));
 
@@ -114,7 +114,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedPolicy() {
+  void testAdd_ReturnsAddedPolicy() {
     doAnswer(inv -> {
       CreatePolicyRequest req = inv.getArgument(0, CreatePolicyRequest.class);
 
@@ -194,7 +194,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenGetReturnsObject() {
+  void testExists_ReturnsTrue_WhenGetReturnsObject() {
     doAnswer(inv -> {
       GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
       Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));
@@ -205,14 +205,14 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenGetReturnsNull() {
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
     doThrow(NoSuchEntityException.class).when(mAwsIamClient).getPolicy(any(GetPolicyRequest.class));
 
     assertFalse(client.exists("POLICY"));
   }
 
   @Test
-  public void testPut_CallsAdd_WhenExistIsFalse() {
+  void testPut_CallsAdd_WhenExistIsFalse() {
     client = spy(client);
     doReturn(false).when(client).exists("POLICY_1");
 
@@ -222,7 +222,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testPut_CallsUpdate_WhenExistIsTrue() {
+  void testPut_CallsUpdate_WhenExistIsTrue() {
     client = spy(client);
     doReturn(true).when(client).exists("POLICY_1");
 
@@ -232,7 +232,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testGetPolicyVersions_ReturnsAllVersions() {
+  void testGetPolicyVersions_ReturnsAllVersions() {
     List<PolicyVersion> pageA
         = List.of(new PolicyVersion().withVersionId("A1"), new PolicyVersion().withVersionId("A2"));
     List<PolicyVersion> pageB

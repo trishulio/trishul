@@ -22,7 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;
 
-public class TenantControllerTest {
+class TenantControllerTest {
   private TenantController controller;
 
   private CrudControllerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>, TenantDto, AddTenantDto, UpdateTenantDto> mCrudController;
@@ -30,14 +30,14 @@ public class TenantControllerTest {
   private TenantService mService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mCrudController = mock(CrudControllerService.class);
     this.mService = mock(TenantService.class);
     this.controller = new TenantController(mCrudController, mService);
   }
 
   @Test
-  public void testGetAllTenant_ReturnsDtosFromController() throws MalformedURLException {
+  void testGetAllTenant_ReturnsDtosFromController() throws MalformedURLException {
     doReturn(new PageImpl<>(
         List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")))))
             .when(mService).getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000000")),
@@ -61,7 +61,7 @@ public class TenantControllerTest {
   }
 
   @Test
-  public void testGetTenant_ReturnsDtoFromController() {
+  void testGetTenant_ReturnsDtoFromController() {
     doReturn(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001")))
         .when(mCrudController)
         .get(UUID.fromString("00000000-0000-0000-0000-000000000001"), Set.of(""));
@@ -74,7 +74,7 @@ public class TenantControllerTest {
   }
 
   @Test
-  public void testDeleteTenants_ReturnsDeleteCountFromController() {
+  void testDeleteTenants_ReturnsDeleteCountFromController() {
     doReturn(1L).when(mCrudController)
         .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
@@ -83,7 +83,7 @@ public class TenantControllerTest {
   }
 
   @Test
-  public void testAddTenants_AddsToControllerAndReturnsListOfDtos() {
+  void testAddTenants_AddsToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
         .when(mCrudController).add(List.of(new AddTenantDto()));
 
@@ -94,7 +94,7 @@ public class TenantControllerTest {
   }
 
   @Test
-  public void testUpdateTenants_PutsToControllerAndReturnsListOfDtos() {
+  void testUpdateTenants_PutsToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
         .when(mCrudController)
         .put(List.of(new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
@@ -107,7 +107,7 @@ public class TenantControllerTest {
   }
 
   @Test
-  public void testPatchTenants_PatchToControllerAndReturnsListOfDtos() {
+  void testPatchTenants_PatchToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))))
         .when(mCrudController).patch(
             List.of(new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))));

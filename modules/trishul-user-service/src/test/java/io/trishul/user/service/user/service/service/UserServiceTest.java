@@ -36,7 +36,7 @@ import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
 import io.trishul.user.service.user.service.repository.UserRepository;
 
-public class UserServiceTest {
+class UserServiceTest {
   private UserService service;
 
   private EntityMergerService<Long, User, BaseUser<?>, UpdateUser<?>> mMergerService;
@@ -46,7 +46,7 @@ public class UserServiceTest {
   private TenantIaasUserService iaasService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mMergerService = mock(EntityMergerService.class);
     this.mRepoService = mock(RepoService.class);
 
@@ -59,7 +59,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testGetUsers_ReturnsEntitiesFromRepoService_WithCustomSpec() {
+  void testGetUsers_ReturnsEntitiesFromRepoService_WithCustomSpec() {
     @SuppressWarnings("unchecked")
     final ArgumentCaptor<Specification<User>> captor = ArgumentCaptor.forClass(Specification.class);
     final Page<User> mPage = new PageImpl<>(List.of(new User(1L)));
@@ -78,7 +78,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testGetUser_ReturnsUserPojo_WhenRepoServiceReturnsOptionalWithEntity() {
+  void testGetUser_ReturnsUserPojo_WhenRepoServiceReturnsOptionalWithEntity() {
     doReturn(new User(1L)).when(this.mRepoService).get(1L);
 
     final User user = this.service.get(1L);
@@ -87,7 +87,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testGetByIds_CallsRepoService() {
+  void testGetByIds_CallsRepoService() {
     ArgumentCaptor<List<? extends Identified<Long>>> captor = ArgumentCaptor.forClass(List.class);
 
     doReturn(List.of(new User(1L))).when(mRepoService).getByIds(captor.capture());
@@ -97,7 +97,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_CallsRepoService() {
+  void testGetByAccessorIds_CallsRepoService() {
     class S implements UserAccessor<S> {
       @Override
       public S setUser(User User) {
@@ -123,35 +123,35 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExists_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
   }
 
   @Test
-  public void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
   }
 
   @Test
-  public void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
+  void testExist_ReturnsTrue_WhenRepoServiceReturnsTrue() {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
   }
 
   @Test
-  public void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
+  void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDeleteBulk_WhenUserExists() {
+  void testDelete_CallsRepoServiceDeleteBulk_WhenUserExists() {
     doReturn(123L).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
 
     final long count = this.service.delete(Set.of(1L, 2L, 3L));
@@ -159,7 +159,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testDelete_CallsRepoServiceDelete_WhenUserExists() {
+  void testDelete_CallsRepoServiceDelete_WhenUserExists() {
     this.service = spy(this.service);
     doReturn(99L).when(this.service).delete(Set.of(1L));
 
@@ -168,7 +168,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testAdd_AddsUserAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
+  void testAdd_AddsUserAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
     doAnswer(inv -> List.of()).when(this.iaasService).put(anyList());
 
@@ -184,7 +184,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
+  void testAdd_DoesNotCallRepoServiceAndReturnsNull_WhenAdditionsAreNull() {
     assertNull(this.service.add(null));
     verify(this.mRepoService, times(0)).saveAll(any());
   }

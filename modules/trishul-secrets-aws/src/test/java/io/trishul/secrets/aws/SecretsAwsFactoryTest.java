@@ -13,7 +13,7 @@ class SecretsAwsFactoryTest {
   private SecretsAwsFactory factory;
 
   @BeforeEach
-  public void init() {
+  void init() {
     factory = new SecretsAwsFactory();
   }
 

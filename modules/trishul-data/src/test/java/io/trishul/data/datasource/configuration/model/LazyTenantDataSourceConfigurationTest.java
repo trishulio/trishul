@@ -11,13 +11,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import io.trishul.secrets.SecretsManager;
 
-public class LazyTenantDataSourceConfigurationTest {
+class LazyTenantDataSourceConfigurationTest {
   private DataSourceConfiguration config;
 
   private SecretsManager<String, String> mSecretsManager;
 
   @BeforeEach
-  public void init() throws URISyntaxException {
+  void init() throws URISyntaxException {
     mSecretsManager = mock(SecretsManager.class);
 
     config = new LazyTenantDataSourceConfiguration("FQ_TENANT_ID",
@@ -27,50 +27,50 @@ public class LazyTenantDataSourceConfigurationTest {
   }
 
   @Test
-  public void testGetUserName_ReturnsUsernameField() {
+  void testGetUserName_ReturnsUsernameField() {
     assertEquals("FQ_TENANT_ID", config.getUserName());
   }
 
   @Test
-  public void testGetPassword_ReturnsPasswordFromSecretsManager() throws IOException {
+  void testGetPassword_ReturnsPasswordFromSecretsManager() throws IOException {
     doReturn("PASSWORD").when(mSecretsManager).get("FQ_TENANT_ID");
 
     assertEquals("PASSWORD", config.getPassword());
   }
 
   @Test
-  public void testGetSchemaName_ReturnsSchemaNameField() {
+  void testGetSchemaName_ReturnsSchemaNameField() {
     assertEquals("FQ_TENANT_ID", config.getSchemaName());
   }
 
   @Test
-  public void testGetPoolSize_ReturnsGlobalPoolSize() {
+  void testGetPoolSize_ReturnsGlobalPoolSize() {
     assertEquals(10, config.getPoolSize());
   }
 
   @Test
-  public void testIsAutoCommit_ReturnsGlobalAutoCommit() {
+  void testIsAutoCommit_ReturnsGlobalAutoCommit() {
     assertFalse(config.isAutoCommit());
   }
 
   @Test
-  public void testGetUrl_ReturnsGlobalUrl() throws URISyntaxException {
+  void testGetUrl_ReturnsGlobalUrl() throws URISyntaxException {
     assertEquals(new URI("jdbc://localhost/"), config.getUrl());
   }
 
   @Test
-  public void testGetDbName_ReturnsGlobalDbName() {
+  void testGetDbName_ReturnsGlobalDbName() {
     assertEquals("dbName", config.getDbName());
   }
 
   @Test
-  public void testGetMigrationScript_ReturnsGlobalMigrationScriptPath() {
+  void testGetMigrationScript_ReturnsGlobalMigrationScriptPath() {
     assertEquals(1, config.getMigrationConfigurations().length);
     assertEquals("MIGRATION_PATH", config.getMigrationConfigurations()[0].getMigrationScriptPath());
   }
 
   @Test
-  public void testGetSchemaPrefix_ReturnsGlobalSchemaPrefix() {
+  void testGetSchemaPrefix_ReturnsGlobalSchemaPrefix() {
     assertEquals("SCHEMA_", config.getSchemaPrefix());
   }
 }

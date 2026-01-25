@@ -27,20 +27,20 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class QuantityUnitServiceImplTest {
+class QuantityUnitServiceImplTest {
   private QuantityUnitService quantityUnitService;
 
   private QuantityUnitRepository quantityUnitRepositoryMock;
 
   @BeforeEach
-  public void init() {
+  void init() {
     quantityUnitRepositoryMock = mock(QuantityUnitRepository.class);
 
     quantityUnitService = new QuantityUnitServiceImpl(quantityUnitRepositoryMock);
   }
 
   @Test
-  public void testGetRoles_returnsRoles() throws Exception {
+  void testGetRoles_returnsRoles() throws Exception {
     Page<UnitEntity> expectedUnitsPage = new PageImpl<>(List.of(new UnitEntity("g", "g")));
 
     final ArgumentCaptor<Specification<UnitEntity>> specificationCaptor
@@ -60,7 +60,7 @@ public class QuantityUnitServiceImplTest {
   }
 
   @Test
-  public void testGetQuantityUnit_returnsUnit() throws Exception {
+  void testGetQuantityUnit_returnsUnit() throws Exception {
     String symbol = "g";
     UnitEntity unitEntity = new UnitEntity("g");
     Optional<UnitEntity> expectedUnitEntity = Optional.ofNullable(unitEntity);
@@ -73,7 +73,7 @@ public class QuantityUnitServiceImplTest {
   }
 
   @Test
-  public void testQuantityUnitService_classIsTransactional() throws Exception {
+  void testQuantityUnitService_classIsTransactional() throws Exception {
     Transactional transactional = quantityUnitService.getClass().getAnnotation(Transactional.class);
 
     assertNotNull(transactional);
@@ -82,7 +82,7 @@ public class QuantityUnitServiceImplTest {
   }
 
   @Test
-  public void testQuantityUnitService_methodsAreNotTransactional() throws Exception {
+  void testQuantityUnitService_methodsAreNotTransactional() throws Exception {
     Method[] methods = quantityUnitService.getClass().getMethods();
     for (Method method : methods) {
       assertFalse(method.isAnnotationPresent(Transactional.class));

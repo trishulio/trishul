@@ -17,7 +17,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasObjectStoreFileControllerTest {
+class IaasObjectStoreFileControllerTest {
   private IaasObjectStoreFileController controller;
 
   private CrudControllerService<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>, IaasObjectStoreFileDto, AddIaasObjectStoreFileDto, UpdateIaasObjectStoreFileDto> mCrudController;
@@ -25,14 +25,14 @@ public class IaasObjectStoreFileControllerTest {
   private IaasObjectStoreFileService mService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mCrudController = mock(CrudControllerService.class);
     this.mService = mock(IaasObjectStoreFileService.class);
     this.controller = new IaasObjectStoreFileController(mCrudController, mService);
   }
 
   @Test
-  public void testGetAllIaasObjectStoreFile_ReturnsDtosFromController() {
+  void testGetAllIaasObjectStoreFile_ReturnsDtosFromController() {
     doReturn(List.of(new IaasObjectStoreFile(URI.create("file_1.txt")))).when(mService)
         .getAll(Set.of(URI.create("file_1.txt")));
 
@@ -44,7 +44,7 @@ public class IaasObjectStoreFileControllerTest {
   }
 
   @Test
-  public void testGetIaasObjectStoreFile_ReturnsDtoFromController() {
+  void testGetIaasObjectStoreFile_ReturnsDtoFromController() {
     doReturn(new IaasObjectStoreFileDto(URI.create("file_1.txt"))).when(mCrudController)
         .get(URI.create("file_1.txt"), Set.of(""));
 
@@ -56,14 +56,14 @@ public class IaasObjectStoreFileControllerTest {
   }
 
   @Test
-  public void testDeleteIaasObjectStoreFiles_ReturnsDeleteCountFromController() {
+  void testDeleteIaasObjectStoreFiles_ReturnsDeleteCountFromController() {
     doReturn(1L).when(mCrudController).delete(Set.of(URI.create("file_1.txt")));
 
     assertEquals(1L, this.controller.deleteIaasObjectStoreFiles(Set.of(URI.create("file_1.txt"))));
   }
 
   @Test
-  public void testAddIaasObjectStoreFiles_AddsToControllerAndReturnsListOfDtos() {
+  void testAddIaasObjectStoreFiles_AddsToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new IaasObjectStoreFileDto(URI.create("file_1.txt")))).when(mCrudController)
         .add(List.of(new AddIaasObjectStoreFileDto()));
 
@@ -74,7 +74,7 @@ public class IaasObjectStoreFileControllerTest {
   }
 
   @Test
-  public void testUpdateIaasObjectStoreFiles_PutsToControllerAndReturnsListOfDtos() {
+  void testUpdateIaasObjectStoreFiles_PutsToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new IaasObjectStoreFileDto(URI.create("file_1.txt")))).when(mCrudController)
         .put(List.of(new UpdateIaasObjectStoreFileDto(URI.create("file_1.txt"))));
 
@@ -85,7 +85,7 @@ public class IaasObjectStoreFileControllerTest {
   }
 
   @Test
-  public void testPatchIaasObjectStoreFiles_PatchToControllerAndReturnsListOfDtos() {
+  void testPatchIaasObjectStoreFiles_PatchToControllerAndReturnsListOfDtos() {
     doReturn(List.of(new IaasObjectStoreFileDto(URI.create("file_1.txt")))).when(mCrudController)
         .patch(List.of(new UpdateIaasObjectStoreFileDto(URI.create("file_1.txt"))));
 

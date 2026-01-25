@@ -7,16 +7,16 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AttributeFilterTest {
+class AttributeFilterTest {
   private AttributeFilter filter;
 
   @BeforeEach
-  public void init() {
+  void init() {
     filter = new AttributeFilter();
   }
 
   @Test
-  public void testRetain_DoesNotSetNullValue_WhenAllPropertiesAreSpecified() {
+  void testRetain_DoesNotSetNullValue_WhenAllPropertiesAreSpecified() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.retain(data, Set.of("string", "longg", "doublee", "integer", "character", "bool"));
 
@@ -29,7 +29,7 @@ public class AttributeFilterTest {
   }
 
   @Test
-  public void testRetain_SetsNullValueOnUnspecifiedProperties() {
+  void testRetain_SetsNullValueOnUnspecifiedProperties() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.retain(data, Set.of("string", "integer", "bool"));
 
@@ -42,7 +42,7 @@ public class AttributeFilterTest {
   }
 
   @Test
-  public void testRetain_SetsNullValueOnAllProperties_WhenNoPropertiesAreSpecified() {
+  void testRetain_SetsNullValueOnAllProperties_WhenNoPropertiesAreSpecified() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.retain(data, Set.of());
 
@@ -55,7 +55,7 @@ public class AttributeFilterTest {
   }
 
   @Test
-  public void testRemove_SetsNullValueOnAllProps_WhenAllPropertiesAreSpecified() {
+  void testRemove_SetsNullValueOnAllProps_WhenAllPropertiesAreSpecified() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.remove(data, Set.of("string", "longg", "doublee", "integer", "character", "bool"));
 
@@ -68,7 +68,7 @@ public class AttributeFilterTest {
   }
 
   @Test
-  public void testRemove_SetsNullValueOnSpecifiedProperties() {
+  void testRemove_SetsNullValueOnSpecifiedProperties() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.remove(data, Set.of("string", "integer", "bool"));
 
@@ -81,7 +81,7 @@ public class AttributeFilterTest {
   }
 
   @Test
-  public void testRemove_DoesNotSetsNullValue_WhenNoPropertiesAreSpecified() {
+  void testRemove_DoesNotSetsNullValue_WhenNoPropertiesAreSpecified() {
     Dummy data = new Dummy("value", 12345L, 0.12345, 12345, 'a', true);
     filter.remove(data, Set.of());
 

@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasPolicyTest {
+class IaasPolicyTest {
   private IaasPolicy policy;
 
   @BeforeEach
-  public void init() {
+  void init() {
     policy = new IaasPolicy();
   }
 
   @Test
-  public void testNoArgConstructor() {
+  void testNoArgConstructor() {
     assertNull(policy.getId());
     assertNull(policy.getName());
     assertNull(policy.getDescription());
@@ -28,7 +28,7 @@ public class IaasPolicyTest {
   }
 
   @Test
-  public void testAllArgConstructor() {
+  void testAllArgConstructor() {
     policy = new IaasPolicy("ID", "DOCUMENT", "DESCRIPTION", "IAAS_RES_NAME", "IAAS_ID",
         LocalDateTime.of(2002, 1, 1, 0, 0), LocalDateTime.of(2003, 1, 1, 0, 0));
 
@@ -43,49 +43,49 @@ public class IaasPolicyTest {
   }
 
   @Test
-  public void testGetSetId() {
+  void testGetSetId() {
     policy.setId("ID");
     assertEquals("ID", policy.getId());
   }
 
   @Test
-  public void testGetSetName() {
+  void testGetSetName() {
     policy.setName("NAME");
     assertEquals("NAME", policy.getName());
   }
 
   @Test
-  public void testGetSetDescription() {
+  void testGetSetDescription() {
     policy.setDescription("DESCRIPTION");
     assertEquals("DESCRIPTION", policy.getDescription());
   }
 
   @Test
-  public void testGetSetIaasId() {
+  void testGetSetIaasId() {
     policy.setIaasId("IAAS_ID");
     assertEquals("IAAS_ID", policy.getIaasId());
   }
 
   @Test
-  public void testGetSetIaasResourceName() {
+  void testGetSetIaasResourceName() {
     policy.setIaasResourceName("IAAS_RES_NAME");
     assertEquals("IAAS_RES_NAME", policy.getIaasResourceName());
   }
 
   @Test
-  public void testGetSetDocument() {
+  void testGetSetDocument() {
     policy.setDocument("DOCUMENT");
     assertEquals("DOCUMENT", policy.getDocument());
   }
 
   @Test
-  public void testGetSetCreatedAt() {
+  void testGetSetCreatedAt() {
     policy.setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), policy.getCreatedAt());
   }
 
   @Test
-  public void testGetSetLastUpdated() {
+  void testGetSetLastUpdated() {
     policy.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), policy.getLastUpdated());
   }
