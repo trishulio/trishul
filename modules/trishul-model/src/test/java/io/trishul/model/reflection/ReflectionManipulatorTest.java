@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.trishul.test.bom.model.Dummy;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -216,7 +217,7 @@ class ReflectionManipulatorTest {
 
   @Test
   void testGetPropertyNames_ReturnsNull_WhenClassIsNull() {
-    assertNull(this.util.getPropertyNames(null, null));
+    assertEquals(Collections.emptySet(), this.util.getPropertyNames(null, null));
   }
 
   @Test
