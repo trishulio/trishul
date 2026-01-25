@@ -45,7 +45,8 @@ class DataManagementAutoConfigurationTest {
 
     Mockito.when(dataSourceManagerMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
-    config.jdbcTemplate(dataSourceManagerMock);
+    JdbcTemplate result = config.jdbcTemplate(dataSourceManagerMock);
+    assertNotNull(result, "JdbcTemplate should not be null");
   }
 
   @Test
@@ -55,6 +56,7 @@ class DataManagementAutoConfigurationTest {
 
     Mockito.when(dataSourceManagerMock.getAdminDataSource()).thenReturn(dataSourceMock);
 
-    config.transactionTemplate(dataSourceManagerMock);
+    TransactionTemplate result = config.transactionTemplate(dataSourceManagerMock);
+    assertNotNull(result, "TransactionTemplate should not be null");
   }
 }

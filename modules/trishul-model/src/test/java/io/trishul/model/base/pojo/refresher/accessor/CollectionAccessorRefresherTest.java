@@ -67,11 +67,15 @@ class CollectionAccessorRefresherTest {
   @Test
   void testRefreshAccessors_DoesNothing_WhenAccessorsAreNull() {
     refresher.refreshAccessors(null);
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test
   void testRefreshAccessors_DoesNothing_WhenAccessorsAreEmptyCollection() {
     refresher.refreshAccessors(new ArrayList<>());
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test

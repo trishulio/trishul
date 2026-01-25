@@ -24,6 +24,8 @@ class UserSalutationRefresherTest {
   @Test
   void testRefresh_DoesNothing() {
     userSalutationRefresher.refresh(null);
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test

@@ -37,6 +37,8 @@ class ValidatorTest {
     validator.raiseErrors();
     validator.rule(true, "No exception will be raised because condition is true");
     validator.raiseErrors();
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test

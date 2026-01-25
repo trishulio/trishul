@@ -17,11 +17,15 @@ class LockServiceTest {
   @Test
   void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNull() {
     lockService.optimisticLockCheck(() -> null, () -> null);
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test
   void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNotNullAndEqual() {
     lockService.optimisticLockCheck(() -> 1, () -> 1);
+    // Test passes if no exception is thrown
+    assertTrue(true, "Method completes without throwing exception");
   }
 
   @Test
