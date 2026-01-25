@@ -34,7 +34,7 @@ public class JpaJoinerLocalCacheTest {
   }
 
   @Test
-  public <X, Y> void testGet_CallsSupplierOnceOnlyAndServesSubsequentCallsFromCache_WhenCacheIsPresent() {
+  <X, Y> void testGet_CallsSupplierOnceOnlyAndServesSubsequentCallsFromCache_WhenCacheIsPresent() {
     Key<X, Y> mKey = mock(Key.class);
     Path<X> mPath = mock(Path.class);
     Supplier<Path<X>> mSupplier = mock(Supplier.class);

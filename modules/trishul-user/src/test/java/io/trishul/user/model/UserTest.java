@@ -60,7 +60,7 @@ public class UserTest {
   }
 
   @Test
-  public void testAccessIaasUsername() {
+  void testAccessIaasUsername() {
     assertNull(user.getIaasUsername());
     user.setIaasUsername("iaasUsername");
     assertEquals("iaasUsername", user.getIaasUsername());

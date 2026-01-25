@@ -107,7 +107,7 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGetByIds_ReturnsListOfEntitiesWithNonNullProviderIdsFromRepository_WhenProvidersIsNotNull() {
+  void testGetByIds_ReturnsListOfEntitiesWithNonNullProviderIdsFromRepository_WhenProvidersIsNotNull() {
     final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
     doReturn(mEntities).when(this.mRepo).findAllById(Set.of(1L));
 
@@ -129,7 +129,7 @@ public class CrudRepoServiceTest {
   }
 
   @Test
-  public void testGetByAccessorIds_ReturnsListOfEntitiesWithNonNullAccessorsIdsFromRepository_WhenAccessorsAreNotNull() {
+  void testGetByAccessorIds_ReturnsListOfEntitiesWithNonNullAccessorsIdsFromRepository_WhenAccessorsAreNotNull() {
     final List<DummyCrudEntity> mEntities = List.of(new DummyCrudEntity(1L));
     doReturn(mEntities).when(this.mRepo).findAllById(Set.of(1L));
 

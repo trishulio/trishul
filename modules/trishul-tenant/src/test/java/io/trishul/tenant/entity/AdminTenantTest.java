@@ -34,7 +34,7 @@ public class AdminTenantTest {
   }
 
   @Test
-  public void testGetUrl() throws MalformedURLException {
+  void testGetUrl() throws MalformedURLException {
     assertEquals(new URL("http://localhost/"), adminTenant.getUrl());
   }
 }

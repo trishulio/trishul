@@ -141,7 +141,7 @@ public class AwsIamRolePolicyAttachmentClient implements
             marker = BooleanUtils.isTrue(result.isTruncated()) ? result.getMarker() : null;
 
             List<AttachedPolicy> policies = result.getAttachedPolicies();
-            policies.stream().map(policy -> policy.getPolicyName()).forEach(allPolicyNames::add);
+            policies.stream().map(AttachedPolicy::getPolicyName).forEach(allPolicyNames::add);
           } while (marker != null);
           return allPolicyNames;
         }

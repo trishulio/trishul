@@ -177,7 +177,7 @@ public class AwsIamPolicyClient
   }
 
   protected String getDefaultDocument(String policyName) {
-    return getPolicyVersions(policyName).stream().filter(version -> version.getIsDefaultVersion())
+    return getPolicyVersions(policyName).stream().filter(PolicyVersion::getIsDefaultVersion)
         .findAny().get().getDocument();
   }
 }

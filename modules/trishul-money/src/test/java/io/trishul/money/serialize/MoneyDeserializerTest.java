@@ -14,17 +14,17 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.trishul.money.dto.MoneyDto;
 
-public class MoneyDeserializerTest {
+class MoneyDeserializerTest {
 
   JsonDeserializer<Money> deserializer;
 
   @BeforeEach
-  public void init() {
+  void init() {
     deserializer = new MoneyDeserializer();
   }
 
   @Test
-  public void testDeserialize() throws JacksonException, IOException {
+  void testDeserialize() throws JacksonException, IOException {
     JsonNode mCurrencyNode = mock(JsonNode.class);
     doReturn("CAD").when(mCurrencyNode).asText();
 

@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import jakarta.persistence.EntityManager;
 
-public class RepositoryAutoConfigurationTest {
+class RepositoryAutoConfigurationTest {
   private RepositoryAutoConfiguration repoConf;
 
   @BeforeEach

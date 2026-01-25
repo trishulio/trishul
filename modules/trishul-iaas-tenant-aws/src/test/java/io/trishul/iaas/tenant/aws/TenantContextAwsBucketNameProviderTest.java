@@ -29,7 +29,7 @@ public class TenantContextAwsBucketNameProviderTest {
   }
 
   @Test
-  public void testGetObjectStoreName_ReturnsDefaultBucketName_WhenPrincipalContextHaveNullTenantId() {
+  void testGetObjectStoreName_ReturnsDefaultBucketName_WhenPrincipalContextHaveNullTenantId() {
 
     assertEquals("DEFAULT_BUCKET", provider.getObjectStoreName());
   }
@@ -43,7 +43,7 @@ public class TenantContextAwsBucketNameProviderTest {
   }
 
   @Test
-  public void testGetObjectStoreName_ReturnsBucketNameFromTemplate_WhenVfsBucketNameReturnsValue() {
+  void testGetObjectStoreName_ReturnsBucketNameFromTemplate_WhenVfsBucketNameReturnsValue() {
     doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001")).when(mTenantIdProvider)
         .getTenantId();
     doReturn("BUCKET-00000000-0000-0000-0000-000000000001").when(mTemplates)

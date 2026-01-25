@@ -46,7 +46,7 @@ public class CurrencyTest {
   }
 
   @Test
-  public void testDeepClone_ReturnsEqualsInstance() {
+  void testDeepClone_ReturnsEqualsInstance() {
     assertEquals(new Currency(), (new Currency()).deepClone());
 
     assertEquals(new Currency("CAD"), (new Currency("CAD")).deepClone());

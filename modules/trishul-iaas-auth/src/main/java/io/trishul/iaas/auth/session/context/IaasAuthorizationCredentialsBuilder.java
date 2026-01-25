@@ -1,14 +1,9 @@
 package io.trishul.iaas.auth.session.context;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class IaasAuthorizationCredentialsBuilder {
-  private static final Logger log
-      = LoggerFactory.getLogger(IaasAuthorizationCredentialsBuilder.class);
-
   public IaasAuthorizationCredentials build(ServletRequest request) {
     if (request == null) {
       throw new IllegalArgumentException("Request cannot be null");

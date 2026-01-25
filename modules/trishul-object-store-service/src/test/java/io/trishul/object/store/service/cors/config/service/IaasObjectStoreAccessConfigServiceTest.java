@@ -153,7 +153,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
+  void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
     List<IaasObjectStoreAccessConfig> expected
         = List.of(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()),
             new IaasObjectStoreAccessConfig("BUCKET_2", new PublicAccessBlockConfiguration()));
@@ -177,7 +177,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
+  void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
     List<IaasObjectStoreAccessConfig> expected
         = List.of(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()),
             new IaasObjectStoreAccessConfig("BUCKET_2", new PublicAccessBlockConfiguration()));
@@ -201,7 +201,7 @@ public class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
+  void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
     List<IaasObjectStoreAccessConfig> expected
         = List.of(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration()),
             new IaasObjectStoreAccessConfig("BUCKET_2", new PublicAccessBlockConfiguration()));

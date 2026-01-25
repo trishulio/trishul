@@ -75,7 +75,7 @@ public class IaasRoleService extends BaseService implements
   @Override
   public List<IaasRole> getByIds(Collection<? extends Identified<String>> idProviders) {
     Set<String> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);
   }
@@ -83,7 +83,7 @@ public class IaasRoleService extends BaseService implements
   @Override
   public List<IaasRole> getByAccessorIds(Collection<? extends IaasRoleAccessor<?>> accessors) {
     List<IaasRole> idProviders = accessors.stream().filter(Objects::nonNull)
-        .map(accessor -> accessor.getIaasRole()).filter(Objects::nonNull).toList();
+        .map(IaasRoleAccessor::getIaasRole).filter(Objects::nonNull).toList();
     return getByIds(idProviders);
   }
 

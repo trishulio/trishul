@@ -72,7 +72,7 @@ public class IaasIdpTenantService extends BaseService implements
   @Override
   public List<IaasIdpTenant> getByIds(Collection<? extends Identified<String>> idProviders) {
     Set<String> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);
   }
@@ -81,7 +81,7 @@ public class IaasIdpTenantService extends BaseService implements
   public List<IaasIdpTenant> getByAccessorIds(
       Collection<? extends IaasIdpTenantAccessor<?>> accessors) {
     List<IaasIdpTenant> idProviders = accessors.stream().filter(Objects::nonNull)
-        .map(accessor -> accessor.getIdpTenant()).filter(Objects::nonNull).toList();
+        .map(IaasIdpTenantAccessor::getIdpTenant).filter(Objects::nonNull).toList();
     return getByIds(idProviders);
   }
 

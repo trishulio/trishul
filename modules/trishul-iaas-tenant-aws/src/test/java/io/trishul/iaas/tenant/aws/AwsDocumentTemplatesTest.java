@@ -16,7 +16,7 @@ public class AwsDocumentTemplatesTest {
   }
 
   @Test
-  public void testGetTenantBucketPolicyDoc() throws JSONException {
+  void testGetTenantBucketPolicyDoc() throws JSONException {
         JSONAssert.assertEquals("""
         {
           "Version": "2012-10-17",
@@ -50,7 +50,7 @@ public class AwsDocumentTemplatesTest {
   }
 
   @Test
-  public void testGetCognitoIdAssumeRolePolicyDoc() throws JSONException {
+  void testGetCognitoIdAssumeRolePolicyDoc() throws JSONException {
     JSONAssert.assertEquals("""
       {
         "Version": "2012-10-17",

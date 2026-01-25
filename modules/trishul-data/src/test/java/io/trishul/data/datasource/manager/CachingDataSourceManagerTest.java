@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CachingDataSourceManagerTest {
+class CachingDataSourceManagerTest {
   private CachingDataSourceManager dataSourceManager;
 
   private DataSource mAdminDs;
@@ -30,7 +30,7 @@ public class CachingDataSourceManagerTest {
   private Connection mConnection;
 
   @BeforeEach
-  public void init() throws SQLException {
+  void init() throws SQLException {
     mAdminDs = mock(DataSource.class);
     mDataSourceBuilder = mock(DataSourceBuilder.class);
     mDsConfig = mock(DataSourceConfiguration.class);
@@ -50,14 +50,14 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetAdminDataSource_ReturnsAdminDataSource() {
+  void testGetAdminDataSource_ReturnsAdminDataSource() {
     DataSource result = dataSourceManager.getAdminDataSource();
 
     assertSame(mAdminDs, result);
   }
 
   @Test
-  public void testGetDataSource_ReturnsAdminDataSource_WhenConfigSchemaMatchesAdminSchema()
+  void testGetDataSource_ReturnsAdminDataSource_WhenConfigSchemaMatchesAdminSchema()
       throws SQLException, IOException {
     String schemaName = "admin_schema";
     when(mConnection.getSchema()).thenReturn(schemaName);
@@ -70,7 +70,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_BuildsNewDataSource_WhenConfigSchemaDiffersFromAdminSchema()
+  void testGetDataSource_BuildsNewDataSource_WhenConfigSchemaDiffersFromAdminSchema()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
@@ -105,7 +105,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_BuildsNewDataSource_WhenAdminSchemaIsNull()
+  void testGetDataSource_BuildsNewDataSource_WhenAdminSchemaIsNull()
       throws SQLException, IOException, URISyntaxException {
     String tenantSchemaName = "tenant_schema";
     URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
@@ -132,7 +132,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_CachesDataSource_WhenSameConfigUsedMultipleTimes()
+  void testGetDataSource_CachesDataSource_WhenSameConfigUsedMultipleTimes()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
@@ -166,7 +166,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_ThrowsSQLException_WhenAdminConnectionThrowsSQLException()
+  void testGetDataSource_ThrowsSQLException_WhenAdminConnectionThrowsSQLException()
       throws SQLException {
     SQLException expectedException = new SQLException("Connection failed");
     when(mAdminDs.getConnection()).thenThrow(expectedException);
@@ -178,7 +178,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_ThrowsSQLException_WhenDataSourceBuilderThrowsRuntimeException()
+  void testGetDataSource_ThrowsSQLException_WhenDataSourceBuilderThrowsRuntimeException()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
@@ -201,7 +201,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_ThrowsRuntimeException_WhenDataSourceBuilderThrowsIllegalArgumentException()
+  void testGetDataSource_ThrowsRuntimeException_WhenDataSourceBuilderThrowsIllegalArgumentException()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
@@ -224,7 +224,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_ThrowsRuntimeException_WhenDataSourceBuilderThrowsOtherException()
+  void testGetDataSource_ThrowsRuntimeException_WhenDataSourceBuilderThrowsOtherException()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
@@ -247,7 +247,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_CreatesDifferentDataSources_ForDifferentConfigurations()
+  void testGetDataSource_CreatesDifferentDataSources_ForDifferentConfigurations()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
 
@@ -290,7 +290,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_BuildsNewDataSource_WhenConfigSchemaIsNullButAdminSchemaIsNot()
+  void testGetDataSource_BuildsNewDataSource_WhenConfigSchemaIsNullButAdminSchemaIsNot()
       throws SQLException, IOException, URISyntaxException {
     String adminSchemaName = "admin_schema";
     URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
@@ -317,7 +317,7 @@ public class CachingDataSourceManagerTest {
   }
 
   @Test
-  public void testGetDataSource_BuildsNewDataSource_WhenBothSchemasAreNull()
+  void testGetDataSource_BuildsNewDataSource_WhenBothSchemasAreNull()
       throws SQLException, IOException, URISyntaxException {
     URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
     String username = "testuser";

@@ -26,7 +26,7 @@ public class ImmutableGlobalDataSourceConfigurationTest {
   }
 
   @Test
-  public void testGetMigrationConfigurations_ReturnsMigrationConfigurations() {
+  void testGetMigrationConfigurations_ReturnsMigrationConfigurations() {
     assertEquals(1, dsConfig.getMigrationConfigurations().length);
     assertEquals("MIGRATION_PATH",
         dsConfig.getMigrationConfigurations()[0].getMigrationScriptPath());

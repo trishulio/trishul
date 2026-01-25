@@ -60,7 +60,7 @@ public class CollectionAccessorRefresherTest {
     mEntityRetriever = mock(Function.class);
 
     refresher
-        = new CollectionAccessorRefresher<>(Entity.class, accessor -> accessor.getEntityList(),
+        = new CollectionAccessorRefresher<>(Entity.class, EntityAccessor::getEntityList,
             (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)), mEntityRetriever);
   }
 
@@ -145,7 +145,7 @@ public class CollectionAccessorRefresherTest {
   }
 
   @Test
-  public void testRefreshAccessors_ThrowsException_WhenEntityRetrieverDoesNotReturnReferencedEntity() {
+  void testRefreshAccessors_ThrowsException_WhenEntityRetrieverDoesNotReturnReferencedEntity() {
     List<Entity> repoEntities = List.of( // Unordered on purpose to capture any edge case
         new Entity(3L), new Entity(1L));
     doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L, 2L, 3L));

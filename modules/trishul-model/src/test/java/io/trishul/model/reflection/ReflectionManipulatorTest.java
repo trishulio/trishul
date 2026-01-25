@@ -204,7 +204,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testOuterJoin_CopiesProperty_WhenGetterAndSetterAreBothPresentAndPredicateReturnsTrue() {
+  void testOuterJoin_CopiesProperty_WhenGetterAndSetterAreBothPresentAndPredicateReturnsTrue() {
     final TestData o1 = new TestData(10);
     final TestData o2 = new TestData(20);
 
@@ -227,7 +227,7 @@ public class ReflectionManipulatorTest {
   }
 
   @Test
-  public void testGetPropertyNames_ReturnsListOfPropertyNamesWithExclusions_WhenExcludedContainsClassProps() {
+  void testGetPropertyNames_ReturnsListOfPropertyNamesWithExclusions_WhenExcludedContainsClassProps() {
     Set<String> props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));
 
     props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));

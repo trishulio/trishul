@@ -68,7 +68,7 @@ public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, U
   public List<EntityDto> add(List<AddDto> addDtos) {
     @SuppressWarnings("unchecked")
     List<AddEntity> additions = (List<AddEntity>) addDtos.stream()
-        .map(dto -> mapper.fromAddDto(dto)).collect(Collectors.toList());
+        .map(dto -> mapper.fromAddDto(dto)).toList();
     List<Entity> added = this.service.add(additions);
 
     List<EntityDto> dtos = added.stream().map(entity -> mapper.toDto(entity)).toList();

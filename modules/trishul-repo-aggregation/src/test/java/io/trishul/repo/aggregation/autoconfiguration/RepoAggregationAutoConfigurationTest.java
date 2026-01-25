@@ -7,7 +7,7 @@ import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RepoAggregationAutoConfigurationTest {
+class RepoAggregationAutoConfigurationTest {
   private RepoAggregationAutoConfiguration config;
 
   @BeforeEach

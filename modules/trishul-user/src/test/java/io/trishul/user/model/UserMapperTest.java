@@ -95,7 +95,7 @@ public class UserMapperTest {
   }
 
   @Test
-  public void testToDto_MapsIaasUsername_WhenEntityHasValue() {
+  void testToDto_MapsIaasUsername_WhenEntityHasValue() {
     User user = new User(1L, "USER_NAME", "DISPLAY_NAME", "FIRST_NAME", "LAST_NAME", "EMAIL",
         "PHONE_NUMBER", URI.create("IMAGE_SRC"), null, new UserStatus(1L), new UserSalutation(2L),
         List.of(new UserRole(3L)), LocalDateTime.of(1999, 1, 1, 0, 0),

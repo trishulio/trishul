@@ -43,7 +43,7 @@ public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
         if (collectionEntities != null && !collectionEntities.isEmpty()) {
           Set<I> collectionEntitiesIds = collectionEntities.stream()
               .filter(collectionEntity -> collectionEntity.getId() != null)
-              .map(collectionEntity -> collectionEntity.getId()).collect(Collectors.toSet());
+              .map(Identified::getId).collect(Collectors.toSet());
           entityToCollectionEntitiesIds.put(accessor, collectionEntitiesIds);
           allCollectionEntitiesIds.addAll(collectionEntitiesIds);
         }
@@ -53,14 +53,14 @@ public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
 
       if (collectionEntities.size() != allCollectionEntitiesIds.size()) {
         List<?> existingCollectionEntitiesIds
-            = collectionEntities.stream().map(entity -> entity.getId()).toList();
+            = collectionEntities.stream().map(Identified::getId).toList();
         throw new EntityNotFoundException(String.format(
             "Cannot find all %ss in Id-Set: %s. Only found the ones with Ids: %s",
             this.clazz.getSimpleName(), allCollectionEntitiesIds, existingCollectionEntitiesIds));
       }
 
       final Map<I, V> idToCollectionEntity = collectionEntities.stream()
-          .collect(Collectors.toMap(entity -> entity.getId(), Function.identity()));
+          .collect(Collectors.toMap(Identified::getId, Function.identity()));
 
       for (var entry : entityToCollectionEntitiesIds.entrySet()) {
         A entity = entry.getKey();

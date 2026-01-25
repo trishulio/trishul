@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import io.trishul.model.base.exception.ValidationException;
 
-public class ValidationExceptionTest {
+class ValidationExceptionTest {
 
   @Test
-  public void testConstructor_SetsMessage() {
+  void testConstructor_SetsMessage() {
     String message = "Test validation error";
     ValidationException exception = new ValidationException(message);
 
@@ -16,13 +16,13 @@ public class ValidationExceptionTest {
   }
 
   @Test
-  public void testAssertion_DoesNotThrow_WhenConditionIsTrue() {
+  void testAssertion_DoesNotThrow_WhenConditionIsTrue() {
     // Should not throw any exception
     ValidationException.assertion(true, "This should not throw");
   }
 
   @Test
-  public void testAssertion_ThrowsValidationException_WhenConditionIsFalse() {
+  void testAssertion_ThrowsValidationException_WhenConditionIsFalse() {
     String expectedMessage = "Validation failed";
 
     ValidationException exception = assertThrows(ValidationException.class,
@@ -32,7 +32,7 @@ public class ValidationExceptionTest {
   }
 
   @Test
-  public void testAssertion_ThrowsValidationExceptionWithCorrectMessage_WhenConditionIsFalse() {
+  void testAssertion_ThrowsValidationExceptionWithCorrectMessage_WhenConditionIsFalse() {
     String customMessage = "Custom validation error message";
 
     ValidationException exception = assertThrows(ValidationException.class,
@@ -42,7 +42,7 @@ public class ValidationExceptionTest {
   }
 
   @Test
-  public void testAssertion_WorksWithComplexConditions() {
+  void testAssertion_WorksWithComplexConditions() {
     int value = 5;
     String fieldName = "age";
 
@@ -57,7 +57,7 @@ public class ValidationExceptionTest {
   }
 
   @Test
-  public void testAssertion_WorksWithNullMessage() {
+  void testAssertion_WorksWithNullMessage() {
     ValidationException exception
         = assertThrows(ValidationException.class, () -> ValidationException.assertion(false, null));
 
@@ -65,7 +65,7 @@ public class ValidationExceptionTest {
   }
 
   @Test
-  public void testAssertion_WorksWithEmptyMessage() {
+  void testAssertion_WorksWithEmptyMessage() {
     String emptyMessage = "";
 
     ValidationException exception = assertThrows(ValidationException.class,

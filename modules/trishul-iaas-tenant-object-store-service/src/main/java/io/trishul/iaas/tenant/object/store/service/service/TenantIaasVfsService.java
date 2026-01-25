@@ -147,7 +147,7 @@ public class TenantIaasVfsService {
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates = tenants.stream()
         .map(tenant -> this.resourceBuilder.buildObjectStoreCorsConfiguration(tenant))
-        .map(o -> (IaasObjectStoreCorsConfiguration) o).toList();
+        .map(o -> o).toList();
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs
         = this.objectStoreCorsConfigService.put(objectStoreCorsConfigUpdates);

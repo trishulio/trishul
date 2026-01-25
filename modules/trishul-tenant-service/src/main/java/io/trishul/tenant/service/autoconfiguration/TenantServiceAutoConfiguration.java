@@ -44,7 +44,7 @@ public class TenantServiceAutoConfiguration {
   @Bean
   public AccessorRefresher<UUID, TenantAccessor<?>, Tenant> tenantAccessorRefresher(
       TenantRepository repo) {
-    return new AccessorRefresher<>(Tenant.class, accessor -> accessor.getTenant(),
+    return new AccessorRefresher<>(Tenant.class, TenantAccessor::getTenant,
         (accessor, tenant) -> accessor.setTenant(tenant), ids -> repo.findAllById(ids));
   }
 

@@ -57,7 +57,7 @@ public class ThreadLocalContextHolderTest {
   }
 
   @Test
-  public void testClear_RemovesValuesFromThreadLocal() {
+  void testClear_RemovesValuesFromThreadLocal() {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     holder.setContext(mCtx);
     holder.clear();

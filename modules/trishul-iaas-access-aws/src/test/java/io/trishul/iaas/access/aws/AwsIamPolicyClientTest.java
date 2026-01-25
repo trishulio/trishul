@@ -149,7 +149,7 @@ public class AwsIamPolicyClientTest {
   }
 
   @Test
-  public void testUpdate_ReturnsUpdatedPolicy_AfterAddingNewDefaultVersionAndDeletingAllOtherVersions() {
+  void testUpdate_ReturnsUpdatedPolicy_AfterAddingNewDefaultVersionAndDeletingAllOtherVersions() {
     doAnswer(inv -> {
       GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
       Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));

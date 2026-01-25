@@ -33,7 +33,7 @@ public class AggregationFunctionTest {
   }
 
   @Test
-  public void testGetAggregation_CountFunctionReturnsCountAggregation_WhenPathProviderIsNotNull() {
+  void testGetAggregation_CountFunctionReturnsCountAggregation_WhenPathProviderIsNotNull() {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"FIELD_1", "FIELD_2"}).when(mProvider).getPath();
 

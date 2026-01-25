@@ -15,20 +15,20 @@ import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.user.model.User;
 import io.trishul.user.service.user.service.repository.UserRepository;
 
-public class AccountServiceTest {
+class AccountServiceTest {
   private AccountService service;
   private UserRepository mRepository;
   private ContextHolder mContextHolder;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mRepository = mock(UserRepository.class);
     this.mContextHolder = mock(ContextHolder.class);
     this.service = new AccountService(mRepository, mContextHolder);
   }
 
   @Test
-  public void testGetCurrentUser_ReturnsUserFromRepository_WhenUserExists() {
+  void testGetCurrentUser_ReturnsUserFromRepository_WhenUserExists() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn("john.doe").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
@@ -47,7 +47,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_ReturnsFirstUserFromMultipleMatches() {
+  void testGetCurrentUser_ReturnsFirstUserFromMultipleMatches() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn("test.user").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
@@ -66,7 +66,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_ThrowsNotFoundException_WhenContextIsNull() {
+  void testGetCurrentUser_ThrowsNotFoundException_WhenContextIsNull() {
     doReturn(null).when(mContextHolder).getPrincipalContext();
 
     EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -75,7 +75,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_ThrowsNotFoundException_WhenUsernameIsNull() {
+  void testGetCurrentUser_ThrowsNotFoundException_WhenUsernameIsNull() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn(null).when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
@@ -86,7 +86,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_ThrowsNotFoundException_WhenUsernameIsEmpty() {
+  void testGetCurrentUser_ThrowsNotFoundException_WhenUsernameIsEmpty() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn("").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
@@ -97,7 +97,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_ThrowsNotFoundException_WhenUserNotFound() {
+  void testGetCurrentUser_ThrowsNotFoundException_WhenUserNotFound() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn("nonexistent.user").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
@@ -111,7 +111,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void testGetCurrentUser_FindsUserByIaasUsername() {
+  void testGetCurrentUser_FindsUserByIaasUsername() {
     PrincipalContext principalContext = mock(PrincipalContext.class);
     doReturn("iaas_jane.smith").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();

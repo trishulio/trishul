@@ -43,13 +43,13 @@ public class EntityNotFoundExceptionTest {
   }
 
   @Test
-  public void testAssertion_DoesNotThrow_WhenConditionIsTrue() {
+  void testAssertion_DoesNotThrow_WhenConditionIsTrue() {
     // Should not throw any exception
     EntityNotFoundException.assertion(true, "EntityTest", "id", "123");
   }
 
   @Test
-  public void testAssertion_ThrowsException_WhenConditionIsFalse() {
+  void testAssertion_ThrowsException_WhenConditionIsFalse() {
     EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
         () -> EntityNotFoundException.assertion(false, "EntityTest", "id", "123"));
 
@@ -57,7 +57,7 @@ public class EntityNotFoundExceptionTest {
   }
 
   @Test
-  public void testAssertion_ThrowsExceptionWithCustomField_WhenConditionIsFalse() {
+  void testAssertion_ThrowsExceptionWithCustomField_WhenConditionIsFalse() {
     EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
         () -> EntityNotFoundException.assertion(false, "User", "email", "test@example.com"));
 

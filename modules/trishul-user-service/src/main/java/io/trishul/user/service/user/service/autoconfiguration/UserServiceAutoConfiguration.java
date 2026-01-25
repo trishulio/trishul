@@ -99,14 +99,14 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   public AccessorRefresher<Long, UserAccessor<?>, User> userAccessorRefresher(UserRepository repo) {
-    return new AccessorRefresher<>(User.class, accessor -> accessor.getUser(),
+    return new AccessorRefresher<>(User.class, UserAccessor::getUser,
         (accessor, user) -> accessor.setUser(user), ids -> repo.findAllById(ids));
   }
 
   @Bean
   public AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> userRoleAccessorRefresher(
       UserRoleRepository repo) {
-    return new AccessorRefresher<>(UserRole.class, accessor -> accessor.getRole(),
+    return new AccessorRefresher<>(UserRole.class, UserRoleAccessor::getRole,
         (accessor, role) -> accessor.setRole(role), ids -> repo.findAllById(ids));
   }
 
@@ -120,21 +120,21 @@ public class UserServiceAutoConfiguration {
   @Bean
   public AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> userStatusAccessorRefresher(
       UserStatusRepository repo) {
-    return new AccessorRefresher<>(UserStatus.class, accessor -> accessor.getStatus(),
+    return new AccessorRefresher<>(UserStatus.class, UserStatusAccessor::getStatus,
         (accessor, status) -> accessor.setStatus(status), ids -> repo.findAllById(ids));
   }
 
   @Bean
   public AccessorRefresher<Long, AssignedToAccessor<?>, User> assignedToAccessorRefresher(
       UserRepository repo) {
-    return new AccessorRefresher<>(User.class, accessor -> accessor.getAssignedTo(),
+    return new AccessorRefresher<>(User.class, AssignedToAccessor::getAssignedTo,
         (accessor, assignedTo) -> accessor.setAssignedTo(assignedTo), ids -> repo.findAllById(ids));
   }
 
   @Bean
   public AccessorRefresher<Long, OwnedByAccessor<User>, User> ownedByAccessorRefresher(
       UserRepository repo) {
-    return new AccessorRefresher<>(User.class, accessor -> accessor.getOwnedBy(),
+    return new AccessorRefresher<>(User.class, OwnedByAccessor::getOwnedBy,
         (accessor, ownedBy) -> accessor.setOwnedBy(ownedBy), ids -> repo.findAllById(ids));
   }
 

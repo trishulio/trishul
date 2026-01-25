@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;
 
-public class UserControllerTest {
+class UserControllerTest {
   private UserController controller;
 
   private CrudControllerService<Long, User, BaseUser<?>, UpdateUser<?>, UserDto, AddUserDto, UpdateUserDto> mCrudController;
@@ -28,14 +28,14 @@ public class UserControllerTest {
   private UserService mService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mCrudController = mock(CrudControllerService.class);
     this.mService = mock(UserService.class);
     this.controller = new UserController(mCrudController, mService);
   }
 
   @Test
-  public void testGetAllUsers_ReturnsDtosFromController() {
+  void testGetAllUsers_ReturnsDtosFromController() {
     doReturn(new PageImpl<>(
         List.of(new User(1L, "user1", "User One", "User", "One", "user1@example.com",
             "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
@@ -68,7 +68,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testGetUser_ReturnsDtoFromController() {
+  void testGetUser_ReturnsDtoFromController() {
     doReturn(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
         "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
         null, null, null))
@@ -83,14 +83,14 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testDeleteUsers_ReturnsDeleteCountFromController() {
+  void testDeleteUsers_ReturnsDeleteCountFromController() {
     doReturn(1L).when(mCrudController).delete(Set.of(1L));
 
     assertEquals(1L, this.controller.deleteUsers(Set.of(1L)));
   }
 
   @Test
-  public void testAddUser_AddsToControllerAndReturnsListOfDtos() {
+  void testAddUser_AddsToControllerAndReturnsListOfDtos() {
     AddUserDto addDto = new AddUserDto("user1", "User One", "User", "One", "user1@example.com",
         1L, 1L, "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L));
 
@@ -108,7 +108,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testUpdateUser_PutsToControllerAndReturnsListOfDtos() {
+  void testUpdateUser_PutsToControllerAndReturnsListOfDtos() {
     UpdateUserDto updateDto =
         new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
             "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L), 1);
@@ -127,7 +127,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testPatchUser_PatchToControllerAndReturnsListOfDtos() {
+  void testPatchUser_PatchToControllerAndReturnsListOfDtos() {
     UpdateUserDto patchDto =
         new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
             "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L), 1);

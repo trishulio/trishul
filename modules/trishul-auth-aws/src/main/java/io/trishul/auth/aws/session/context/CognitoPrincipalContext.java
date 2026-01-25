@@ -36,7 +36,7 @@ public class CognitoPrincipalContext implements PrincipalContext {
     List<String> roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
 
     List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
-    List<UUID> tenantIds = groups.stream().map(UUID::fromString).collect(Collectors.toList());
+    List<UUID> tenantIds = groups.stream().map(UUID::fromString).toList();
 
     return new CognitoPrincipalContext(tenantIds, username, roles);
   }

@@ -172,7 +172,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
+  void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
     List<IaasObjectStoreCorsConfiguration> expected = List.of(
         new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()),
         new IaasObjectStoreCorsConfiguration("BUCKET_2", new BucketCrossOriginConfiguration()));
@@ -196,7 +196,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
+  void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
     List<IaasObjectStoreCorsConfiguration> expected = List.of(
         new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()),
         new IaasObjectStoreCorsConfiguration("BUCKET_2", new BucketCrossOriginConfiguration()));
@@ -220,7 +220,7 @@ public class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
+  void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
     List<IaasObjectStoreCorsConfiguration> expected = List.of(
         new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()),
         new IaasObjectStoreCorsConfiguration("BUCKET_2", new BucketCrossOriginConfiguration()));

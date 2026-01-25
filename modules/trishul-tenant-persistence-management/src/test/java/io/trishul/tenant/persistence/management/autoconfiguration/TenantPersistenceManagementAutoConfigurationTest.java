@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TenantPersistenceManagementAutoConfigurationTest {
+class TenantPersistenceManagementAutoConfigurationTest {
   private TenantPersistenceManagementAutoConfiguration config;
 
   @BeforeEach

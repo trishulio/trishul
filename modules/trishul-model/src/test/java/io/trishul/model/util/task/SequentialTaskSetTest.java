@@ -15,7 +15,7 @@ public class SequentialTaskSetTest {
   }
 
   @Test
-  public void testSubmitSupplier_ExecutesTheSupplierAndStoreResult_WhenSupplierRunsWithoutErrors() {
+  void testSubmitSupplier_ExecutesTheSupplierAndStoreResult_WhenSupplierRunsWithoutErrors() {
     tasks.submit(() -> "RETURN_VALUE");
 
     assertEquals(1, tasks.getResults().size());
@@ -39,7 +39,7 @@ public class SequentialTaskSetTest {
   }
 
   @Test
-  public void testSubmitRunnable_ExecutesTheRunnableAndStoreNullResult_WhenRunnableRunsWithoutErrors() {
+  void testSubmitRunnable_ExecutesTheRunnableAndStoreNullResult_WhenRunnableRunsWithoutErrors() {
     tasks.submit(() -> {
     });
 
@@ -49,7 +49,7 @@ public class SequentialTaskSetTest {
   }
 
   @Test
-  public void testSubmitRunnable_ExecutesTheRunnablerAndStoreException_WhenRunnableThrowsException() {
+  void testSubmitRunnable_ExecutesTheRunnablerAndStoreException_WhenRunnableThrowsException() {
     RuntimeException e = new RuntimeException();
     tasks.submit(new Runnable() {
       @Override

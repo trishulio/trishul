@@ -6,7 +6,7 @@ import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AuthAutoConfigurationTest {
+class AuthAutoConfigurationTest {
   private AuthAutoConfiguration config;
 
   @BeforeEach
@@ -15,7 +15,7 @@ public class AuthAutoConfigurationTest {
   }
 
   @Test
-  public void testcontextHolder_ReturnsInstanceOfTypeThreadLocalContextHolder() {
+  void testcontextHolder_ReturnsInstanceOfTypeThreadLocalContextHolder() {
     ContextHolder holder = config.contextHolder();
     assertTrue(holder instanceof ThreadLocalContextHolder);
   }

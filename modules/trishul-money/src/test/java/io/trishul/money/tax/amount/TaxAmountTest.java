@@ -83,7 +83,7 @@ public class TaxAmountTest {
 
   @Test
   @Disabled("Fails due to unknow issue during cloning")
-  public void testDeepClone_ReturnsEqualsEntity() {
+  void testDeepClone_ReturnsEqualsEntity() {
     Register.init();
     assertEquals(new TaxAmount(), (new TaxAmount()).deepClone());
     assertEquals(new TaxAmount(Money.parse("CAD 0")),

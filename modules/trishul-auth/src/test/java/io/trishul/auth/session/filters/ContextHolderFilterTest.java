@@ -48,7 +48,7 @@ public class ContextHolderFilterTest {
   }
 
   @Test
-  public void testDoFilter_SetsPrincipalContext_AndClearsAfterwards()
+  void testDoFilter_SetsPrincipalContext_AndClearsAfterwards()
       throws IOException, ServletException {
     Authentication mAuth = mock(Authentication.class);
     doReturn(mAuth).when(mSecurityCtx).getAuthentication();
@@ -67,7 +67,7 @@ public class ContextHolderFilterTest {
   }
 
   @Test
-  public void testDoFilter_SetsSessionTenantIdFromHeader() throws IOException, ServletException {
+  void testDoFilter_SetsSessionTenantIdFromHeader() throws IOException, ServletException {
     Authentication mAuth = mock(Authentication.class);
     doReturn(mAuth).when(mSecurityCtx).getAuthentication();
 

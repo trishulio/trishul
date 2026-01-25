@@ -10,7 +10,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class IaasAuthAwsFactoryTest {
+class IaasAuthAwsFactoryTest {
   private IaasAuthAwsFactory factory;
 
   @BeforeEach
@@ -35,7 +35,7 @@ public class IaasAuthAwsFactoryTest {
   }
 
   @Test
-  public void testGetAwsCognitoIdentityClient() throws IllegalAccessException, URISyntaxException {
+  void testGetAwsCognitoIdentityClient() throws IllegalAccessException, URISyntaxException {
     AmazonCognitoIdentity idp
         = factory.getAwsCognitoIdentityClient("REGION", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
 

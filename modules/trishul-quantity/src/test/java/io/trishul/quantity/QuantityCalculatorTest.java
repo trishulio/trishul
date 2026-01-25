@@ -108,7 +108,7 @@ public class QuantityCalculatorTest {
   }
 
   @Test
-  public void testToSystemQuantityValueWithDisplayUnit_ReturnsSystemValueWithDisplayUnit_WhenArgIsNotNull() {
+  void testToSystemQuantityValueWithDisplayUnit_ReturnsSystemValueWithDisplayUnit_WhenArgIsNotNull() {
     Quantity<?> input = Quantities.getQuantity(new BigDecimal("100000"), SupportedUnits.GRAM);
 
     Quantity<?> output = calc.toSystemQuantityValueWithDisplayUnit(input);
@@ -122,7 +122,7 @@ public class QuantityCalculatorTest {
   }
 
   @Test
-  public void testFromSystemQuantityValueWithDisplayUnit_ReturnsQuantityInDisplayUnit_WhenArgIsNotNull() {
+  void testFromSystemQuantityValueWithDisplayUnit_ReturnsQuantityInDisplayUnit_WhenArgIsNotNull() {
     Quantity<?> input = Quantities.getQuantity(new BigDecimal("100"), SupportedUnits.GRAM);
 
     Quantity<?> output = calc.fromSystemQuantityValueWithDisplayUnit(input);
@@ -151,7 +151,7 @@ public class QuantityCalculatorTest {
   }
 
   @Test
-  public void testIsCompatibleQtyForUnitAccessor_ReturnsTrue_WhenAccessorQuantityIsCompatibleWithUnit() {
+  void testIsCompatibleQtyForUnitAccessor_ReturnsTrue_WhenAccessorQuantityIsCompatibleWithUnit() {
     BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
     doReturn(SupportedUnits.GRAM).when(accessor).getBaseQuantityUnit();
 
@@ -159,7 +159,7 @@ public class QuantityCalculatorTest {
   }
 
   @Test
-  public void testIsCompatibleQtyForUnitAccessor_ReturnsFalse_WhenAccessorQuantityIsNotCompatibleWithUnit() {
+  void testIsCompatibleQtyForUnitAccessor_ReturnsFalse_WhenAccessorQuantityIsNotCompatibleWithUnit() {
     BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
     doReturn(SupportedUnits.LITRE).when(accessor).getBaseQuantityUnit();
 

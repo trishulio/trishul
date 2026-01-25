@@ -84,7 +84,7 @@ public class WhereClauseBuilderTest {
   }
 
   @Test
-  public <T extends Comparable<T>> void testBetween_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+  <T extends Comparable<T>> void testBetween_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
     T c1 = (T) mock(Comparable.class);
     T c2 = (T) mock(Comparable.class);
 

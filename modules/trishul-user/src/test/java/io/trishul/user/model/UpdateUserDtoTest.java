@@ -56,7 +56,7 @@ public class UpdateUserDtoTest {
   }
 
   @Test
-  public void testAccessEmail() {
+  void testAccessEmail() {
     assertNull(dto.getEmail());
     dto.setEmail("email");
     assertEquals("email", dto.getEmail());

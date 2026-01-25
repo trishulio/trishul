@@ -53,7 +53,7 @@ public class AggregationRepositoryTest {
   }
 
   @Test
-  public void testGetAggregation_UsesSameClassForReturnClassAndReturnsListOFResultsFromTypedQuery_WhenOverloadedMethodIsUsed() {
+  void testGetAggregation_UsesSameClassForReturnClassAndReturnsListOFResultsFromTypedQuery_WhenOverloadedMethodIsUsed() {
     SelectClauseBuilder mSelector = mock(SelectClauseBuilder.class);
     GroupByClauseBuilder mGroupBy = mock(GroupByClauseBuilder.class);
     Specification<TestEntity> mSpec = mock(Specification.class);

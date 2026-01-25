@@ -94,8 +94,7 @@ public class DataManagementAutoConfiguration {
   @ConditionalOnMissingBean(DataSourceManager.class)
   public DataSourceManager dataSourceManager(DataSource adminDs,
       DataSourceBuilder dataSourceBuilder) {
-    DataSourceManager mgr = new CachingDataSourceManager(adminDs, dataSourceBuilder);
-    return mgr;
+    return new CachingDataSourceManager(adminDs, dataSourceBuilder);
   }
 
   @Bean

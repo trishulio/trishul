@@ -2,13 +2,9 @@ package io.trishul.model.validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.trishul.model.base.exception.ValidationException;
 
 public class Validator {
-  private static final Logger log = LoggerFactory.getLogger(Validator.class);
-
   private final List<String> errors;
 
   public Validator() {

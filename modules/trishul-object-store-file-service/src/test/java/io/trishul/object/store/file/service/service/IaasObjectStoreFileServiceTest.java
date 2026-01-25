@@ -169,7 +169,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService()
+  void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService()
       throws MalformedURLException {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).add(anyList());
 
@@ -198,7 +198,7 @@ public class IaasObjectStoreFileServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService()
+  void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService()
       throws MalformedURLException {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).put(anyList());
 

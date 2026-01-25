@@ -10,7 +10,7 @@ import io.trishul.money.dto.MoneyDto;
 import io.trishul.money.tax.amount.TaxAmount;
 import io.trishul.money.tax.amount.dto.TaxAmountDto;
 
-public class AmountMapperTest {
+class AmountMapperTest {
   private AmountMapper mapper;
 
   @BeforeEach

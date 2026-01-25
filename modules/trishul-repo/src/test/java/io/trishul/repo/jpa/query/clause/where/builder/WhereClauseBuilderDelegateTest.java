@@ -121,7 +121,7 @@ public class WhereClauseBuilderDelegateTest {
   }
 
   @Test
-  public void testBuild_ReturnSpecification_WithToPredicateFunctionThatGetsAllPredicatesAndCombinesThem() {
+  void testBuild_ReturnSpecification_WithToPredicateFunctionThatGetsAllPredicatesAndCombinesThem() {
     Specification<Integer> spec = builder.build();
 
     CriteriaBuilder mCriteriaBuilder = mock(CriteriaBuilder.class);

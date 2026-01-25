@@ -75,7 +75,7 @@ public class IaasObjectStoreCorsConfigService extends BaseService implements
   public List<IaasObjectStoreCorsConfiguration> getByIds(
       Collection<? extends Identified<String>> idProviders) {
     Set<String> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);
   }

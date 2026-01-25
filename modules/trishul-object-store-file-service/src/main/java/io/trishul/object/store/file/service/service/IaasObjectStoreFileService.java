@@ -75,7 +75,7 @@ public class IaasObjectStoreFileService extends BaseService implements
 
   @Override
   public List<IaasObjectStoreFile> getByIds(Collection<? extends Identified<URI>> idProviders) {
-    Set<URI> ids = idProviders.stream().filter(Objects::nonNull).map(provider -> provider.getId())
+    Set<URI> ids = idProviders.stream().filter(Objects::nonNull).map(Identified::getId)
         .filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);

@@ -6,26 +6,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import jakarta.persistence.OptimisticLockException;
 
-public class LockServiceTest {
+class LockServiceTest {
   private LockService lockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.lockService = new LockService();
   }
 
   @Test
-  public void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNull() {
+  void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNull() {
     lockService.optimisticLockCheck(() -> null, () -> null);
   }
 
   @Test
-  public void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNotNullAndEqual() {
+  void testOptimisticLockCheck_Returns_WhenOriginalAndUpdateAreNotNullAndEqual() {
     lockService.optimisticLockCheck(() -> 1, () -> 1);
   }
 
   @Test
-  public void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalIsNullButUpdateIsNotNull() {
+  void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalIsNullButUpdateIsNotNull() {
     OptimisticLockException exception = assertThrows(OptimisticLockException.class, () -> {
       lockService.optimisticLockCheck(() -> null, () -> 1);
     });
@@ -35,7 +35,7 @@ public class LockServiceTest {
   }
 
   @Test
-  public void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalIsNotNullButUpdateIsNull() {
+  void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalIsNotNullButUpdateIsNull() {
     OptimisticLockException exception = assertThrows(OptimisticLockException.class, () -> {
       lockService.optimisticLockCheck(() -> 1, () -> null);
     });
@@ -45,7 +45,7 @@ public class LockServiceTest {
   }
 
   @Test
-  public void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalVersionIsNotEqualToUpdateVersion() {
+  void testOptimisticLockCheck_ThrowsOptimisticLockException_WhenOriginalVersionIsNotEqualToUpdateVersion() {
     OptimisticLockException exception = assertThrows(OptimisticLockException.class, () -> {
       lockService.optimisticLockCheck(() -> 1, () -> 2);
     });

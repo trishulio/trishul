@@ -23,7 +23,7 @@ import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionPr
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
 
-public class TenantPersistenceAutoConfigurationTest {
+class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
 
   private EntityManagerFactory mEntityManagerFactory;

@@ -74,7 +74,7 @@ public class IaasPolicyService extends BaseService implements
   @Override
   public List<IaasPolicy> getByIds(Collection<? extends Identified<String>> idProviders) {
     Set<String> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);
   }
@@ -82,7 +82,7 @@ public class IaasPolicyService extends BaseService implements
   @Override
   public List<IaasPolicy> getByAccessorIds(Collection<? extends IaasPolicyAccessor<?>> accessors) {
     List<IaasPolicy> idProviders = accessors.stream().filter(Objects::nonNull)
-        .map(accessor -> accessor.getIaasPolicy()).filter(Objects::nonNull).toList();
+        .map(IaasPolicyAccessor::getIaasPolicy).filter(Objects::nonNull).toList();
     return getByIds(idProviders);
   }
 

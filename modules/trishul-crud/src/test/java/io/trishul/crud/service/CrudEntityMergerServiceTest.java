@@ -14,12 +14,12 @@ import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
 import jakarta.persistence.OptimisticLockException;
 
-public class CrudEntityMergerServiceTest {
+class CrudEntityMergerServiceTest {
   private EntityMergerService<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> service;
   private LockService mLockService;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.mLockService = new LockService();
 
     this.service = new CrudEntityMergerService<>(this.mLockService, BaseDummyCrudEntity.class,
@@ -28,12 +28,12 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetAddEntities_ReturnsNull_WhenAdditionsAreNull() {
+  void testGetAddEntities_ReturnsNull_WhenAdditionsAreNull() {
     assertNull(this.service.getAddEntities(null));
   }
 
   @Test
-  public void testGetAddEntities_ReturnsListOfEntitiesWithBasePropertiesOnly_WhenAdditionsAreNotNull() {
+  void testGetAddEntities_ReturnsListOfEntitiesWithBasePropertiesOnly_WhenAdditionsAreNotNull() {
     final List<BaseDummyCrudEntity<?>> additions = List.of(new DummyCrudEntity().setId(1L)
         .setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1));
 
@@ -44,7 +44,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPutEntities_ReturnsEmptyList_WhenUpdatesAreNull() {
+  void testGetPutEntities_ReturnsEmptyList_WhenUpdatesAreNull() {
     assertEquals(new ArrayList<>(), this.service.getPutEntities(null, null));
     assertEquals(new ArrayList<>(), this.service.getPutEntities(List.of(), null));
     assertEquals(new ArrayList<>(),
@@ -52,7 +52,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPutEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenUpdatesAreNotNull() {
+  void testGetPutEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenUpdatesAreNotNull() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L).setVersion(1));
     final List<UpdateDummyCrudEntity<?>> updates = List.of(
         new DummyCrudEntity().setId(1L).setValue("VALUE").setExcludedValue("EXCLUDED_VALUE")
@@ -68,7 +68,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPutEntities_ReturnsNewEntities_WhenUpdateEntityIdDoesNotExistInExistingEntities() {
+  void testGetPutEntities_ReturnsNewEntities_WhenUpdateEntityIdDoesNotExistInExistingEntities() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
     final List<UpdateDummyCrudEntity<?>> updates
         = List.of(new DummyCrudEntity().setId(2L), new DummyCrudEntity().setId(3L));
@@ -78,7 +78,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPutEntities_ThrowsOptimisticLockException_WhenExistingEntityVersionIsDifferentFromUpdateVersion() {
+  void testGetPutEntities_ThrowsOptimisticLockException_WhenExistingEntityVersionIsDifferentFromUpdateVersion() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
     final List<UpdateDummyCrudEntity<?>> updates = List.of(new DummyCrudEntity().setId(1L)
         .setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1), new DummyCrudEntity());
@@ -90,7 +90,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_ReturnsExistingEntities_WhenUpdatesAreNull() {
+  void testGetPatchEntities_ReturnsExistingEntities_WhenUpdatesAreNull() {
     assertNull(this.service.getPatchEntities(null, null));
     assertEquals(List.of(), this.service.getPatchEntities(List.of(), null));
     assertEquals(List.of(new DummyCrudEntity().setId(1L)),
@@ -98,7 +98,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenPatchesAreNotNull() {
+  void testGetPatchEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenPatchesAreNotNull() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L)
         .setValue("OLD_VALUE").setExcludedValue("OLD_EXCLUDED_VALUE").setVersion(1));
     final List<UpdateDummyCrudEntity<?>> patches = List.of(new DummyCrudEntity().setId(1L)
@@ -112,7 +112,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_ThrowsEntityNotFoundException_WhenUpdateEntityIdDoesNotExistInExistingEntities() {
+  void testGetPatchEntities_ThrowsEntityNotFoundException_WhenUpdateEntityIdDoesNotExistInExistingEntities() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
     final List<UpdateDummyCrudEntity<?>> patches
         = List.of(new DummyCrudEntity().setId(2L), new DummyCrudEntity().setId(3L));
@@ -130,7 +130,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_ThrowsOptimisticLockException_WhenExistingEntityVersionIsDifferentFromUpdateVersion() {
+  void testGetPatchEntities_ThrowsOptimisticLockException_WhenExistingEntityVersionIsDifferentFromUpdateVersion() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
     final List<UpdateDummyCrudEntity<?>> patches
         = List.of(new DummyCrudEntity(1L, "VALUE", "EXCLUDED_VALUE", 1), new DummyCrudEntity());
@@ -142,7 +142,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_ThrowsDuplicateKeyException_WhenMultiplePatchesHaveSameId() {
+  void testGetPatchEntities_ThrowsDuplicateKeyException_WhenMultiplePatchesHaveSameId() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L));
     final List<UpdateDummyCrudEntity<?>> patchesWithSameId
         = List.of(new DummyCrudEntity().setId(2L), new DummyCrudEntity().setId(2L));
@@ -156,7 +156,7 @@ public class CrudEntityMergerServiceTest {
   }
 
   @Test
-  public void testGetPatchEntities_AppliesUpdateToEntityWithNullId_WhenPatchIdIsNull() {
+  void testGetPatchEntities_AppliesUpdateToEntityWithNullId_WhenPatchIdIsNull() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity(1L).setValue("OLD_VALUE")
         .setExcludedValue("OLD_EXCLUDED_VALUE").setVersion(1));
     final List<UpdateDummyCrudEntity<?>> patches = List.of(

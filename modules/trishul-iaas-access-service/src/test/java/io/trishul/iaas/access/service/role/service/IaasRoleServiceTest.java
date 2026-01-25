@@ -161,7 +161,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
+  void testAdd_ReturnsAddedRepoEntities_AfterSavingAddEntitiesFromMergerService() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).add(anyList());
 
     List<BaseIaasRole<?>> additions = List.of(
@@ -195,7 +195,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
+  void testPut_ReturnsPutRepoEntities_AfterSavingPutEntitiesFromMergerService() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).put(anyList());
 
     List<UpdateIaasRole<?>> updates = List.of(
@@ -227,7 +227,7 @@ public class IaasRoleServiceTest {
   }
 
   @Test
-  public void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
+  void testPatch_ReturnsPatchRepoEntities_AfterSavingPatchEntitiesFromMergerService() {
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).put(anyList());
 
     doAnswer(inv -> {

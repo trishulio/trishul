@@ -67,7 +67,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
 
     existingItems = existingItems != null ? existingItems : new ArrayList<>(0);
     final Map<ID, E> idToItemLookup = existingItems.stream()
-        .collect(Collectors.toMap(item -> item.getId(), item -> item));
+        .collect(Collectors.toMap(Identified::getId, item -> item));
 
     final List<E> targetItems = updates.stream().map(update -> {
       final E item = this.newEntity();
@@ -96,7 +96,7 @@ public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE ext
     List<E> targetItems = null;
     patches = patches == null ? new ArrayList<>() : patches;
 
-    final Map<ID, UE> idToItemLookup = patches.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
+    final Map<ID, UE> idToItemLookup = patches.stream().collect(Collectors.toMap(Identified::getId, item -> item));
 
     if (existingItems != null) {
       targetItems = existingItems.stream().map(existing -> {

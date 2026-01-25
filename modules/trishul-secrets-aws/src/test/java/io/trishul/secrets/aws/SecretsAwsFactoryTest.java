@@ -9,7 +9,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SecretsAwsFactoryTest {
+class SecretsAwsFactoryTest {
   private SecretsAwsFactory factory;
 
   @BeforeEach
@@ -18,7 +18,7 @@ public class SecretsAwsFactoryTest {
   }
 
   @Test
-  public void testSecretsManager() throws URISyntaxException, IllegalAccessException {
+  void testSecretsManager() throws URISyntaxException, IllegalAccessException {
     AWSSecretsManager secretsManager
         = factory.secretsManager("REGION", "URL", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
 

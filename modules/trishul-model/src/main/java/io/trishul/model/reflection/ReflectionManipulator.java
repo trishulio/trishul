@@ -26,6 +26,9 @@ public class ReflectionManipulator {
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(ReflectionManipulator.class);
 
+  private static final String ERR_MSG_DYNAMIC_METHOD_ACCESS = "Failed to access the value using dynamic method because: %s";
+  private static final String ERR_MSG_PREDICATE_EXECUTION = "Failed to execute the predicate because: %s";
+
   static class PropNameKey {
     private Class<?> clazz;
     private Set<String> exclusions;
@@ -135,10 +138,10 @@ public class ReflectionManipulator {
       this.handleException(msg, e);
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       final String msg = String
-          .format("Failed to access the value using dynamic method because: %s", e.getMessage());
+          .format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
       this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
-      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
       this.handleException(msg, e);
     }
   }
@@ -179,10 +182,10 @@ public class ReflectionManipulator {
       this.handleException(msg, e);
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       final String msg = String
-          .format("Failed to access the value using dynamic method because: %s", e.getMessage());
+          .format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
       this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
-      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
       this.handleException(msg, e);
     }
 
@@ -221,11 +224,11 @@ public class ReflectionManipulator {
         log.info("No setter method found for property: {}", propertyName);
       }
     } catch (final ReflectiveOperationException e) {
-      final String msg = String.format("Failed to execute the predicate because: %s", e.getMessage());
+      final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
       this.handleException(msg, e);
     } catch (IllegalArgumentException e) {
       final String msg = String
-          .format("Failed to access the value using dynamic method because: %s", e.getMessage());
+          .format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
       this.handleException(msg, e);
     }
   }

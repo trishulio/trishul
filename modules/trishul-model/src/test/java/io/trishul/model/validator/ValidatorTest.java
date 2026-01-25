@@ -7,23 +7,23 @@ import io.trishul.model.base.exception.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ValidatorTest {
+class ValidatorTest {
   private Validator validator;
 
   @BeforeEach
-  public void init() {
+  void init() {
     validator = new Validator();
   }
 
   @Test
-  public void testRule_SetsMsgAsError_WhenConditionIsFalse() {
+  void testRule_SetsMsgAsError_WhenConditionIsFalse() {
     validator.rule(false, "This is an error message: %s", "TEST");
     ValidationException exception = assertThrows(ValidationException.class,
         () -> validator.raiseErrors(), "1. This is an error message: TEST");
   }
 
   @Test
-  public void testRule_DoesNotSetMsgAsError_WhenConditionIsTrue() {
+  void testRule_DoesNotSetMsgAsError_WhenConditionIsTrue() {
     validator.rule(true, "This is not an error message: %s", "TEST");
     validator.rule(false, "This is an error message: %s", "TEST");
     validator.rule(true, "This is not an error message: %s", "TEST");
@@ -33,14 +33,14 @@ public class ValidatorTest {
   }
 
   @Test
-  public void testRaiseErrors_DoesNotThrowException_WhenNoErrorsExist() {
+  void testRaiseErrors_DoesNotThrowException_WhenNoErrorsExist() {
     validator.raiseErrors();
     validator.rule(true, "No exception will be raised because condition is true");
     validator.raiseErrors();
   }
 
   @Test
-  public void testRaiseErrors_ConcatsErrorsIntoNumberedList() {
+  void testRaiseErrors_ConcatsErrorsIntoNumberedList() {
     validator.rule(false, "This is error A: %s", "TEST");
     validator.rule(true, "This message is ignored: %s", "TEST");
     validator.rule(false, "This is error B: %s", "TEST");
@@ -54,14 +54,14 @@ public class ValidatorTest {
   }
 
   @Test
-  public void testHasErrors_ReturnsTrue_WhenAtleastOneErrorExists() {
+  void testHasErrors_ReturnsTrue_WhenAtleastOneErrorExists() {
     validator.rule(false, "Error");
 
     assertTrue(validator.hasErrors());
   }
 
   @Test
-  public void testHasErrors_ReturnsFalse_WhenNoErrorExists() {
+  void testHasErrors_ReturnsFalse_WhenNoErrorExists() {
     assertFalse(validator.hasErrors());
   }
 }

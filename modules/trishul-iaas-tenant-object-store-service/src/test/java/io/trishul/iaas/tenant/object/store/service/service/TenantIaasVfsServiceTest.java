@@ -67,7 +67,7 @@ public class TenantIaasVfsServiceTest {
   }
 
   @Test
-  public void testGet_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
+  void testGet_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
     Set<String> iaasIdpTenantIds = Set.of("T1", "T2");
 
     doReturn("POLICY_ID_1").when(mBuilder).getVfsPolicyId("T1");
@@ -94,7 +94,7 @@ public class TenantIaasVfsServiceTest {
   }
 
   @Test
-  public void testAdd_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
+  void testAdd_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
     List<IaasIdpTenant> iaasIdpTenant = List.of(new IaasIdpTenant("T1"), new IaasIdpTenant("T2"));
     iaasIdpTenant.get(0).setIaasRole(new IaasRole("IAAS_ROLE_1"));
     iaasIdpTenant.get(1).setIaasRole(new IaasRole("IAAS_ROLE_2"));
@@ -125,7 +125,7 @@ public class TenantIaasVfsServiceTest {
   }
 
   @Test
-  public void testPut_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
+  void testPut_ReturnsListOfVfsResourcesBuiltFromAllServiceResponse_WhenIdpTenantsAreNotNull() {
     List<IaasIdpTenant> iaasIdpTenant = List.of(new IaasIdpTenant("T1"), new IaasIdpTenant("T2"));
     iaasIdpTenant.get(0).setIaasRole(new IaasRole("IAAS_ROLE_1"));
     iaasIdpTenant.get(1).setIaasRole(new IaasRole("IAAS_ROLE_2"));

@@ -26,7 +26,7 @@ public class CognitoPrincipalContextTest {
   }
 
   @Test
-  public void testGetTenantIds_ReturnsAllGroupValuesInJwt() {
+  void testGetTenantIds_ReturnsAllGroupValuesInJwt() {
     mJwt = mock(Jwt.class);
     doReturn(Arrays.asList("00000000-0000-0000-0000-000000000001",
         "00000000-0000-0000-0000-000000000002")).when(mJwt)

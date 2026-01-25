@@ -77,7 +77,7 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   public List<IaasRolePolicyAttachment> getByIds(
       Collection<? extends Identified<IaasRolePolicyAttachmentId>> idProviders) {
     Set<IaasRolePolicyAttachmentId> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(provider -> provider.getId()).filter(Objects::nonNull).collect(Collectors.toSet());
+        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.iaasRepo.get(ids);
   }

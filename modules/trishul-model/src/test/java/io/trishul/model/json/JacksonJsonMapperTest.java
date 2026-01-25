@@ -178,7 +178,7 @@ public class JacksonJsonMapperTest {
   }
 
   @Test
-  public void testWriteString_DoesNotCauseStackOverflowInCatchClause_WhenEntityOverridesToStringToCallJacksonMapper()
+  void testWriteString_DoesNotCauseStackOverflowInCatchClause_WhenEntityOverridesToStringToCallJacksonMapper()
       throws JsonProcessingException {
     doThrow(JsonProcessingException.class).when(mObjectMapper).writeValueAsString(any());
 

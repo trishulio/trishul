@@ -190,7 +190,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testPut_UpdatesUserAndSyncsWithIaasAndSavesToRepo_WhenUpdatesAreNotNull() {
+  void testPut_UpdatesUserAndSyncsWithIaasAndSavesToRepo_WhenUpdatesAreNotNull() {
     final UpdateUser<?> user1 = new User(1L);
     final UpdateUser<?> user2 = new User(2L);
 
@@ -226,8 +226,7 @@ public class UserServiceTest {
 
     // Mock repoService.saveAll() to return users after iaasUsername is set
     doAnswer(inv -> {
-      List<User> users = inv.getArgument(0);
-      return users;
+      return inv.getArgument(0);
     }).when(this.mRepoService).saveAll(anyList());
 
     final List<User> updated = this.service.put(List.of(user1, user2));
@@ -240,7 +239,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void testPut_PreservesIaasUsername_WhenNotProvidedInUpdateDto() {
+  void testPut_PreservesIaasUsername_WhenNotProvidedInUpdateDto() {
     final UpdateUser<?> userUpdate = new User(1L);
 
     User existingUser = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
