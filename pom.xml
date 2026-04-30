@@ -90,7 +90,7 @@
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
         <org.owasp.dependency.check.version>12.2.1</org.owasp.dependency.check.version>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
-        <org.apache.maven.plugin.compiler.version>3.8.1</org.apache.maven.plugin.compiler.version>
+        <org.apache.maven.plugin.compiler.version>3.15.0</org.apache.maven.plugin.compiler.version>
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <org.apache.maven.plugin.antrun.version>3.2.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
