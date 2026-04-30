@@ -3,7 +3,6 @@ package io.trishul.money.tax.model;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.tax.rate.TaxRate;
 import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;

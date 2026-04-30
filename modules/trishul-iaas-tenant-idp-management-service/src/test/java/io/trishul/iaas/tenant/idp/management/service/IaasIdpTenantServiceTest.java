@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Collections;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
@@ -191,8 +192,8 @@ class IaasIdpTenantServiceTest {
   }
 
   @Test
-  void testAdd_ReturnsNull_WhenArgIsNull() {
-    assertNull(service.add(null));
+  void testAdd_ReturnsEmptyList_WhenArgIsNull() {
+    assertEquals(Collections.emptyList(), service.add(null));
   }
 
   @Test
@@ -221,8 +222,8 @@ class IaasIdpTenantServiceTest {
   }
 
   @Test
-  void testPut_ReturnsNull_WhenArgIsNull() {
-    assertNull(service.put(null));
+  void testPut_ReturnsEmptyList_WhenArgIsNull() {
+    assertEquals(Collections.emptyList(), service.put(null));
   }
 
   @Test
@@ -266,7 +267,7 @@ class IaasIdpTenantServiceTest {
   }
 
   @Test
-  void testPatch_ReturnsNull_WhenArgIsNull() {
-    assertNull(service.patch(null));
+  void testPatch_ReturnsEmptyList_WhenArgIsNull() {
+    assertEquals(Collections.emptyList(), service.patch(null));
   }
 }

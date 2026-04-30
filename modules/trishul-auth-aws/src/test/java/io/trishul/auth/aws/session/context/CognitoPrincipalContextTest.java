@@ -1,6 +1,7 @@
 package io.trishul.auth.aws.session.context;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import io.trishul.auth.session.context.PrincipalContext;
@@ -48,5 +49,13 @@ class CognitoPrincipalContextTest {
   @Test
   void testGetRoles_ReturnsTheCognitoScopes() {
     assertEquals(Arrays.asList("SCOPE_1", "SCOPE_2"), ctx.getRoles());
+  }
+
+  @Test
+  void testFromJwt_ThrowsIllegalArgumentException_WhenJwtIsNull() {
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+      CognitoPrincipalContext.fromJwt(null);
+    });
+    assertEquals("Jwt cannot be null", exception.getMessage());
   }
 }

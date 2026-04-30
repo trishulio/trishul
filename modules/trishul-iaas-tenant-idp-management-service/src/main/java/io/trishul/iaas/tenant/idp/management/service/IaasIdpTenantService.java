@@ -10,6 +10,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;

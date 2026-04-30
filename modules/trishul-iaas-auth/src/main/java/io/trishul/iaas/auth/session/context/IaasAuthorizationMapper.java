@@ -9,9 +9,9 @@ import org.mapstruct.factory.Mappers;
 public interface IaasAuthorizationMapper {
   static final IaasAuthorizationMapper INSTANCE = Mappers.getMapper(IaasAuthorizationMapper.class);
 
-  @Mapping(source = BaseIaasAuthorization.ATTR_ACCESS_KEY_ID, target = "accessKeyId")
-  @Mapping(source = BaseIaasAuthorization.ATTR_ACCESS_SECRET_KEY, target = "accessSecretKey")
-  @Mapping(source = BaseIaasAuthorization.ATTR_SESSION_TOKEN, target = "sessionToken")
-  @Mapping(source = BaseIaasAuthorization.ATTR_EXPIRATION, target = "expiration")
+  @Mapping(source = IaasAuthorization.ATTR_ACCESS_KEY_ID, target = "accessKeyId")
+  @Mapping(source = IaasAuthorization.ATTR_ACCESS_SECRET_KEY, target = "accessSecretKey")
+  @Mapping(source = IaasAuthorization.ATTR_SESSION_TOKEN, target = "sessionToken")
+  @Mapping(source = IaasAuthorization.ATTR_EXPIRATION, target = "expiration")
   IaasAuthorizationDto toDto(IaasAuthorization authorization);
 }

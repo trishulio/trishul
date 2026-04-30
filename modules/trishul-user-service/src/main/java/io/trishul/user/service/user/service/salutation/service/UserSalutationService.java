@@ -1,9 +1,9 @@
 package io.trishul.user.service.user.service.salutation.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
-import io.trishul.user.model.User;
 import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
 import java.util.Set;

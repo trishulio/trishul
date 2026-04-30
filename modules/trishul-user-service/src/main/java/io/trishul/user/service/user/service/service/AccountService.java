@@ -10,6 +10,7 @@ import io.trishul.auth.session.context.PrincipalContext;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
+import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.User;
 import io.trishul.user.service.user.service.repository.UserRepository;
 import jakarta.transaction.Transactional;

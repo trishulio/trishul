@@ -10,6 +10,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -124,7 +125,7 @@ class UserTest {
 
   @Test
   void testAccessRoles() {
-    assertNull(user.getRoles());
+    assertEquals(Collections.emptyList(), user.getRoles());
     user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
     assertEquals(List.of(new UserRole(1L), new UserRole(2L)), user.getRoles());
 
@@ -134,14 +135,14 @@ class UserTest {
 
   @Test
   void testAccessRoles_NullValues() {
-    assertNull(user.getRoles());
+    assertEquals(Collections.emptyList(), user.getRoles());
     user.setRoles(null);
-    assertNull(user.getRoles());
+    assertEquals(Collections.emptyList(), user.getRoles());
   }
 
   @Test
   void testAccessRoles_OverridesOldRoleAndAddNewOnes() {
-    assertNull(user.getRoles());
+    assertEquals(Collections.emptyList(), user.getRoles());
     user.setRoles(List.of(new UserRole(1L)));
     assertEquals(List.of(new UserRole(1L)), user.getRoles());
 
@@ -154,7 +155,7 @@ class UserTest {
 
   @Test
   void testGetRoleBindings() {
-    assertNull(user.getRoles());
+    assertEquals(Collections.emptyList(), user.getRoles());
     user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
 
     List<UserRoleBinding> expected = List.of(new UserRoleBinding(null, new UserRole(1L), user),

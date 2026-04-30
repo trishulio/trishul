@@ -36,43 +36,43 @@ class AddressDtoTest {
 
   @Test
   void testGetSetId() {
-    addressDto.setId(1L);
+    assertSame(addressDto, addressDto.setId(1L));
     assertSame(1L, addressDto.getId());
   }
 
   @Test
   void testGetSetAddressLine1() {
-    addressDto.setAddressLine1("line1");
+    assertSame(addressDto, addressDto.setAddressLine1("line1"));
     assertSame("line1", addressDto.getAddressLine1());
   }
 
   @Test
   void testGetSetAddressLine2() {
-    addressDto.setAddressLine2("line2");
+    assertSame(addressDto, addressDto.setAddressLine2("line2"));
     assertSame("line2", addressDto.getAddressLine2());
   }
 
   @Test
   void testGetSetCity() {
-    addressDto.setCity("city");
+    assertSame(addressDto, addressDto.setCity("city"));
     assertSame("city", addressDto.getCity());
   }
 
   @Test
   void testGetSetCountry() {
-    addressDto.setCountry("country");
+    assertSame(addressDto, addressDto.setCountry("country"));
     assertSame("country", addressDto.getCountry());
   }
 
   @Test
   void testGetSetProvince() {
-    addressDto.setProvince("province");
+    assertSame(addressDto, addressDto.setProvince("province"));
     assertSame("province", addressDto.getProvince());
   }
 
   @Test
   void testGetPostalCode() {
-    addressDto.setPostalCode("postalCode");
+    assertSame(addressDto, addressDto.setPostalCode("postalCode"));
     assertSame("postalCode", addressDto.getPostalCode());
   }
 }

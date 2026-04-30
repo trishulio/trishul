@@ -1,6 +1,7 @@
 package io.trishul.crud.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -102,8 +103,8 @@ class CrudRepoServiceTest {
   }
 
   @Test
-  void testGetByIds_ReturnsNull_WhenProvidersIsNull() {
-    assertNull(this.service.getByIds(null));
+  void testGetByIds_ReturnsEmptyList_WhenProvidersIsNull() {
+    assertEquals(Collections.emptyList(), this.service.getByIds(null));
   }
 
   @Test
@@ -124,8 +125,8 @@ class CrudRepoServiceTest {
   }
 
   @Test
-  void testGetByAccessorIds_ReturnsNull_WhenAccessorsAreNull() {
-    assertNull(this.service.getByAccessorIds(null, accessor -> null));
+  void testGetByAccessorIds_ReturnsEmptyList_WhenAccessorsAreNull() {
+    assertEquals(Collections.emptyList(), this.service.getByAccessorIds(null, accessor -> null));
   }
 
   @Test

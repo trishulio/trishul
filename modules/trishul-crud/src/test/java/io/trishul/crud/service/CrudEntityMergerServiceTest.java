@@ -1,6 +1,7 @@
 package io.trishul.crud.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,8 +29,8 @@ class CrudEntityMergerServiceTest {
   }
 
   @Test
-  void testGetAddEntities_ReturnsNull_WhenAdditionsAreNull() {
-    assertNull(this.service.getAddEntities(null));
+  void testGetAddEntities_ReturnsEmptyList_WhenAdditionsAreNull() {
+    assertEquals(Collections.emptyList(), this.service.getAddEntities(null));
   }
 
   @Test

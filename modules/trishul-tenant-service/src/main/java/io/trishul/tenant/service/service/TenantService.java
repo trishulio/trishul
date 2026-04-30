@@ -23,6 +23,7 @@ import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantAccessor;
+import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;

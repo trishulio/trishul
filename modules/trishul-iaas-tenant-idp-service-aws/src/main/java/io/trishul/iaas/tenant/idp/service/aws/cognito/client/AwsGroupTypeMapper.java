@@ -13,13 +13,13 @@ public interface AwsGroupTypeMapper extends IaasEntityMapper<GroupType, IaasIdpT
   final AwsGroupTypeMapper INSTANCE = Mappers.getMapper(AwsGroupTypeMapper.class);
 
   @Override
-  @Mapping(target = Audited.ATTR_CREATED_AT, source = "creationDate")
-  @Mapping(target = BaseIaasIdpTenant.ATTR_NAME, source = "groupName")
-  @Mapping(target = Identified.ATTR_ID, ignore = true) // ID is same as name
-  @Mapping(target = BaseIaasIdpTenant.ATTR_DESCRIPTION, source = "description")
-  @Mapping(target = Audited.ATTR_LAST_UPDATED, source = "lastModifiedDate")
-  @Mapping(target = Versioned.ATTR_VERSION, ignore = true)
-  @Mapping(target = IaasRoleAccessor.ATTR_IAAS_ROLE, ignore = true)
+  @Mapping(target = IaasIdpTenant.ATTR_CREATED_AT, source = "creationDate")
+  @Mapping(target = IaasIdpTenant.ATTR_NAME, source = "groupName")
+  @Mapping(target = IaasIdpTenant.ATTR_ID, ignore = true) // ID is same as name
+  @Mapping(target = IaasIdpTenant.ATTR_DESCRIPTION, source = "description")
+  @Mapping(target = IaasIdpTenant.ATTR_LAST_UPDATED, source = "lastModifiedDate")
+  @Mapping(target = IaasIdpTenant.ATTR_VERSION, ignore = true)
+  @Mapping(target = IaasIdpTenant.ATTR_IAAS_ROLE, ignore = true)
   // TODO: If there's a use-case implement a mapper from Role ARN to IaasRole
   IaasIdpTenant fromIaasEntity(GroupType entity);
 }

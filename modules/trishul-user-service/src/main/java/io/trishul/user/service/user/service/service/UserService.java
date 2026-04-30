@@ -27,9 +27,9 @@ import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.UpdateUser;
 import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
-import io.trishul.user.role.model.UserRole;
+import io.trishul.user.salutation.model.UserSalutationAccessor;
 import io.trishul.user.service.user.service.repository.UserRepository;
-import io.trishul.user.status.UserStatus;
+import io.trishul.user.status.UserStatusAccessor;
 import jakarta.transaction.Transactional;
 
 @Transactional
