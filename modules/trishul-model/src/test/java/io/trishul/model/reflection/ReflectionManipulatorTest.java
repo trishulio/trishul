@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.trishul.test.bom.model.Dummy;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +18,8 @@ import org.junit.jupiter.api.Test;
 
 class ReflectionManipulatorTest {
   public static class TestData {
-    public TestData() {}
+    public TestData() {
+    }
 
     public TestData(int x) {
       this.setX(x);
@@ -40,6 +43,30 @@ class ReflectionManipulatorTest {
 
     public void setY(int y) {
       this.y = y;
+    }
+  }
+
+  public static class TestDataWithStringField {
+    private String name;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+  }
+
+  public static class TestDataWithoutSetter {
+    private final int value;
+
+    public TestDataWithoutSetter(int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
     }
   }
 
@@ -135,8 +162,8 @@ class ReflectionManipulatorTest {
 
   @Test
   void testOuterJoin_ThrowsException_WhenEitherObjectIsNull() {
-    NullPointerException exception1
-        = assertThrows(NullPointerException.class, () -> this.util.copy(null, null, pd -> true));
+    NullPointerException exception1 = assertThrows(NullPointerException.class,
+        () -> this.util.copy(null, null, pd -> true));
 
     assertEquals("Outer Joins can not be on null objects", exception1.getMessage());
     NullPointerException exception2 = assertThrows(NullPointerException.class,
@@ -254,5 +281,49 @@ class ReflectionManipulatorTest {
 
     assertEquals(1, o.getX());
     assertEquals(2, o.getY());
+  }
+
+  @Test
+  void testInvokeSetter_SetsValue_WhenPropertyDescriptorHasReadMethod() throws IntrospectionException {
+    TestDataWithStringField obj = new TestDataWithStringField();
+    PropertyDescriptor pd = new PropertyDescriptor("name", TestDataWithStringField.class);
+
+    util.invokeSetter(obj, pd, "test-value");
+
+    assertEquals("test-value", obj.getName());
+  }
+
+  @Test
+  void testInvokeSetter_SetsValue_UsingDerivedSetterName_WhenReadMethodExists()
+      throws IntrospectionException {
+    TestData obj = new TestData();
+    PropertyDescriptor pd = new PropertyDescriptor("x", TestData.class);
+
+    util.invokeSetter(obj, pd, 42);
+
+    assertEquals(42, obj.getX());
+  }
+
+  @Test
+  void testInvokeSetter_DoesNotThrow_WhenSetterMethodDoesNotExist() throws IntrospectionException {
+    TestDataWithoutSetter obj = new TestDataWithoutSetter(10);
+    PropertyDescriptor pd = new PropertyDescriptor("value", TestDataWithoutSetter.class, "getValue", null);
+
+    // Should not throw, just logs info about missing setter
+    util.invokeSetter(obj, pd, 20);
+
+    // Value should remain unchanged since no setter exists
+    assertEquals(10, obj.getValue());
+  }
+
+  @Test
+  void testInvokeSetter_SetsNullValue_WhenValueIsNull() throws IntrospectionException {
+    TestDataWithStringField obj = new TestDataWithStringField();
+    obj.setName("initial");
+    PropertyDescriptor pd = new PropertyDescriptor("name", TestDataWithStringField.class);
+
+    util.invokeSetter(obj, pd, null);
+
+    assertNull(obj.getName());
   }
 }

@@ -1,21 +1,35 @@
 package io.trishul.model.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 class JacksonJsonMapperTest {
   public static class TestData {
     private int x, y;
 
-    public TestData() {}
+    public TestData() {
+    }
 
     public TestData(int x, int y) {
       this.x = x;
@@ -73,6 +87,7 @@ class JacksonJsonMapperTest {
     assertEquals(10, data.getX());
     assertEquals(20, data.getY());
   }
+
   @Test
   void testLocalDateTimeDeserialization_ReturnsTimestamp_WhenStringIsNotNull() {
     String json = "\"2020-12-31T12:00:00\"";
@@ -105,6 +120,83 @@ class JacksonJsonMapperTest {
     }
 
     OverrideToStringWithJackson o = new OverrideToStringWithJackson();
-    RuntimeException exception = assertThrows(RuntimeException.class, () -> mapper.writeString(o));
+    assertThrows(RuntimeException.class, () -> mapper.writeString(o));
+  }
+
+  @Test
+  void testAddSerializer_ReturnsSimpleModule() {
+    JacksonJsonMapper jacksonMapper = new JacksonJsonMapper(new ObjectMapper());
+
+    JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
+      @Override
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeString("custom");
+      }
+    };
+
+    SimpleModule result = jacksonMapper.addSerializer(TestData.class, serializer);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAddDeserializer_ReturnsSimpleModule() {
+    JacksonJsonMapper jacksonMapper = new JacksonJsonMapper(new ObjectMapper());
+
+    JsonDeserializer<TestData> deserializer = new JsonDeserializer<TestData>() {
+      @Override
+      public TestData deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        return new TestData(99, 99);
+      }
+    };
+
+    SimpleModule result = jacksonMapper.addDeserializer(TestData.class, deserializer);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testRegisterModule_RegistersSerializerAndDeserializer() {
+    JacksonJsonMapper jacksonMapper = new JacksonJsonMapper(new ObjectMapper());
+
+    JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
+      @Override
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeString("custom:" + value.getX() + ":" + value.getY());
+      }
+    };
+
+    jacksonMapper.addSerializer(TestData.class, serializer);
+    jacksonMapper.registerModule();
+
+    String result = jacksonMapper.writeString(new TestData(10, 20));
+    assertEquals("\"custom:10:20\"", result);
+  }
+
+  @Test
+  void testRegisterModule_ResetsModuleAfterRegistration() {
+    JacksonJsonMapper jacksonMapper = new JacksonJsonMapper(new ObjectMapper());
+
+    JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
+      @Override
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeString("custom");
+      }
+    };
+
+    jacksonMapper.addSerializer(TestData.class, serializer);
+    jacksonMapper.registerModule();
+
+    // Module should be reset, so adding new serializer should work
+    assertNotNull(jacksonMapper.module);
+  }
+
+  @Test
+  void testReadString_ThrowsRuntimeException_WhenJsonIsInvalid() {
+    String invalidJson = "not valid json";
+
+    RuntimeException exception = assertThrows(RuntimeException.class,
+        () -> mapper.readString(invalidJson, TestData.class));
+    assertTrue(exception.getMessage().contains("Failed to de-serialize string"));
   }
 }

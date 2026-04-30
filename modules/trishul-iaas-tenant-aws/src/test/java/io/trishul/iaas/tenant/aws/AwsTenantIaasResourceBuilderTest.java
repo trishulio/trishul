@@ -1,194 +1,193 @@
-// TODO: Reenable
-// package io.trishul.iaas.tenant.aws;
+package io.trishul.iaas.tenant.aws;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.mockito.ArgumentMatchers.anyString;
-// import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import com.amazonaws.services.s3.model.CORSRule.AllowedMethods;
+import io.trishul.iaas.access.policy.model.IaasPolicy;
+import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
+import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
+import io.trishul.iaas.access.role.model.IaasRole;
+import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
+import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
+import io.trishul.object.store.model.IaasObjectStore;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-// import java.util.List;
+class AwsTenantIaasResourceBuilderTest {
+  private AwsTenantIaasResourceBuilder builder;
+  private AwsDocumentTemplates mTemplates;
 
-// import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.Test;
+  @BeforeEach
+  void init() {
+    mTemplates = mock(AwsDocumentTemplates.class);
+    this.builder = new AwsTenantIaasResourceBuilder(mTemplates, List.of("*"),
+        List.of(AllowedMethods.PUT.toString(), AllowedMethods.POST.toString(),
+            AllowedMethods.DELETE.toString()),
+        List.of("http://wwww.localhost:3000/", "https://locahost//", "https://locahost//path",
+            "https://locahost/path//"),
+        true, true, true, true);
+  }
 
-// import com.amazonaws.services.s3.model.CORSRule.AllowedMethods;
+  @Test
+  void testConstructor_WithNullLists_DoesNotThrowException() {
+    AwsTenantIaasResourceBuilder nullListBuilder =
+        new AwsTenantIaasResourceBuilder(mTemplates, null, null, null, true, true, true, true);
+    assertNotNull(nullListBuilder);
+  }
 
-// import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
-// import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
-// import io.trishul.object.store.model.IaasObjectStore;
-// import
-// io.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
-// import
-// io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
-// import io.trishul.iaas.access.policy.model.IaasPolicy;
-// import io.trishul.iaas.access.role.model.IaasRole;
-// import
-// io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
-// import
-// io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
-// import io.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilder;
-// import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
+  @Test
+  void testGetRoleName_ReturnsRoleNameFromTemplateWithTenantName() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_NAME").when(mTemplates)
+        .getTenantIaasRoleName(anyString());
 
-// public class AwsTenantIaasResourceBuilderTest {
-// private TenantIaasResourceBuilder builder;
-// private AwsDocumentTemplates mTemplates;
+    String roleName = builder.getRoleId("T1");
 
-// @BeforeEach
-// public void init() {
-// mTemplates = mock(AwsDocumentTemplates.class);
-// this.builder = new AwsTenantIaasResourceBuilder(mTemplates, List.of("*"),
-// List.of(AllowedMethods.PUT.toString(), AllowedMethods.POST.toString(),
-// AllowedMethods.DELETE.toString()), List.of("http://wwww.localhost:3000/",
-// "https://locahost//",
-// "https://locahost//path", "https://locahost/path//"), true, true, true,
-// true);
-// }
+    assertEquals("T1_ROLE_NAME", roleName);
+  }
 
-// @Test
-// public void testGetRoleName_ReturnsRoleNameFromTemplateWithTenantName() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_ROLE_NAME").when(mTemplates).getTenantIaasRoleName(anyString());
+  @Test
+  void testBuildRole_ReturnsRoleObjectFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_NAME").when(mTemplates)
+        .getTenantIaasRoleName(anyString());
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_DESCRIPTION").when(mTemplates)
+        .getTenantIaasRoleDescription(anyString());
+    doReturn("ROLE_DOC").when(mTemplates).getCognitoIdAssumeRolePolicyDoc();
 
-// String roleName = builder.getRoleId("T1");
+    IaasRole role = builder.buildRole(new IaasIdpTenant("T1"));
 
-// assertEquals("T1_ROLE_NAME", roleName);
-// }
+    assertEquals("T1_ROLE_NAME", role.getName());
+    assertEquals("T1_ROLE_DESCRIPTION", role.getDescription());
+    assertEquals("ROLE_DOC", role.getAssumePolicyDocument());
+  }
 
-// @Test
-// public void testBuildRole_ReturnsRoleObjectFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_ROLE_NAME").when(mTemplates).getTenantIaasRoleName(anyString());
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_ROLE_DESCRIPTION").when(mTemplates).getTenantIaasRoleDescription(anyString());
-// doReturn("ROLE_DOC").when(mTemplates).getCognitoIdAssumeRolePolicyDoc();
+  @Test
+  void testGetVfsPolicyName_ReturnsVfsPolicyNameFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_POLICY_NAME").when(mTemplates)
+        .getTenantVfsPolicyName(anyString());
 
-// IaasRole role = builder.buildRole(new IaasIdpTenant("T1"));
+    String policyName = builder.getVfsPolicyId("T1");
 
-// IaasRole expected = new IaasRole("T1_ROLE_NAME", "T1_ROLE_DESCRIPTION",
-// "ROLE_DOC", null,
-// null, null, null, null);
+    assertEquals("T1_POLICY_NAME", policyName);
+  }
 
-// assertEquals(expected, role);
-// }
+  @Test
+  void testBuildVfsPolicy_ReturnsVfsPolicyObjectFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_POLICY_NAME").when(mTemplates)
+        .getTenantVfsPolicyName(anyString());
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_POLICY_DESCRIPTION").when(mTemplates)
+        .getTenantVfsPolicyDescription(anyString());
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_POLICY_DOC").when(mTemplates)
+        .getTenantBucketPolicyDoc(anyString());
 
-// @Test
-// public void testGetVfsPolicyName_ReturnsVfsPolicyNameFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_POLICY_NAME").when(mTemplates).getTenantVfsPolicyName(anyString());
+    IaasPolicy policy = builder.buildVfsPolicy(new IaasIdpTenant("T1"));
 
-// String policyName = builder.getVfsPolicyId("T1");
+    assertEquals("T1_POLICY_NAME", policy.getName());
+    assertEquals("T1_POLICY_DESCRIPTION", policy.getDescription());
+    assertEquals("T1_POLICY_DOC", policy.getDocument());
+  }
 
-// assertEquals("T1_POLICY_NAME", policyName);
-// }
+  @Test
+  void testGetObjectStoreName_ReturnsObjectStoreNameFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_OBJECT_STORE_NAME").when(mTemplates)
+        .getTenantVfsBucketName(anyString());
 
-// @Test
-// public void testBuildVfsPolicy_ReturnsVfsPolicyObjectFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_POLICY_NAME").when(mTemplates).getTenantVfsPolicyName(anyString());
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_POLICY_DESCRIPTION").when(mTemplates).getTenantVfsPolicyDescription(anyString());
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_POLICY_DOC").when(mTemplates).getTenantBucketPolicyDoc(anyString());
+    String objectStoreName = builder.getObjectStoreId("T1");
 
-// IaasPolicy policy = builder.buildVfsPolicy(new IaasIdpTenant("T1"));
+    assertEquals("T1_OBJECT_STORE_NAME", objectStoreName);
+  }
 
-// IaasPolicy expected = new IaasPolicy("T1_POLICY_NAME", "T1_POLICY_DOC",
-// "T1_POLICY_DESCRIPTION", null, null, null, null);
+  @Test
+  void testBuildObjectStore_ReturnsObjectStoreObjectFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_OBJECT_STORE_NAME").when(mTemplates)
+        .getTenantVfsBucketName(anyString());
 
-// assertEquals(expected, policy);
-// }
+    IaasObjectStore objectStore = builder.buildObjectStore(new IaasIdpTenant("T1"));
 
-// @Test
-// public void testGetObjectStoreName_ReturnsObjectStoreNameFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_OBJECT_STORE_NAME").when(mTemplates).getTenantVfsBucketName(anyString());
+    assertEquals("T1_OBJECT_STORE_NAME", objectStore.getName());
+  }
 
-// String objectStoreName = builder.getObjectStoreId("T1");
+  @Test
+  void testBuildVfsAttachmentId_ReturnsAttachmentIdFromTenant() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_ROLE_NAME").when(mTemplates)
+        .getTenantIaasRoleName(anyString());
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_POLICY_NAME").when(mTemplates)
+        .getTenantVfsPolicyName(anyString());
 
-// assertEquals("T1_OBJECT_STORE_NAME", objectStoreName);
-// }
+    IaasRolePolicyAttachmentId id = builder.buildVfsAttachmentId("T1");
 
-// @Test
-// public void testBuildObjectStore_ReturnsObjectStoreObjectFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_OBJECT_STORE_NAME").when(mTemplates).getTenantVfsBucketName(anyString());
+    assertEquals("T1_ROLE_NAME", id.getRoleId());
+    assertEquals("T1_POLICY_NAME", id.getPolicyId());
+  }
 
-// IaasObjectStore objectStore = builder.buildObjectStore(new
-// IaasIdpTenant("T1"));
+  @Test
+  void testBuildAttachment_ReturnsAttachmentFromRoleAndPolicy() {
+    IaasRole role = new IaasRole("T1_ROLE");
+    IaasPolicy policy = new IaasPolicy("T1_POLICY");
 
-// IaasObjectStore expected = new IaasObjectStore("T1_OBJECT_STORE_NAME");
+    IaasRolePolicyAttachment attachment = builder.buildAttachment(role, policy);
 
-// assertEquals(expected, objectStore);
-// }
+    assertEquals("T1_ROLE", attachment.getIaasRole().getName());
+    assertEquals("T1_POLICY", attachment.getIaasPolicy().getName());
+  }
 
-// @Test
-// public void testBuildVfsAttachmentId_ReturnsAttachmentIdFromTenant() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_ROLE_NAME").when(mTemplates).getTenantIaasRoleName(anyString());
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_POLICY_NAME").when(mTemplates).getTenantVfsPolicyName(anyString());
+  @Test
+  void testBuildObjectStoreCorsConfiguration_ReturnsCrossOriginConfig() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_OBJECT_STORE_NAME").when(mTemplates)
+        .getTenantVfsBucketName(anyString());
 
-// IaasRolePolicyAttachmentId id = builder.buildVfsAttachmentId("T1");
+    IaasObjectStoreCorsConfiguration actual =
+        builder.buildObjectStoreCorsConfiguration(new IaasIdpTenant("T1"));
 
-// IaasRolePolicyAttachmentId expected = new
-// IaasRolePolicyAttachmentId("T1_ROLE_NAME",
-// "T1_POLICY_NAME");
-// assertEquals(expected, id);
-// }
+    assertEquals("T1_OBJECT_STORE_NAME", actual.getId());
+    assertEquals("T1_OBJECT_STORE_NAME", actual.getBucketName());
 
-// @Test
-// public void testBuildAttachment_ReturnsAttachmentFromRoleAndPolicy() {
-// IaasRolePolicyAttachment attachment = builder.buildAttachment(new
-// IaasRole("T1_ROLE"),
-// new IaasPolicy("T1_POLICY"));
+    assertEquals(1, actual.getBucketCrossOriginConfiguration().getRules().size());
+    assertEquals(List.of("*"),
+        actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedHeaders());
+    assertEquals(List.of(AllowedMethods.PUT, AllowedMethods.POST, AllowedMethods.DELETE),
+        actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedMethods());
+    // Trailing slashes are stripped except for double slashes in paths
+    assertEquals(
+        List.of("http://wwww.localhost:3000", "https://locahost", "https://locahost//path",
+            "https://locahost/path"),
+        actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedOrigins());
+  }
 
-// IaasRolePolicyAttachment expected = new IaasRolePolicyAttachment(new
-// IaasRole("T1_ROLE"),
-// new IaasPolicy("T1_POLICY"));
+  @Test
+  void testBuildPublicAccessBlock_ReturnsPublicAccessBlock() {
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_OBJECT_STORE_NAME").when(mTemplates)
+        .getTenantVfsBucketName(anyString());
 
-// assertEquals(expected, attachment);
-// }
+    IaasObjectStoreAccessConfig actual = builder.buildPublicAccessBlock(new IaasIdpTenant("T1"));
 
-// @Test
-// public void testBuildObjectStoreCorsConfiguration_ReturnsCrossOriginConfig()
-// {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_OBJECT_STORE_NAME").when(mTemplates).getTenantVfsBucketName(anyString());
+    assertEquals("T1_OBJECT_STORE_NAME", actual.getId());
+    assertEquals("T1_OBJECT_STORE_NAME", actual.getObjectStoreName());
+    assertEquals(true, actual.getPublicAccessBlockConfig().getBlockPublicAcls());
+    assertEquals(true, actual.getPublicAccessBlockConfig().getBlockPublicPolicy());
+    assertEquals(true, actual.getPublicAccessBlockConfig().getIgnorePublicAcls());
+    assertEquals(true, actual.getPublicAccessBlockConfig().getRestrictPublicBuckets());
+  }
 
-// IaasObjectStoreCorsConfiguration actual =
-// builder.buildObjectStoreCorsConfiguration(new
-// IaasIdpTenant("T1"));
+  @Test
+  void testBuildPublicAccessBlock_ReturnsFalseFlags_WhenConstructedWithFalse() {
+    AwsTenantIaasResourceBuilder falseBuilder = new AwsTenantIaasResourceBuilder(mTemplates,
+        List.of("*"), List.of(AllowedMethods.GET.toString()), List.of("http://localhost"), false,
+        false, false, false);
 
-// assertEquals("T1_OBJECT_STORE_NAME", actual.getId());
-// assertEquals("T1_OBJECT_STORE_NAME", actual.getBucketName());
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_BUCKET").when(mTemplates)
+        .getTenantVfsBucketName(anyString());
 
-// assertEquals(1,
-// actual.getBucketCrossOriginConfiguration().getRules().size());
-// assertEquals(List.of("*"),
-// actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedHeaders());
-// assertEquals(List.of(AllowedMethods.PUT, AllowedMethods.POST,
-// AllowedMethods.DELETE),
-// actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedMethods());
-// assertEquals(List.of("http://wwww.localhost:3000", "https://locahost",
-// "https://locahost//path", "https://locahost/path"),
-// actual.getBucketCrossOriginConfiguration().getRules().get(0).getAllowedOrigins());
-// }
+    IaasObjectStoreAccessConfig actual = falseBuilder.buildPublicAccessBlock(new IaasIdpTenant("T2"));
 
-// @Test
-// public void testBuildPublicAccessBlock_ReturnsPublicAccessBlock() {
-// doAnswer(inv -> inv.getArgument(0, String.class) +
-// "_OBJECT_STORE_NAME").when(mTemplates).getTenantVfsBucketName(anyString());
-
-// IaasObjectStoreAccessConfig actual = builder.buildPublicAccessBlock(new
-// IaasIdpTenant("T1"));
-
-// assertEquals("T1_OBJECT_STORE_NAME", actual.getId());
-// assertEquals("T1_OBJECT_STORE_NAME", actual.getObjectStoreName());
-// assertEquals(true, actual.getPublicAccessBlockConfig().getBlockPublicAcls());
-// assertEquals(true,
-// actual.getPublicAccessBlockConfig().getBlockPublicPolicy());
-// assertEquals(true,
-// actual.getPublicAccessBlockConfig().getIgnorePublicAcls());
-// assertEquals(true,
-// actual.getPublicAccessBlockConfig().getRestrictPublicBuckets());
-// }
-// }
+    assertEquals(false, actual.getPublicAccessBlockConfig().getBlockPublicAcls());
+    assertEquals(false, actual.getPublicAccessBlockConfig().getBlockPublicPolicy());
+    assertEquals(false, actual.getPublicAccessBlockConfig().getIgnorePublicAcls());
+    assertEquals(false, actual.getPublicAccessBlockConfig().getRestrictPublicBuckets());
+  }
+}

@@ -1,5 +1,6 @@
 package io.trishul.model.validation;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -16,6 +17,12 @@ class NullOrNotBlankValidatorTest {
   void init() {
     validator = new NullOrNotBlankValidator();
     mockContext = mock(ConstraintValidatorContext.class);
+  }
+
+  @Test
+  void testInitialize_DoesNotThrowException() {
+    NullOrNotBlank mockAnnotation = mock(NullOrNotBlank.class);
+    assertDoesNotThrow(() -> validator.initialize(mockAnnotation));
   }
 
   @Test
