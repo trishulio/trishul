@@ -24,7 +24,6 @@ import io.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor;
 import io.trishul.test.util.MockUtilProvider;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +102,7 @@ class IaasObjectStoreFileServiceTest {
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     IaasObjectStoreFile attachment = service.get(URI.create("URI"));
 
@@ -121,7 +120,7 @@ class IaasObjectStoreFileServiceTest {
   void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasObjectStoreFile> attachments = service.getAll(Set.of(URI.create("URI")));
 
@@ -133,7 +132,7 @@ class IaasObjectStoreFileServiceTest {
   void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasObjectStoreFile> attachments = service.getByIds(Set.of(() -> URI.create("URI")));
 
@@ -146,7 +145,7 @@ class IaasObjectStoreFileServiceTest {
   void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     class DummyIaasObjectStoreFileAccessor
         implements IaasObjectStoreFileAccessor<DummyIaasObjectStoreFileAccessor> {
@@ -175,17 +174,17 @@ class IaasObjectStoreFileServiceTest {
 
     List<BaseIaasObjectStoreFile<?>> additions = List.of(
         new IaasObjectStoreFile(URI.create("URI_1"), LocalDateTime.of(2000, 1, 1, 0, 0),
-            new URL("http://localhost/1")),
+            URI.create("http://localhost/1").toURL()),
         new IaasObjectStoreFile(URI.create("URI_2"), LocalDateTime.of(2000, 2, 1, 0, 0),
-            new URL("http://localhost/2")));
+            URI.create("http://localhost/2").toURL()));
 
     List<IaasObjectStoreFile> attachments = service.add(additions);
 
     List<IaasObjectStoreFile> expected = List.of(
         new IaasObjectStoreFile(URI.create("URI_1"), LocalDateTime.of(2000, 1, 1, 0, 0),
-            new URL("http://localhost/1")),
+            URI.create("http://localhost/1").toURL()),
         new IaasObjectStoreFile(URI.create("URI_2"), LocalDateTime.of(2000, 2, 1, 0, 0),
-            new URL("http://localhost/2")));
+            URI.create("http://localhost/2").toURL()));
 
     assertEquals(expected, attachments);
     verify(mIaasRepo, times(1)).add(attachments);
@@ -204,17 +203,17 @@ class IaasObjectStoreFileServiceTest {
 
     List<UpdateIaasObjectStoreFile<?>> updates = List.of(
         new IaasObjectStoreFile(URI.create("URI_1"), LocalDateTime.of(2000, 1, 1, 0, 0),
-            new URL("http://localhost/1")),
+            URI.create("http://localhost/1").toURL()),
         new IaasObjectStoreFile(URI.create("URI_2"), LocalDateTime.of(2000, 2, 1, 0, 0),
-            new URL("http://localhost/2")));
+            URI.create("http://localhost/2").toURL()));
 
     List<IaasObjectStoreFile> attachments = service.put(updates);
 
     List<IaasObjectStoreFile> expected = List.of(
         new IaasObjectStoreFile(URI.create("URI_1"), LocalDateTime.of(2000, 1, 1, 0, 0),
-            new URL("http://localhost/1")),
+            URI.create("http://localhost/1").toURL()),
         new IaasObjectStoreFile(URI.create("URI_2"), LocalDateTime.of(2000, 2, 1, 0, 0),
-            new URL("http://localhost/2")));
+            URI.create("http://localhost/2").toURL()));
 
     assertEquals(expected, attachments);
     verify(mIaasRepo, times(1)).put(attachments);
@@ -228,8 +227,8 @@ class IaasObjectStoreFileServiceTest {
 
   @Test
   void testPatch_ThrowsNotSupportedException() {
-    UnsupportedOperationException exception
-        = assertThrows(UnsupportedOperationException.class, () -> service.patch(List.of()));
+    UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+        () -> service.patch(List.of()));
 
     assertEquals("Patch is not supported for file urls", exception.getMessage());
   }

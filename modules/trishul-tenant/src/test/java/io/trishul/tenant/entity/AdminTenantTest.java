@@ -1,9 +1,9 @@
 package io.trishul.tenant.entity;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.net.URL;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,14 +14,13 @@ class AdminTenantTest {
   @BeforeEach
   void init() throws MalformedURLException {
     adminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "ADMIN",
-        new URL("http://localhost/"));
+        URI.create("http://localhost/").toURL());
   }
 
   @Test
   void testGetId() {
     assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000001"), adminTenant.getId());
   }
-
 
   @Test
   void testGetSetIsReady() {
@@ -35,6 +34,6 @@ class AdminTenantTest {
 
   @Test
   void testGetUrl() throws MalformedURLException {
-    assertEquals(new URL("http://localhost/"), adminTenant.getUrl());
+    assertEquals(URI.create("http://localhost/").toURL(), adminTenant.getUrl());
   }
 }

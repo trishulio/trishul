@@ -6,7 +6,7 @@ import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;
 import io.trishul.tenant.dto.UpdateTenantDto;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,14 +28,14 @@ class TenantMapperTest {
   @Test
   void testToDto_ReturnsDto_WhenPojoIsNotNull() throws MalformedURLException {
     Tenant tenant = new Tenant().setId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
-        .setName("TENANT_1").setUrl(new URL("http://localhost/")).setIsReady(true)
+        .setName("TENANT_1").setUrl(URI.create("http://localhost/").toURL()).setIsReady(true)
         .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
         .setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0));
 
     TenantDto dto = mapper.toDto(tenant);
 
     TenantDto expected = new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"),
-        "TENANT_1", new URL("http://localhost/"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+        "TENANT_1", URI.create("http://localhost/").toURL(), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2000, 1, 1, 0, 0));
 
     assertEquals(expected, dto);
@@ -48,14 +48,13 @@ class TenantMapperTest {
 
   @Test
   void testFromUpdateDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
-    UpdateTenantDto dto
-        = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
-            new URL("http://localhost/"));
+    UpdateTenantDto dto = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
+        URI.create("http://localhost/").toURL());
 
     Tenant tenant = mapper.fromUpdateDto(dto);
 
     Tenant expected = new Tenant().setId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
-        .setName("TENANT_1").setUrl(new URL("http://localhost/")).setIsReady(false);
+        .setName("TENANT_1").setUrl(URI.create("http://localhost/").toURL()).setIsReady(false);
     assertEquals(expected, tenant);
   }
 
@@ -66,11 +65,11 @@ class TenantMapperTest {
 
   @Test
   void testFromAddDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
-    AddTenantDto dto = new AddTenantDto("TENANT_1", new URL("http://localhost/"));
+    AddTenantDto dto = new AddTenantDto("TENANT_1", URI.create("http://localhost/").toURL());
     Tenant tenant = mapper.fromAddDto(dto);
 
-    Tenant expected
-        = new Tenant().setName("TENANT_1").setUrl(new URL("http://localhost/")).setIsReady(false);
+    Tenant expected = new Tenant().setName("TENANT_1").setUrl(URI.create("http://localhost/").toURL())
+        .setIsReady(false);
     assertEquals(expected, tenant);
   }
 }

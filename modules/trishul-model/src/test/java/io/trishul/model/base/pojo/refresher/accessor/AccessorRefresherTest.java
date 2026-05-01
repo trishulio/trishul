@@ -1,6 +1,7 @@
 package io.trishul.model.base.pojo.refresher.accessor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -58,8 +59,9 @@ class AccessorRefresherTest {
   private Function<Iterable<Long>, List<Entity>> mEntityRetriever;
 
   @BeforeEach
+  @SuppressWarnings("unchecked")
   void init() {
-    mEntityRetriever = mock(Function.class);
+    mEntityRetriever = (Function<Iterable<Long>, List<Entity>>) mock(Function.class);
 
     refresher = new AccessorRefresher<>(Entity.class, EntityAccessor::getEntity,
         (accessor, e) -> accessor.setEntity(e), mEntityRetriever);
@@ -107,9 +109,9 @@ class AccessorRefresherTest {
     refresher.refreshAccessors(consumers);
 
     assertSame(repoEntities.get(1), consumers.get(0).getEntity());
-    assertSame(null, consumers.get(1).getEntity());
+    assertNull(consumers.get(1).getEntity());
     assertSame(repoEntities.get(0), consumers.get(2).getEntity());
-    assertSame(null, consumers.get(3).getEntity());
+    assertNull(consumers.get(3).getEntity());
   }
 
   @Test

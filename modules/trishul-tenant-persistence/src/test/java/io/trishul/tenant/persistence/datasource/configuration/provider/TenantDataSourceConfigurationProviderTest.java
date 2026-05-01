@@ -17,7 +17,6 @@ import io.trishul.tenant.entity.TenantData;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ class TenantDataSourceConfigurationProviderTest {
   @BeforeEach
   void init() throws URISyntaxException, MalformedURLException {
     mAdminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"), "ADMIN",
-        new URL("http://localhost/"));
+        URI.create("http://localhost/").toURL());
     mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
         MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false);
     mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",

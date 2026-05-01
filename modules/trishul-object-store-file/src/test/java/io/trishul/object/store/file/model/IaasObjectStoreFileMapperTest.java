@@ -7,7 +7,6 @@ import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,13 +27,13 @@ class IaasObjectStoreFileMapperTest {
   @Test
   void testToDto_ReturnsDto_WhenPojoIsNotNull() throws MalformedURLException {
     IaasObjectStoreFile tenant = new IaasObjectStoreFile().setId(URI.create("file.txt"))
-        .setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)).setFileUrl(new URL("http://localhost/"));
+        .setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)).setFileUrl(URI.create("http://localhost/").toURL());
 
     IaasObjectStoreFileDto dto = mapper.toDto(tenant);
 
     IaasObjectStoreFileDto expected = new IaasObjectStoreFileDto()
         .setFileKey(URI.create("file.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setFileUrl(new URL("http://localhost/"));
+        .setFileUrl(URI.create("http://localhost/").toURL());
 
     assertEquals(expected, dto);
   }

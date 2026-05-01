@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,10 +26,10 @@ class IaasObjectStoreFileDtoTest {
   @Test
   void testAllArgConstructor() throws MalformedURLException {
     dto = new IaasObjectStoreFileDto(URI.create("file.txt"), LocalDateTime.of(2000, 1, 1, 0, 0),
-        new URL("http://localhost/"));
+        URI.create("http://localhost/").toURL());
 
     assertEquals(URI.create("file.txt"), dto.getFileKey());
-    assertEquals(new URL("http://localhost/"), dto.getFileUrl());
+    assertEquals(URI.create("http://localhost/").toURL(), dto.getFileUrl());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getExpiration());
   }
 
@@ -42,8 +41,8 @@ class IaasObjectStoreFileDtoTest {
 
   @Test
   void testAccessUrl() throws MalformedURLException {
-    dto.setFileUrl(new URL("http://localhost/"));
-    assertEquals(new URL("http://localhost/"), dto.getFileUrl());
+    dto.setFileUrl(URI.create("http://localhost/").toURL());
+    assertEquals(URI.create("http://localhost/").toURL(), dto.getFileUrl());
   }
 
   @Test

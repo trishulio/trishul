@@ -21,7 +21,6 @@ import io.trishul.model.mapper.LocalDateTimeMapper;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,12 +39,11 @@ class AwsS3FileClientTest {
 
   @Test
   void testGet_ReturnsObjectStoreWithGetPresignedURL() throws MalformedURLException {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor
-        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
-      return new URL("http://localhost/" + req.getKey());
+      return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file = client.get(URI.create("file.txt"));
@@ -53,23 +51,21 @@ class AwsS3FileClientTest {
     assertEquals(URI.create("file.txt"), file.getFileKey());
     assertThat(file.getExpiration()).isBetween(LocalDateTime.now(),
         LocalDateTime.now().plusSeconds(1005));
-    assertEquals(new URL("http://localhost/file.txt"), file.getFileUrl());
+    assertEquals(URI.create("http://localhost/file.txt").toURL(), file.getFileUrl());
 
     assertEquals(HttpMethod.GET, captor.getValue().getMethod());
   }
 
   @Test
   void testAdd_ReturnsObjectStoreWithPutPresignedURLAndRandomFileKey() {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor
-        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
-      return new URL("http://localhost/" + req.getKey());
+      return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
-    IaasObjectStoreFile file
-        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+    IaasObjectStoreFile file = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
 
     assertNotNull(file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
@@ -82,12 +78,11 @@ class AwsS3FileClientTest {
   @Test
   void testPut_ReturnsObjectStoreWithPutPresignedURLAndGivenFileKey()
       throws MalformedURLException {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor
-        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
-      return new URL("http://localhost/" + req.getKey());
+      return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file = client.put(new IaasObjectStoreFile()
@@ -95,7 +90,7 @@ class AwsS3FileClientTest {
 
     assertEquals(URI.create("note.txt"), file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
-    assertEquals(new URL("http://localhost/note.txt"), file.getFileUrl());
+    assertEquals(URI.create("http://localhost/note.txt").toURL(), file.getFileUrl());
 
     assertEquals(HttpMethod.PUT, captor.getValue().getMethod());
   }

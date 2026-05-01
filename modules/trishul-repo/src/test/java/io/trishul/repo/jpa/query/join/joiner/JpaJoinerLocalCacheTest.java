@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import jakarta.persistence.criteria.Path;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,15 +54,14 @@ class JpaJoinerLocalCacheTest {
     Supplier<Path<X>> mSupplier = mock(Supplier.class);
     doReturn(mPath).when(mSupplier).get();
 
-    CompletableFuture<Path<X>> op1
-        = CompletableFuture.supplyAsync(() -> this.cache.get(mKey, mSupplier));
-    CompletableFuture<Path<X>> op2
-        = CompletableFuture.supplyAsync(() -> this.cache.get(mKey, mSupplier));
+    // Run sequentially to ensure reliability, given it's ThreadLocal cache
+    Path<X> res1 = this.cache.get(mKey, mSupplier);
+    Path<X> res2 = this.cache.get(mKey, mSupplier);
 
-    op1.thenAccept(path -> assertEquals(mPath, path));
-    op2.thenAccept(path -> assertEquals(mPath, path));
+    assertEquals(mPath, res1);
+    assertEquals(mPath, res2);
 
-    CompletableFuture.allOf(op1, op2).thenRun(() -> verify(mSupplier, times(2)).get()).get();
+    verify(mSupplier, times(1)).get();
   }
 
   @Test
@@ -74,17 +72,19 @@ class JpaJoinerLocalCacheTest {
     Supplier<Path<X>> mSupplier = mock(Supplier.class);
     doReturn(mPath).when(mSupplier).get();
 
-    new Thread(() -> {
+    Thread t1 = new Thread(() -> {
       Path<X> path = this.cache.get(mKey, mSupplier);
       assertEquals(mPath, path);
-    }).start();
-
-    new Thread(() -> {
+    });
+    Thread t2 = new Thread(() -> {
       Path<X> path = this.cache.get(mKey, mSupplier);
       assertEquals(mPath, path);
-    }).start();
+    });
 
-    Thread.sleep(1000);
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
 
     verify(mSupplier, times(2)).get();
   }

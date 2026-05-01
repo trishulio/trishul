@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import io.trishul.tenant.entity.Tenant;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +28,7 @@ class TenantIaasIdpTenantMapperTest {
   void testFromTenants_ReturnsList_WhenArgIsNotNull() throws MalformedURLException {
     List<Tenant> tenants
         = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
-            new URL("http://localhost/"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+            URI.create("http://localhost/").toURL(), true, LocalDateTime.of(2000, 1, 1, 0, 0),
             LocalDateTime.of(2000, 1, 1, 0, 0)));
 
     List<? extends BaseIaasIdpTenant<?>> idpTenants = mapper.fromTenants(tenants);

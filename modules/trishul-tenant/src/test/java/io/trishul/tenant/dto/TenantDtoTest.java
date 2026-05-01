@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,12 +23,12 @@ class TenantDtoTest {
   @Test
   void testAllArgConstructor() throws MalformedURLException {
     tenantDto = new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NAME",
-        new URL("http://localhost/"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+        URI.create("http://localhost/").toURL(), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));
 
     assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000000"), tenantDto.getId());
     assertEquals("NAME", tenantDto.getName());
-    assertEquals(new URL("http://localhost/"), tenantDto.getUrl());
+    assertEquals(URI.create("http://localhost/").toURL(), tenantDto.getUrl());
     assertEquals(true, tenantDto.getIsReady());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), tenantDto.getCreatedAt());
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), tenantDto.getLastUpdated());
@@ -49,7 +50,7 @@ class TenantDtoTest {
 
   @Test
   void testGetSetUrl() throws MalformedURLException {
-    URL url = new URL("https://localhost/");
+    URL url = URI.create("https://localhost/").toURL();
     tenantDto.setUrl(url);
     assertSame(url, tenantDto.getUrl());
   }

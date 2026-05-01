@@ -1,7 +1,7 @@
 package io.trishul.tenant.service.service;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,32 +60,29 @@ class TenantServiceTest {
     doAnswer(inv -> inv.getArgument(0)).when(mRepoService).saveAll(anyList());
 
     mLockService = mock(LockService.class);
-    EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> mMergerService
-        = new CrudEntityMergerService<>(new MockUtilProvider(), mLockService, BaseTenant.class,
-            UpdateTenant.class, Tenant.class, Set.of("createdAt"));
+    EntityMergerService<UUID, Tenant, BaseTenant<?>, UpdateTenant<?>> mMergerService = new CrudEntityMergerService<>(
+        new MockUtilProvider(), mLockService, BaseTenant.class,
+        UpdateTenant.class, Tenant.class, Set.of("createdAt"));
 
-    this.service
-        = new TenantService(mRepoService, mMergerService, mTenantRepo, mMigrationMgr, mIaasService);
+    this.service = new TenantService(mRepoService, mMergerService, mTenantRepo, mMigrationMgr, mIaasService);
   }
 
   @Test
   void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec()
       throws MalformedURLException {
     @SuppressWarnings("unchecked")
-    final ArgumentCaptor<Specification<Tenant>> captor
-        = ArgumentCaptor.forClass(Specification.class);
+    final ArgumentCaptor<Specification<Tenant>> captor = ArgumentCaptor.forClass(Specification.class);
     final Page<Tenant> mPage = new PageImpl<>(
         List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
     doReturn(mPage).when(this.mRepoService).getAll(captor.capture(),
         eq(new TreeSet<>(List.of("id"))), eq(true), eq(10), eq(20));
 
-    final Page<Tenant> page
-        = this.service.getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
-            Set.of("T1"), Set.of(new URL("http://localhost/")), true, new TreeSet<>(List.of("id")), // sort,
-            true, // orderAscending,
-            10, // page,
-            20 // size
-        );
+    final Page<Tenant> page = this.service.getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
+        Set.of("T1"), Set.of(URI.create("http://localhost/").toURL()), true, new TreeSet<>(List.of("id")), // sort,
+        true, // orderAscending,
+        10, // page,
+        20 // size
+    );
 
     final Page<Tenant> expected = new PageImpl<>(
         List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
@@ -120,8 +117,7 @@ class TenantServiceTest {
 
   @Test
   void testGetByAccessorIds_CallsRepoService() {
-    ArgumentCaptor<Function<TenantAccessor<?>, Tenant>> captor
-        = ArgumentCaptor.forClass(Function.class);
+    ArgumentCaptor<Function<TenantAccessor<?>, Tenant>> captor = ArgumentCaptor.forClass(Function.class);
 
     class DummyTenantAccessor implements TenantAccessor<DummyTenantAccessor> {
       @Override
@@ -192,10 +188,9 @@ class TenantServiceTest {
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
             UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-    final long count
-        = this.service.delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
-            UUID.fromString("00000000-0000-0000-0000-000000000002"),
-            UUID.fromString("00000000-0000-0000-0000-000000000003")));
+    final long count = this.service.delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+        UUID.fromString("00000000-0000-0000-0000-000000000002"),
+        UUID.fromString("00000000-0000-0000-0000-000000000003")));
     assertEquals(10L, count);
   }
 
@@ -212,8 +207,7 @@ class TenantServiceTest {
 
     verify(mIaasService, times(1)).delete(tenantIds);
 
-    List<Tenant> expected
-        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    List<Tenant> expected = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     expected.get(0).setIsReady(false);
     verify(mRepoService, times(1)).saveAll(expected);
     verify(mRepoService).delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
@@ -221,8 +215,7 @@ class TenantServiceTest {
 
   @Test
   void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
-    final BaseTenant<?> tenant1
-        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final BaseTenant<?> tenant1 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
     final BaseTenant<?> tenant2 = new Tenant();
 
     final List<Tenant> added = this.service.add(List.of(tenant1, tenant2));
@@ -244,20 +237,17 @@ class TenantServiceTest {
 
   @Test
   void testPut_UpdatesTenantAndItemsAndSavesToRepo_WhenUpdatesAreNotNull() {
-    final UpdateTenant<?> tenant1
-        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-    final UpdateTenant<?> tenant2
-        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
+    final UpdateTenant<?> tenant1 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final UpdateTenant<?> tenant2 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
 
     doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
         new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-            .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
+        .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
 
     final List<Tenant> updated = this.service.put(List.of(tenant1, tenant2, new Tenant()));
 
-    final List<Tenant> expected
-        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")), new Tenant());
+    final List<Tenant> expected = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")), new Tenant());
     expected.forEach(tenant -> tenant.setIsReady(true));
 
     assertEquals(expected, updated);
@@ -273,20 +263,17 @@ class TenantServiceTest {
 
   @Test
   void testPatch_PatchesTenantAndItemsAndSavesToRepo_WhenPatchesAreNotNull() {
-    final UpdateTenant<?> tenant1
-        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-    final UpdateTenant<?> tenant2
-        = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
+    final UpdateTenant<?> tenant1 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    final UpdateTenant<?> tenant2 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
 
     doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
         new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-            .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
+        .when(this.mRepoService).getByIds(List.of(tenant1, tenant2));
 
     final List<Tenant> updated = this.service.patch(List.of(tenant1, tenant2));
 
-    final List<Tenant> expected
-        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
+    final List<Tenant> expected = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
     expected.forEach(tenant -> tenant.setIsReady(true));
 
     assertEquals(expected, updated);
@@ -302,17 +289,15 @@ class TenantServiceTest {
 
   @Test
   void testPatch_ThrowsNotFoundException_WhenAllTenantsDontExist() {
-    final List<UpdateTenant<?>> updates
-        = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
-            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),
-            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000003")),
-            new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000004")));
+    final List<UpdateTenant<?>> updates = List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000003")),
+        new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000004")));
     doReturn(List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")),
         new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"))))
-            .when(this.mRepoService).getByIds(updates);
+        .when(this.mRepoService).getByIds(updates);
 
-    EntityNotFoundException exception
-        = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
+    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
     assertEquals(
         "Cannot find tenants with Ids: [00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004]",
         exception.getMessage());
