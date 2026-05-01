@@ -27,7 +27,6 @@ public abstract class BaseController {
     this.filter = filter;
   }
 
-  @Deprecated(forRemoval = true)
   public void filter(BaseDto dto, Set<String> retainAttr) {
     if (retainAttr != null && !retainAttr.isEmpty()) {
       this.filter.retain(dto, retainAttr);
