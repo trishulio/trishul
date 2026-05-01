@@ -2,6 +2,7 @@ package io.trishul.auth.autoconfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -12,7 +13,8 @@ public class WebSecurityConfig {
     http.authorizeHttpRequests(authorize -> authorize
         .requestMatchers("/actuator/**", "/public/**", "/static/**", "/api-docs/**",
             "/swagger-ui/**", "/swagger-resources/**", "/swagger-ui.html")
-        .permitAll().anyRequest().authenticated()).oauth2ResourceServer(oauth2 -> oauth2.jwt());
+        .permitAll().anyRequest().authenticated())
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
     return http.build();
   }
