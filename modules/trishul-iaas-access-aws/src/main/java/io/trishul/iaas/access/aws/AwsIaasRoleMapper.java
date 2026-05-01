@@ -22,5 +22,6 @@ public interface AwsIaasRoleMapper extends IaasEntityMapper<Role, IaasRole> {
   @Mapping(source = "roleLastUsed.lastUsedDate", target = IaasRole.ATTR_LAST_USED)
   @Mapping(source = "createDate", target = IaasRole.ATTR_CREATED_AT)
   @Mapping(ignore = true, target = IaasRole.ATTR_LAST_UPDATED)
+  @Mapping(ignore = true, target = IaasRole.ATTR_VERSION)
   IaasRole fromIaasEntity(Role role);
 }

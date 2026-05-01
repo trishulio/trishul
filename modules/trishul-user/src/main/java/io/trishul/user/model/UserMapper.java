@@ -52,5 +52,6 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   User fromUpdateDto(UpdateUserDto updateUserDto);
 
   @Override
+  @Mapping(target = "objectStoreFile", ignore = true)
   UserDto toDto(User user);
 }

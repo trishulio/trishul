@@ -17,5 +17,6 @@ public interface AwsIaasObjectStoreMapper extends IaasEntityMapper<Bucket, IaasO
   @Mapping(source = "name", target = IaasObjectStore.ATTR_NAME)
   @Mapping(source = "creationDate", target = IaasObjectStore.ATTR_CREATED_AT)
   @Mapping(ignore = true, target = IaasObjectStore.ATTR_LAST_UPDATED)
+  @Mapping(ignore = true, target = IaasObjectStore.ATTR_VERSION)
   IaasObjectStore fromIaasEntity(Bucket bucket);
 }

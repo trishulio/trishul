@@ -21,5 +21,6 @@ public interface AwsIaasPolicyMapper extends IaasEntityMapper<Policy, IaasPolicy
   @Mapping(source = "arn", target = IaasPolicy.ATTR_IAAS_RESOURCE_NAME)
   @Mapping(source = "createDate", target = IaasPolicy.ATTR_CREATED_AT)
   @Mapping(source = "updateDate", target = IaasPolicy.ATTR_LAST_UPDATED)
+  @Mapping(ignore = true, target = IaasPolicy.ATTR_VERSION)
   IaasPolicy fromIaasEntity(Policy iamPolicy);
 }
