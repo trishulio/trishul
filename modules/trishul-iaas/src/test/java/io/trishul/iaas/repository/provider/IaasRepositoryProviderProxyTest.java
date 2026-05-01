@@ -34,8 +34,8 @@ class IaasRepositoryProviderProxyTest {
 
   @Test
   void testGet_ReturnsValueFromDelegate() {
-    doAnswer(inv -> inv.getArgument(0, Set.class).stream().map(id -> new DummyCrudEntity((Long) id))
-        .toList()).when(mDelegate).get(anySet());
+    doAnswer(inv -> inv.<Set<Long>>getArgument(0).stream().map(DummyCrudEntity::new).toList())
+        .when(mDelegate).get(anySet());
 
     List<DummyCrudEntity> entities = proxy.get(Set.of(1L, 2L));
 
@@ -46,7 +46,7 @@ class IaasRepositoryProviderProxyTest {
 
   @Test
   void testAdd_ReturnsValueFromDelegate() {
-    doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).add(anyList());
+    doAnswer(inv -> inv.<List<DummyCrudEntity>>getArgument(0)).when(mDelegate).add(anyList());
 
     List<DummyCrudEntity> entities
         = proxy.add(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));
@@ -58,7 +58,7 @@ class IaasRepositoryProviderProxyTest {
 
   @Test
   void testPut_ReturnsValueFromDelegate() {
-    doAnswer(inv -> inv.getArgument(0, List.class)).when(mDelegate).put(anyList());
+    doAnswer(inv -> inv.<List<DummyCrudEntity>>getArgument(0)).when(mDelegate).put(anyList());
 
     List<DummyCrudEntity> entities
         = proxy.put(List.of(new DummyCrudEntity(1L), new DummyCrudEntity(2L)));

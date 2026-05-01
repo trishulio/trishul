@@ -33,9 +33,11 @@ class WhereClauseBuilderDelegateTest {
   private ArgumentCaptor<CriteriaSpec<Boolean>> captor;
 
   @BeforeEach
+  @SuppressWarnings("unchecked")
   void init() {
     mAccumulator = mock(PredicateSpecAccumulator.class);
-    captor = ArgumentCaptor.forClass(CriteriaSpec.class);
+    captor = (ArgumentCaptor<CriteriaSpec<Boolean>>) (ArgumentCaptor<?>) ArgumentCaptor
+        .forClass(CriteriaSpec.class);
 
     builder = new WhereClauseBuilderDelegate(mAccumulator);
   }

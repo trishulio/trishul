@@ -129,7 +129,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeUTF8String(byte[] text, int offset, int length) throws IOException {
-    String s = new String(text, offset, length, "UTF-8");
+    String s = new String(text, offset, length, StandardCharsets.UTF_8);
     this.buffer.append(String.format("\"%s\"", s));
   }
 
@@ -140,7 +140,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeRaw(String text, int offset, int len) throws IOException {
-    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len);
+    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len, StandardCharsets.UTF_8);
     this.buffer.append(String.format("\"%s\"", s));
   }
 
@@ -163,7 +163,7 @@ public class MockJsonGenerator extends JsonGenerator {
 
   @Override
   public void writeRawValue(String text, int offset, int len) throws IOException {
-    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len);
+    String s = new String(text.getBytes(StandardCharsets.UTF_8), offset, len, StandardCharsets.UTF_8);
     this.buffer.append(String.format("\"%s\"", s));
   }
 
