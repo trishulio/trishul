@@ -19,4 +19,9 @@
     <Class name="~io\.trishul\.test\..*Mock.*"/>
 </Match>
 
+    <!-- SQL_INJECTION_JDBC is expected in Jdbc Dialect classes as they are trusted classes used by trusted classes -->
+    <Match>
+        <Bug pattern="SQL_INJECTION_JDBC" />
+        <Class name="~io\.trishul\.dialect\.postgres\.PostgresJdbcDialect.*" />
+    </Match>
 </FindBugsFilter>

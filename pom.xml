@@ -94,6 +94,7 @@
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <org.apache.maven.plugin.antrun.version>3.2.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
+        <argLine></argLine>
     </properties>
 
     <parent>
@@ -522,7 +523,7 @@
                             <id>copy-test-resources</id>
                             <phase>process-resources</phase>
                             <goals>
-                                <goal>resources</goal>
+                                <goal>copy-resources</goal>
                             </goals>
                             <configuration>
                                 <resources>
@@ -545,8 +546,26 @@
                     <artifactId>spotless-maven-plugin</artifactId>
                     <version>${spotless.version}</version>
                     <configuration>
+                        <formats>
+                            <format>
+                                <includes>
+                                    <include>*.xml</include>
+                                    <include>*.md</include>
+                                    <include>.gitignore</include>
+                                </includes>
+                                <trimTrailingWhitespace/>
+                                <endWithNewline/>
+                                <indent>
+                                    <spaces>true</spaces>
+                                    <spacesPerTab>4</spacesPerTab>
+                                </indent>
+                            </format>
+                        </formats>
                         <java>
                             <removeUnusedImports/>
+                            <eclipse>
+                                <file>${maven.multiModuleProjectDirectory}/java.xml</file>
+                            </eclipse>
                         </java>
                     </configuration>
                     <executions>
@@ -574,8 +593,10 @@
                     <configuration>
                         <effort>max</effort>
                         <threshold>low</threshold>
+                        <noClassOk>true</noClassOk>
                         <xmlOutput>true</xmlOutput>
                         <failOnError>${env.SPOTBUGS_FAIL_ON_ERROR}</failOnError>
+                        <excludeFilterFile>${maven.multiModuleProjectDirectory}/spotbugs-exclude.xml</excludeFilterFile>
                         <plugins>
                             <plugin>
                                 <groupId>com.h3xstream.findsecbugs</groupId>
@@ -606,6 +627,7 @@
                         <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version</excludeProperties>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
@@ -880,7 +902,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
-                    </plugin>       
+                    </plugin>
                 </plugins>
             </build>
         </profile>
