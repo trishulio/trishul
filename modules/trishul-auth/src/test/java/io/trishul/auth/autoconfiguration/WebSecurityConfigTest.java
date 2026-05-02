@@ -21,13 +21,8 @@ class WebSecurityConfigTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void testSecurityFilterChain_ReturnsNonNullInstance() throws Exception {
     HttpSecurity httpSecurity = mock(HttpSecurity.class);
-    AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry =
-        mock(AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry.class);
-    OAuth2ResourceServerConfigurer<HttpSecurity> oauth2Configurer =
-        mock(OAuth2ResourceServerConfigurer.class);
     DefaultSecurityFilterChain filterChain = mock(DefaultSecurityFilterChain.class);
 
     when(httpSecurity.authorizeHttpRequests(any())).thenReturn(httpSecurity);
