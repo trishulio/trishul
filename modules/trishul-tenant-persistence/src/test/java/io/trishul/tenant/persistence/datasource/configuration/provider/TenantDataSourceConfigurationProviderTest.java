@@ -14,7 +14,6 @@ import io.trishul.data.datasource.configuration.provider.DataSourceConfiguration
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.TenantData;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
@@ -31,9 +30,9 @@ class TenantDataSourceConfigurationProviderTest {
   private SecretsManager<String, String> mSecretsManager;
 
   @BeforeEach
-  void init() throws URISyntaxException, MalformedURLException {
+  void init() throws URISyntaxException {
     mAdminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"), "ADMIN",
-        URI.create("http://localhost/").toURL());
+        URI.create("http://localhost/"));
     mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
         MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false);
     mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",
