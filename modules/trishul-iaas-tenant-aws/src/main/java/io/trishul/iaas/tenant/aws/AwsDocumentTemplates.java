@@ -70,30 +70,30 @@ public class AwsDocumentTemplates {
 
   public String getTenantBucketPolicyDoc(String iaasIdpTenantId) {
     String bucketName = getTenantVfsBucketName(iaasIdpTenantId);
-    return String.format(POLICY_DOC_TENANT_BUCKET, bucketName);
+    return POLICY_DOC_TENANT_BUCKET.replace("%s", bucketName);
   }
 
   public String getCognitoIdAssumeRolePolicyDoc() {
-    return String.format(POLICY_DOC_COGNITO_ID_ASSUME_ROLE, cognitoIdPoolId);
+    return POLICY_DOC_COGNITO_ID_ASSUME_ROLE.replace("%s", cognitoIdPoolId);
   }
 
   public String getTenantVfsBucketName(String iaasIdpTenantId) {
-    return String.format(BUCKET_NAME_TENANT_VFS, iaasIdpTenantId);
+    return BUCKET_NAME_TENANT_VFS.replace("%s", iaasIdpTenantId);
   }
 
   public String getTenantIaasRoleName(String iaasIdpTenantId) {
-    return String.format(ROLE_NAME_TENANT_IAAS, iaasIdpTenantId);
+    return ROLE_NAME_TENANT_IAAS.replace("%s", iaasIdpTenantId);
   }
 
   public String getTenantVfsPolicyName(String iaasIdpTenantId) {
-    return String.format(POLICY_NAME_TENANT_VFS, iaasIdpTenantId);
+    return POLICY_NAME_TENANT_VFS.replace("%s", iaasIdpTenantId);
   }
 
   public String getTenantVfsPolicyDescription(String iaasIdpTenantId) {
-    return String.format(POLICY_DESCRIPTION_TENANT_VFS, iaasIdpTenantId);
+    return POLICY_DESCRIPTION_TENANT_VFS.replace("%s", iaasIdpTenantId);
   }
 
   public String getTenantIaasRoleDescription(String iaasIdpTenantId) {
-    return String.format(ROLE_DESCRIPTION_TENANT_VFS, iaasIdpTenantId);
+    return ROLE_DESCRIPTION_TENANT_VFS.replace("%s", iaasIdpTenantId);
   }
 }
