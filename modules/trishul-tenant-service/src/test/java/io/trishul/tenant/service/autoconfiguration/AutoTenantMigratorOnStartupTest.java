@@ -36,8 +36,8 @@ class AutoTenantMigratorOnStartupTest {
 
   @Test
   void testConstructor_CreatesInstance() {
-    AutoTenantMigratorOnStartup migrator = new AutoTenantMigratorOnStartup(
-        mockAdminTenant, mockTenantService, mockMigrationManager);
+    AutoTenantMigratorOnStartup migrator
+        = new AutoTenantMigratorOnStartup(mockAdminTenant, mockTenantService, mockMigrationManager);
 
     assertNotNull(migrator);
   }
@@ -45,11 +45,11 @@ class AutoTenantMigratorOnStartupTest {
   @Test
   void testMigrateAllTenantsOnStartup_MigratesAdminAndTenants() {
     Page<Tenant> emptyPage = new PageImpl<>(Collections.emptyList());
-    when(mockTenantService.getAll(isNull(), isNull(), isNull(), anyBoolean(), any(), anyBoolean(), anyInt(), anyInt()))
-        .thenReturn(emptyPage);
+    when(mockTenantService.getAll(isNull(), isNull(), isNull(), anyBoolean(), any(), anyBoolean(),
+        anyInt(), anyInt())).thenReturn(emptyPage);
 
-    AutoTenantMigratorOnStartup migrator = new AutoTenantMigratorOnStartup(
-        mockAdminTenant, mockTenantService, mockMigrationManager);
+    AutoTenantMigratorOnStartup migrator
+        = new AutoTenantMigratorOnStartup(mockAdminTenant, mockTenantService, mockMigrationManager);
 
     migrator.migrateAllTenantsOnStartup();
 

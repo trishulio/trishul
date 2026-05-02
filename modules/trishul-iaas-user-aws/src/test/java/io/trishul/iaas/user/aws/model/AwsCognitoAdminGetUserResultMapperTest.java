@@ -34,9 +34,9 @@ class AwsCognitoAdminGetUserResultMapperTest {
 
     IaasUser iaasUser = mapper.fromIaasEntity(user);
 
-    IaasUser expected = new IaasUser().setEmail("EMAIL")
-        .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
+    IaasUser expected
+        = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(expected, iaasUser);
   }
 
@@ -47,9 +47,9 @@ class AwsCognitoAdminGetUserResultMapperTest {
 
     IaasUser iaasUser = mapper.fromIaasEntity(user);
 
-    IaasUser expected = new IaasUser().setEmail("EMAIL")
-        .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
+    IaasUser expected
+        = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(expected, iaasUser);
   }
 }

@@ -68,10 +68,10 @@ Implement `IaasObjectStoreAccessor`:
 ```java
 public class TenantResources implements IaasObjectStoreAccessor<TenantResources> {
     private IaasObjectStore dataBucket;
-    
+
     @Override
     public IaasObjectStore getObjectStore() { return dataBucket; }
-    
+
     @Override
     public TenantResources setObjectStore(IaasObjectStore store) {
         this.dataBucket = store;
@@ -139,26 +139,26 @@ Typical pattern for per-tenant buckets:
 public class TenantObjectStoreService {
     @Autowired private IaasRepository<String, IaasObjectStore, ...> storeRepo;
     @Autowired private IaasRepository<String, IaasObjectStoreAccessConfig, ...> accessRepo;
-    
+
     public IaasObjectStore provisionTenantStorage(UUID tenantId) {
         String bucketName = "tenant-" + tenantId + "-data";
-        
+
         // 1. Create bucket
         IaasObjectStore store = new IaasObjectStore().setName(bucketName);
         store = storeRepo.add(List.of(store)).get(0);
-        
+
         // 2. Block all public access
         PublicAccessBlockConfiguration blockConfig = new PublicAccessBlockConfiguration()
             .withBlockPublicAcls(true)
             .withIgnorePublicAcls(true)
             .withBlockPublicPolicy(true)
             .withRestrictPublicBuckets(true);
-        
+
         accessRepo.add(List.of(new IaasObjectStoreAccessConfig(bucketName, blockConfig)));
-        
+
         return store;
     }
-    
+
     public void deprovisionTenantStorage(UUID tenantId) {
         String bucketName = "tenant-" + tenantId + "-data";
         storeRepo.delete(Set.of(bucketName));

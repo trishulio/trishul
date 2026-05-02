@@ -22,7 +22,7 @@ Reusable address entity base class for JPA entities requiring postal address fie
 public class CustomerAddress extends Address {
     @Id
     private Long id;
-    
+
     @ManyToOne
     private Customer customer;
 }
@@ -52,7 +52,7 @@ public class BillingAddress extends Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @OneToOne
     private Invoice invoice;
 }
@@ -63,7 +63,7 @@ public class ShippingAddress extends Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     private Order order;
 }
@@ -117,18 +117,18 @@ private LocalDateTime lastUpdated;
 @Entity
 @Table(name = "facility_address")
 public class FacilityAddress extends Address {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @OneToOne(mappedBy = "address")
     private Facility facility;
-    
+
     public Long getId() {
         return id;
     }
-    
+
     public FacilityAddress setId(Long id) {
         this.id = id;
         return this;
@@ -144,7 +144,7 @@ public interface FacilityAddressRepository extends JpaRepository<FacilityAddress
 // Service usage
 @Service
 public class FacilityService {
-    
+
     public Facility createFacility(String name, AddressDto addressDto) {
         FacilityAddress address = new FacilityAddress()
             .setAddressLine1(addressDto.getAddressLine1())
@@ -153,7 +153,7 @@ public class FacilityService {
             .setProvince(addressDto.getProvince())
             .setCountry(addressDto.getCountry())
             .setPostalCode(addressDto.getPostalCode());
-        
+
         return new Facility()
             .setName(name)
             .setAddress(address);

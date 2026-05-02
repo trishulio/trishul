@@ -81,6 +81,7 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
   }
 }
 
+
 class GetIdentityPoolsArgs extends BaseModel {
   int pageSize;
 
@@ -88,6 +89,7 @@ class GetIdentityPoolsArgs extends BaseModel {
     this.pageSize = pageSize;
   }
 }
+
 
 class GetIdentityIdArgs extends BaseModel {
   String identityPoolId;
@@ -99,6 +101,7 @@ class GetIdentityIdArgs extends BaseModel {
     this.logins = logins;
   }
 }
+
 
 class GetCredentialsForIdentityIdArgs extends BaseModel {
   String identityId;

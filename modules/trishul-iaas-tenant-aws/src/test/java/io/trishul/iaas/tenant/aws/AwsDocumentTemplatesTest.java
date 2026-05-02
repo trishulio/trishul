@@ -17,7 +17,7 @@ class AwsDocumentTemplatesTest {
 
   @Test
   void testGetTenantBucketPolicyDoc() throws JSONException {
-        JSONAssert.assertEquals("""
+    JSONAssert.assertEquals("""
         {
           "Version": "2012-10-17",
           "Statement": [
@@ -45,31 +45,31 @@ class AwsDocumentTemplatesTest {
                   "Resource": "arn:aws:s3:::t-T1-vfs/*"
               }
           ]
-        } 
+        }
         """, templates.getTenantBucketPolicyDoc("T1"), JSONCompareMode.NON_EXTENSIBLE);
   }
 
   @Test
   void testGetCognitoIdAssumeRolePolicyDoc() throws JSONException {
     JSONAssert.assertEquals("""
-      {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Effect": "Allow",
-                "Principal": {
-                    "Federated": "cognito-identity.amazonaws.com"
-                },
-                "Action": "sts:AssumeRoleWithWebIdentity",
-                "Condition": {
-                    "StringEquals": {
-                        "cognito-identity.amazonaws.com:aud": "COGNITO_ID_POOL_ID"
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Federated": "cognito-identity.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRoleWithWebIdentity",
+                    "Condition": {
+                        "StringEquals": {
+                            "cognito-identity.amazonaws.com:aud": "COGNITO_ID_POOL_ID"
+                        }
                     }
                 }
-            }
-        ]
-      }
-    """, templates.getCognitoIdAssumeRolePolicyDoc(), JSONCompareMode.NON_EXTENSIBLE);
+            ]
+          }
+        """, templates.getCognitoIdAssumeRolePolicyDoc(), JSONCompareMode.NON_EXTENSIBLE);
   }
 
   @Test

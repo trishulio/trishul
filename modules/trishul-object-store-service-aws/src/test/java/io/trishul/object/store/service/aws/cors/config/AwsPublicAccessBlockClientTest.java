@@ -40,7 +40,7 @@ class AwsPublicAccessBlockClientTest {
   void testGet_ReturnsIaasPublicAccessBlock() {
     doReturn(new GetPublicAccessBlockResult()
         .withPublicAccessBlockConfiguration(new PublicAccessBlockConfiguration())).when(mAwsClient)
-            .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
+        .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
 
     IaasObjectStoreAccessConfig config = client.get("BUCKET_1");
 

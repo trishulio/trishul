@@ -19,8 +19,8 @@ class ValidatorTest {
   @Test
   void testRule_SetsMsgAsError_WhenConditionIsFalse() {
     validator.rule(false, "This is an error message: %s", "TEST");
-    assertThrows(ValidationException.class,
-        () -> validator.raiseErrors(), "1. This is an error message: TEST");
+    assertThrows(ValidationException.class, () -> validator.raiseErrors(),
+        "1. This is an error message: TEST");
   }
 
   @Test

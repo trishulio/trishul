@@ -31,7 +31,7 @@ User user = new User()
 public class Order implements UserAccessor<Order>, AssignedToAccessor<Order> {
     private User createdBy;
     private User assignedTo;
-    
+
     @Override public User getUser() { return createdBy; }
     @Override public User getAssignedTo() { return assignedTo; }
 }
@@ -134,29 +134,29 @@ Implement `UserAccessor` and/or `AssignedToAccessor`:
 ```java
 @Entity
 public class Task implements UserAccessor<Task>, AssignedToAccessor<Task> {
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User createdBy;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User assignedTo;
-    
+
     @Override
     public User getUser() { return createdBy; }
-    
+
     @Override
-    public Task setUser(User user) { 
-        this.createdBy = user; 
-        return this; 
+    public Task setUser(User user) {
+        this.createdBy = user;
+        return this;
     }
-    
+
     @Override
     public User getAssignedTo() { return assignedTo; }
-    
+
     @Override
-    public Task setAssignedTo(User user) { 
-        this.assignedTo = user; 
-        return this; 
+    public Task setAssignedTo(User user) {
+        this.assignedTo = user;
+        return this;
     }
 }
 ```

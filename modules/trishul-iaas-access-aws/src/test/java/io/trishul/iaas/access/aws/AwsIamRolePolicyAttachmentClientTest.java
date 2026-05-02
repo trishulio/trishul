@@ -55,7 +55,7 @@ class AwsIamRolePolicyAttachmentClientTest {
         new AttachedPolicy().withPolicyName("POLICY_2"));
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(attachedPolicies)
         .withIsTruncated(true).withMarker("MARKER")).when(mAwsClient)
-            .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1"));
+        .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1"));
     doThrow(NoSuchEntityException.class).when(mAwsClient).listAttachedRolePolicies(
         new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1").withMarker("MARKER"));
 
@@ -82,7 +82,7 @@ class AwsIamRolePolicyAttachmentClientTest {
 
     doReturn(
         new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
-            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
+        .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
     IaasRolePolicyAttachment addition
         = new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1"));
     IaasRolePolicyAttachment attachment = client.add(addition);
@@ -117,7 +117,7 @@ class AwsIamRolePolicyAttachmentClientTest {
 
     doReturn(
         new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
-            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
+        .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
 
     IaasRolePolicyAttachment attachment = client
         .put(new IaasRolePolicyAttachment(new IaasRole("ROLE_1"), new IaasPolicy("POLICY_1")));
@@ -150,7 +150,7 @@ class AwsIamRolePolicyAttachmentClientTest {
   void testDelete_ReturnsTrue_WhenDeleteIsSuccessful() {
     doReturn(
         new DetachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
-            .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
+        .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
     assertTrue(client.delete(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
 
     verify(mAwsClient, times(1)).detachRolePolicy(
@@ -187,18 +187,18 @@ class AwsIamRolePolicyAttachmentClientTest {
         .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_B"));
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleCPoliciesPartion1)
         .withIsTruncated(true).withMarker("MARKER")).when(mAwsClient)
-            .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_C"));
+        .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_C"));
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleCPoliciesPartion2))
         .when(mAwsClient).listAttachedRolePolicies(
             new ListAttachedRolePoliciesRequest().withRoleName("ROLE_C").withMarker("MARKER"));
 
     doReturn(
         new AttachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
-            .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
+        .when(mAwsClient).attachRolePolicy(any(AttachRolePolicyRequest.class));
 
     doReturn(
         new DetachRolePolicyResult().setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
-            .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
+        .when(mAwsClient).detachRolePolicy(any(DetachRolePolicyRequest.class));
 
     IaasRolePolicyAttachment roleAPolicy1
         = client.get(new IaasRolePolicyAttachmentId("ROLE_A", "POLICY_1A"));

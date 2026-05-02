@@ -18,8 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class ReflectionManipulatorTest {
   public static class TestData {
-    public TestData() {
-    }
+    public TestData() {}
 
     public TestData(int x) {
       this.setX(x);
@@ -162,8 +161,8 @@ class ReflectionManipulatorTest {
 
   @Test
   void testOuterJoin_ThrowsException_WhenEitherObjectIsNull() {
-    NullPointerException exception1 = assertThrows(NullPointerException.class,
-        () -> this.util.copy(null, null, pd -> true));
+    NullPointerException exception1
+        = assertThrows(NullPointerException.class, () -> this.util.copy(null, null, pd -> true));
 
     assertEquals("Outer Joins can not be on null objects", exception1.getMessage());
     NullPointerException exception2 = assertThrows(NullPointerException.class,
@@ -284,7 +283,8 @@ class ReflectionManipulatorTest {
   }
 
   @Test
-  void testInvokeSetter_SetsValue_WhenPropertyDescriptorHasReadMethod() throws IntrospectionException {
+  void testInvokeSetter_SetsValue_WhenPropertyDescriptorHasReadMethod()
+      throws IntrospectionException {
     TestDataWithStringField obj = new TestDataWithStringField();
     PropertyDescriptor pd = new PropertyDescriptor("name", TestDataWithStringField.class);
 
@@ -307,7 +307,8 @@ class ReflectionManipulatorTest {
   @Test
   void testInvokeSetter_DoesNotThrow_WhenSetterMethodDoesNotExist() throws IntrospectionException {
     TestDataWithoutSetter obj = new TestDataWithoutSetter(10);
-    PropertyDescriptor pd = new PropertyDescriptor("value", TestDataWithoutSetter.class, "getValue", null);
+    PropertyDescriptor pd
+        = new PropertyDescriptor("value", TestDataWithoutSetter.class, "getValue", null);
 
     // Should not throw, just logs info about missing setter
     util.invokeSetter(obj, pd, 20);

@@ -28,7 +28,8 @@ class IaasTenantIdpServiceAwsAutoConfigurationTest {
     AwsArnMapper mockArnMapper = mock(AwsArnMapper.class);
     IaasRoleService mockRoleService = mock(IaasRoleService.class);
 
-    IaasClient<?, ?, ?, ?> result = config.iaasIdpTenantClient(mockIdp, userPoolId, mockArnMapper, mockRoleService);
+    IaasClient<?, ?, ?, ?> result
+        = config.iaasIdpTenantClient(mockIdp, userPoolId, mockArnMapper, mockRoleService);
 
     assertNotNull(result);
   }

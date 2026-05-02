@@ -48,7 +48,7 @@ class QuantityUnitServiceImplTest {
 
     when(quantityUnitRepositoryMock.findAll(specificationCaptor.capture(),
         eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
-            .thenReturn(expectedUnitsPage);
+        .thenReturn(expectedUnitsPage);
 
     Page<UnitEntity> actualUnitsPage
         = quantityUnitService.getUnits(null, new TreeSet<>(List.of("id")), true, 0, 100);

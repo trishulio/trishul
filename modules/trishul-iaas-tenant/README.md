@@ -39,16 +39,16 @@ Use `TenantIaasResources` as a container for all IaaS components:
 ```java
 @Service
 public class TenantIaasProvisioningService {
-    
+
     private final TenantIaasAuthService authService;
     private final TenantIaasIdpService idpService;
     private final TenantIaasVfsService vfsService;
-    
+
     public TenantIaasResources provisionTenant(Tenant tenant) {
         TenantIaasAuthResources auth = authService.provision(tenant);
         TenantIaasIdpResources idp = idpService.provision(tenant);
         TenantIaasVfsResources vfs = vfsService.provision(tenant);
-        
+
         return new TenantIaasResources()
             .setAuthResources(auth)
             .setIdpResources(idp)
@@ -67,7 +67,7 @@ public void onTenantProvisioned(TenantIaasResources resources) {
     TenantIaasAuthResources auth = resources.getAuthResources();
     TenantIaasIdpResources idp = resources.getIdpResources();
     TenantIaasVfsResources vfs = resources.getVfsResources();
-    
+
     // Use resources for further configuration
     configureWebhooks(idp.getUserPoolId());
 }
@@ -110,13 +110,13 @@ TenantIaasResources resources = TenantIaasResourceBuilder.builder()
 ```java
 @Service
 public class TenantLifecycleService {
-    
+
     private final TenantIaasService iaasService;
-    
+
     public void provisionTenant(Tenant tenant) {
         // Provision all IaaS resources
         TenantIaasResources resources = iaasService.put(tenant);
-        
+
         // Log what was created
         log.info("Provisioned tenant {} with resources: " +
             "Auth={}, IDP={}, VFS={}",
@@ -125,7 +125,7 @@ public class TenantLifecycleService {
             resources.getIdpResources(),
             resources.getVfsResources());
     }
-    
+
     public void deprovisionTenant(UUID tenantId) {
         // Clean up all IaaS resources
         iaasService.delete(Set.of(tenantId));

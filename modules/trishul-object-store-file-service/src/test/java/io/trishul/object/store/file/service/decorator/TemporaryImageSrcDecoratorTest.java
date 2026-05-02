@@ -33,7 +33,7 @@ class TemporaryImageSrcDecoratorTest {
   void testDecorate_OverridesFileOnEntities_WhenUriIsNotNull() {
     doAnswer(inv -> inv.getArgument(0, Set.class).stream()
         .map(uri -> new IaasObjectStoreFileDto((URI) uri)).toList()).when(mController)
-            .getAll(anySet());
+        .getAll(anySet());
 
     List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/2")),
         new DecoratedEntity(URI.create("http://localhost/1")));

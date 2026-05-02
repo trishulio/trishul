@@ -63,8 +63,8 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
       return Collections.emptyList();
     }
 
-    final Set<ID> ids = idProviders.stream().filter(Objects::nonNull)
-        .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
+    final Set<ID> ids = idProviders.stream().filter(Objects::nonNull).map(Identified::getId)
+        .filter(Objects::nonNull).collect(Collectors.toSet());
 
     return this.repo.findAllById(ids);
   }

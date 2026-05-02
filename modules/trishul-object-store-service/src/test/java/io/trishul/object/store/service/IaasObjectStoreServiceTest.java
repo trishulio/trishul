@@ -101,7 +101,7 @@ class IaasObjectStoreServiceTest {
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStore((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     IaasObjectStore attachment = service.get("POLICY");
 
@@ -119,7 +119,7 @@ class IaasObjectStoreServiceTest {
   void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStore((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasObjectStore> attachments = service.getAll(Set.of("POLICY"));
 
@@ -131,7 +131,7 @@ class IaasObjectStoreServiceTest {
   void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStore((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasObjectStore> attachments = service.getByIds(Set.of(() -> "POLICY"));
 
@@ -144,7 +144,7 @@ class IaasObjectStoreServiceTest {
   void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStore((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     class DummyIaasObjectStoreAccessor
         implements IaasObjectStoreAccessor<DummyIaasObjectStoreAccessor> {

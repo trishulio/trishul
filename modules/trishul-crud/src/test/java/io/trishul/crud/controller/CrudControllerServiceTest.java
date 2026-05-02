@@ -24,8 +24,7 @@ import org.springframework.data.domain.PageImpl;
 
 @SuppressWarnings("unchecked")
 class CrudControllerServiceTest {
-  private CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto>
-      controllerService;
+  private CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto> controllerService;
   private AttributeFilter mFilter;
   private BaseMapper<TestEntity, TestDto, TestDto, TestDto> mMapper;
   private CrudService<Long, TestEntity, TestEntity, TestEntity, ?> mService;
@@ -96,14 +95,14 @@ class CrudControllerServiceTest {
     mService = mock(CrudService.class);
     mDecorator = mock(EntityDecorator.class);
 
-    controllerService =
-        new CrudControllerService<>(mFilter, mMapper, mService, "TestEntity", mDecorator);
+    controllerService
+        = new CrudControllerService<>(mFilter, mMapper, mService, "TestEntity", mDecorator);
   }
 
   @Test
   void testConstructorWithoutDecorator_CreatesInstance() {
-    CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto>
-        service = new CrudControllerService<>(mFilter, mMapper, mService, "TestEntity");
+    CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto> service
+        = new CrudControllerService<>(mFilter, mMapper, mService, "TestEntity");
     assertNotNull(service);
   }
 

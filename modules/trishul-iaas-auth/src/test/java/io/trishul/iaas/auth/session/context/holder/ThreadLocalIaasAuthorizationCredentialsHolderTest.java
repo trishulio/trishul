@@ -35,7 +35,8 @@ class ThreadLocalIaasAuthorizationCredentialsHolderTest {
   void testSetIaasAuthorizationCredentials_SetsCredentials() {
     IaasAuthorizationCredentials mockCredentials = mock(IaasAuthorizationCredentials.class);
 
-    ThreadLocalIaasAuthorizationCredentialsHolder result = holder.setIaasAuthorizationCredentials(mockCredentials);
+    ThreadLocalIaasAuthorizationCredentialsHolder result
+        = holder.setIaasAuthorizationCredentials(mockCredentials);
 
     assertNotNull(result);
     assertEquals(holder, result);

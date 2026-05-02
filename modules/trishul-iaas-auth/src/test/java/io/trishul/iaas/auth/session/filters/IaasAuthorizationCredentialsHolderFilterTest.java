@@ -54,7 +54,8 @@ class IaasAuthorizationCredentialsHolderFilterTest {
   }
 
   @Test
-  void testDoFilter_SetsNullCredentialsWhenBuilderReturnsNull() throws IOException, ServletException {
+  void testDoFilter_SetsNullCredentialsWhenBuilderReturnsNull()
+      throws IOException, ServletException {
     ServletRequest mockRequest = mock(ServletRequest.class);
     ServletResponse mockResponse = mock(ServletResponse.class);
     FilterChain mockChain = mock(FilterChain.class);

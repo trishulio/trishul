@@ -31,12 +31,13 @@ class ObjectStoreFileServiceAwsAutoConfigurationTest {
   void testIaasObjectStoreFileClientProvider_ReturnsNonNull() {
     String region = "us-east-1";
     IaasObjectStoreNameProvider mockBucketNameProvider = mock(IaasObjectStoreNameProvider.class);
-    ContextHolderAuthorizationFetcher mockAuthFetcher = mock(ContextHolderAuthorizationFetcher.class);
+    ContextHolderAuthorizationFetcher mockAuthFetcher
+        = mock(ContextHolderAuthorizationFetcher.class);
     ObjectStoreFileServiceAwsFactory mockAwsFactory = mock(ObjectStoreFileServiceAwsFactory.class);
     Long getPresignUrlDuration = 3600L;
 
-    IaasRepositoryProvider<?, ?, ?, ?> result = config.iaasObjectStoreFileClientProvider(
-        region, mockBucketNameProvider, mockAuthFetcher, mockAwsFactory, getPresignUrlDuration);
+    IaasRepositoryProvider<?, ?, ?, ?> result = config.iaasObjectStoreFileClientProvider(region,
+        mockBucketNameProvider, mockAuthFetcher, mockAwsFactory, getPresignUrlDuration);
 
     assertNotNull(result);
   }

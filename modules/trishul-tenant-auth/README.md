@@ -36,9 +36,9 @@ Use `ContextHolderTenantIdProvider`:
 ```java
 @Service
 public class TenantAwareService {
-    
+
     private final TenantIdProvider tenantIdProvider;
-    
+
     public List<Order> getCurrentTenantOrders() {
         UUID tenantId = tenantIdProvider.getTenantId();
         return orderRepository.findByTenantId(tenantId);
@@ -54,11 +54,11 @@ The provider returns admin tenant ID when no session tenant is set:
 // How it works internally:
 public UUID getTenantId() {
     UUID tenantId = contextHolder.getSessionTenantId();
-    
+
     if (tenantId != null) {
         return tenantId;  // User's session tenant
     }
-    
+
     return defaultTenantId;  // Admin tenant fallback
 }
 ```
@@ -70,14 +70,14 @@ Integrate with Hibernate's `CurrentTenantIdentifierResolver`:
 ```java
 @Component
 public class TenantIdentifierResolver implements CurrentTenantIdentifierResolver {
-    
+
     private final TenantIdProvider tenantIdProvider;
-    
+
     @Override
     public String resolveCurrentTenantIdentifier() {
         return tenantIdProvider.getTenantId().toString();
     }
-    
+
     @Override
     public boolean validateExistingCurrentSessions() {
         return true;
@@ -92,13 +92,13 @@ Use the provider in repositories or services:
 ```java
 @Repository
 public class TenantScopedRepository<T> {
-    
+
     private final TenantIdProvider tenantIdProvider;
     private final EntityManager entityManager;
-    
+
     public List<T> findAll() {
         UUID tenantId = tenantIdProvider.getTenantId();
-        
+
         return entityManager.createQuery(
             "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.tenantId = :tenantId",
             entityClass)
@@ -168,7 +168,7 @@ public class TenantScopedRepository<T> {
 @Configuration
 @Import(TenantAuthAutoConfiguration.class)
 public class MultiTenantConfig {
-    
+
     @Bean
     public AdminTenant adminTenant() {
         return new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"));
@@ -177,22 +177,22 @@ public class MultiTenantConfig {
 
 @Service
 public class OrderService {
-    
+
     private final TenantIdProvider tenantIdProvider;
     private final OrderRepository orderRepository;
-    
+
     @Transactional
     public Order createOrder(CreateOrderRequest request) {
         UUID tenantId = tenantIdProvider.getTenantId();
-        
+
         Order order = new Order()
             .setTenantId(tenantId)
             .setItems(request.getItems())
             .setTotal(calculateTotal(request));
-        
+
         return orderRepository.save(order);
     }
-    
+
     public List<Order> getMyOrders() {
         UUID tenantId = tenantIdProvider.getTenantId();
         return orderRepository.findByTenantId(tenantId);

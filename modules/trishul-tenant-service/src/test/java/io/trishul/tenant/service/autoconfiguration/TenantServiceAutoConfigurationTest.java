@@ -38,9 +38,8 @@ class TenantServiceAutoConfigurationTest {
     TenantIaasService mockTenantIaasService = mock(TenantIaasService.class);
     Refresher<Tenant, TenantAccessor<?>> mockTenantRefresher = mock(Refresher.class);
 
-    TenantService result = config.tenantService(
-        mockLockService, mockTenantRepository, mockMigrationManager,
-        mockTenantRegister, mockTenantIaasService, mockTenantRefresher);
+    TenantService result = config.tenantService(mockLockService, mockTenantRepository,
+        mockMigrationManager, mockTenantRegister, mockTenantIaasService, mockTenantRefresher);
 
     assertNotNull(result);
   }
@@ -49,7 +48,8 @@ class TenantServiceAutoConfigurationTest {
   void testTenantAccessorRefresher_ReturnsNonNull() {
     TenantRepository mockRepo = mock(TenantRepository.class);
 
-    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> result = config.tenantAccessorRefresher(mockRepo);
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> result
+        = config.tenantAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -57,7 +57,8 @@ class TenantServiceAutoConfigurationTest {
   @Test
   @SuppressWarnings("unchecked")
   void testTenantRefresher_ReturnsNonNull() {
-    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> mockAccessorRefresher = mock(AccessorRefresher.class);
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> mockAccessorRefresher
+        = mock(AccessorRefresher.class);
 
     Refresher<Tenant, TenantAccessor<?>> result = config.tenantRefresher(mockAccessorRefresher);
 

@@ -32,9 +32,11 @@ class IaasTenantIdpManagementServiceAutoConfigurationTest {
   void testIaasIdpTenantService_ReturnsNonNull() {
     LockService mockLockService = mock(LockService.class);
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> mockClient = mock(IaasClient.class);
+    IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> mockClient
+        = mock(IaasClient.class);
 
-    IaasIdpTenantService result = config.iaasIdpTenantService(mockLockService, mockExecutor, mockClient);
+    IaasIdpTenantService result
+        = config.iaasIdpTenantService(mockLockService, mockExecutor, mockClient);
 
     assertNotNull(result);
   }
@@ -53,7 +55,8 @@ class IaasTenantIdpManagementServiceAutoConfigurationTest {
     IaasRoleService mockRoleService = mock(IaasRoleService.class);
     TenantIaasResourceBuilder mockResourceBuilder = mock(TenantIaasResourceBuilder.class);
 
-    TenantIaasAuthService result = config.tenantIaasAuthService(mockRoleService, mockResourceBuilder);
+    TenantIaasAuthService result
+        = config.tenantIaasAuthService(mockRoleService, mockResourceBuilder);
 
     assertNotNull(result);
   }

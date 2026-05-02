@@ -47,7 +47,7 @@ Use `WhereClauseBuilder`:
 @Service
 public class ProductQueryService {
     @Autowired private ProductRepository repo;
-    
+
     public List<Product> search(
         Set<UUID> ids,
         Set<String> categories,
@@ -60,12 +60,12 @@ public class ProductQueryService {
             .in("id", ids)                              // WHERE id IN (...)
             .in("category", categories)                 // AND category IN (...)
             .between("price", minPrice, maxPrice)       // AND price BETWEEN ... AND ...
-            .like("name", namePattern != null 
-                ? Set.of("%" + namePattern + "%") 
+            .like("name", namePattern != null
+                ? Set.of("%" + namePattern + "%")
                 : null)                                 // AND name LIKE '%...%'
             .is("isActive", isActive)                   // AND isActive = ...
             .build();
-        
+
         return repo.findAll(spec);
     }
 }
@@ -131,7 +131,7 @@ Use `RepoService.pageRequest()`:
 @Service
 public class ProductService implements RepoService<UUID, Product, ProductAccessor> {
     @Autowired private ProductRepository repo;
-    
+
     public Page<Product> getProducts(
         Specification<Product> spec,
         SortedSet<String> sortFields,  // e.g., ["name", "price"]
@@ -158,11 +158,11 @@ public PageDto<ProductDto> getProducts(
     @RequestParam(defaultValue = "true") boolean asc
 ) {
     Page<Product> products = service.getProducts(null, sort, asc, page, size);
-    
+
     List<ProductDto> content = products.getContent().stream()
         .map(mapper::toDto)
         .toList();
-    
+
     return new PageDto<>(content, products.getTotalPages(), products.getTotalElements());
 }
 ```
@@ -181,8 +181,8 @@ Response:
 Use `ExtendedRepository`:
 
 ```java
-public interface ProductRepository 
-    extends JpaRepository<Product, UUID>, 
+public interface ProductRepository
+    extends JpaRepository<Product, UUID>,
             JpaSpecificationExecutor<Product>,
             ExtendedRepository<UUID> {
     // Inherited:
@@ -225,14 +225,14 @@ public Specification<Order> buildComplexSpec(Set<UUID> customerIds, BigDecimal m
         // Build column references
         CriteriaSpec<UUID> customerIdSpec = new ColumnSpec<>(new String[]{"customer", "id"});
         CriteriaSpec<BigDecimal> totalSpec = new ColumnSpec<>(new String[]{"total"});
-        
+
         // Build conditions
         CriteriaSpec<Boolean> inCustomers = new InSpec<>(customerIdSpec, customerIds);
         CriteriaSpec<Boolean> minTotalSpec = new BetweenSpec<>(totalSpec, minTotal, null);
-        
+
         // Combine
         CriteriaSpec<Boolean> combined = new AndSpec(inCustomers, minTotalSpec);
-        
+
         return combined.getExpression(root, query, cb);
     };
 }

@@ -32,12 +32,12 @@ class SecretsAwsAutoConfigurationTest {
   void testSecretsManager_ReturnsNonNull() {
     SecretsAwsFactory mockFactory = mock(SecretsAwsFactory.class);
     AWSSecretsManager mockSecretsManager = mock(AWSSecretsManager.class);
-    
+
     when(mockFactory.secretsManager("region", "url", "key", "secret"))
         .thenReturn(mockSecretsManager);
 
-    SecretsManager<String, String> result = config.secretsManager(
-        mockFactory, "region", "url", "key", "secret");
+    SecretsManager<String, String> result
+        = config.secretsManager(mockFactory, "region", "url", "key", "secret");
 
     assertNotNull(result);
   }

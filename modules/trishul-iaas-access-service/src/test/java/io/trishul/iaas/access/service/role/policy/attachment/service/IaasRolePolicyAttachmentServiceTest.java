@@ -185,13 +185,13 @@ class IaasRolePolicyAttachmentServiceTest {
 
     IaasRolePolicyAttachmentId id1 = new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1");
     IaasRolePolicyAttachmentId id2 = new IaasRolePolicyAttachmentId("ROLE_2", "POLICY_2");
-    List<BaseIaasRolePolicyAttachment<?>> additions =
-        List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
+    List<BaseIaasRolePolicyAttachment<?>> additions
+        = List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
 
     List<IaasRolePolicyAttachment> result = service.add(additions);
 
-    List<IaasRolePolicyAttachment> expected =
-        List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
+    List<IaasRolePolicyAttachment> expected
+        = List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
     assertEquals(expected, result);
     verify(mIaasRepo, times(1)).add(anyList());
     verify(mMergerService).getAddEntities(additions);
@@ -208,13 +208,13 @@ class IaasRolePolicyAttachmentServiceTest {
 
     IaasRolePolicyAttachmentId id1 = new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1");
     IaasRolePolicyAttachmentId id2 = new IaasRolePolicyAttachmentId("ROLE_2", "POLICY_2");
-    List<UpdateIaasRolePolicyAttachment<?>> updates =
-        List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
+    List<UpdateIaasRolePolicyAttachment<?>> updates
+        = List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
 
     List<IaasRolePolicyAttachment> result = service.put(updates);
 
-    List<IaasRolePolicyAttachment> expected =
-        List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
+    List<IaasRolePolicyAttachment> expected
+        = List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
     assertEquals(expected, result);
     verify(mIaasRepo, times(1)).put(anyList());
     verify(mMergerService).getPutEntities(null, updates);
@@ -237,8 +237,8 @@ class IaasRolePolicyAttachmentServiceTest {
     }).when(mIaasRepo).get(anySet());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mIaasRepo).put(anyList());
 
-    List<UpdateIaasRolePolicyAttachment<?>> updates =
-        List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
+    List<UpdateIaasRolePolicyAttachment<?>> updates
+        = List.of(new IaasRolePolicyAttachment(id1), new IaasRolePolicyAttachment(id2));
 
     List<IaasRolePolicyAttachment> result = service.patch(updates);
 

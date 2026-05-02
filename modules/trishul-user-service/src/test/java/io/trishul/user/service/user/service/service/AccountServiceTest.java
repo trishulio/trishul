@@ -33,8 +33,8 @@ class AccountServiceTest {
     doReturn("john.doe").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
-    User expectedUser = new User(1L, "john.doe", "John Doe", "John", "Doe",
-        "john.doe@example.com", "5551234567", null, null, null, null, List.of(), null, null, null);
+    User expectedUser = new User(1L, "john.doe", "John Doe", "John", "Doe", "john.doe@example.com",
+        "5551234567", null, null, null, null, List.of(), null, null, null);
     expectedUser.setIaasUsername("iaas_john.doe");
 
     doReturn(List.of(expectedUser)).when(mRepository).findAll(any(Specification.class));
@@ -52,10 +52,10 @@ class AccountServiceTest {
     doReturn("test.user").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
-    User user1 = new User(1L, "test.user", "Test User 1", "Test", "User 1",
-        "test1@example.com", "1111111111", null, null, null, null, List.of(), null, null, null);
-    User user2 = new User(2L, "test.user", "Test User 2", "Test", "User 2",
-        "test2@example.com", "2222222222", null, null, null, null, List.of(), null, null, null);
+    User user1 = new User(1L, "test.user", "Test User 1", "Test", "User 1", "test1@example.com",
+        "1111111111", null, null, null, null, List.of(), null, null, null);
+    User user2 = new User(2L, "test.user", "Test User 2", "Test", "User 2", "test2@example.com",
+        "2222222222", null, null, null, null, List.of(), null, null, null);
 
     doReturn(List.of(user1, user2)).when(mRepository).findAll(any(Specification.class));
 
@@ -69,8 +69,8 @@ class AccountServiceTest {
   void testGetCurrentUser_ThrowsNotFoundException_WhenContextIsNull() {
     doReturn(null).when(mContextHolder).getPrincipalContext();
 
-    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-        () -> this.service.getCurrentUser());
+    EntityNotFoundException exception
+        = assertThrows(EntityNotFoundException.class, () -> this.service.getCurrentUser());
     assertEquals("User not found with context: current", exception.getMessage());
   }
 
@@ -80,8 +80,8 @@ class AccountServiceTest {
     doReturn(null).when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
-    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-        () -> this.service.getCurrentUser());
+    EntityNotFoundException exception
+        = assertThrows(EntityNotFoundException.class, () -> this.service.getCurrentUser());
     assertEquals("User not found with username: current", exception.getMessage());
   }
 
@@ -91,8 +91,8 @@ class AccountServiceTest {
     doReturn("").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
-    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-        () -> this.service.getCurrentUser());
+    EntityNotFoundException exception
+        = assertThrows(EntityNotFoundException.class, () -> this.service.getCurrentUser());
     assertEquals("User not found with username: current", exception.getMessage());
   }
 
@@ -104,8 +104,8 @@ class AccountServiceTest {
 
     doReturn(List.of()).when(mRepository).findAll(any(Specification.class));
 
-    EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-        () -> this.service.getCurrentUser());
+    EntityNotFoundException exception
+        = assertThrows(EntityNotFoundException.class, () -> this.service.getCurrentUser());
     assertEquals("User not found with userName or iaasUsername: nonexistent.user",
         exception.getMessage());
   }
@@ -116,8 +116,9 @@ class AccountServiceTest {
     doReturn("iaas_jane.smith").when(principalContext).getUsername();
     doReturn(principalContext).when(mContextHolder).getPrincipalContext();
 
-    User expectedUser = new User(2L, "jane.smith", "Jane Smith", "Jane", "Smith",
-        "jane.smith@example.com", "5559876543", null, null, null, null, List.of(), null, null, null);
+    User expectedUser
+        = new User(2L, "jane.smith", "Jane Smith", "Jane", "Smith", "jane.smith@example.com",
+            "5559876543", null, null, null, null, List.of(), null, null, null);
     expectedUser.setIaasUsername("iaas_jane.smith");
 
     doReturn(List.of(expectedUser)).when(mRepository).findAll(any(Specification.class));

@@ -87,16 +87,16 @@ Extend `BaseMapper<Entity, Dto, AddDto, UpdateDto>`:
 ```java
 @Mapper(componentModel = "spring")
 public interface ProductMapper extends BaseMapper<Product, ProductDto, AddProductDto, UpdateProductDto> {
-    
+
     @Override
     ProductDto toDto(Product entity);
-    
+
     @Override
     @Mapping(target = Product.ATTR_ID, ignore = true)
     @Mapping(target = Product.ATTR_CREATED_AT, ignore = true)
     @Mapping(target = Product.ATTR_LAST_UPDATED, ignore = true)
     Product fromAddDto(AddProductDto dto);
-    
+
     @Override
     @Mapping(target = Product.ATTR_CREATED_AT, ignore = true)
     @Mapping(target = Product.ATTR_LAST_UPDATED, ignore = true)
@@ -126,7 +126,7 @@ Use `@NullOrNotBlank` (unlike `@NotBlank` which rejects null):
 public class UpdateProductDto extends BaseDto {
     @NullOrNotBlank  // null = "don't update", blank = "invalid"
     private String name;
-    
+
     @NotBlank        // null = invalid, blank = invalid
     private String code;
 }
@@ -183,16 +183,16 @@ Product product = util.construct(Product.class, values);
 ```java
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity 
+public class Product extends BaseEntity
     implements CrudEntity<UUID, Product>, Audited<Product> {
-    
+
     @Id private UUID id;
     @Column(nullable = false) private String name;
     @Column(precision = 10, scale = 2) private BigDecimal price;
     @CreationTimestamp @Column(updatable = false) private LocalDateTime createdAt;
     @UpdateTimestamp private LocalDateTime lastUpdated;
     @Version private Integer version;
-    
+
     // Fluent getters/setters...
 }
 ```
@@ -229,19 +229,19 @@ public class UpdateProductDto extends BaseDto {
 ```java
 @Mapper(componentModel = "spring")
 public interface ProductMapper extends BaseMapper<Product, ProductDto, AddProductDto, UpdateProductDto> {
-    
+
     @Override
     ProductDto toDto(Product e);
-    
+
     List<ProductDto> toDtos(List<Product> entities);
-    
+
     @Override
     @Mapping(target = Product.ATTR_ID, ignore = true)
     @Mapping(target = Product.ATTR_VERSION, ignore = true)
     @Mapping(target = Product.ATTR_CREATED_AT, ignore = true)
     @Mapping(target = Product.ATTR_LAST_UPDATED, ignore = true)
     Product fromAddDto(AddProductDto dto);
-    
+
     @Override
     @Mapping(target = Product.ATTR_CREATED_AT, ignore = true)
     @Mapping(target = Product.ATTR_LAST_UPDATED, ignore = true)

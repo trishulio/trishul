@@ -34,12 +34,12 @@ class IaasAuthAwsAutoConfigurationTest {
   void testAmazonCognitoIdentity_ReturnsNonNull() {
     IaasAuthAwsFactory mockFactory = mock(IaasAuthAwsFactory.class);
     AmazonCognitoIdentity mockIdentity = mock(AmazonCognitoIdentity.class);
-    
+
     when(mockFactory.getAwsCognitoIdentityClient("region", "accessKey", "secretKey"))
         .thenReturn(mockIdentity);
 
-    AmazonCognitoIdentity result = config.amazonCognitoIdentity(
-        mockFactory, "region", "accessKey", "secretKey");
+    AmazonCognitoIdentity result
+        = config.amazonCognitoIdentity(mockFactory, "region", "accessKey", "secretKey");
 
     assertNotNull(result);
   }
@@ -48,12 +48,12 @@ class IaasAuthAwsAutoConfigurationTest {
   void testAwsCognitoIdpProvider_ReturnsNonNull() {
     IaasAuthAwsFactory mockFactory = mock(IaasAuthAwsFactory.class);
     AWSCognitoIdentityProvider mockProvider = mock(AWSCognitoIdentityProvider.class);
-    
+
     when(mockFactory.getIdentityProvider("region", "url", "accessKey", "secretKey"))
         .thenReturn(mockProvider);
 
-    AWSCognitoIdentityProvider result = config.awsCognitoIdpProvider(
-        mockFactory, "region", "url", "accessKey", "secretKey");
+    AWSCognitoIdentityProvider result
+        = config.awsCognitoIdpProvider(mockFactory, "region", "url", "accessKey", "secretKey");
 
     assertNotNull(result);
   }

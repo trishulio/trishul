@@ -66,7 +66,7 @@ Use `IaasAuthorizationCredentialsHolder`:
 
 ```java
 // Store credentials for current thread
-ThreadLocalIaasAuthorizationCredentialsHolder holder = 
+ThreadLocalIaasAuthorizationCredentialsHolder holder =
     new ThreadLocalIaasAuthorizationCredentialsHolder();
 
 holder.set(credentials);
@@ -85,18 +85,18 @@ Use `IaasAuthorizationFetcher`:
 ```java
 @Service
 public class IaasClientService {
-    
+
     private final IaasAuthorizationFetcher authFetcher;
-    
+
     public void callAwsApi() {
         IaasAuthorization auth = authFetcher.fetch();
-        
+
         AWSCredentials creds = new BasicSessionCredentials(
             auth.getAccessKeyId(),
             auth.getAccessSecretKey(),
             auth.getSessionToken()
         );
-        
+
         // Use credentials for AWS API call
     }
 }
@@ -109,12 +109,12 @@ Use `IaasAuthorizationCredentialsHolderFilter`:
 ```java
 @Configuration
 public class FilterConfig {
-    
+
     @Bean
     public FilterRegistrationBean<IaasAuthorizationCredentialsHolderFilter> iaasAuthFilter(
             IaasAuthorizationCredentialsHolder holder) {
-        
-        FilterRegistrationBean<IaasAuthorizationCredentialsHolderFilter> bean = 
+
+        FilterRegistrationBean<IaasAuthorizationCredentialsHolderFilter> bean =
             new FilterRegistrationBean<>();
         bean.setFilter(new IaasAuthorizationCredentialsHolderFilter(holder));
         bean.addUrlPatterns("/api/*");
@@ -179,25 +179,25 @@ public class FilterConfig {
 ```java
 @Component
 public class IaasCredentialPropagationFilter extends OncePerRequestFilter {
-    
+
     private final IaasAuthorizationCredentialsHolder holder;
     private final IaasAuthorizationMapper mapper;
-    
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response, FilterChain chain) {
-        
+
         try {
             // Extract token from header
             String token = request.getHeader(IaasAuthorizationCredentials.HEADER_NAME_IAAS_TOKEN);
-            
+
             if (token != null) {
                 IaasAuthorizationCredentials creds = new IaasAuthorizationCredentials(token);
                 holder.set(creds);
             }
-            
+
             chain.doFilter(request, response);
-            
+
         } finally {
             holder.clear();
         }

@@ -32,9 +32,11 @@ class IaasObjectStoreAutoConfigurationTest {
   void testIaasObjectStoreService_ReturnsNonNull() {
     LockService mockLockService = mock(LockService.class);
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> mockClient = mock(IaasClient.class);
+    IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> mockClient
+        = mock(IaasClient.class);
 
-    IaasObjectStoreService result = config.iaasObjectStoreService(mockLockService, mockExecutor, mockClient);
+    IaasObjectStoreService result
+        = config.iaasObjectStoreService(mockLockService, mockExecutor, mockClient);
 
     assertNotNull(result);
   }
@@ -44,9 +46,11 @@ class IaasObjectStoreAutoConfigurationTest {
   void testIaasObjectStoreCorsConfigService_ReturnsNonNull() {
     LockService mockLockService = mock(LockService.class);
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> mockClient = mock(IaasClient.class);
+    IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> mockClient
+        = mock(IaasClient.class);
 
-    IaasObjectStoreCorsConfigService result = config.iaasObjectStoreCorsConfigService(mockLockService, mockExecutor, mockClient);
+    IaasObjectStoreCorsConfigService result
+        = config.iaasObjectStoreCorsConfigService(mockLockService, mockExecutor, mockClient);
 
     assertNotNull(result);
   }
@@ -56,9 +60,11 @@ class IaasObjectStoreAutoConfigurationTest {
   void testIaasPublicAccessBlockService_ReturnsNonNull() {
     LockService mockLockService = mock(LockService.class);
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> mockClient = mock(IaasClient.class);
+    IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> mockClient
+        = mock(IaasClient.class);
 
-    IaasObjectStoreAccessConfigService result = config.iaasPublicAccessBlockService(mockLockService, mockExecutor, mockClient);
+    IaasObjectStoreAccessConfigService result
+        = config.iaasPublicAccessBlockService(mockLockService, mockExecutor, mockClient);
 
     assertNotNull(result);
   }

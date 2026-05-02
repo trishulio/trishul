@@ -42,8 +42,8 @@ public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
 
         if (collectionEntities != null && !collectionEntities.isEmpty()) {
           Set<I> collectionEntitiesIds = collectionEntities.stream()
-              .filter(collectionEntity -> collectionEntity.getId() != null)
-              .map(Identified::getId).collect(Collectors.toSet());
+              .filter(collectionEntity -> collectionEntity.getId() != null).map(Identified::getId)
+              .collect(Collectors.toSet());
           entityToCollectionEntitiesIds.put(accessor, collectionEntitiesIds);
           allCollectionEntitiesIds.addAll(collectionEntitiesIds);
         }

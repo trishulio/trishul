@@ -28,8 +28,7 @@ class JacksonJsonMapperTest {
   public static class TestData {
     private int x, y;
 
-    public TestData() {
-    }
+    public TestData() {}
 
     public TestData(int x, int y) {
       this.x = x;
@@ -129,7 +128,8 @@ class JacksonJsonMapperTest {
 
     JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
       @Override
-      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers)
+          throws IOException {
         gen.writeString("custom");
       }
     };
@@ -161,7 +161,8 @@ class JacksonJsonMapperTest {
 
     JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
       @Override
-      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers)
+          throws IOException {
         gen.writeString("custom:" + value.getX() + ":" + value.getY());
       }
     };
@@ -179,7 +180,8 @@ class JacksonJsonMapperTest {
 
     JsonSerializer<TestData> serializer = new JsonSerializer<TestData>() {
       @Override
-      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+      public void serialize(TestData value, JsonGenerator gen, SerializerProvider serializers)
+          throws IOException {
         gen.writeString("custom");
       }
     };

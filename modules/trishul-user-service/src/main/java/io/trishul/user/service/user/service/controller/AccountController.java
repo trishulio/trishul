@@ -27,9 +27,8 @@ public class AccountController extends BaseController {
 
   @GetMapping(value = "/me", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserDto getCurrentUser(
-      @RequestParam(name = PROPNAME_ATTR,
-          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+  public UserDto getCurrentUser(@RequestParam(name = PROPNAME_ATTR,
+      defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
     User user = accountService.getCurrentUser();
 
     return UserMapper.INSTANCE.toDto(user);

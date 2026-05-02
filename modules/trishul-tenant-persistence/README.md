@@ -20,7 +20,7 @@ Provides Hibernate multi-tenancy support with dynamic DataSource routing, connec
 @Component
 public class RequestTenantIdProvider implements TenantIdProvider {
     @Autowired private ContextHolder contextHolder;
-    
+
     @Override
     public UUID getTenantId() {
         return contextHolder.getSessionTenantId();
@@ -72,7 +72,7 @@ Once configured, use standard JPA - the module handles routing:
 @Service
 public class ProductService {
     @Autowired private ProductRepository repository;
-    
+
     public List<Product> getProducts() {
         // Automatically queries the current tenant's database
         // No tenant filtering needed in queries
@@ -90,7 +90,7 @@ Implement `TenantIdProvider`:
 @Component
 public class AuthTenantIdProvider implements TenantIdProvider {
     @Autowired private ContextHolder contextHolder;
-    
+
     @Override
     public UUID getTenantId() {
         return contextHolder.getSessionTenantId();
@@ -101,7 +101,7 @@ public class AuthTenantIdProvider implements TenantIdProvider {
 @Component
 public class HeaderTenantIdProvider implements TenantIdProvider {
     @Autowired private HttpServletRequest request;
-    
+
     @Override
     public UUID getTenantId() {
         String tenantId = request.getHeader("X-Tenant-ID");
@@ -114,7 +114,7 @@ public class HeaderTenantIdProvider implements TenantIdProvider {
 public class SubdomainTenantIdProvider implements TenantIdProvider {
     @Autowired private HttpServletRequest request;
     @Autowired private TenantLookupService tenantLookup;
-    
+
     @Override
     public UUID getTenantId() {
         String host = request.getServerName();  // acme.example.com
@@ -131,17 +131,17 @@ Implement `TenantDataSourceConfigurationProvider`:
 ```java
 @Component
 public class MyTenantConfigProvider implements TenantDataSourceConfigurationProvider {
-    
+
     @Value("${trishul.tenant.datasource.url-template}")
     private String urlTemplate;  // jdbc:postgresql://localhost:5432/tenant_{tenantId}
-    
+
     @Autowired private SecretsManager<String, String> secretsManager;
-    
+
     @Override
     public DataSourceConfiguration getConfiguration(UUID tenantId) throws IOException {
         String url = urlTemplate.replace("{tenantId}", tenantId.toString());
         String password = secretsManager.get("tenant/" + tenantId + "/db-password");
-        
+
         return new LazyTenantDataSourceConfiguration(
             tenantId.toString(),
             url,
@@ -237,21 +237,21 @@ public class TenantProvisioningService {
     @Autowired private DataSourceQueryRunner queryRunner;
     @Autowired private TenantMigrator migrator;
     @Autowired private TenantService tenantService;
-    
+
     @Transactional
     public Tenant provisionTenant(String name, URL url) throws SQLException {
         // 1. Create tenant record
         Tenant tenant = tenantService.add(List.of(
             new Tenant().setName(name).setUrl(url)
         )).get(0);
-        
+
         // 2. Create database
         String dbName = "tenant_" + tenant.getId().toString().replace("-", "_");
         queryRunner.execute("CREATE DATABASE " + dbName);
-        
+
         // 3. Run migrations
         migrator.migrate(tenant.getId());
-        
+
         // 4. Mark tenant ready
         tenant.setIsReady(true);
         return tenantService.put(List.of(tenant)).get(0);
@@ -271,7 +271,7 @@ Mock the tenant context:
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
     @Mock private TenantIdProvider tenantIdProvider;
-    
+
     @BeforeEach
     void setup() {
         when(tenantIdProvider.getTenantId())

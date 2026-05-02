@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class })
+@Mapper(uses = {UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class})
 public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, UpdateUserDto> {
   UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 

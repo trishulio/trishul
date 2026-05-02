@@ -42,7 +42,7 @@ class LocalDateTimeMapperTest {
   }
 
   private Date toDate(int year, int month, int dayOfMonth) {
-    return Date.from(LocalDate.of(year, month, dayOfMonth).atStartOfDay(ZoneId.systemDefault())
-        .toInstant());
+    return Date.from(
+        LocalDate.of(year, month, dayOfMonth).atStartOfDay(ZoneId.systemDefault()).toInstant());
   }
 }

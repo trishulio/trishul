@@ -103,7 +103,7 @@ class IaasIdpTenantServiceTest {
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     IaasIdpTenant attachment = service.get("TENANT");
 
@@ -121,7 +121,7 @@ class IaasIdpTenantServiceTest {
   void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasIdpTenant> attachments = service.getAll(Set.of("TENANT"));
 
@@ -133,7 +133,7 @@ class IaasIdpTenantServiceTest {
   void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasIdpTenant> attachments = service.getByIds(Set.of(() -> "TENANT"));
 
@@ -146,7 +146,7 @@ class IaasIdpTenantServiceTest {
   void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasIdpTenant((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     class DummyIaasIdpTenantAccessor implements IaasIdpTenantAccessor<DummyIaasIdpTenantAccessor> {
       @Override

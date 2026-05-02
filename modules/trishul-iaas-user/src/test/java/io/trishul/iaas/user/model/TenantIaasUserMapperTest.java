@@ -28,9 +28,9 @@ class TenantIaasUserMapperTest {
   @Test
   void testFromUsers_ReturnsListOfIaasUser_WhenArgIsNotNull() {
     List<IaasUser> users = mapper.fromUsers(List.of(new User(1L, "USERNAME", "DISPLAY_NAME",
-        "FIRST_NAME", "LAST_NAME", "EMAIL", "PHONE_NUMBER", URI.create("URI"), null, new UserStatus(1L),
-        new UserSalutation(1L), List.of(new UserRole(1L)), LocalDateTime.of(2000, 1, 1, 0, 0),
-        LocalDateTime.of(2001, 1, 1, 0, 0), 1)));
+        "FIRST_NAME", "LAST_NAME", "EMAIL", "PHONE_NUMBER", URI.create("URI"), null,
+        new UserStatus(1L), new UserSalutation(1L), List.of(new UserRole(1L)),
+        LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2001, 1, 1, 0, 0), 1)));
 
     List<IaasUser> expected = List
         .of(new IaasUser().setId("USERNAME").setEmail("EMAIL").setPhoneNumber("PHONE_NUMBER"));

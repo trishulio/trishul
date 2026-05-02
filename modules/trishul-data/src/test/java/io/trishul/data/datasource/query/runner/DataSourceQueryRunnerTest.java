@@ -55,7 +55,8 @@ class DataSourceQueryRunnerTest {
   }
 
   @Test
-  void testQueryWithConfigAndSupplier_PassesConnectionToSupplier() throws SQLException, IOException {
+  void testQueryWithConfigAndSupplier_PassesConnectionToSupplier()
+      throws SQLException, IOException {
     when(mDsManager.getDataSource(mDsConfig)).thenReturn(mDataSource);
 
     Connection[] capturedConnection = new Connection[1];
@@ -68,7 +69,8 @@ class DataSourceQueryRunnerTest {
   }
 
   @Test
-  void testQueryWithConfigAndSupplier_ClosesConnectionAfterSuccess() throws SQLException, IOException {
+  void testQueryWithConfigAndSupplier_ClosesConnectionAfterSuccess()
+      throws SQLException, IOException {
     when(mDsManager.getDataSource(mDsConfig)).thenReturn(mDataSource);
 
     queryRunner.query(mDsConfig, conn -> "result");
@@ -108,7 +110,8 @@ class DataSourceQueryRunnerTest {
       throw new RuntimeException("Supplier failed");
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, failingSupplier));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, failingSupplier));
 
     verify(mConnection).rollback();
     verify(mConnection).close();
@@ -159,7 +162,8 @@ class DataSourceQueryRunnerTest {
       throw new RuntimeException("Supplier failed");
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> queryRunner.query(failingSupplier));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(failingSupplier));
 
     verify(mConnection).rollback();
     verify(mConnection).close();
@@ -170,7 +174,7 @@ class DataSourceQueryRunnerTest {
   void testQueryWithConfigAndConsumer_ExecutesConsumer() throws SQLException, IOException {
     when(mDsManager.getDataSource(mDsConfig)).thenReturn(mDataSource);
 
-    boolean[] executed = { false };
+    boolean[] executed = {false};
     CheckedConsumer<Connection, Exception> consumer = conn -> {
       executed[0] = true;
     };
@@ -180,7 +184,8 @@ class DataSourceQueryRunnerTest {
   }
 
   @Test
-  void testQueryWithConfigAndConsumer_PassesConnectionToConsumer() throws SQLException, IOException {
+  void testQueryWithConfigAndConsumer_PassesConnectionToConsumer()
+      throws SQLException, IOException {
     when(mDsManager.getDataSource(mDsConfig)).thenReturn(mDataSource);
 
     Connection[] capturedConnection = new Connection[1];
@@ -193,7 +198,8 @@ class DataSourceQueryRunnerTest {
   }
 
   @Test
-  void testQueryWithConfigAndConsumer_ClosesConnectionAfterSuccess() throws SQLException, IOException {
+  void testQueryWithConfigAndConsumer_ClosesConnectionAfterSuccess()
+      throws SQLException, IOException {
     when(mDsManager.getDataSource(mDsConfig)).thenReturn(mDataSource);
 
     CheckedConsumer<Connection, Exception> consumer = conn -> {
@@ -210,8 +216,8 @@ class DataSourceQueryRunnerTest {
     CheckedConsumer<Connection, Exception> consumer = conn -> {
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class,
-        () -> queryRunner.query(mDsConfig, consumer));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, consumer));
 
     assertNotNull(ex.getCause());
     assertEquals(SQLException.class, ex.getCause().getClass());
@@ -224,8 +230,8 @@ class DataSourceQueryRunnerTest {
     CheckedConsumer<Connection, Exception> consumer = conn -> {
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class,
-        () -> queryRunner.query(mDsConfig, consumer));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, consumer));
 
     assertNotNull(ex.getCause());
     assertEquals(IOException.class, ex.getCause().getClass());
@@ -239,7 +245,8 @@ class DataSourceQueryRunnerTest {
       throw new RuntimeException("Consumer failed");
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, failingConsumer));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(mDsConfig, failingConsumer));
 
     verify(mConnection).rollback();
     verify(mConnection).close();
@@ -262,7 +269,7 @@ class DataSourceQueryRunnerTest {
 
   @Test
   void testQueryWithConsumer_ExecutesConsumer() {
-    boolean[] executed = { false };
+    boolean[] executed = {false};
     CheckedConsumer<Connection, Exception> consumer = conn -> {
       executed[0] = true;
     };
@@ -296,7 +303,8 @@ class DataSourceQueryRunnerTest {
       throw new RuntimeException("Consumer failed");
     };
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> queryRunner.query(failingConsumer));
+    RuntimeException ex
+        = assertThrows(RuntimeException.class, () -> queryRunner.query(failingConsumer));
 
     verify(mConnection).rollback();
     verify(mConnection).close();
@@ -346,7 +354,7 @@ class DataSourceQueryRunnerTest {
   void testQueryWithConsumer_CompletesSuccessfully_WhenCloseThrowsException() throws SQLException {
     doThrow(new SQLException("Close failed")).when(mConnection).close();
 
-    boolean[] executed = { false };
+    boolean[] executed = {false};
     CheckedConsumer<Connection, Exception> consumer = conn -> {
       executed[0] = true;
     };

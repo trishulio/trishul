@@ -31,12 +31,14 @@ class IaasUserServiceAutoConfigurationTest {
   @SuppressWarnings("unchecked")
   void testTenantIaasUserService_ReturnsNonNull() {
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> mockUserClient = mock(IaasClient.class);
-    IaasClient<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> mockMembershipClient = mock(IaasClient.class);
+    IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> mockUserClient
+        = mock(IaasClient.class);
+    IaasClient<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> mockMembershipClient
+        = mock(IaasClient.class);
     TenantIdProvider mockTenantIdProvider = mock(TenantIdProvider.class);
 
-    TenantIaasUserService result = config.tenantIaasUserService(
-        mockExecutor, mockUserClient, mockMembershipClient, mockTenantIdProvider);
+    TenantIaasUserService result = config.tenantIaasUserService(mockExecutor, mockUserClient,
+        mockMembershipClient, mockTenantIdProvider);
 
     assertNotNull(result);
   }

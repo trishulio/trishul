@@ -53,8 +53,8 @@ public class UpdateUserDto extends BaseDto {
   }
 
   public UpdateUserDto(Long id, String userName, String displayName, String firstName,
-      String lastName, String email, Long statusId, Long salutationId, String phoneNumber, URI imageSrc,
-      List<Long> roleIds, @NotNull Integer version) {
+      String lastName, String email, Long statusId, Long salutationId, String phoneNumber,
+      URI imageSrc, List<Long> roleIds, @NotNull Integer version) {
     this(id);
     setUserName(userName);
     setDisplayName(displayName);

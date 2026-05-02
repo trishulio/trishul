@@ -23,10 +23,10 @@ JdbcDialect dialect = new PostgresJdbcDialect(new PostgresJdbcDialectSql());
 try (Connection conn = adminDataSource.getConnection()) {
     // Create tenant schema
     dialect.createSchemaIfNotExists(conn, "tenant_123");
-    
+
     // Create tenant user with credentials
     dialect.createUser(conn, "tenant_123_user", "secure_password");
-    
+
     // Grant schema access
     dialect.grantPrivilege(conn, "ALL", "SCHEMA", "tenant_123", "tenant_123_user");
 }
@@ -41,7 +41,7 @@ Use `JdbcDialect.createSchemaIfNotExists()`:
 ```java
 public void provisionTenantSchema(UUID tenantId) throws SQLException {
     String schemaName = "tenant_" + tenantId.toString().replace("-", "");
-    
+
     try (Connection conn = adminDataSource.getConnection()) {
         boolean created = dialect.createSchemaIfNotExists(conn, schemaName);
         if (created) {
@@ -76,7 +76,7 @@ public void deprovisionTenant(String schemaName, String username) throws SQLExce
         // Reassign ownership before dropping
         dialect.reassignOwnedByTo(conn, username, "admin_user");
         dialect.dropOwnedBy(conn, username);
-        
+
         // Drop schema and user
         dialect.dropSchema(conn, schemaName);
         dialect.dropUser(conn, username);
@@ -91,7 +91,7 @@ Use `schemaExists()` and `userExists()`:
 ```java
 public boolean isTenantProvisioned(String schemaName, String username) throws SQLException {
     try (Connection conn = adminDataSource.getConnection()) {
-        return dialect.schemaExists(conn, schemaName) 
+        return dialect.schemaExists(conn, schemaName)
             && dialect.userExists(conn, username);
     }
 }
@@ -142,36 +142,36 @@ DROP USER tenant_123_user;
 ```java
 @Service
 public class TenantDatabaseProvisioner {
-    
+
     private final DataSource adminDataSource;
     private final JdbcDialect dialect;
-    
+
     public TenantDatabaseProvisioner(DataSource adminDataSource) {
         this.adminDataSource = adminDataSource;
         this.dialect = new PostgresJdbcDialect(new PostgresJdbcDialectSql());
     }
-    
+
     @Transactional
     public TenantDbCredentials provision(UUID tenantId) throws SQLException {
         String schemaName = "tenant_" + tenantId.toString().replace("-", "");
         String username = schemaName + "_user";
         String password = generateSecurePassword();
-        
+
         try (Connection conn = adminDataSource.getConnection()) {
             // Create schema
             dialect.createSchemaIfNotExists(conn, schemaName);
-            
+
             // Create user
             dialect.createUser(conn, username, password);
-            
+
             // Grant privileges
             dialect.grantPrivilege(conn, "ALL", "SCHEMA", schemaName, username);
             dialect.grantPrivilege(conn, "ALL", "ALL TABLES IN SCHEMA", schemaName, username);
-            
+
             return new TenantDbCredentials(schemaName, username, password);
         }
     }
-    
+
     public void deprovision(String schemaName, String username) throws SQLException {
         try (Connection conn = adminDataSource.getConnection()) {
             dialect.dropSchema(conn, schemaName);

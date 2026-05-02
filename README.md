@@ -200,7 +200,7 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
         <groupId>io.trishul</groupId>
         <artifactId>trishul-crud</artifactId>
     </dependency>
-    
+
     <!-- Multi-tenancy -->
     <dependency>
         <groupId>io.trishul</groupId>
@@ -210,7 +210,7 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
         <groupId>io.trishul</groupId>
         <artifactId>trishul-tenant-persistence-management</artifactId>
     </dependency>
-    
+
     <!-- AWS Auth -->
     <dependency>
         <groupId>io.trishul</groupId>
@@ -220,7 +220,7 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
         <groupId>io.trishul</groupId>
         <artifactId>trishul-iaas-auth-aws</artifactId>
     </dependency>
-    
+
     <!-- User Management -->
     <dependency>
         <groupId>io.trishul</groupId>
@@ -230,7 +230,7 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
         <groupId>io.trishul</groupId>
         <artifactId>trishul-iaas-user-service-aws</artifactId>
     </dependency>
-    
+
     <!-- Object Storage -->
     <dependency>
         <groupId>io.trishul</groupId>
@@ -240,7 +240,7 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
         <groupId>io.trishul</groupId>
         <artifactId>trishul-iaas-tenant-object-store-service</artifactId>
     </dependency>
-    
+
     <!-- Secrets -->
     <dependency>
         <groupId>io.trishul</groupId>
@@ -323,23 +323,23 @@ All entities should implement the standard interfaces from `trishul-base-types`:
 ```java
 @Entity
 @Table(name = "MY_ENTITY")
-public class MyEntity extends BaseEntity 
+public class MyEntity extends BaseEntity
     implements CrudEntity<UUID, MyEntity>, Audited<MyEntity> {
-    
+
     @Id
     private UUID id;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
-    
+
     // Implement interface methods...
 }
 ```
@@ -349,7 +349,7 @@ public class MyEntity extends BaseEntity
 ```java
 @Mapper(componentModel = "spring")
 public interface MyEntityMapper extends BaseMapper<MyEntity, MyEntityDto, AddMyEntityDto, UpdateMyEntityDto> {
-    
+
     // IMPORTANT: Always reference static constants from the concrete class
     @Mapping(target = MyEntity.ATTR_ID, ignore = true)
     @Mapping(target = MyEntity.ATTR_CREATED_AT, ignore = true)
@@ -378,10 +378,10 @@ Use `trishul-test` for common test patterns:
 class MyServiceTest {
     @Mock
     private MyRepository repository;
-    
+
     @InjectMocks
     private MyService service;
-    
+
     @Test
     void testCreate() {
         // Test implementation

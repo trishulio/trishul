@@ -64,8 +64,7 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AccountService.class)
-  public AccountService accountService(UserRepository userRepository,
-      ContextHolder contextHolder) {
+  public AccountService accountService(UserRepository userRepository, ContextHolder contextHolder) {
     return new AccountService(userRepository, contextHolder);
   }
 

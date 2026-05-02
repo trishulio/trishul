@@ -37,8 +37,8 @@ class IaasTenantAwsAutoConfigurationTest {
     ContextHolderTenantIdProvider mockTenantIdProvider = mock(ContextHolderTenantIdProvider.class);
     String appBucketName = "test-bucket";
 
-    IaasObjectStoreNameProvider result = config.iaasObjectStoreNameProvider(
-        mockDocumentTemplates, mockTenantIdProvider, appBucketName);
+    IaasObjectStoreNameProvider result = config.iaasObjectStoreNameProvider(mockDocumentTemplates,
+        mockTenantIdProvider, appBucketName);
 
     assertNotNull(result);
   }
@@ -50,15 +50,11 @@ class IaasTenantAwsAutoConfigurationTest {
     List<String> allowedMethods = List.of("GET", "PUT");
     List<String> allowedOrigins = List.of("*");
 
-    TenantIaasResourceBuilder result = config.tenantIaasResourceBuilder(
-        mockDocumentTemplates,
-        allowedHeaders,
-        allowedMethods,
-        allowedOrigins,
-        true,  // blockPublicAcls
-        true,  // ignorePublicAcls
-        true,  // blockPublicPolicy
-        true   // restrictPublicBuckets
+    TenantIaasResourceBuilder result = config.tenantIaasResourceBuilder(mockDocumentTemplates,
+        allowedHeaders, allowedMethods, allowedOrigins, true, // blockPublicAcls
+        true, // ignorePublicAcls
+        true, // blockPublicPolicy
+        true // restrictPublicBuckets
     );
 
     assertNotNull(result);

@@ -197,7 +197,7 @@ class UserServiceTest {
     User existingUser1 = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
         "1234567890", null, null, null, null, List.of(), null, null, null);
     existingUser1.setIaasUsername("iaas_user1");
-    
+
     User existingUser2 = new User(2L, "user2", "User Two", "User", "Two", "user2@example.com",
         "0987654321", null, null, null, null, List.of(), null, null, null);
     existingUser2.setIaasUsername("iaas_user2");
@@ -214,15 +214,14 @@ class UserServiceTest {
     iaasUser1.setId("user1@example.com");
     iaasUser1.setUserName("iaas_user1_updated");
     membership1.setUser(iaasUser1);
-    
+
     IaasUserTenantMembership membership2 = new IaasUserTenantMembership();
     IaasUser iaasUser2 = new IaasUser();
     iaasUser2.setId("user2@example.com");
     iaasUser2.setUserName("iaas_user2");
     membership2.setUser(iaasUser2);
 
-    doAnswer(inv -> List.of(membership1, membership2)).when(this.iaasService)
-        .put(anyList());
+    doAnswer(inv -> List.of(membership1, membership2)).when(this.iaasService).put(anyList());
 
     // Mock repoService.saveAll() to return users after iaasUsername is set
     doAnswer(inv -> {

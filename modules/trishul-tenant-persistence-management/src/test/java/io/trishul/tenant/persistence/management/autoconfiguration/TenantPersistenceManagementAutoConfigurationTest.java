@@ -22,8 +22,7 @@ class TenantPersistenceManagementAutoConfigurationTest {
   }
 
   @Test
-  void testRandomGenerator_ReturnsInstanceOfRandonGeneratorImpl()
-      throws NoSuchAlgorithmException {
+  void testRandomGenerator_ReturnsInstanceOfRandonGeneratorImpl() throws NoSuchAlgorithmException {
     RandomGenerator rand = config.randomGenerator();
     assertTrue(rand instanceof RandomGeneratorImpl);
   }

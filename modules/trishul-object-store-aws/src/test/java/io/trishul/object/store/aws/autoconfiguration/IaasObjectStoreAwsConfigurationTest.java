@@ -31,9 +31,8 @@ class IaasObjectStoreAwsConfigurationTest {
   void testS3Client_ReturnsNonNull() {
     ObjectStoreAwsFactory mockFactory = mock(ObjectStoreAwsFactory.class);
     AmazonS3 mockS3Client = mock(AmazonS3.class);
-    
-    when(mockFactory.s3Client("us-east-1", "accessKey", "secret"))
-        .thenReturn(mockS3Client);
+
+    when(mockFactory.s3Client("us-east-1", "accessKey", "secret")).thenReturn(mockS3Client);
 
     AmazonS3 result = config.s3Client(mockFactory, "us-east-1", "accessKey", "secret");
 

@@ -20,20 +20,20 @@ Defines `IaasClient` for single-entity operations and `IaasRepository`/`BulkIaas
 @Component
 public class S3BucketClient implements IaasClient<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> {
     @Autowired private AmazonS3 s3;
-    
+
     @Override
     public IaasObjectStore get(String bucketName) {
-        return s3.doesBucketExistV2(bucketName) 
-            ? new IaasObjectStore().setName(bucketName) 
+        return s3.doesBucketExistV2(bucketName)
+            ? new IaasObjectStore().setName(bucketName)
             : null;
     }
-    
+
     @Override
     public <BE extends BaseIaasObjectStore> IaasObjectStore add(BE entity) {
         s3.createBucket(entity.getName());
         return get(entity.getName());
     }
-    
+
     @Override
     public boolean delete(String bucketName) {
         s3.deleteBucket(bucketName);
@@ -44,7 +44,7 @@ public class S3BucketClient implements IaasClient<String, IaasObjectStore, BaseI
 
 // 2. Wrap with BulkIaasClient for parallel bulk operations
 @Bean
-public IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> 
+public IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
     bucketRepository(BlockingAsyncExecutor executor, S3BucketClient client) {
     return new BulkIaasClient<>(executor, client);
 }
@@ -85,7 +85,7 @@ Use `BulkIaasClient` to wrap your `IaasClient`:
 @Configuration
 public class IaasConfig {
     @Bean
-    public IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> 
+    public IaasRepository<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore>
         objectStoreRepo(BlockingAsyncExecutor executor, S3BucketClient client) {
         return new BulkIaasClient<>(executor, client);
     }
@@ -95,15 +95,15 @@ public class IaasConfig {
 @Service
 public class BucketService {
     @Autowired private IaasRepository<String, IaasObjectStore, ...> repo;
-    
+
     public List<IaasObjectStore> getBuckets(Set<String> names) {
         return repo.get(names);  // Fetches in parallel
     }
-    
+
     public List<IaasObjectStore> createBuckets(List<BaseIaasObjectStore> buckets) {
         return repo.add(buckets);  // Creates in parallel
     }
-    
+
     public long deleteBuckets(Set<String> names) {
         return repo.delete(names);  // Returns count of successful deletes
     }
@@ -141,7 +141,7 @@ Use `IaasRepositoryProvider`:
 @Service
 public class DynamicResourceService {
     @Autowired private IaasRepositoryProvider<String, IaasObjectStore, ...> provider;
-    
+
     public void processResources(Set<String> ids) {
         IaasRepository<String, IaasObjectStore, ...> repo = provider.getIaasRepository();
         List<IaasObjectStore> stores = repo.get(ids);
@@ -206,15 +206,15 @@ public interface UpdateIaasObjectStore<T> extends BaseIaasObjectStore<T> {
 }
 
 // 3. Full Entity - all fields including read-only
-public class IaasObjectStore extends BaseEntity 
-    implements UpdateIaasObjectStore<IaasObjectStore>, 
+public class IaasObjectStore extends BaseEntity
+    implements UpdateIaasObjectStore<IaasObjectStore>,
                CrudEntity<String, IaasObjectStore>,
                Audited<IaasObjectStore> {
-    
+
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdated;
-    
+
     @Override
     public String getId() { return getName(); }  // ID is the name
 }
@@ -224,12 +224,12 @@ public class IaasObjectStore extends BaseEntity
 
 ```java
 @Component
-public class S3BucketIaasClient 
+public class S3BucketIaasClient
     implements IaasClient<String, IaasObjectStore, BaseIaasObjectStore, UpdateIaasObjectStore> {
-    
+
     @Autowired private AmazonS3 s3Client;
     @Autowired private S3BucketMapper mapper;
-    
+
     @Override
     public IaasObjectStore get(String bucketName) {
         if (!s3Client.doesBucketExistV2(bucketName)) {
@@ -240,19 +240,19 @@ public class S3BucketIaasClient
             .findFirst().orElse(null);
         return mapper.fromIaasEntity(bucket);
     }
-    
+
     @Override
     public <BE extends BaseIaasObjectStore> IaasObjectStore add(BE entity) {
         s3Client.createBucket(entity.getName());
         return get(entity.getName());
     }
-    
+
     @Override
     public <UE extends UpdateIaasObjectStore> IaasObjectStore put(UE entity) {
         // S3 buckets have limited update capabilities
         return get(entity.getName());
     }
-    
+
     @Override
     public boolean delete(String bucketName) {
         try {
@@ -262,7 +262,7 @@ public class S3BucketIaasClient
             return false;
         }
     }
-    
+
     @Override
     public boolean exists(String bucketName) {
         return s3Client.doesBucketExistV2(bucketName);

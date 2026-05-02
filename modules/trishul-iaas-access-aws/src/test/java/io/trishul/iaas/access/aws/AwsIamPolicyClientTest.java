@@ -170,12 +170,12 @@ class AwsIamPolicyClientTest {
 
     doReturn(
         new CreatePolicyVersionResult().withPolicyVersion(new PolicyVersion().withVersionId("V1"))
-            .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
-                .createPolicyVersion(any(CreatePolicyVersionRequest.class));
+            .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+        .when(mAwsIamClient).createPolicyVersion(any(CreatePolicyVersionRequest.class));
 
     doReturn(new DeletePolicyVersionResult()
         .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
-            .deletePolicyVersion(any(DeletePolicyVersionRequest.class));
+        .deletePolicyVersion(any(DeletePolicyVersionRequest.class));
 
     IaasPolicy policy = client.update(new IaasPolicy().setName("POLICY_1").setDocument("DOCUMENT_1")
         .setDescription("DESCRIPTION_1").setIaasResourceName("IAAS_RES_1").setIaasId("IAAS_ID_1")
@@ -242,7 +242,7 @@ class AwsIamPolicyClientTest {
 
     doReturn(new ListPolicyVersionsResult().withVersions(pageA).withMarker("next_1")
         .withIsTruncated(true)).when(mAwsIamClient)
-            .listPolicyVersions(new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN"));
+        .listPolicyVersions(new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN"));
     doReturn(new ListPolicyVersionsResult().withVersions(pageB).withMarker("next_2")
         .withIsTruncated(true)).when(mAwsIamClient).listPolicyVersions(
             new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN").withMarker("next_1"));

@@ -79,7 +79,7 @@ class ThreadLocalContextHolderTest {
   void testSetContext_ReturnsThis() {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     ThreadLocalContextHolder result = holder.setContext(mCtx);
-    
+
     assertSame(holder, result);
     assertSame(mCtx, holder.getPrincipalContext());
   }
@@ -90,9 +90,9 @@ class ThreadLocalContextHolderTest {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     when(mCtx.getTenantIds()).thenReturn(Arrays.asList(tenantId));
     holder.setContext(mCtx);
-    
+
     ThreadLocalContextHolder result = holder.setSessionTenantId(tenantId);
-    
+
     assertSame(holder, result);
     assertEquals(tenantId, holder.getSessionTenantId());
   }
@@ -104,9 +104,9 @@ class ThreadLocalContextHolderTest {
     when(mCtx.getTenantIds()).thenReturn(Arrays.asList(tenantId));
     holder.setContext(mCtx);
     holder.setSessionTenantId(tenantId);
-    
+
     UUID result = holder.getSessionTenantId();
-    
+
     assertNotNull(result);
     assertEquals(tenantId, result);
   }

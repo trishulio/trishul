@@ -29,7 +29,7 @@ public class MyApiApplication {
 @RestController
 @RequestMapping("/api/v1/items")
 public class ItemController {
-    
+
     @GetMapping
     public List<ItemDto> getItems() {
         return itemService.findAll();
@@ -140,7 +140,7 @@ springdoc.info.version=1.0.0
 @RequestMapping("/api/v1/tenants")
 @Tag(name = "Tenants", description = "Tenant management operations")
 public class TenantController {
-    
+
     @Operation(summary = "Get all tenants")
     @ApiResponse(responseCode = "200", description = "List of tenants")
     @GetMapping
@@ -178,19 +178,19 @@ public class TenantApiApplication {
 @RestController
 @RequestMapping("/api/v1/tenants")
 public class TenantController {
-    
+
     private final TenantService tenantService;
-    
+
     @GetMapping
     public List<TenantDto> list() {
         return tenantService.findAll();
     }
-    
+
     @PostMapping
     public TenantDto create(@RequestBody AddTenantDto dto) {
         return tenantService.create(dto);
     }
-    
+
     @GetMapping("/{id}")
     public TenantDto get(@PathVariable UUID id) {
         return tenantService.findById(id);

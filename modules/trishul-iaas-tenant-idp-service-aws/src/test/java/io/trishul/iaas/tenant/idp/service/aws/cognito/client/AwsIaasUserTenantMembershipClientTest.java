@@ -121,7 +121,7 @@ class AwsIaasUserTenantMembershipClientTest {
     client = spy(client);
     doAnswer(
         inv -> new IaasUserTenantMembership((inv.getArgument(0, IaasUserTenantMembershipId.class))))
-            .when(client).get(any());
+        .when(client).get(any());
 
     IaasUserTenantMembership membership
         = client.put(new IaasUserTenantMembership(new IaasUser("USER_1"), "T1"));
@@ -136,7 +136,7 @@ class AwsIaasUserTenantMembershipClientTest {
   void testDelete_ReturnsTrue_WhenRemoveUserFromGroupIsCalled() {
     doReturn(new AdminRemoveUserFromGroupResult()
         .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mIdp)
-            .adminRemoveUserFromGroup(any(AdminRemoveUserFromGroupRequest.class));
+        .adminRemoveUserFromGroup(any(AdminRemoveUserFromGroupRequest.class));
     boolean b = client.delete(new IaasUserTenantMembershipId("USER_1", "T1"));
 
     assertTrue(b);

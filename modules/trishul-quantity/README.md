@@ -40,13 +40,13 @@ Use `QuantityEntity` - a JPA-embeddable that stores value and unit:
 ```java
 @Entity
 public class Ingredient extends BaseEntity {
-    
+
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "quantity_value"))
     @AssociationOverride(name = "unit",
         joinColumns = @JoinColumn(name = "quantity_unit_symbol", referencedColumnName = "symbol"))
     private QuantityEntity quantity;
-    
+
     public Quantity<?> getQuantity() {
         return quantityMapper.fromEntity(quantity);
     }
@@ -131,10 +131,10 @@ Quantity<?> total = calc.add(bottles, cases);  // 34 each
 ```java
 @Entity
 public class Recipe extends BaseEntity {
-    
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<RecipeIngredient> ingredients;
-    
+
     public Quantity<Mass> getTotalMass() {
         QuantityCalculator calc = QuantityCalculator.INSTANCE;
         return ingredients.stream()
@@ -146,10 +146,10 @@ public class Recipe extends BaseEntity {
 
 @Entity
 public class RecipeIngredient extends BaseEntity {
-    
+
     @Embedded
     private QuantityEntity quantity;
-    
+
     @ManyToOne
     private Ingredient ingredient;
 }

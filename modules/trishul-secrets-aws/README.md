@@ -34,9 +34,9 @@ Add this dependency and the `AwsSecretsManager` is auto-configured:
 ```java
 @Service
 public class CredentialService {
-    
+
     private final SecretsManager<String, String> secretsManager;
-    
+
     public DatabaseCredentials getDbCredentials(String tenantId) throws IOException {
         String secretId = "myapp/tenants/" + tenantId + "/database";
         String json = secretsManager.get(secretId);
@@ -53,7 +53,7 @@ Use standard `SecretsManager` operations:
 public void provisionTenant(UUID tenantId) throws IOException {
     String secretId = "myapp/tenants/" + tenantId + "/database";
     String credentials = generateCredentialsJson();
-    
+
     secretsManager.create(secretId, credentials);  // Fails if exists
     // or
     secretsManager.put(secretId, credentials);     // Upsert
@@ -67,7 +67,7 @@ Use `SecretsAwsFactory`:
 ```java
 @Configuration
 public class CustomSecretsConfig {
-    
+
     @Bean
     public AWSSecretsManager awsSecretsManagerClient() {
         return SecretsAwsFactory.buildSecretsClient(

@@ -25,7 +25,7 @@ public class MyPrincipalContextBuilder implements PrincipalContextBuilder {
             .map(UUID::fromString).toList();
         String username = jwt.getSubject();
         List<String> roles = jwt.getClaimAsStringList("roles");
-        
+
         return new DefaultPrincipalContext(tenantIds, username, roles);
     }
 }
@@ -34,7 +34,7 @@ public class MyPrincipalContextBuilder implements PrincipalContextBuilder {
 @Service
 public class MyService {
     @Autowired private ContextHolder contextHolder;
-    
+
     public void doWork() {
         UUID tenantId = contextHolder.getSessionTenantId();
         String username = contextHolder.getPrincipalContext().getUsername();
@@ -56,21 +56,21 @@ Inject `ContextHolder`:
 @Service
 public class OrderService {
     @Autowired private ContextHolder contextHolder;
-    
+
     public Order createOrder(OrderRequest request) {
         // Get current tenant for the request
         UUID tenantId = contextHolder.getSessionTenantId();
-        
+
         // Get user information
         PrincipalContext ctx = contextHolder.getPrincipalContext();
         String createdBy = ctx.getUsername();
         List<String> roles = ctx.getRoles();
-        
+
         // Check if user can access multiple tenants
         if (ctx.getTenantIds().size() > 1) {
             // Handle multi-tenant user
         }
-        
+
         return new Order()
             .setTenantId(tenantId)
             .setCreatedBy(createdBy);
@@ -93,11 +93,11 @@ public class CognitoPrincipalContextBuilder implements PrincipalContextBuilder {
         List<UUID> tenantIds = Arrays.stream(tenantClaim.split(","))
             .map(UUID::fromString)
             .toList();
-        
+
         // Extract username and roles
         String username = jwt.getClaimAsString("cognito:username");
         List<String> roles = jwt.getClaimAsStringList("cognito:groups");
-        
+
         return new DefaultPrincipalContext(tenantIds, username, roles);
     }
 }
@@ -211,10 +211,10 @@ void testWithMockedContext() {
     PrincipalContext mockCtx = mock(PrincipalContext.class);
     when(mockCtx.getTenantIds()).thenReturn(List.of(TENANT_ID));
     when(mockCtx.getUsername()).thenReturn("testuser");
-    
+
     holder.setContext(mockCtx);
     holder.setSessionTenantId(TENANT_ID);
-    
+
     try {
         // Test code that uses ContextHolder
         myService.doWork();

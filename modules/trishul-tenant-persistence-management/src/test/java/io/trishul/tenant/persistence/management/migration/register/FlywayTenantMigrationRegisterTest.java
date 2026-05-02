@@ -33,7 +33,8 @@ class FlywayTenantMigrationRegisterTest {
   @BeforeEach
   void init() throws SQLException, IOException {
     mConfig = mock(DataSourceConfiguration.class);
-    doReturn(MigrationConfiguration.from("MIGRATION_PATH")).when(mConfig).getMigrationConfigurations();
+    doReturn(MigrationConfiguration.from("MIGRATION_PATH")).when(mConfig)
+        .getMigrationConfigurations();
     doReturn("SCHEMA").when(mConfig).getSchemaName();
 
     mConfigProvider = mock(DataSourceConfigurationProvider.class);
@@ -68,7 +69,7 @@ class FlywayTenantMigrationRegisterTest {
     doReturn(config).when(config).baselineOnMigrate(anyBoolean());
     doReturn(config).when(config).baselineVersion(anyString());
     doReturn(config).when(config).table(anyString());
-    doReturn(new Location[] { new Location("LOCATION") }).when(config).getLocations();
+    doReturn(new Location[] {new Location("LOCATION")}).when(config).getLocations();
     doReturn("TABLE").when(config).getTable();
 
     return mFw;

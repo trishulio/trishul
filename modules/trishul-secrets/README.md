@@ -41,16 +41,16 @@ Use `SecretsManager.put()` for upsert or `create()`/`update()` for explicit sema
 ```java
 @Service
 public class TenantProvisioningService {
-    
+
     private final SecretsManager<String, String> secretsManager;
-    
+
     public void provisionTenant(UUID tenantId) throws IOException {
         String secretId = "trishul/tenants/" + tenantId + "/database";
         DatabaseCredentials creds = new DatabaseCredentials(
             "tenant_" + tenantId.toString().replace("-", ""),
             generateSecurePassword()
         );
-        
+
         // Create new secret (fails if already exists)
         secretsManager.create(secretId, objectMapper.writeValueAsString(creds));
     }
@@ -64,11 +64,11 @@ Use `SecretsManager.get()`:
 ```java
 public DatabaseCredentials getCredentials(String tenantId) throws IOException {
     String secretId = "tenant/" + tenantId + "/db-credentials";
-    
+
     if (!secretsManager.exists(secretId)) {
         throw new NotFoundException("Credentials not found");
     }
-    
+
     String secretJson = secretsManager.get(secretId);
     return objectMapper.readValue(secretJson, DatabaseCredentials.class);
 }
@@ -92,7 +92,7 @@ Use `SecretsManager.remove()`:
 ```java
 public void deprovisionTenant(UUID tenantId) throws IOException {
     String secretId = "trishul/tenants/" + tenantId + "/database";
-    
+
     if (secretsManager.exists(secretId)) {
         secretsManager.remove(secretId);
     }
@@ -106,16 +106,16 @@ Implement `SecretsManager<K, V>` for your provider:
 ```java
 @Component
 public class AwsSecretsManagerImpl implements SecretsManager<String, String> {
-    
+
     private final AWSSecretsManager client;
-    
+
     @Override
     public String get(String secretId) throws IOException {
         GetSecretValueRequest request = new GetSecretValueRequest()
             .withSecretId(secretId);
         return client.getSecretValue(request).getSecretString();
     }
-    
+
     @Override
     public void put(String secretId, String secret) throws IOException {
         if (exists(secretId)) {
@@ -124,7 +124,7 @@ public class AwsSecretsManagerImpl implements SecretsManager<String, String> {
             create(secretId, secret);
         }
     }
-    
+
     // ... other methods
 }
 ```
@@ -160,10 +160,10 @@ public class AwsSecretsManagerImpl implements SecretsManager<String, String> {
 ```java
 @Service
 public class SecretOperations {
-    
+
     private final SecretsManager<String, String> secretsManager;
     private final ObjectMapper objectMapper;
-    
+
     public Optional<DatabaseCredentials> safeGetCredentials(String tenantId) {
         try {
             String secretId = buildSecretId(tenantId);
@@ -177,7 +177,7 @@ public class SecretOperations {
             throw new SecretAccessException("Unable to access secret", e);
         }
     }
-    
+
     public void safeStoreCredentials(String tenantId, DatabaseCredentials creds) {
         try {
             String secretId = buildSecretId(tenantId);
@@ -188,7 +188,7 @@ public class SecretOperations {
             throw new SecretAccessException("Unable to store secret", e);
         }
     }
-    
+
     private String buildSecretId(String tenantId) {
         return "trishul/tenants/" + tenantId + "/database";
     }

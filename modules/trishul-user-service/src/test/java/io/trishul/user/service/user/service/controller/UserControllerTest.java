@@ -36,49 +36,40 @@ class UserControllerTest {
 
   @Test
   void testGetAllUsers_ReturnsDtosFromController() {
-    doReturn(new PageImpl<>(
-        List.of(new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-            "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
-            List.of(), null, null, null))))
-            .when(mService).getUsers(Set.of(1L), Set.of(2L), Set.of("user1"), Set.of("User One"),
-                Set.of("user1@example.com"), Set.of("1234567890"), Set.of(1L), Set.of(2L),
-                Set.of("role1"), 1, 10, new TreeSet<>(List.of("id")), true);
-    doReturn(new PageDto<>(
-        List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-            "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
-            List.of(), null, null, null)),
-        1, 1))
-            .when(mCrudController).getAll(
-                new PageImpl<>(
-                    List.of(new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-                        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
-                        List.of(), null, null, null))),
-                Set.of(""));
+    doReturn(new PageImpl<>(List.of(new User(1L, "user1", "User One", "User", "One",
+        "user1@example.com", "1234567890", URI.create("http://example.com/image.jpg"), null, null,
+        null, List.of(), null, null, null)))).when(mService).getUsers(Set.of(1L), Set.of(2L),
+            Set.of("user1"), Set.of("User One"), Set.of("user1@example.com"), Set.of("1234567890"),
+            Set.of(1L), Set.of(2L), Set.of("role1"), 1, 10, new TreeSet<>(List.of("id")), true);
+    doReturn(new PageDto<>(List.of(new UserDto(1L, "user1", "User One", "User", "One",
+        "user1@example.com", "1234567890", URI.create("http://example.com/image.jpg"), null, null,
+        null, List.of(), null, null, null)), 1, 1))
+        .when(mCrudController)
+        .getAll(new PageImpl<>(List.of(new User(1L, "user1", "User One", "User", "One",
+            "user1@example.com", "1234567890", URI.create("http://example.com/image.jpg"), null,
+            null, null, List.of(), null, null, null))), Set.of(""));
 
     PageDto<UserDto> page = this.controller.getAllUsers(Set.of(1L), Set.of(2L), Set.of("user1"),
         Set.of("User One"), Set.of("user1@example.com"), Set.of("1234567890"), Set.of(1L),
         Set.of(2L), Set.of("role1"), new TreeSet<>(List.of("id")), true, 1, 10, Set.of(""));
 
-    PageDto<UserDto> expected = new PageDto<>(
-        List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-            "1234567890", URI.create("http://example.com/image.jpg"), null, null, null,
-            List.of(), null, null, null)),
-        1, 1);
+    PageDto<UserDto> expected = new PageDto<>(List.of(new UserDto(1L, "user1", "User One", "User",
+        "One", "user1@example.com", "1234567890", URI.create("http://example.com/image.jpg"), null,
+        null, null, List.of(), null, null, null)), 1, 1);
     assertEquals(expected, page);
   }
 
   @Test
   void testGetUser_ReturnsDtoFromController() {
-    doReturn(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null))
-            .when(mCrudController).get(1L, Set.of(""));
+    doReturn(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com", "1234567890",
+        URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null, null, null))
+        .when(mCrudController).get(1L, Set.of(""));
 
     UserDto dto = this.controller.getUser(1L, Set.of(""));
 
     UserDto expected = new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null);
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null);
     assertEquals(expected, dto);
   }
 
@@ -91,57 +82,51 @@ class UserControllerTest {
 
   @Test
   void testAddUser_AddsToControllerAndReturnsListOfDtos() {
-    AddUserDto addDto = new AddUserDto("user1", "User One", "User", "One", "user1@example.com",
-        1L, 1L, "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L));
+    AddUserDto addDto = new AddUserDto("user1", "User One", "User", "One", "user1@example.com", 1L,
+        1L, "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L));
 
     doReturn(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)))
-            .when(mCrudController).add(List.of(addDto));
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null))).when(mCrudController).add(List.of(addDto));
 
     List<UserDto> dtos = this.controller.addUser(List.of(addDto));
 
     assertEquals(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)),
-        dtos);
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null)), dtos);
   }
 
   @Test
   void testUpdateUser_PutsToControllerAndReturnsListOfDtos() {
-    UpdateUserDto updateDto =
-        new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
+    UpdateUserDto updateDto
+        = new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
             "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L), 1);
 
     doReturn(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)))
-            .when(mCrudController).put(List.of(updateDto));
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null))).when(mCrudController).put(List.of(updateDto));
 
     List<UserDto> dtos = this.controller.updateUser(List.of(updateDto));
 
     assertEquals(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)),
-        dtos);
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null)), dtos);
   }
 
   @Test
   void testPatchUser_PatchToControllerAndReturnsListOfDtos() {
-    UpdateUserDto patchDto =
-        new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
+    UpdateUserDto patchDto
+        = new UpdateUserDto(1L, "user1", "User One", "User", "One", "user1@example.com", 1L, 1L,
             "1234567890", URI.create("http://example.com/image.jpg"), List.of(1L), 1);
 
     doReturn(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)))
-            .when(mCrudController).patch(List.of(patchDto));
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null))).when(mCrudController).patch(List.of(patchDto));
 
     List<UserDto> dtos = this.controller.patchUser(List.of(patchDto));
 
     assertEquals(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null)),
-        dtos);
+        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
+        null, null)), dtos);
   }
 }

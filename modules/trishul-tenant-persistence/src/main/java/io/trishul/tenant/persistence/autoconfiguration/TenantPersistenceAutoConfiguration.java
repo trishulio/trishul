@@ -72,7 +72,8 @@ public class TenantPersistenceAutoConfiguration {
 
     Map<String, Object> jpaProperties = new HashMap<>();
     jpaProperties.put(JdbcSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-    jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
+    jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER,
+        multiTenantConnectionProvider);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,
         currentTenantIdentifierResolver);
 

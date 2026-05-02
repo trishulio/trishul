@@ -35,17 +35,17 @@ Use `CognitoPrincipalContext.fromJwt()` - maps Cognito groups to tenant IDs:
 ```java
 @Component
 public class TenantContextFilter extends OncePerRequestFilter {
-    
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
+    protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response, FilterChain chain) {
-        
+
         Jwt jwt = getJwtFromSecurityContext();
         CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
-        
+
         // Cognito groups are mapped to tenant UUIDs
         List<UUID> tenantIds = context.getTenantIds();
-        
+
         TenantContextHolder.setTenantIds(tenantIds);
         chain.doFilter(request, response);
     }
@@ -114,7 +114,7 @@ String username = context.getUsername();  // From "username" claim
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -125,16 +125,16 @@ public class SecurityConfig {
             );
         return http.build();
     }
-    
+
     @Bean
     public Converter<Jwt, AbstractAuthenticationToken> cognitoJwtConverter() {
         return jwt -> {
             CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
-            
+
             List<GrantedAuthority> authorities = context.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                 .collect(Collectors.toList());
-            
+
             return new JwtAuthenticationToken(jwt, authorities, context.getUsername());
         };
     }

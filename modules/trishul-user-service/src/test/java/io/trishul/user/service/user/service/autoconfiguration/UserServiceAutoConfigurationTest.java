@@ -51,8 +51,8 @@ class UserServiceAutoConfigurationTest {
     Refresher<User, UserAccessor<?>> mockUserRefresher = mock(Refresher.class);
     TenantIaasUserService mockTenantIaasUserService = mock(TenantIaasUserService.class);
 
-    UserService result = config.userService(
-        mockLockService, mockUserRepository, mockUserRefresher, mockTenantIaasUserService);
+    UserService result = config.userService(mockLockService, mockUserRepository, mockUserRefresher,
+        mockTenantIaasUserService);
 
     assertNotNull(result);
   }
@@ -74,8 +74,8 @@ class UserServiceAutoConfigurationTest {
     UserRoleRepository mockUserRoleRepository = mock(UserRoleRepository.class);
     Refresher<UserRole, UserRoleAccessor<?>> mockUserRoleRefresher = mock(Refresher.class);
 
-    UserRoleService result = config.userRoleService(
-        mockLockService, mockUserRoleRepository, mockUserRoleRefresher);
+    UserRoleService result
+        = config.userRoleService(mockLockService, mockUserRoleRepository, mockUserRoleRefresher);
 
     assertNotNull(result);
   }
@@ -111,7 +111,8 @@ class UserServiceAutoConfigurationTest {
   void testUserRoleAccessorRefresher_ReturnsNonNull() {
     UserRoleRepository mockRepo = mock(UserRoleRepository.class);
 
-    AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> result = config.userRoleAccessorRefresher(mockRepo);
+    AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> result
+        = config.userRoleAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -120,7 +121,8 @@ class UserServiceAutoConfigurationTest {
   void testUserSalutationAccessorRefresher_ReturnsNonNull() {
     UserSalutationRepository mockRepo = mock(UserSalutationRepository.class);
 
-    AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> result = config.userSalutationAccessorRefresher(mockRepo);
+    AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> result
+        = config.userSalutationAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -129,7 +131,8 @@ class UserServiceAutoConfigurationTest {
   void testUserStatusAccessorRefresher_ReturnsNonNull() {
     UserStatusRepository mockRepo = mock(UserStatusRepository.class);
 
-    AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> result = config.userStatusAccessorRefresher(mockRepo);
+    AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> result
+        = config.userStatusAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -138,7 +141,8 @@ class UserServiceAutoConfigurationTest {
   void testAssignedToAccessorRefresher_ReturnsNonNull() {
     UserRepository mockRepo = mock(UserRepository.class);
 
-    AccessorRefresher<Long, AssignedToAccessor<?>, User> result = config.assignedToAccessorRefresher(mockRepo);
+    AccessorRefresher<Long, AssignedToAccessor<?>, User> result
+        = config.assignedToAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -147,7 +151,8 @@ class UserServiceAutoConfigurationTest {
   void testOwnedByAccessorRefresher_ReturnsNonNull() {
     UserRepository mockRepo = mock(UserRepository.class);
 
-    AccessorRefresher<Long, OwnedByAccessor<User>, User> result = config.ownedByAccessorRefresher(mockRepo);
+    AccessorRefresher<Long, OwnedByAccessor<User>, User> result
+        = config.ownedByAccessorRefresher(mockRepo);
 
     assertNotNull(result);
   }
@@ -155,20 +160,21 @@ class UserServiceAutoConfigurationTest {
   @Test
   @SuppressWarnings("unchecked")
   void testUserRefresher_ReturnsNonNull() {
-    AccessorRefresher<Long, UserAccessor<?>, User> mockUserAccessorRefresher = mock(AccessorRefresher.class);
-    AccessorRefresher<Long, AssignedToAccessor<?>, User> mockAssignedToAccessorRefresher = mock(AccessorRefresher.class);
-    AccessorRefresher<Long, OwnedByAccessor<User>, User> mockOwnedByAccessorRefresher = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, UserAccessor<?>, User> mockUserAccessorRefresher
+        = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, AssignedToAccessor<?>, User> mockAssignedToAccessorRefresher
+        = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, OwnedByAccessor<User>, User> mockOwnedByAccessorRefresher
+        = mock(AccessorRefresher.class);
     Refresher<UserStatus, UserStatusAccessor<?>> mockStatusRefresher = mock(Refresher.class);
-    Refresher<UserSalutation, UserSalutationAccessor<?>> mockSalutationRefresher = mock(Refresher.class);
-    Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> mockRoleBindingRefresher = mock(Refresher.class);
+    Refresher<UserSalutation, UserSalutationAccessor<?>> mockSalutationRefresher
+        = mock(Refresher.class);
+    Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> mockRoleBindingRefresher
+        = mock(Refresher.class);
 
-    Refresher<User, UserAccessor<?>> result = config.userRefresher(
-        mockUserAccessorRefresher,
-        mockAssignedToAccessorRefresher,
-        mockOwnedByAccessorRefresher,
-        mockStatusRefresher,
-        mockSalutationRefresher,
-        mockRoleBindingRefresher);
+    Refresher<User, UserAccessor<?>> result = config.userRefresher(mockUserAccessorRefresher,
+        mockAssignedToAccessorRefresher, mockOwnedByAccessorRefresher, mockStatusRefresher,
+        mockSalutationRefresher, mockRoleBindingRefresher);
 
     assertNotNull(result);
   }
@@ -178,7 +184,8 @@ class UserServiceAutoConfigurationTest {
   void testUserRoleBindingRefresher_ReturnsNonNull() {
     Refresher<UserRole, UserRoleAccessor<?>> mockUserRoleRefresher = mock(Refresher.class);
 
-    Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> result = config.userRoleBindingRefresher(mockUserRoleRefresher);
+    Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> result
+        = config.userRoleBindingRefresher(mockUserRoleRefresher);
 
     assertNotNull(result);
   }
@@ -186,9 +193,11 @@ class UserServiceAutoConfigurationTest {
   @Test
   @SuppressWarnings("unchecked")
   void testUserRoleRefresher_ReturnsNonNull() {
-    AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> mockUserRoleAccessorRefresher = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> mockUserRoleAccessorRefresher
+        = mock(AccessorRefresher.class);
 
-    Refresher<UserRole, UserRoleAccessor<?>> result = config.userRoleRefresher(mockUserRoleAccessorRefresher);
+    Refresher<UserRole, UserRoleAccessor<?>> result
+        = config.userRoleRefresher(mockUserRoleAccessorRefresher);
 
     assertNotNull(result);
   }
@@ -196,9 +205,11 @@ class UserServiceAutoConfigurationTest {
   @Test
   @SuppressWarnings("unchecked")
   void testUserSalutationRefresher_ReturnsNonNull() {
-    AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> mockUserSalutationAccessorRefresher = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> mockUserSalutationAccessorRefresher
+        = mock(AccessorRefresher.class);
 
-    Refresher<UserSalutation, UserSalutationAccessor<?>> result = config.userSalutationRefresher(mockUserSalutationAccessorRefresher);
+    Refresher<UserSalutation, UserSalutationAccessor<?>> result
+        = config.userSalutationRefresher(mockUserSalutationAccessorRefresher);
 
     assertNotNull(result);
   }
@@ -206,9 +217,11 @@ class UserServiceAutoConfigurationTest {
   @Test
   @SuppressWarnings("unchecked")
   void testUserStatusRefresher_ReturnsNonNull() {
-    AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> mockUserStatusAccessorRefresher = mock(AccessorRefresher.class);
+    AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> mockUserStatusAccessorRefresher
+        = mock(AccessorRefresher.class);
 
-    Refresher<UserStatus, UserStatusAccessor<?>> result = config.userStatusRefresher(mockUserStatusAccessorRefresher);
+    Refresher<UserStatus, UserStatusAccessor<?>> result
+        = config.userStatusRefresher(mockUserStatusAccessorRefresher);
 
     assertNotNull(result);
   }

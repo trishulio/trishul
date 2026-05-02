@@ -100,7 +100,7 @@ class IaasPolicyServiceTest {
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     IaasPolicy attachment = service.get("POLICY");
 
@@ -118,7 +118,7 @@ class IaasPolicyServiceTest {
   void testGetAll_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasPolicy> attachments = service.getAll(Set.of("POLICY"));
 
@@ -130,7 +130,7 @@ class IaasPolicyServiceTest {
   void testGetByIds_ReturnAttachmentsFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     List<IaasPolicy> attachments = service.getByIds(Set.of(() -> "POLICY"));
 
@@ -143,7 +143,7 @@ class IaasPolicyServiceTest {
   void testGetByAccessorIds_ReturnsAttachmentFromRepo() {
     doAnswer(
         inv -> List.of(new IaasPolicy((String) inv.getArgument(0, Set.class).iterator().next())))
-            .when(mIaasRepo).get(anySet());
+        .when(mIaasRepo).get(anySet());
 
     class DummyIaasPolicyAccessor implements IaasPolicyAccessor<DummyIaasPolicyAccessor> {
       @Override
@@ -241,9 +241,8 @@ class IaasPolicyServiceTest {
     }).when(mIaasRepo).get(anySet());
 
     List<UpdateIaasPolicy<?>> updates = List.of(
-        new IaasPolicy().setId("POLICY_1")
-            .setIaasResourceName("RES_NAME_1_UPDATED").setIaasId("RES_ID_1_UPDATED")
-            .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+        new IaasPolicy().setId("POLICY_1").setIaasResourceName("RES_NAME_1_UPDATED")
+            .setIaasId("RES_ID_1_UPDATED").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
             .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)),
         new IaasPolicy().setId("POLICY_2").setDocument("DOCUMENT_2_UPDATED")
             .setDescription("DESCRIPTION_2_UPDATED").setIaasResourceName(null).setIaasId(null)

@@ -37,14 +37,14 @@ Use `MigrationManager` to apply migrations:
 ```java
 @Service
 public class TenantProvisioningService {
-    
+
     private final MigrationManager migrationManager;
-    
+
     public void provisionTenant(Tenant tenant) {
         // Creates schema, user, and runs migrations
         migrationManager.migrate(tenant);
     }
-    
+
     public void migrateAllTenants(List<Tenant> tenants) {
         migrationManager.migrateAll(tenants);
     }
@@ -68,7 +68,7 @@ Use `TenantSchemaRegister`:
 
 ```java
 public class TenantSchemaRegister implements TenantRegister {
-    
+
     @Override
     public void register(TenantData tenant) {
         // Creates schema: tenant_{id}
@@ -83,7 +83,7 @@ Use `TenantUserRegister`:
 
 ```java
 public class TenantUserRegister implements TenantRegister {
-    
+
     @Override
     public void register(TenantData tenant) {
         // Creates user and grants schema access
@@ -99,7 +99,7 @@ Use `FlywayTenantMigrationRegister`:
 
 ```java
 public class FlywayTenantMigrationRegister implements MigrationRegister {
-    
+
     @Override
     public void register(TenantData tenant) {
         Flyway flyway = Flyway.configure()
@@ -107,7 +107,7 @@ public class FlywayTenantMigrationRegister implements MigrationRegister {
             .schemas(schemaName)
             .locations(migrationLocations)
             .load();
-        
+
         flyway.migrate();
     }
 }
@@ -186,13 +186,13 @@ unifiedRegister.register(tenant);  // Runs all registers in order
 @Configuration
 @Import(TenantPersistenceManagementAutoConfiguration.class)
 public class TenantConfig {
-    
+
     @Bean
     public MigrationManager migrationManager(
             TenantSchemaRegister schemaRegister,
             TenantUserRegister userRegister,
             FlywayTenantMigrationRegister flywayRegister) {
-        
+
         return new SequentialMigrationManager(
             List.of(schemaRegister, userRegister, flywayRegister)
         );
@@ -201,20 +201,20 @@ public class TenantConfig {
 
 @Service
 public class TenantOnboardingService {
-    
+
     private final TenantRepository tenantRepository;
     private final MigrationManager migrationManager;
-    
+
     @Transactional
     public Tenant onboardTenant(CreateTenantRequest request) {
         // Save tenant
         Tenant tenant = tenantRepository.save(
             new Tenant().setName(request.getName())
         );
-        
+
         // Provision database resources
         migrationManager.migrate(tenant);
-        
+
         // Mark as ready
         tenant.setIsReady(true);
         return tenantRepository.save(tenant);

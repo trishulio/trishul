@@ -38,8 +38,8 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasRoleService_ReturnsNonNullInstance() {
     @SuppressWarnings("unchecked")
-    IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mRoleClient =
-        mock(IaasClient.class);
+    IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mRoleClient
+        = mock(IaasClient.class);
 
     IaasRoleService service = config.iaasRoleService(mLockService, mExecutor, mRoleClient);
 
@@ -49,8 +49,8 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasRoleService_ReturnsInstanceOfIaasRoleService() {
     @SuppressWarnings("unchecked")
-    IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mRoleClient =
-        mock(IaasClient.class);
+    IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> mRoleClient
+        = mock(IaasClient.class);
 
     IaasRoleService service = config.iaasRoleService(mLockService, mExecutor, mRoleClient);
 
@@ -60,8 +60,8 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasPolicyService_ReturnsNonNullInstance() {
     @SuppressWarnings("unchecked")
-    IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> mPolicyClient =
-        mock(IaasClient.class);
+    IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> mPolicyClient
+        = mock(IaasClient.class);
 
     IaasPolicyService service = config.iaasPolicyService(mLockService, mExecutor, mPolicyClient);
 
@@ -71,8 +71,8 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasPolicyService_ReturnsInstanceOfIaasPolicyService() {
     @SuppressWarnings("unchecked")
-    IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> mPolicyClient =
-        mock(IaasClient.class);
+    IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> mPolicyClient
+        = mock(IaasClient.class);
 
     IaasPolicyService service = config.iaasPolicyService(mLockService, mExecutor, mPolicyClient);
 
@@ -82,11 +82,11 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasRolePolicyAttachmentService_ReturnsNonNullInstance() {
     @SuppressWarnings("unchecked")
-    IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> mAttachmentClient =
-        mock(IaasClient.class);
+    IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> mAttachmentClient
+        = mock(IaasClient.class);
 
-    IaasRolePolicyAttachmentService service =
-        config.iaasRolePolicyAttachmentService(mLockService, mExecutor, mAttachmentClient);
+    IaasRolePolicyAttachmentService service
+        = config.iaasRolePolicyAttachmentService(mLockService, mExecutor, mAttachmentClient);
 
     assertNotNull(service);
   }
@@ -94,11 +94,11 @@ class IaasAccessServiceAutoConfigurationTest {
   @Test
   void testIaasRolePolicyAttachmentService_ReturnsInstanceOfIaasRolePolicyAttachmentService() {
     @SuppressWarnings("unchecked")
-    IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> mAttachmentClient =
-        mock(IaasClient.class);
+    IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> mAttachmentClient
+        = mock(IaasClient.class);
 
-    IaasRolePolicyAttachmentService service =
-        config.iaasRolePolicyAttachmentService(mLockService, mExecutor, mAttachmentClient);
+    IaasRolePolicyAttachmentService service
+        = config.iaasRolePolicyAttachmentService(mLockService, mExecutor, mAttachmentClient);
 
     assertTrue(service instanceof IaasRolePolicyAttachmentService);
   }

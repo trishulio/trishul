@@ -18,15 +18,15 @@ Zero-dependency foundation module defining the core interfaces that all Trishul 
 ```java
 // 1. Implement CrudEntity for full CRUD support with PATCH/PUT semantics
 @Entity
-public class Product extends BaseEntity 
+public class Product extends BaseEntity
     implements CrudEntity<UUID, Product>, Audited<Product> {
-    
+
     @Id private UUID id;
     private String name;
     @Version private Integer version;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdated;
-    
+
     // Implement interface methods (see examples below)
 }
 
@@ -43,7 +43,7 @@ Use `Identified<ID>` or `IdentityAccessor<ID, T>` to give your entity a typed ID
 ```java
 public class Order implements IdentityAccessor<UUID, Order> {
     private UUID id;
-    
+
     @Override public UUID getId() { return id; }
     @Override public Order setId(UUID id) { this.id = id; return this; }
 }
@@ -56,7 +56,7 @@ Use `Versioned` to add a version field that Hibernate checks before updates:
 ```java
 public class Order implements Versioned {
     @Version private Integer version;
-    
+
     @Override public Integer getVersion() { return version; }
 }
 ```
@@ -69,7 +69,7 @@ Use `Audited<T>` to track when entities are created and last modified:
 public class Order implements Audited<Order> {
     @CreationTimestamp private LocalDateTime createdAt;
     @UpdateTimestamp private LocalDateTime lastUpdated;
-    
+
     @Override public LocalDateTime getCreatedAt() { return createdAt; }
     @Override public Order setCreatedAt(LocalDateTime ts) { this.createdAt = ts; return this; }
     @Override public LocalDateTime getLastUpdated() { return lastUpdated; }
@@ -105,7 +105,7 @@ public interface OrderMapper {
     @Mapping(target = Order.ATTR_ID, ignore = true)
     @Mapping(target = Order.ATTR_CREATED_AT, ignore = true)
     Order fromDto(OrderDto dto);
-    
+
     // WRONG: Never reference from interface (breaks MapStruct)
     // @Mapping(target = Identified.ATTR_ID, ignore = true)
 }
@@ -180,43 +180,43 @@ Versioned  (standalone, included in UpdatableEntity)
 ```java
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity 
+public class Product extends BaseEntity
     implements CrudEntity<UUID, Product>, Audited<Product> {
-    
+
     @Id
     private UUID id;
     private String name;
     private BigDecimal price;
-    
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
-    
+
     @Version
     private Integer version;
-    
+
     // --- Identified ---
     @Override public UUID getId() { return id; }
     @Override public Product setId(UUID id) { this.id = id; return this; }
-    
+
     // --- Versioned ---
     @Override public Integer getVersion() { return version; }
-    
+
     // --- Audited ---
     @Override public LocalDateTime getCreatedAt() { return createdAt; }
     @Override public Product setCreatedAt(LocalDateTime ts) { this.createdAt = ts; return this; }
     @Override public LocalDateTime getLastUpdated() { return lastUpdated; }
     @Override public Product setLastUpdated(LocalDateTime ts) { this.lastUpdated = ts; return this; }
-    
+
     // --- CrudEntity (inherit from BaseModel in trishul-model) ---
     @Override public void outerJoin(Object other) { /* merge non-null */ }
     @Override public void outerJoin(Object other, Set<String> include) { /* merge specified */ }
     @Override public void override(Object other) { /* replace all */ }
     @Override public void override(Object other, Set<String> include) { /* replace specified */ }
-    
+
     // Fluent setters
     public Product setName(String name) { this.name = name; return this; }
     public Product setPrice(BigDecimal price) { this.price = price; return this; }

@@ -38,9 +38,8 @@ class TenantDataSourceConfigurationProviderTest {
         MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false);
     mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",
         mGlobalDsConfig, mSecretsManager);
-    mConfigMgr = new DataSourceConfigurationManager();
-    interface StringSecretsManager extends SecretsManager<String, String> {
-    }
+    mConfigMgr
+        = new DataSourceConfigurationManager();interface StringSecretsManager extends SecretsManager<String,String>{}
     mSecretsManager = mock(StringSecretsManager.class);
 
     dsProvider = new TenantDataSourceConfigurationProvider(mAdminConfig, mAdminTenant,
@@ -49,20 +48,19 @@ class TenantDataSourceConfigurationProviderTest {
 
   @Test
   void testGetConfiguration_ReturnsAdminConfig_WhenIdMatchesAdminId() {
-    DataSourceConfiguration config = dsProvider
-        .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+    DataSourceConfiguration config
+        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
     assertSame(mAdminConfig, config);
   }
 
   @Test
   void testGetConfiguration_ReturnsLazyTenantConfig_WhenIdIsNotTenantId()
       throws URISyntaxException {
-    DataSourceConfiguration config = dsProvider
-        .getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    DataSourceConfiguration config
+        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
     DataSourceConfiguration expected = new LazyTenantDataSourceConfiguration(
-        "SCHEMA_00000000_0000_0000_0000_000000000001",
-        mGlobalDsConfig, mSecretsManager);
+        "SCHEMA_00000000_0000_0000_0000_000000000001", mGlobalDsConfig, mSecretsManager);
 
     assertNotSame(mAdminConfig, config);
     assertEquals(expected, config);

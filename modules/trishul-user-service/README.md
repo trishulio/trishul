@@ -192,10 +192,10 @@ public class MyApplication {
 @RestController
 @RequestMapping("/api/v1/onboarding")
 public class OnboardingController {
-    
+
     private final UserService userService;
     private final UserRoleService roleService;
-    
+
     @PostMapping("/register")
     public UserDto register(@RequestBody RegistrationRequest request) {
         // Create user
@@ -205,11 +205,11 @@ public class OnboardingController {
                 .setEmail(request.getEmail())
                 .setDisplayName(request.getDisplayName())
         )).get(0);
-        
+
         // Assign default role
         UserRole defaultRole = roleService.getByName("USER");
         userService.assignRole(user.getId(), defaultRole.getId());
-        
+
         return UserMapper.INSTANCE.toDto(user);
     }
 }

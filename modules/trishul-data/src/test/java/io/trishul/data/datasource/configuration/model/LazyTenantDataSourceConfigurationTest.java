@@ -20,9 +20,9 @@ class LazyTenantDataSourceConfigurationTest {
   void init() throws URISyntaxException {
     mSecretsManager = mock(SecretsManager.class);
 
-    config = new LazyTenantDataSourceConfiguration("FQ_TENANT_ID",
-        new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"), "dbName",
-            MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false),
+    config = new LazyTenantDataSourceConfiguration(
+        "FQ_TENANT_ID", new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://localhost/"),
+            "dbName", MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false),
         mSecretsManager);
   }
 

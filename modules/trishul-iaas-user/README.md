@@ -40,9 +40,9 @@ Use `IaasUser` for identity provider operations:
 ```java
 @Service
 public class IaasUserService {
-    
+
     private final CognitoIdentityProviderClient cognito;
-    
+
     public IaasUser createUser(IaasUser user) {
         AdminCreateUserRequest request = AdminCreateUserRequest.builder()
             .userPoolId(userPoolId)
@@ -52,7 +52,7 @@ public class IaasUserService {
                 AttributeType.builder().name("phone_number").value(user.getPhoneNumber()).build()
             )
             .build();
-        
+
         cognito.adminCreateUser(request);
         return user.setCreatedAt(LocalDateTime.now());
     }
@@ -127,37 +127,37 @@ User newUser = TenantIaasUserMapper.INSTANCE.toUser(iaasUser);
 ```java
 @Service
 public class UserIdentityService {
-    
+
     private final IaasUserClient iaasClient;
     private final TenantIaasUserMapper mapper = TenantIaasUserMapper.INSTANCE;
-    
+
     public User createUserInIdentityProvider(User domainUser, UUID tenantId) {
         // Convert to IaaS model
         IaasUser iaasUser = mapper.fromUser(domainUser);
-        
+
         // Create in identity provider
         IaasUser created = iaasClient.createUser(iaasUser);
-        
+
         // Add to tenant group
         IaasUserTenantMembership membership = new IaasUserTenantMembership()
             .setIaasUser(created)
             .setTenantId(tenantId);
-        
+
         iaasClient.addUserToGroup(membership);
-        
+
         // Update domain user with IaaS timestamps
         return domainUser
             .setCreatedAt(created.getCreatedAt())
             .setLastUpdated(created.getLastUpdated());
     }
-    
+
     public void addUserToTenant(String userEmail, UUID tenantId) {
         IaasUser user = new IaasUser(userEmail);
-        
+
         IaasUserTenantMembership membership = new IaasUserTenantMembership()
             .setIaasUser(user)
             .setTenantId(tenantId);
-        
+
         iaasClient.addUserToGroup(membership);
     }
 }

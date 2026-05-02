@@ -21,10 +21,9 @@ class TransactionServiceTest {
   void testSetRollbackOnly_CallsSetRollbackOnlyOnCurrentTransactionStatus() {
     TransactionStatus mockStatus = mock(TransactionStatus.class);
 
-    try (MockedStatic<TransactionAspectSupport> mockedStatic =
-        mockStatic(TransactionAspectSupport.class)) {
-      mockedStatic.when(TransactionAspectSupport::currentTransactionStatus)
-          .thenReturn(mockStatus);
+    try (MockedStatic<TransactionAspectSupport> mockedStatic
+        = mockStatic(TransactionAspectSupport.class)) {
+      mockedStatic.when(TransactionAspectSupport::currentTransactionStatus).thenReturn(mockStatus);
 
       transactionService.setRollbackOnly();
 

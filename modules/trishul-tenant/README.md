@@ -30,7 +30,7 @@ public class Product extends BaseEntity implements TenantAccessor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id")
     private Tenant tenant;
-    
+
     @Override
     public Tenant getTenant() { return tenant; }
 }
@@ -82,14 +82,14 @@ Implement `TenantAccessor`:
 ```java
 @Entity
 public class Product extends BaseEntity implements TenantAccessor {
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;
-    
+
     @Override
     public Tenant getTenant() { return tenant; }
-    
+
     public Product setTenant(Tenant tenant) {
         this.tenant = tenant;
         return this;
@@ -104,7 +104,7 @@ Use `TenantIdProvider` instead of loading the full entity:
 ```java
 public class OrderRequest implements TenantIdProvider {
     private UUID tenantId;
-    
+
     @Override
     public UUID getTenantId() { return tenantId; }
 }

@@ -227,8 +227,8 @@ class IaasObjectStoreFileServiceTest {
 
   @Test
   void testPatch_ThrowsNotSupportedException() {
-    UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
-        () -> service.patch(List.of()));
+    UnsupportedOperationException exception
+        = assertThrows(UnsupportedOperationException.class, () -> service.patch(List.of()));
 
     assertEquals("Patch is not supported for file urls", exception.getMessage());
   }

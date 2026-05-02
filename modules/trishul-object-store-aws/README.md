@@ -51,7 +51,7 @@ Use `ObjectStoreAwsFactory`:
 ```java
 @Configuration
 public class S3Config {
-    
+
     @Bean
     public AmazonS3 s3Client(AWSCredentialsProvider credentials) {
         return ObjectStoreAwsFactory.buildS3Client(

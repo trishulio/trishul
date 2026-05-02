@@ -27,7 +27,7 @@ void testCrudOperations() {
         .setId(1L)
         .setName("Test Entity")
         .setVersion(1);
-    
+
     // Test your CRUD service with this dummy entity
 }
 ```
@@ -39,10 +39,10 @@ Use `DbMockUtil` for common repository mocking patterns:
 ```java
 @ExtendWith(MockitoExtension.class)
 class MyServiceTest {
-    
+
     @Mock
     private MyRepository repository;
-    
+
     @BeforeEach
     void setup() {
         DbMockUtil.mockFindById(repository, entity);
@@ -104,28 +104,28 @@ MockUtilProvider provider = new MockUtilProvider();
 ```java
 @ExtendWith(MockitoExtension.class)
 class MyCrudServiceTest {
-    
+
     @Mock
     private DummyCrudEntityRepository repository;
-    
+
     @InjectMocks
     private MyCrudService service;
-    
+
     @Test
     void testAdd_ReturnsCreatedEntity() {
         // Arrange
         BaseDummyCrudEntity addition = new BaseDummyCrudEntity()
             .setName("New Entity");
-        
+
         DummyCrudEntity expected = new DummyCrudEntity()
             .setId(1L)
             .setName("New Entity");
-        
+
         when(repository.save(any())).thenReturn(expected);
-        
+
         // Act
         DummyCrudEntity result = service.add(addition);
-        
+
         // Assert
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getName()).isEqualTo("New Entity");

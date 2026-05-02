@@ -86,7 +86,8 @@ class MigrationConfigurationTest {
 
   @Test
   void testFrom_HandlesMixedFormats() {
-    MigrationConfiguration[] configs = MigrationConfiguration.from("table1:path1;path2;table3:path3");
+    MigrationConfiguration[] configs
+        = MigrationConfiguration.from("table1:path1;path2;table3:path3");
 
     assertNotNull(configs);
     assertEquals(3, configs.length);

@@ -73,11 +73,11 @@ The `TenantService.add()` automatically:
 public List<Tenant> add(final List<? extends BaseTenant<?>> additions) {
     final List<Tenant> entities = this.entityMergerService.getAddEntities(additions);
     List<Tenant> tenants = this.repoService.saveAll(entities);
-    
+
     // Automatic provisioning
     this.migrationManager.migrateAll(tenants);
     this.iaasService.put(tenants);
-    
+
     tenants.forEach(tenant -> tenant.setIsReady(true));
     return this.repoService.saveAll(tenants);
 }
@@ -91,13 +91,13 @@ The `TenantService.delete()` handles deprovisioning:
 public long delete(Set<UUID> ids) {
     // Mark as not ready first
     tenants.forEach(tenant -> tenant.setIsReady(false));
-    
+
     // Delete from database
     long deleteCount = this.repoService.delete(ids);
-    
+
     // Clean up IaaS resources
     this.iaasService.delete(ids);
-    
+
     return deleteCount;
 }
 ```
@@ -212,16 +212,16 @@ public class MultiTenantApplication {
 // Inject and use the service
 @Service
 public class TenantOnboardingService {
-    
+
     private final TenantService tenantService;
-    
+
     public TenantDto onboardTenant(TenantOnboardingRequest request) {
         Tenant tenant = tenantService.add(List.of(
             new BaseTenant<>()
                 .setName(request.getCompanyName())
                 .setUrl(request.getSubdomainUrl())
         )).get(0);
-        
+
         // Tenant is now fully provisioned
         return TenantMapper.INSTANCE.toDto(tenant);
     }

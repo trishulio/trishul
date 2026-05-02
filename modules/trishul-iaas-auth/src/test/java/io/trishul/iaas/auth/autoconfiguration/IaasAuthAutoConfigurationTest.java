@@ -40,11 +40,13 @@ class IaasAuthAutoConfigurationTest {
 
   @Test
   void testIaasAuthorizationCredentialsHolderFilter_ReturnsNonNull() {
-    ThreadLocalIaasAuthorizationCredentialsHolder mockHolder = new ThreadLocalIaasAuthorizationCredentialsHolder();
-    IaasAuthorizationCredentialsBuilder mockBuilder = mock(IaasAuthorizationCredentialsBuilder.class);
+    ThreadLocalIaasAuthorizationCredentialsHolder mockHolder
+        = new ThreadLocalIaasAuthorizationCredentialsHolder();
+    IaasAuthorizationCredentialsBuilder mockBuilder
+        = mock(IaasAuthorizationCredentialsBuilder.class);
 
-    IaasAuthorizationCredentialsHolderFilter result = config.iaasAuthorizationCredentialsHolderFilter(
-        mockHolder, mockBuilder);
+    IaasAuthorizationCredentialsHolderFilter result
+        = config.iaasAuthorizationCredentialsHolderFilter(mockHolder, mockBuilder);
 
     assertNotNull(result);
   }
@@ -54,8 +56,8 @@ class IaasAuthAutoConfigurationTest {
     IaasAuthorizationFetcher mockFetcher = mock(IaasAuthorizationFetcher.class);
     IaasAuthorizationCredentialsHolder mockHolder = mock(IaasAuthorizationCredentialsHolder.class);
 
-    ContextHolderAuthorizationFetcher result = config.contextHolderAuthorizationFetcher(
-        mockFetcher, mockHolder);
+    ContextHolderAuthorizationFetcher result
+        = config.contextHolderAuthorizationFetcher(mockFetcher, mockHolder);
 
     assertNotNull(result);
   }

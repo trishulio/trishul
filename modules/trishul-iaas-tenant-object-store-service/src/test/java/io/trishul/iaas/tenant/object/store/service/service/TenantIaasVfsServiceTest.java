@@ -55,8 +55,8 @@ class TenantIaasVfsServiceTest {
         mBuilder);
 
     doAnswer(inv -> new IaasRolePolicyAttachment(inv.getArgument(0, IaasRole.class),
-        inv.getArgument(1, IaasPolicy.class))).when(mBuilder).buildAttachment(any(IaasRole.class),
-            any(IaasPolicy.class));
+        inv.getArgument(1, IaasPolicy.class))).when(mBuilder)
+        .buildAttachment(any(IaasRole.class), any(IaasPolicy.class));
     doAnswer(inv -> {
       List<IaasObjectStore> objectStores = inv.getArgument(0, List.class);
       Iterator<IaasPolicy> policies = inv.getArgument(1, List.class).iterator();

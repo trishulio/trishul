@@ -62,9 +62,8 @@ class CollectionAccessorRefresherTest {
   void init() {
     mEntityRetriever = (Function<Iterable<Long>, List<Entity>>) mock(Function.class);
 
-    refresher
-        = new CollectionAccessorRefresher<>(Entity.class, EntityAccessor::getEntityList,
-            (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)), mEntityRetriever);
+    refresher = new CollectionAccessorRefresher<>(Entity.class, EntityAccessor::getEntityList,
+        (accessor, e) -> accessor.setEntityList(new ArrayList<Entity>(e)), mEntityRetriever);
   }
 
   @Test

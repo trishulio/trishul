@@ -21,18 +21,18 @@ Generic CRUD patterns that handle entity merging, version checking, and exceptio
 public class ProductService implements CrudService<UUID, Product, BaseProduct, UpdateProduct, ProductAccessor> {
     private final ProductRepository repo;
     private final EntityMergerService<UUID, Product, BaseProduct, UpdateProduct> merger;
-    
+
     @Override
     public List<Product> add(List<? extends BaseProduct> additions) {
         return repo.saveAll(merger.getAddEntities(additions));
     }
-    
+
     @Override
     public List<Product> patch(List<? extends UpdateProduct> patches) {
         List<Product> existing = repo.findAllById(patches.stream().map(UpdateProduct::getId).toList());
         return repo.saveAll(merger.getPatchEntities(existing, patches));  // PATCH: non-null only
     }
-    
+
     @Override
     public List<Product> put(List<? extends UpdateProduct> updates) {
         List<Product> existing = repo.findAllById(updates.stream().map(UpdateProduct::getId).toList());
@@ -46,13 +46,13 @@ public class ProductService implements CrudService<UUID, Product, BaseProduct, U
 public class ProductController extends BaseController {
     private final CrudControllerService<UUID, Product, BaseProduct, UpdateProduct,
             ProductDto, AddProductDto, UpdateProductDto> controllerService;
-    
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public List<ProductDto> add(@Valid @RequestBody List<AddProductDto> dtos) {
         return controllerService.add(dtos);
     }
-    
+
     @PatchMapping
     public List<ProductDto> patch(@Valid @RequestBody List<UpdateProductDto> dtos) {
         return controllerService.patch(dtos);
@@ -89,10 +89,10 @@ private LockService lockService;
 
 public Product update(UpdateProductDto dto) {
     Product existing = repository.findById(dto.getId()).orElseThrow();
-    
+
     // Throws OptimisticLockException if versions don't match
     lockService.optimisticLockCheck(existing, dto);
-    
+
     existing.outerJoin(dto);
     return repository.save(existing);
 }
@@ -105,7 +105,7 @@ Extend `BaseController` for consistent query params:
 ```java
 @RestController
 public class ProductController extends BaseController {
-    
+
     @GetMapping
     public PageDto<ProductDto> getAll(
         @RequestParam(defaultValue = "id") SortedSet<String> sort,
@@ -203,9 +203,9 @@ Product p2 = service.add(List.of(product2)).get(0);
 ```java
 @Entity
 @Table(name = "PRODUCT")
-public class Product extends BaseEntity 
+public class Product extends BaseEntity
     implements CrudEntity<UUID, Product>, Audited<Product> {
-    
+
     @Id private UUID id;
     private String name;
     private BigDecimal price;
@@ -273,11 +273,11 @@ public class ProductConfig {
 @RestController
 @RequestMapping("/api/products")
 public class ProductController extends BaseController {
-    
+
     private final CrudControllerService<UUID, Product, BaseProduct, UpdateProduct,
             ProductDto, AddProductDto, UpdateProductDto> controllerService;
     private final ProductService service;
-    
+
     @GetMapping
     public PageDto<ProductDto> getAll(
             @RequestParam(defaultValue = "id") SortedSet<String> sort,
@@ -286,35 +286,35 @@ public class ProductController extends BaseController {
             @RequestParam(defaultValue = "100") int size,
             @RequestParam(required = false) Set<String> attr,
             @RequestParam(required = false) String name) {
-        
+
         Specification<Product> spec = WhereClauseBuilder.builder()
             .like("name", name != null ? Set.of("%" + name + "%") : null)
             .build();
-        
+
         return controllerService.getAll(service.getAll(spec, sort, order_asc, page, size), attr);
     }
-    
+
     @GetMapping("/{id}")
     public ProductDto get(@PathVariable UUID id, @RequestParam(required = false) Set<String> attr) {
         return controllerService.get(id, attr);
     }
-    
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public List<ProductDto> add(@Valid @RequestBody List<AddProductDto> dtos) {
         return controllerService.add(dtos);
     }
-    
+
     @PutMapping
     public List<ProductDto> put(@Valid @RequestBody List<UpdateProductDto> dtos) {
         return controllerService.put(dtos);
     }
-    
+
     @PatchMapping
     public List<ProductDto> patch(@Valid @RequestBody List<UpdateProductDto> dtos) {
         return controllerService.patch(dtos);
     }
-    
+
     @DeleteMapping
     public long delete(@RequestParam Set<UUID> ids) {
         return controllerService.delete(ids);

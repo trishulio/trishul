@@ -152,28 +152,28 @@ LocalDateTime lastUsed = role.getLastUsed();  // When role was last assumed
 ```java
 @Service
 public class TenantIamService {
-    
+
     private final IaasPolicyClient policyClient;
     private final IaasRoleClient roleClient;
-    
+
     public TenantIaasAuthResources provisionTenantIam(Tenant tenant) {
         String tenantPrefix = "tenant-" + tenant.getId();
-        
+
         // Create S3 access policy
         IaasPolicy s3Policy = policyClient.create(new IaasPolicy()
             .setName(tenantPrefix + "-s3-policy")
             .setDocument(buildS3PolicyDocument(tenant))
             .setDescription("S3 access for " + tenant.getName()));
-        
+
         // Create application role
         IaasRole appRole = roleClient.create(new IaasRole()
             .setName(tenantPrefix + "-app-role")
             .setAssumePolicyDocument(buildAssumeRolePolicy())
             .setDescription("App role for " + tenant.getName()));
-        
+
         // Attach policy to role
         roleClient.attachPolicy(appRole.getName(), s3Policy.getName());
-        
+
         return new TenantIaasAuthResources()
             .setPolicy(s3Policy)
             .setRole(appRole);

@@ -36,8 +36,8 @@ class AwsTenantIaasResourceBuilderTest {
 
   @Test
   void testConstructor_WithNullLists_DoesNotThrowException() {
-    AwsTenantIaasResourceBuilder nullListBuilder =
-        new AwsTenantIaasResourceBuilder(mTemplates, null, null, null, true, true, true, true);
+    AwsTenantIaasResourceBuilder nullListBuilder
+        = new AwsTenantIaasResourceBuilder(mTemplates, null, null, null, true, true, true, true);
     assertNotNull(nullListBuilder);
   }
 
@@ -141,8 +141,8 @@ class AwsTenantIaasResourceBuilderTest {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_OBJECT_STORE_NAME").when(mTemplates)
         .getTenantVfsBucketName(anyString());
 
-    IaasObjectStoreCorsConfiguration actual =
-        builder.buildObjectStoreCorsConfiguration(new IaasIdpTenant("T1"));
+    IaasObjectStoreCorsConfiguration actual
+        = builder.buildObjectStoreCorsConfiguration(new IaasIdpTenant("T1"));
 
     assertEquals("T1_OBJECT_STORE_NAME", actual.getId());
     assertEquals("T1_OBJECT_STORE_NAME", actual.getBucketName());
@@ -183,7 +183,8 @@ class AwsTenantIaasResourceBuilderTest {
     doAnswer(inv -> inv.getArgument(0, String.class) + "_BUCKET").when(mTemplates)
         .getTenantVfsBucketName(anyString());
 
-    IaasObjectStoreAccessConfig actual = falseBuilder.buildPublicAccessBlock(new IaasIdpTenant("T2"));
+    IaasObjectStoreAccessConfig actual
+        = falseBuilder.buildPublicAccessBlock(new IaasIdpTenant("T2"));
 
     assertEquals(false, actual.getPublicAccessBlockConfig().getBlockPublicAcls());
     assertEquals(false, actual.getPublicAccessBlockConfig().getBlockPublicPolicy());

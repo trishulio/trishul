@@ -110,13 +110,13 @@ MoneyCalculator calc = MoneyCalculator.INSTANCE;
 ```java
 @Entity
 public class Invoice extends BaseEntity {
-    
+
     @Embedded
     private Amount invoiceAmount;
-    
+
     @Embedded
     private Tax applicableTax;
-    
+
     public Invoice calculateTotal(Money subTotal) {
         TaxCalculator calculator = new TaxCalculator();
         TaxAmount taxAmount = calculator.calculate(subTotal, applicableTax);
@@ -187,14 +187,14 @@ CREATE TABLE orders (
     id BIGSERIAL PRIMARY KEY,
     price_amount DECIMAL(20,4),
     price_currency_code VARCHAR(3) REFERENCES currency(numeric_code),
-    
+
     -- Amount fields
     total_amount DECIMAL(20,4),
     sub_total_amount DECIMAL(20,4),
     gst_amount DECIMAL(20,4),
     pst_amount DECIMAL(20,4),
     hst_amount DECIMAL(20,4),
-    
+
     -- Tax rates
     gst_rate DECIMAL(10,4),
     pst_rate DECIMAL(10,4),

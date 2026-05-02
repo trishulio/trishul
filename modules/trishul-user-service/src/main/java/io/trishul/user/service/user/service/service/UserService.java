@@ -57,12 +57,13 @@ public class UserService extends BaseService
       Set<Long> salutationIds, Set<String> roles, int page, int size, SortedSet<String> sort,
       boolean orderAscending) {
     final Specification<User> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids).not()
-        .in(Identified.ATTR_ID, excludeIds)
-        .in(BaseUser.ATTR_USER_NAME, userNames).in(BaseUser.ATTR_DISPLAY_NAME, displayNames)
-        .in(BaseUser.ATTR_EMAIL, emails).in(BaseUser.ATTR_PHONE_NUMBER, phoneNumbers)
-        .in(new String[] { UserStatusAccessor.ATTR_STATUS, Identified.ATTR_ID }, statusIds)
-        .in(new String[] { UserSalutationAccessor.ATTR_SALUTATION, Identified.ATTR_ID }, salutationIds)
-        .in(new String[] { BaseUser.ATTR_ROLES, Identified.ATTR_ID }, roles).build();
+        .in(Identified.ATTR_ID, excludeIds).in(BaseUser.ATTR_USER_NAME, userNames)
+        .in(BaseUser.ATTR_DISPLAY_NAME, displayNames).in(BaseUser.ATTR_EMAIL, emails)
+        .in(BaseUser.ATTR_PHONE_NUMBER, phoneNumbers)
+        .in(new String[] {UserStatusAccessor.ATTR_STATUS, Identified.ATTR_ID}, statusIds)
+        .in(new String[] {UserSalutationAccessor.ATTR_SALUTATION, Identified.ATTR_ID},
+            salutationIds)
+        .in(new String[] {BaseUser.ATTR_ROLES, Identified.ATTR_ID}, roles).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }
@@ -121,8 +122,7 @@ public class UserService extends BaseService
 
     // Create a map of email to IaasUser for efficient lookup
     Map<String, IaasUser> iaasUserMap = updatedIaasUserMemberships.stream()
-        .map(IaasUserTenantMembership::getUser)
-        .filter(Objects::nonNull)
+        .map(IaasUserTenantMembership::getUser).filter(Objects::nonNull)
         .collect(Collectors.toMap(IaasUser::getId, iaasUser -> iaasUser));
 
     // Update users with IaasUsername
@@ -152,8 +152,7 @@ public class UserService extends BaseService
     List<IaasUserTenantMembership> updatedIaasUserMemberships = this.iaasService.put(updated);
 
     Map<String, IaasUser> iaasUserMap = updatedIaasUserMemberships.stream()
-        .map(IaasUserTenantMembership::getUser)
-        .filter(Objects::nonNull)
+        .map(IaasUserTenantMembership::getUser).filter(Objects::nonNull)
         .collect(Collectors.toMap(IaasUser::getId, iaasUser -> iaasUser));
 
     updated.forEach(user -> {
@@ -177,7 +176,8 @@ public class UserService extends BaseService
     final List<User> existing = this.repoService.getByIds(patches);
 
     if (existing.size() != patches.size()) {
-      final Set<Long> existingIds = existing.stream().map(Identified::getId).collect(Collectors.toSet());
+      final Set<Long> existingIds
+          = existing.stream().map(Identified::getId).collect(Collectors.toSet());
       final Set<Long> nonExistingIds = patches.stream().map(Identified::getId)
           .filter(patchId -> !existingIds.contains(patchId)).collect(Collectors.toSet());
 

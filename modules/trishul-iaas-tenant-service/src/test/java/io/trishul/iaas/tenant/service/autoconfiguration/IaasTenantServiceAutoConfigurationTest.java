@@ -26,7 +26,8 @@ class IaasTenantServiceAutoConfigurationTest {
     TenantIaasIdpService mockIdpService = mock(TenantIaasIdpService.class);
     TenantIaasVfsService mockVfsService = mock(TenantIaasVfsService.class);
 
-    TenantIaasService result = config.tenantIaasService(mockAuthService, mockIdpService, mockVfsService);
+    TenantIaasService result
+        = config.tenantIaasService(mockAuthService, mockIdpService, mockVfsService);
 
     assertNotNull(result);
   }

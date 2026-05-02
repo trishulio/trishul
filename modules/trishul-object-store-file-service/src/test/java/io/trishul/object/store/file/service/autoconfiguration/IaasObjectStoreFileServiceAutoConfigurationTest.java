@@ -41,9 +41,11 @@ class IaasObjectStoreFileServiceAutoConfigurationTest {
   void testIaasObjectStoreFileService_ReturnsNonNull() {
     LockService mockLockService = mock(LockService.class);
     BlockingAsyncExecutor mockExecutor = mock(BlockingAsyncExecutor.class);
-    IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> mockProvider = mock(IaasRepositoryProvider.class);
+    IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> mockProvider
+        = mock(IaasRepositoryProvider.class);
 
-    IaasObjectStoreFileService result = config.iaasObjectStoreFileService(mockLockService, mockExecutor, mockProvider);
+    IaasObjectStoreFileService result
+        = config.iaasObjectStoreFileService(mockLockService, mockExecutor, mockProvider);
 
     assertNotNull(result);
   }

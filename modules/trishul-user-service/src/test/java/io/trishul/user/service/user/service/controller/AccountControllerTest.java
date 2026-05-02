@@ -33,10 +33,9 @@ class AccountControllerTest {
 
     UserDto dto = this.controller.getCurrentUser(Set.of(""));
 
-    UserDto expected =
-        new UserDto(1L, "john.doe", "John Doe", "John", "Doe", "john.doe@example.com",
-            "5551234567", URI.create("http://example.com/avatar.jpg"), null, null, null,
-            List.of(), null, null, null);
+    UserDto expected = new UserDto(1L, "john.doe", "John Doe", "John", "Doe",
+        "john.doe@example.com", "5551234567", URI.create("http://example.com/avatar.jpg"), null,
+        null, null, List.of(), null, null, null);
     expected.setIaasUsername("iaas_john.doe");
     assertEquals(expected, dto);
   }
@@ -44,8 +43,8 @@ class AccountControllerTest {
   @Test
   void testGetCurrentUser_ReturnsMappedDtoWithIaasUsername() {
     User user = new User(2L, "jane.smith", "Jane Smith", "Jane", "Smith", "jane.smith@example.com",
-        "5559876543", URI.create("http://example.com/jane.jpg"), null, null, null, List.of(),
-        null, null, null);
+        "5559876543", URI.create("http://example.com/jane.jpg"), null, null, null, List.of(), null,
+        null, null);
     user.setIaasUsername("iaas_jane.smith");
 
     doReturn(user).when(mService).getCurrentUser();
@@ -60,9 +59,8 @@ class AccountControllerTest {
 
   @Test
   void testGetCurrentUser_IgnoresAttributeParameter() {
-    User user = new User(1L, "user1", "User One", "User", "One", "user1@example.com",
-        "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(),
-        null, null, null);
+    User user = new User(1L, "user1", "User One", "User", "One", "user1@example.com", "1234567890",
+        URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null, null, null);
     user.setIaasUsername("iaas_user1");
 
     doReturn(user).when(mService).getCurrentUser();

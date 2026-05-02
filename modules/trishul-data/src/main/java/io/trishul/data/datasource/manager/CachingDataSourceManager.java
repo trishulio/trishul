@@ -51,29 +51,29 @@ public class CachingDataSourceManager implements DataSourceManager {
   }
 
   @Override
-    public DataSource getDataSource(DataSourceConfiguration dsConfig)
-            throws SQLException, IOException {
-        DataSource ds = null;
-        try {
-            ds = this.cache.get(dsConfig);
-        } catch (ExecutionException e) {
-            // TODO: These checks are buggy.
-            log.error("Error loading the datasource from the cache");
-            Throwable cause = e.getCause();
-            if (cause instanceof SQLException c) {
-                log.error("SQLException occurred while fetching DataSource");
-                throw c;
-            } else if (cause instanceof IOException io) {
-                log.error("IOException occurred while fetching DataSource");
-                throw io;
-            } else {
-                log.error("Unknown error occurred while fetching DataSource");
-                throw new RuntimeException(cause);
-            }
-        }
-
-        return ds;
+  public DataSource getDataSource(DataSourceConfiguration dsConfig)
+      throws SQLException, IOException {
+    DataSource ds = null;
+    try {
+      ds = this.cache.get(dsConfig);
+    } catch (ExecutionException e) {
+      // TODO: These checks are buggy.
+      log.error("Error loading the datasource from the cache");
+      Throwable cause = e.getCause();
+      if (cause instanceof SQLException c) {
+        log.error("SQLException occurred while fetching DataSource");
+        throw c;
+      } else if (cause instanceof IOException io) {
+        log.error("IOException occurred while fetching DataSource");
+        throw io;
+      } else {
+        log.error("Unknown error occurred while fetching DataSource");
+        throw new RuntimeException(cause);
+      }
     }
+
+    return ds;
+  }
 
   @Override
   public DataSource getAdminDataSource() {

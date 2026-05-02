@@ -64,8 +64,9 @@ public class AwsCognitoUserClient
     attributes[1] = new AttributeType().withName(CognitoPrincipalContext.ATTRIBUTE_EMAIL_VERIFIED)
         .withValue("true");
 
-    final AdminCreateUserRequest request = new AdminCreateUserRequest().withUserPoolId(userPoolId)
-        .withUsername(addition.getEmail()).withDesiredDeliveryMediums(DeliveryMediumType.EMAIL);
+    final AdminCreateUserRequest request
+        = new AdminCreateUserRequest().withUserPoolId(userPoolId).withUsername(addition.getEmail())
+            .withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withUserAttributes(attributes);
     final AdminCreateUserResult result = this.idp.adminCreateUser(request);
     return userTypeMapper.fromIaasEntity(result.getUser());
   }

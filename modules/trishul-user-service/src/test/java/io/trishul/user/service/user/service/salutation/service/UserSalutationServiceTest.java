@@ -46,7 +46,7 @@ class UserSalutationServiceTest {
 
     when(userSalutationRepository.findAll(specificationCaptor.capture(),
         eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
-            .thenReturn(expectedSalutationsPage);
+        .thenReturn(expectedSalutationsPage);
 
     Page<UserSalutation> actualSalutationsPage
         = userSalutationService.getSalutations(null, new TreeSet<>(List.of("id")), true, 0, 100);

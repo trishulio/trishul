@@ -47,9 +47,8 @@ public class AccountService {
       throw new EntityNotFoundException("User", "username", "current");
     }
 
-    final Specification<User> spec = WhereClauseBuilder.builder()
-        .is(BaseUser.ATTR_IAAS_USERNAME, username)
-        .build();
+    final Specification<User> spec
+        = WhereClauseBuilder.builder().is(BaseUser.ATTR_IAAS_USERNAME, username).build();
 
     List<User> users = userRepository.findAll(spec);
 

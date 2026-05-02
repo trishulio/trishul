@@ -114,7 +114,7 @@ class AwsIamRoleClientTest {
 
     doReturn(new UpdateAssumeRolePolicyResult()
         .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
-            .updateAssumeRolePolicy(any());
+        .updateAssumeRolePolicy(any());
 
     IaasRole role = client.update(new IaasRole().setId("ROLE_1").setDescription("DESCRIPTION_1")
         .setAssumePolicyDocument("DOCUMENT_1"));

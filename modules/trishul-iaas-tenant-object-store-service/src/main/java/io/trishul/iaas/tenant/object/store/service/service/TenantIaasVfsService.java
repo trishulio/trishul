@@ -146,8 +146,8 @@ public class TenantIaasVfsService {
     log.info(String.format("Created IaasRolePolicyAttachment: %s", attachments.size()));
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates = tenants.stream()
-        .map(tenant -> this.resourceBuilder.buildObjectStoreCorsConfiguration(tenant))
-        .map(o -> o).toList();
+        .map(tenant -> this.resourceBuilder.buildObjectStoreCorsConfiguration(tenant)).map(o -> o)
+        .toList();
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs
         = this.objectStoreCorsConfigService.put(objectStoreCorsConfigUpdates);

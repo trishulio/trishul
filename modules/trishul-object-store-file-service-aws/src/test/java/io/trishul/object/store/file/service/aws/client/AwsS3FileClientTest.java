@@ -39,7 +39,8 @@ class AwsS3FileClientTest {
 
   @Test
   void testGet_ReturnsObjectStoreWithGetPresignedURL() throws MalformedURLException {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor
+        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
@@ -58,14 +59,16 @@ class AwsS3FileClientTest {
 
   @Test
   void testAdd_ReturnsObjectStoreWithPutPresignedURLAndRandomFileKey() {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor
+        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
       return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
-    IaasObjectStoreFile file = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+    IaasObjectStoreFile file
+        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
 
     assertNotNull(file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
@@ -76,9 +79,9 @@ class AwsS3FileClientTest {
   }
 
   @Test
-  void testPut_ReturnsObjectStoreWithPutPresignedURLAndGivenFileKey()
-      throws MalformedURLException {
-    ArgumentCaptor<GeneratePresignedUrlRequest> captor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
+  void testPut_ReturnsObjectStoreWithPutPresignedURLAndGivenFileKey() throws MalformedURLException {
+    ArgumentCaptor<GeneratePresignedUrlRequest> captor
+        = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
 
     doAnswer(inv -> {
       GeneratePresignedUrlRequest req = inv.getArgument(0, GeneratePresignedUrlRequest.class);
@@ -96,8 +99,7 @@ class AwsS3FileClientTest {
   }
 
   @Test
-  void testDelete_ReturnTrueAndCallsDelete_WhenExistsReturnTrue()
-      throws MalformedURLException {
+  void testDelete_ReturnTrueAndCallsDelete_WhenExistsReturnTrue() throws MalformedURLException {
     ArgumentCaptor<DeleteObjectRequest> captor = ArgumentCaptor.forClass(DeleteObjectRequest.class);
     doNothing().when(mS3).deleteObject(captor.capture());
 
@@ -112,8 +114,7 @@ class AwsS3FileClientTest {
   }
 
   @Test
-  void testDelete_ReturnFalseAndDoNothing_WhenExistsReturnFalse()
-      throws MalformedURLException {
+  void testDelete_ReturnFalseAndDoNothing_WhenExistsReturnFalse() throws MalformedURLException {
     client = spy(client);
     doReturn(false).when(client).exists(URI.create("file.txt"));
 

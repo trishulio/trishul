@@ -46,8 +46,8 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testConstraintViolationException_ReturnsConflictResponse() {
-    DataIntegrityViolationException exception =
-        new DataIntegrityViolationException("Constraint violation");
+    DataIntegrityViolationException exception
+        = new DataIntegrityViolationException("Constraint violation");
 
     ErrorResponse response = handler.constraintViolationException(exception, mRequest);
 
@@ -70,11 +70,10 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testObjectOptimisticLockingFailureException_ReturnsConflictResponse() {
-    ObjectOptimisticLockingFailureException exception =
-        new ObjectOptimisticLockingFailureException("Entity", "id");
+    ObjectOptimisticLockingFailureException exception
+        = new ObjectOptimisticLockingFailureException("Entity", "id");
 
-    ErrorResponse response =
-        handler.objectOptimisticLockingFailureException(exception, mRequest);
+    ErrorResponse response = handler.objectOptimisticLockingFailureException(exception, mRequest);
 
     assertNotNull(response);
     assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
@@ -85,8 +84,7 @@ class ControllerExceptionHandlerTest {
   void testOptimisticLockException_ReturnsConflictResponse() {
     OptimisticLockException exception = new OptimisticLockException("Lock failed");
 
-    ErrorResponse response =
-        handler.objectOptimisticLockingFailureException(exception, mRequest);
+    ErrorResponse response = handler.objectOptimisticLockingFailureException(exception, mRequest);
 
     assertNotNull(response);
     assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
@@ -123,10 +121,9 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testJpaObjectRetrievalFailureException_ReturnsNotFoundResponse() {
-    jakarta.persistence.EntityNotFoundException cause =
-        new jakarta.persistence.EntityNotFoundException("Entity not found");
-    JpaObjectRetrievalFailureException exception =
-        new JpaObjectRetrievalFailureException(cause);
+    jakarta.persistence.EntityNotFoundException cause
+        = new jakarta.persistence.EntityNotFoundException("Entity not found");
+    JpaObjectRetrievalFailureException exception = new JpaObjectRetrievalFailureException(cause);
 
     ErrorResponse response = handler.jpaObjectRetrievalFailureException(exception, mRequest);
 

@@ -41,11 +41,11 @@ class UserMapperTest {
 
     User user = mapper.fromAddDto(dto);
 
-    User expected = new User().setUserName("userName").setDisplayName("displayName")
-        .setFirstName("firstName").setLastName("lastName").setEmail("email")
-        .setPhoneNumber("phoneNumber").setImageSrc(URI.create("imageSrc")).setIaasUsername(null)
-        .setStatus(new UserStatus(1L)).setSalutation(new UserSalutation(2L))
-        .setRoles(List.of(new UserRole(10L)));
+    User expected
+        = new User().setUserName("userName").setDisplayName("displayName").setFirstName("firstName")
+            .setLastName("lastName").setEmail("email").setPhoneNumber("phoneNumber")
+            .setImageSrc(URI.create("imageSrc")).setIaasUsername(null).setStatus(new UserStatus(1L))
+            .setSalutation(new UserSalutation(2L)).setRoles(List.of(new UserRole(10L)));
 
     assertEquals(expected, user);
   }

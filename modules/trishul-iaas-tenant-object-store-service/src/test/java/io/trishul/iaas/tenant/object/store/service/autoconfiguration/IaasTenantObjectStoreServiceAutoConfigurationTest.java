@@ -27,17 +27,17 @@ class IaasTenantObjectStoreServiceAutoConfigurationTest {
   void testIaasVfsService_ReturnsNonNull() {
     IaasPolicyService mockPolicyService = mock(IaasPolicyService.class);
     IaasObjectStoreService mockObjectStoreService = mock(IaasObjectStoreService.class);
-    IaasRolePolicyAttachmentService mockRolePolicyAttachmentService = mock(IaasRolePolicyAttachmentService.class);
-    IaasObjectStoreCorsConfigService mockCorsConfigService = mock(IaasObjectStoreCorsConfigService.class);
-    IaasObjectStoreAccessConfigService mockAccessConfigService = mock(IaasObjectStoreAccessConfigService.class);
-    TenantObjectStoreResourceBuilder mockResourceBuilder = mock(TenantObjectStoreResourceBuilder.class);
+    IaasRolePolicyAttachmentService mockRolePolicyAttachmentService
+        = mock(IaasRolePolicyAttachmentService.class);
+    IaasObjectStoreCorsConfigService mockCorsConfigService
+        = mock(IaasObjectStoreCorsConfigService.class);
+    IaasObjectStoreAccessConfigService mockAccessConfigService
+        = mock(IaasObjectStoreAccessConfigService.class);
+    TenantObjectStoreResourceBuilder mockResourceBuilder
+        = mock(TenantObjectStoreResourceBuilder.class);
 
-    TenantIaasVfsService result = config.iaasVfsService(
-        mockPolicyService,
-        mockObjectStoreService,
-        mockRolePolicyAttachmentService,
-        mockCorsConfigService,
-        mockAccessConfigService,
+    TenantIaasVfsService result = config.iaasVfsService(mockPolicyService, mockObjectStoreService,
+        mockRolePolicyAttachmentService, mockCorsConfigService, mockAccessConfigService,
         mockResourceBuilder);
 
     assertNotNull(result);

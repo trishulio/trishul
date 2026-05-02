@@ -59,10 +59,10 @@ Use `CachingDataSourceManager` - caches DataSource instances by configuration:
 ```java
 @Service
 public class TenantDatabaseService {
-    
+
     private final DataSourceManager dataSourceManager;
     private final DataSourceConfigurationProvider configProvider;
-    
+
     public Connection getTenantConnection(String tenantId) throws SQLException, IOException {
         DataSourceConfiguration config = configProvider.getConfiguration(tenantId);
         DataSource ds = dataSourceManager.getDataSource(config);  // Cached
@@ -111,10 +111,10 @@ Use `DataSourceQueryRunner`:
 ```java
 @Service
 public class DatabaseQueryService {
-    
+
     private final DataSourceQueryRunner queryRunner;
     private final DataSourceManager dataSourceManager;
-    
+
     public int getTenantCount() throws SQLException {
         DataSource ds = dataSourceManager.getAdminDataSource();
         return queryRunner.query(
@@ -133,10 +133,10 @@ Combine `DataSourceManager` with `DataSourceConfigurationManager`:
 ```java
 @Service
 public class MultiTenantDataSourceService {
-    
+
     private final DataSourceManager dataSourceManager;
     private final DataSourceConfigurationManager configManager;
-    
+
     public DataSource getDataSourceForTenant(String tenantId) throws SQLException, IOException {
         DataSourceConfiguration config = configManager.getConfiguration(tenantId);
         if (config == null) {
@@ -144,7 +144,7 @@ public class MultiTenantDataSourceService {
         }
         return dataSourceManager.getDataSource(config);
     }
-    
+
     public void registerTenant(String tenantId, DataSourceConfiguration config) {
         configManager.registerConfiguration(tenantId, config);
     }
@@ -163,7 +163,7 @@ trishul:
     schema-prefix: tenant_
     pool-size: 10
     auto-commit: false
-    
+
     migrations:
       - location: classpath:db/migration/admin
         table: flyway_schema_history
@@ -246,7 +246,7 @@ trishul:
 ```java
 @Configuration
 public class MultiTenantDatabaseConfiguration {
-    
+
     @Bean
     public DataSourceManager dataSourceManager(
         GlobalDataSourceConfiguration globalConfig,
@@ -258,7 +258,7 @@ public class MultiTenantDatabaseConfiguration {
             secretsManager
         );
     }
-    
+
     @Bean
     public TenantConnectionProvider tenantConnectionProvider(
         DataSourceManager dataSourceManager,
