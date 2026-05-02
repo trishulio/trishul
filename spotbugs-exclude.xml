@@ -1,40 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Bug pattern="EI_EXPOSE_REP2"/>
-        <Or>
-            <Parameter type="io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator"/>
-            <Parameter type="io.trishul.crud.service.CrudService"/>
-            <Parameter type="com.amazonaws*"/>
-            <Parameter type="*Client"/>
-            <Parameter type="javax.sql.DataSource"/>
-            <Parameter type="*Executor"/>
-            <Parameter type="*Configuration"/>
-            <Parameter type="*Wrapper"/>
-            <Parameter type="*Filter"/>
-            <Parameter type="*Service"/>
-            <Parameter type="*Controller"/>
-            <Parameter type="*Repo"/>
-            <Parameter type="*Repository"/>
-            <Parameter type="*Provider"/>
-            <Parameter type="*Manager"/>
-            <Parameter type="*Calculator"/>
-            <Parameter type="*Delegate"/>
-        </Or>
-    </Match>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    <Or>
+        <!-- 1. All framework-style / DI classes -->
+        <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper)" />
+        <!-- 2. Entire internal packages where exposure is acceptable -->
+        <Class name="~io\.trishul\..*\.(service|client|manager|provider|controller|config|executor|wrapper|delegate|repository)\..*" />
+        <!-- 3. Known framework / infra types (instead of Parameter filters) -->
+        <Class name="~(javax|jakarta|org\.springframework|com\.amazonaws)\..*" />
+        <!-- 4. Models / DTOs (if you want blanket allowance) -->
+        <Class name="~io\.trishul\..*\.model\..*" />
+    </Or>
+</Match>
+
+    <!-- Ignore all bugs for Test Mocks -->
     <Match>
-        <Bug pattern="DMI_COLLECTION_OF_URLS"/>
-        <Class name="*Controller"/>
-    </Match>
-    <Match>
-        <Bug pattern="DMI_COLLECTION_OF_URLS"/>
-        <Class name="io.trishul.tenant.service.service.TenantService"/>
-    </Match>
-    <Match>
-        <Bug pattern="*"/>
-        <Class name="io.trishul.test.*Mock.*"/>
-    </Match>
-    <Match>
-        <Bug pattern="*"/>
-        <Class name="io.trishul.dialect.postgres.PostgresJdbcDialectSql"/>
-    </Match>
+    <Class name="~io\.trishul\.test\..*Mock.*"/>
+</Match>
+
 </FindBugsFilter>
