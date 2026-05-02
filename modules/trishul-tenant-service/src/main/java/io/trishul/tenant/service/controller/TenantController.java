@@ -14,7 +14,7 @@ import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.service.service.TenantService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -60,7 +60,7 @@ public class TenantController extends BaseController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public PageDto<TenantDto> getAll(@RequestParam(required = false, name = "ids") Set<UUID> ids,
       @RequestParam(required = false, name = "names") Set<String> names,
-      @RequestParam(required = false, name = "urls") Set<URL> urls,
+      @RequestParam(required = false, name = "urls") Set<URI> urls,
       @RequestParam(required = false, name = "is_ready") Boolean isReady,
       @RequestParam(name = PROPNAME_SORT_BY,
           defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,

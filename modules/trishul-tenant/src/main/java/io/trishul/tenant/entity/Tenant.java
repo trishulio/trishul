@@ -1,6 +1,6 @@
 package io.trishul.tenant.entity;
 
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,7 +27,7 @@ public class Tenant extends BaseEntity
   private String name;
 
   @Column(name = "url")
-  private URL url;
+  private URI url;
 
   @Column(name = "is_ready")
   private Boolean isReady;
@@ -50,7 +50,7 @@ public class Tenant extends BaseEntity
     setId(id);
   }
 
-  public Tenant(UUID id, String name, URL url, Boolean isReady, LocalDateTime createdAt,
+  public Tenant(UUID id, String name, URI url, Boolean isReady, LocalDateTime createdAt,
       LocalDateTime lastUpdated) {
     this(id);
     this.name = name;
@@ -90,12 +90,12 @@ public class Tenant extends BaseEntity
   }
 
   @Override
-  public URL getUrl() {
+  public URI getUrl() {
     return url;
   }
 
   @Override
-  public Tenant setUrl(URL url) {
+  public Tenant setUrl(URI url) {
     this.url = url;
     return this;
   }

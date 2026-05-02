@@ -1,6 +1,5 @@
 package io.trishul.tenant.service.service;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -69,7 +68,7 @@ class TenantServiceTest {
   }
 
   @Test
-  void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec() throws MalformedURLException {
+  void testGetTenants_ReturnsEntitiesFromRepoService_WithCustomSpec() {
     @SuppressWarnings("unchecked")
     final ArgumentCaptor<Specification<Tenant>> captor
         = ArgumentCaptor.forClass(Specification.class);
@@ -78,14 +77,13 @@ class TenantServiceTest {
     doReturn(mPage).when(this.mRepoService).getAll(captor.capture(),
         eq(new TreeSet<>(List.of("id"))), eq(true), eq(10), eq(20));
 
-    final Page<Tenant> page
-        = this.service.getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
-            Set.of("T1"), Set.of(URI.create("http://localhost/").toURL()), true,
-            new TreeSet<>(List.of("id")), // sort,
-            true, // orderAscending,
-            10, // page,
-            20 // size
-        );
+    final Page<Tenant> page = this.service.getAll(
+        Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")), // ids
+        Set.of("T1"), Set.of(URI.create("http://localhost/")), true, new TreeSet<>(List.of("id")), // sort,
+        true, // orderAscending,
+        10, // page,
+        20 // size
+    );
 
     final Page<Tenant> expected = new PageImpl<>(
         List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));

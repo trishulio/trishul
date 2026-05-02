@@ -2,9 +2,7 @@ package io.trishul.tenant.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,13 +16,13 @@ class UpdateTenantDtoTest {
   }
 
   @Test
-  void testAllArgConstructor() throws MalformedURLException {
+  void testAllArgConstructor() {
     tenantDto = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NAME",
-        URI.create("http://localhost/").toURL());
+        URI.create("http://localhost/"));
 
     assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000000"), tenantDto.getId());
     assertEquals("NAME", tenantDto.getName());
-    assertEquals(URI.create("http://localhost/").toURL(), tenantDto.getUrl());
+    assertEquals(URI.create("http://localhost/"), tenantDto.getUrl());
   }
 
   @Test
@@ -42,8 +40,8 @@ class UpdateTenantDtoTest {
   }
 
   @Test
-  void testGetSetUrl() throws MalformedURLException {
-    URL url = URI.create("https://localhost/").toURL();
+  void testGetSetUrl() {
+    URI url = URI.create("https://localhost/");
     tenantDto.setUrl(url);
     assertSame(url, tenantDto.getUrl());
   }

@@ -1,6 +1,6 @@
 package io.trishul.tenant.entity;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.UUID;
 import io.trishul.base.types.base.pojo.Identified;
 
@@ -11,7 +11,7 @@ public interface TenantData extends Identified<UUID> {
 
   String getName();
 
-  URL getUrl();
+  URI getUrl();
 
   Boolean getIsReady();
 }

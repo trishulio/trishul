@@ -1,6 +1,6 @@
 package io.trishul.tenant.service.service;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +52,7 @@ public class TenantService
     this.iaasService = iaasService;
   }
 
-  public Page<Tenant> getAll(Set<UUID> ids, Set<String> names, Set<URL> urls, Boolean isReady,
+  public Page<Tenant> getAll(Set<UUID> ids, Set<String> names, Set<URI> urls, Boolean isReady,
       SortedSet<String> sort, boolean orderAscending, int page, int size) {
     Specification<Tenant> spec = WhereClauseBuilder.builder()
         .in(new String[] {Identified.ATTR_ID}, ids).in(new String[] {TenantData.ATTR_NAME}, names)

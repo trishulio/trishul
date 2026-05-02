@@ -1,6 +1,6 @@
 package io.trishul.tenant.dto;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.UUID;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +13,7 @@ public class UpdateTenantDto extends BaseDto {
   private String name;
 
   @NotNull
-  private URL url;
+  private URI url;
 
   public UpdateTenantDto() {
     super();
@@ -24,7 +24,7 @@ public class UpdateTenantDto extends BaseDto {
     setId(id);
   }
 
-  public UpdateTenantDto(UUID id, String name, URL url) {
+  public UpdateTenantDto(UUID id, String name, URI url) {
     this(id);
     setName(name);
     setUrl(url);
@@ -48,11 +48,11 @@ public class UpdateTenantDto extends BaseDto {
     return this;
   }
 
-  public URL getUrl() {
+  public URI getUrl() {
     return url;
   }
 
-  public UpdateTenantDto setUrl(URL url) {
+  public UpdateTenantDto setUrl(URI url) {
     this.url = url;
     return this;
   }

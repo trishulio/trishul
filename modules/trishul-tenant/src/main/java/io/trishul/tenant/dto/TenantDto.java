@@ -1,6 +1,6 @@
 package io.trishul.tenant.dto;
 
-import java.net.URL;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import io.trishul.model.base.dto.BaseDto;
@@ -8,7 +8,7 @@ import io.trishul.model.base.dto.BaseDto;
 public class TenantDto extends BaseDto {
   private UUID id;
   private String name;
-  private URL url;
+  private URI url;
   private Boolean isReady;
   private LocalDateTime createdAt;
   private LocalDateTime lastUpdated;
@@ -22,7 +22,7 @@ public class TenantDto extends BaseDto {
     setId(id);
   }
 
-  public TenantDto(UUID id, String name, URL url, Boolean isReady, LocalDateTime createdAt,
+  public TenantDto(UUID id, String name, URI url, Boolean isReady, LocalDateTime createdAt,
       LocalDateTime lastUpdated) {
     this(id);
     setName(name);
@@ -50,11 +50,11 @@ public class TenantDto extends BaseDto {
     return this;
   }
 
-  public URL getUrl() {
+  public URI getUrl() {
     return url;
   }
 
-  public TenantDto setUrl(URL url) {
+  public TenantDto setUrl(URI url) {
     this.url = url;
     return this;
   }

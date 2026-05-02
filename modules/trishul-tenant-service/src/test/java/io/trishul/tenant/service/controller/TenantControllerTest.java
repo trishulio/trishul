@@ -12,7 +12,6 @@ import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.service.service.TenantService;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -37,11 +36,11 @@ class TenantControllerTest {
   }
 
   @Test
-  void testGetAllTenant_ReturnsDtosFromController() throws MalformedURLException {
+  void testGetAllTenant_ReturnsDtosFromController() {
     doReturn(new PageImpl<>(
         List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")))))
         .when(mService).getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000000")),
-            Set.of("T1"), Set.of(URI.create("http://localhost/").toURL()), true,
+            Set.of("T1"), Set.of(URI.create("http://localhost/")), true,
             new TreeSet<>(List.of("id")), true, 1, 10);
     doReturn(new PageDto<>(
         List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))), 1, 1))
@@ -52,7 +51,7 @@ class TenantControllerTest {
 
     PageDto<TenantDto> page
         = this.controller.getAll(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000000")),
-            Set.of("T1"), Set.of(URI.create("http://localhost/").toURL()), true,
+            Set.of("T1"), Set.of(URI.create("http://localhost/")), true,
             new TreeSet<>(List.of("id")), true, 1, 10, Set.of(""));
 
     PageDto<TenantDto> expected = new PageDto<>(

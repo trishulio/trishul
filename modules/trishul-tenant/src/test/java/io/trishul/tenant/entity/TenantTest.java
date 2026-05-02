@@ -1,8 +1,6 @@
 package io.trishul.tenant.entity;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.json.JSONException;
@@ -23,14 +21,14 @@ class TenantTest {
   }
 
   @Test
-  void testAllArgConstructor() throws MalformedURLException {
+  void testAllArgConstructor() {
     tenant = new Tenant(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"), "TENANT_1",
-        URI.create("http://localhost").toURL(), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+        URI.create("http://localhost"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));
 
     assertEquals(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"), tenant.getId());
     assertEquals("TENANT_1", tenant.getName());
-    assertEquals(URI.create("http://localhost").toURL(), tenant.getUrl());
+    assertEquals(URI.create("http://localhost"), tenant.getUrl());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), tenant.getCreatedAt());
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), tenant.getLastUpdated());
   }
@@ -67,8 +65,8 @@ class TenantTest {
   }
 
   @Test
-  void testGetSetUrl() throws MalformedURLException {
-    URL url = URI.create("http://localhost").toURL();
+  void testGetSetUrl() {
+    URI url = URI.create("http://localhost");
     tenant.setUrl(url);
     assertSame(url, tenant.getUrl());
   }
@@ -88,9 +86,9 @@ class TenantTest {
   }
 
   @Test
-  void testToString_ReturnsJsonifiedString() throws JSONException, MalformedURLException {
+  void testToString_ReturnsJsonifiedString() throws JSONException {
     tenant = new Tenant(UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9"), "TENANT_1",
-        URI.create("http://localhost").toURL(), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+        URI.create("http://localhost"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
         LocalDateTime.of(2001, 1, 1, 0, 0));
 
     final String json

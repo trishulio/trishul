@@ -20,16 +20,14 @@ public abstract class QuantityUnitMapper {
 
   public static final QuantityUnitMapper INSTANCE = Mappers.getMapper(QuantityUnitMapper.class);
 
-  private final Map<String, Unit<?>> map;
+  private static final Map<String, Unit<?>> UNITS = getAllUnits();
 
-  public QuantityUnitMapper() {
-    this.map = getAllUnits();
-  }
+  public QuantityUnitMapper() {}
 
   public Unit<?> fromSymbol(String symbol) {
     Unit<?> unit = null;
     if (symbol != null) {
-      unit = this.map.get(symbol);
+      unit = UNITS.get(symbol);
     }
 
     return unit;
@@ -43,7 +41,7 @@ public abstract class QuantityUnitMapper {
     return unit;
   }
 
-  public String toSymbol(Unit<?> unit) {
+  public static String toSymbol(Unit<?> unit) {
     String symbol = null;
     if (unit != null) {
       symbol = unit.toString();
@@ -88,7 +86,7 @@ public abstract class QuantityUnitMapper {
     return dto;
   }
 
-  private Map<String, Unit<?>> getAllUnits() {
+  private static Map<String, Unit<?>> getAllUnits() {
     try {
       Field[] fields = SupportedUnits.class.getFields();
 

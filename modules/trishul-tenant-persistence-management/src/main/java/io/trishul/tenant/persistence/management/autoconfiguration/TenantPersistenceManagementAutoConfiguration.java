@@ -1,6 +1,5 @@
 package io.trishul.tenant.persistence.management.autoconfiguration;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -35,10 +34,10 @@ public class TenantPersistenceManagementAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(TenantData.class)
   public TenantData adminTenant(@Value("${app.config.tenant.admin.id}") String id,
-      @Value("${app.config.tenant.admin.name}") String name) throws MalformedURLException {
+      @Value("${app.config.tenant.admin.name}") String name) {
     UUID adminId = UUID.fromString(id);
 
-    return new AdminTenant(adminId, name, URI.create("http://localhost/").toURL());
+    return new AdminTenant(adminId, name, URI.create("http://localhost/"));
   }
 
   @Bean
