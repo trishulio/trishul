@@ -84,11 +84,12 @@
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.6.0.6792</org.sonarsource.scanner.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
-        <spotless.version>3.4.0</spotless.version>
+        <spotless.version>3.5.1</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <spotbugs.version>4.9.8.3</spotbugs.version>
+        <pmd.version>3.28.0</pmd.version>
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
-        <org.owasp.dependency.check.version>12.2.1</org.owasp.dependency.check.version>
+        <org.owasp.dependency.check.version>12.2.2</org.owasp.dependency.check.version>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.15.0</org.apache.maven.plugin.compiler.version>
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
@@ -607,6 +608,24 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${pmd.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <targetJdk>${java.version}</targetJdk>
+                        <failOnViolation>${env.PMD_FAIL_ON_VIOLATION}</failOnViolation>
+                        <printFailingErrors>true</printFailingErrors>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${org.codehaus.mojo.versions.plugin.version}</version>
@@ -938,6 +957,24 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>pmd</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>env.ENABLE_PMD</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
