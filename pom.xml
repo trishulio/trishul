@@ -65,6 +65,8 @@
         <module>modules/trishul-iaas-user-service-aws</module>
         <module>modules/trishul-object-store-aws</module>
         <module>modules/trishul-object-store-service-aws</module>
+        <module>modules/trishul-ai</module>
+        <module>modules/trishul-ai-service</module>
     </modules>
 
     <properties>
@@ -95,6 +97,8 @@
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <org.apache.maven.plugin.antrun.version>3.2.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
+        <dev.langchain4j.version>0.36.2</dev.langchain4j.version>
+        <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
         <argLine></argLine>
     </properties>
 
@@ -470,6 +474,35 @@
                 <artifactId>trishul-object-store-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-ai</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-ai-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- AI Dependencies -->
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-bom</artifactId>
+                <version>${dev.langchain4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${org.springframework.ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -643,7 +676,7 @@
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
                         <!-- Tech debt -->
-                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,dev.langchain4j.version,org.springframework.ai.version</excludeProperties>
                     </configuration>
                 </plugin>
 
