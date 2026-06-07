@@ -1,0 +1,96 @@
+package io.trishul.ai.service.chat.model.service;
+
+import io.trishul.ai.chat.model.AiChatModelConfig;
+import io.trishul.ai.chat.model.AiChatModelConfigAccessor;
+import io.trishul.ai.chat.model.BaseAiChatModelConfig;
+import io.trishul.ai.chat.model.UpdateAiChatModelConfig;
+import io.trishul.crud.service.BaseService;
+import io.trishul.crud.service.CrudService;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.crud.service.EntityMergerService;
+import io.trishul.repo.jpa.repository.service.RepoService;
+import jakarta.transaction.Transactional;
+
+@Transactional
+public class AiChatModelConfigService extends BaseService implements
+    CrudService<Long, AiChatModelConfig, BaseAiChatModelConfig<?>, UpdateAiChatModelConfig<?>, AiChatModelConfigAccessor<?>> {
+
+  private final EntityMergerService<Long, AiChatModelConfig, BaseAiChatModelConfig<?>, UpdateAiChatModelConfig<?>> entityMergerService;
+  private final RepoService<Long, AiChatModelConfig, AiChatModelConfigAccessor<?>> repoService;
+
+  public AiChatModelConfigService(
+      EntityMergerService<Long, AiChatModelConfig, BaseAiChatModelConfig<?>, UpdateAiChatModelConfig<?>> entityMergerService,
+      RepoService<Long, AiChatModelConfig, AiChatModelConfigAccessor<?>> repoService) {
+    this.entityMergerService = entityMergerService;
+    this.repoService = repoService;
+  }
+
+  @Override
+  public AiChatModelConfig get(Long id) {
+    return this.repoService.get(id);
+  }
+
+  @Override
+  public List<AiChatModelConfig> getByIds(Collection<? extends Identified<Long>> idProviders) {
+    return this.repoService.getByIds(idProviders);
+  }
+
+  @Override
+  public List<AiChatModelConfig> getByAccessorIds(
+      Collection<? extends AiChatModelConfigAccessor<?>> accessors) {
+    return this.repoService.getByAccessorIds(accessors,
+        AiChatModelConfigAccessor::getChatModelConfig);
+  }
+
+  @Override
+  public boolean exists(Set<Long> ids) {
+    return this.repoService.exists(ids);
+  }
+
+  @Override
+  public boolean exist(Long id) {
+    return this.repoService.exists(id);
+  }
+
+  @Override
+  public long delete(Set<Long> ids) {
+    return this.repoService.delete(ids);
+  }
+
+  @Override
+  public long delete(Long id) {
+    return this.repoService.delete(id);
+  }
+
+  @Override
+  public List<AiChatModelConfig> add(List<? extends BaseAiChatModelConfig<?>> additions) {
+    if (additions == null)
+      return null;
+    List<AiChatModelConfig> entities = this.entityMergerService.getAddEntities(additions);
+    return this.repoService.saveAll(entities);
+  }
+
+  @Override
+  public List<AiChatModelConfig> put(List<? extends UpdateAiChatModelConfig<?>> updates) {
+    if (updates == null)
+      return null;
+    List<AiChatModelConfig> existing = this.repoService.getByIds(updates);
+    List<AiChatModelConfig> updated = this.entityMergerService.getPutEntities(existing, updates);
+    return this.repoService.saveAll(updated);
+  }
+
+  @Override
+  public List<AiChatModelConfig> patch(List<? extends UpdateAiChatModelConfig<?>> patches) {
+    if (patches == null)
+      return null;
+    List<AiChatModelConfig> existing = this.repoService.getByIds(patches);
+    if (existing.size() != patches.size())
+      throw new EntityNotFoundException("Entity not found");
+    List<AiChatModelConfig> updated = this.entityMergerService.getPatchEntities(existing, patches);
+    return this.repoService.saveAll(updated);
+  }
+}

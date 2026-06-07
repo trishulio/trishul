@@ -1,0 +1,144 @@
+CREATE SEQUENCE ai_chat_model_config_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_CHAT_MODEL_CONFIG (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_chat_model_config_sequence'),
+  name VARCHAR(255) NOT NULL,
+  provider VARCHAR(255) NOT NULL,
+  model_name VARCHAR(255) NOT NULL,
+  temperature DOUBLE PRECISION,
+  max_tokens INTEGER,
+  top_p DOUBLE PRECISION,
+  is_default BOOLEAN DEFAULT FALSE,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_chat_memory_config_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_CHAT_MEMORY_CONFIG (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_chat_memory_config_sequence'),
+  name VARCHAR(255) NOT NULL,
+  memory_type VARCHAR(50) NOT NULL,
+  max_messages INTEGER,
+  max_tokens INTEGER,
+  is_default BOOLEAN DEFAULT FALSE,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_guardrail_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_GUARDRAIL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_guardrail_sequence'),
+  name VARCHAR(255) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  configuration TEXT,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_skill_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_SKILL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_skill_sequence'),
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  system_prompt_extension TEXT,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_tool_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_TOOL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_tool_sequence'),
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  bean_name VARCHAR(255) NOT NULL,
+  method_name VARCHAR(255) NOT NULL,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_speech_config_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_SPEECH_CONFIG (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_speech_config_sequence'),
+  name VARCHAR(255) NOT NULL,
+  provider VARCHAR(255) NOT NULL,
+  tts_model_name VARCHAR(255),
+  stt_model_name VARCHAR(255),
+  voice VARCHAR(255),
+  speed DOUBLE PRECISION,
+  is_default BOOLEAN DEFAULT FALSE,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE ai_agent_config_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_AGENT_CONFIG (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_agent_config_sequence'),
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  is_active BOOLEAN DEFAULT TRUE,
+  chat_model_config_id BIGINT,
+  chat_memory_config_id BIGINT,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_ai_agent_chat_model FOREIGN KEY (chat_model_config_id) REFERENCES AI_CHAT_MODEL_CONFIG(id),
+  CONSTRAINT fk_ai_agent_chat_memory FOREIGN KEY (chat_memory_config_id) REFERENCES AI_CHAT_MEMORY_CONFIG(id)
+);
+
+CREATE SEQUENCE ai_agent_guardrail_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_AGENT_GUARDRAIL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_agent_guardrail_sequence'),
+  agent_config_id BIGINT NOT NULL,
+  guardrail_id BIGINT NOT NULL,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_agent_guardrail_agent FOREIGN KEY (agent_config_id) REFERENCES AI_AGENT_CONFIG(id),
+  CONSTRAINT fk_agent_guardrail_guardrail FOREIGN KEY (guardrail_id) REFERENCES AI_GUARDRAIL(id)
+);
+
+CREATE SEQUENCE ai_agent_skill_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_AGENT_SKILL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_agent_skill_sequence'),
+  agent_config_id BIGINT NOT NULL,
+  skill_id BIGINT NOT NULL,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_agent_skill_agent FOREIGN KEY (agent_config_id) REFERENCES AI_AGENT_CONFIG(id),
+  CONSTRAINT fk_agent_skill_skill FOREIGN KEY (skill_id) REFERENCES AI_SKILL(id)
+);
+
+CREATE SEQUENCE ai_agent_tool_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_AGENT_TOOL (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_agent_tool_sequence'),
+  agent_config_id BIGINT NOT NULL,
+  tool_id BIGINT NOT NULL,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_agent_tool_agent FOREIGN KEY (agent_config_id) REFERENCES AI_AGENT_CONFIG(id),
+  CONSTRAINT fk_agent_tool_tool FOREIGN KEY (tool_id) REFERENCES AI_TOOL(id)
+);
+
+CREATE SEQUENCE ai_chat_session_sequence START WITH 1 INCREMENT BY 1;
+CREATE TABLE AI_CHAT_SESSION (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ai_chat_session_sequence'),
+  tenant_id BIGINT NOT NULL,
+  user_id BIGINT NOT NULL,
+  agent_config_id BIGINT NOT NULL,
+  chat_memory_config_id BIGINT,
+  status VARCHAR(50) NOT NULL,
+  started_at TIMESTAMP WITH TIME ZONE,
+  ended_at TIMESTAMP WITH TIME ZONE,
+  version INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_ai_session_agent_config FOREIGN KEY (agent_config_id) REFERENCES AI_AGENT_CONFIG(id),
+  CONSTRAINT fk_ai_session_memory_config FOREIGN KEY (chat_memory_config_id) REFERENCES AI_CHAT_MEMORY_CONFIG(id)
+);

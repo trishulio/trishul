@@ -1,0 +1,25 @@
+package io.trishul.ai.service.autoconfiguration;
+
+import io.trishul.ai.service.speech.websocket.ChatWebSocketHandler;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+@Configuration
+@EnableWebSocket
+public class WebSocketAutoConfiguration implements WebSocketConfigurer {
+
+  @Bean
+  @ConditionalOnMissingBean(ChatWebSocketHandler.class)
+  public ChatWebSocketHandler chatWebSocketHandler() {
+    return new ChatWebSocketHandler();
+  }
+
+  @Override
+  public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(chatWebSocketHandler(), "/api/v1/ai/chat/stream").setAllowedOrigins("*");
+  }
+}
