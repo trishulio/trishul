@@ -29,8 +29,5 @@ public interface IaasObjectStoreFileMapper extends
   IaasObjectStoreFile fromUpdateDto(UpdateIaasObjectStoreFileDto dto);
 
   @Override
-  @Mapping(target = "fileKey", source = IaasObjectStoreFile.ATTR_FILE_KEY)
-  @Mapping(target = "fileUrl", source = IaasObjectStoreFile.ATTR_FILE_URL)
-  @Mapping(target = "expiration", source = IaasObjectStoreFile.ATTR_EXPIRATION)
   IaasObjectStoreFileDto toDto(IaasObjectStoreFile e);
 }
