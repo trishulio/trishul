@@ -67,6 +67,13 @@
         <module>modules/trishul-object-store-service-aws</module>
         <module>modules/trishul-ai</module>
         <module>modules/trishul-ai-service</module>
+        <module>modules/trishul-integration</module>
+        <module>modules/trishul-integration-service</module>
+        <module>modules/trishul-communication</module>
+        <module>modules/trishul-communication-service</module>
+        <module>modules/trishul-communication-twilio</module>
+        <module>modules/trishul-integration-communication</module>
+        <module>modules/trishul-integration-communication-service</module>
     </modules>
 
     <properties>
@@ -99,6 +106,7 @@
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
         <dev.langchain4j.version>0.36.2</dev.langchain4j.version>
         <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
+        <com.twilio.sdk.version>12.1.1</com.twilio.sdk.version>
         <argLine></argLine>
     </properties>
 
@@ -485,6 +493,54 @@
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-ai-service</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-integration-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-communication</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-communication-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-communication-twilio</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-integration-communication</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-integration-communication-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.twilio.sdk</groupId>
+                <artifactId>twilio</artifactId>
+                <version>${com.twilio.sdk.version}</version>
             </dependency>
 
             <!-- AI Dependencies -->
