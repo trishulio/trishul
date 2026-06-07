@@ -1,6 +1,7 @@
 package io.trishul.ai.service.autoconfiguration;
 
 import io.trishul.ai.service.speech.websocket.ChatWebSocketHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,9 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketAutoConfiguration implements WebSocketConfigurer {
 
+  @Value("${ai.websocket.allowed-origins:*}")
+  private String[] allowedOrigins;
+
   @Bean
   @ConditionalOnMissingBean(ChatWebSocketHandler.class)
   public ChatWebSocketHandler chatWebSocketHandler() {
@@ -20,6 +24,7 @@ public class WebSocketAutoConfiguration implements WebSocketConfigurer {
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-    registry.addHandler(chatWebSocketHandler(), "/api/v1/ai/chat/stream").setAllowedOrigins("*");
+    registry.addHandler(chatWebSocketHandler(), "/api/v1/ai/chat/stream")
+        .setAllowedOrigins(allowedOrigins);
   }
 }

@@ -15,6 +15,7 @@ import io.trishul.ai.service.agent.model.service.AiAgentConfigService;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.service.LockService;
 
+import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 
@@ -31,7 +32,8 @@ class AiAgentConfigAutoConfigurationTest {
   void testAgentFactory_ReturnsNonNull() {
     TenantChatMemoryStore mockMemoryStore = mock(TenantChatMemoryStore.class);
     AiToolRegistry mockToolRegistry = mock(AiToolRegistry.class);
-    AgentFactory result = config.agentFactory(mockMemoryStore, mockToolRegistry);
+    StreamingChatModelFactory mockModelFactory = mock(StreamingChatModelFactory.class);
+    AgentFactory result = config.agentFactory(mockMemoryStore, mockToolRegistry, mockModelFactory);
     assertNotNull(result);
   }
 

@@ -12,8 +12,10 @@ import java.util.Set;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class AiChatSessionService extends BaseService implements
@@ -32,6 +34,19 @@ public class AiChatSessionService extends BaseService implements
   @Override
   public AiChatSession get(Long id) {
     return this.repoService.get(id);
+  }
+
+  public AiChatSession getBySessionKey(String sessionKey) {
+    final Specification<AiChatSession> spec = WhereClauseBuilder.builder()
+        .is(BaseAiChatSession.ATTR_SESSION_KEY, sessionKey).build();
+
+    final List<AiChatSession> sessions = this.repoService.getAll(spec);
+
+    if (sessions.isEmpty()) {
+      throw new EntityNotFoundException("Session not found for key: " + sessionKey);
+    }
+
+    return sessions.get(0);
   }
 
   @Override

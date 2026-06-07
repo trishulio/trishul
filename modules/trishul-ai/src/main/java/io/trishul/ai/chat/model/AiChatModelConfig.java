@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.trishul.base.types.base.pojo.Audited;
 import io.trishul.base.types.base.pojo.CrudEntity;
 import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.repo.jpa.converter.StringCryptoConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +43,7 @@ public class AiChatModelConfig extends BaseEntity implements CrudEntity<Long, Ai
   private String streamingModelName;
 
   @Column(name = "api_key")
+  @Convert(converter = StringCryptoConverter.class)
   private String apiKey;
 
   @Column(name = "temperature")

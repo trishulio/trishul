@@ -10,50 +10,29 @@ import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 
-/**
- * AgentFactory builds the final AiServices instance based on the provided AiAgentConfig. It ties
- * together the Model, Memory, Skills, Tools, and Guardrails.
- */
 public class AgentFactory {
 
   private final TenantChatMemoryStore memoryStore;
   private final AiToolRegistry toolRegistry;
+  private final StreamingChatModelFactory modelFactory;
 
-  public AgentFactory(TenantChatMemoryStore memoryStore, AiToolRegistry toolRegistry) {
+  public AgentFactory(TenantChatMemoryStore memoryStore, AiToolRegistry toolRegistry,
+      StreamingChatModelFactory modelFactory) {
     this.memoryStore = memoryStore;
     this.toolRegistry = toolRegistry;
+    this.modelFactory = modelFactory;
   }
 
   public Object buildAgent(AiAgentConfig config) {
-    // In actual implementation, returns something like:
-    // AiServices.builder(MyAgentInterface.class)
-    // .chatLanguageModel(buildModel(config.getChatModelConfig()))
-    // .chatMemory(buildMemory(config.getChatMemoryConfig()))
-    // .tools(toolRegistry.getToolsByIds(config.getToolIds()))
-    // ...
-    // .build();
-    
-    // For now, return the chat language model since AiChatController uses it directly
     return buildModel(config != null ? config.getChatModelConfig() : null);
   }
 
   public StreamingChatLanguageModel buildModel(AiChatModelConfig modelConfig) {
     if (modelConfig == null) {
-      return OpenAiStreamingChatModel.builder()
-          .apiKey("demo")
-          .modelName("gpt-4o-mini")
-          .build();
+      throw new IllegalArgumentException("AiChatModelConfig must not be null");
     }
-    
-    if ("openai".equalsIgnoreCase(modelConfig.getProvider())) {
-      return OpenAiStreamingChatModel.builder()
-          .apiKey(modelConfig.getApiKey() != null ? modelConfig.getApiKey() : "demo")
-          .modelName(modelConfig.getStreamingModelName() != null ? modelConfig.getStreamingModelName() : modelConfig.getModelName())
-          .temperature(modelConfig.getTemperature())
-          .topP(modelConfig.getTopP())
-          .build();
-    }
-    throw new IllegalArgumentException("Unsupported provider: " + modelConfig.getProvider());
+    AiProvider provider = AiProvider.fromString(modelConfig.getProvider());
+    return modelFactory.getModel(provider, modelConfig);
   }
 
   public ChatMemory buildMemory(AiChatMemoryConfig memoryConfig, Object memoryId) {
@@ -61,7 +40,7 @@ public class AgentFactory {
     if (memoryConfig != null && memoryConfig.getMaxMessages() != null) {
       maxMessages = memoryConfig.getMaxMessages();
     }
-    
+
     return MessageWindowChatMemory.builder()
         .id(memoryId)
         .maxMessages(maxMessages)

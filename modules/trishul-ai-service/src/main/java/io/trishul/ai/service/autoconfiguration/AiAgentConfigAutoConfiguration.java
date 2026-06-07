@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 
 import io.trishul.ai.service.agent.cache.AgentCache;
 import io.trishul.ai.service.agent.factory.AgentFactory;
-
+import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 
@@ -34,9 +34,16 @@ import io.trishul.ai.service.tool.registry.AiToolRegistry;
 public class AiAgentConfigAutoConfiguration {
 
   @Bean
+  @ConditionalOnMissingBean(StreamingChatModelFactory.class)
+  public StreamingChatModelFactory streamingChatModelFactory() {
+    return new StreamingChatModelFactory();
+  }
+
+  @Bean
   @ConditionalOnMissingBean(AgentFactory.class)
-  public AgentFactory agentFactory(TenantChatMemoryStore memoryStore, AiToolRegistry toolRegistry) {
-    return new AgentFactory(memoryStore, toolRegistry);
+  public AgentFactory agentFactory(TenantChatMemoryStore memoryStore, AiToolRegistry toolRegistry,
+      StreamingChatModelFactory modelFactory) {
+    return new AgentFactory(memoryStore, toolRegistry, modelFactory);
   }
 
   @Bean

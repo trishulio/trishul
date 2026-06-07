@@ -15,13 +15,23 @@ import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.repo.jpa.converter.StringCryptoConverter;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AiChatModelConfigAutoConfiguration {
+
+  @Bean
+  @ConditionalOnMissingBean(StringCryptoConverter.class)
+  public StringCryptoConverter stringCryptoConverter(
+      @Value("${db.encryption.algorithm}") String algorithm,
+      @Value("${db.encryption.key}") String encryptionKey) {
+    return new StringCryptoConverter(algorithm, encryptionKey);
+  }
 
   @Bean
   @ConditionalOnMissingBean(AiChatModelConfigService.class)
