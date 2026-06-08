@@ -9,6 +9,7 @@ import io.trishul.ai.service.guardrail.model.controller.AiGuardrailController;
 import io.trishul.ai.service.guardrail.model.repository.AiGuardrailRepository;
 import io.trishul.ai.service.guardrail.model.service.AiGuardrailService;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -47,8 +48,9 @@ public class AiGuardrailAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiGuardrailController.class)
-  public AiGuardrailController aiGuardrailController(AiGuardrailService service) {
-    return new AiGuardrailController(service);
+  public AiGuardrailController aiGuardrailController(AiGuardrailService service,
+      AttributeFilter filter) {
+    return new AiGuardrailController(service, filter);
   }
 
   @Bean

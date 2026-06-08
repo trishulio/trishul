@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import org.json.JSONException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +39,7 @@ class TenantTest {
     assertNull(tenant.getId());
     tenant.setId();
 
-    // assertNotNull(tenant.getId()); // TODO: Reenable it. failure during
-    // compilations
+    assertNotNull(tenant.getId());
   }
 
   @Test
@@ -94,5 +94,10 @@ class TenantTest {
     final String json
         = "{\"id\":\"89efec46-fd0b-4fec-bcde-7f4bcef4f8e9\",\"name\":\"TENANT_1\",\"url\":\"http://localhost\",\"createdAt\":\"2000-01-01T00:00:00\",\"lastUpdated\":\"2001-01-01T00:00:00\", \"version\": null, \"isReady\": true}";
     JSONAssert.assertEquals(json, tenant.toString(), JSONCompareMode.NON_EXTENSIBLE);
+  }
+
+  @Test
+  void testSetVersion_ReturnsThis() {
+    assertSame(tenant, tenant.setVersion(1));
   }
 }

@@ -28,6 +28,7 @@ import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
 
+
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
@@ -71,7 +72,7 @@ public class TenantPersistenceAutoConfiguration {
         ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "io.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
-    jpaProperties.put(JdbcSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+    jpaProperties.put(JdbcSettings.DIALECT, "PostgreSQLDialect");
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER,
         multiTenantConnectionProvider);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,

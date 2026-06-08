@@ -30,8 +30,10 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.model.IaasRole;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 class AwsIamRolePolicyAttachmentClientTest {
   private AwsIamRolePolicyAttachmentClient client;
@@ -73,6 +75,23 @@ class AwsIamRolePolicyAttachmentClientTest {
 
     RuntimeException exception = assertThrows(RuntimeException.class,
         () -> client.get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
+  }
+
+  @Test
+  void testGet_ThrowsRuntimeException_WhenCacheThrowsExecutionException() {
+    doAnswer(inv -> {
+      throw new Exception("CHECKED_EXCEPTION");
+    }).when(mAwsClient)
+        .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1"));
+
+    RuntimeException exception = assertThrows(RuntimeException.class,
+        () -> client.get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
+
+    assertEquals(
+        "Failed to fetch all the attachedPolicies because java.lang.Exception: CHECKED_EXCEPTION",
+        exception.getMessage());
+    assertTrue(exception.getCause() instanceof ExecutionException);
+    assertEquals("CHECKED_EXCEPTION", exception.getCause().getCause().getMessage());
   }
 
   @Test

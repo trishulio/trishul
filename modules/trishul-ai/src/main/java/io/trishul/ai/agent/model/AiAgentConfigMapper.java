@@ -10,11 +10,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { AiChatModelConfigMapper.class, AiChatMemoryConfigMapper.class,
-    AiGuardrailMapper.class, AiSkillMapper.class, AiToolMapper.class })
+@Mapper(uses = {AiChatModelConfigMapper.class, AiChatMemoryConfigMapper.class,
+    AiGuardrailMapper.class, AiSkillMapper.class, AiToolMapper.class})
 public interface AiAgentConfigMapper extends
     BaseMapper<AiAgentConfig, AiAgentConfigDto, AddAiAgentConfigDto, UpdateAiAgentConfigDto> {
   AiAgentConfigMapper INSTANCE = Mappers.getMapper(AiAgentConfigMapper.class);
+
+  @Mapping(target = AiAgentConfig.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_VERSION, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_NAME, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_DESCRIPTION, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_IS_ACTIVE, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_CHAT_MODEL_CONFIG, ignore = true)
+  @Mapping(target = AiAgentConfig.ATTR_CHAT_MEMORY_CONFIG, ignore = true)
+  AiAgentConfig fromDto(Long id);
 
   @Override
   @Mapping(target = AiAgentConfig.ATTR_ID, ignore = true)
@@ -42,9 +52,8 @@ public interface AiAgentConfigMapper extends
   AiAgentConfig fromUpdateDto(UpdateAiAgentConfigDto updateDto);
 
   @Override
-  @Mapping(target = "guardrails", ignore = true) // Handled by service if needed, or explicitly
-                                                 // populated
-  @Mapping(target = "skills", ignore = true)
-  @Mapping(target = "tools", ignore = true)
+  @Mapping(target = AiAgentConfigDto.ATTR_GUARDRAILS, ignore = true)
+  @Mapping(target = AiAgentConfigDto.ATTR_SKILLS, ignore = true)
+  @Mapping(target = AiAgentConfigDto.ATTR_TOOLS, ignore = true)
   AiAgentConfigDto toDto(AiAgentConfig entity);
 }

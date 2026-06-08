@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, UpdateUserDto> {
   UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-  @Mapping(target = "roleBindings", ignore = true)
+  @Mapping(target = User.ATTR_ROLE_BINDINGS, ignore = true)
   @Mapping(target = User.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = User.ATTR_CREATED_AT, ignore = true)
   @Mapping(target = User.ATTR_VERSION, ignore = true)
@@ -26,11 +26,11 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = User.ATTR_ROLES, ignore = true)
   @Mapping(target = User.ATTR_IMAGE_SRC, ignore = true)
   @Mapping(target = User.ATTR_PHONE_NUMBER, ignore = true)
-  @Mapping(target = "iaasUsername", ignore = true)
+  @Mapping(target = User.ATTR_IAAS_USERNAME, ignore = true)
   User fromDto(Long id);
 
   @Override
-  @Mapping(target = "roleBindings", ignore = true)
+  @Mapping(target = User.ATTR_ROLE_BINDINGS, ignore = true)
   @Mapping(target = User.ATTR_ID, ignore = true)
   @Mapping(target = User.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = User.ATTR_CREATED_AT, ignore = true)
@@ -38,20 +38,20 @@ public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, Update
   @Mapping(target = User.ATTR_STATUS, source = "statusId")
   @Mapping(target = User.ATTR_SALUTATION, source = "salutationId")
   @Mapping(target = User.ATTR_ROLES, source = "roleIds")
-  @Mapping(target = "iaasUsername", ignore = true)
+  @Mapping(target = User.ATTR_IAAS_USERNAME, ignore = true)
   User fromAddDto(AddUserDto addUserDto);
 
   @Override
-  @Mapping(target = "roleBindings", ignore = true)
+  @Mapping(target = User.ATTR_ROLE_BINDINGS, ignore = true)
   @Mapping(target = User.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = User.ATTR_CREATED_AT, ignore = true)
   @Mapping(target = User.ATTR_STATUS, source = "statusId")
   @Mapping(target = User.ATTR_SALUTATION, source = "salutationId")
   @Mapping(target = User.ATTR_ROLES, source = "roleIds")
-  @Mapping(target = "iaasUsername", ignore = true)
+  @Mapping(target = User.ATTR_IAAS_USERNAME, ignore = true)
   User fromUpdateDto(UpdateUserDto updateUserDto);
 
   @Override
-  @Mapping(target = "objectStoreFile", ignore = true)
+  @Mapping(target = UserDto.ATTR_OBJECT_STORE_FILE, ignore = true)
   UserDto toDto(User user);
 }

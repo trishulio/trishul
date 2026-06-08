@@ -11,11 +11,14 @@ import io.trishul.ai.service.guardrail.model.service.AiGuardrailService;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,20 +41,43 @@ public class AiGuardrailController extends BaseController {
 
   private final AiGuardrailService service;
 
+  protected AiGuardrailController(
+      CrudControllerService<Long, AiGuardrail, BaseAiGuardrail<?>, UpdateAiGuardrail<?>, AiGuardrailDto, AddAiGuardrailDto, UpdateAiGuardrailDto> controller,
+      AiGuardrailService service) {
+    this.controller = controller;
+    this.service = service;
+  }
+
   @Autowired
   public AiGuardrailController(AiGuardrailService service, AttributeFilter filter) {
-    this.service = service;
-    this.controller = new CrudControllerService<>(filter, AiGuardrailMapper.INSTANCE, service,
-        "AiGuardrail");
+    this(new CrudControllerService<>(filter, AiGuardrailMapper.INSTANCE, service, "AiGuardrail"),
+        service);
+  }
+
+  @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<AiGuardrailDto> getAll(@RequestParam(name = "ids", required = false) Set<Long> ids,
+      @RequestParam(name = "names", required = false) Set<String> names,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_ATTR,
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    Page<AiGuardrail> entityPage
+        = service.getGuardrails(ids, names, page, size, sort, orderAscending);
+    return this.controller.getAll(entityPage, attributes);
   }
 
   @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public AiGuardrailDto get(@PathVariable("id") Long id,
-      @RequestParam(name = PROPNAME_ATTR,
-          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+  public AiGuardrailDto get(@PathVariable("id") Long id, @RequestParam(name = PROPNAME_ATTR,
+      defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
     return this.controller.get(id, attributes);
   }
+
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
@@ -77,7 +103,8 @@ public class AiGuardrailController extends BaseController {
   @PatchMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public List<AiGuardrailDto> patch(@Valid @NotNull @RequestBody List<UpdateAiGuardrailDto> updateDtos) {
+  public List<AiGuardrailDto> patch(
+      @Valid @NotNull @RequestBody List<UpdateAiGuardrailDto> updateDtos) {
     return this.controller.patch(updateDtos);
   }
 }

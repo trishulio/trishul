@@ -84,6 +84,8 @@ class TenantSchemaRegisterTest {
     doReturn(true).when(register)
         .exists(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
+    register.put(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+
     verify(register, times(0)).add(any());
   }
 

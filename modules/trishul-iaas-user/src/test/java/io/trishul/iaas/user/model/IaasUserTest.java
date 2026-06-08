@@ -73,4 +73,17 @@ class IaasUserTest {
     iaasUser.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), iaasUser.getCreatedAt());
   }
+
+  @Test
+  void testIdOnlyConstructor() {
+    iaasUser = new IaasUser("test@email.com");
+    assertEquals("test@email.com", iaasUser.getId());
+    assertEquals("test@email.com", iaasUser.getEmail());
+  }
+
+  @Test
+  void testSetVersion() {
+    iaasUser.setVersion(1);
+    assertNull(iaasUser.getVersion());
+  }
 }

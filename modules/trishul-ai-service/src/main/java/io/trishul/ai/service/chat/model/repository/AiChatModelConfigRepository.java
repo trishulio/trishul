@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import io.trishul.repo.jpa.repository.ExtendedRepository;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 @Repository
 public interface AiChatModelConfigRepository extends JpaRepository<AiChatModelConfig, Long>,
-    org.springframework.data.jpa.repository.JpaSpecificationExecutor<AiChatModelConfig>,
-    ExtendedRepository<Long> {
+    JpaSpecificationExecutor<AiChatModelConfig>, ExtendedRepository<Long> {
 }

@@ -13,6 +13,7 @@ import io.trishul.ai.session.model.AiChatSessionRefresher;
 import io.trishul.ai.session.model.BaseAiChatSession;
 import io.trishul.ai.session.model.UpdateAiChatSession;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -44,8 +45,9 @@ public class AiChatSessionAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiChatSessionController.class)
-  public AiChatSessionController aiChatSessionController(AiChatSessionService service) {
-    return new AiChatSessionController(service);
+  public AiChatSessionController aiChatSessionController(AiChatSessionService service,
+      AttributeFilter filter) {
+    return new AiChatSessionController(service, filter);
   }
 
   @Bean

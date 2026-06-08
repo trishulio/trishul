@@ -55,4 +55,25 @@ class IaasUserTenantMembershipTest {
 
     assertEquals("T1", membership.getTenantId());
   }
+
+  @Test
+  void testSetId_Null() {
+    membership.setId(null);
+    assertNull(membership.getId());
+  }
+
+  @Test
+  void testSetId_ReusesExistingUser() {
+    IaasUser user = new IaasUser("EXISTING");
+    membership.setUser(user);
+    membership.setId(new IaasUserTenantMembershipId("NEW_USER", "NEW_TENANT"));
+    assertEquals("EXISTING", membership.getUser().getEmail());
+    assertEquals("NEW_TENANT", membership.getTenantId());
+  }
+
+  @Test
+  void testSetVersion() {
+    membership.setVersion(1);
+    assertNull(membership.getVersion());
+  }
 }

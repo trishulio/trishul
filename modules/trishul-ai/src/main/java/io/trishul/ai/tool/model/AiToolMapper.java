@@ -9,7 +9,17 @@ import org.mapstruct.factory.Mappers;
 public interface AiToolMapper extends BaseMapper<AiTool, AiToolDto, AddAiToolDto, UpdateAiToolDto> {
   AiToolMapper INSTANCE = Mappers.getMapper(AiToolMapper.class);
 
+  @Mapping(target = AiTool.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = AiTool.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = AiTool.ATTR_VERSION, ignore = true)
+  @Mapping(target = AiTool.ATTR_NAME, ignore = true)
+  @Mapping(target = AiTool.ATTR_BEAN_NAME, ignore = true)
+  @Mapping(target = AiTool.ATTR_DESCRIPTION, ignore = true)
+  @Mapping(target = AiTool.ATTR_IS_ENABLED, ignore = true)
+  AiTool fromDto(Long id);
+
   @Override
+
   @Mapping(target = AiTool.ATTR_ID, ignore = true)
   @Mapping(target = AiTool.ATTR_LAST_UPDATED, ignore = true)
   @Mapping(target = AiTool.ATTR_CREATED_AT, ignore = true)

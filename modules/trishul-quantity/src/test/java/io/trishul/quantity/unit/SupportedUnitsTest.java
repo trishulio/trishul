@@ -7,6 +7,8 @@ import javax.measure.quantity.Volume;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class SupportedUnitsTest {
   @Test
   void validateSupportedUnitSymbols() {
@@ -31,5 +33,11 @@ class SupportedUnitsTest {
     Quantity<Mass> quantity = Quantities.getQuantity(1, SupportedUnits.KILOGRAM);
     assertEquals(1000000.0, quantity.to(SupportedUnits.MILLIGRAM).getValue());
     assertEquals(1000.0, quantity.to(SupportedUnits.GRAM).getValue());
+  }
+
+  @Test
+  void testConstructor() {
+    SupportedUnits supportedUnits = new SupportedUnits();
+    assertNotNull(supportedUnits);
   }
 }

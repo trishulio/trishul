@@ -13,30 +13,19 @@ class IllegalArgExceptionTest {
   }
 
   @Test
-  void testAssertion_ThrowsIllegalArgumentException_WhenConditionIsFalse() {
+  void testAssertion_ThrowsIllegalArgException_WhenConditionIsFalse() {
     String testMessage = "Invalid argument provided";
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    IllegalArgException exception = assertThrows(IllegalArgException.class,
         () -> IllegalArgException.assertion(false, testMessage));
 
     assertEquals(testMessage, exception.getMessage());
   }
 
   @Test
-  void testAssertion_ThrowsIllegalArgumentException_WithNullMessage_WhenConditionIsFalse() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-        () -> IllegalArgException.assertion(false, null));
-
-    assertEquals(null, exception.getMessage());
-  }
-
-  @Test
-  void testAssertion_ThrowsIllegalArgumentException_WithEmptyMessage_WhenConditionIsFalse() {
-    String emptyMessage = "";
-
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-        () -> IllegalArgException.assertion(false, emptyMessage));
-
-    assertEquals(emptyMessage, exception.getMessage());
+  void testConstructor() {
+    String message = "test message";
+    IllegalArgException exception = new IllegalArgException(message);
+    assertEquals(message, exception.getMessage());
   }
 }

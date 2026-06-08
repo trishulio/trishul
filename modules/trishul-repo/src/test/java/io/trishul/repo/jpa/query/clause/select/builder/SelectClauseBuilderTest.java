@@ -18,6 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class SelectClauseBuilderTest {
   private SelectClauseBuilder selector;
   private ColumnSpecAccumulator mAccumulator;
@@ -90,5 +92,11 @@ class SelectClauseBuilderTest {
     doReturn(mExprs).when(mAccumulator).getColumns(mRoot, mCq, mCb);
 
     assertEquals(mExprs, selector.getSelectClause(mRoot, mCq, mCb));
+  }
+
+  @Test
+  void testDefaultConstructor() {
+    SelectClauseBuilder builder = new SelectClauseBuilder();
+    assertNotNull(builder);
   }
 }

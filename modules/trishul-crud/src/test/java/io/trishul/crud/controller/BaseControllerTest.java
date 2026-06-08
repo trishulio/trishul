@@ -48,6 +48,11 @@ class BaseControllerTest {
   void testDefaultConstructor_CreatesController() {
     TestableBaseController defaultController = new TestableBaseController();
     assertNotNull(defaultController);
+
+    TestDto dto = new TestDto();
+    dto.setValue("value");
+    defaultController.filter(dto, Set.of("value"));
+    assertEquals("value", dto.getValue());
   }
 
   @Test

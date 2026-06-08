@@ -165,4 +165,18 @@ class CollectionAccessorRefresherTest {
         "Cannot find all Entitys in Id-Set: [1, 2, 3]. Only found the ones with Ids: [3, 1]",
         exception.getMessage());
   }
+
+  @Test
+  void testRefreshAccessors_IgnoresEntitiesWithNullId() {
+    List<Entity> repoEntities = List.of(new Entity(1L));
+    doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L));
+
+    List<EntityConsumer> consumers
+        = List.of(new EntityConsumer(List.of(new Entity(1L), new Entity(null))));
+
+    refresher.refreshAccessors(consumers);
+
+    assertEquals(1, consumers.get(0).getEntityList().size());
+    assertSame(repoEntities.get(0), consumers.get(0).getEntityList().get(0));
+  }
 }

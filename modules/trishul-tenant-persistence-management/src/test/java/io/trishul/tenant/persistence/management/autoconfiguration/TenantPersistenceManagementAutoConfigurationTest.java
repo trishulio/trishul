@@ -9,9 +9,18 @@ import io.trishul.tenant.persistence.management.migration.register.FlywayTenantM
 import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
 import io.trishul.tenant.persistence.management.migration.register.UnifiedTenantRegister;
+import io.trishul.tenant.entity.TenantData;
 import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
+import io.trishul.tenant.entity.AdminTenant;
+import static java.util.UUID.fromString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 class TenantPersistenceManagementAutoConfigurationTest {
   private TenantPersistenceManagementAutoConfiguration config;
@@ -44,4 +53,20 @@ class TenantPersistenceManagementAutoConfigurationTest {
     MigrationRegister register = config.migrationRegister(null, null);
     assertTrue(register instanceof FlywayTenantMigrationRegister);
   }
+
+  @Test
+  void testAdminTenant_ReturnsAdminTenantWithSpecifiedDetails() {
+    TenantData tenant = config.adminTenant("00000000-0000-0000-0000-000000000001", "Admin Tenant");
+    assertTrue(tenant instanceof AdminTenant);
+    assertEquals(fromString("00000000-0000-0000-0000-000000000001"), tenant.getId());
+    assertEquals("Admin Tenant", tenant.getName());
+  }
+
+  @Test
+  void testDataSourceQueryRunner_ReturnsDataSourceQueryRunner() {
+    DataSourceManager dsManager = mock(DataSourceManager.class);
+    DataSourceQueryRunner runner = config.dataSourceQueryRunner(dsManager);
+    assertNotNull(runner);
+  }
 }
+

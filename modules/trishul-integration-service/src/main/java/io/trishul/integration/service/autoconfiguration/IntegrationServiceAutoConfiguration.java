@@ -14,17 +14,21 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.trishul.crud.service.LockService;
+import io.trishul.integration.model.IntegrationRefresher;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import static java.util.Set.of;
+
 @Configuration
 public class IntegrationServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IntegrationService.class)
-  public IntegrationService integrationService(io.trishul.crud.service.LockService lockService,
-      IntegrationRepository integrationRepository,
-      io.trishul.integration.model.IntegrationRefresher integrationRefresher) {
+  public IntegrationService integrationService(LockService lockService,
+      IntegrationRepository integrationRepository, IntegrationRefresher integrationRefresher) {
     EntityMergerService<Long, Integration, BaseIntegration<?>, UpdateIntegration<?>> entityMergerService
         = new CrudEntityMergerService<>(lockService, BaseIntegration.class, UpdateIntegration.class,
-            Integration.class, java.util.Set.of());
+            Integration.class, of());
     RepoService<Long, Integration, IntegrationAccessor<?>> repoService
         = new CrudRepoService<>(integrationRepository, integrationRefresher);
 
@@ -32,17 +36,16 @@ public class IntegrationServiceAutoConfiguration {
   }
 
   @Bean
-  public io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<Long, IntegrationAccessor<?>, Integration> integrationAccessorRefresher(
+  public AccessorRefresher<Long, IntegrationAccessor<?>, Integration> integrationAccessorRefresher(
       IntegrationRepository repo) {
-    return new io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<>(Integration.class,
-        IntegrationAccessor::getIntegration,
+    return new AccessorRefresher<>(Integration.class, IntegrationAccessor::getIntegration,
         (accessor, integration) -> accessor.setIntegration(integration),
         ids -> repo.findAllById(ids));
   }
 
   @Bean
-  public io.trishul.integration.model.IntegrationRefresher integrationRefresher(
-      io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<Long, IntegrationAccessor<?>, Integration> integrationAccessorRefresher) {
-    return new io.trishul.integration.model.IntegrationRefresher(integrationAccessorRefresher);
+  public IntegrationRefresher integrationRefresher(
+      AccessorRefresher<Long, IntegrationAccessor<?>, Integration> integrationAccessorRefresher) {
+    return new IntegrationRefresher(integrationAccessorRefresher);
   }
 }

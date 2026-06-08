@@ -18,16 +18,8 @@ public class IncompatibleQuantityUnitException extends IllegalArgumentException 
 
   public static void validateUnit(BaseQuantityUnitAccessor<?> unitAccessor, Quantity<?> quantity) {
     if (!QuantityCalculator.INSTANCE.isCompatibleQtyForUnitAccessor(quantity, unitAccessor)) {
-      Unit<?> qtyUnit = null;
-      Unit<?> accessorUnit = null;
-
-      if (quantity != null) {
-        qtyUnit = quantity.getUnit();
-      }
-
-      if (unitAccessor != null) {
-        accessorUnit = unitAccessor.getBaseQuantityUnit();
-      }
+      Unit<?> qtyUnit = quantity.getUnit();
+      Unit<?> accessorUnit = unitAccessor.getBaseQuantityUnit();
 
       String error = String.format("Quantity Unit: %s is not compatible with accessor unit: %s",
           qtyUnit, accessorUnit);
@@ -38,14 +30,8 @@ public class IncompatibleQuantityUnitException extends IllegalArgumentException 
 
   public static void validateCompatibleQuantities(Quantity<?> quantity1, Quantity<?> quantity2) {
     if (!QuantityCalculator.INSTANCE.areCompatibleQuantities(quantity1, quantity2)) {
-      Unit<?> unit1 = null;
-      Unit<?> unit2 = null;
-      if (quantity1 != null) {
-        unit1 = quantity1.getUnit();
-      }
-      if (quantity2 != null) {
-        unit2 = quantity2.getUnit();
-      }
+      Unit<?> unit1 = quantity1.getUnit();
+      Unit<?> unit2 = quantity2.getUnit();
 
       String error
           = String.format("Quantity with units %s and %s are not compatible", unit1, unit2);

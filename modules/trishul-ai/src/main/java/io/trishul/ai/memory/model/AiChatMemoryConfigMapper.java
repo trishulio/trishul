@@ -10,6 +10,17 @@ public interface AiChatMemoryConfigMapper extends
     BaseMapper<AiChatMemoryConfig, AiChatMemoryConfigDto, AddAiChatMemoryConfigDto, UpdateAiChatMemoryConfigDto> {
   AiChatMemoryConfigMapper INSTANCE = Mappers.getMapper(AiChatMemoryConfigMapper.class);
 
+  @Mapping(target = AiChatMemoryConfig.ATTR_LAST_UPDATED, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_CREATED_AT, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_VERSION, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_NAME, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_STRATEGY, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_MAX_MESSAGES, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_MAX_TOKENS, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_TTL_MINUTES, ignore = true)
+  @Mapping(target = AiChatMemoryConfig.ATTR_IS_DEFAULT, ignore = true)
+  AiChatMemoryConfig fromDto(Long id);
+
   @Override
   @Mapping(target = AiChatMemoryConfig.ATTR_ID, ignore = true)
   @Mapping(target = AiChatMemoryConfig.ATTR_LAST_UPDATED, ignore = true)

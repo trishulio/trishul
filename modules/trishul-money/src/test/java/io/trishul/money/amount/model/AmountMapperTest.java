@@ -54,4 +54,26 @@ class AmountMapperTest {
 
     assertEquals(expected, amount);
   }
+
+  @Test
+  void testToDto_ReturnsDtoWithNullTaxAmount_WhenArgHasNullTaxAmount() {
+    Amount amount = new Amount(Money.parse("CAD 100"), null);
+
+    AmountDto dto = mapper.toDto(amount);
+
+    AmountDto expected = new AmountDto(null, new MoneyDto("CAD", new BigDecimal("100.00")), null);
+    assertEquals(expected, dto);
+  }
+
+  @Test
+  void testFromDto_ReturnsPojoWithNullTaxAmount_WhenArgHasNullTaxAmount() {
+    AmountDto dto = new AmountDto(new MoneyDto("CAD", new BigDecimal("100.00")),
+        new MoneyDto("CAD", new BigDecimal("100.00")), null);
+
+    Amount amount = mapper.fromDto(dto);
+
+    Amount expected = new Amount(Money.parse("CAD 100"), null);
+
+    assertEquals(expected, amount);
+  }
 }

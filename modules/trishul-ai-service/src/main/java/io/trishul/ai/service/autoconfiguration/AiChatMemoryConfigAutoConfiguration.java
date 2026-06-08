@@ -15,6 +15,7 @@ import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -49,8 +50,8 @@ public class AiChatMemoryConfigAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(AiChatMemoryConfigController.class)
   public AiChatMemoryConfigController aiChatMemoryConfigController(
-      AiChatMemoryConfigService service) {
-    return new AiChatMemoryConfigController(service);
+      AiChatMemoryConfigService service, AttributeFilter filter) {
+    return new AiChatMemoryConfigController(service, filter);
   }
 
   @Bean

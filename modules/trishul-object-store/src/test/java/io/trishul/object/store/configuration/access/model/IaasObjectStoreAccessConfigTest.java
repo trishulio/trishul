@@ -49,6 +49,24 @@ class IaasObjectStoreAccessConfigTest {
   }
 
   @Test
+  void testIdConstructor() {
+    iaasObjectStoreAccessConfig = new IaasObjectStoreAccessConfig("BUCKET_1");
+    assertEquals("BUCKET_1", iaasObjectStoreAccessConfig.getId());
+  }
+
+  @Test
+  void testConstructor_NullConfig() {
+    iaasObjectStoreAccessConfig = new IaasObjectStoreAccessConfig("BUCKET_1", null);
+    assertNull(iaasObjectStoreAccessConfig.getPublicAccessBlockConfig());
+  }
+
+  @Test
+  void testSetPublicAccessBlockConfig_Null() {
+    iaasObjectStoreAccessConfig.setPublicAccessBlockConfig(null);
+    assertNull(iaasObjectStoreAccessConfig.getPublicAccessBlockConfig());
+  }
+
+  @Test
   void testGetVersion() {
     assertNull(iaasObjectStoreAccessConfig.getVersion());
   }

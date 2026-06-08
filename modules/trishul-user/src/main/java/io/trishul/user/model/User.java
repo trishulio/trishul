@@ -44,6 +44,8 @@ import jakarta.validation.constraints.Email;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User extends BaseEntity
     implements CrudEntity<Long, User>, UpdateUser<User>, Audited<User> {
+  public static final String ATTR_ROLE_BINDINGS = "roleBindings";
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
   @SequenceGenerator(name = "user_generator", sequenceName = "user_sequence", allocationSize = 1)

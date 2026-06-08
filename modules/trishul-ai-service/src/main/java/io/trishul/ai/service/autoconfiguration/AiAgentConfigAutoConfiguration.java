@@ -18,6 +18,7 @@ import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -69,8 +70,9 @@ public class AiAgentConfigAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiAgentConfigController.class)
-  public AiAgentConfigController aiAgentConfigController(AiAgentConfigService service) {
-    return new AiAgentConfigController(service);
+  public AiAgentConfigController aiAgentConfigController(AiAgentConfigService service,
+      AttributeFilter filter) {
+    return new AiAgentConfigController(service, filter);
   }
 
   @Bean

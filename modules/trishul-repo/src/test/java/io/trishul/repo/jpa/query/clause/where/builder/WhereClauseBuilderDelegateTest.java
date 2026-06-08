@@ -26,6 +26,10 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
+import java.util.HashSet;
+import static org.mockito.Mockito.any;
+
 class WhereClauseBuilderDelegateTest {
   private WhereClauseBuilderDelegate builder;
   private PredicateSpecAccumulator mAccumulator;
@@ -139,5 +143,58 @@ class WhereClauseBuilderDelegateTest {
     Predicate ret = spec.toPredicate(mRoot, mQuery, mCriteriaBuilder);
 
     assertEquals(ret, mCombined);
+  }
+
+  @Test
+  void testNot_CallsSetIsNotOnAccumulator() {
+    builder.not();
+    verify(mAccumulator).setIsNot(true);
+  }
+
+  @Test
+  void testIs_AddsIsSpecAndResetNotFlag_WhenValueIsNotNull() {
+    builder.is(new String[] {"layer-1"}, "VALUE");
+
+    IsSpec<String> expected = new IsSpec<>(new ColumnSpec<>(new String[] {"layer-1"}), "VALUE");
+    verify(mAccumulator).add(captor.capture());
+    assertEquals(expected, captor.getValue());
+
+    verify(mAccumulator).setIsNot(false);
+  }
+
+  @Test
+  void testIs_AddsNothingAndResetNotFlag_WhenValueIsNull() {
+    builder.is(new String[] {"layer-1"}, null);
+    verify(mAccumulator).setIsNot(false);
+    verifyNoMoreInteractions(mAccumulator);
+  }
+
+  @Test
+  void testLike_SkipsNullQueries() {
+    Set<String> queries = new HashSet<>();
+    queries.add(null);
+    queries.add("V1");
+
+    builder.like(new String[] {"layer-1"}, queries);
+
+    verify(mAccumulator).add(captor.capture());
+    assertEquals(new LikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V1"), captor.getValue());
+
+    verify(mAccumulator).setIsNot(false);
+    verifyNoMoreInteractions(mAccumulator);
+  }
+
+  @Test
+  void testBetween_AddsBetweenSpec_WhenStartIsNullButEndIsNotNull() {
+    builder.between(new String[] {"layer-1"}, null, 10);
+    verify(mAccumulator).add(any());
+    verify(mAccumulator).setIsNot(false);
+  }
+
+  @Test
+  void testBetween_AddsBetweenSpec_WhenStartIsNotNullButEndIsNull() {
+    builder.between(new String[] {"layer-1"}, 5, null);
+    verify(mAccumulator).add(any());
+    verify(mAccumulator).setIsNot(false);
   }
 }

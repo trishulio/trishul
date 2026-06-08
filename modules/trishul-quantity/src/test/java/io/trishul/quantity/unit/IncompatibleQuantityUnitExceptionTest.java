@@ -76,4 +76,11 @@ class IncompatibleQuantityUnitExceptionTest {
     IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM,
         Quantities.getQuantity(100, SupportedUnits.GRAM));
   }
+
+  @Test
+  void testValidateExpectedUnit_ThrowsException_WhenQuantityIsNull() {
+    assertThrows(IncompatibleQuantityUnitException.class,
+        () -> IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM, null));
+  }
 }
+

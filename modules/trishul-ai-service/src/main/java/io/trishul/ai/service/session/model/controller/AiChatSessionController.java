@@ -11,11 +11,14 @@ import io.trishul.ai.session.model.UpdateAiChatSessionDto;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,18 +41,45 @@ public class AiChatSessionController extends BaseController {
 
   private final AiChatSessionService service;
 
+  protected AiChatSessionController(
+      CrudControllerService<Long, AiChatSession, BaseAiChatSession<?>, UpdateAiChatSession<?>, AiChatSessionDto, AddAiChatSessionDto, UpdateAiChatSessionDto> controller,
+      AiChatSessionService service) {
+    this.controller = controller;
+    this.service = service;
+  }
+
   @Autowired
   public AiChatSessionController(AiChatSessionService service, AttributeFilter filter) {
-    this.service = service;
-    this.controller = new CrudControllerService<>(filter, AiChatSessionMapper.INSTANCE, service,
-        "AiChatSession");
+    this(
+        new CrudControllerService<>(filter, AiChatSessionMapper.INSTANCE, service, "AiChatSession"),
+        service);
+  }
+
+  @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<AiChatSessionDto> getAll(
+      @RequestParam(name = "ids", required = false) Set<Long> ids,
+      @RequestParam(name = "session_keys", required = false) Set<String> sessionKeys,
+      @RequestParam(name = "titles", required = false) Set<String> titles,
+      @RequestParam(name = "is_active", required = false) Boolean isActive,
+      @RequestParam(name = "agent_config_ids", required = false) Set<Long> agentConfigIds,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_ATTR,
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    Page<AiChatSession> entityPage = service.getChatSessions(ids, sessionKeys, titles, isActive,
+        agentConfigIds, page, size, sort, orderAscending);
+    return this.controller.getAll(entityPage, attributes);
   }
 
   @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public AiChatSessionDto get(@PathVariable("id") Long id,
-      @RequestParam(name = PROPNAME_ATTR,
-          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+  public AiChatSessionDto get(@PathVariable("id") Long id, @RequestParam(name = PROPNAME_ATTR,
+      defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
     return this.controller.get(id, attributes);
   }
 
@@ -62,7 +92,8 @@ public class AiChatSessionController extends BaseController {
   @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(value = HttpStatus.CREATED)
-  public List<AiChatSessionDto> add(@Valid @NotNull @RequestBody List<AddAiChatSessionDto> addDtos) {
+  public List<AiChatSessionDto> add(
+      @Valid @NotNull @RequestBody List<AddAiChatSessionDto> addDtos) {
     return this.controller.add(addDtos);
   }
 

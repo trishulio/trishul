@@ -154,4 +154,20 @@ class WhereClauseBuilderTest {
 
     assertSame(mSpec, spec);
   }
+
+  @Test
+  void testIs_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+    WhereClauseBuilder ret = builder.is("PATH", "VALUE");
+
+    assertSame(builder, ret);
+    verify(mDelegate, times(1)).is(new String[] {"PATH"}, "VALUE");
+  }
+
+  @Test
+  void testIs_ArrayArrayArgs_DelegatesArguments() {
+    WhereClauseBuilder ret = builder.is(new String[] {"PATH"}, "VALUE");
+
+    assertSame(builder, ret);
+    verify(mDelegate, times(1)).is(new String[] {"PATH"}, "VALUE");
+  }
 }

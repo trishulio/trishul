@@ -14,6 +14,11 @@ import io.trishul.dialect.postgres.PostgresJdbcDialect;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 import javax.sql.DataSource;
+import io.trishul.secrets.SecretsManager;
+import io.trishul.tenant.entity.TenantData;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -129,4 +134,35 @@ class DataManagementAutoConfigurationTest {
     TransactionTemplate result = config.transactionTemplate(dataSourceManagerMock);
     assertTrue(result instanceof TransactionTemplate);
   }
+
+  @Test
+  void testAdminDataSourceConfiguration_ReturnsNonNullInstance() {
+    SecretsManager<String, String> secretsManager = Mockito.mock(SecretsManager.class);
+    DataSourceConfigurationManager dsConfigMgr = Mockito.mock(DataSourceConfigurationManager.class);
+    TenantData adminTenant = Mockito.mock(TenantData.class);
+    UUID adminTenantId = UUID.randomUUID();
+    Mockito.when(adminTenant.getId()).thenReturn(adminTenantId);
+    Mockito.when(dsConfigMgr.getFqName("prefix", adminTenantId)).thenReturn("fqName");
+
+    DataSourceConfiguration result
+        = config.adminDataSourceConfiguration("jdbc:postgresql://localhost:5432/db", "db", "prefix",
+            "script:script", 10, true, secretsManager, dsConfigMgr, adminTenant);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testTenantDsConfigProvider_ReturnsNonNullInstance() {
+    DataSourceConfiguration adminConfig = Mockito.mock(DataSourceConfiguration.class);
+    TenantData adminTenant = Mockito.mock(TenantData.class);
+    DataSourceConfigurationManager dsConfigMgr = Mockito.mock(DataSourceConfigurationManager.class);
+    SecretsManager<String, String> secretsManager = Mockito.mock(SecretsManager.class);
+
+    DataSourceConfigurationProvider<UUID> result
+        = config.tenantDsConfigProvider(adminConfig, adminTenant, dsConfigMgr, secretsManager,
+            "jdbc:postgresql://localhost:5432/db", "db", "prefix", "script:script", 10, true);
+
+    assertNotNull(result);
+  }
 }
+

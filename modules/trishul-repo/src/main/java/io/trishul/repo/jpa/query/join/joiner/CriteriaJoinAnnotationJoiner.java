@@ -29,7 +29,7 @@ public final class CriteriaJoinAnnotationJoiner implements JpaJoiner {
         .filter(f -> f.getName().equals(fieldName)).findFirst().orElseThrow();
     CriteriaJoin cj = field.getAnnotation(CriteriaJoin.class);
     JoinType jt = JoinType.INNER;
-    if (cj != null && cj.type() != null) {
+    if (cj != null) {
       jt = cj.type();
     }
 

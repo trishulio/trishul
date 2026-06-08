@@ -3,6 +3,7 @@ package io.trishul.object.store.service.aws.cors.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -49,6 +50,14 @@ class AwsCorsConfigClientTest {
   }
 
   @Test
+  void testGet_ReturnsNull_WhenClientReturnsNull() {
+    doReturn(null).when(mAwsClient)
+        .getBucketCrossOriginConfiguration(any(GetBucketCrossOriginConfigurationRequest.class));
+
+    assertNull(client.get("BUCKET_1"));
+  }
+
+  @Test
   void testGet_ReturnsNull_WhenClientThrowsException() {
     doThrow(AmazonS3Exception.class).when(mAwsClient)
         .getBucketCrossOriginConfiguration(any(GetBucketCrossOriginConfigurationRequest.class));
@@ -57,7 +66,7 @@ class AwsCorsConfigClientTest {
   }
 
   @Test
-  void testAdd_ReturnsAddedAttachement() {
+  void testAdd_ReturnsAddedAttachment() {
     client = spy(client);
     doReturn(new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration()))
         .when(client).get("BUCKET_1");
@@ -91,12 +100,64 @@ class AwsCorsConfigClientTest {
   }
 
   @Test
+  void testPut_ThrowsException_WhenClientThrowsException() {
+    AmazonS3Exception exception = new AmazonS3Exception("error");
+    exception.setErrorCode("InternalError");
+    doThrow(exception).when(mAwsClient).setBucketCrossOriginConfiguration(any());
+
+    assertThrows(AmazonS3Exception.class, () -> client.put(
+        new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration())));
+  }
+
+  @Test
+  void testPut_ThrowsEnhancedException_WhenBucketExistsAndAccessDenied() {
+    AmazonS3Exception exception = new AmazonS3Exception("Original Error");
+    exception.setErrorCode("AccessDenied");
+    doThrow(exception).when(mAwsClient).setBucketCrossOriginConfiguration(any());
+    doReturn(true).when(mAwsClient).doesBucketExistV2("BUCKET_1");
+
+    AmazonS3Exception thrown = assertThrows(AmazonS3Exception.class, () -> client.put(
+        new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration())));
+
+    assertTrue(thrown.getErrorMessage()
+        .contains("Bucket: 'BUCKET_1' exists, but failed to put the cross origin configuration"));
+    assertTrue(thrown.getErrorMessage().contains("Original Error"));
+  }
+
+  @Test
+  void testPut_ThrowsOriginalException_WhenBucketDoesNotExistAndAccessDenied() {
+    AmazonS3Exception exception = new AmazonS3Exception("Original Error");
+    exception.setErrorCode("AccessDenied");
+    doThrow(exception).when(mAwsClient).setBucketCrossOriginConfiguration(any());
+    doReturn(false).when(mAwsClient).doesBucketExistV2("BUCKET_1");
+
+    AmazonS3Exception thrown = assertThrows(AmazonS3Exception.class, () -> client.put(
+        new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration())));
+
+    assertEquals("Original Error", thrown.getErrorMessage());
+  }
+
+  @Test
+  void testPut_ThrowsOriginalException_WhenBucketExistsAndNotAccessDenied() {
+    AmazonS3Exception exception = new AmazonS3Exception("Original Error");
+    exception.setErrorCode("InternalError");
+    doThrow(exception).when(mAwsClient).setBucketCrossOriginConfiguration(any());
+    doReturn(true).when(mAwsClient).doesBucketExistV2("BUCKET_1");
+
+    AmazonS3Exception thrown = assertThrows(AmazonS3Exception.class, () -> client.put(
+        new IaasObjectStoreCorsConfiguration("BUCKET_1", new BucketCrossOriginConfiguration())));
+
+    assertEquals("Original Error", thrown.getErrorMessage());
+  }
+
+  @Test
   void testExists_ReturnsFalse_WhenGetReturnsNull() {
     client = spy(client);
     doReturn(null).when(client).get("BUCKET_1");
 
     assertFalse(client.exists("BUCKET_1"));
   }
+
 
   @Test
   void testExists_ReturnsTrue_WhenGetReturnsEntity() {

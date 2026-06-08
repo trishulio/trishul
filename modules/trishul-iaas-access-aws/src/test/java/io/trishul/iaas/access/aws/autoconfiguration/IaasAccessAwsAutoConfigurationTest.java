@@ -1,8 +1,10 @@
 package io.trishul.iaas.access.aws.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import io.trishul.iaas.access.aws.AwsArnMapper;
@@ -32,6 +34,17 @@ class IaasAccessAwsAutoConfigurationTest {
   void testIaasAccessAwsFactory_ReturnsInstanceOfIaasAccessAwsFactory() {
     IaasAccessAwsFactory factory = config.iaasAccessAwsFactory();
     assertTrue(factory instanceof IaasAccessAwsFactory);
+  }
+
+  @Test
+  void testIamClient_ReturnsIamClientFromFactory() {
+    IaasAccessAwsFactory mFactory = mock(IaasAccessAwsFactory.class);
+    AmazonIdentityManagement mIam = mock(AmazonIdentityManagement.class);
+    when(mFactory.iamClient("key", "secret")).thenReturn(mIam);
+
+    AmazonIdentityManagement iam = config.iamClient(mFactory, "key", "secret");
+
+    assertSame(mIam, iam);
   }
 
   @Test

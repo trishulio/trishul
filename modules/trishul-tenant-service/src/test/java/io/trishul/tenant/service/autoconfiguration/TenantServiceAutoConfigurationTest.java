@@ -1,8 +1,13 @@
 package io.trishul.tenant.service.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -63,5 +68,25 @@ class TenantServiceAutoConfigurationTest {
     Refresher<Tenant, TenantAccessor<?>> result = config.tenantRefresher(mockAccessorRefresher);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testTenantAccessorRefresher_LambdaCoverage() {
+    TenantRepository mockRepo = mock(TenantRepository.class);
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher
+        = config.tenantAccessorRefresher(mockRepo);
+
+    UUID id = UUID.randomUUID();
+    Tenant tenant = new Tenant(id);
+    when(mockRepo.findAllById(any())).thenReturn(List.of(tenant));
+
+    TenantAccessor<?> mockAccessor = mock(TenantAccessor.class);
+    when(mockAccessor.getTenant()).thenReturn(new Tenant(id));
+
+    refresher.refreshAccessors(List.of(mockAccessor));
+
+    verify(mockAccessor).setTenant(null);
+    verify(mockAccessor).setTenant(tenant);
+    verify(mockRepo).findAllById(Set.of(id));
   }
 }

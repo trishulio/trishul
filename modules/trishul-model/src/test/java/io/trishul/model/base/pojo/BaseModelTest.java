@@ -65,14 +65,14 @@ public class BaseModelTest {
   }
 
   @Test
-  void testOuterJoinWithInclude_OnlyCopiesIncludedProperties() {
+  void testOuterJoinWithInclude_CopiesOnlyWhenValueIsNotNull() {
     TestModel target = new TestModel("original", 10);
-    TestModel source = new TestModel("updated", 20);
+    TestModel source = new TestModel("updated", null);
 
-    target.outerJoin(source, Set.of("name"));
+    target.outerJoin(source, Set.of("name", "value"));
 
     assertEquals("updated", target.getName());
-    assertEquals(10, target.getValue()); // not in include set
+    assertEquals(10, target.getValue()); // value was null in source, should not be copied
   }
 
   @Test
@@ -225,5 +225,16 @@ public class BaseModelTest {
 
     assertEquals(null, model.getName());
     assertEquals(null, model.getValue());
+  }
+
+  @Test
+  void testOuterJoinWithInclude_SkipsPropertiesNotIncluded() {
+    TestModel target = new TestModel("original", 10);
+    TestModel source = new TestModel("updated", 20);
+
+    target.outerJoin(source, Set.of("value"));
+
+    assertEquals("original", target.getName());
+    assertEquals(20, target.getValue());
   }
 }

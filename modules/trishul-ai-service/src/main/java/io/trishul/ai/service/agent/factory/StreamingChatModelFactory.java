@@ -7,26 +7,39 @@ import io.trishul.ai.chat.model.AiChatModelConfig;
 public class StreamingChatModelFactory {
 
   public StreamingChatLanguageModel getModel(AiProvider provider, AiChatModelConfig config) {
-    return switch (provider) {
-      case OPENAI -> getOpenAiModel(config);
-      case ANTHROPIC -> getAnthropicModel(config);
-    };
+    if (provider == AiProvider.GITHUB_COPILOT) {
+      return getGithubCopilotModel(config);
+    }
+    if (provider == AiProvider.OPENAI) {
+      return getOpenAiModel(config);
+    }
+    if (provider == AiProvider.ANTHROPIC) {
+      throw getAnthropicModel(config);
+    }
+    throw new IllegalArgumentException("Unsupported AI Provider: " + provider);
+  }
+
+
+  public StreamingChatLanguageModel getGithubCopilotModel(AiChatModelConfig config) {
+    if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
+      throw new IllegalArgumentException("GitHub Copilot API Key must be provided");
+    }
+    return OpenAiStreamingChatModel.builder().baseUrl("https://models.inference.ai.azure.com")
+        .apiKey(config.getApiKey()).modelName("Gemini 3.1 Pro Preview")
+        .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
   public StreamingChatLanguageModel getOpenAiModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenAI API Key must be provided");
     }
-    return OpenAiStreamingChatModel.builder()
-        .apiKey(config.getApiKey())
+    return OpenAiStreamingChatModel.builder().apiKey(config.getApiKey())
         .modelName(config.getStreamingModelName() != null ? config.getStreamingModelName()
             : config.getModelName())
-        .temperature(config.getTemperature())
-        .topP(config.getTopP())
-        .build();
+        .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
-  public StreamingChatLanguageModel getAnthropicModel(AiChatModelConfig config) {
-    throw new UnsupportedOperationException("Anthropic is not yet implemented");
+  public RuntimeException getAnthropicModel(AiChatModelConfig config) {
+    return new UnsupportedOperationException("Anthropic is not yet implemented");
   }
 }

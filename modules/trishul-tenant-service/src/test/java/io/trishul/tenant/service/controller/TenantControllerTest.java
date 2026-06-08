@@ -1,9 +1,12 @@
 package io.trishul.tenant.service.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;
@@ -116,5 +119,12 @@ class TenantControllerTest {
 
     assertEquals(List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))),
         dtos);
+  }
+
+  @Test
+  void testConstructorWithAutowiredParameters() {
+    AttributeFilter filter = mock(AttributeFilter.class);
+    TenantController autowiredController = new TenantController(mService, filter);
+    assertNotNull(autowiredController);
   }
 }

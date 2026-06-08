@@ -11,11 +11,14 @@ import io.trishul.ai.service.memory.model.service.AiChatMemoryConfigService;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,20 +41,44 @@ public class AiChatMemoryConfigController extends BaseController {
 
   private final AiChatMemoryConfigService service;
 
+  protected AiChatMemoryConfigController(
+      CrudControllerService<Long, AiChatMemoryConfig, BaseAiChatMemoryConfig<?>, UpdateAiChatMemoryConfig<?>, AiChatMemoryConfigDto, AddAiChatMemoryConfigDto, UpdateAiChatMemoryConfigDto> controller,
+      AiChatMemoryConfigService service) {
+    this.controller = controller;
+    this.service = service;
+  }
+
   @Autowired
   public AiChatMemoryConfigController(AiChatMemoryConfigService service, AttributeFilter filter) {
-    this.service = service;
-    this.controller = new CrudControllerService<>(filter, AiChatMemoryConfigMapper.INSTANCE, service,
-        "AiChatMemoryConfig");
+    this(new CrudControllerService<>(filter, AiChatMemoryConfigMapper.INSTANCE, service,
+        "AiChatMemoryConfig"), service);
+  }
+
+  @GetMapping(value = "", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<AiChatMemoryConfigDto> getAll(
+      @RequestParam(name = "ids", required = false) Set<Long> ids,
+      @RequestParam(name = "names", required = false) Set<String> names,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_ATTR,
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    Page<AiChatMemoryConfig> entityPage
+        = service.getChatMemoryConfigs(ids, names, page, size, sort, orderAscending);
+    return this.controller.getAll(entityPage, attributes);
   }
 
   @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public AiChatMemoryConfigDto get(@PathVariable("id") Long id,
-      @RequestParam(name = PROPNAME_ATTR,
-          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+  public AiChatMemoryConfigDto get(@PathVariable("id") Long id, @RequestParam(name = PROPNAME_ATTR,
+      defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
     return this.controller.get(id, attributes);
   }
+
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)

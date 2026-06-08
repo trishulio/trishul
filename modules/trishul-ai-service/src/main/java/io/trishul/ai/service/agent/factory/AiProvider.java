@@ -1,8 +1,7 @@
 package io.trishul.ai.service.agent.factory;
 
 public enum AiProvider {
-  OPENAI,
-  ANTHROPIC;
+  OPENAI, ANTHROPIC, GITHUB_COPILOT;
 
   public static AiProvider fromString(String provider) {
     for (AiProvider p : values()) {

@@ -12,6 +12,10 @@ import io.trishul.iaas.mapper.IaasEntityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.twilio.rest.api.v2010.account.Message.creator;
+import static com.twilio.rest.api.v2010.account.Message.deleter;
+import static com.twilio.rest.api.v2010.account.Message.fetcher;
+
 public class TwilioMessageClient
     implements IaasClient<String, Message, BaseMessage<?>, UpdateMessage<?>> {
   private static final Logger log = LoggerFactory.getLogger(TwilioMessageClient.class);
@@ -28,8 +32,7 @@ public class TwilioMessageClient
   @Override
   public Message get(String messageSid) {
     try {
-      MessageFetcher fetcher
-          = com.twilio.rest.api.v2010.account.Message.fetcher(accountSid, messageSid);
+      MessageFetcher fetcher = fetcher(accountSid, messageSid);
       com.twilio.rest.api.v2010.account.Message twilioMessage = fetcher.fetch();
       return mapper.fromIaasEntity(twilioMessage);
     } catch (Exception e) {
@@ -43,8 +46,8 @@ public class TwilioMessageClient
     String to = formatAddress(entity.getTo(), entity.getChannelType());
     String from = formatAddress(entity.getFrom(), entity.getChannelType());
 
-    MessageCreator creator = com.twilio.rest.api.v2010.account.Message.creator(accountSid,
-        new PhoneNumber(to), new PhoneNumber(from), entity.getBody());
+    MessageCreator creator
+        = creator(accountSid, new PhoneNumber(to), new PhoneNumber(from), entity.getBody());
 
     com.twilio.rest.api.v2010.account.Message twilioMessage = creator.create();
     return mapper.fromIaasEntity(twilioMessage);
@@ -62,7 +65,7 @@ public class TwilioMessageClient
   @Override
   public boolean delete(String messageSid) {
     try {
-      return com.twilio.rest.api.v2010.account.Message.deleter(accountSid, messageSid).delete();
+      return deleter(accountSid, messageSid).delete();
     } catch (Exception e) {
       log.error("Failed to delete message: {}", messageSid, e);
       return false;

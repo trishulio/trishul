@@ -10,6 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizedUrl;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer.JwtConfigurer;
+
 class WebSecurityConfigTest {
   private WebSecurityConfig config;
 
@@ -23,8 +29,36 @@ class WebSecurityConfigTest {
     HttpSecurity httpSecurity = mock(HttpSecurity.class);
     DefaultSecurityFilterChain filterChain = mock(DefaultSecurityFilterChain.class);
 
-    when(httpSecurity.authorizeHttpRequests(any())).thenReturn(httpSecurity);
-    when(httpSecurity.oauth2ResourceServer(any())).thenReturn(httpSecurity);
+    // Mock for authorizeHttpRequests
+    var registry = mock(AuthorizationManagerRequestMatcherRegistry.class);
+    var authorizedUrl = mock(AuthorizedUrl.class);
+
+    when(registry.requestMatchers(any(String[].class))).thenReturn(authorizedUrl);
+    when(authorizedUrl.permitAll()).thenReturn(registry);
+    when(registry.anyRequest()).thenReturn(authorizedUrl);
+    when(authorizedUrl.authenticated()).thenReturn(registry);
+
+    when(httpSecurity.authorizeHttpRequests(any(Customizer.class))).thenAnswer(invocation -> {
+      Customizer<AuthorizationManagerRequestMatcherRegistry> customizer = invocation.getArgument(0);
+      customizer.customize(registry);
+      return httpSecurity;
+    });
+
+    // Mock for oauth2ResourceServer
+    var oauth2Configurer = mock(OAuth2ResourceServerConfigurer.class);
+    when(httpSecurity.oauth2ResourceServer(any(Customizer.class))).thenAnswer(invocation -> {
+      Customizer customizer = invocation.getArgument(0);
+      customizer.customize(oauth2Configurer);
+      return httpSecurity;
+    });
+
+    var jwtConfigurer = mock(JwtConfigurer.class);
+    when(oauth2Configurer.jwt(any(Customizer.class))).thenAnswer(invocation -> {
+      Customizer customizer = invocation.getArgument(0);
+      customizer.customize(jwtConfigurer);
+      return oauth2Configurer;
+    });
+
     when(httpSecurity.build()).thenReturn(filterChain);
 
     SecurityFilterChain result = config.securityFilterChain(httpSecurity);

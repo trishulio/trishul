@@ -16,7 +16,8 @@ import io.trishul.object.store.file.decorator.EntityDecorator;
 import io.trishul.object.store.file.decorator.NoActionDecorator;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 
-// import org.springframework.data.domain.Page;
+
+// import Page;
 
 public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, UpdateEntity extends Identified<ID>, EntityDto extends BaseDto, AddDto extends BaseDto, UpdateDto extends BaseDto> {
   private final AttributeFilter filter;

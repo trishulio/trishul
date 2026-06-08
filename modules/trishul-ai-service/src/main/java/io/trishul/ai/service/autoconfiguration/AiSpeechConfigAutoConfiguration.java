@@ -9,6 +9,7 @@ import io.trishul.ai.speech.model.AiSpeechConfigRefresher;
 import io.trishul.ai.speech.model.BaseAiSpeechConfig;
 import io.trishul.ai.speech.model.UpdateAiSpeechConfig;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -40,8 +41,9 @@ public class AiSpeechConfigAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiSpeechConfigController.class)
-  public AiSpeechConfigController aiSpeechConfigController(AiSpeechConfigService service) {
-    return new AiSpeechConfigController(service);
+  public AiSpeechConfigController aiSpeechConfigController(AiSpeechConfigService service,
+      AttributeFilter filter) {
+    return new AiSpeechConfigController(service, filter);
   }
 
   @Bean

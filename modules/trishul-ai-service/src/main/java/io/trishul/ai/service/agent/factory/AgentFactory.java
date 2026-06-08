@@ -3,7 +3,6 @@ package io.trishul.ai.service.agent.factory;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
@@ -41,10 +40,7 @@ public class AgentFactory {
       maxMessages = memoryConfig.getMaxMessages();
     }
 
-    return MessageWindowChatMemory.builder()
-        .id(memoryId)
-        .maxMessages(maxMessages)
-        .chatMemoryStore(memoryStore)
-        .build();
+    return MessageWindowChatMemory.builder().id(memoryId).maxMessages(maxMessages)
+        .chatMemoryStore(memoryStore).build();
   }
 }

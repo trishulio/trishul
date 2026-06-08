@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 class RandomGeneratorImplTest {
   private RandomGenerator generator;
 
@@ -14,7 +15,7 @@ class RandomGeneratorImplTest {
   @BeforeEach
   void init() {
     // Manually extending the class because Mockito cannot mock
-    // java.util.Random class due to one of it's properties.
+    // Random class due to one of it's properties.
     class RandomMock extends SecureRandom {
       int i = 1;
 
@@ -31,10 +32,24 @@ class RandomGeneratorImplTest {
   }
 
   @Test
+  void testConstructor_UsesNewSecureRandom_WhenNullPassed() {
+    generator = new RandomGeneratorImpl(null);
+    String s = generator.string(10);
+    assertEquals(10, s.length());
+  }
+
+  @Test
   void testString_ReturnsString_WithAlphaNumAndSpecialChars() {
     String s = generator.string(50);
 
     assertEquals(50, s.length());
     assertEquals("BCEIQg#wQg#wQg#wQg#wQg#wQg#wQg#wQg#wQg#wQg#wQg#wQg", s);
+  }
+
+  @Test
+  void testString_ReturnsEmptyString_WhenLengthIsZero() {
+    String s = generator.string(0);
+    assertEquals(0, s.length());
+    assertEquals("", s);
   }
 }

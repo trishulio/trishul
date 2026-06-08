@@ -3,6 +3,7 @@ package io.trishul.object.store.service.aws.cors.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -50,6 +51,17 @@ class AwsPublicAccessBlockClientTest {
   }
 
   @Test
+  void testGet_ReturnsConfigWithNullDetails_WhenClientReturnsNullConfig() {
+    doReturn(new GetPublicAccessBlockResult()).when(mAwsClient)
+        .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
+
+    IaasObjectStoreAccessConfig config = client.get("BUCKET_1");
+
+    assertEquals("BUCKET_1", config.getObjectStoreName());
+    assertNull(config.getPublicAccessBlockConfig());
+  }
+
+  @Test
   void testGet_ReturnsNull_WhenClientThrowsException() {
     doThrow(AmazonS3Exception.class).when(mAwsClient)
         .getPublicAccessBlock(any(GetPublicAccessBlockRequest.class));
@@ -89,6 +101,15 @@ class AwsPublicAccessBlockClientTest {
     assertEquals("BUCKET_1", config.getObjectStoreName());
     assertTrue(new ReflectionEquals(new PublicAccessBlockConfiguration())
         .matches(config.getPublicAccessBlockConfig()));
+  }
+
+  @Test
+  void testPut_ThrowsAmazonS3Exception_WhenClientThrowsException() {
+    doThrow(AmazonS3Exception.class).when(mAwsClient)
+        .setPublicAccessBlock(any(SetPublicAccessBlockRequest.class));
+
+    assertThrows(AmazonS3Exception.class, () -> client
+        .put(new IaasObjectStoreAccessConfig("BUCKET_1", new PublicAccessBlockConfiguration())));
   }
 
   @Test

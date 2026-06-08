@@ -15,6 +15,10 @@ import io.trishul.crud.service.EntityMergerService;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
@@ -31,14 +35,26 @@ public class AiChatSessionService extends BaseService implements
     this.repoService = repoService;
   }
 
+  public Page<AiChatSession> getChatSessions(Set<Long> ids, Set<String> sessionKeys,
+      Set<String> titles, Boolean isActive, Set<Long> agentConfigIds, int page, int size,
+      SortedSet<String> sort, boolean orderAscending) {
+    final Specification<AiChatSession> spec = WhereClauseBuilder.builder()
+        .in(Identified.ATTR_ID, ids).in(BaseAiChatSession.ATTR_SESSION_KEY, sessionKeys)
+        .in(BaseAiChatSession.ATTR_TITLE, titles).is(BaseAiChatSession.ATTR_IS_ACTIVE, isActive)
+        .in(new String[] {BaseAiChatSession.ATTR_AGENT_CONFIG, Identified.ATTR_ID}, agentConfigIds)
+        .build();
+
+    return this.repoService.getAll(spec, sort, orderAscending, page, size);
+  }
+
   @Override
   public AiChatSession get(Long id) {
     return this.repoService.get(id);
   }
 
   public AiChatSession getBySessionKey(String sessionKey) {
-    final Specification<AiChatSession> spec = WhereClauseBuilder.builder()
-        .is(BaseAiChatSession.ATTR_SESSION_KEY, sessionKey).build();
+    final Specification<AiChatSession> spec
+        = WhereClauseBuilder.builder().is(BaseAiChatSession.ATTR_SESSION_KEY, sessionKey).build();
 
     final List<AiChatSession> sessions = this.repoService.getAll(spec);
 

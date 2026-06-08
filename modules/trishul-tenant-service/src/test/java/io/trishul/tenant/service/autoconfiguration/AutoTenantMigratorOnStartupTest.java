@@ -21,6 +21,8 @@ import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.service.TenantService;
 
+import static org.mockito.ArgumentMatchers.eq;
+
 class AutoTenantMigratorOnStartupTest {
 
   private TenantService mockTenantService;
@@ -54,5 +56,32 @@ class AutoTenantMigratorOnStartupTest {
     migrator.migrateAllTenantsOnStartup();
 
     verify(mockMigrationManager).migrate(mockAdminTenant);
+  }
+
+  @Test
+  void testMigrateAllTenantsOnStartup_MigratesMultiplePagesOfTenants() {
+    Page<Tenant> page1 = mock(Page.class);
+    when(page1.hasNext()).thenReturn(true);
+    when(page1.getContent()).thenReturn(Collections.emptyList());
+
+    Page<Tenant> page2 = mock(Page.class);
+    when(page2.hasNext()).thenReturn(false);
+    when(page2.getContent()).thenReturn(Collections.emptyList());
+
+    when(mockTenantService.getAll(isNull(), isNull(), isNull(), anyBoolean(), any(), anyBoolean(),
+        eq(0), anyInt())).thenReturn(page1);
+    when(mockTenantService.getAll(isNull(), isNull(), isNull(), anyBoolean(), any(), anyBoolean(),
+        eq(1), anyInt())).thenReturn(page2);
+
+    AutoTenantMigratorOnStartup migrator
+        = new AutoTenantMigratorOnStartup(mockAdminTenant, mockTenantService, mockMigrationManager);
+
+    migrator.migrateAllTenantsOnStartup();
+
+    verify(mockMigrationManager).migrate(mockAdminTenant);
+    verify(mockTenantService).getAll(isNull(), isNull(), isNull(), anyBoolean(), any(),
+        anyBoolean(), eq(0), anyInt());
+    verify(mockTenantService).getAll(isNull(), isNull(), isNull(), anyBoolean(), any(),
+        anyBoolean(), eq(1), anyInt());
   }
 }

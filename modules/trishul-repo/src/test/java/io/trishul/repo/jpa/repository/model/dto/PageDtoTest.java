@@ -8,6 +8,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 class PageDtoTest {
   class DummyDto extends BaseDto {
   }
@@ -62,5 +65,13 @@ class PageDtoTest {
 
     assertTrue(it.hasNext());
     assertEquals(new DummyDto(), it.next());
+  }
+
+  @Test
+  void testGetContent_ReturnsNull_WhenContentIsNullReflectively() throws Exception {
+    Field contentField = PageDto.class.getDeclaredField("content");
+    contentField.setAccessible(true);
+    contentField.set(dto, null);
+    assertNull(dto.getContent());
   }
 }

@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
-import dev.langchain4j.model.chat.request.ChatRequest;
-import dev.langchain4j.model.chat.request.ResponseFormat;
 
 public class AddAiAgentConfigDto extends BaseDto {
   @NotBlank
@@ -28,8 +26,7 @@ public class AddAiAgentConfigDto extends BaseDto {
 
   private Set<Long> toolIds;
 
-  public AddAiAgentConfigDto() {
-  }
+  public AddAiAgentConfigDto() {}
 
   public AddAiAgentConfigDto(String name, String description, Boolean isActive,
       Long chatModelConfigId, Long chatMemoryConfigId, Set<Long> guardrailIds, Set<Long> skillIds,

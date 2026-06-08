@@ -7,14 +7,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
 import io.trishul.test.bom.model.Dummy;
 import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import com.google.common.cache.LoadingCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+
+import java.lang.reflect.Field;
 
 class ReflectionManipulatorTest {
   public static class TestData {
@@ -326,5 +337,131 @@ class ReflectionManipulatorTest {
     util.invokeSetter(obj, pd, null);
 
     assertNull(obj.getName());
+  }
+
+  @Test
+  void testPropNameKeySetters() {
+    ReflectionManipulator.PropNameKey key
+        = new ReflectionManipulator.PropNameKey(TestData.class, null);
+    key.setClazz(TestDataWithStringField.class);
+    key.setExclusions(Set.of("name"));
+    assertEquals(TestDataWithStringField.class, key.getClazz());
+    assertEquals(Set.of("name"), key.getExclusions());
+  }
+
+  @Test
+  void testCopy_ThrowsRuntimeException_WhenIntrospectionExceptionOccurs() throws Exception {
+    try (MockedStatic<Introspector> mockedIntrospector = mockStatic(Introspector.class)) {
+      mockedIntrospector.when(() -> Introspector.getBeanInfo(any(), any()))
+          .thenThrow(new IntrospectionException("Custom error"));
+
+      assertThrows(RuntimeException.class,
+          () -> util.copy(new TestData(), new TestData(), pd -> true));
+    }
+  }
+
+  @Test
+  void testCopy_ThrowsRuntimeException_WhenReflectiveOperationExceptionOccurs() {
+    assertThrows(RuntimeException.class, () -> util.copy(new TestData(), new TestData(), pd -> {
+      throw new ReflectiveOperationException("custom");
+    }));
+  }
+
+  @Test
+  void testGetPropertyNames_ThrowsRuntimeException_WhenExecutionExceptionOccurs() throws Exception {
+    Field field = ReflectionManipulator.class.getDeclaredField("propNamesCacheWithExclusions");
+    field.setAccessible(true);
+    @SuppressWarnings("unchecked")
+    LoadingCache<ReflectionManipulator.PropNameKey, Set<String>> mockCache
+        = mock(LoadingCache.class);
+    when(mockCache.get(any()))
+        .thenThrow(new ExecutionException("custom", new RuntimeException("cause")));
+
+    ReflectionManipulator customUtil = new ReflectionManipulator();
+    field.set(customUtil, mockCache);
+
+    assertThrows(RuntimeException.class, () -> customUtil.getPropertyNames(TestData.class, null));
+  }
+
+  public static class ClassWithoutNoArgConstructor {
+    public ClassWithoutNoArgConstructor(String arg) {}
+  }
+
+  @Test
+  void testConstruct_ThrowsRuntimeException_WhenReflectiveOperationExceptionOccurs() {
+    assertThrows(RuntimeException.class, () -> util.construct(ClassWithoutNoArgConstructor.class));
+  }
+
+  @Test
+  void testConstruct_ThrowsRuntimeException_WhenIntrospectionExceptionOccurs() throws Exception {
+    try (MockedStatic<Introspector> mockedIntrospector = mockStatic(Introspector.class)) {
+      mockedIntrospector.when(() -> Introspector.getBeanInfo(any(), any()))
+          .thenThrow(new IntrospectionException("Custom error"));
+
+      assertThrows(RuntimeException.class, () -> util.construct(TestData.class));
+    }
+  }
+
+  public static class ConstructorExceptionClass {
+    public ConstructorExceptionClass() {
+      throw new RuntimeException("Constructor failed");
+    }
+  }
+
+  @Test
+  void testConstruct_ThrowsRuntimeException_WhenInvocationTargetExceptionOccurs() {
+    assertThrows(RuntimeException.class, () -> util.construct(ConstructorExceptionClass.class));
+  }
+
+  @Test
+  void testInvokeSetter_UsesDerivedSetterName_WhenReadMethodIsNull() throws IntrospectionException {
+    PropertyDescriptor pd = new PropertyDescriptor("x", TestData.class, null, "setX");
+    TestData obj = new TestData();
+
+    util.invokeSetter(obj, pd, 99);
+
+    assertEquals(99, obj.getX());
+  }
+
+  @Test
+  void testInvokeSetter_ThrowsRuntimeException_WhenIllegalArgumentExceptionOccurs()
+      throws IntrospectionException {
+    PropertyDescriptor pd = new PropertyDescriptor("x", TestData.class);
+    TestData obj = new TestData();
+
+    assertThrows(RuntimeException.class, () -> util.invokeSetter(obj, pd, "invalid-type"));
+  }
+
+  public static class TestDataWithExceptionSetter {
+    public int getX() {
+      return 1;
+    }
+
+    public void setX(int x) {
+      throw new RuntimeException("Setter error");
+    }
+  }
+
+  @Test
+  void testInvokeSetter_ThrowsRuntimeException_WhenReflectiveOperationExceptionOccurs()
+      throws IntrospectionException {
+    PropertyDescriptor pd = new PropertyDescriptor("x", TestDataWithExceptionSetter.class);
+    TestDataWithExceptionSetter obj = new TestDataWithExceptionSetter();
+
+    assertThrows(RuntimeException.class, () -> util.invokeSetter(obj, pd, 42));
+  }
+
+  public static class GetterExceptionClass {
+    public int getX() {
+      throw new RuntimeException("Getter failed");
+    }
+
+    public void setX(int x) {}
+  }
+
+  @Test
+  void testCopy_ThrowsRuntimeException_WhenInvocationTargetExceptionOccurs() {
+    assertThrows(RuntimeException.class,
+        () -> util.copy(new GetterExceptionClass(), new GetterExceptionClass(), pd -> true));
   }
 }

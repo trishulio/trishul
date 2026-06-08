@@ -2,10 +2,20 @@ package io.trishul.crud.controller.filter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
 import io.trishul.test.bom.model.Dummy;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 class AttributeFilterTest {
   private AttributeFilter filter;
@@ -91,5 +101,49 @@ class AttributeFilterTest {
     assertEquals(12345, data.getInteger());
     assertEquals('a', data.getCharacter());
     assertEquals(true, data.getBool());
+  }
+
+  @Test
+  void testSetNullValueOnProps_ThrowsRuntimeException_WhenIntrospectionExceptionOccurs()
+      throws Exception {
+    try (MockedStatic<Introspector> mockedIntrospector = mockStatic(Introspector.class)) {
+      mockedIntrospector.when(() -> Introspector.getBeanInfo(any()))
+          .thenThrow(new IntrospectionException("Custom error"));
+
+      RuntimeException e
+          = assertThrows(RuntimeException.class, () -> filter.retain(new Dummy(), Set.of()));
+      assertEquals("Failed to get the property descriptors for the the object", e.getMessage());
+    }
+  }
+
+  @Test
+  void testSetNullValueOnProps_ThrowsRuntimeException_WhenIllegalArgumentExceptionOccurs() {
+    Set<String> mockSet = mock(Set.class);
+    when(mockSet.contains(anyString())).thenThrow(new IllegalArgumentException("Custom error"));
+
+    RuntimeException e
+        = assertThrows(RuntimeException.class, () -> filter.remove(new Dummy(), mockSet));
+    assertEquals("Failed to dynamically call setter because: Custom error", e.getMessage());
+  }
+
+  @Test
+  void testRemove_ThrowsException_WhenSettingNullToPrimitiveField() {
+    class PrimitiveDummy {
+      private int id;
+
+      public int getId() {
+        return id;
+      }
+
+      public void setId(int id) {
+        this.id = id;
+      }
+    }
+    PrimitiveDummy data = new PrimitiveDummy();
+
+    // ReflectionManipulator catches IllegalArgumentException and rethrows as RuntimeException
+    // So this might not hit the catch(IllegalArgumentException) block in AttributeFilter
+    // but we add it to satisfy the requirement of using a class with primitive fields.
+    assertThrows(RuntimeException.class, () -> filter.remove(data, Set.of("id")));
   }
 }

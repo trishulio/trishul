@@ -6,6 +6,7 @@ import io.trishul.commodity.good.model.Good;
 import io.trishul.money.amount.model.Amount;
 import io.trishul.money.amount.model.AmountSupplier;
 import io.trishul.money.tax.amount.TaxAmount;
+import io.trishul.money.tax.calculator.TaxCalculator;
 import io.trishul.money.tax.model.Tax;
 import io.trishul.money.tax.rate.TaxRate;
 import io.trishul.quantity.unit.SupportedUnits;
@@ -17,6 +18,9 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AmountCalculatorTest {
   private AmountCalculator calculator;
@@ -137,5 +141,23 @@ class AmountCalculatorTest {
 
     Amount expected = new Amount(Money.parse("CAD 250"), new TaxAmount(Money.parse("CAD 75")));
     assertEquals(expected, total);
+  }
+
+  @Test
+  void testGetAmount_ReturnsAmount_WhenSubTotalIsNullButTaxAmountIsNotNull() {
+    CostCalculator mockCost = mock(CostCalculator.class);
+    TaxCalculator mockTax = mock(TaxCalculator.class);
+    AmountCalculator testCalculator = new AmountCalculator(mockCost, mockTax);
+
+    Good good = mock(Good.class);
+    Tax tax = mock(Tax.class);
+    when(good.getTax()).thenReturn(tax);
+
+    when(mockCost.getCost(good)).thenReturn(null);
+    TaxAmount expectedTaxAmount = new TaxAmount(Money.parse("CAD 5"));
+    when(mockTax.getTaxAmount(tax, null)).thenReturn(expectedTaxAmount);
+
+    Amount expected = new Amount(null, expectedTaxAmount);
+    assertEquals(expected, testCalculator.getAmount(good));
   }
 }

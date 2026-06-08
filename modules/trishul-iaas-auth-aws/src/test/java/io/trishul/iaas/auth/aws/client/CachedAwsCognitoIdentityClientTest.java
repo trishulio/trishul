@@ -18,6 +18,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 class CachedAwsCognitoIdentityClientTest {
   private AwsCognitoIdentityClient client;
 
@@ -99,4 +100,41 @@ class CachedAwsCognitoIdentityClientTest {
     RuntimeException exception = assertThrows(RuntimeException.class,
         () -> client.getCredentialsForIdentity("IDENTITY_POOL_ID", Map.of("login", "creds")));
   }
+
+  @Test
+  void testGetIdentityPools_ThrowsRuntimeException_WhenClientThrowsCheckedException() {
+    doAnswer(invocation -> {
+      throw new Exception("checked");
+    }).when(mDelegate).getIdentityPools(1);
+
+    RuntimeException exception
+        = assertThrows(RuntimeException.class, () -> client.getIdentityPools(1));
+    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+        exception.getMessage());
+  }
+
+  @Test
+  void testGetIdentityId_ThrowsRuntimeException_WhenClientThrowsCheckedException() {
+    doAnswer(invocation -> {
+      throw new Exception("checked");
+    }).when(mDelegate).getIdentityId("IDENTITY_POOL_ID", Map.of("login", "creds"));
+
+    RuntimeException exception = assertThrows(RuntimeException.class,
+        () -> client.getIdentityId("IDENTITY_POOL_ID", Map.of("login", "creds")));
+    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+        exception.getMessage());
+  }
+
+  @Test
+  void testGetCredentialsForIdentity_ThrowsRuntimeException_WhenClientThrowsCheckedException() {
+    doAnswer(invocation -> {
+      throw new Exception("checked");
+    }).when(mDelegate).getCredentialsForIdentity("IDENTITY_POOL_ID", Map.of("login", "creds"));
+
+    RuntimeException exception = assertThrows(RuntimeException.class,
+        () -> client.getCredentialsForIdentity("IDENTITY_POOL_ID", Map.of("login", "creds")));
+    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+        exception.getMessage());
+  }
 }
+

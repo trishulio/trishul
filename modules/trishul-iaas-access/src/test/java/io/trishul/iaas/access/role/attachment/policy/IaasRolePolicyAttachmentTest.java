@@ -66,14 +66,66 @@ class IaasRolePolicyAttachmentTest {
   }
 
   @Test
-  void testGetSetLastUpdated() {
-    attachment.setLastUpdated(LocalDateTime.of(2000, 1, 1, 1, 1));
+  void testAllArgConstructorWithDates() {
+    LocalDateTime now = LocalDateTime.now();
+    attachment
+        = new IaasRolePolicyAttachment(new IaasRole("ROLE"), new IaasPolicy("POLICY"), now, now);
 
-    assertEquals(LocalDateTime.of(2000, 1, 1, 1, 1), attachment.getLastUpdated());
+    assertEquals(new IaasRole("ROLE"), attachment.getIaasRole());
+    assertEquals(new IaasPolicy("POLICY"), attachment.getIaasPolicy());
+    assertEquals(now, attachment.getCreatedAt());
+    assertEquals(now, attachment.getLastUpdated());
   }
 
   @Test
-  void testGetVersion() {
+  void testSetId_SetsNullOnFields_WhenIdIsNullAndFieldsAreNotNull() {
+    attachment.setIaasRole(new IaasRole("ROLE"));
+    attachment.setIaasPolicy(new IaasPolicy("POLICY"));
+    attachment.setId(null);
+    assertNull(attachment.getIaasRole().getId());
+    assertNull(attachment.getIaasPolicy().getId());
+  }
+
+  @Test
+  void testSetId_ReusesExistingRoleAndPolicy_WhenFieldsAreNotNull() {
+    IaasRole role = new IaasRole("ROLE");
+    IaasPolicy policy = new IaasPolicy("POLICY");
+    attachment.setIaasRole(role);
+    attachment.setIaasPolicy(policy);
+    attachment.setId(new IaasRolePolicyAttachmentId("NEW_ROLE", "NEW_POLICY"));
+    assertEquals("NEW_ROLE", attachment.getIaasRole().getId());
+    assertEquals("NEW_POLICY", attachment.getIaasPolicy().getId());
+  }
+
+  @Test
+  void testSetIaasRole_Null() {
+    attachment.setIaasRole(null);
+    assertNull(attachment.getIaasRole());
+  }
+
+  @Test
+  void testSetIaasPolicy_Null() {
+    attachment.setIaasPolicy(null);
+    assertNull(attachment.getIaasPolicy());
+  }
+
+  @Test
+  void testGetSetCreatedAt() {
+    LocalDateTime now = LocalDateTime.now();
+    attachment.setCreatedAt(now);
+    assertEquals(now, attachment.getCreatedAt());
+  }
+
+  @Test
+  void testGetSetLastUpdated() {
+    LocalDateTime now = LocalDateTime.now();
+    attachment.setLastUpdated(now);
+    assertEquals(now, attachment.getLastUpdated());
+  }
+
+  @Test
+  void testSetVersion() {
+    attachment.setVersion(1);
     assertNull(attachment.getVersion());
   }
 }

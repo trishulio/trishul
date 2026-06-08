@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class AiAgentConfigDto extends BaseDto {
+  public static final String ATTR_GUARDRAILS = "guardrails";
+  public static final String ATTR_SKILLS = "skills";
+  public static final String ATTR_TOOLS = "tools";
+
   private Long id;
 
   private String name;

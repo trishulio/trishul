@@ -15,20 +15,26 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.service.LockService;
+import io.trishul.integration.communication.model.IntegrationCommunicationConfigRefresher;
+import io.trishul.integration.model.Integration;
+import io.trishul.integration.model.IntegrationAccessor;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import static java.util.Set.of;
+
 @Configuration
 public class IntegrationCommunicationServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(IntegrationCommunicationService.class)
-  public IntegrationCommunicationService integrationCommunicationService(
-      io.trishul.crud.service.LockService lockService,
+  public IntegrationCommunicationService integrationCommunicationService(LockService lockService,
       IntegrationCommunicationConfigRepository configRepository,
-      io.trishul.integration.communication.model.IntegrationCommunicationConfigRefresher configRefresher,
+      IntegrationCommunicationConfigRefresher configRefresher,
       CommunicationMessageService communicationMessageService) {
     EntityMergerService<Long, IntegrationCommunicationConfig, BaseIntegrationCommunicationConfig<?>, UpdateIntegrationCommunicationConfig<?>> entityMergerService
         = new CrudEntityMergerService<>(lockService, BaseIntegrationCommunicationConfig.class,
-            UpdateIntegrationCommunicationConfig.class, IntegrationCommunicationConfig.class,
-            java.util.Set.of());
+            UpdateIntegrationCommunicationConfig.class, IntegrationCommunicationConfig.class, of());
     RepoService<Long, IntegrationCommunicationConfig, IntegrationCommunicationConfigAccessor<?>> repoService
         = new CrudRepoService<>(configRepository, configRefresher);
 
@@ -37,20 +43,19 @@ public class IntegrationCommunicationServiceAutoConfiguration {
   }
 
   @Bean
-  public io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<Long, IntegrationCommunicationConfigAccessor<?>, IntegrationCommunicationConfig> integrationCommunicationConfigAccessorRefresher(
+  public AccessorRefresher<Long, IntegrationCommunicationConfigAccessor<?>, IntegrationCommunicationConfig> integrationCommunicationConfigAccessorRefresher(
       IntegrationCommunicationConfigRepository repo) {
-    return new io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<>(
-        IntegrationCommunicationConfig.class,
+    return new AccessorRefresher<>(IntegrationCommunicationConfig.class,
         IntegrationCommunicationConfigAccessor::getIntegrationCommunicationConfig,
         (accessor, config) -> accessor.setIntegrationCommunicationConfig(config),
         ids -> repo.findAllById(ids));
   }
 
   @Bean
-  public io.trishul.integration.communication.model.IntegrationCommunicationConfigRefresher integrationCommunicationConfigRefresher(
-      io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher<Long, IntegrationCommunicationConfigAccessor<?>, IntegrationCommunicationConfig> integrationCommunicationConfigAccessorRefresher,
-      io.trishul.base.types.base.pojo.Refresher<io.trishul.integration.model.Integration, io.trishul.integration.model.IntegrationAccessor<?>> integrationRefresher) {
-    return new io.trishul.integration.communication.model.IntegrationCommunicationConfigRefresher(
+  public IntegrationCommunicationConfigRefresher integrationCommunicationConfigRefresher(
+      AccessorRefresher<Long, IntegrationCommunicationConfigAccessor<?>, IntegrationCommunicationConfig> integrationCommunicationConfigAccessorRefresher,
+      Refresher<Integration, IntegrationAccessor<?>> integrationRefresher) {
+    return new IntegrationCommunicationConfigRefresher(
         integrationCommunicationConfigAccessorRefresher, integrationRefresher);
   }
 }

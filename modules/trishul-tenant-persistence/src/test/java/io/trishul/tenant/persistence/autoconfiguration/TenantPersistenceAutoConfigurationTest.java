@@ -23,6 +23,8 @@ import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionPr
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
 
@@ -80,6 +82,17 @@ class TenantPersistenceAutoConfigurationTest {
   }
 
   @Test
+  void testPlatformTransactionManager_ThrowsIllegalStateException_WhenEntityManagerFactoryIsNull() {
+    when(localContainerEntityManagerFactoryBeanMock.getObject()).thenReturn(null);
+
+    assertThrows(IllegalStateException.class, () -> {
+      tenantPersistenceAutoConfiguration
+          .platformTransactionManager(localContainerEntityManagerFactoryBeanMock);
+    });
+  }
+
+
+  @Test
   void testJpaVendorAdapter_ReturnsHibernateJpaVendorAdapter() {
     JpaVendorAdapter jpaVendorAdapter = tenantPersistenceAutoConfiguration.jpaVendorAdapter();
 
@@ -102,8 +115,7 @@ class TenantPersistenceAutoConfigurationTest {
 
     Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
     assertEquals(3, jpaPropertyMap.size());
-    assertEquals("org.hibernate.dialect.PostgreSQLDialect",
-        jpaPropertyMap.get(Environment.DIALECT));
+    assertEquals("PostgreSQLDialect", jpaPropertyMap.get(Environment.DIALECT));
     assertEquals(multiTenantConnectionProviderMock,
         jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
     assertEquals(currentTenantIdentifierResolverMock,

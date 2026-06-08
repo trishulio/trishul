@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import io.trishul.repo.jpa.repository.ExtendedRepository;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 @Repository
 public interface AiToolRepository extends JpaRepository<AiTool, Long>,
-    org.springframework.data.jpa.repository.JpaSpecificationExecutor<AiTool>,
-    ExtendedRepository<Long> {
+    JpaSpecificationExecutor<AiTool>, ExtendedRepository<Long> {
 }

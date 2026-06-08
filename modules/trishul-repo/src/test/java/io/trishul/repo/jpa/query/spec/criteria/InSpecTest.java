@@ -41,4 +41,13 @@ class InSpecTest {
     spec = new InSpec<>(mDelegate, Set.of("val1", "val2"));
     assertSame(mInExpr, spec.getExpression(mRoot, mCq, mCb));
   }
+
+  @Test
+  void testConstructor_UsesEmptyList_WhenCollectionIsNull() {
+    Expression<Boolean> mInExpr = mock(Predicate.class);
+    doReturn(mInExpr).when(mExpr).in(Set.of());
+
+    spec = new InSpec<>(mDelegate, null);
+    assertSame(mInExpr, spec.getExpression(mRoot, mCq, mCb));
+  }
 }

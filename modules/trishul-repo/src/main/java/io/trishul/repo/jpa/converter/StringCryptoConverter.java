@@ -1,6 +1,7 @@
 package io.trishul.repo.jpa.converter;
 
 import jakarta.persistence.AttributeConverter;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -19,7 +20,7 @@ public class StringCryptoConverter implements AttributeConverter<String, String>
 
     // Ensure key is 16 bytes for AES-128 if not provided correctly
     byte[] keyBytes = new byte[16];
-    byte[] sourceKeyBytes = encryptionKey.getBytes();
+    byte[] sourceKeyBytes = encryptionKey.getBytes(StandardCharsets.UTF_8);
     System.arraycopy(sourceKeyBytes, 0, keyBytes, 0, Math.min(sourceKeyBytes.length, 16));
     this.secretKey = new SecretKeySpec(keyBytes, "AES");
   }
@@ -32,7 +33,8 @@ public class StringCryptoConverter implements AttributeConverter<String, String>
     try {
       Cipher cipher = Cipher.getInstance(algorithm);
       cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-      return Base64.getEncoder().encodeToString(cipher.doFinal(attribute.getBytes()));
+      return Base64.getEncoder()
+          .encodeToString(cipher.doFinal(attribute.getBytes(StandardCharsets.UTF_8)));
     } catch (Exception e) {
       log.error("Error encrypting attribute", e);
       throw new RuntimeException("Error encrypting attribute", e);
@@ -47,7 +49,7 @@ public class StringCryptoConverter implements AttributeConverter<String, String>
     try {
       Cipher cipher = Cipher.getInstance(algorithm);
       cipher.init(Cipher.DECRYPT_MODE, secretKey);
-      return new String(cipher.doFinal(Base64.getDecoder().decode(dbData)));
+      return new String(cipher.doFinal(Base64.getDecoder().decode(dbData)), StandardCharsets.UTF_8);
     } catch (Exception e) {
       log.error("Error decrypting attribute", e);
       throw new RuntimeException("Error decrypting attribute", e);

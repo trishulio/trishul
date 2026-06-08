@@ -3,6 +3,7 @@ package io.trishul.money.tax.rate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.math.BigDecimal;
 import org.joda.money.Money;
@@ -30,10 +31,17 @@ class TaxRateTest {
   }
 
   @Test
-  void testGetTaxAmount_ReturnsNull_WhenArgIsNull() {
+  void testGetTaxAmount_ReturnsNull_WhenMoneyArgIsNull() {
     taxRate.setValue(new BigDecimal("2"));
 
     assertNull(taxRate.getTaxAmount(null));
+  }
+
+  @Test
+  void testGetTaxAmount_ReturnsNull_WhenValueIsNull() {
+    taxRate.setValue(null);
+
+    assertNull(taxRate.getTaxAmount(Money.parse("CAD 100")));
   }
 
   @Test
@@ -41,6 +49,14 @@ class TaxRateTest {
     taxRate.setValue(new BigDecimal("2"));
 
     assertEquals(Money.parse("CAD 200"), taxRate.getTaxAmount(Money.parse("CAD 100")));
+  }
+
+  @Test
+  void testSetValue_ReturnsSameInstance() {
+    TaxRate result = taxRate.setValue(new BigDecimal("1"));
+
+    assertSame(taxRate, result);
+    assertEquals(new BigDecimal("1"), taxRate.getValue());
   }
 
   @Test

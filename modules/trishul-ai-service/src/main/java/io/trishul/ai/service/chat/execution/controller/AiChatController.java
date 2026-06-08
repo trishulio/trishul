@@ -40,8 +40,8 @@ public class AiChatController {
     SseEmitter emitter = new SseEmitter(180000L); // 3 minutes timeout
 
     AiChatSession session = sessionService.getBySessionKey(request.getSessionId());
-    StreamingChatLanguageModel chatModel = (StreamingChatLanguageModel) agentCache
-        .getAgent(session.getAgentConfig());
+    StreamingChatLanguageModel chatModel
+        = (StreamingChatLanguageModel) agentCache.getAgent(session.getAgentConfig());
 
     chatModel.generate(request.getMessage(), new StreamingResponseHandler<AiMessage>() {
       @Override

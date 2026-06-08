@@ -2,6 +2,7 @@ package io.trishul.object.store.service.aws.cors.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -19,7 +20,6 @@ import io.trishul.object.store.aws.model.mapper.AwsIaasObjectStoreMapper;
 import io.trishul.object.store.model.IaasObjectStore;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class AwsObjectStoreClientTest {
@@ -57,7 +57,6 @@ class AwsObjectStoreClientTest {
   }
 
   @Test
-  @Disabled("This test is disabled because of TODO: manually validate the AmazonS3Exception is only thrown when bucket is failed to be delete because it's not there. If that's true, enable this test.")
   void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
     doAnswer(inv -> {
       assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
@@ -67,6 +66,32 @@ class AwsObjectStoreClientTest {
     assertFalse(client.delete("B1"));
 
     verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
+  }
+
+  @Test
+  void testGet_ReturnsNull_WhenBucketDoesNotExist() {
+    doReturn(List.of(new Bucket("B2"))).when(s3).listBuckets(any(ListBucketsRequest.class));
+
+    IaasObjectStore objectStore = client.get("B1");
+
+    assertEquals(null, objectStore);
+  }
+
+  @Test
+  void testGet_ThrowsNullPointerException_WhenBucketsAreNull() {
+    doReturn(null).when(s3).listBuckets(any(ListBucketsRequest.class));
+
+    assertThrows(NullPointerException.class, () -> client.get("B1"));
+  }
+
+  @Test
+  void testObjectStores_CachesBuckets() {
+    doReturn(List.of(new Bucket("B1"))).when(s3).listBuckets(any(ListBucketsRequest.class));
+
+    client.get("B1");
+    client.get("B1");
+
+    verify(s3, times(1)).listBuckets(any(ListBucketsRequest.class));
   }
 
   @Test

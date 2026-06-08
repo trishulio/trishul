@@ -20,6 +20,13 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.google.common.cache.LoadingCache;
+import java.lang.reflect.Field;
+import java.util.concurrent.ExecutionException;
+import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+
 class TenantDataSourceConfigurationProviderTest {
   private DataSourceConfigurationProvider<UUID> dsProvider;
 
@@ -71,4 +78,27 @@ class TenantDataSourceConfigurationProviderTest {
 
     assertEquals(mAdminConfig, config);
   }
+
+  @Test
+  void testGetConfiguration_ThrowsRuntimeException_WhenCacheThrowsExecutionException()
+      throws Exception {
+    Field field = dsProvider.getClass().getDeclaredField("cache");
+    field.setAccessible(true);
+
+    LoadingCache<UUID, DataSourceConfiguration> mockCache = mock(LoadingCache.class);
+
+    Mockito.doThrow(new ExecutionException("Execution error", new Exception("cause")))
+        .when(mockCache).get(any(UUID.class));
+
+    field.set(dsProvider, mockCache);
+
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+      dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    });
+
+    assertEquals(
+        "Failed to load datasource configuration for tenantId: '00000000-0000-0000-0000-000000000001' because: Execution error",
+        exception.getMessage());
+  }
 }
+

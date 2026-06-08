@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 import io.trishul.quantity.unit.dto.UnitDto;
 import javax.measure.MetricPrefix;
 import javax.measure.Unit;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.QuantityDimension;
 import tec.uom.se.unit.BaseUnit;
 import tec.uom.se.unit.Units;
+
+import java.lang.reflect.Field;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class QuantityUnitMapperTest {
   private QuantityUnitMapper mapper;
@@ -137,4 +142,28 @@ class QuantityUnitMapperTest {
   void testToDto_ReturnsDto_WhenEntityIsNotNull() {
     assertEquals(new UnitDto("g"), mapper.toDto(new UnitEntity("g")));
   }
+
+  @Test
+  void testToEntity_ReturnsNull_WhenUnitIsNull() {
+    assertNull(mapper.toEntity(null));
+  }
+
+  @Test
+  void testToEntity_ReturnsEntity_WhenUnitIsNotNull() {
+    assertEquals(new UnitEntity("g"), mapper.toEntity(Units.GRAM));
+  }
+
+  @Test
+  void testGetFieldValue_ThrowsRuntimeException_WhenIllegalAccessExceptionOccurs()
+      throws Exception {
+    Field mockField = mock(Field.class);
+    when(mockField.get(null)).thenThrow(new IllegalAccessException("Access Denied"));
+
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+      QuantityUnitMapper.getFieldValue(mockField);
+    });
+    assertEquals("Failed to retrieve the field value because: Access Denied", ex.getMessage());
+  }
 }
+
+

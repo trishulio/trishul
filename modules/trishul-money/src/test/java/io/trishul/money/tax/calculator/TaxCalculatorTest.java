@@ -42,6 +42,17 @@ class TaxCalculatorTest {
   }
 
   @Test
+  void testGetTaxAmount_ReturnsTaxAmountWithHst_WhenTaxHasHstAndAmountIsNotNull() {
+    Tax tax = new Tax(new TaxRate(new BigDecimal("0.13")));
+    Money money = Money.parse("CAD 100");
+
+    TaxAmount taxAmount = calculator.getTaxAmount(tax, money);
+
+    TaxAmount expected = new TaxAmount(Money.parse("CAD 13"));
+    assertEquals(expected, taxAmount);
+  }
+
+  @Test
   void testTotal_ReturnsNull_WhenTaxAmountsAreNull() {
     assertNull(calculator.getTaxAmountTotal(null));
   }
@@ -67,13 +78,14 @@ class TaxCalculatorTest {
         add(new TaxAmount(Money.parse("CAD 40"), Money.parse("CAD 50")));
         add(null);
         add(new TaxAmount());
+        add(new TaxAmount(Money.parse("CAD 15")));
       }
     };
 
     TaxAmount total = calculator.getTaxAmountTotal(amounts);
 
     TaxAmount expected
-        = new TaxAmount(Money.parse("CAD 75"), Money.parse("CAD 70"), Money.parse("CAD 10"));
+        = new TaxAmount(Money.parse("CAD 75"), Money.parse("CAD 70"), Money.parse("CAD 25"));
     assertEquals(expected, total);
   }
 }

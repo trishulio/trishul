@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import static org.mockito.Mockito.never;
+
 @SuppressWarnings("unchecked")
 class CrudControllerServiceTest {
   private CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto> controllerService;
@@ -104,6 +106,15 @@ class CrudControllerServiceTest {
     CrudControllerService<Long, TestEntity, TestEntity, TestEntity, TestDto, TestDto, TestDto> service
         = new CrudControllerService<>(mFilter, mMapper, mService, "TestEntity");
     assertNotNull(service);
+
+    // Call a method to ensure it works with the default NoActionDecorator
+    TestEntity entity = new TestEntity(1L, "value");
+    TestDto dto = new TestDto(1L, "value");
+    when(mService.get(1L)).thenReturn(entity);
+    when(mMapper.toDto(entity)).thenReturn(dto);
+
+    TestDto result = service.get(1L, null);
+    assertNotNull(result);
   }
 
   @Test
@@ -138,6 +149,20 @@ class CrudControllerServiceTest {
   }
 
   @Test
+  void testGetAll_DoesNotApplyFilter_WhenAttributesIsEmpty() {
+    TestEntity entity = new TestEntity(1L, "value");
+    TestDto dto = new TestDto(1L, "value");
+    Page<TestEntity> page = new PageImpl<>(List.of(entity));
+    Set<String> attributes = Set.of();
+
+    when(mMapper.toDto(entity)).thenReturn(dto);
+
+    controllerService.getAll(page, attributes);
+
+    verify(mFilter, never()).retain(any(), any());
+  }
+
+  @Test
   void testGet_ReturnsDto_WhenEntityExists() {
     TestEntity entity = new TestEntity(1L, "value");
     TestDto dto = new TestDto(1L, "value");
@@ -150,6 +175,20 @@ class CrudControllerServiceTest {
     assertNotNull(result);
     assertEquals(1L, result.getId());
     verify(mDecorator).decorate(List.of(dto));
+  }
+
+  @Test
+  void testGet_AppliesFilter_WhenAttributesProvided() {
+    TestEntity entity = new TestEntity(1L, "value");
+    TestDto dto = new TestDto(1L, "value");
+    Set<String> attributes = Set.of("id");
+
+    when(mService.get(1L)).thenReturn(entity);
+    when(mMapper.toDto(entity)).thenReturn(dto);
+
+    controllerService.get(1L, attributes);
+
+    verify(mFilter).retain(dto, attributes);
   }
 
   @Test

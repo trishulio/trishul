@@ -16,6 +16,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 class AccessorRefresherTest {
   class Entity implements Identified<Long> {
     private final Long id;
@@ -129,5 +130,26 @@ class AccessorRefresherTest {
     assertEquals(
         "Cannot find all Entitys in Id-Set: [1, 2, 3]. Only found the ones with Ids: [3, 1]",
         exception.getMessage());
+  }
+
+  @Test
+  void testRefreshAccessors_HandlesNullAccessorElement() {
+    List<Entity> repoEntities = List.of(new Entity(1L));
+    doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L));
+
+    AccessorRefresher<Long, EntityAccessor, Entity> localRefresher
+        = new AccessorRefresher<>(Entity.class, EntityAccessor::getEntity, (accessor, e) -> {
+          if (accessor != null) {
+            accessor.setEntity(e);
+          }
+        }, mEntityRetriever);
+
+    List<EntityConsumer> consumers = new ArrayList<>();
+    consumers.add(new EntityConsumer(new Entity(1L)));
+    consumers.add(null);
+
+    localRefresher.refreshAccessors(consumers);
+
+    assertSame(repoEntities.get(0), consumers.get(0).getEntity());
   }
 }

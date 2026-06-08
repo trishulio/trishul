@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 
 class EntityNotFoundExceptionTest {
   @Test
+  void testConstructor_String() {
+    EntityNotFoundException exception = new EntityNotFoundException("msg");
+    assertEquals("msg", exception.getMessage());
+  }
+
+  @Test
   void testConstructor_StringString_SetsId() {
     EntityNotFoundException exception = new EntityNotFoundException("EntityTest", "idTest");
     assertEquals("EntityTest not found with id: idTest", exception.getMessage());
@@ -14,7 +20,7 @@ class EntityNotFoundExceptionTest {
 
   @Test
   void testConstructor_StringObject_SetsNullIdWhenObjectIsNull() {
-    EntityNotFoundException exception = new EntityNotFoundException("EntityTest", null);
+    EntityNotFoundException exception = new EntityNotFoundException("EntityTest", (Object) null);
     assertEquals("EntityTest not found with id: null", exception.getMessage());
   }
 

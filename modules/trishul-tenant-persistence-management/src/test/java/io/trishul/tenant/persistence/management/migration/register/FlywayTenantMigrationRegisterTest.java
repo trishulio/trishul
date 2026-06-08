@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
@@ -20,6 +21,12 @@ import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.flywaydb.core.api.FlywayException;
+import org.mockito.MockedStatic;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mockStatic;
 
 class FlywayTenantMigrationRegisterTest {
   private TenantDataSourceManager mDsMgr;
@@ -59,6 +66,84 @@ class FlywayTenantMigrationRegisterTest {
     verify(mFw).migrate();
   }
 
+  @Test
+  void testDefaultConstructor_ConstructsSuccessfully() {
+    FlywayTenantMigrationRegister reg = new FlywayTenantMigrationRegister(mDsMgr, mConfigProvider);
+    assertNotNull(reg);
+  }
+
+  @Test
+  void testMigrate_RunsFlywayOnTenantWithTenantsDataSource_UsingPublicConstructor() {
+    try (MockedStatic<Flyway> flywayMock = mockStatic(Flyway.class)) {
+      flywayMock.when(Flyway::configure).thenReturn(mFwConfig);
+      FlywayTenantMigrationRegister publicReg
+          = new FlywayTenantMigrationRegister(mDsMgr, mConfigProvider);
+
+      Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+      publicReg.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+      verify(mFw).migrate();
+    }
+  }
+
+  @Test
+  void testMigrate_ConfiguresHistoryTable_WhenSpecified() {
+    doReturn(MigrationConfiguration.from("HISTORY_TABLE:MIGRATION_PATH")).when(mConfig)
+        .getMigrationConfigurations();
+
+    Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+
+    register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+
+    verify(mFwConfig).table("HISTORY_TABLE");
+    verify(mFw).migrate();
+  }
+
+  @Test
+  void testMigrate_ThrowsRuntimeException_WhenSQLExceptionIsThrown() throws Exception {
+    mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+
+    doThrow(new SQLException("DB Error")).when(mDsMgr)
+        .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    assertThrows(RuntimeException.class, () -> {
+      register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    });
+  }
+
+  @Test
+  void testMigrate_ThrowsRuntimeException_WhenIOExceptionIsThrown() throws Exception {
+    mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+
+    doThrow(new IOException("IO Error")).when(mDsMgr)
+        .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    assertThrows(RuntimeException.class, () -> {
+      register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    });
+  }
+
+
+
+  @Test
+  void testMigrate_ThrowsRuntimeException_WhenFlywayExceptionIsThrown() {
+    Flyway mFw = mock(Flyway.class);
+    doReturn(mFw).when(mFwConfig).load();
+    doReturn(mFwConfig).when(mFwConfig).locations(anyString());
+    doReturn(mFwConfig).when(mFwConfig).schemas(anyString());
+    doReturn(mFwConfig).when(mFwConfig).dataSource(any(DataSource.class));
+    doReturn(mFwConfig).when(mFwConfig).baselineOnMigrate(anyBoolean());
+    doReturn(mFwConfig).when(mFwConfig).baselineVersion(anyString());
+    doReturn(mFwConfig).when(mFwConfig).table(anyString());
+    doReturn(new Location[] {new Location("LOCATION")}).when(mFwConfig).getLocations();
+    doReturn("TABLE").when(mFwConfig).getTable();
+
+    doThrow(new FlywayException("Flyway error")).when(mFw).migrate();
+
+    assertThrows(RuntimeException.class, () -> {
+      register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    });
+  }
+
   private Flyway mockFlyway(FluentConfiguration config, String schemas, String location,
       DataSource ds) {
     Flyway mFw = mock(Flyway.class);
@@ -75,3 +160,4 @@ class FlywayTenantMigrationRegisterTest {
     return mFw;
   }
 }
+

@@ -25,6 +25,9 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
+import static org.springframework.security.core.context.SecurityContextHolder.setContext;
+
 class ContextHolderFilterTest {
   private Filter filter;
 
@@ -96,5 +99,25 @@ class ContextHolderFilterTest {
     assertNull(ctx);
     verify(mChain).doFilter(mReq, mRes);
     verifyNoInteractions(mPrincipalContextBuilder);
+  }
+
+  @Test
+  void testPublicConstructorAndFilter() throws Exception {
+    SecurityContext originalContext = getContext();
+    try {
+      SecurityContext mockCtx = mock(SecurityContext.class);
+      Authentication mockAuth = mock(Authentication.class);
+      doReturn(mockAuth).when(mockCtx).getAuthentication();
+      doReturn(null).when(mockAuth).getPrincipal();
+
+      setContext(mockCtx);
+
+      ContextHolderFilter publicFilter
+          = new ContextHolderFilter(mcontextHolder, mPrincipalContextBuilder);
+      publicFilter.doFilter(mReq, mRes, mChain);
+      verify(mChain).doFilter(mReq, mRes);
+    } finally {
+      setContext(originalContext);
+    }
   }
 }

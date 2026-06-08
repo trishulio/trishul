@@ -22,47 +22,50 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.trishul.crud.service.LockService;
+import static java.util.Set.of;
+
 @Configuration
 public class CommunicationServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(CommunicationMessageService.class)
-  public CommunicationMessageService communicationMessageService(
-      io.trishul.crud.service.LockService lockService, BlockingAsyncExecutor executor,
+  public CommunicationMessageService communicationMessageService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, Message, BaseMessage<?>, UpdateMessage<?>> messageClient) {
     IaasRepository<String, Message, BaseMessage<?>, UpdateMessage<?>> messageRepo
         = new BulkIaasClient<>(executor, messageClient);
     EntityMergerService<String, Message, BaseMessage<?>, UpdateMessage<?>> mergerService
         = new CrudEntityMergerService<>(lockService, BaseMessage.class, UpdateMessage.class,
-            Message.class, java.util.Set.of());
+            Message.class, of());
 
     return new CommunicationMessageService(mergerService, messageRepo);
   }
 
   @Bean
   @ConditionalOnMissingBean(CommunicationChannelService.class)
-  public CommunicationChannelService communicationChannelService(
-      io.trishul.crud.service.LockService lockService, BlockingAsyncExecutor executor,
+  public CommunicationChannelService communicationChannelService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, CommunicationChannel, BaseCommunicationChannel<?>, UpdateCommunicationChannel<?>> channelClient) {
     IaasRepository<String, CommunicationChannel, BaseCommunicationChannel<?>, UpdateCommunicationChannel<?>> channelRepo
         = new BulkIaasClient<>(executor, channelClient);
     EntityMergerService<String, CommunicationChannel, BaseCommunicationChannel<?>, UpdateCommunicationChannel<?>> mergerService
         = new CrudEntityMergerService<>(lockService, BaseCommunicationChannel.class,
-            UpdateCommunicationChannel.class, CommunicationChannel.class, java.util.Set.of());
+            UpdateCommunicationChannel.class, CommunicationChannel.class, of());
 
     return new CommunicationChannelService(mergerService, channelRepo);
   }
 
   @Bean
   @ConditionalOnMissingBean(CommunicationAccountService.class)
-  public CommunicationAccountService communicationAccountService(
-      io.trishul.crud.service.LockService lockService, BlockingAsyncExecutor executor,
+  public CommunicationAccountService communicationAccountService(LockService lockService,
+      BlockingAsyncExecutor executor,
       IaasClient<String, CommunicationAccount, BaseCommunicationAccount<?>, UpdateCommunicationAccount<?>> accountClient) {
     IaasRepository<String, CommunicationAccount, BaseCommunicationAccount<?>, UpdateCommunicationAccount<?>> accountRepo
         = new BulkIaasClient<>(executor, accountClient);
     EntityMergerService<String, CommunicationAccount, BaseCommunicationAccount<?>, UpdateCommunicationAccount<?>> mergerService
         = new CrudEntityMergerService<>(lockService, BaseCommunicationAccount.class,
-            UpdateCommunicationAccount.class, CommunicationAccount.class, java.util.Set.of());
+            UpdateCommunicationAccount.class, CommunicationAccount.class, of());
 
     return new CommunicationAccountService(mergerService, accountRepo);
   }

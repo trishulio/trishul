@@ -20,6 +20,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.trishul.crud.controller.filter.AttributeFilter;
+
 @Configuration
 public class AiSkillAutoConfiguration {
 
@@ -39,8 +41,7 @@ public class AiSkillAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiSkillController.class)
-  public AiSkillController aiSkillController(AiSkillService service,
-      io.trishul.crud.controller.filter.AttributeFilter filter) {
+  public AiSkillController aiSkillController(AiSkillService service, AttributeFilter filter) {
     return new AiSkillController(service, filter);
   }
 

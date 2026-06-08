@@ -2,6 +2,7 @@ package io.trishul.auth.aws.session.context;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import io.trishul.auth.session.context.PrincipalContext;
@@ -10,6 +11,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.Jwt;
+
+import java.lang.reflect.Constructor;
+import java.util.List;
 
 class CognitoPrincipalContextTest {
   private PrincipalContext ctx;
@@ -58,4 +62,16 @@ class CognitoPrincipalContextTest {
     });
     assertEquals("Jwt cannot be null", exception.getMessage());
   }
+
+  @Test
+  void testPrivateConstructor_NullArguments() throws Exception {
+    Constructor<CognitoPrincipalContext> constructor = CognitoPrincipalContext.class
+        .getDeclaredConstructor(List.class, String.class, List.class);
+    constructor.setAccessible(true);
+    CognitoPrincipalContext context = constructor.newInstance(null, "username", null);
+    assertEquals("username", context.getUsername());
+    assertTrue(context.getTenantIds().isEmpty());
+    assertTrue(context.getRoles().isEmpty());
+  }
 }
+

@@ -45,8 +45,7 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setGstRate(TaxRate gstRate) {
-    IllegalArgException.assertion(
-        !TaxRate.isSet(gstRate) || (TaxRate.isSet(gstRate) && !TaxRate.isSet(getHstRate())),
+    IllegalArgException.assertion(!TaxRate.isSet(gstRate) || !TaxRate.isSet(getHstRate()),
         "Cannot set GST when HST is present. Remove HST");
     this.gstRate = gstRate;
     return this;
@@ -57,8 +56,7 @@ public class Tax extends BaseEntity {
   }
 
   public Tax setPstRate(TaxRate pstRate) {
-    IllegalArgException.assertion(
-        !TaxRate.isSet(pstRate) || (TaxRate.isSet(pstRate) && !TaxRate.isSet(getHstRate())),
+    IllegalArgException.assertion(!TaxRate.isSet(pstRate) || !TaxRate.isSet(getHstRate()),
         "Cannot set PST when HST is present. Remove HST");
     this.pstRate = pstRate;
     return this;

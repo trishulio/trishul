@@ -21,6 +21,8 @@ import io.trishul.iaas.tenant.idp.management.service.TenantIaasIdpService;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.model.executor.BlockingAsyncExecutor;
 
+import static java.util.Set.of;
+
 @Configuration
 public class IaasTenantIdpManagementServiceAutoConfiguration {
   @Bean
@@ -30,7 +32,7 @@ public class IaasTenantIdpManagementServiceAutoConfiguration {
       IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasIdpTenantClient) {
     EntityMergerService<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> entityMergerService
         = new CrudEntityMergerService<>(lockService, BaseIaasIdpTenant.class,
-            UpdateIaasIdpTenant.class, IaasIdpTenant.class, java.util.Set.of());
+            UpdateIaasIdpTenant.class, IaasIdpTenant.class, of());
     IaasRepository<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> iaasRepo
         = new BulkIaasClient<>(executor, iaasIdpTenantClient);
 

@@ -12,8 +12,12 @@ import java.util.Set;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class AiSpeechConfigService extends BaseService implements
@@ -27,6 +31,17 @@ public class AiSpeechConfigService extends BaseService implements
       RepoService<Long, AiSpeechConfig, AiSpeechConfigAccessor<?>> repoService) {
     this.entityMergerService = entityMergerService;
     this.repoService = repoService;
+  }
+
+  public Page<AiSpeechConfig> getSpeechConfigs(Set<Long> ids, Set<String> names,
+      Set<String> providers, Boolean isDefault, int page, int size, SortedSet<String> sort,
+      boolean orderAscending) {
+    final Specification<AiSpeechConfig> spec
+        = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids)
+            .in(BaseAiSpeechConfig.ATTR_NAME, names).in(BaseAiSpeechConfig.ATTR_PROVIDER, providers)
+            .is(BaseAiSpeechConfig.ATTR_IS_DEFAULT, isDefault).build();
+
+    return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }
 
   @Override

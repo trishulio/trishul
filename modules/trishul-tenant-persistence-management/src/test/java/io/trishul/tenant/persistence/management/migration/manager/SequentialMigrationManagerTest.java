@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import io.trishul.tenant.entity.TenantData;
 
+import static org.mockito.Mockito.doThrow;
+
 class SequentialMigrationManagerTest {
   private MigrationManager mgr;
 
@@ -53,4 +55,21 @@ class SequentialMigrationManagerTest {
     order.verify(mgr).migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
     order.verify(mgr).migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002")));
   }
+
+  @Test
+  void testMigrateAll_LogsErrors_WhenMigrationThrowsException() {
+    Tenant tenant1 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    Tenant tenant2 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000002"));
+
+    doThrow(new RuntimeException("Test Exception")).when(mMigrationReg).migrate(tenant1);
+
+    mgr.migrateAll(List.of(tenant1, tenant2));
+
+    InOrder order = inOrder(mTenantReg, mMigrationReg);
+    order.verify(mTenantReg).put(tenant1);
+    order.verify(mMigrationReg).migrate(tenant1);
+    order.verify(mTenantReg).put(tenant2);
+    order.verify(mMigrationReg).migrate(tenant2);
+  }
 }
+

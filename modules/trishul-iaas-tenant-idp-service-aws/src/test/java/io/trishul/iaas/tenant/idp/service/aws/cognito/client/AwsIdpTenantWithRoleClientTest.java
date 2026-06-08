@@ -2,19 +2,26 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.CreateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.CreateGroupResult;
+import com.amazonaws.services.cognitoidp.model.DeleteGroupRequest;
+import com.amazonaws.services.cognitoidp.model.DeleteGroupResult;
 import com.amazonaws.services.cognitoidp.model.GetGroupRequest;
 import com.amazonaws.services.cognitoidp.model.GetGroupResult;
 import com.amazonaws.services.cognitoidp.model.GroupType;
+import com.amazonaws.services.cognitoidp.model.ResourceNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.UpdateGroupResult;
 import io.trishul.iaas.access.aws.AwsArnMapper;
@@ -25,6 +32,8 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +78,15 @@ class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
+  void testGet_ReturnsNull_WhenCognitoThrowsResourceNotFoundException() {
+    when(mIdp.getGroup(any(GetGroupRequest.class))).thenThrow(ResourceNotFoundException.class);
+
+    IaasIdpTenant tenant = client.get("T1");
+
+    assertNull(tenant);
+  }
+
+  @Test
   void testAdd_AddsAndReturnsEntity() {
     doAnswer(inv -> {
       CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
@@ -85,6 +103,54 @@ class AwsIdpTenantWithRoleClientTest {
 
     IaasIdpTenant tenant = client.add(new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"),
         "T1_DESCRIPTION", LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0)));
+
+    IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
+        LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
+    assertEquals(expected, tenant);
+  }
+
+  @Test
+  void testAdd_AddsAndReturnsEntity_WhenRoleIsNull() {
+    doAnswer(inv -> {
+      CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
+      assertEquals("USER_POOL", req.getUserPoolId());
+      assertNull(req.getRoleArn());
+
+      return new CreateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
+          .withDescription(req.getGroupName() + "_DESCRIPTION")
+          .withRoleArn(req.getGroupName() + "_ROLE").withUserPoolId(req.getUserPoolId())
+          .withCreationDate(new Date(100, 0, 1)).withLastModifiedDate(new Date(100, 1, 2)));
+    }).when(mIdp).createGroup(any(CreateGroupRequest.class));
+
+    doAnswer(inv -> new IaasRole(inv.getArgument(0, String.class))).when(mRoleService)
+        .get(anyString());
+
+    IaasIdpTenant tenant = client.add(new IaasIdpTenant("T1", null, "T1_DESCRIPTION",
+        LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0)));
+
+    IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
+        LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
+    assertEquals(expected, tenant);
+  }
+
+  @Test
+  void testAdd_AddsAndReturnsEntity_WhenRoleNameIsNull() {
+    doAnswer(inv -> {
+      CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
+      assertEquals("USER_POOL", req.getUserPoolId());
+      assertNull(req.getRoleArn());
+
+      return new CreateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
+          .withDescription(req.getGroupName() + "_DESCRIPTION")
+          .withRoleArn(req.getGroupName() + "_ROLE").withUserPoolId(req.getUserPoolId())
+          .withCreationDate(new Date(100, 0, 1)).withLastModifiedDate(new Date(100, 1, 2)));
+    }).when(mIdp).createGroup(any(CreateGroupRequest.class));
+
+    doAnswer(inv -> new IaasRole(inv.getArgument(0, String.class))).when(mRoleService)
+        .get(anyString());
+
+    IaasIdpTenant tenant = client.add(new IaasIdpTenant("T1", new IaasRole(), "T1_DESCRIPTION",
+        LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0)));
 
     IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
         LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
@@ -142,6 +208,29 @@ class AwsIdpTenantWithRoleClientTest {
     IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
         LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
     assertEquals(expected, tenant);
+  }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenCognitoSucceeds() {
+    Map<String, String> responseMetadata = new HashMap<>();
+    responseMetadata.put(ResponseMetadata.AWS_REQUEST_ID, "REQ_ID");
+
+    DeleteGroupResult result = mock(DeleteGroupResult.class);
+    when(result.getSdkResponseMetadata()).thenReturn(new ResponseMetadata(responseMetadata));
+    when(mIdp.deleteGroup(any(DeleteGroupRequest.class))).thenReturn(result);
+
+    boolean success = client.delete("T1");
+
+    assertTrue(success);
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenCognitoThrowsResourceNotFoundException() {
+    doThrow(ResourceNotFoundException.class).when(mIdp).deleteGroup(any(DeleteGroupRequest.class));
+
+    boolean success = client.delete("T1");
+
+    assertFalse(success);
   }
 
   @Test

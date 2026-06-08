@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,15 @@ class AwsIamPolicyClientTest {
 
     verify(mAwsIamClient, times(1)).getPolicy(any());
     verify(mAwsIamClient, times(1)).listPolicyVersions(any());
+  }
+
+  @Test
+  void testGet_ReturnsNull_WhenNoSuchEntityExceptionIsThrown() {
+    doThrow(NoSuchEntityException.class).when(mAwsIamClient).getPolicy(any(GetPolicyRequest.class));
+
+    IaasPolicy policy = client.get("POLICY");
+
+    assertNull(policy);
   }
 
   private ResponseMetadata mockResponseMetadata() {

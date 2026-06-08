@@ -6,6 +6,9 @@ import io.trishul.communication.model.message.MessageDirection;
 import io.trishul.communication.model.message.MessageStatus;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 
+import com.twilio.rest.api.v2010.account.Message.Direction;
+import com.twilio.rest.api.v2010.account.Message.Status;
+
 public class TwilioMessageMapper
     implements IaasEntityMapper<com.twilio.rest.api.v2010.account.Message, Message> {
   public static final TwilioMessageMapper INSTANCE = new TwilioMessageMapper();
@@ -36,7 +39,7 @@ public class TwilioMessageMapper
     return ChannelType.SMS;
   }
 
-  private MessageStatus mapStatus(com.twilio.rest.api.v2010.account.Message.Status twilioStatus) {
+  private MessageStatus mapStatus(Status twilioStatus) {
     if (twilioStatus == null) {
       return null;
     }
@@ -52,8 +55,7 @@ public class TwilioMessageMapper
     };
   }
 
-  private MessageDirection mapDirection(
-      com.twilio.rest.api.v2010.account.Message.Direction twilioDirection) {
+  private MessageDirection mapDirection(Direction twilioDirection) {
     if (twilioDirection == null) {
       return null;
     }

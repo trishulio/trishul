@@ -10,6 +10,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.util.LinkedMultiValueMap;
+
 /**
  * WebRTCSpeechService. Interfaces with a Speech provider (like OpenAI Whisper/TTS) to stream audio
  * in and out.
@@ -54,22 +57,20 @@ public class WebRTCSpeechService {
     headers.setBearerAuth(openAiApiKey);
     headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-    org.springframework.util.LinkedMultiValueMap<String, Object> body
-        = new org.springframework.util.LinkedMultiValueMap<>();
+    LinkedMultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
     body.add("model", "whisper-1");
-    body.add("file", new org.springframework.core.io.ByteArrayResource(audioData) {
+    body.add("file", new ByteArrayResource(audioData) {
       @Override
       public String getFilename() {
         return "audio.webm";
       }
     });
 
-    HttpEntity<org.springframework.util.LinkedMultiValueMap<String, Object>> requestEntity
-        = new HttpEntity<>(body, headers);
+    HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
     ResponseEntity<Map> response = restTemplate
         .postForEntity("https://api.openai.com/v1/audio/transcriptions", requestEntity, Map.class);
 
-    Map responseBody = response.getBody();
+    Map<?, ?> responseBody = response.getBody();
     if (responseBody != null && responseBody.containsKey("text")) {
       return (String) responseBody.get("text");
     }

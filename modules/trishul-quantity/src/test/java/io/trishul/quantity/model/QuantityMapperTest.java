@@ -66,4 +66,24 @@ class QuantityMapperTest {
   void testFromEntity_ReturnsNull_WhenEntityIsNotNull() {
     assertNull(mapper.fromEntity(null));
   }
+
+  @Test
+  void testFromEntity_ReturnsQuantity_WhenEntityIsNotNull() {
+    QuantityEntity entity = new QuantityEntity(new UnitEntity("g", null), new BigDecimal("100"));
+    Quantity<?> qty = mapper.fromEntity(entity);
+    assertEquals(SupportedUnits.GRAM, qty.getUnit());
+    assertEquals(new BigDecimal("100"), qty.getValue());
+  }
+
+  @Test
+  void testParseNumber_ReturnsBigDecimal_WhenDoubleIsPassed() {
+    BigDecimal decimal = mapper.parseNumber(10.5d);
+    assertEquals(new BigDecimal("10.5"), decimal);
+  }
+
+  @Test
+  void testParseNumber_ReturnsNull_WhenNullIsPassed() {
+    assertNull(mapper.parseNumber(null));
+  }
 }
+

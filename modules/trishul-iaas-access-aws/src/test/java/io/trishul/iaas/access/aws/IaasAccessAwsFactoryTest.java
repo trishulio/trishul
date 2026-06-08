@@ -1,139 +1,42 @@
-// TODO: re-enable them back
-// package io.trishul.iaas.access.aws;
+package io.trishul.iaas.access.aws;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-// import java.net.URI;
-// import java.net.URISyntaxException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
+import java.net.URI;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
-// import org.apache.commons.lang3.reflect.FieldUtils;
-// import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.Test;
+public class IaasAccessAwsFactoryTest {
+  private IaasAccessAwsFactory factory;
 
-// import com.amazonaws.auth.AWSCredentialsProvider;
-// import com.amazonaws.auth.BasicSessionCredentials;
-// import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
-// import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-// import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
-// import com.amazonaws.services.s3.AmazonS3;
-// import com.amazonaws.services.secretsmanager.AWSSecretsManager;
+  @BeforeEach
+  public void init() {
+    factory = new IaasAccessAwsFactory();
+  }
 
-// public class IaasAccessAwsFactoryTest {
-// private IaasAccessAwsFactory factory;
+  @Test
+  public void testIamClient_returnsIamClientWithCorrectCredentialsAndRegion() throws Exception {
+    String accessKey = "accessKey";
+    String secretKey = "secretKey";
 
-// @BeforeEach
-// public void init() {
-// factory = new AwsFactory();
-// }
+    AmazonIdentityManagement iamClient = factory.iamClient(accessKey, secretKey);
 
-// @Test
-// public void testGetIdentityProvider() throws IllegalAccessException,
-// URISyntaxException {
-// AWSCognitoIdentityProvider idp = factory.getIdentityProvider("REGION", "URL",
-// "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
+    assertNotNull(iamClient);
 
-// final AWSCredentialsProvider awsCredentialsProvider =
-// (AWSCredentialsProvider)
-// FieldUtils.readField(idp, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(idp, "endpoint", true);
-// final String region = (String) FieldUtils.readField(idp, "signingRegion",
-// true);
+    AWSCredentialsProvider credsProvider = (AWSCredentialsProvider) ReflectionTestUtils
+        .getField(iamClient, "awsCredentialsProvider");
+    assertNotNull(credsProvider);
+    assertEquals(accessKey, credsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals(secretKey, credsProvider.getCredentials().getAWSSecretKey());
 
-// assertEquals(new URI("https://URL"), endpoint);
-// assertEquals("REGION", region);
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(),
-// "ACCESS_KEY_ID");
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(),
-// "ACCESS_SECRET_KEY");
-// }
+    URI endpoint = (URI) ReflectionTestUtils.getField(iamClient, "endpoint");
+    assertEquals(new URI("https://iam.amazonaws.com"), endpoint);
 
-// @Test
-// public void testSecretsManager() throws URISyntaxException,
-// IllegalAccessException {
-// AWSSecretsManager secretsManager = factory.secretsManager("REGION", "URL",
-// "ACCESS_KEY_ID",
-// "ACCESS_SECRET_KEY");
-
-// final AWSCredentialsProvider awsCredentialsProvider =
-// (AWSCredentialsProvider)
-// FieldUtils.readField(secretsManager, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(secretsManager, "endpoint",
-// true);
-// final String region = (String) FieldUtils.readField(secretsManager,
-// "signingRegion", true);
-
-// assertEquals(new URI("https://URL"), endpoint);
-// assertEquals("REGION", region);
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(),
-// "ACCESS_KEY_ID");
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(),
-// "ACCESS_SECRET_KEY");
-// }
-
-// @Test
-// public void testGetAwsCognitoIdentityClient() throws IllegalAccessException,
-// URISyntaxException {
-// AmazonCognitoIdentity idp = factory.getAwsCognitoIdentityClient("REGION",
-// "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
-
-// final AWSCredentialsProvider awsCredentialsProvider =
-// (AWSCredentialsProvider)
-// FieldUtils.readField(idp, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(idp, "endpoint", true);
-// final String region = (String) FieldUtils.readField(idp, "signingRegion",
-// true);
-
-// assertEquals(new URI("https://cognito-identity.REGION.amazonaws.com"),
-// endpoint);
-// assertEquals("REGION", region);
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(),
-// "ACCESS_KEY_ID");
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(),
-// "ACCESS_SECRET_KEY");
-// }
-
-// @Test
-// public void testS3Client() throws IllegalAccessException, URISyntaxException
-// {
-// AmazonS3 s3 = factory.s3Client("REGION", "ACCESS_KEY_ID",
-// "ACCESS_SECRET_KEY",
-// "SESSION_TOKEN");
-
-// final AWSCredentialsProvider awsCredentialsProvider =
-// (AWSCredentialsProvider)
-// FieldUtils.readField(s3, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(s3, "endpoint", true);
-// final String region = (String) FieldUtils.readField(s3, "signingRegion",
-// true);
-
-// assertEquals(new URI("https://s3.REGION.amazonaws.com"), endpoint);
-// assertEquals("REGION", region);
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(),
-// "ACCESS_KEY_ID");
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(),
-// "ACCESS_SECRET_KEY");
-// assertEquals(((BasicSessionCredentials)
-// awsCredentialsProvider.getCredentials()).getSessionToken(), "SESSION_TOKEN");
-// }
-
-// @Test
-// public void testIamClient() throws IllegalAccessException, URISyntaxException
-// {
-// AmazonIdentityManagement iamClient = factory.iamClient("ACCESS_KEY_ID",
-// "ACCESS_SECRET_KEY");
-
-// final AWSCredentialsProvider awsCredentialsProvider =
-// (AWSCredentialsProvider)
-// FieldUtils.readField(iamClient, "awsCredentialsProvider", true);
-// final URI endpoint = (URI) FieldUtils.readField(iamClient, "endpoint", true);
-// final String region = (String) FieldUtils.readField(iamClient,
-// "signingRegion", true);
-
-// assertEquals(new URI("https://iam.amazonaws.com"), endpoint);
-// assertEquals("us-east-1", region);
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSAccessKeyId(),
-// "ACCESS_KEY_ID");
-// assertEquals(awsCredentialsProvider.getCredentials().getAWSSecretKey(),
-// "ACCESS_SECRET_KEY");
-// }
-// }
+    String signingRegion = (String) ReflectionTestUtils.getField(iamClient, "signingRegion");
+    assertEquals("us-east-1", signingRegion);
+  }
+}

@@ -9,6 +9,7 @@ import io.trishul.ai.service.chat.model.controller.AiChatModelConfigController;
 import io.trishul.ai.service.chat.model.repository.AiChatModelConfigRepository;
 import io.trishul.ai.service.chat.model.service.AiChatModelConfigService;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -50,8 +51,9 @@ public class AiChatModelConfigAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiChatModelConfigController.class)
-  public AiChatModelConfigController aiChatModelConfigController(AiChatModelConfigService service) {
-    return new AiChatModelConfigController(service);
+  public AiChatModelConfigController aiChatModelConfigController(AiChatModelConfigService service,
+      AttributeFilter filter) {
+    return new AiChatModelConfigController(service, filter);
   }
 
   @Bean

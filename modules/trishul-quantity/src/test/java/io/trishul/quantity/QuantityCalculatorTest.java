@@ -196,4 +196,17 @@ class QuantityCalculatorTest {
     assertFalse(calc.isExpectedUnit(SupportedUnits.GRAM,
         Quantities.getQuantity(100, SupportedUnits.LITRE)));
   }
+
+  @Test
+  void testIsCompatibleQtyForUnitAccessor_ReturnsTrue_WhenQuantityIsNullAndAccessorNotNull() {
+    BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
+    doReturn(SupportedUnits.GRAM).when(accessor).getBaseQuantityUnit();
+    assertTrue(calc.isCompatibleQtyForUnitAccessor(null, accessor));
+  }
+
+  @Test
+  void testIsExpectedUnit_ReturnsFalse_WhenQuantityIsNull() {
+    assertFalse(calc.isExpectedUnit(SupportedUnits.GRAM, null));
+  }
 }
+

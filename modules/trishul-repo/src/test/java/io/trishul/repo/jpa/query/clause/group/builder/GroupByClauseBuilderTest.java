@@ -18,6 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class GroupByClauseBuilderTest {
   private GroupByClauseBuilder grouper;
   private ColumnSpecAccumulator mAccumulator;
@@ -90,5 +92,11 @@ class GroupByClauseBuilderTest {
     doReturn(mExprs).when(mAccumulator).getColumns(mRoot, mCq, mCb);
 
     assertEquals(mExprs, grouper.getGroupByClause(mRoot, mCq, mCb));
+  }
+
+  @Test
+  void testDefaultConstructor() {
+    GroupByClauseBuilder builder = new GroupByClauseBuilder();
+    assertNotNull(builder);
   }
 }

@@ -11,8 +11,11 @@ import io.trishul.ai.service.tool.model.service.AiToolService;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.ai.tool.model.AiTool;
 import io.trishul.ai.tool.model.AiToolAccessor;
+import io.trishul.ai.service.tool.model.controller.AiToolController;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.service.LockService;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 class AiToolAutoConfigurationTest {
 
@@ -21,6 +24,33 @@ class AiToolAutoConfigurationTest {
   @BeforeEach
   void setUp() {
     config = new AiToolAutoConfiguration();
+  }
+
+  @Test
+  void testAiToolController_ReturnsNonNull() {
+    AiToolService mockService = mock(AiToolService.class);
+    AttributeFilter mockFilter = mock(AttributeFilter.class);
+
+    AiToolController result = config.aiToolController(mockService, mockFilter);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiToolAccessorRefresher_ReturnsNonNull() {
+    AiToolRepository mockRepository = mock(AiToolRepository.class);
+    AccessorRefresher<Long, AiToolAccessor<?>, AiTool> result
+        = config.aiToolAccessorRefresher(mockRepository);
+    assertNotNull(result);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testAiToolRefresher_ReturnsNonNull() {
+    AccessorRefresher<Long, AiToolAccessor<?>, AiTool> mockAccessorRefresher
+        = mock(AccessorRefresher.class);
+    Refresher<AiTool, AiToolAccessor<?>> result = config.aiToolRefresher(mockAccessorRefresher);
+    assertNotNull(result);
   }
 
   @Test

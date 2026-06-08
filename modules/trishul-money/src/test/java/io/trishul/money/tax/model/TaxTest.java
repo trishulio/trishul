@@ -43,8 +43,9 @@ class TaxTest {
 
   @Test
   void testGetSetGstRate() {
-    tax.setGstRate(new TaxRate(new BigDecimal("1")));
+    Tax result = tax.setGstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getGstRate());
+    assertEquals(tax, result);
   }
 
   @Test
@@ -53,14 +54,15 @@ class TaxTest {
 
     tax.setGstRate(null);
     tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> tax.setGstRate(new TaxRate(new BigDecimal("2"))));
   }
 
   @Test
   void testGetSetPstRate() {
-    tax.setPstRate(new TaxRate(new BigDecimal("1")));
+    Tax result = tax.setPstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getPstRate());
+    assertEquals(tax, result);
   }
 
   @Test
@@ -68,15 +70,16 @@ class TaxTest {
     tax.setHstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setPstRate(null);
-    tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    tax.setPstRate(new TaxRate(new BigDecimal("0.00")));
+    assertThrows(IllegalArgumentException.class,
         () -> tax.setPstRate(new TaxRate(new BigDecimal("2"))));
   }
 
   @Test
   void testGetSetHstRate() {
-    tax.setHstRate(new TaxRate(new BigDecimal("1")));
+    Tax result = tax.setHstRate(new TaxRate(new BigDecimal("1")));
     assertEquals(new TaxRate(new BigDecimal("1")), tax.getHstRate());
+    assertEquals(tax, result);
   }
 
   @Test
@@ -84,8 +87,8 @@ class TaxTest {
     tax.setPstRate(new TaxRate(new BigDecimal("1")));
 
     tax.setHstRate(null);
-    tax.setGstRate(new TaxRate(new BigDecimal("0.00")));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    tax.setHstRate(new TaxRate(new BigDecimal("0.00")));
+    assertThrows(IllegalArgumentException.class,
         () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
   }
 
@@ -95,7 +98,31 @@ class TaxTest {
 
     tax.setHstRate(null);
     tax.setHstRate(new TaxRate(new BigDecimal("0.00")));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> tax.setHstRate(new TaxRate(new BigDecimal("2"))));
+  }
+
+  @Test
+  void testEquals_ReturnsTrue_WhenAttributesAreSame() {
+    tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+    Tax other = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+
+    assertEquals(tax, other);
+  }
+
+  @Test
+  void testHashCode_ReturnsSameHashCode_WhenAttributesAreSame() {
+    tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+    Tax other = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+
+    assertEquals(tax.hashCode(), other.hashCode());
+  }
+
+  @Test
+  void testToString_ReturnsJsonString() {
+    tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+    String json = tax.toString();
+
+    assertEquals(tax, Tax.fromString(json, Tax.class));
   }
 }

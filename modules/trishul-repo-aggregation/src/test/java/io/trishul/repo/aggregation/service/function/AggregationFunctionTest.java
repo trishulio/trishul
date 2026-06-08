@@ -13,6 +13,10 @@ import io.trishul.repo.jpa.query.spec.criteria.MinSpec;
 import io.trishul.repo.jpa.query.spec.criteria.SumSpec;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class AggregationFunctionTest {
   @Test
   void testGetAggregation_SumFunctionReturnsSumAggregation_WhenPathProviderIsNotNull() {
@@ -102,5 +106,27 @@ class AggregationFunctionTest {
         = AggregationFunction.MIN.getAggregation("FIELD_1", "FIELD_2");
 
     assertEquals(new MinSpec<>(new ColumnSpec<>(new String[] {"FIELD_1", "FIELD_2"})), spec);
+  }
+
+  @Test
+  void testEnumMethods() {
+    assertEquals(5, AggregationFunction.values().length);
+    assertEquals(AggregationFunction.SUM, AggregationFunction.valueOf("SUM"));
+  }
+
+  @Test
+  void testGetAggregation_ThrowsRuntimeException_WhenReflectionFails() throws Exception {
+    Field clazzField = AggregationFunction.class.getDeclaredField("clazz");
+    clazzField.setAccessible(true);
+    Object originalClazz = clazzField.get(AggregationFunction.SUM);
+    try {
+      clazzField.set(AggregationFunction.SUM, String.class);
+      RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        AggregationFunction.SUM.getAggregation("FIELD");
+      });
+      Assertions.assertTrue(ex.getMessage().contains("Failed to create an instance of type"));
+    } finally {
+      clazzField.set(AggregationFunction.SUM, originalClazz);
+    }
   }
 }

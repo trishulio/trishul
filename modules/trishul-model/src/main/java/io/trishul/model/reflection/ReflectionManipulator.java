@@ -140,13 +140,13 @@ public class ReflectionManipulator {
       }
     } catch (final IntrospectionException e) {
       final String msg = String.format("Failed to introspect object because: %s", e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       final String msg = String.format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
       final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     }
   }
 
@@ -184,13 +184,13 @@ public class ReflectionManipulator {
       }
     } catch (final IntrospectionException e) {
       final String msg = String.format("Failed to introspect object because: %s", e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       final String msg = String.format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     } catch (final ReflectiveOperationException e) {
       final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     }
 
     return obj;
@@ -200,9 +200,9 @@ public class ReflectionManipulator {
     return this.construct(clazz, new HashMap<>());
   }
 
-  private void handleException(String msg, Exception e) {
+  private RuntimeException handleException(String msg, Exception e) {
     log.error(msg);
-    throw new RuntimeException(msg, e);
+    return new RuntimeException(msg, e);
   }
 
   // TODO: add unit tests
@@ -230,10 +230,10 @@ public class ReflectionManipulator {
       }
     } catch (final ReflectiveOperationException e) {
       final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     } catch (IllegalArgumentException e) {
       final String msg = String.format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
-      this.handleException(msg, e);
+      throw this.handleException(msg, e);
     }
   }
 }

@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Configuration;
 
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 
+import io.trishul.crud.controller.filter.AttributeFilter;
+
 @Configuration
 public class AiToolAutoConfiguration {
 
@@ -47,8 +49,7 @@ public class AiToolAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(AiToolController.class)
-  public AiToolController aiToolController(AiToolService service,
-      io.trishul.crud.controller.filter.AttributeFilter filter) {
+  public AiToolController aiToolController(AiToolService service, AttributeFilter filter) {
     return new AiToolController(service, filter);
   }
 

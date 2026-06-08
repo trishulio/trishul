@@ -57,4 +57,10 @@ class IaasObjectStoreTest {
     objectStore.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), objectStore.getLastUpdated());
   }
+
+  @Test
+  void testSetVersion() {
+    objectStore.setVersion(1);
+    assertNull(objectStore.getVersion());
+  }
 }

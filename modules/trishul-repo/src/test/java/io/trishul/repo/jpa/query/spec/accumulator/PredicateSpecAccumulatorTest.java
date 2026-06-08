@@ -18,6 +18,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class PredicateSpecAccumulatorTest {
   private PredicateSpecAccumulator accumulator;
 
@@ -71,5 +73,33 @@ class PredicateSpecAccumulatorTest {
     accumulator.add(spec2);
 
     assertArrayEquals(new Predicate[] {mExpr1, mExpr2}, accumulator.getPredicates(mRoot, mCq, mCb));
+  }
+
+  @Test
+  void testNoArgConstructor() {
+    PredicateSpecAccumulator acc = new PredicateSpecAccumulator();
+    assertNotNull(acc);
+  }
+
+  @Test
+  void testAdd_ResetsFlagsAndReturns_WhenIsPredicateIsNull() {
+    CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
+    accumulator.setIsPredicate(null);
+    accumulator.setIsNot(true);
+
+    accumulator.add(spec);
+
+    assertEquals(0, mAggregations.size());
+  }
+
+  @Test
+  void testAdd_ResetsFlagsAndReturns_WhenIsPredicateIsFalse() {
+    CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
+    accumulator.setIsPredicate(false);
+    accumulator.setIsNot(true);
+
+    accumulator.add(spec);
+
+    assertEquals(0, mAggregations.size());
   }
 }
