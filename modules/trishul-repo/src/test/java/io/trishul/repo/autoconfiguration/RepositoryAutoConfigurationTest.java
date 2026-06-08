@@ -3,6 +3,7 @@ package io.trishul.repo.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import io.trishul.repo.jpa.repository.service.TransactionService;
 import jakarta.persistence.EntityManager;

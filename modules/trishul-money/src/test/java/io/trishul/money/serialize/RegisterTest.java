@@ -2,6 +2,7 @@ package io.trishul.money.serialize;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import io.trishul.model.json.JsonMapper;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;

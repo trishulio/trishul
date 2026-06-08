@@ -1,13 +1,13 @@
 package io.trishul.secrets.aws.autoconfiguration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import io.trishul.secrets.SecretsManager;
 import io.trishul.secrets.aws.AwsSecretsManager;
 import io.trishul.secrets.aws.SecretsAwsFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SecretsAwsAutoConfiguration {

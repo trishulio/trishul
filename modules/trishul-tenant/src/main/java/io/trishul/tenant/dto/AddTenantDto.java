@@ -1,9 +1,9 @@
 package io.trishul.tenant.dto;
 
-import java.net.URI;
 import io.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.net.URI;
 
 public class AddTenantDto extends BaseDto {
   @NotBlank

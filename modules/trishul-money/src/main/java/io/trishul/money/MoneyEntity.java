@@ -1,14 +1,14 @@
 package io.trishul.money;
 
-import java.math.BigDecimal;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.currency.model.Currency;
+import io.trishul.money.serialize.Register;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import io.trishul.money.serialize.Register;
+import java.math.BigDecimal;
 
 @Embeddable
 public class MoneyEntity extends BaseEntity {

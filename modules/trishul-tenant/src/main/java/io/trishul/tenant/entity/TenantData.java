@@ -1,8 +1,8 @@
 package io.trishul.tenant.entity;
 
+import io.trishul.base.types.base.pojo.Identified;
 import java.net.URI;
 import java.util.UUID;
-import io.trishul.base.types.base.pojo.Identified;
 
 public interface TenantData extends Identified<UUID> {
   final String ATTR_NAME = "name";

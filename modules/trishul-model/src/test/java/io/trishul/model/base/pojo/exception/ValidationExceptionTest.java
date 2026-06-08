@@ -2,8 +2,9 @@ package io.trishul.model.base.pojo.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
+
 import io.trishul.model.base.exception.ValidationException;
+import org.junit.jupiter.api.Test;
 
 class ValidationExceptionTest {
 

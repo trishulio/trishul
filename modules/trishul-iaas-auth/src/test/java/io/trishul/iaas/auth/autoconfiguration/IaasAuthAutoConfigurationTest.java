@@ -4,15 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
 import io.trishul.iaas.auth.session.context.IaasAuthorizationCredentialsBuilder;
 import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
 import io.trishul.iaas.auth.session.context.holder.IaasAuthorizationCredentialsHolder;
 import io.trishul.iaas.auth.session.context.holder.ThreadLocalIaasAuthorizationCredentialsHolder;
 import io.trishul.iaas.auth.session.filters.IaasAuthorizationCredentialsHolderFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasAuthAutoConfigurationTest {
 

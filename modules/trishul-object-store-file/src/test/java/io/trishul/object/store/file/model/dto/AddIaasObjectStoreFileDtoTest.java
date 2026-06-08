@@ -2,6 +2,7 @@ package io.trishul.object.store.file.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;

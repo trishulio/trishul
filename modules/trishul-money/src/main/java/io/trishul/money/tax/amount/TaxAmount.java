@@ -1,8 +1,5 @@
 package io.trishul.money.tax.amount;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.joda.money.Money;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.MoneyCalculator;
 import io.trishul.money.MoneyEntity;
@@ -14,6 +11,9 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.PrePersist;
+import java.util.ArrayList;
+import java.util.List;
+import org.joda.money.Money;
 
 @Embeddable
 public class TaxAmount extends BaseEntity {

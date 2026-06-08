@@ -2,6 +2,7 @@ package io.trishul.money.serialize;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import io.trishul.money.dto.MoneyDto;

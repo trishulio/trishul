@@ -2,10 +2,12 @@ package io.trishul.repo.jpa.query.spec.accumulator;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.repo.jpa.query.spec.criteria.AndSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.NotSpec;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class PredicateSpecAccumulatorTest {
   private PredicateSpecAccumulator accumulator;

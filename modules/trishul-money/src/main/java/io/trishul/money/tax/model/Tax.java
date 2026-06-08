@@ -1,12 +1,12 @@
 package io.trishul.money.tax.model;
 
 import io.trishul.model.base.entity.BaseEntity;
+import io.trishul.model.base.exception.IllegalArgException;
 import io.trishul.money.tax.rate.TaxRate;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import io.trishul.model.base.exception.IllegalArgException;
 
 @Embeddable
 public class Tax extends BaseEntity {

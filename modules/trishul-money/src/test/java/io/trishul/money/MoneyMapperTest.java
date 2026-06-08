@@ -1,17 +1,17 @@
 package io.trishul.money;
 
+import static java.math.BigDecimal.TEN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import io.trishul.money.currency.model.Currency;
 import io.trishul.money.dto.MoneyDto;
 import java.math.BigDecimal;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static java.math.BigDecimal.TEN;
 
 class MoneyMapperTest {
   MoneyMapper mapper;

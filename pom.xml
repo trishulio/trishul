@@ -653,6 +653,7 @@
                         </formats>
                         <java>
                             <removeUnusedImports/>
+                            <importOrder/>
                             <eclipse>
                                 <file>${maven.multiModuleProjectDirectory}/java.xml</file>
                             </eclipse>

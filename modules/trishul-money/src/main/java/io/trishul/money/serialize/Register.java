@@ -1,8 +1,8 @@
 package io.trishul.money.serialize;
 
-import org.joda.money.Money;
 import io.trishul.model.json.JacksonJsonMapper;
 import io.trishul.model.json.JsonMapper;
+import org.joda.money.Money;
 
 public class Register {
   public static void init() {

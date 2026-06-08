@@ -1,15 +1,15 @@
 package io.trishul.repo.jpa.repository.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.trishul.model.base.dto.BaseDto;
+import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PageDtoTest {
   class DummyDto extends BaseDto {

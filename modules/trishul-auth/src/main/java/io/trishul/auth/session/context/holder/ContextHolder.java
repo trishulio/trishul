@@ -1,7 +1,7 @@
 package io.trishul.auth.session.context.holder;
 
-import java.util.UUID;
 import io.trishul.auth.session.context.PrincipalContext;
+import java.util.UUID;
 
 public interface ContextHolder {
   PrincipalContext getPrincipalContext();

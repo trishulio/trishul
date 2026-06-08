@@ -2,11 +2,12 @@ package io.trishul.money.tax.amount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import io.trishul.money.serialize.Register;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import io.trishul.money.serialize.Register;
 
 class TaxAmountTest {
   private TaxAmount taxAmount;

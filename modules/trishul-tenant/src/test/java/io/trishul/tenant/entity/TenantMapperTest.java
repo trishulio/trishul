@@ -2,6 +2,7 @@ package io.trishul.tenant.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;
 import io.trishul.tenant.dto.UpdateTenantDto;

@@ -1,6 +1,7 @@
 package io.trishul.data.datasource.configuration.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.junit.jupiter.api.BeforeEach;

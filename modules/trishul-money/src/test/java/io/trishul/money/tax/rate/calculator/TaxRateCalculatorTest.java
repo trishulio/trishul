@@ -2,6 +2,7 @@ package io.trishul.money.tax.rate.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.money.tax.rate.TaxRate;
 import java.math.BigDecimal;
 import org.joda.money.Money;

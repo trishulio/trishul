@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 import jakarta.persistence.criteria.Path;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;

@@ -2,6 +2,7 @@ package io.trishul.money.tax.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.money.tax.dto.TaxDto;
 import io.trishul.money.tax.rate.TaxRate;
 import io.trishul.money.tax.rate.dto.TaxRateDto;

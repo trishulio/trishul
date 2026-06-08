@@ -1,6 +1,7 @@
 package io.trishul.secrets.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import java.net.URI;

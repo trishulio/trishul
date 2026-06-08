@@ -1,18 +1,12 @@
 package io.trishul.auth.session.filters;
 
-import java.io.IOException;
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.assertNull;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.oauth2.jwt.Jwt;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
+import static org.springframework.security.core.context.SecurityContextHolder.setContext;
 
 import io.trishul.auth.session.context.PrincipalContext;
 import io.trishul.auth.session.context.PrincipalContextBuilder;
@@ -24,9 +18,13 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-import static org.springframework.security.core.context.SecurityContextHolder.setContext;
+import java.io.IOException;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 class ContextHolderFilterTest {
   private Filter filter;

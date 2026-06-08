@@ -3,6 +3,7 @@ package io.trishul.money.tax.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import io.trishul.money.tax.rate.TaxRate;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;

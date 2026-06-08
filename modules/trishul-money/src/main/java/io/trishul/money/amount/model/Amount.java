@@ -1,6 +1,5 @@
 package io.trishul.money.amount.model;
 
-import org.joda.money.Money;
 import io.trishul.model.base.entity.BaseEntity;
 import io.trishul.money.MoneyEntity;
 import io.trishul.money.MoneyMapper;
@@ -12,6 +11,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.PrePersist;
+import org.joda.money.Money;
 
 @Embeddable
 public class Amount extends BaseEntity {

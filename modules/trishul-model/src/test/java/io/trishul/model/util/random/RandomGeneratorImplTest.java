@@ -1,6 +1,7 @@
 package io.trishul.model.util.random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.trishul.base.types.util.random.RandomGenerator;
 import java.security.SecureRandom;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,6 +2,7 @@ package io.trishul.tenant.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.net.URI;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;

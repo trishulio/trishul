@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import jakarta.persistence.criteria.From;
 import jakarta.persistence.criteria.Path;
 import java.util.function.Supplier;

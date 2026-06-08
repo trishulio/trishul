@@ -1,15 +1,16 @@
 package io.trishul.data.datasource.configuration.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
+import io.trishul.secrets.SecretsManager;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import io.trishul.secrets.SecretsManager;
 
 class LazyTenantDataSourceConfigurationTest {
   private DataSourceConfiguration config;

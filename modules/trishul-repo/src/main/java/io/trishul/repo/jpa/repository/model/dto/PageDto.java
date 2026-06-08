@@ -1,10 +1,10 @@
 package io.trishul.repo.jpa.repository.model.dto;
 
+import io.trishul.model.base.dto.BaseDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import io.trishul.model.base.dto.BaseDto;
 
 public class PageDto<T extends BaseDto> extends BaseDto implements Iterable<T> {
   private List<T> content;

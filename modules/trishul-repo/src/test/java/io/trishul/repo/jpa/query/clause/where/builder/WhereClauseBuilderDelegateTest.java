@@ -1,34 +1,34 @@
 package io.trishul.repo.jpa.query.clause.where.builder;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-import org.assertj.core.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import org.springframework.data.jpa.domain.Specification;
+
 import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.InSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsNullSpec;
+import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
 import io.trishul.repo.jpa.query.spec.criteria.LikeSpec;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-
-import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import static org.mockito.Mockito.any;
+import java.util.List;
+import java.util.Set;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.data.jpa.domain.Specification;
 
 class WhereClauseBuilderDelegateTest {
   private WhereClauseBuilderDelegate builder;

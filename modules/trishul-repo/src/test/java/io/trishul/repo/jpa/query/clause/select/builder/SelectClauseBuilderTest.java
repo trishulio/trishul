@@ -1,10 +1,12 @@
 package io.trishul.repo.jpa.query.clause.select.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.accumulator.ColumnSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
@@ -17,8 +19,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SelectClauseBuilderTest {
   private SelectClauseBuilder selector;

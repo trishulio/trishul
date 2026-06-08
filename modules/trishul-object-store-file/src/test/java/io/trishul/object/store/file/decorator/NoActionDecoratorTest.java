@@ -1,6 +1,7 @@
 package io.trishul.object.store.file.decorator;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

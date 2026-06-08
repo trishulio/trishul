@@ -6,13 +6,13 @@ import com.google.common.cache.LoadingCache;
 import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.sql.Connection;
 
 public class CachingDataSourceManager implements DataSourceManager {
   private static final Logger log = LoggerFactory.getLogger(CachingDataSourceManager.class);

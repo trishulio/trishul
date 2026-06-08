@@ -2,6 +2,7 @@ package io.trishul.money.tax.amount.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.money.dto.MoneyDto;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;

@@ -3,6 +3,7 @@ package io.trishul.repo.jpa.query.join.joiner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.model.base.entity.CriteriaJoin;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.JoinColumn;

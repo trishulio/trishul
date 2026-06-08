@@ -3,6 +3,7 @@ package io.trishul.repo.jpa.query.spec.accumulator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
