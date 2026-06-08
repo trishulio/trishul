@@ -30,8 +30,9 @@ class WebSecurityConfigTest {
     DefaultSecurityFilterChain filterChain = mock(DefaultSecurityFilterChain.class);
 
     // Mock for authorizeHttpRequests
-    var registry = mock(AuthorizationManagerRequestMatcherRegistry.class);
-    var authorizedUrl = mock(AuthorizedUrl.class);
+    AuthorizationManagerRequestMatcherRegistry registry
+        = mock(AuthorizationManagerRequestMatcherRegistry.class);
+    AuthorizedUrl authorizedUrl = mock(AuthorizedUrl.class);
 
     when(registry.requestMatchers(any(String[].class))).thenReturn(authorizedUrl);
     when(authorizedUrl.permitAll()).thenReturn(registry);
@@ -45,14 +46,14 @@ class WebSecurityConfigTest {
     });
 
     // Mock for oauth2ResourceServer
-    var oauth2Configurer = mock(OAuth2ResourceServerConfigurer.class);
+    OAuth2ResourceServerConfigurer<?> oauth2Configurer = mock(OAuth2ResourceServerConfigurer.class);
     when(httpSecurity.oauth2ResourceServer(any(Customizer.class))).thenAnswer(invocation -> {
       Customizer customizer = invocation.getArgument(0);
       customizer.customize(oauth2Configurer);
       return httpSecurity;
     });
 
-    var jwtConfigurer = mock(JwtConfigurer.class);
+    JwtConfigurer jwtConfigurer = mock(JwtConfigurer.class);
     when(oauth2Configurer.jwt(any(Customizer.class))).thenAnswer(invocation -> {
       Customizer customizer = invocation.getArgument(0);
       customizer.customize(jwtConfigurer);
