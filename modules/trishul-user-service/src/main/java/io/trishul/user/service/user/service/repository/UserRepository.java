@@ -1,12 +1,11 @@
 package io.trishul.user.service.user.service.repository;
 
+import io.trishul.repo.jpa.repository.ExtendedRepository;
+import io.trishul.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
-import io.trishul.repo.jpa.repository.ExtendedRepository;
-import io.trishul.user.model.User;
 
 public interface UserRepository
     extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, ExtendedRepository<Long> {

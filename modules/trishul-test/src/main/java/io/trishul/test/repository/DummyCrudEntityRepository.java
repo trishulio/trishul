@@ -1,12 +1,12 @@
 package io.trishul.test.repository;
 
+import io.trishul.repo.jpa.repository.ExtendedRepository;
+import io.trishul.test.model.DummyCrudEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import io.trishul.repo.jpa.repository.ExtendedRepository;
-import io.trishul.test.model.DummyCrudEntity;
 
 @Repository
 public interface DummyCrudEntityRepository extends JpaRepository<DummyCrudEntity, Long>,
