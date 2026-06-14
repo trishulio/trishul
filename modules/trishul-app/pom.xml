@@ -13,7 +13,7 @@
 
     <parent>
         <groupId>io.trishul</groupId>
-        <artifactId>trishul-parent</artifactId>
+        <artifactId>trishul-app-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../trishul-app-parent/pom.xml</relativePath>
     </parent>

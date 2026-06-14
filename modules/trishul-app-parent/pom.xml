@@ -20,11 +20,6 @@
     <dependencies>
         <dependency>
             <groupId>io.trishul</groupId>
-            <artifactId>trishul-app</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.trishul</groupId>
             <artifactId>trishul-base-types</artifactId>
         </dependency>
         <dependency>
