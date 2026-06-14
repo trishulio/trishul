@@ -74,6 +74,8 @@
         <module>modules/trishul-communication-twilio</module>
         <module>modules/trishul-integration-communication</module>
         <module>modules/trishul-integration-communication-service</module>
+        <module>modules/trishul-app-parent</module>
+        <module>modules/trishul-app</module>
     </modules>
 
     <properties>
@@ -95,7 +97,7 @@
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
         <spotless.version>3.6.0</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <spotbugs.version>4.9.8.3</spotbugs.version>
+        <spotbugs.version>4.10.2.0</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
         <org.owasp.dependency.check.version>12.2.2</org.owasp.dependency.check.version>
@@ -534,6 +536,12 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-integration-communication-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
