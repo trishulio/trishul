@@ -1,4 +1,4 @@
-package io.trishul.app;
+package io.trishul.app.test;
 
 import io.trishul.tenant.persistence.config.PackageScanConfig;
 import org.springframework.boot.SpringApplication;

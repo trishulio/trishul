@@ -1,4 +1,4 @@
-package io.trishul.app;
+package io.trishul.app.test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

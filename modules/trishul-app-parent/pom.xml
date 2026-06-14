@@ -272,6 +272,11 @@
         </dependency>
 
         <dependency>
+            <groupId>io.trishul</groupId>
+            <artifactId>trishul-app</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>

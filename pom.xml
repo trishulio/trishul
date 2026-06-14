@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.trishul</groupId>
@@ -76,6 +75,7 @@
         <module>modules/trishul-integration-communication-service</module>
         <module>modules/trishul-app-parent</module>
         <module>modules/trishul-app</module>
+        <module>modules/trishul-app-test</module>
     </modules>
 
     <properties>
@@ -789,19 +789,16 @@
                     <version>${org.apache.maven.plugin.antrun.version}</version>
                     <executions>
                         <execution>
-                        <id>replace-host-url</id>
-                        <phase>integration-test</phase>
-                        <configuration>
-                            <target>
-                            <replaceregexp file="${project.basedir}/api/openapi.json"
-                                            match="${env.APP_URL}"
-                                            replace="/"
-                                            byline="true"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
+                            <id>replace-host-url</id>
+                            <phase>integration-test</phase>
+                            <configuration>
+                                <target>
+                                    <replaceregexp file="${project.basedir}/api/openapi.json" match="${env.APP_URL}" replace="/" byline="true"/>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>

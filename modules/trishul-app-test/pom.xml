@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.trishul</groupId>
-    <artifactId>trishul-app</artifactId>
+    <artifactId>trishul-app-test</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>trishul-app</name>
-    <description>Core reusable app configurations and resources for Trishul-based applications</description>
+    <name>trishul-app-test</name>
+    <description>Final integration tests for the Trishul repository</description>
 
     <parent>
         <groupId>io.trishul</groupId>
-        <artifactId>trishul-parent</artifactId>
+        <artifactId>trishul-app-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../trishul-app-parent/pom.xml</relativePath>
     </parent>
 </project>
