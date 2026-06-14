@@ -1,9 +1,5 @@
 package io.trishul.object.store.service.autoconfiguration;
 
-import java.util.Set;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
@@ -19,6 +15,10 @@ import io.trishul.object.store.model.UpdateIaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
+import java.util.Set;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasObjectStoreAutoConfiguration {

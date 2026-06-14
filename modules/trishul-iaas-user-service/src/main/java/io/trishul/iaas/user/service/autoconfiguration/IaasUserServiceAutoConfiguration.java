@@ -1,8 +1,5 @@
 package io.trishul.iaas.user.service.autoconfiguration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.iaas.client.BulkIaasClient;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.repository.IaasRepository;
@@ -17,6 +14,9 @@ import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.executor.BlockingAsyncExecutor;
 import io.trishul.tenant.entity.TenantIdProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasUserServiceAutoConfiguration {

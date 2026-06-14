@@ -2,6 +2,7 @@ package io.trishul.iaas.user.aws.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import com.amazonaws.services.cognitoidp.model.AdminGetUserResult;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 import io.trishul.auth.aws.session.context.CognitoPrincipalContext;

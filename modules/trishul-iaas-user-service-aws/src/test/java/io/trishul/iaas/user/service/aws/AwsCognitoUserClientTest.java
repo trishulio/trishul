@@ -1,15 +1,9 @@
 package io.trishul.iaas.user.service.aws;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -17,6 +11,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+
 import com.amazonaws.ResponseMetadata;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
@@ -34,6 +29,12 @@ import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 import io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper;
 import io.trishul.iaas.user.aws.model.AwsCognitoUserMapper;
 import io.trishul.iaas.user.model.IaasUser;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Supplier;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AwsCognitoUserClientTest {
   private AwsCognitoUserClient client;

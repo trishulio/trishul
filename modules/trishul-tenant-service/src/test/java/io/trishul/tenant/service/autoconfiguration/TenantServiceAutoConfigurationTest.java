@@ -6,13 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.tenant.service.TenantIaasService;
@@ -23,6 +16,11 @@ import io.trishul.tenant.persistence.management.migration.manager.MigrationManag
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
 import io.trishul.tenant.service.repository.TenantRepository;
 import io.trishul.tenant.service.service.TenantService;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TenantServiceAutoConfigurationTest {
 

@@ -2,6 +2,7 @@ package io.trishul.quantity.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.quantity.model.dto.QuantityDto;
 import io.trishul.quantity.unit.SupportedUnits;
 import io.trishul.quantity.unit.UnitEntity;
@@ -86,4 +87,3 @@ class QuantityMapperTest {
     assertNull(mapper.parseNumber(null));
   }
 }
-

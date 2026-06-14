@@ -3,12 +3,14 @@ package io.trishul.ai.service.autoconfiguration;
 import io.trishul.ai.service.tool.model.controller.AiToolController;
 import io.trishul.ai.service.tool.model.repository.AiToolRepository;
 import io.trishul.ai.service.tool.model.service.AiToolService;
+import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.ai.tool.model.AiTool;
 import io.trishul.ai.tool.model.AiToolAccessor;
 import io.trishul.ai.tool.model.AiToolRefresher;
 import io.trishul.ai.tool.model.BaseAiTool;
 import io.trishul.ai.tool.model.UpdateAiTool;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -19,10 +21,6 @@ import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.ai.service.tool.registry.AiToolRegistry;
-
-import io.trishul.crud.controller.filter.AttributeFilter;
 
 @Configuration
 public class AiToolAutoConfiguration {

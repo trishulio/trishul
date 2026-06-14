@@ -3,6 +3,7 @@ package io.trishul.user.model;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 import io.trishul.base.types.base.pojo.OwnedByAccessor;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;

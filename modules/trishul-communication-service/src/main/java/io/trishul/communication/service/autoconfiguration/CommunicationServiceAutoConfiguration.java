@@ -1,5 +1,7 @@
 package io.trishul.communication.service.autoconfiguration;
 
+import static java.util.Set.of;
+
 import io.trishul.communication.model.account.BaseCommunicationAccount;
 import io.trishul.communication.model.account.CommunicationAccount;
 import io.trishul.communication.model.account.UpdateCommunicationAccount;
@@ -14,6 +16,7 @@ import io.trishul.communication.service.channel.CommunicationChannelService;
 import io.trishul.communication.service.message.CommunicationMessageService;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.crud.service.LockService;
 import io.trishul.iaas.client.BulkIaasClient;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.repository.IaasRepository;
@@ -21,9 +24,6 @@ import io.trishul.model.executor.BlockingAsyncExecutor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.crud.service.LockService;
-import static java.util.Set.of;
 
 @Configuration
 public class CommunicationServiceAutoConfiguration {
@@ -70,4 +70,3 @@ public class CommunicationServiceAutoConfiguration {
     return new CommunicationAccountService(mergerService, accountRepo);
   }
 }
-

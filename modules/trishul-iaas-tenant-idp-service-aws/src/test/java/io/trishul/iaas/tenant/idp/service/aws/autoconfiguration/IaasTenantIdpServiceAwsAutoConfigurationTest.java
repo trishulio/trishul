@@ -3,14 +3,12 @@ package io.trishul.iaas.tenant.idp.service.aws.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.service.role.service.IaasRoleService;
 import io.trishul.iaas.client.IaasClient;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasTenantIdpServiceAwsAutoConfigurationTest {
 

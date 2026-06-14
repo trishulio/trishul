@@ -3,6 +3,7 @@ package io.trishul.iaas.access.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;

@@ -1,13 +1,5 @@
 package io.trishul.tenant.persistence.management.autoconfiguration;
 
-import java.net.URI;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.base.types.util.random.RandomGenerator;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
@@ -28,6 +20,14 @@ import io.trishul.tenant.persistence.management.migration.register.TenantRegiste
 import io.trishul.tenant.persistence.management.migration.register.TenantSchemaRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantUserRegister;
 import io.trishul.tenant.persistence.management.migration.register.UnifiedTenantRegister;
+import java.net.URI;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class TenantPersistenceManagementAutoConfiguration {

@@ -2,6 +2,7 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import com.amazonaws.services.cognitoidp.model.GroupType;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import java.time.LocalDateTime;

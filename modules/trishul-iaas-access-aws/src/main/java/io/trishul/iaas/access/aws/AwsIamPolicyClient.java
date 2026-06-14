@@ -1,10 +1,5 @@
 package io.trishul.iaas.access.aws;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang3.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.CreatePolicyRequest;
 import com.amazonaws.services.identitymanagement.model.CreatePolicyResult;
@@ -26,6 +21,11 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsIamPolicyClient
     implements IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>> {

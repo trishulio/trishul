@@ -3,19 +3,18 @@ package io.trishul.ai.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.chat.model.AiChatModelConfigAccessor;
 import io.trishul.ai.service.chat.model.controller.AiChatModelConfigController;
 import io.trishul.ai.service.chat.model.repository.AiChatModelConfigRepository;
 import io.trishul.ai.service.chat.model.service.AiChatModelConfigService;
-import io.trishul.repo.jpa.converter.StringCryptoConverter;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import io.trishul.repo.jpa.converter.StringCryptoConverter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AiChatModelConfigAutoConfigurationTest {
 

@@ -2,6 +2,7 @@ package io.trishul.user.role.binding.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.user.model.User;
 import io.trishul.user.role.model.UserRole;
 import java.time.LocalDateTime;

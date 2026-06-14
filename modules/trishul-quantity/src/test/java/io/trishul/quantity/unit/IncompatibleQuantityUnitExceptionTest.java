@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,4 +84,3 @@ class IncompatibleQuantityUnitExceptionTest {
         () -> IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM, null));
   }
 }
-

@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import io.trishul.ai.speech.model.AiSpeechConfig;
 import io.trishul.ai.speech.model.AiSpeechConfigAccessor;
 import io.trishul.ai.speech.model.BaseAiSpeechConfig;
@@ -19,13 +20,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.util.function.Function;
 
 class AiSpeechConfigServiceTest {
 

@@ -9,6 +9,7 @@ import io.trishul.ai.skill.model.AiSkillRefresher;
 import io.trishul.ai.skill.model.BaseAiSkill;
 import io.trishul.ai.skill.model.UpdateAiSkill;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
@@ -19,8 +20,6 @@ import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.crud.controller.filter.AttributeFilter;
 
 @Configuration
 public class AiSkillAutoConfiguration {

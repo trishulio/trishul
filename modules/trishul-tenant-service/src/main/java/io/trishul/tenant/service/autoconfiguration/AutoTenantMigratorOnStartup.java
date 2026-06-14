@@ -1,15 +1,15 @@
 package io.trishul.tenant.service.autoconfiguration;
 
-import java.util.List;
-import java.util.TreeSet;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.service.TenantService;
 import jakarta.annotation.PostConstruct;
+import java.util.List;
+import java.util.TreeSet;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 @Component
 @ConditionalOnProperty(name = "trishul.tenant.migration.on-startup.enabled", havingValue = "true")

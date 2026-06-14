@@ -2,6 +2,7 @@ package io.trishul.iaas.idp.tenant.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.tenant.entity.Tenant;
 import java.net.URI;
 import java.time.LocalDateTime;

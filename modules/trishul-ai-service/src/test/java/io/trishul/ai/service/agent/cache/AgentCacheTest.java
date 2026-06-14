@@ -5,15 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import io.trishul.ai.agent.model.AiAgentConfig;
-import io.trishul.ai.service.agent.factory.AgentFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import com.google.common.cache.LoadingCache;
+import io.trishul.ai.agent.model.AiAgentConfig;
+import io.trishul.ai.service.agent.factory.AgentFactory;
 import java.util.concurrent.ExecutionException;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AgentCacheTest {
 

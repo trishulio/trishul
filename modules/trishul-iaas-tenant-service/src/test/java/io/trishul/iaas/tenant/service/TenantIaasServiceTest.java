@@ -1,13 +1,9 @@
 package io.trishul.iaas.tenant.service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
@@ -26,6 +22,11 @@ import io.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsService;
 import io.trishul.iaas.tenant.resource.TenantIaasResources;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.tenant.entity.Tenant;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TenantIaasServiceTest {
   private TenantIaasService service;

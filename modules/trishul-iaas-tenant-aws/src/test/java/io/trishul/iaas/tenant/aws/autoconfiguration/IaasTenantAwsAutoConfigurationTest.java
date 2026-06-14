@@ -3,15 +3,13 @@ package io.trishul.iaas.tenant.aws.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import io.trishul.tenant.auth.model.ContextHolderTenantIdProvider;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasTenantAwsAutoConfigurationTest {
 

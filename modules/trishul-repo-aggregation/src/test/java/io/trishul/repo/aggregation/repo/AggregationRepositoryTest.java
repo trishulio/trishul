@@ -3,6 +3,7 @@ package io.trishul.repo.aggregation.repo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import io.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;

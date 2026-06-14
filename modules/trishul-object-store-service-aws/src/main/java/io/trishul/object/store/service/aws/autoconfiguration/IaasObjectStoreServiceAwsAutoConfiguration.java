@@ -1,8 +1,5 @@
 package io.trishul.object.store.service.aws.autoconfiguration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.amazonaws.services.s3.AmazonS3;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.object.store.aws.model.mapper.AwsIaasObjectStoreMapper;
@@ -14,6 +11,9 @@ import io.trishul.object.store.model.UpdateIaasObjectStore;
 import io.trishul.object.store.service.aws.cors.config.AwsCorsConfigClient;
 import io.trishul.object.store.service.aws.cors.config.AwsObjectStoreClient;
 import io.trishul.object.store.service.aws.cors.config.AwsPublicAccessBlockClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasObjectStoreServiceAwsAutoConfiguration {

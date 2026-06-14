@@ -2,6 +2,7 @@ package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import java.time.LocalDateTime;

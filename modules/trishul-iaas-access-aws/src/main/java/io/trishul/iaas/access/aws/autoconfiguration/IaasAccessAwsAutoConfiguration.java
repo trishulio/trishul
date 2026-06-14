@@ -1,9 +1,5 @@
 package io.trishul.iaas.access.aws.autoconfiguration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import io.trishul.iaas.access.aws.AwsArnMapper;
@@ -24,6 +20,10 @@ import io.trishul.iaas.access.role.model.BaseIaasRole;
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.client.IaasClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasAccessAwsAutoConfiguration {
@@ -69,4 +69,3 @@ public class IaasAccessAwsAutoConfiguration {
     return new AwsIamRolePolicyAttachmentClient(iamClient, arnMapper);
   }
 }
-

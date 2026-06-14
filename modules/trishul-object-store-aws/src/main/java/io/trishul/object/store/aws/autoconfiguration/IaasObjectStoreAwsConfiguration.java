@@ -1,11 +1,11 @@
 package io.trishul.object.store.aws.autoconfiguration;
 
+import com.amazonaws.services.s3.AmazonS3;
+import io.trishul.object.store.aws.model.mapper.ObjectStoreAwsFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.amazonaws.services.s3.AmazonS3;
-import io.trishul.object.store.aws.model.mapper.ObjectStoreAwsFactory;
 
 @Configuration
 public class IaasObjectStoreAwsConfiguration {

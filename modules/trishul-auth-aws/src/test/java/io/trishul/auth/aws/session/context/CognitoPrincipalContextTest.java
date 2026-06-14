@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.auth.session.context.PrincipalContext;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import java.lang.reflect.Constructor;
-import java.util.List;
 
 class CognitoPrincipalContextTest {
   private PrincipalContext ctx;
@@ -74,4 +74,3 @@ class CognitoPrincipalContextTest {
     assertTrue(context.getRoles().isEmpty());
   }
 }
-

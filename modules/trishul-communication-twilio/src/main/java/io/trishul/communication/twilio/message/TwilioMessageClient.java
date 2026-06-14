@@ -1,5 +1,9 @@
 package io.trishul.communication.twilio.message;
 
+import static com.twilio.rest.api.v2010.account.Message.creator;
+import static com.twilio.rest.api.v2010.account.Message.deleter;
+import static com.twilio.rest.api.v2010.account.Message.fetcher;
+
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.rest.api.v2010.account.MessageFetcher;
 import com.twilio.type.PhoneNumber;
@@ -11,10 +15,6 @@ import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.twilio.rest.api.v2010.account.Message.creator;
-import static com.twilio.rest.api.v2010.account.Message.deleter;
-import static com.twilio.rest.api.v2010.account.Message.fetcher;
 
 public class TwilioMessageClient
     implements IaasClient<String, Message, BaseMessage<?>, UpdateMessage<?>> {

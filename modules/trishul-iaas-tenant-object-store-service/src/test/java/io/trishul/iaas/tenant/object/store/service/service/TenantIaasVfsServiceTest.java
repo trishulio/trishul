@@ -1,19 +1,14 @@
 package io.trishul.iaas.tenant.object.store.service.service;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import org.mockito.InOrder;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
@@ -28,6 +23,12 @@ import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 
 class TenantIaasVfsServiceTest {
   private TenantIaasVfsService service;

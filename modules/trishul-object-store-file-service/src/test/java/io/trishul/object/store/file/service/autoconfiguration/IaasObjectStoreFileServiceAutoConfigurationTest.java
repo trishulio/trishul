@@ -3,11 +3,6 @@ package io.trishul.object.store.file.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import java.net.URI;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.repository.provider.IaasRepositoryProvider;
 import io.trishul.model.executor.BlockingAsyncExecutor;
@@ -17,6 +12,9 @@ import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 import io.trishul.object.store.file.service.controller.IaasObjectStoreFileController;
 import io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
 import io.trishul.object.store.file.service.service.IaasObjectStoreFileService;
+import java.net.URI;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasObjectStoreFileServiceAutoConfigurationTest {
 

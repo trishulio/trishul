@@ -1,13 +1,12 @@
 package io.trishul.communication.twilio.message;
 
+import com.twilio.rest.api.v2010.account.Message.Direction;
+import com.twilio.rest.api.v2010.account.Message.Status;
 import io.trishul.communication.model.channel.ChannelType;
 import io.trishul.communication.model.message.Message;
 import io.trishul.communication.model.message.MessageDirection;
 import io.trishul.communication.model.message.MessageStatus;
 import io.trishul.iaas.mapper.IaasEntityMapper;
-
-import com.twilio.rest.api.v2010.account.Message.Direction;
-import com.twilio.rest.api.v2010.account.Message.Status;
 
 public class TwilioMessageMapper
     implements IaasEntityMapper<com.twilio.rest.api.v2010.account.Message, Message> {

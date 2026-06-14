@@ -1,7 +1,5 @@
 package io.trishul.iaas.access.aws;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.model.CreateRoleRequest;
 import com.amazonaws.services.identitymanagement.model.CreateRoleResult;
@@ -20,6 +18,8 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.role.model.UpdateIaasRole;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsIamRoleClient
     implements IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>> {

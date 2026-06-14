@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 import io.trishul.auth.session.context.PrincipalContext;
 import java.util.Arrays;

@@ -3,6 +3,7 @@ package io.trishul.ai.service.chat.model.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.ai.chat.model.AddAiChatModelConfigDto;
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.chat.model.AiChatModelConfigDto;

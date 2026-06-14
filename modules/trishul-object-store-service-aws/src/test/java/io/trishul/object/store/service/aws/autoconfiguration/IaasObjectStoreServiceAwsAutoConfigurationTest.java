@@ -3,12 +3,10 @@ package io.trishul.object.store.service.aws.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
+import com.amazonaws.services.s3.AmazonS3;
+import io.trishul.iaas.client.IaasClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.amazonaws.services.s3.AmazonS3;
-
-import io.trishul.iaas.client.IaasClient;
 
 class IaasObjectStoreServiceAwsAutoConfigurationTest {
 

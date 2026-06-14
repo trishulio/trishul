@@ -1,13 +1,13 @@
 package io.trishul.user.model;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import io.trishul.model.base.dto.BaseDto;
 import io.trishul.model.validation.NullOrNotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateUserDto extends BaseDto {
   private Long id;

@@ -2,6 +2,7 @@ package io.trishul.iaas.tenant.object.store;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.object.store.model.IaasObjectStore;
 import java.util.List;

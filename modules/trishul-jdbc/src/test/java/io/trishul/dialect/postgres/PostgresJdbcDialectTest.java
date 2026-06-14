@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 import io.trishul.dialect.JdbcDialect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

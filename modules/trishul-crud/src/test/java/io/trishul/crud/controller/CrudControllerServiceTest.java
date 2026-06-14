@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
@@ -21,8 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-
-import static org.mockito.Mockito.never;
 
 @SuppressWarnings("unchecked")
 class CrudControllerServiceTest {

@@ -1,10 +1,5 @@
 package io.trishul.iaas.tenant.aws.autoconfiguration;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
 import io.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilder;
 import io.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProvider;
@@ -12,6 +7,11 @@ import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuil
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
 import io.trishul.tenant.auth.model.ContextHolderTenantIdProvider;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasTenantAwsAutoConfiguration {

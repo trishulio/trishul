@@ -3,6 +3,7 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.GetCredentialsForIdentityRequest;

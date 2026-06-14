@@ -9,27 +9,26 @@ import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.chat.model.AiChatModelConfigAccessor;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
+import io.trishul.ai.service.agent.cache.AgentCache;
+import io.trishul.ai.service.agent.factory.AgentFactory;
+import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
 import io.trishul.ai.service.agent.model.controller.AiAgentConfigController;
 import io.trishul.ai.service.agent.model.repository.AiAgentConfigRepository;
 import io.trishul.ai.service.agent.model.service.AiAgentConfigService;
+import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
+import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.ai.service.agent.cache.AgentCache;
-import io.trishul.ai.service.agent.factory.AgentFactory;
-import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
-import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
-import io.trishul.ai.service.tool.registry.AiToolRegistry;
 
 @Configuration
 public class AiAgentConfigAutoConfiguration {

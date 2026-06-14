@@ -1,13 +1,14 @@
 package io.trishul.user.status;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class UserStatusRefresherTest {
   private AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> mRefresher;

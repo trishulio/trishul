@@ -3,9 +3,6 @@ package io.trishul.ai.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.agent.model.AiAgentConfigAccessor;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
@@ -19,6 +16,8 @@ import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AiChatSessionAutoConfigurationTest {
 

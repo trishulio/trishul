@@ -2,6 +2,7 @@ package io.trishul.commodity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.commodity.model.Commodity;
 import io.trishul.quantity.unit.SupportedUnits;
 import java.math.BigDecimal;

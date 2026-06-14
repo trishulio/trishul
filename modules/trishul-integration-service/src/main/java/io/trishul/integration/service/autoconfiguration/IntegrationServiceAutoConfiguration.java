@@ -1,23 +1,23 @@
 package io.trishul.integration.service.autoconfiguration;
 
+import static java.util.Set.of;
+
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.crud.service.LockService;
 import io.trishul.integration.model.BaseIntegration;
 import io.trishul.integration.model.Integration;
 import io.trishul.integration.model.IntegrationAccessor;
+import io.trishul.integration.model.IntegrationRefresher;
 import io.trishul.integration.model.UpdateIntegration;
 import io.trishul.integration.service.repository.IntegrationRepository;
 import io.trishul.integration.service.service.IntegrationService;
+import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.crud.service.LockService;
-import io.trishul.integration.model.IntegrationRefresher;
-import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import static java.util.Set.of;
 
 @Configuration
 public class IntegrationServiceAutoConfiguration {

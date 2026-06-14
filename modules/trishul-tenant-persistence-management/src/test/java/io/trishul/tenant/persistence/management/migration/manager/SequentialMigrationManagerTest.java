@@ -1,9 +1,12 @@
 package io.trishul.tenant.persistence.management.migration.manager;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+
 import io.trishul.tenant.entity.Tenant;
+import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
 import java.util.List;
@@ -11,9 +14,6 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import io.trishul.tenant.entity.TenantData;
-
-import static org.mockito.Mockito.doThrow;
 
 class SequentialMigrationManagerTest {
   private MigrationManager mgr;
@@ -72,4 +72,3 @@ class SequentialMigrationManagerTest {
     order.verify(mMigrationReg).migrate(tenant2);
   }
 }
-

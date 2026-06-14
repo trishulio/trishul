@@ -8,6 +8,7 @@ import io.trishul.ai.guardrail.model.UpdateAiGuardrail;
 import io.trishul.ai.service.guardrail.model.controller.AiGuardrailController;
 import io.trishul.ai.service.guardrail.model.repository.AiGuardrailRepository;
 import io.trishul.ai.service.guardrail.model.service.AiGuardrailService;
+import io.trishul.ai.service.guardrail.pipeline.GuardrailPipeline;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
@@ -20,8 +21,6 @@ import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.ai.service.guardrail.pipeline.GuardrailPipeline;
 
 @Configuration
 public class AiGuardrailAutoConfiguration {

@@ -1,11 +1,14 @@
 package io.trishul.ai.service.chat.execution.controller;
 
+import static java.lang.reflect.Proxy.newProxyInstance;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
+
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import io.trishul.ai.agent.model.AiAgentConfig;
@@ -13,14 +16,11 @@ import io.trishul.ai.service.agent.cache.AgentCache;
 import io.trishul.ai.service.chat.execution.dto.ChatRequestDto;
 import io.trishul.ai.service.session.model.service.AiChatSessionService;
 import io.trishul.ai.session.model.AiChatSession;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
-import static java.lang.reflect.Proxy.newProxyInstance;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 class AiChatControllerTest {
 

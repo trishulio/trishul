@@ -5,15 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.data.jpa.domain.Specification;
+
 import io.trishul.auth.session.context.PrincipalContext;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.user.model.User;
 import io.trishul.user.service.user.service.repository.UserRepository;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.jpa.domain.Specification;
 
 class AccountServiceTest {
   private AccountService service;

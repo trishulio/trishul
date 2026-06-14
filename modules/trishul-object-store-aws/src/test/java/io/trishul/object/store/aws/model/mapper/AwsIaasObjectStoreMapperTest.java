@@ -2,6 +2,7 @@ package io.trishul.object.store.aws.model.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import com.amazonaws.services.s3.model.Bucket;
 import io.trishul.object.store.model.IaasObjectStore;
 import java.time.LocalDateTime;

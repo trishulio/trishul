@@ -1,9 +1,9 @@
 package io.trishul.tenant.auth.model;
 
-import java.util.UUID;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.TenantIdProvider;
+import java.util.UUID;
 
 public class ContextHolderTenantIdProvider implements TenantIdProvider {
   private final ContextHolder contextHolder;

@@ -2,12 +2,12 @@ package io.trishul.repo.aggregation.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.repo.aggregation.repo.AggregationRepository;
+import io.trishul.repo.aggregation.service.AggregationService;
 import io.trishul.repo.jpa.query.resolver.QueryResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.repo.aggregation.service.AggregationService;
 
 class RepoAggregationAutoConfigurationTest {
   private RepoAggregationAutoConfiguration config;

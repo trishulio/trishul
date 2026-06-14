@@ -1,9 +1,5 @@
 package io.trishul.iaas.access.service.autoconfiguration;
 
-import java.util.Set;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
@@ -24,6 +20,10 @@ import io.trishul.iaas.client.BulkIaasClient;
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.model.executor.BlockingAsyncExecutor;
+import java.util.Set;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasAccessServiceAutoConfiguration {

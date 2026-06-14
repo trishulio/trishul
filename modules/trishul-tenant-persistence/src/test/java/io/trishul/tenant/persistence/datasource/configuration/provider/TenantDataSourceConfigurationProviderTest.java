@@ -3,7 +3,11 @@ package io.trishul.tenant.persistence.datasource.configuration.provider;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+
+import com.google.common.cache.LoadingCache;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
@@ -14,18 +18,14 @@ import io.trishul.data.datasource.configuration.provider.DataSourceConfiguration
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.AdminTenant;
 import io.trishul.tenant.entity.TenantData;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.cache.LoadingCache;
-import java.lang.reflect.Field;
-import java.util.concurrent.ExecutionException;
 import org.mockito.Mockito;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
 class TenantDataSourceConfigurationProviderTest {
   private DataSourceConfigurationProvider<UUID> dsProvider;
@@ -101,4 +101,3 @@ class TenantDataSourceConfigurationProviderTest {
         exception.getMessage());
   }
 }
-

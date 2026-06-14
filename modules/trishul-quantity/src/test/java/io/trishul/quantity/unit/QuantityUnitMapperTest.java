@@ -3,10 +3,14 @@ package io.trishul.quantity.unit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+
 import io.trishul.quantity.unit.dto.UnitDto;
+import java.lang.reflect.Field;
 import javax.measure.MetricPrefix;
 import javax.measure.Unit;
 import javax.measure.quantity.AmountOfSubstance;
@@ -16,10 +20,6 @@ import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.QuantityDimension;
 import tec.uom.se.unit.BaseUnit;
 import tec.uom.se.unit.Units;
-
-import java.lang.reflect.Field;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 
 class QuantityUnitMapperTest {
   private QuantityUnitMapper mapper;
@@ -165,5 +165,3 @@ class QuantityUnitMapperTest {
     assertEquals("Failed to retrieve the field value because: Access Denied", ex.getMessage());
   }
 }
-
-

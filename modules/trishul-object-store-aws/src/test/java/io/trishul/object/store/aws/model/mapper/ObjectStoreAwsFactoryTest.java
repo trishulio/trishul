@@ -1,6 +1,7 @@
 package io.trishul.object.store.aws.model.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.services.s3.AmazonS3;

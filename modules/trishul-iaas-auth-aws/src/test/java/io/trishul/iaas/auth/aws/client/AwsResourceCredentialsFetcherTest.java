@@ -3,6 +3,7 @@ package io.trishul.iaas.auth.aws.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.IdentityPoolShortDescription;
 import io.trishul.iaas.auth.session.context.IaasAuthorization;

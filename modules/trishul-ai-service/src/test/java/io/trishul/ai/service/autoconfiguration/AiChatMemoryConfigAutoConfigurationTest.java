@@ -6,20 +6,20 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
+import io.trishul.ai.service.memory.model.controller.AiChatMemoryConfigController;
 import io.trishul.ai.service.memory.model.repository.AiChatMemoryConfigRepository;
 import io.trishul.ai.service.memory.model.service.AiChatMemoryConfigService;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
-import io.trishul.ai.service.memory.model.controller.AiChatMemoryConfigController;
-import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AiChatMemoryConfigAutoConfigurationTest {
 

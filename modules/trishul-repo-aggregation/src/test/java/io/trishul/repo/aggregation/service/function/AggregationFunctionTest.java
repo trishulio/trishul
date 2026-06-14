@@ -1,8 +1,10 @@
 package io.trishul.repo.aggregation.service.function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.repo.jpa.query.path.provider.PathProvider;
 import io.trishul.repo.jpa.query.spec.criteria.AverageSpec;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
@@ -11,11 +13,9 @@ import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import io.trishul.repo.jpa.query.spec.criteria.MaxSpec;
 import io.trishul.repo.jpa.query.spec.criteria.MinSpec;
 import io.trishul.repo.jpa.query.spec.criteria.SumSpec;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 class AggregationFunctionTest {
   @Test

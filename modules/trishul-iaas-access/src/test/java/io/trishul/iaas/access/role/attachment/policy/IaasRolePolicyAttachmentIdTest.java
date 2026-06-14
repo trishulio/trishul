@@ -2,6 +2,7 @@ package io.trishul.iaas.access.role.attachment.policy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
 import org.junit.jupiter.api.BeforeEach;

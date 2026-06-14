@@ -1,16 +1,11 @@
 package io.trishul.iaas.user.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.user.model.BaseIaasUser;
 import io.trishul.iaas.user.model.BaseIaasUserTenantMembership;
@@ -22,6 +17,12 @@ import io.trishul.iaas.user.model.UpdateIaasUser;
 import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
 import io.trishul.tenant.entity.TenantIdProvider;
 import io.trishul.user.model.User;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TenantIaasUserServiceTest {
   private TenantIaasUserService service;

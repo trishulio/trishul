@@ -2,6 +2,9 @@ package io.trishul.commodity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import io.trishul.commodity.good.model.Good;
 import io.trishul.money.amount.model.Amount;
 import io.trishul.money.amount.model.AmountSupplier;
@@ -18,9 +21,6 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class AmountCalculatorTest {
   private AmountCalculator calculator;

@@ -3,6 +3,7 @@ package io.trishul.user.service.user.service.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.user.model.User;
 import io.trishul.user.model.UserDto;
 import io.trishul.user.service.user.service.service.AccountService;

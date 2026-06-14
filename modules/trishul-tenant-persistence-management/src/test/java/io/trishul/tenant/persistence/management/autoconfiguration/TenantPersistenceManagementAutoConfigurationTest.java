@@ -1,26 +1,26 @@
 package io.trishul.tenant.persistence.management.autoconfiguration;
 
+import static java.util.UUID.fromString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
 import io.trishul.base.types.util.random.RandomGenerator;
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
 import io.trishul.model.util.random.RandomGeneratorImpl;
+import io.trishul.tenant.entity.AdminTenant;
+import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.persistence.management.migration.manager.SequentialMigrationManager;
 import io.trishul.tenant.persistence.management.migration.register.FlywayTenantMigrationRegister;
 import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
 import io.trishul.tenant.persistence.management.migration.register.UnifiedTenantRegister;
-import io.trishul.tenant.entity.TenantData;
 import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.data.datasource.query.runner.DataSourceQueryRunner;
-import io.trishul.tenant.entity.AdminTenant;
-import static java.util.UUID.fromString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 class TenantPersistenceManagementAutoConfigurationTest {
   private TenantPersistenceManagementAutoConfiguration config;
@@ -69,4 +69,3 @@ class TenantPersistenceManagementAutoConfigurationTest {
     assertNotNull(runner);
   }
 }
-

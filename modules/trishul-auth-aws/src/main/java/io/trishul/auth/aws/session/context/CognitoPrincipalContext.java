@@ -1,14 +1,12 @@
 package io.trishul.auth.aws.session.context;
 
+import io.trishul.auth.session.context.PrincipalContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import io.trishul.auth.session.context.PrincipalContext;
 
 public class CognitoPrincipalContext implements PrincipalContext {
   public static final String CLAIM_GROUPS = "cognito:groups";

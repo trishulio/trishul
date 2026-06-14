@@ -8,20 +8,19 @@ import io.trishul.ai.memory.model.UpdateAiChatMemoryConfig;
 import io.trishul.ai.service.memory.model.controller.AiChatMemoryConfigController;
 import io.trishul.ai.service.memory.model.repository.AiChatMemoryConfigRepository;
 import io.trishul.ai.service.memory.model.service.AiChatMemoryConfigService;
+import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import io.trishul.repo.jpa.repository.service.RepoService;
-import io.trishul.crud.controller.filter.AttributeFilter;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 
 @Configuration
 public class AiChatMemoryConfigAutoConfiguration {

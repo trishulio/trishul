@@ -1,15 +1,16 @@
 package io.trishul.user.role.binding.model;
 
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.role.model.UserRoleAccessor;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class UserRoleBindingRefresherTest {
   private Refresher<UserRole, UserRoleAccessor<?>> mUserRoleRefresher;

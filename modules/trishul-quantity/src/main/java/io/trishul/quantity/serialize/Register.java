@@ -1,8 +1,8 @@
 package io.trishul.quantity.serialize;
 
-import javax.measure.Quantity;
 import io.trishul.model.json.JacksonJsonMapper;
 import io.trishul.model.json.JsonMapper;
+import javax.measure.Quantity;
 
 public class Register {
   public static void init() {

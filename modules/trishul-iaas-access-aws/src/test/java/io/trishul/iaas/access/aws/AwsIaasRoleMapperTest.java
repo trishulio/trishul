@@ -2,6 +2,7 @@ package io.trishul.iaas.access.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import com.amazonaws.services.identitymanagement.model.Role;
 import com.amazonaws.services.identitymanagement.model.RoleLastUsed;
 import io.trishul.iaas.access.role.model.IaasRole;

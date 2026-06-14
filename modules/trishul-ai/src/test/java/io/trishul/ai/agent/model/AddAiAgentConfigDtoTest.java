@@ -2,6 +2,7 @@ package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 

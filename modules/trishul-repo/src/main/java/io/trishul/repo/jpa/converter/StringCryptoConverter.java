@@ -8,6 +8,10 @@ import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class StringCryptoConverter implements AttributeConverter<String, String> {
 
   private static final Logger log = LoggerFactory.getLogger(StringCryptoConverter.class);
@@ -15,7 +19,16 @@ public class StringCryptoConverter implements AttributeConverter<String, String>
   private final String algorithm;
   private final SecretKeySpec secretKey;
 
-  public StringCryptoConverter(String algorithm, String encryptionKey) {
+  public StringCryptoConverter() {
+    this(
+        System.getenv("DB_ENCRYPTION_ALGORITHM") != null ? System.getenv("DB_ENCRYPTION_ALGORITHM")
+            : "AES/ECB/PKCS5Padding",
+        System.getenv("DB_ENCRYPTION_KEY") != null ? System.getenv("DB_ENCRYPTION_KEY")
+            : "fake-encryption-key-for-test");
+  }
+
+  public StringCryptoConverter(@Value("${db.encryption.algorithm}") String algorithm,
+      @Value("${db.encryption.key}") String encryptionKey) {
     this.algorithm = algorithm;
 
     // Ensure key is 16 bytes for AES-128 if not provided correctly

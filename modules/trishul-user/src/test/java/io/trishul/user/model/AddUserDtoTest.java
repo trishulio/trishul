@@ -2,6 +2,7 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.net.URI;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

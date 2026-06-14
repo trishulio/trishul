@@ -3,13 +3,12 @@ package io.trishul.object.store.file.service.aws.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;
 import io.trishul.iaas.repository.provider.IaasRepositoryProvider;
 import io.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactory;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class ObjectStoreFileServiceAwsAutoConfigurationTest {
 

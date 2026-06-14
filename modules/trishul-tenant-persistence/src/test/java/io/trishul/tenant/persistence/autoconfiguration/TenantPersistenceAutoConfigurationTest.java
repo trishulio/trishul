@@ -1,29 +1,29 @@
 package io.trishul.tenant.persistence.autoconfiguration;
 
-import java.util.Map;
-import javax.sql.DataSource;
-import org.hibernate.cfg.Environment;
-import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
-import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
+
 import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.tenant.persistence.config.PackageScanConfig;
 import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
 import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
 import jakarta.persistence.EntityManagerFactory;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.hibernate.cfg.Environment;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
 class TenantPersistenceAutoConfigurationTest {
   private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanMock;
@@ -115,7 +115,8 @@ class TenantPersistenceAutoConfigurationTest {
 
     Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
     assertEquals(3, jpaPropertyMap.size());
-    assertEquals("PostgreSQLDialect", jpaPropertyMap.get(Environment.DIALECT));
+    assertEquals("org.hibernate.dialect.PostgreSQLDialect",
+        jpaPropertyMap.get(Environment.DIALECT));
     assertEquals(multiTenantConnectionProviderMock,
         jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
     assertEquals(currentTenantIdentifierResolverMock,

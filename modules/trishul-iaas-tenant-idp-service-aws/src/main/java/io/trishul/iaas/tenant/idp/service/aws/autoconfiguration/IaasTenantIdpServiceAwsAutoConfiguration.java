@@ -1,9 +1,5 @@
 package io.trishul.iaas.tenant.idp.service.aws.autoconfiguration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import io.trishul.iaas.access.aws.AwsArnMapper;
 import io.trishul.iaas.access.service.role.service.IaasRoleService;
@@ -18,6 +14,10 @@ import io.trishul.iaas.user.model.BaseIaasUserTenantMembership;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasTenantIdpServiceAwsAutoConfiguration {

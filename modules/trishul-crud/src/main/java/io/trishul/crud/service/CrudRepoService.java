@@ -1,6 +1,7 @@
 package io.trishul.crud.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
+
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.repo.jpa.repository.ExtendedRepository;

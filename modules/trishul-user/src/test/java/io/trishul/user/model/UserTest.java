@@ -2,6 +2,7 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.user.role.binding.model.UserRoleBinding;
 import io.trishul.user.role.model.UserRole;
 import io.trishul.user.salutation.model.UserSalutation;
@@ -9,8 +10,8 @@ import io.trishul.user.status.UserStatus;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -2,6 +2,7 @@ package io.trishul.tenant.auth.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.tenant.auth.model.ContextHolderTenantIdProvider;
 import io.trishul.tenant.entity.AdminTenant;

@@ -3,6 +3,7 @@ package io.trishul.object.store.file.service.aws.client.provider;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import io.trishul.iaas.auth.session.context.ContextHolderAuthorizationFetcher;

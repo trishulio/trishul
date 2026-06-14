@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.quantity.unit.SupportedUnits;
 import io.trishul.quantity.unit.accessor.BaseQuantityUnitAccessor;
 import java.math.BigDecimal;
@@ -209,4 +210,3 @@ class QuantityCalculatorTest {
     assertFalse(calc.isExpectedUnit(SupportedUnits.GRAM, null));
   }
 }
-

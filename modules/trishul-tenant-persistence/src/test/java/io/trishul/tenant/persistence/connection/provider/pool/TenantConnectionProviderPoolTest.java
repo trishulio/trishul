@@ -1,23 +1,23 @@
 package io.trishul.tenant.persistence.connection.provider.pool;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+
+import com.google.common.cache.LoadingCache;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.sql.DataSource;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.cache.LoadingCache;
-import java.lang.reflect.Field;
-import java.util.concurrent.ExecutionException;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TenantConnectionProviderPoolTest {
   private DataSource mAdminDs;

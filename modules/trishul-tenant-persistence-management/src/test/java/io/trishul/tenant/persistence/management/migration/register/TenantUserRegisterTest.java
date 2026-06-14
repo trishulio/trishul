@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 import io.trishul.base.types.lambda.CheckedConsumer;
 import io.trishul.base.types.lambda.CheckedSupplier;
 import io.trishul.base.types.util.random.RandomGenerator;

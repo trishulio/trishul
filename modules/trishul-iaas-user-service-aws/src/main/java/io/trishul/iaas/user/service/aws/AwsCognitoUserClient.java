@@ -1,7 +1,5 @@
 package io.trishul.iaas.user.service.aws;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserResult;
@@ -21,6 +19,8 @@ import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.iaas.user.model.BaseIaasUser;
 import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.UpdateIaasUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsCognitoUserClient
     implements IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> {

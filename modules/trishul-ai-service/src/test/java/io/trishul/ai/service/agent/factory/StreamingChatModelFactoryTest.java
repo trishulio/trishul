@@ -2,6 +2,7 @@ package io.trishul.ai.service.agent.factory;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import io.trishul.ai.chat.model.AiChatModelConfig;

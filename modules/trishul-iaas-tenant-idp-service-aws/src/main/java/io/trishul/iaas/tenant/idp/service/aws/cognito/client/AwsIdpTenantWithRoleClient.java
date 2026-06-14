@@ -1,7 +1,5 @@
 package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.CreateGroupRequest;
 import com.amazonaws.services.cognitoidp.model.CreateGroupResult;
@@ -22,6 +20,8 @@ import io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsIdpTenantWithRoleClient
     implements IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>> {

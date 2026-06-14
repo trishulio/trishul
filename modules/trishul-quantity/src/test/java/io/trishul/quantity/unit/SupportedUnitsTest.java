@@ -1,13 +1,13 @@
 package io.trishul.quantity.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 import javax.measure.quantity.Volume;
 import org.junit.jupiter.api.Test;
 import tec.uom.se.quantity.Quantities;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SupportedUnitsTest {
   @Test

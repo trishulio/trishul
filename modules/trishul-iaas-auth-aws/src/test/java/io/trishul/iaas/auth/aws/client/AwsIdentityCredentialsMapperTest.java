@@ -2,6 +2,7 @@ package io.trishul.iaas.auth.aws.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import io.trishul.iaas.auth.session.context.IaasAuthorization;
 import java.time.LocalDateTime;

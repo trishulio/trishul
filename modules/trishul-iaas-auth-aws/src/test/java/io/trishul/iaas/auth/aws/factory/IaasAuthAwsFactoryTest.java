@@ -1,6 +1,7 @@
 package io.trishul.iaas.auth.aws.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;

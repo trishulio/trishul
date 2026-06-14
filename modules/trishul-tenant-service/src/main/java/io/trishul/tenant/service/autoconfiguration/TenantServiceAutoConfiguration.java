@@ -1,10 +1,5 @@
 package io.trishul.tenant.service.autoconfiguration;
 
-import java.util.Set;
-import java.util.UUID;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.CrudRepoService;
@@ -22,6 +17,11 @@ import io.trishul.tenant.persistence.management.migration.manager.MigrationManag
 import io.trishul.tenant.persistence.management.migration.register.TenantRegister;
 import io.trishul.tenant.service.repository.TenantRepository;
 import io.trishul.tenant.service.service.TenantService;
+import java.util.Set;
+import java.util.UUID;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class TenantServiceAutoConfiguration {

@@ -1,6 +1,7 @@
 package io.trishul.iaas.idp.tenant.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.trishul.iaas.access.role.model.IaasRole;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

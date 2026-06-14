@@ -2,6 +2,7 @@ package io.trishul.ai.session.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.agent.model.AiAgentConfigDto;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;

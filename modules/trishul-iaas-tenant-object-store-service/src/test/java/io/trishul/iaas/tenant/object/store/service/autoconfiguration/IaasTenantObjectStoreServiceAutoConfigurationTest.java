@@ -3,9 +3,6 @@ package io.trishul.iaas.tenant.object.store.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.iaas.access.service.policy.service.IaasPolicyService;
 import io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService;
 import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
@@ -13,6 +10,8 @@ import io.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsService;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasTenantObjectStoreServiceAutoConfigurationTest {
 

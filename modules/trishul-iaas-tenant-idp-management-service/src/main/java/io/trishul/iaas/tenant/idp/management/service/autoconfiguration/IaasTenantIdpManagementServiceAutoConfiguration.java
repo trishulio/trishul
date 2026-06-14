@@ -1,8 +1,7 @@
 package io.trishul.iaas.tenant.idp.management.service.autoconfiguration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import static java.util.Set.of;
+
 import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
@@ -20,8 +19,9 @@ import io.trishul.iaas.tenant.idp.management.service.TenantIaasAuthService;
 import io.trishul.iaas.tenant.idp.management.service.TenantIaasIdpService;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.model.executor.BlockingAsyncExecutor;
-
-import static java.util.Set.of;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class IaasTenantIdpManagementServiceAutoConfiguration {

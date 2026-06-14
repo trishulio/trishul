@@ -4,16 +4,16 @@ import io.trishul.ai.skill.model.AiSkill;
 import io.trishul.ai.skill.model.AiSkillAccessor;
 import io.trishul.ai.skill.model.BaseAiSkill;
 import io.trishul.ai.skill.model.UpdateAiSkill;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
+import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.repo.jpa.repository.service.RepoService;
+import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
-import io.trishul.crud.service.EntityMergerService;
-import io.trishul.repo.jpa.repository.service.RepoService;
-import jakarta.transaction.Transactional;
 
 @Transactional
 public class AiSkillService extends BaseService

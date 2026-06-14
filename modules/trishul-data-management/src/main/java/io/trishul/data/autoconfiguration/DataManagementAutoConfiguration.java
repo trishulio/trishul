@@ -1,17 +1,5 @@
 package io.trishul.data.autoconfiguration;
 
-import java.net.URI;
-import java.util.UUID;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
 import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
@@ -31,6 +19,18 @@ import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
 import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
+import java.net.URI;
+import java.util.UUID;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Configuration
 public class DataManagementAutoConfiguration {

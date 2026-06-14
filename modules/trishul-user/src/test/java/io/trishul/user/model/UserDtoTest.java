@@ -2,6 +2,7 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.user.role.model.UserRoleDto;
 import io.trishul.user.salutation.model.UserSalutationDto;

@@ -1,9 +1,5 @@
 package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
@@ -19,6 +15,10 @@ import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
+import java.util.ArrayList;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AwsIaasUserTenantMembershipClient implements
     IaasClient<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> {

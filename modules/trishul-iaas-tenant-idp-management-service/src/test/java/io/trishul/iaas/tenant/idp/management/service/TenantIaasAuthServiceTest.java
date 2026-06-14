@@ -1,16 +1,13 @@
 package io.trishul.iaas.tenant.idp.management.service;
 
-import java.util.List;
-import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+
 import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.service.role.service.IaasRoleService;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
@@ -18,6 +15,10 @@ import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapper;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
+import java.util.List;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TenantIaasAuthServiceTest {
   private TenantIaasAuthService service;

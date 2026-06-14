@@ -1,6 +1,13 @@
 // TODO: Figure out if this is a tenant module class or data module class
 package io.trishul.tenant.persistence.autoconfiguration;
 
+import io.trishul.data.datasource.manager.DataSourceManager;
+import io.trishul.tenant.entity.TenantIdProvider;
+import io.trishul.tenant.persistence.config.PackageScanConfig;
+import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
+import jakarta.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -20,13 +27,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import io.trishul.data.datasource.manager.DataSourceManager;
-import io.trishul.tenant.entity.TenantIdProvider;
-import io.trishul.tenant.persistence.config.PackageScanConfig;
-import io.trishul.tenant.persistence.connection.provider.pool.TenantConnectionProviderPool;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
-import io.trishul.tenant.persistence.resolver.TenantIdentifierResolver;
-import jakarta.persistence.EntityManagerFactory;
 
 
 @Configuration
@@ -72,7 +72,7 @@ public class TenantPersistenceAutoConfiguration {
         ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "io.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
-    jpaProperties.put(JdbcSettings.DIALECT, "PostgreSQLDialect");
+    jpaProperties.put(JdbcSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER,
         multiTenantConnectionProvider);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,

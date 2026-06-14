@@ -1,12 +1,16 @@
 package io.trishul.tenant.persistence.management.migration.register;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
+
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.MigrationConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
@@ -17,16 +21,12 @@ import java.sql.SQLException;
 import java.util.UUID;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.flywaydb.core.api.FlywayException;
 import org.mockito.MockedStatic;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mockStatic;
 
 class FlywayTenantMigrationRegisterTest {
   private TenantDataSourceManager mDsMgr;
@@ -160,4 +160,3 @@ class FlywayTenantMigrationRegisterTest {
     return mFw;
   }
 }
-

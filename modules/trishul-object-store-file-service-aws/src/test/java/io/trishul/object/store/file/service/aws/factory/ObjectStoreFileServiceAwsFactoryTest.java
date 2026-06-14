@@ -1,6 +1,7 @@
 package io.trishul.object.store.file.service.aws.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.services.s3.AmazonS3;

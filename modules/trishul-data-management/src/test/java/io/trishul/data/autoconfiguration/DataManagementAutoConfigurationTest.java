@@ -2,26 +2,27 @@ package io.trishul.data.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.support.TransactionTemplate;
+
 import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
+import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import io.trishul.data.datasource.manager.CachingDataSourceManager;
 import io.trishul.data.datasource.manager.DataSourceManager;
 import io.trishul.dialect.JdbcDialect;
 import io.trishul.dialect.postgres.PostgresJdbcDialect;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
-import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
-import javax.sql.DataSource;
 import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.TenantData;
-import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
-import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManager;
+import io.trishul.tenant.persistence.datasource.manager.TenantDataSourceManagerWrapper;
 import java.util.UUID;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.support.TransactionTemplate;
 
 class DataManagementAutoConfigurationTest {
   private DataManagementAutoConfiguration config;
@@ -165,4 +166,3 @@ class DataManagementAutoConfigurationTest {
     assertNotNull(result);
   }
 }
-

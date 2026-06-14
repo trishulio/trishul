@@ -1,12 +1,5 @@
 package io.trishul.user.service.user.service.autoconfiguration;
 
-import java.util.Set;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.base.types.base.pojo.OwnedByAccessor;
 import io.trishul.base.types.base.pojo.Refresher;
@@ -47,6 +40,11 @@ import io.trishul.user.service.user.service.status.repository.UserStatusReposito
 import io.trishul.user.status.UserStatus;
 import io.trishul.user.status.UserStatusAccessor;
 import io.trishul.user.status.UserStatusRefresher;
+import java.util.Set;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 public class UserServiceAutoConfiguration {

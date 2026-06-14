@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
 import java.lang.reflect.Method;

@@ -3,11 +3,10 @@ package io.trishul.quantity.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.quantity.service.unit.repository.QuantityUnitRepository;
 import io.trishul.quantity.service.unit.service.QuantityUnitService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class QuantityServiceAutoConfigurationTest {
 

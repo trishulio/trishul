@@ -1,6 +1,7 @@
 package io.trishul.repo.aggregation.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
+
 import io.trishul.repo.aggregation.repo.AggregationRepository;
 import io.trishul.repo.aggregation.service.function.AggregationFunction;
 import io.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;

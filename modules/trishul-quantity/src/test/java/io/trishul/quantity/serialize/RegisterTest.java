@@ -1,8 +1,9 @@
 package io.trishul.quantity.serialize;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Constructor;
+import org.junit.jupiter.api.Test;
 
 class RegisterTest {
   @Test

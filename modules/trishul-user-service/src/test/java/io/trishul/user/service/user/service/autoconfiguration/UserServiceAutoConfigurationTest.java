@@ -3,9 +3,6 @@ package io.trishul.user.service.user.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.base.types.base.pojo.OwnedByAccessor;
 import io.trishul.base.types.base.pojo.Refresher;
@@ -33,6 +30,8 @@ import io.trishul.user.service.user.service.service.UserService;
 import io.trishul.user.service.user.service.status.repository.UserStatusRepository;
 import io.trishul.user.status.UserStatus;
 import io.trishul.user.status.UserStatusAccessor;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class UserServiceAutoConfigurationTest {
 

@@ -6,9 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.agent.model.AiAgentConfigAccessor;
 import io.trishul.ai.chat.model.AiChatModelConfig;
@@ -17,19 +14,20 @@ import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
 import io.trishul.ai.service.agent.cache.AgentCache;
 import io.trishul.ai.service.agent.factory.AgentFactory;
+import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
+import io.trishul.ai.service.agent.model.controller.AiAgentConfigController;
 import io.trishul.ai.service.agent.model.repository.AiAgentConfigRepository;
 import io.trishul.ai.service.agent.model.service.AiAgentConfigService;
+import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
+import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import java.util.List;
 import java.util.Set;
-
-import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
-import io.trishul.ai.service.agent.model.controller.AiAgentConfigController;
-import io.trishul.crud.controller.filter.AttributeFilter;
-import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
-import io.trishul.ai.service.tool.registry.AiToolRegistry;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class AiAgentConfigAutoConfigurationTest {
 

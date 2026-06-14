@@ -1,12 +1,5 @@
 package io.trishul.iaas.tenant.object.store.service.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
@@ -30,6 +23,13 @@ import io.trishul.object.store.model.UpdateIaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TenantIaasVfsService {
   private static final Logger log = LoggerFactory.getLogger(TenantIaasVfsService.class);

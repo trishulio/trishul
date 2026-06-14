@@ -3,9 +3,6 @@ package io.trishul.iaas.user.service.autoconfiguration;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import io.trishul.iaas.client.IaasClient;
 import io.trishul.iaas.user.model.BaseIaasUser;
 import io.trishul.iaas.user.model.BaseIaasUserTenantMembership;
@@ -17,6 +14,8 @@ import io.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.executor.BlockingAsyncExecutor;
 import io.trishul.tenant.entity.TenantIdProvider;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IaasUserServiceAutoConfigurationTest {
 

@@ -1,7 +1,7 @@
 package io.trishul.user.role.model;
 
-import java.time.LocalDateTime;
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class UserRoleDto extends BaseDto {
   private Long id;

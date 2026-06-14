@@ -3,6 +3,7 @@ package io.trishul.tenant.auth.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.tenant.entity.AdminTenant;
 import java.net.URI;

@@ -1,7 +1,7 @@
 package io.trishul.user.salutation.model;
 
-import java.time.LocalDateTime;
 import io.trishul.model.base.dto.BaseDto;
+import java.time.LocalDateTime;
 
 public class UserSalutationDto extends BaseDto {
   private Long id;

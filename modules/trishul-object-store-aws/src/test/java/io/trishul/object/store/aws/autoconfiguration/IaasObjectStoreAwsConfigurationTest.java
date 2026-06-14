@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.amazonaws.services.s3.AmazonS3;
+import io.trishul.object.store.aws.model.mapper.ObjectStoreAwsFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.amazonaws.services.s3.AmazonS3;
-
-import io.trishul.object.store.aws.model.mapper.ObjectStoreAwsFactory;
 
 class IaasObjectStoreAwsConfigurationTest {
 

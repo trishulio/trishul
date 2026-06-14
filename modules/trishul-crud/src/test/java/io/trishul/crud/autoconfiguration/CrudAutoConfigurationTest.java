@@ -2,6 +2,7 @@ package io.trishul.crud.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.LockService;
 import io.trishul.model.executor.BlockingAsyncExecutor;

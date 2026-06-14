@@ -1,5 +1,6 @@
 package io.trishul.crud.controller.filter;
 
+import io.trishul.model.reflection.ReflectionManipulator;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -7,7 +8,6 @@ import java.util.Set;
 import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.trishul.model.reflection.ReflectionManipulator;
 
 public class AttributeFilter {
   private static final Logger log = LoggerFactory.getLogger(AttributeFilter.class);
