@@ -4,17 +4,17 @@ import io.trishul.ai.guardrail.model.AiGuardrail;
 import io.trishul.ai.guardrail.model.AiGuardrailAccessor;
 import io.trishul.ai.guardrail.model.BaseAiGuardrail;
 import io.trishul.ai.guardrail.model.UpdateAiGuardrail;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,8 +35,8 @@ public class AiGuardrailService extends BaseService implements
 
   public Page<AiGuardrail> getGuardrails(Set<Long> ids, Set<String> names, int page, int size,
       SortedSet<String> sort, boolean orderAscending) {
-    final Specification<AiGuardrail> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids)
-        .in(BaseAiGuardrail.ATTR_NAME, names).build();
+    final Specification<AiGuardrail> spec = WhereClauseBuilder.builder()
+        .in(AiGuardrail.ATTR_ID, ids).in(AiGuardrail.ATTR_NAME, names).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

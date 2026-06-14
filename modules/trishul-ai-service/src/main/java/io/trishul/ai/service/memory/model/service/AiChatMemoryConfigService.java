@@ -4,17 +4,17 @@ import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
 import io.trishul.ai.memory.model.BaseAiChatMemoryConfig;
 import io.trishul.ai.memory.model.UpdateAiChatMemoryConfig;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,7 +36,7 @@ public class AiChatMemoryConfigService extends BaseService implements
   public Page<AiChatMemoryConfig> getChatMemoryConfigs(Set<Long> ids, Set<String> names, int page,
       int size, SortedSet<String> sort, boolean orderAscending) {
     final Specification<AiChatMemoryConfig> spec = WhereClauseBuilder.builder()
-        .in(Identified.ATTR_ID, ids).in(BaseAiChatMemoryConfig.ATTR_NAME, names).build();
+        .in(AiChatMemoryConfig.ATTR_ID, ids).in(AiChatMemoryConfig.ATTR_NAME, names).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

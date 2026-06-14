@@ -1,16 +1,5 @@
 package io.trishul.tenant.service.service;
 
-import java.net.URI;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
@@ -23,11 +12,21 @@ import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantAccessor;
-import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.entity.UpdateTenant;
 import io.trishul.tenant.persistence.management.migration.manager.MigrationManager;
 import io.trishul.tenant.service.repository.TenantRepository;
 import jakarta.transaction.Transactional;
+import java.net.URI;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class TenantService
@@ -54,10 +53,9 @@ public class TenantService
 
   public Page<Tenant> getAll(Set<UUID> ids, Set<String> names, Set<URI> urls, Boolean isReady,
       SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    Specification<Tenant> spec = WhereClauseBuilder.builder()
-        .in(new String[] {Identified.ATTR_ID}, ids).in(new String[] {TenantData.ATTR_NAME}, names)
-        .in(new String[] {TenantData.ATTR_URL}, urls)
-        .is(new String[] {TenantData.ATTR_IS_READY}, isReady).build();
+    Specification<Tenant> spec = WhereClauseBuilder.builder().in(new String[] {Tenant.ATTR_ID}, ids)
+        .in(new String[] {Tenant.ATTR_NAME}, names).in(new String[] {Tenant.ATTR_URL}, urls)
+        .is(new String[] {Tenant.ATTR_IS_READY}, isReady).build();
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }
 

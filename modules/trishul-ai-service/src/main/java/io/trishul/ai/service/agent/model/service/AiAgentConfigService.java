@@ -4,17 +4,17 @@ import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.agent.model.AiAgentConfigAccessor;
 import io.trishul.ai.agent.model.BaseAiAgentConfig;
 import io.trishul.ai.agent.model.UpdateAiAgentConfig;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,9 +35,9 @@ public class AiAgentConfigService extends BaseService implements
 
   public Page<AiAgentConfig> getAgentConfigs(Set<Long> ids, Set<String> names, Boolean isActive,
       int page, int size, SortedSet<String> sort, boolean orderAscending) {
-    final Specification<AiAgentConfig> spec = WhereClauseBuilder.builder()
-        .in(Identified.ATTR_ID, ids).in(BaseAiAgentConfig.ATTR_NAME, names)
-        .is(BaseAiAgentConfig.ATTR_IS_ACTIVE, isActive).build();
+    final Specification<AiAgentConfig> spec
+        = WhereClauseBuilder.builder().in(AiAgentConfig.ATTR_ID, ids)
+            .in(AiAgentConfig.ATTR_NAME, names).is(AiAgentConfig.ATTR_IS_ACTIVE, isActive).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

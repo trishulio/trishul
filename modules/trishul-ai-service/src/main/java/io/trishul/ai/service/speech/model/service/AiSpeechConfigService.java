@@ -4,17 +4,17 @@ import io.trishul.ai.speech.model.AiSpeechConfig;
 import io.trishul.ai.speech.model.AiSpeechConfigAccessor;
 import io.trishul.ai.speech.model.BaseAiSpeechConfig;
 import io.trishul.ai.speech.model.UpdateAiSpeechConfig;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,9 +37,9 @@ public class AiSpeechConfigService extends BaseService implements
       Set<String> providers, Boolean isDefault, int page, int size, SortedSet<String> sort,
       boolean orderAscending) {
     final Specification<AiSpeechConfig> spec
-        = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids)
-            .in(BaseAiSpeechConfig.ATTR_NAME, names).in(BaseAiSpeechConfig.ATTR_PROVIDER, providers)
-            .is(BaseAiSpeechConfig.ATTR_IS_DEFAULT, isDefault).build();
+        = WhereClauseBuilder.builder().in(AiSpeechConfig.ATTR_ID, ids)
+            .in(AiSpeechConfig.ATTR_NAME, names).in(AiSpeechConfig.ATTR_PROVIDER, providers)
+            .is(AiSpeechConfig.ATTR_IS_DEFAULT, isDefault).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

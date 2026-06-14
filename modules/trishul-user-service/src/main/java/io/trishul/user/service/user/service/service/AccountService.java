@@ -1,19 +1,16 @@
 package io.trishul.user.service.user.service.service;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.domain.Specification;
-
 import io.trishul.auth.session.context.PrincipalContext;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
-import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.User;
 import io.trishul.user.service.user.service.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class AccountService {
@@ -48,7 +45,7 @@ public class AccountService {
     }
 
     final Specification<User> spec
-        = WhereClauseBuilder.builder().is(BaseUser.ATTR_IAAS_USERNAME, username).build();
+        = WhereClauseBuilder.builder().is(User.ATTR_IAAS_USERNAME, username).build();
 
     List<User> users = userRepository.findAll(spec);
 

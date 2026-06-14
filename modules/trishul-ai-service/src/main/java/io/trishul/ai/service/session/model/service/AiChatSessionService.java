@@ -1,5 +1,6 @@
 package io.trishul.ai.service.session.model.service;
 
+import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.session.model.AiChatSession;
 import io.trishul.ai.session.model.AiChatSessionAccessor;
 import io.trishul.ai.session.model.BaseAiChatSession;
@@ -37,9 +38,9 @@ public class AiChatSessionService extends BaseService implements
       Set<String> titles, Boolean isActive, Set<Long> agentConfigIds, int page, int size,
       SortedSet<String> sort, boolean orderAscending) {
     final Specification<AiChatSession> spec = WhereClauseBuilder.builder()
-        .in(Identified.ATTR_ID, ids).in(BaseAiChatSession.ATTR_SESSION_KEY, sessionKeys)
-        .in(BaseAiChatSession.ATTR_TITLE, titles).is(BaseAiChatSession.ATTR_IS_ACTIVE, isActive)
-        .in(new String[] {BaseAiChatSession.ATTR_AGENT_CONFIG, Identified.ATTR_ID}, agentConfigIds)
+        .in(AiChatSession.ATTR_ID, ids).in(AiChatSession.ATTR_SESSION_KEY, sessionKeys)
+        .in(AiChatSession.ATTR_TITLE, titles).is(AiChatSession.ATTR_IS_ACTIVE, isActive)
+        .in(new String[] {AiChatSession.ATTR_AGENT_CONFIG, AiAgentConfig.ATTR_ID}, agentConfigIds)
         .build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
@@ -52,7 +53,7 @@ public class AiChatSessionService extends BaseService implements
 
   public AiChatSession getBySessionKey(String sessionKey) {
     final Specification<AiChatSession> spec
-        = WhereClauseBuilder.builder().is(BaseAiChatSession.ATTR_SESSION_KEY, sessionKey).build();
+        = WhereClauseBuilder.builder().is(AiChatSession.ATTR_SESSION_KEY, sessionKey).build();
 
     final List<AiChatSession> sessions = this.repoService.getAll(spec);
 

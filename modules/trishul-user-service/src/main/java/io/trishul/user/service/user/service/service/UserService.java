@@ -1,18 +1,5 @@
 package io.trishul.user.service.user.service.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
-
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
@@ -27,10 +14,22 @@ import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.UpdateUser;
 import io.trishul.user.model.User;
 import io.trishul.user.model.UserAccessor;
-import io.trishul.user.salutation.model.UserSalutationAccessor;
+import io.trishul.user.role.model.UserRole;
+import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.service.user.service.repository.UserRepository;
-import io.trishul.user.status.UserStatusAccessor;
+import io.trishul.user.status.UserStatus;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 
 @Transactional
 public class UserService extends BaseService
@@ -56,14 +55,13 @@ public class UserService extends BaseService
       Set<String> displayNames, Set<String> emails, Set<String> phoneNumbers, Set<Long> statusIds,
       Set<Long> salutationIds, Set<String> roles, int page, int size, SortedSet<String> sort,
       boolean orderAscending) {
-    final Specification<User> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids).not()
-        .in(Identified.ATTR_ID, excludeIds).in(BaseUser.ATTR_USER_NAME, userNames)
-        .in(BaseUser.ATTR_DISPLAY_NAME, displayNames).in(BaseUser.ATTR_EMAIL, emails)
-        .in(BaseUser.ATTR_PHONE_NUMBER, phoneNumbers)
-        .in(new String[] {UserStatusAccessor.ATTR_STATUS, Identified.ATTR_ID}, statusIds)
-        .in(new String[] {UserSalutationAccessor.ATTR_SALUTATION, Identified.ATTR_ID},
-            salutationIds)
-        .in(new String[] {BaseUser.ATTR_ROLES, Identified.ATTR_ID}, roles).build();
+    final Specification<User> spec
+        = WhereClauseBuilder.builder().in(User.ATTR_ID, ids).not().in(User.ATTR_ID, excludeIds)
+            .in(User.ATTR_USER_NAME, userNames).in(User.ATTR_DISPLAY_NAME, displayNames)
+            .in(User.ATTR_EMAIL, emails).in(User.ATTR_PHONE_NUMBER, phoneNumbers)
+            .in(new String[] {User.ATTR_STATUS, UserStatus.ATTR_ID}, statusIds)
+            .in(new String[] {User.ATTR_SALUTATION, UserSalutation.ATTR_ID}, salutationIds)
+            .in(new String[] {User.ATTR_ROLES, UserRole.ATTR_ID}, roles).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

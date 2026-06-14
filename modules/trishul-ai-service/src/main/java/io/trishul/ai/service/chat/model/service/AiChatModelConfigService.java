@@ -4,17 +4,17 @@ import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.chat.model.AiChatModelConfigAccessor;
 import io.trishul.ai.chat.model.BaseAiChatModelConfig;
 import io.trishul.ai.chat.model.UpdateAiChatModelConfig;
+import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.crud.service.EntityMergerService;
+import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,10 +36,10 @@ public class AiChatModelConfigService extends BaseService implements
   public Page<AiChatModelConfig> getChatModelConfigs(Set<Long> ids, Set<String> names,
       Set<String> providers, Boolean isDefault, int page, int size, SortedSet<String> sort,
       boolean orderAscending) {
-    final Specification<AiChatModelConfig> spec = WhereClauseBuilder.builder()
-        .in(Identified.ATTR_ID, ids).in(BaseAiChatModelConfig.ATTR_NAME, names)
-        .in(BaseAiChatModelConfig.ATTR_PROVIDER, providers)
-        .is(BaseAiChatModelConfig.ATTR_IS_DEFAULT, isDefault).build();
+    final Specification<AiChatModelConfig> spec
+        = WhereClauseBuilder.builder().in(AiChatModelConfig.ATTR_ID, ids)
+            .in(AiChatModelConfig.ATTR_NAME, names).in(AiChatModelConfig.ATTR_PROVIDER, providers)
+            .is(AiChatModelConfig.ATTR_IS_DEFAULT, isDefault).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

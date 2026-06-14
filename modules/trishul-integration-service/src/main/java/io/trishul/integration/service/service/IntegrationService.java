@@ -42,10 +42,10 @@ public class IntegrationService extends BaseService implements
   public Page<Integration> getIntegrations(Set<Long> ids, Set<String> names,
       Set<IntegrationType> types, Set<String> providers, Set<IntegrationStatus> statuses, int page,
       int size, SortedSet<String> sort, boolean orderAscending) {
-    final Specification<Integration> spec = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids)
-        .in(BaseIntegration.ATTR_NAME, names).in(BaseIntegration.ATTR_TYPE, types)
-        .in(BaseIntegration.ATTR_PROVIDER, providers).in(BaseIntegration.ATTR_STATUS, statuses)
-        .build();
+    final Specification<Integration> spec
+        = WhereClauseBuilder.builder().in(Integration.ATTR_ID, ids).in(Integration.ATTR_NAME, names)
+            .in(Integration.ATTR_TYPE, types).in(Integration.ATTR_PROVIDER, providers)
+            .in(Integration.ATTR_STATUS, statuses).build();
 
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }

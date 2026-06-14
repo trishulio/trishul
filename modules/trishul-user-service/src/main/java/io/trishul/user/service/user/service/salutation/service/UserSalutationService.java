@@ -1,7 +1,7 @@
 package io.trishul.user.service.user.service.salutation.service;
 
 import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
-import io.trishul.base.types.base.pojo.Identified;
+
 import io.trishul.crud.service.BaseService;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.user.salutation.model.UserSalutation;
@@ -23,7 +23,7 @@ public class UserSalutationService extends BaseService {
   public Page<UserSalutation> getSalutations(Set<Long> ids, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {
     Specification<UserSalutation> spec
-        = WhereClauseBuilder.builder().in(Identified.ATTR_ID, ids).build();
+        = WhereClauseBuilder.builder().in(UserSalutation.ATTR_ID, ids).build();
     Page<UserSalutation> userSalutations
         = userSalutationRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
 
