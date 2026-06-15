@@ -8,7 +8,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,15 +32,17 @@ public class TemporaryImageSrcDecorator
     // This is a temporary hack. Need ideas on where decorating the entity would be
     // ideal.
     try {
-      Map<URI, R> uriToEntity = entities.stream().filter(Objects::nonNull)
+      Map<URI, List<R>> uriToEntities = entities.stream().filter(Objects::nonNull)
           .filter(entity -> Objects.nonNull(entity.getImageSrc()))
-          .collect(Collectors.toMap(entity -> entity.getImageSrc(), Function.identity()));
+          .collect(Collectors.groupingBy(entity -> entity.getImageSrc()));
 
-      List<IaasObjectStoreFileDto> files = objectStoreController.getAll(uriToEntity.keySet());
+      List<IaasObjectStoreFileDto> files = objectStoreController.getAll(uriToEntities.keySet());
 
       files.stream().forEach(file -> {
-        R entity = uriToEntity.get(file.getFileKey());
-        entity.setObjectStoreFile(file);
+        List<R> list = uriToEntities.get(file.getFileKey());
+        if (list != null) {
+          list.forEach(entity -> entity.setObjectStoreFile(file));
+        }
       });
     } catch (Exception e) {
       log.error("Failed to decorate Dtos: {}", e);
