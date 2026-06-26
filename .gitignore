@@ -34,3 +34,5 @@ build/
 .vscode/
 
 dependency-check-data/
+
+.scannerwork/
