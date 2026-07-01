@@ -146,8 +146,8 @@ class DataManagementAutoConfigurationTest {
     Mockito.when(dsConfigMgr.getFqName("prefix", adminTenantId)).thenReturn("fqName");
 
     DataSourceConfiguration result
-        = config.adminDataSourceConfiguration("jdbc:postgresql://localhost:5432/db", "db", "prefix",
-            "script:script", 10, true, secretsManager, dsConfigMgr, adminTenant);
+        = config.adminDataSourceConfiguration("jdbc:postgresql://localhost:5432/db", "user", "pass",
+            "db", "prefix", "script:script", 10, true, secretsManager, dsConfigMgr, adminTenant);
 
     assertNotNull(result);
   }

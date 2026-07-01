@@ -84,7 +84,7 @@
         <org.springframework.boot.version>3.4.1</org.springframework.boot.version>
         <org.springdoc.openapi.webmvc.version>2.8.5</org.springdoc.openapi.webmvc.version>
         <org.springdoc.openapi.maven.plugin.version>1.5</org.springdoc.openapi.maven.plugin.version>
-        <org.mapstruct.version>1.7.0.Beta1</org.mapstruct.version>
+        <org.mapstruct.version>1.7.0.Beta2</org.mapstruct.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <javax.measure.version>2.0</javax.measure.version>
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
@@ -95,7 +95,7 @@
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.7.0.6970</org.sonarsource.scanner.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
-        <spotless.version>3.6.0</spotless.version>
+        <spotless.version>3.8.0</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <spotbugs.version>4.10.2.0</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>

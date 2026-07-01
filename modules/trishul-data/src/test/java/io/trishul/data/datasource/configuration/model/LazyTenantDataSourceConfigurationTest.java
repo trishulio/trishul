@@ -74,4 +74,13 @@ class LazyTenantDataSourceConfigurationTest {
   void testGetSchemaPrefix_ReturnsGlobalSchemaPrefix() {
     assertEquals("SCHEMA_", config.getSchemaPrefix());
   }
+
+  @Test
+  void testGetPassword_ReturnsStaticPasswordWhenInitializedWithStaticConstructor() {
+    DataSourceConfiguration staticConfig = new LazyTenantDataSourceConfiguration("user", "static_password", "schema",
+        new ImmutableGlobalDataSourceConfiguration(null, null, null, null, 0, false));
+    assertEquals("static_password", staticConfig.getPassword());
+    assertEquals("user", staticConfig.getUserName());
+    assertEquals("schema", staticConfig.getSchemaName());
+  }
 }

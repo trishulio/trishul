@@ -45,6 +45,8 @@ public class DataManagementAutoConfiguration {
   @ConditionalOnMissingBean(DataSourceConfiguration.class)
   public DataSourceConfiguration adminDataSourceConfiguration(
       @Value("${spring.datasource.url}") String jdbcUrl,
+      @Value("${spring.datasource.username}") String username,
+      @Value("${spring.datasource.password}") String password,
       @Value("${app.config.ds.db-name}") String dbName,
       @Value("${app.config.tenant.admin.ds.schema.prefix}") String schemaPrefix,
       @Value("${app.config.tenant.admin.ds.schema.migration.configs}") String schemaMigrationScriptConfigsStr,
@@ -59,7 +61,7 @@ public class DataManagementAutoConfiguration {
         dbName, migrationConfigs, schemaPrefix, poolSize, autoCommit);
     String fqName = dataSourceConfigurationManager.getFqName(schemaPrefix, adminTenant.getId());
 
-    return new LazyTenantDataSourceConfiguration(fqName, globalConfig, secretsManager);
+    return new LazyTenantDataSourceConfiguration(username, password, fqName, globalConfig);
   }
 
   @Bean
