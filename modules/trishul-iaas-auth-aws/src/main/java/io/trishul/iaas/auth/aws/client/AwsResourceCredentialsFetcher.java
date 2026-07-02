@@ -8,27 +8,29 @@ import io.trishul.iaas.auth.session.context.IaasAuthorizationFetcher;
 import java.util.Map;
 
 public class AwsResourceCredentialsFetcher implements IaasAuthorizationFetcher {
-  private static final int NUM_COGNITO_ID_POOLS = 1; // 1 because we only have 1 Cognito ID Pool per
-                                                     // deployment.
-
   private final AwsCognitoIdentityClient identityClient;
   private final AwsIdentityCredentialsMapper iaasAuthorizationMapper;
   private final String userPoolUrl;
+  private final String identityPoolId;
 
   public AwsResourceCredentialsFetcher(AwsCognitoIdentityClient identityClient,
       AwsIdentityCredentialsMapper iaasAuthorizationMapper, String userPoolUrl) {
+    this(identityClient, iaasAuthorizationMapper, userPoolUrl, null);
+  }
+
+  public AwsResourceCredentialsFetcher(AwsCognitoIdentityClient identityClient,
+      AwsIdentityCredentialsMapper iaasAuthorizationMapper, String userPoolUrl,
+      String identityPoolId) {
     this.identityClient = identityClient;
     this.iaasAuthorizationMapper = iaasAuthorizationMapper;
     this.userPoolUrl = userPoolUrl;
+    this.identityPoolId = identityPoolId;
   }
 
   @Override
   public IaasAuthorization fetch(IaasAuthorizationCredentials loginCredentials) {
     Map<String, String> logins = ImmutableMap.of(userPoolUrl, loginCredentials.toString());
-
-    String identityPoolId
-        = this.identityClient.getIdentityPools(NUM_COGNITO_ID_POOLS).get(0).getIdentityPoolId();
-    String identityId = this.identityClient.getIdentityId(identityPoolId, logins);
+    String identityId = this.identityClient.getIdentityId(this.identityPoolId, logins);
     Credentials credentials = this.identityClient.getCredentialsForIdentity(identityId, logins);
 
     return iaasAuthorizationMapper.fromIaasEntity(credentials);

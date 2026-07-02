@@ -42,4 +42,21 @@ class AwsResourceCredentialsFetcherTest {
     IaasAuthorization expected = new IaasAuthorization("AK", "SK", "ST", null);
     assertEquals(expected, auth);
   }
+
+  @Test
+  void testFetch_UsesConfiguredIdentityPoolId_ReturnsCredentials() {
+    fetcher = new AwsResourceCredentialsFetcher(mIdentityClient,
+        AwsIdentityCredentialsMapper.INSTANCE, "USER_POOL", "CONFIGURED_POOL_ID");
+
+    doReturn("IDENTITY_ID").when(mIdentityClient).getIdentityId("CONFIGURED_POOL_ID",
+        Map.of("USER_POOL", "TOKEN"));
+    doReturn(new Credentials().withAccessKeyId("AK").withSecretKey("SK").withSessionToken("ST"))
+        .when(mIdentityClient)
+        .getCredentialsForIdentity("IDENTITY_ID", Map.of("USER_POOL", "TOKEN"));
+
+    IaasAuthorization auth = fetcher.fetch(new IaasAuthorizationCredentials("TOKEN"));
+
+    IaasAuthorization expected = new IaasAuthorization("AK", "SK", "ST", null);
+    assertEquals(expected, auth);
+  }
 }

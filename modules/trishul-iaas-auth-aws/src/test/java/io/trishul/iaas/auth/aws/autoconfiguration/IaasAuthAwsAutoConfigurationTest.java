@@ -36,8 +36,7 @@ class IaasAuthAwsAutoConfigurationTest {
     when(mockFactory.getAwsCognitoIdentityClient("region", "accessKey", "secretKey"))
         .thenReturn(mockIdentity);
 
-    AmazonCognitoIdentity result
-        = config.amazonCognitoIdentity(mockFactory, "region", "accessKey", "secretKey");
+    AmazonCognitoIdentity result = config.amazonCognitoIdentity(mockFactory, "region", "accessKey", "secretKey");
 
     assertNotNull(result);
   }
@@ -50,8 +49,8 @@ class IaasAuthAwsAutoConfigurationTest {
     when(mockFactory.getIdentityProvider("region", "url", "accessKey", "secretKey"))
         .thenReturn(mockProvider);
 
-    AWSCognitoIdentityProvider result
-        = config.awsCognitoIdpProvider(mockFactory, "region", "url", "accessKey", "secretKey");
+    AWSCognitoIdentityProvider result = config.awsCognitoIdpProvider(mockFactory, "region", "url", "accessKey",
+        "secretKey");
 
     assertNotNull(result);
   }
@@ -70,8 +69,9 @@ class IaasAuthAwsAutoConfigurationTest {
   void testIaasAuthorizationFetcher_ReturnsNonNull() {
     AwsCognitoIdentityClient mockClient = mock(AwsCognitoIdentityClient.class);
     String userPoolUrl = "https://cognito-idp.us-east-1.amazonaws.com/pool-id";
+    String identityPoolId = "us-east-1:12345678-1234-1234-1234-123456789012";
 
-    IaasAuthorizationFetcher result = config.iaasAuthorizationFetcher(mockClient, userPoolUrl);
+    IaasAuthorizationFetcher result = config.iaasAuthorizationFetcher(mockClient, userPoolUrl, identityPoolId);
 
     assertNotNull(result);
   }

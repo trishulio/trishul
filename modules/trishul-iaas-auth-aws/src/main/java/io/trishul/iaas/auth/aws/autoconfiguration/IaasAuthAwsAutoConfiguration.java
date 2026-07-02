@@ -48,8 +48,7 @@ public class IaasAuthAwsAutoConfiguration {
   public AwsCognitoIdentityClient awsCognitoIdentityClient(
       AmazonCognitoIdentity amazonCognitoIdentity,
       @Value("${app.iaas.credentials.expiry.duration}") long credentialsExpiryDurationSeconds) {
-    AwsCognitoIdentityClient awsCognitoIdentityClient
-        = new AwsCognitoIdentitySdkWrapper(amazonCognitoIdentity);
+    AwsCognitoIdentityClient awsCognitoIdentityClient = new AwsCognitoIdentitySdkWrapper(amazonCognitoIdentity);
 
     return new CachedAwsCognitoIdentityClient(awsCognitoIdentityClient,
         credentialsExpiryDurationSeconds);
@@ -58,8 +57,9 @@ public class IaasAuthAwsAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(IaasAuthorizationFetcher.class)
   public IaasAuthorizationFetcher iaasAuthorizationFetcher(AwsCognitoIdentityClient identityClient,
-      @Value("${aws.cognito.user-pool.url}") String userPoolUrl) {
+      @Value("${aws.cognito.user-pool.url}") String userPoolUrl,
+      @Value("${aws.cognito.identity.pool.id}") String identityPoolId) {
     return new AwsResourceCredentialsFetcher(identityClient, AwsIdentityCredentialsMapper.INSTANCE,
-        userPoolUrl);
+        userPoolUrl, identityPoolId);
   }
 }
