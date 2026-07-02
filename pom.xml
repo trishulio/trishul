@@ -73,6 +73,7 @@
         <module>modules/trishul-communication-twilio</module>
         <module>modules/trishul-integration-communication</module>
         <module>modules/trishul-integration-communication-service</module>
+        <module>modules/trishul-config</module>
         <module>modules/trishul-app-parent</module>
         <module>modules/trishul-app</module>
         <module>modules/trishul-app-test</module>
@@ -536,6 +537,12 @@
             <dependency>
                 <groupId>io.trishul</groupId>
                 <artifactId>trishul-integration-communication-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.trishul</groupId>
+                <artifactId>trishul-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

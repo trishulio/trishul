@@ -273,6 +273,11 @@
 
         <dependency>
             <groupId>io.trishul</groupId>
+            <artifactId>trishul-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.trishul</groupId>
             <artifactId>trishul-app</artifactId>
         </dependency>
 

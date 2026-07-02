@@ -1,5 +1,6 @@
 package io.trishul.iaas.tenant.aws.autoconfiguration;
 
+import io.trishul.config.AppConfig;
 import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
 import io.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilder;
 import io.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProvider;
@@ -19,8 +20,8 @@ public class IaasTenantAwsAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(AwsDocumentTemplates.class)
   public AwsDocumentTemplates awsDocumentTemplates(
-      @Value("${aws.cognito.identity.pool.id}") String cognitoIdPoolId) {
-    return new AwsDocumentTemplates(cognitoIdPoolId);
+      @Value("${aws.cognito.identity.pool.id}") String cognitoIdPoolId, AppConfig appConfig) {
+    return new AwsDocumentTemplates(cognitoIdPoolId, appConfig.getName());
   }
 
   @Bean

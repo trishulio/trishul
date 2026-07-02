@@ -51,21 +51,23 @@ public class AwsDocumentTemplates {
           ]
       }""";
 
-  private static final String BUCKET_NAME_TENANT_VFS = "t-%s-vfs";
+  private static final String BUCKET_NAME_TENANT_VFS = "%s-t-%s-vfs";
 
-  private static final String ROLE_NAME_TENANT_IAAS = "t-%s-iaas";
+  private static final String ROLE_NAME_TENANT_IAAS = "%s-t-%s-iaas";
 
   private static final String ROLE_DESCRIPTION_TENANT_VFS
       = "Role assumed by tenant-users to gain access to the Iaas resources: %s";
 
-  private static final String POLICY_NAME_TENANT_VFS = "t-%s-vfs";
+  private static final String POLICY_NAME_TENANT_VFS = "%s-t-%s-vfs";
 
   private static final String POLICY_DESCRIPTION_TENANT_VFS = "File storage for tenant: %s";
 
   private final String cognitoIdPoolId;
+  private final String appName;
 
-  public AwsDocumentTemplates(String cognitoIdPoolId) {
+  public AwsDocumentTemplates(String cognitoIdPoolId, String appName) {
     this.cognitoIdPoolId = cognitoIdPoolId;
+    this.appName = appName;
   }
 
   public String getTenantBucketPolicyDoc(String iaasIdpTenantId) {
@@ -78,15 +80,15 @@ public class AwsDocumentTemplates {
   }
 
   public String getTenantVfsBucketName(String iaasIdpTenantId) {
-    return BUCKET_NAME_TENANT_VFS.replace("%s", iaasIdpTenantId);
+    return String.format(BUCKET_NAME_TENANT_VFS, appName, iaasIdpTenantId);
   }
 
   public String getTenantIaasRoleName(String iaasIdpTenantId) {
-    return ROLE_NAME_TENANT_IAAS.replace("%s", iaasIdpTenantId);
+    return String.format(ROLE_NAME_TENANT_IAAS, appName, iaasIdpTenantId);
   }
 
   public String getTenantVfsPolicyName(String iaasIdpTenantId) {
-    return POLICY_NAME_TENANT_VFS.replace("%s", iaasIdpTenantId);
+    return String.format(POLICY_NAME_TENANT_VFS, appName, iaasIdpTenantId);
   }
 
   public String getTenantVfsPolicyDescription(String iaasIdpTenantId) {

@@ -13,7 +13,7 @@ class AwsDocumentTemplatesTest {
 
   @BeforeEach
   void init() {
-    templates = new AwsDocumentTemplates("COGNITO_ID_POOL_ID");
+    templates = new AwsDocumentTemplates("COGNITO_ID_POOL_ID", "myapp");
   }
 
   @Test
@@ -43,7 +43,7 @@ class AwsDocumentTemplatesTest {
                       "s3:DeleteObject",
                       "s3:GetBucketLocation"
                   ],
-                  "Resource": "arn:aws:s3:::t-T1-vfs/*"
+                  "Resource": "arn:aws:s3:::myapp-t-T1-vfs/*"
               }
           ]
         }
@@ -75,17 +75,17 @@ class AwsDocumentTemplatesTest {
 
   @Test
   void testGetTenantVfsBucketName() {
-    assertEquals("t-T1-vfs", templates.getTenantVfsBucketName("T1"));
+    assertEquals("myapp-t-T1-vfs", templates.getTenantVfsBucketName("T1"));
   }
 
   @Test
   void testGetTenantIaasRoleName() {
-    assertEquals("t-T1-iaas", templates.getTenantIaasRoleName("T1"));
+    assertEquals("myapp-t-T1-iaas", templates.getTenantIaasRoleName("T1"));
   }
 
   @Test
   void testGetTenantVfsPolicyName() {
-    assertEquals("t-T1-vfs", templates.getTenantVfsPolicyName("T1"));
+    assertEquals("myapp-t-T1-vfs", templates.getTenantVfsPolicyName("T1"));
   }
 
   @Test

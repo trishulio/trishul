@@ -1,8 +1,10 @@
 package io.trishul.iaas.tenant.aws.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import io.trishul.config.AppConfig;
 import io.trishul.iaas.tenant.aws.AwsDocumentTemplates;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
 import io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider;
@@ -23,8 +25,10 @@ class IaasTenantAwsAutoConfigurationTest {
   @Test
   void testAwsDocumentTemplates_ReturnsNonNull() {
     String cognitoIdPoolId = "test-pool-id";
+    AppConfig appConfig = mock(AppConfig.class);
+    doReturn("test-app").when(appConfig).getName();
 
-    AwsDocumentTemplates result = config.awsDocumentTemplates(cognitoIdPoolId);
+    AwsDocumentTemplates result = config.awsDocumentTemplates(cognitoIdPoolId, appConfig);
 
     assertNotNull(result);
   }
