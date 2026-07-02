@@ -48,7 +48,8 @@ public class IaasAuthAwsAutoConfiguration {
   public AwsCognitoIdentityClient awsCognitoIdentityClient(
       AmazonCognitoIdentity amazonCognitoIdentity,
       @Value("${app.iaas.credentials.expiry.duration}") long credentialsExpiryDurationSeconds) {
-    AwsCognitoIdentityClient awsCognitoIdentityClient = new AwsCognitoIdentitySdkWrapper(amazonCognitoIdentity);
+    AwsCognitoIdentityClient awsCognitoIdentityClient
+        = new AwsCognitoIdentitySdkWrapper(amazonCognitoIdentity);
 
     return new CachedAwsCognitoIdentityClient(awsCognitoIdentityClient,
         credentialsExpiryDurationSeconds);

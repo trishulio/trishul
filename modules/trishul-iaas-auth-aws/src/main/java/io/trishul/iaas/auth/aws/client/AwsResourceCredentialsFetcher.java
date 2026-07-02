@@ -14,11 +14,6 @@ public class AwsResourceCredentialsFetcher implements IaasAuthorizationFetcher {
   private final String identityPoolId;
 
   public AwsResourceCredentialsFetcher(AwsCognitoIdentityClient identityClient,
-      AwsIdentityCredentialsMapper iaasAuthorizationMapper, String userPoolUrl) {
-    this(identityClient, iaasAuthorizationMapper, userPoolUrl, null);
-  }
-
-  public AwsResourceCredentialsFetcher(AwsCognitoIdentityClient identityClient,
       AwsIdentityCredentialsMapper iaasAuthorizationMapper, String userPoolUrl,
       String identityPoolId) {
     this.identityClient = identityClient;
