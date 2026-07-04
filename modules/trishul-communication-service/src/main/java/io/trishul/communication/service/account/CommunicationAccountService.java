@@ -8,6 +8,7 @@ import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
@@ -43,13 +44,13 @@ public class CommunicationAccountService extends BaseService implements
   }
 
   @Override
-  public long delete(Set<String> ids) {
-    return this.iaasRepo.delete(ids);
+  public DeleteResult delete(Set<String> ids) {
+    return new DeleteResult(this.iaasRepo.delete(ids));
   }
 
   @Override
-  public long delete(String id) {
-    return this.iaasRepo.delete(Set.of(id));
+  public DeleteResult delete(String id) {
+    return new DeleteResult(this.iaasRepo.delete(Set.of(id)));
   }
 
   @Override

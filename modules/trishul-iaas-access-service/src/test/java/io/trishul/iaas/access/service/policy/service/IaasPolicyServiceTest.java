@@ -22,6 +22,7 @@ import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.policy.model.IaasPolicyAccessor;
 import io.trishul.iaas.access.policy.model.UpdateIaasPolicy;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.test.util.MockUtilProvider;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -83,18 +84,18 @@ class IaasPolicyServiceTest {
   @Test
   void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("POLICY_1", "POLICY_2"));
-    long deleteCount = service.delete(Set.of("POLICY_1", "POLICY_2"));
+    DeleteResult deleteCount = service.delete(Set.of("POLICY_1", "POLICY_2"));
 
-    assertEquals(9, deleteCount);
+    assertEquals(new DeleteResult(9L), deleteCount);
   }
 
   @Test
   void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("POLICY"));
 
-    long deleteCount = service.delete("POLICY");
+    DeleteResult deleteCount = service.delete("POLICY");
 
-    assertEquals(1, deleteCount);
+    assertEquals(new DeleteResult(1L), deleteCount);
   }
 
   @Test

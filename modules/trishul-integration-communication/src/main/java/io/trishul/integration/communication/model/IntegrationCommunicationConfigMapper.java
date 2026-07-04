@@ -2,11 +2,12 @@ package io.trishul.integration.communication.model;
 
 import io.trishul.integration.model.IntegrationMapper;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {IntegrationMapper.class})
+@Mapper(uses = {IntegrationMapper.class, DeleteResultMapper.class})
 public interface IntegrationCommunicationConfigMapper extends
     BaseMapper<IntegrationCommunicationConfig, IntegrationCommunicationConfigDto, AddIntegrationCommunicationConfigDto, UpdateIntegrationCommunicationConfigDto> {
   IntegrationCommunicationConfigMapper INSTANCE

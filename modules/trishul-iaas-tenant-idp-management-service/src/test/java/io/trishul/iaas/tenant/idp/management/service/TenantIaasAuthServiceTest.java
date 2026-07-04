@@ -15,6 +15,7 @@ import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapper;
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
 import io.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
+import io.trishul.model.base.pojo.DeleteResult;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,8 +89,8 @@ class TenantIaasAuthServiceTest {
   @Test
   void testDelete_ReturnsDeleteResultWithCounts() {
     doAnswer(inv -> inv.getArgument(0, String.class)).when(mResourceBuilder).getRoleId(anyString());
-    doAnswer(inv -> (long) inv.getArgument(0, Set.class).size()).when(mRoleService)
-        .delete(anySet());
+    doAnswer(inv -> new DeleteResult((long) inv.getArgument(0, Set.class).size()))
+        .when(mRoleService).delete(any(Set.class));
 
     TenantIaasAuthDeleteResult result = this.service.delete(Set.of("T1", "T2"));
 

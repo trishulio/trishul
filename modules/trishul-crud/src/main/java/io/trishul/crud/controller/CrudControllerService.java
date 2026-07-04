@@ -4,8 +4,10 @@ import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.object.store.file.decorator.EntityDecorator;
 import io.trishul.object.store.file.decorator.NoActionDecorator;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
@@ -13,9 +15,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
-
-
-// import Page;
 
 public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, UpdateEntity extends Identified<ID>, EntityDto extends BaseDto, AddDto extends BaseDto, UpdateDto extends BaseDto> {
   private final AttributeFilter filter;
@@ -103,8 +102,8 @@ public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, U
     return dtos;
   }
 
-  public long delete(Set<ID> ids) {
-    return this.service.delete(ids);
+  public DeleteResultDto delete(Set<ID> ids) {
+    return DeleteResultMapper.INSTANCE.toDto(this.service.delete(ids));
   }
 
   private void filter(BaseDto dto, Set<String> retainAttr) {

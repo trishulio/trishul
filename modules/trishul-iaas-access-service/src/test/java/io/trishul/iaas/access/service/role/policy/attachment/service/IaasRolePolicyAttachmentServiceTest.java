@@ -23,6 +23,7 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentAcc
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.test.util.MockUtilProvider;
 import java.util.Iterator;
 import java.util.List;
@@ -91,9 +92,9 @@ class IaasRolePolicyAttachmentServiceTest {
     IaasRolePolicyAttachmentId id2 = new IaasRolePolicyAttachmentId("ROLE_2", "POLICY_2");
     doReturn(2L).when(mIaasRepo).delete(Set.of(id1, id2));
 
-    long deleteCount = service.delete(Set.of(id1, id2));
+    DeleteResult deleteCount = service.delete(Set.of(id1, id2));
 
-    assertEquals(2, deleteCount);
+    assertEquals(new DeleteResult(2L), deleteCount);
   }
 
   @Test
@@ -101,9 +102,9 @@ class IaasRolePolicyAttachmentServiceTest {
     IaasRolePolicyAttachmentId id = new IaasRolePolicyAttachmentId("ROLE", "POLICY");
     doReturn(1L).when(mIaasRepo).delete(Set.of(id));
 
-    long deleteCount = service.delete(id);
+    DeleteResult deleteCount = service.delete(id);
 
-    assertEquals(1, deleteCount);
+    assertEquals(new DeleteResult(1L), deleteCount);
   }
 
   @Test

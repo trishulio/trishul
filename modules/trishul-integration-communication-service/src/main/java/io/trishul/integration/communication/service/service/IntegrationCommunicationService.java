@@ -11,6 +11,7 @@ import io.trishul.integration.communication.model.IntegrationCommunicationConfig
 import io.trishul.integration.communication.model.IntegrationCommunicationConfigAccessor;
 import io.trishul.integration.communication.model.UpdateIntegrationCommunicationConfig;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
@@ -67,12 +68,12 @@ public class IntegrationCommunicationService extends BaseService implements
   }
 
   @Override
-  public long delete(Set<Long> ids) {
+  public DeleteResult delete(Set<Long> ids) {
     return this.repoService.delete(ids);
   }
 
   @Override
-  public long delete(Long id) {
+  public DeleteResult delete(Long id) {
     return this.delete(Set.of(id));
   }
 

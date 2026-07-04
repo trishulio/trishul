@@ -5,13 +5,14 @@ import com.amazonaws.services.cognitoidp.model.AttributeType;
 import io.trishul.auth.aws.session.context.CognitoPrincipalContext;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 import io.trishul.iaas.user.model.IaasUser;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.util.CollectionUtils;
 
-@Mapper(uses = {LocalDateTimeMapper.class})
+@Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsCognitoAdminGetUserResultMapper
     extends IaasEntityMapper<AdminGetUserResult, IaasUser> {
   final AwsCognitoAdminGetUserResultMapper INSTANCE

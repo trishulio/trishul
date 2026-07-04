@@ -38,7 +38,7 @@ public class TenantIaasIdpService {
 
   public TenantIaasIdpDeleteResult delete(Set<String> iaasIdpTenantIds) {
 
-    long idpCount = this.idpService.delete(iaasIdpTenantIds);
+    long idpCount = this.idpService.delete(iaasIdpTenantIds).getCount();
 
     return new TenantIaasIdpDeleteResult(idpCount);
   }

@@ -1,6 +1,7 @@
 package io.trishul.repo.jpa.repository.service;
 
 import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.pojo.DeleteResult;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +43,7 @@ public interface RepoService<ID, E extends Identified<ID>, A> {
 
   List<E> saveAll(List<E> entities);
 
-  long delete(Set<ID> ids);
+  DeleteResult delete(Set<ID> ids);
 
-  long delete(ID id);
+  DeleteResult delete(ID id);
 }

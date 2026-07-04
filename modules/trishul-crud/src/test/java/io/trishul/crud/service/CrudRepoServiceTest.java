@@ -13,6 +13,7 @@ import static org.mockito.Mockito.times;
 
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntityAccessor;
@@ -205,15 +206,15 @@ class CrudRepoServiceTest {
   void testDeleteByIds_DelegatesToRepositoryAndReturnsDeleteCount() {
     doReturn(99).when(this.mRepo).deleteByIds(Set.of(1L, 2L));
 
-    assertEquals(99L, this.service.delete(Set.of(1L, 2L)));
+    assertEquals(new DeleteResult(99L), this.service.delete(Set.of(1L, 2L)));
   }
 
   @Test
   void testDelete_ReturnsCountFromRepoDelete() {
     doReturn(1).when(mRepo).deleteOneById(1L);
 
-    long count = this.service.delete(1L);
+    DeleteResult count = this.service.delete(1L);
 
-    assertEquals(1L, count);
+    assertEquals(new DeleteResult(1L), count);
   }
 }

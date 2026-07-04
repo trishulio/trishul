@@ -3,8 +3,8 @@ package io.trishul.iaas.tenant.idp.management.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -14,6 +14,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
 import io.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapper;
+import io.trishul.model.base.pojo.DeleteResult;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,8 +78,8 @@ class TenantIaasIdpServiceTest {
 
   @Test
   void testDelete_ReturnsDeleteResult() {
-    doAnswer(inv -> (long) inv.getArgument(0, Set.class).size()).when(mIdpTenantService)
-        .delete(anySet());
+    doAnswer(inv -> new DeleteResult((long) inv.getArgument(0, Set.class).size()))
+        .when(mIdpTenantService).delete(any(Set.class));
 
     TenantIaasIdpDeleteResult res = service.delete(Set.of("T1", "T2"));
 

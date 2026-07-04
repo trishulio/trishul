@@ -3,11 +3,13 @@ package io.trishul.ai.session.model;
 import io.trishul.ai.agent.model.AiAgentConfigMapper;
 import io.trishul.ai.memory.model.AiChatMemoryConfigMapper;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AiAgentConfigMapper.class, AiChatMemoryConfigMapper.class})
+@Mapper(
+    uses = {AiAgentConfigMapper.class, AiChatMemoryConfigMapper.class, DeleteResultMapper.class})
 public interface AiChatSessionMapper extends
     BaseMapper<AiChatSession, AiChatSessionDto, AddAiChatSessionDto, UpdateAiChatSessionDto> {
   AiChatSessionMapper INSTANCE = Mappers.getMapper(AiChatSessionMapper.class);

@@ -23,6 +23,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.test.util.MockUtilProvider;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -86,18 +87,18 @@ class IaasIdpTenantServiceTest {
   @Test
   void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("TENANT_1", "TENANT_2"));
-    long deleteCount = service.delete(Set.of("TENANT_1", "TENANT_2"));
+    DeleteResult deleteCount = service.delete(Set.of("TENANT_1", "TENANT_2"));
 
-    assertEquals(9, deleteCount);
+    assertEquals(new DeleteResult(9L), deleteCount);
   }
 
   @Test
   void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("TENANT"));
 
-    long deleteCount = service.delete("TENANT");
+    DeleteResult deleteCount = service.delete("TENANT");
 
-    assertEquals(1, deleteCount);
+    assertEquals(new DeleteResult(1L), deleteCount);
   }
 
   @Test

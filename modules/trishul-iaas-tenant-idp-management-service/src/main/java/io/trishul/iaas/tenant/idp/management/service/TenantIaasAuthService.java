@@ -75,7 +75,7 @@ public class TenantIaasAuthService {
       roleIds.add(roleName);
     });
 
-    long roleCount = this.roleService.delete(roleIds);
+    long roleCount = this.roleService.delete(roleIds).getCount();
 
     return new TenantIaasAuthDeleteResult(roleCount);
   }

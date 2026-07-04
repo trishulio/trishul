@@ -185,8 +185,8 @@ public class TenantIaasVfsService {
     this.rolePolicyAttachmentService.delete(attachmentIds);
     this.objectStoreCorsConfigService.delete(objectStoreIds);
     this.objectStoreAccessConfigService.delete(objectStoreIds);
-    long policyCount = this.policyService.delete(policyIds);
-    long objectStoreCount = this.objectStoreService.delete(objectStoreIds);
+    long policyCount = this.policyService.delete(policyIds).getCount();
+    long objectStoreCount = this.objectStoreService.delete(objectStoreIds).getCount();
 
     return new TenantIaasVfsDeleteResult(policyCount, objectStoreCount);
   }

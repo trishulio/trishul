@@ -3,12 +3,13 @@ package io.trishul.iaas.auth.aws.client;
 import com.amazonaws.services.cognitoidentity.model.Credentials;
 import io.trishul.iaas.auth.session.context.IaasAuthorization;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = LocalDateTimeMapper.class)
+@Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIdentityCredentialsMapper
     extends IaasEntityMapper<Credentials, IaasAuthorization> {
   final AwsIdentityCredentialsMapper INSTANCE

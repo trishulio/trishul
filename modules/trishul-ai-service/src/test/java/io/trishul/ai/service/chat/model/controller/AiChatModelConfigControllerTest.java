@@ -12,6 +12,7 @@ import io.trishul.ai.chat.model.UpdateAiChatModelConfig;
 import io.trishul.ai.chat.model.UpdateAiChatModelConfigDto;
 import io.trishul.ai.service.chat.model.service.AiChatModelConfigService;
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import java.util.List;
 import java.util.Set;
@@ -63,9 +64,9 @@ class AiChatModelConfigControllerTest {
 
   @Test
   void testDelete_ReturnsDeleteCountFromController() {
-    doReturn(1L).when(mCrudController).delete(Set.of(1L));
+    doReturn(new DeleteResultDto(1L)).when(mCrudController).delete(Set.of(1L));
 
-    assertEquals(1L, this.controller.delete(Set.of(1L)));
+    assertEquals(new DeleteResultDto(1L), this.controller.delete(Set.of(1L)));
   }
 
   @Test

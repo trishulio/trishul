@@ -13,8 +13,10 @@ import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.crud.service.CrudService;
 import io.trishul.model.base.dto.BaseDto;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.model.base.exception.EntityNotFoundException;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.object.store.file.decorator.EntityDecorator;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import java.util.List;
@@ -253,10 +255,10 @@ class CrudControllerServiceTest {
 
   @Test
   void testDelete_ReturnsDeleteCount() {
-    when(mService.delete(Set.of(1L, 2L))).thenReturn(2L);
+    when(mService.delete(Set.of(1L, 2L))).thenReturn(new DeleteResult(2L));
 
-    long result = controllerService.delete(Set.of(1L, 2L));
+    DeleteResultDto result = controllerService.delete(Set.of(1L, 2L));
 
-    assertEquals(2L, result);
+    assertEquals(new DeleteResultDto(2L), result);
   }
 }

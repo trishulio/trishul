@@ -4,6 +4,7 @@ import static io.trishul.repo.jpa.repository.service.RepoService.pageRequest;
 
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.base.types.base.pojo.Refresher;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.ExtendedRepository;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import java.util.Collection;
@@ -105,12 +106,12 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
   }
 
   @Override
-  public long delete(Set<ID> ids) {
-    return Long.valueOf(this.repo.deleteByIds(ids));
+  public DeleteResult delete(Set<ID> ids) {
+    return new DeleteResult(Long.valueOf(this.repo.deleteByIds(ids)));
   }
 
   @Override
-  public long delete(ID id) {
-    return Long.valueOf(this.repo.deleteOneById(id));
+  public DeleteResult delete(ID id) {
+    return new DeleteResult(Long.valueOf(this.repo.deleteOneById(id)));
   }
 }

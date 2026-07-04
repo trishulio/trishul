@@ -2,13 +2,14 @@ package io.trishul.object.store.aws.model.mapper;
 
 import com.amazonaws.services.s3.model.Bucket;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import io.trishul.object.store.model.IaasObjectStore;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = LocalDateTimeMapper.class)
+@Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIaasObjectStoreMapper extends IaasEntityMapper<Bucket, IaasObjectStore> {
   final AwsIaasObjectStoreMapper INSTANCE = Mappers.getMapper(AwsIaasObjectStoreMapper.class);
 

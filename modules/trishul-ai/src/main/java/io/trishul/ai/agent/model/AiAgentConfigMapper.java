@@ -6,12 +6,13 @@ import io.trishul.ai.memory.model.AiChatMemoryConfigMapper;
 import io.trishul.ai.skill.model.AiSkillMapper;
 import io.trishul.ai.tool.model.AiToolMapper;
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = {AiChatModelConfigMapper.class, AiChatMemoryConfigMapper.class,
-    AiGuardrailMapper.class, AiSkillMapper.class, AiToolMapper.class})
+    AiGuardrailMapper.class, AiSkillMapper.class, AiToolMapper.class, DeleteResultMapper.class})
 public interface AiAgentConfigMapper extends
     BaseMapper<AiAgentConfig, AiAgentConfigDto, AddAiAgentConfigDto, UpdateAiAgentConfigDto> {
   AiAgentConfigMapper INSTANCE = Mappers.getMapper(AiAgentConfigMapper.class);

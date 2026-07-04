@@ -1,6 +1,7 @@
 package io.trishul.crud.service;
 
 import io.trishul.base.types.base.pojo.Identified;
+import io.trishul.model.base.pojo.DeleteResult;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -10,9 +11,9 @@ public interface CrudService<ID, E, BE, UE extends Identified<ID>, A> {
 
   boolean exist(ID id);
 
-  long delete(Set<ID> ids);
+  DeleteResult delete(Set<ID> ids);
 
-  long delete(ID id);
+  DeleteResult delete(ID id);
 
   E get(ID id);
 

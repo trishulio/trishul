@@ -8,6 +8,7 @@ import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.user.model.BaseUser;
@@ -92,9 +93,9 @@ public class UserService extends BaseService
   }
 
   @Override
-  public long delete(Set<Long> ids) {
+  public DeleteResult delete(Set<Long> ids) {
     List<User> users = this.userRepo.findAllById(ids);
-    long deleteCount = this.repoService.delete(ids);
+    DeleteResult deleteCount = this.repoService.delete(ids);
     long iaasUserDeleteResult = this.iaasService.delete(users);
     log.info("Deleted users: {}", iaasUserDeleteResult);
 
@@ -102,7 +103,7 @@ public class UserService extends BaseService
   }
 
   @Override
-  public long delete(Long id) {
+  public DeleteResult delete(Long id) {
     return this.delete(Set.of(id));
   }
 

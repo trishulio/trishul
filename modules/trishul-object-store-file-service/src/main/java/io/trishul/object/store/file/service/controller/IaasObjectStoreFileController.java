@@ -3,6 +3,7 @@ package io.trishul.object.store.file.service.controller;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFileMapper;
@@ -74,7 +75,7 @@ public class IaasObjectStoreFileController extends BaseController {
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public long deleteIaasObjectStoreFiles(@RequestParam("fileIds") Set<URI> fileIds) {
+  public DeleteResultDto deleteIaasObjectStoreFiles(@RequestParam("fileIds") Set<URI> fileIds) {
     return this.controller.delete(fileIds);
   }
 

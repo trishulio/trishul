@@ -15,6 +15,7 @@ import io.trishul.ai.agent.model.BaseAiAgentConfig;
 import io.trishul.ai.agent.model.UpdateAiAgentConfig;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import java.util.List;
 import java.util.Set;
@@ -105,13 +106,13 @@ class AiAgentConfigServiceTest {
   @Test
   void testDelete_ReturnsCount() {
     when(mockRepoService.delete(Set.of(1L))).thenReturn(1L);
-    assertEquals(1L, service.delete(Set.of(1L)));
+    assertEquals(new DeleteResult(1L), service.delete(Set.of(1L)));
   }
 
   @Test
   void testDeleteSingle_ReturnsCount() {
-    when(mockRepoService.delete(1L)).thenReturn(1L);
-    assertEquals(1L, service.delete(1L));
+    when(mockRepoService.delete(1L)).thenReturn(new DeleteResult(1L));
+    assertEquals(new DeleteResult(1L), service.delete(1L));
   }
 
   @Test

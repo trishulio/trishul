@@ -3,6 +3,7 @@ package io.trishul.user.service.user.service.role.controller;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.user.role.model.AddUserRoleDto;
 import io.trishul.user.role.model.BaseUserRole;
@@ -103,7 +104,7 @@ public class UserRoleController extends BaseController {
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public long deleteUserRoles(@RequestParam("ids") Set<Long> ids) {
+  public DeleteResultDto deleteUserRoles(@RequestParam("ids") Set<Long> ids) {
     return this.controller.delete(ids);
   }
 }

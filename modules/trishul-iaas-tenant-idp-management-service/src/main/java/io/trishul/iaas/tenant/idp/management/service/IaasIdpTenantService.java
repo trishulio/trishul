@@ -9,6 +9,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor;
 import io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -43,13 +44,13 @@ public class IaasIdpTenantService extends BaseService implements
   }
 
   @Override
-  public long delete(Set<String> ids) {
-    return this.iaasRepo.delete(ids);
+  public DeleteResult delete(Set<String> ids) {
+    return new DeleteResult(this.iaasRepo.delete(ids));
   }
 
   @Override
-  public long delete(String id) {
-    return this.iaasRepo.delete(Set.of(id));
+  public DeleteResult delete(String id) {
+    return new DeleteResult(this.iaasRepo.delete(Set.of(id)));
   }
 
   @Override

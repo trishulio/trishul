@@ -19,6 +19,7 @@ import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.tenant.service.TenantIaasService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
 import io.trishul.tenant.entity.Tenant;
@@ -186,16 +187,16 @@ class TenantServiceTest {
 
   @Test
   void testDelete_CallsRepoServiceDeleteBulk_WhenTenantExists() {
-    doReturn(10L).when(this.mRepoService)
+    doReturn(new DeleteResult(10L)).when(this.mRepoService)
         .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
             UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-    final long count
+    final DeleteResult count
         = this.service.delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
             UUID.fromString("00000000-0000-0000-0000-000000000003")));
-    assertEquals(10L, count);
+    assertEquals(new DeleteResult(10L), count);
   }
 
   @Test

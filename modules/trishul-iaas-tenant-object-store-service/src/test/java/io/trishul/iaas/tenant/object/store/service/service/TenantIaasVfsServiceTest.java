@@ -19,6 +19,7 @@ import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
 import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
@@ -168,6 +169,8 @@ class TenantIaasVfsServiceTest {
     doReturn("POLICY_ID_2").when(mBuilder).getVfsPolicyId("T2");
     doReturn("OBJECT_STORE_1").when(mBuilder).getObjectStoreId("T1");
     doReturn("OBJECT_STORE_2").when(mBuilder).getObjectStoreId("T2");
+    doReturn(new DeleteResult(0L)).when(mPolicyService).delete(any(Set.class));
+    doReturn(new DeleteResult(0L)).when(mObjectStoreService).delete(any(Set.class));
 
     this.service.delete(iaasIdpTenantIds);
 

@@ -5,6 +5,7 @@ import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
@@ -46,13 +47,13 @@ public class IaasObjectStoreFileService extends BaseService implements
   }
 
   @Override
-  public long delete(Set<URI> ids) {
-    return this.iaasRepo.delete(ids);
+  public DeleteResult delete(Set<URI> ids) {
+    return new DeleteResult(this.iaasRepo.delete(ids));
   }
 
   @Override
-  public long delete(URI id) {
-    return this.iaasRepo.delete(Set.of(id));
+  public DeleteResult delete(URI id) {
+    return new DeleteResult(this.iaasRepo.delete(Set.of(id)));
   }
 
   @Override

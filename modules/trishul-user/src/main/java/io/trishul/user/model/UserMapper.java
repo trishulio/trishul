@@ -1,6 +1,7 @@
 package io.trishul.user.model;
 
 import io.trishul.model.base.mapper.BaseMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.user.role.model.UserRoleMapper;
 import io.trishul.user.salutation.model.UserSalutationMapper;
 import io.trishul.user.status.UserStatusMapper;
@@ -8,7 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class})
+@Mapper(uses = {UserStatusMapper.class, UserSalutationMapper.class, UserRoleMapper.class,
+    DeleteResultMapper.class})
 public interface UserMapper extends BaseMapper<User, UserDto, AddUserDto, UpdateUserDto> {
   UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 

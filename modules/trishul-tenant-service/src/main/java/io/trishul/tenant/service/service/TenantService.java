@@ -7,6 +7,7 @@ import io.trishul.iaas.tenant.resource.TenantIaasResources;
 import io.trishul.iaas.tenant.service.TenantIaasDeleteResult;
 import io.trishul.iaas.tenant.service.TenantIaasService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.tenant.entity.BaseTenant;
@@ -70,12 +71,12 @@ public class TenantService
   }
 
   @Override
-  public long delete(Set<UUID> ids) {
+  public DeleteResult delete(Set<UUID> ids) {
     List<Tenant> tenants = this.tenantRepository.findAllById(ids);
     tenants.forEach(tenant -> tenant.setIsReady(false));
     this.repoService.saveAll(tenants);
 
-    long deleteCount = this.repoService.delete(ids);
+    DeleteResult deleteCount = this.repoService.delete(ids);
 
     TenantIaasDeleteResult result = this.iaasService.delete(ids);
     log.info("Deleted tenants: {}", result);
@@ -84,7 +85,7 @@ public class TenantService
   }
 
   @Override
-  public long delete(UUID id) {
+  public DeleteResult delete(UUID id) {
     return this.delete(Set.of(id));
   }
 

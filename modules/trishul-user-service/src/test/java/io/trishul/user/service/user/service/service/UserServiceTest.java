@@ -20,6 +20,7 @@ import io.trishul.iaas.user.model.IaasUser;
 import io.trishul.iaas.user.model.IaasUserTenantMembership;
 import io.trishul.iaas.user.service.TenantIaasUserService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.user.model.BaseUser;
 import io.trishul.user.model.UpdateUser;
@@ -153,19 +154,19 @@ class UserServiceTest {
 
   @Test
   void testDelete_CallsRepoServiceDeleteBulk_WhenUserExists() {
-    doReturn(123L).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
+    doReturn(new DeleteResult(123L)).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
 
-    final long count = this.service.delete(Set.of(1L, 2L, 3L));
-    assertEquals(123L, count);
+    final DeleteResult count = this.service.delete(Set.of(1L, 2L, 3L));
+    assertEquals(new DeleteResult(123L), count);
   }
 
   @Test
   void testDelete_CallsRepoServiceDelete_WhenUserExists() {
     this.service = spy(this.service);
-    doReturn(99L).when(this.service).delete(Set.of(1L));
+    doReturn(new DeleteResult(99L)).when(this.service).delete(Set.of(1L));
 
-    long count = this.service.delete(1L);
-    assertEquals(99L, count);
+    DeleteResult count = this.service.delete(1L);
+    assertEquals(new DeleteResult(99L), count);
   }
 
   @Test

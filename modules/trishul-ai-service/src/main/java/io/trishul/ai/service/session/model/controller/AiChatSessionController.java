@@ -11,6 +11,7 @@ import io.trishul.ai.session.model.UpdateAiChatSessionDto;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -85,7 +86,7 @@ public class AiChatSessionController extends BaseController {
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public long delete(@RequestParam("ids") Set<Long> ids) {
+  public DeleteResultDto delete(@RequestParam("ids") Set<Long> ids) {
     return this.controller.delete(ids);
   }
 

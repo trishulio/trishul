@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
 import io.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
@@ -58,9 +59,11 @@ class IaasObjectStoreFileControllerTest {
 
   @Test
   void testDeleteIaasObjectStoreFiles_ReturnsDeleteCountFromController() {
-    doReturn(1L).when(mCrudController).delete(Set.of(URI.create("file_1.txt")));
+    doReturn(new DeleteResultDto(1L)).when(mCrudController)
+        .delete(Set.of(URI.create("file_1.txt")));
 
-    assertEquals(1L, this.controller.deleteIaasObjectStoreFiles(Set.of(URI.create("file_1.txt"))));
+    assertEquals(new DeleteResultDto(1L),
+        this.controller.deleteIaasObjectStoreFiles(Set.of(URI.create("file_1.txt"))));
   }
 
   @Test

@@ -18,6 +18,7 @@ import io.trishul.crud.service.CrudEntityMergerService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.crud.service.LockService;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.object.store.model.BaseIaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.model.IaasObjectStoreAccessor;
@@ -84,18 +85,18 @@ class IaasObjectStoreServiceTest {
   @Test
   void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(9L).when(mIaasRepo).delete(Set.of("POLICY_1", "POLICY_2"));
-    long deleteCount = service.delete(Set.of("POLICY_1", "POLICY_2"));
+    DeleteResult deleteCount = service.delete(Set.of("POLICY_1", "POLICY_2"));
 
-    assertEquals(9, deleteCount);
+    assertEquals(new DeleteResult(9L), deleteCount);
   }
 
   @Test
   void testDelete_Id_CallsRepoDeleteWithIds() {
     doReturn(1L).when(mIaasRepo).delete(Set.of("POLICY"));
 
-    long deleteCount = service.delete("POLICY");
+    DeleteResult deleteCount = service.delete("POLICY");
 
-    assertEquals(1, deleteCount);
+    assertEquals(new DeleteResult(1L), deleteCount);
   }
 
   @Test

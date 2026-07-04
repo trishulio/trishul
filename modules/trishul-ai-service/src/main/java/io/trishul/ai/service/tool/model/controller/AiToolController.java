@@ -11,6 +11,7 @@ import io.trishul.ai.tool.model.UpdateAiToolDto;
 import io.trishul.crud.controller.BaseController;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -78,7 +79,7 @@ public class AiToolController extends BaseController {
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public long delete(@RequestParam("ids") Set<Long> ids) {
+  public DeleteResultDto delete(@RequestParam("ids") Set<Long> ids) {
     return this.controller.delete(ids);
   }
 }

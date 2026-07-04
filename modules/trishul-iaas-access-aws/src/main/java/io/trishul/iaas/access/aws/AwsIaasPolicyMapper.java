@@ -3,12 +3,13 @@ package io.trishul.iaas.access.aws;
 import com.amazonaws.services.identitymanagement.model.Policy;
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = LocalDateTimeMapper.class)
+@Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIaasPolicyMapper extends IaasEntityMapper<Policy, IaasPolicy> {
   final AwsIaasPolicyMapper INSTANCE = Mappers.getMapper(AwsIaasPolicyMapper.class);
 

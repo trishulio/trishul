@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.tenant.dto.AddTenantDto;
 import io.trishul.tenant.dto.TenantDto;
@@ -77,10 +78,10 @@ class TenantControllerTest {
 
   @Test
   void testDeleteTenants_ReturnsDeleteCountFromController() {
-    doReturn(1L).when(mCrudController)
+    doReturn(new DeleteResultDto(1L)).when(mCrudController)
         .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    assertEquals(1L, this.controller
+    assertEquals(new DeleteResultDto(1L), this.controller
         .deleteTenants(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
   }
 

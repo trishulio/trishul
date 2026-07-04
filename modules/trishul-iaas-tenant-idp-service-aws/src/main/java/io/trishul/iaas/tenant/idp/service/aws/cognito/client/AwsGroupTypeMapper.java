@@ -3,12 +3,13 @@ package io.trishul.iaas.tenant.idp.service.aws.cognito.client;
 import com.amazonaws.services.cognitoidp.model.GroupType;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import io.trishul.iaas.mapper.IaasEntityMapper;
+import io.trishul.model.mapper.DeleteResultMapper;
 import io.trishul.model.mapper.LocalDateTimeMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {LocalDateTimeMapper.class})
+@Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsGroupTypeMapper extends IaasEntityMapper<GroupType, IaasIdpTenant> {
   final AwsGroupTypeMapper INSTANCE = Mappers.getMapper(AwsGroupTypeMapper.class);
 

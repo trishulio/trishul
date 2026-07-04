@@ -14,6 +14,7 @@ import io.trishul.ai.tool.model.UpdateAiTool;
 import io.trishul.ai.tool.model.UpdateAiToolDto;
 import io.trishul.crud.controller.CrudControllerService;
 import io.trishul.crud.controller.filter.AttributeFilter;
+import io.trishul.model.base.dto.DeleteResultDto;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,9 +54,9 @@ class AiToolControllerTest {
 
   @Test
   void testDelete_ReturnsDeleteCountFromController() {
-    doReturn(1L).when(mCrudController).delete(Set.of(1L));
+    doReturn(new DeleteResultDto(1L)).when(mCrudController).delete(Set.of(1L));
 
-    assertEquals(1L, this.controller.delete(Set.of(1L)));
+    assertEquals(new DeleteResultDto(1L), this.controller.delete(Set.of(1L)));
   }
 
   @Test

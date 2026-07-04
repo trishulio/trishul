@@ -13,6 +13,7 @@ import io.trishul.integration.model.IntegrationType;
 import io.trishul.integration.model.UpdateIntegration;
 import io.trishul.integration.model.UpdateIntegrationDto;
 import io.trishul.integration.service.service.IntegrationService;
+import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -87,7 +88,7 @@ public class IntegrationController extends BaseController {
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
-  public long deleteIntegrations(@RequestParam("ids") Set<Long> integrationIds) {
+  public DeleteResultDto deleteIntegrations(@RequestParam("ids") Set<Long> integrationIds) {
     return this.controller.delete(integrationIds);
   }
 

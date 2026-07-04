@@ -16,6 +16,7 @@ import static org.mockito.Mockito.verify;
 import io.trishul.base.types.base.pojo.Identified;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.user.role.model.BaseUserRole;
 import io.trishul.user.role.model.UpdateUserRole;
@@ -141,10 +142,10 @@ class UserRoleServiceTest {
 
   @Test
   void testDelete_CallsRepoServiceDeleteBulk_WhenUserRoleExists() {
-    doReturn(123L).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
+    doReturn(new DeleteResult(123L)).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
 
-    final long count = this.service.delete(Set.of(1L, 2L, 3L));
-    assertEquals(123L, count);
+    final DeleteResult count = this.service.delete(Set.of(1L, 2L, 3L));
+    assertEquals(new DeleteResult(123L), count);
   }
 
   @Test

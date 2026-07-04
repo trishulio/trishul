@@ -1,5 +1,7 @@
 package io.trishul.quantity.model;
 
+import io.trishul.model.mapper.DeleteResultMapper;
+
 import io.trishul.quantity.model.dto.QuantityDto;
 import io.trishul.quantity.unit.QuantityUnitMapper;
 import java.math.BigDecimal;
@@ -9,7 +11,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import tec.uom.se.quantity.Quantities;
 
-@Mapper(uses = {QuantityUnitMapper.class})
+@Mapper(uses = {QuantityUnitMapper.class, DeleteResultMapper.class})
 public abstract class QuantityMapper {
   public static final QuantityMapper INSTANCE = Mappers.getMapper(QuantityMapper.class);
 

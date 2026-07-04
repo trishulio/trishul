@@ -9,6 +9,7 @@ import io.trishul.crud.service.BaseService;
 import io.trishul.crud.service.CrudService;
 import io.trishul.crud.service.EntityMergerService;
 import io.trishul.model.base.exception.EntityNotFoundException;
+import io.trishul.model.base.pojo.DeleteResult;
 import io.trishul.repo.jpa.repository.service.RepoService;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
@@ -55,12 +56,12 @@ public class AiSkillService extends BaseService
   }
 
   @Override
-  public long delete(Set<Long> ids) {
+  public DeleteResult delete(Set<Long> ids) {
     return this.repoService.delete(ids);
   }
 
   @Override
-  public long delete(Long id) {
+  public DeleteResult delete(Long id) {
     return this.repoService.delete(id);
   }
 

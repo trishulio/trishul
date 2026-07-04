@@ -10,6 +10,7 @@ import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentAcc
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
 import io.trishul.iaas.access.role.attachment.policy.UpdateIaasRolePolicyAttachment;
 import io.trishul.iaas.repository.IaasRepository;
+import io.trishul.model.base.pojo.DeleteResult;
 import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
@@ -46,13 +47,13 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   }
 
   @Override
-  public long delete(Set<IaasRolePolicyAttachmentId> ids) {
-    return this.iaasRepo.delete(ids);
+  public DeleteResult delete(Set<IaasRolePolicyAttachmentId> ids) {
+    return new DeleteResult(this.iaasRepo.delete(ids));
   }
 
   @Override
-  public long delete(IaasRolePolicyAttachmentId id) {
-    return this.iaasRepo.delete(Set.of(id));
+  public DeleteResult delete(IaasRolePolicyAttachmentId id) {
+    return new DeleteResult(this.iaasRepo.delete(Set.of(id)));
   }
 
   @Override
