@@ -75,6 +75,7 @@ This module provides default properties that can be overridden:
 
 ```properties
 # Default configuration (from api-application.properties)
+
 management.endpoints.web.exposure.include=*
 management.endpoint.health.show-details=always
 springdoc.api-docs.path=/api-docs
