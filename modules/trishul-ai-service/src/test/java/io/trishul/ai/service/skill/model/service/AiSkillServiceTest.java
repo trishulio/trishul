@@ -70,7 +70,7 @@ class AiSkillServiceTest {
 
   @Test
   void testDelete_ReturnsCount() {
-    when(mockRepoService.delete(Set.of(1L))).thenReturn(1L);
+    when(mockRepoService.delete(Set.of(1L))).thenReturn(new DeleteResult(1L));
     assertEquals(new DeleteResult(1L), service.delete(Set.of(1L)));
   }
 
