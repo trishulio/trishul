@@ -2,6 +2,7 @@ package io.trishul.money.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,17 +27,17 @@ class MoneyDtoTest {
   @Test
   void testAccessCurrency() {
     assertNull(dto.getCurrency());
-    dto.setCurrency("CAD");
+    assertSame(dto, dto.setCurrency("CAD"));
     assertEquals("CAD", dto.getCurrency());
   }
 
   @Test
   void testAccessAmount() {
     assertNull(dto.getAmount());
-    dto.setAmount(new BigDecimal("999.00"));
+    assertSame(dto, dto.setAmount(new BigDecimal("999.00")));
     assertEquals(new BigDecimal("999"), dto.getAmount());
 
-    dto.setAmount(new BigDecimal("999"));
+    assertSame(dto, dto.setAmount(new BigDecimal("999")));
     assertEquals(new BigDecimal("999"), dto.getAmount());
   }
 

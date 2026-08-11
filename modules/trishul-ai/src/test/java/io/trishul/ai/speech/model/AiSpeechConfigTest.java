@@ -1,6 +1,7 @@
 package io.trishul.ai.speech.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -42,4 +43,84 @@ class AiSpeechConfigTest {
     assertEquals(now.plusDays(1), config.getLastUpdated());
     assertEquals(2, config.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessProvider() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setProvider("testString"));
+    assertEquals("testString", accessor.getProvider());
+  }
+
+  @Test
+  void testAccessTtsModelName() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setTtsModelName("testString"));
+    assertEquals("testString", accessor.getTtsModelName());
+  }
+
+  @Test
+  void testAccessSttModelName() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setSttModelName("testString"));
+    assertEquals("testString", accessor.getSttModelName());
+  }
+
+  @Test
+  void testAccessVoice() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setVoice("testString"));
+    assertEquals("testString", accessor.getVoice());
+  }
+
+  @Test
+  void testAccessSpeed() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setSpeed(123.45));
+    assertEquals(123.45, accessor.getSpeed());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiSpeechConfig accessor = new AiSpeechConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

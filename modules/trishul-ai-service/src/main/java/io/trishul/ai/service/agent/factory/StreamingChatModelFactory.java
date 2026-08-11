@@ -19,7 +19,6 @@ public class StreamingChatModelFactory {
     throw new IllegalArgumentException("Unsupported AI Provider: " + provider);
   }
 
-
   public StreamingChatLanguageModel getGithubCopilotModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("GitHub Copilot API Key must be provided");

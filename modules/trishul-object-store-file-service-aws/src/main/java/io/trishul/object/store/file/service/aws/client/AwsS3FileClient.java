@@ -19,9 +19,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 public class AwsS3FileClient implements
     IaasClient<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> {
@@ -41,7 +41,7 @@ public class AwsS3FileClient implements
     this.presignUrlCache = CacheBuilder.newBuilder().expireAfterWrite(Duration.ofHours(1))
         .build(new CacheLoader<PresignUrlRequest, IaasObjectStoreFile>() {
           @Override
-          public IaasObjectStoreFile load(@Nonnull PresignUrlRequest key) throws Exception {
+          public IaasObjectStoreFile load(@NonNull PresignUrlRequest key) throws Exception {
             IaasObjectStoreFile file
                 = new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, null);
 

@@ -91,7 +91,13 @@ public class AwsCorsConfigClient implements
       this.awsClient.deleteBucketCrossOriginConfiguration(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      log.error("Failed to delete the cross origin configuration for bucket: {}", bucketName);
+      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())
+          || "NoSuchCORSConfiguration".equalsIgnoreCase(e.getErrorCode())) {
+        log.info("S3 CORS configuration already deleted or not found: {}", bucketName);
+        success = true;
+      } else {
+        log.error("Failed to delete the cross origin configuration for bucket: {}", bucketName);
+      }
     }
 
     return success;

@@ -46,4 +46,27 @@ class UpdateTenantDtoTest {
     tenantDto.setUrl(url);
     assertSame(url, tenantDto.getUrl());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    UUID value = UUID.randomUUID();
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessUrl() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    assertSame(accessor, accessor.setUrl(URI.create("http://localhost")));
+    assertEquals(URI.create("http://localhost"), accessor.getUrl());
+  }
+
 }

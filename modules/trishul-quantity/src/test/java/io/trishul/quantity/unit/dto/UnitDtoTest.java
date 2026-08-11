@@ -2,6 +2,7 @@ package io.trishul.quantity.unit.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class UnitDtoTest {
 
   @Test
   void testAccessSymbol() {
-    dto.setSymbol("SYMBOL_1");
+    assertSame(dto, dto.setSymbol("SYMBOL_1"));
     assertEquals("SYMBOL_1", dto.getSymbol());
   }
 }

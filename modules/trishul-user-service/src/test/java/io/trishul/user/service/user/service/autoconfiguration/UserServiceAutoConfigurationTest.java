@@ -1,6 +1,8 @@
 package io.trishul.user.service.user.service.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.auth.session.context.holder.ContextHolder;
@@ -30,6 +32,8 @@ import io.trishul.user.service.user.service.service.UserService;
 import io.trishul.user.service.user.service.status.repository.UserStatusRepository;
 import io.trishul.user.status.UserStatus;
 import io.trishul.user.status.UserStatusAccessor;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,8 +86,11 @@ class UserServiceAutoConfigurationTest {
   @Test
   void testUserSalutationService_ReturnsNonNull() {
     UserSalutationRepository mockUserSalutationRepository = mock(UserSalutationRepository.class);
+    Refresher<UserSalutation, UserSalutationAccessor<?>> mockUserSalutationRefresher
+        = mock(Refresher.class);
 
-    UserSalutationService result = config.userSalutationService(mockUserSalutationRepository);
+    UserSalutationService result
+        = config.userSalutationService(mockUserSalutationRepository, mockUserSalutationRefresher);
 
     assertNotNull(result);
   }
@@ -107,6 +114,21 @@ class UserServiceAutoConfigurationTest {
   }
 
   @Test
+  void testUserAccessorRefresher_RefreshesUsersFromRepository() {
+    UserRepository mockRepo = mock(UserRepository.class);
+    AccessorRefresher<Long, UserAccessor<?>, User> refresher
+        = config.userAccessorRefresher(mockRepo);
+    UserAccessorImpl accessor = new UserAccessorImpl(new User(1L));
+    User replacement = new User(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(accessor));
+
+    assertSame(replacement, accessor.getUser());
+  }
+
+  @Test
   void testUserRoleAccessorRefresher_ReturnsNonNull() {
     UserRoleRepository mockRepo = mock(UserRoleRepository.class);
 
@@ -114,6 +136,21 @@ class UserServiceAutoConfigurationTest {
         = config.userRoleAccessorRefresher(mockRepo);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testUserRoleAccessorRefresher_RefreshesRolesFromRepository() {
+    UserRoleRepository mockRepo = mock(UserRoleRepository.class);
+    AccessorRefresher<Long, UserRoleAccessor<?>, UserRole> refresher
+        = config.userRoleAccessorRefresher(mockRepo);
+    UserRoleAccessorImpl role = new UserRoleAccessorImpl(new UserRole(1L));
+    UserRole replacement = new UserRole(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(role));
+
+    assertSame(replacement, role.getRole());
   }
 
   @Test
@@ -127,6 +164,21 @@ class UserServiceAutoConfigurationTest {
   }
 
   @Test
+  void testUserSalutationAccessorRefresher_RefreshesSalutationsFromRepository() {
+    UserSalutationRepository mockRepo = mock(UserSalutationRepository.class);
+    AccessorRefresher<Long, UserSalutationAccessor<?>, UserSalutation> refresher
+        = config.userSalutationAccessorRefresher(mockRepo);
+    UserSalutationAccessorImpl salutation = new UserSalutationAccessorImpl(new UserSalutation(1L));
+    UserSalutation replacement = new UserSalutation(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(salutation));
+
+    assertSame(replacement, salutation.getSalutation());
+  }
+
+  @Test
   void testUserStatusAccessorRefresher_ReturnsNonNull() {
     UserStatusRepository mockRepo = mock(UserStatusRepository.class);
 
@@ -134,6 +186,21 @@ class UserServiceAutoConfigurationTest {
         = config.userStatusAccessorRefresher(mockRepo);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testUserStatusAccessorRefresher_RefreshesStatusesFromRepository() {
+    UserStatusRepository mockRepo = mock(UserStatusRepository.class);
+    AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> refresher
+        = config.userStatusAccessorRefresher(mockRepo);
+    UserStatusAccessorImpl status = new UserStatusAccessorImpl(new UserStatus(1L));
+    UserStatus replacement = new UserStatus(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(status));
+
+    assertSame(replacement, status.getStatus());
   }
 
   @Test
@@ -147,6 +214,21 @@ class UserServiceAutoConfigurationTest {
   }
 
   @Test
+  void testAssignedToAccessorRefresher_RefreshesAssignedUsersFromRepository() {
+    UserRepository mockRepo = mock(UserRepository.class);
+    AccessorRefresher<Long, AssignedToAccessor<?>, User> refresher
+        = config.assignedToAccessorRefresher(mockRepo);
+    UserLinkAccessorImpl accessor = new UserLinkAccessorImpl(new User(1L), new User(1L));
+    User replacement = new User(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(accessor));
+
+    assertSame(replacement, accessor.getAssignedTo());
+  }
+
+  @Test
   void testOwnedByAccessorRefresher_ReturnsNonNull() {
     UserRepository mockRepo = mock(UserRepository.class);
 
@@ -154,6 +236,21 @@ class UserServiceAutoConfigurationTest {
         = config.ownedByAccessorRefresher(mockRepo);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testOwnedByAccessorRefresher_RefreshesOwnedUsersFromRepository() {
+    UserRepository mockRepo = mock(UserRepository.class);
+    AccessorRefresher<Long, OwnedByAccessor<User>, User> refresher
+        = config.ownedByAccessorRefresher(mockRepo);
+    UserLinkAccessorImpl accessor = new UserLinkAccessorImpl(new User(1L), new User(1L));
+    User replacement = new User(1L);
+
+    doReturn(List.of(replacement)).when(mockRepo).findAllById(Set.of(1L));
+
+    refresher.refreshAccessors(List.of(accessor));
+
+    assertSame(replacement, accessor.getOwnedBy());
   }
 
   @Test
@@ -223,5 +320,116 @@ class UserServiceAutoConfigurationTest {
         = config.userStatusRefresher(mockUserStatusAccessorRefresher);
 
     assertNotNull(result);
+  }
+
+  private static final class UserAccessorImpl implements UserAccessor<UserAccessorImpl> {
+    private User user;
+
+    private UserAccessorImpl(User user) {
+      this.user = user;
+    }
+
+    @Override
+    public User getUser() {
+      return user;
+    }
+
+    @Override
+    public UserAccessorImpl setUser(User user) {
+      this.user = user;
+      return this;
+    }
+  }
+
+  private static final class UserLinkAccessorImpl
+      implements AssignedToAccessor<UserLinkAccessorImpl>, OwnedByAccessor<User> {
+    private User assignedTo;
+    private User ownedBy;
+
+    private UserLinkAccessorImpl(User assignedTo, User ownedBy) {
+      this.assignedTo = assignedTo;
+      this.ownedBy = ownedBy;
+    }
+
+    @Override
+    public User getAssignedTo() {
+      return assignedTo;
+    }
+
+    @Override
+    public UserLinkAccessorImpl setAssignedTo(User user) {
+      this.assignedTo = user;
+      return this;
+    }
+
+    @Override
+    public User getOwnedBy() {
+      return ownedBy;
+    }
+
+    @Override
+    public void setOwnedBy(User user) {
+      this.ownedBy = user;
+    }
+  }
+
+  private static final class UserRoleAccessorImpl
+      implements UserRoleAccessor<UserRoleAccessorImpl> {
+    private UserRole role;
+
+    private UserRoleAccessorImpl(UserRole role) {
+      this.role = role;
+    }
+
+    @Override
+    public UserRole getRole() {
+      return role;
+    }
+
+    @Override
+    public UserRoleAccessorImpl setRole(UserRole role) {
+      this.role = role;
+      return this;
+    }
+  }
+
+  private static final class UserSalutationAccessorImpl
+      implements UserSalutationAccessor<UserSalutationAccessorImpl> {
+    private UserSalutation salutation;
+
+    private UserSalutationAccessorImpl(UserSalutation salutation) {
+      this.salutation = salutation;
+    }
+
+    @Override
+    public UserSalutation getSalutation() {
+      return salutation;
+    }
+
+    @Override
+    public UserSalutationAccessorImpl setSalutation(UserSalutation salutation) {
+      this.salutation = salutation;
+      return this;
+    }
+  }
+
+  private static final class UserStatusAccessorImpl
+      implements UserStatusAccessor<UserStatusAccessorImpl> {
+    private UserStatus status;
+
+    private UserStatusAccessorImpl(UserStatus status) {
+      this.status = status;
+    }
+
+    @Override
+    public UserStatus getStatus() {
+      return status;
+    }
+
+    @Override
+    public UserStatusAccessorImpl setStatus(UserStatus status) {
+      this.status = status;
+      return this;
+    }
   }
 }

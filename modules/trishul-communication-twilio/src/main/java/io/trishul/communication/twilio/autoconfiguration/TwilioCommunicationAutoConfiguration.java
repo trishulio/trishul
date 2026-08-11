@@ -31,7 +31,8 @@ public class TwilioCommunicationAutoConfiguration {
       @Value("${twilio.account.sid}") String accountSid,
       @Value("${twilio.auth.token}") String authToken) {
     Twilio.init(accountSid, authToken);
-    return new TwilioMessageClient(accountSid, TwilioMessageMapper.INSTANCE);
+    return (IaasClient<String, Message, BaseMessage<?>, UpdateMessage<?>>) (IaasClient) new TwilioMessageClient(
+        accountSid, TwilioMessageMapper.INSTANCE);
   }
 
   @Bean

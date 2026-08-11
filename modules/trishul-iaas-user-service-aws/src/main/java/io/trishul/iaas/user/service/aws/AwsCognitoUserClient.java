@@ -83,16 +83,20 @@ public class AwsCognitoUserClient
   @Override
   public boolean delete(String id) {
     boolean success = false;
-    AdminDeleteUserRequest req
-        = new AdminDeleteUserRequest().withUsername(id).withUserPoolId(userPoolId);
 
-    try {
-      AdminDeleteUserResult result = this.idp.adminDeleteUser(req);
-      log.info("Deleted Cognito user. Username: {}, UserPoolId: {}, RequestId: {}", id, userPoolId,
-          result.getSdkResponseMetadata().getRequestId());
-      success = true;
-    } catch (UserNotFoundException e) {
-      log.error("Failed to delete user: {}", id);
+    if (id != null && !id.isBlank()) {
+      AdminDeleteUserRequest req
+          = new AdminDeleteUserRequest().withUsername(id).withUserPoolId(userPoolId);
+
+      try {
+        AdminDeleteUserResult result = this.idp.adminDeleteUser(req);
+        log.info("Deleted Cognito user. Username: {}, UserPoolId: {}, RequestId: {}", id,
+            userPoolId, result.getSdkResponseMetadata().getRequestId());
+        success = true;
+      } catch (UserNotFoundException e) {
+        log.info("Cognito user already deleted or not found: {}", id);
+        success = true;
+      }
     }
 
     return success;

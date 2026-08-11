@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
+import org.springframework.lang.NonNull;
 
 public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient {
   private final LoadingCache<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>> getIdentityPools;
@@ -22,7 +22,7 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
     this.getIdentityPools = CacheBuilder.newBuilder()
         .build(new CacheLoader<GetIdentityPoolsArgs, List<IdentityPoolShortDescription>>() {
           @Override
-          public List<IdentityPoolShortDescription> load(@Nonnull GetIdentityPoolsArgs key)
+          public List<IdentityPoolShortDescription> load(@NonNull GetIdentityPoolsArgs key)
               throws Exception {
             return cognitoIdClient.getIdentityPools(key.pageSize);
           }
@@ -32,7 +32,7 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
         .expireAfterWrite(Duration.ofSeconds(credentialsExpiryDurationSeconds))
         .build(new CacheLoader<GetIdentityIdArgs, String>() {
           @Override
-          public String load(@Nonnull GetIdentityIdArgs key) throws Exception {
+          public String load(@NonNull GetIdentityIdArgs key) throws Exception {
             return cognitoIdClient.getIdentityId(key.identityPoolId, key.logins);
           }
         });
@@ -41,7 +41,7 @@ public class CachedAwsCognitoIdentityClient implements AwsCognitoIdentityClient 
         .expireAfterWrite(Duration.ofSeconds(credentialsExpiryDurationSeconds))
         .build(new CacheLoader<GetCredentialsForIdentityIdArgs, Credentials>() {
           @Override
-          public Credentials load(@Nonnull GetCredentialsForIdentityIdArgs key) throws Exception {
+          public Credentials load(@NonNull GetCredentialsForIdentityIdArgs key) throws Exception {
             return cognitoIdClient.getCredentialsForIdentity(key.identityId, key.logins);
           }
         });

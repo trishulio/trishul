@@ -1,5 +1,6 @@
 package io.trishul.user.model;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,7 +15,9 @@ import io.trishul.user.salutation.model.UserSalutation;
 import io.trishul.user.salutation.model.UserSalutationAccessor;
 import io.trishul.user.status.UserStatus;
 import io.trishul.user.status.UserStatusAccessor;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,12 +30,28 @@ class UserRefresherTest {
   private Refresher<UserRoleBinding, UserRoleBindingAccessor<?>> mRoleBindingRefresher;
 
   private UserRefresher userRefresher;
+  private User userReplacement;
+  private User assignedToReplacement;
+  private User ownedByReplacement;
 
   @BeforeEach
+  @SuppressWarnings("unchecked")
   void init() {
-    mRefresher = mock(AccessorRefresher.class);
-    mAssignedToRefresher = mock(AccessorRefresher.class);
-    mOwnedByRefresher = mock(AccessorRefresher.class);
+    userReplacement = new User(1L);
+    assignedToReplacement = new User(2L);
+    ownedByReplacement = new User(3L);
+
+    Function<Iterable<Long>, List<User>> userRetriever = ids -> List.of(userReplacement);
+    Function<Iterable<Long>, List<User>> assignedToRetriever
+        = ids -> List.of(assignedToReplacement);
+    Function<Iterable<Long>, List<User>> ownedByRetriever = ids -> List.of(ownedByReplacement);
+
+    mRefresher = new AccessorRefresher<>(User.class, UserAccessor::getUser,
+        (accessor, user) -> accessor.setUser(user), userRetriever);
+    mAssignedToRefresher = new AccessorRefresher<>(User.class, AssignedToAccessor::getAssignedTo,
+        (accessor, user) -> accessor.setAssignedTo(user), assignedToRetriever);
+    mOwnedByRefresher = new AccessorRefresher<>(User.class, OwnedByAccessor::getOwnedBy,
+        (accessor, user) -> accessor.setOwnedBy(user), ownedByRetriever);
     mStatusRefresher = mock(Refresher.class);
     mSalutationRefresher = mock(Refresher.class);
     mRoleBindingRefresher = mock(Refresher.class);
@@ -59,26 +78,98 @@ class UserRefresherTest {
   }
 
   @Test
+  void testRefresh_SkipsNullAndEmptyRoleBindings() {
+    User withRoles = new User(1L);
+    withRoles.setRoles(List.of(new UserRole(10L)));
+
+    User withoutRoles = new User(2L);
+    withoutRoles.setRoles(List.of());
+
+    List<User> users = new ArrayList<>();
+    users.add(null);
+    users.add(withoutRoles);
+    users.add(withRoles);
+
+    userRefresher.refresh(users);
+
+    List<UserRoleBinding> expected
+        = List.of(new UserRoleBinding().setRole(new UserRole(10L)).setUser(withRoles));
+
+    verify(mRoleBindingRefresher, times(1)).refresh(expected);
+  }
+
+  @Test
   void testRefreshAccessors_CallsAccessorRefresher() {
-    UserAccessor<?> accessor = mock(UserAccessor.class);
+    UserAccessorImpl accessor = new UserAccessorImpl(new User(1L));
     userRefresher.refreshAccessors(List.of(accessor));
 
-    verify(mRefresher, times(1)).refreshAccessors(List.of(accessor));
+    assertSame(userReplacement, accessor.getUser());
   }
 
   @Test
   void testAssignedToRefreshAccessors_CallsAccessorRefresher() {
-    AssignedToAccessor<?> accessor = mock(AssignedToAccessor.class);
+    UserLinkAccessorImpl accessor = new UserLinkAccessorImpl(new User(2L), new User(3L));
     userRefresher.refreshAssignedToAccessors(List.of(accessor));
 
-    verify(mAssignedToRefresher, times(1)).refreshAccessors(List.of(accessor));
+    assertSame(assignedToReplacement, accessor.getAssignedTo());
   }
 
   @Test
   void testOwnedByRefreshAccessors_CallsAccessorRefresher() {
-    OwnedByAccessor<User> accessor = mock(OwnedByAccessor.class);
+    UserLinkAccessorImpl accessor = new UserLinkAccessorImpl(new User(2L), new User(3L));
     userRefresher.refreshOwnedByAccessors(List.of(accessor));
 
-    verify(mOwnedByRefresher, times(1)).refreshAccessors(List.of(accessor));
+    assertSame(ownedByReplacement, accessor.getOwnedBy());
+  }
+
+  private static final class UserAccessorImpl implements UserAccessor<UserAccessorImpl> {
+    private User user;
+
+    private UserAccessorImpl(User user) {
+      this.user = user;
+    }
+
+    @Override
+    public User getUser() {
+      return user;
+    }
+
+    @Override
+    public UserAccessorImpl setUser(User user) {
+      this.user = user;
+      return this;
+    }
+  }
+
+  private static final class UserLinkAccessorImpl
+      implements AssignedToAccessor<UserLinkAccessorImpl>, OwnedByAccessor<User> {
+    private User assignedTo;
+    private User ownedBy;
+
+    private UserLinkAccessorImpl(User assignedTo, User ownedBy) {
+      this.assignedTo = assignedTo;
+      this.ownedBy = ownedBy;
+    }
+
+    @Override
+    public User getAssignedTo() {
+      return assignedTo;
+    }
+
+    @Override
+    public UserLinkAccessorImpl setAssignedTo(User user) {
+      this.assignedTo = user;
+      return this;
+    }
+
+    @Override
+    public User getOwnedBy() {
+      return ownedBy;
+    }
+
+    @Override
+    public void setOwnedBy(User user) {
+      this.ownedBy = user;
+    }
   }
 }

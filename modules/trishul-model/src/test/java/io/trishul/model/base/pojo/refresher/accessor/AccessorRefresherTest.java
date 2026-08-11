@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.base.types.base.pojo.Identified;
@@ -13,10 +14,11 @@ import io.trishul.model.base.exception.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.mockito.InOrder;
 
 class AccessorRefresherTest {
   class Entity implements Identified<Long> {
@@ -152,5 +154,25 @@ class AccessorRefresherTest {
     localRefresher.refreshAccessors(consumers);
 
     assertSame(repoEntities.get(0), consumers.get(0).getEntity());
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testRefreshAccessors_CallsSetterWithNullBeforeSettingRefreshedEntity() {
+    BiConsumer<EntityAccessor, Entity> mSetter = mock(BiConsumer.class);
+    AccessorRefresher<Long, EntityAccessor, Entity> localRefresher = new AccessorRefresher<>(
+        Entity.class, EntityAccessor::getEntity, mSetter, mEntityRetriever);
+
+    List<Entity> repoEntities = List.of(new Entity(1L));
+    doReturn(repoEntities).when(mEntityRetriever).apply(Set.of(1L));
+
+    EntityConsumer consumer = new EntityConsumer(new Entity(1L));
+    List<EntityConsumer> consumers = List.of(consumer);
+
+    localRefresher.refreshAccessors(consumers);
+
+    InOrder inOrder = inOrder(mSetter);
+    inOrder.verify(mSetter).accept(consumer, null);
+    inOrder.verify(mSetter).accept(consumer, repoEntities.get(0));
   }
 }

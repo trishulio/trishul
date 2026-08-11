@@ -1,10 +1,15 @@
 package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.ai.chat.model.AiChatModelConfigDto;
+import io.trishul.ai.guardrail.model.AiGuardrailDto;
 import io.trishul.ai.memory.model.AiChatMemoryConfigDto;
+import io.trishul.ai.skill.model.AiSkillDto;
+import io.trishul.ai.tool.model.AiToolDto;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -45,4 +50,96 @@ class AiAgentConfigDtoTest {
     assertEquals(now.plusDays(1), dto.getLastUpdated());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessDescription() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    assertSame(accessor, accessor.setDescription("testString"));
+    assertEquals("testString", accessor.getDescription());
+  }
+
+  @Test
+  void testAccessIsActive() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    assertSame(accessor, accessor.setIsActive(true));
+    assertEquals(true, accessor.getIsActive());
+  }
+
+  @Test
+  void testAccessChatModelConfig() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    AiChatModelConfigDto value = mock(AiChatModelConfigDto.class);
+    assertSame(accessor, accessor.setChatModelConfig(value));
+    assertEquals(value, accessor.getChatModelConfig());
+  }
+
+  @Test
+  void testAccessChatMemoryConfig() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    AiChatMemoryConfigDto value = mock(AiChatMemoryConfigDto.class);
+    assertSame(accessor, accessor.setChatMemoryConfig(value));
+    assertEquals(value, accessor.getChatMemoryConfig());
+  }
+
+  @Test
+  void testAccessGuardrails() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    Set<AiGuardrailDto> value = Set.of(mock(AiGuardrailDto.class));
+    assertSame(accessor, accessor.setGuardrails(value));
+    assertEquals(value, accessor.getGuardrails());
+  }
+
+  @Test
+  void testAccessSkills() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    Set<AiSkillDto> value = Set.of(mock(AiSkillDto.class));
+    assertSame(accessor, accessor.setSkills(value));
+    assertEquals(value, accessor.getSkills());
+  }
+
+  @Test
+  void testAccessTools() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    Set<AiToolDto> value = Set.of(mock(AiToolDto.class));
+    assertSame(accessor, accessor.setTools(value));
+    assertEquals(value, accessor.getTools());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiAgentConfigDto accessor = new AiAgentConfigDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

@@ -5,6 +5,7 @@ package io.trishul.data.datasource.builder;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.trishul.data.datasource.configuration.builder.AbstractDataSourceBuilder;
+import java.util.Properties;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,25 @@ public class HikariDataSourceBuilder extends AbstractDataSourceBuilder {
 
   @Override
   public DataSource build() {
-    HikariConfig config = new HikariConfig(props);
+    Properties configProps = new Properties();
+    configProps.putAll(props);
+
+    int size = poolSize();
+    configProps.remove(POOL_SIZE);
+
+    configProps.remove(KEY_SCHEMA);
+
+    HikariConfig config = new HikariConfig(configProps);
+
+    String schema = schema();
+    if (schema != null) {
+      config.setSchema(schema);
+    }
+
+    if (size > 0) {
+      config.setMaximumPoolSize(size);
+    }
+
     DataSource ds = new HikariDataSource(config);
 
     return ds;

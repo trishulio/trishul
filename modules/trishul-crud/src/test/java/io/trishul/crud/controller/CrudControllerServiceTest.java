@@ -208,7 +208,7 @@ class CrudControllerServiceTest {
     TestDto resultDto = new TestDto(1L, "value");
 
     when(mMapper.fromAddDto(addDto)).thenReturn(addEntity);
-    when(mService.add(any())).thenReturn(List.of(addedEntity));
+    when(mService.add(List.of(addEntity))).thenReturn(List.of(addedEntity));
     when(mMapper.toDto(addedEntity)).thenReturn(resultDto);
 
     List<TestDto> result = controllerService.add(List.of(addDto));
@@ -226,13 +226,13 @@ class CrudControllerServiceTest {
     TestDto resultDto = new TestDto(1L, "updated");
 
     when(mMapper.fromUpdateDto(updateDto)).thenReturn(updateEntity);
-    when(mService.put(any())).thenReturn(List.of(updateEntity));
+    when(mService.put(List.of(updateEntity))).thenReturn(List.of(updateEntity));
     when(mMapper.toDto(updateEntity)).thenReturn(resultDto);
 
     List<TestDto> result = controllerService.put(List.of(updateDto));
 
     assertNotNull(result);
-    assertEquals(1, result.size());
+    assertEquals(List.of(resultDto), result);
     verify(mDecorator).decorate(result);
   }
 
@@ -243,13 +243,13 @@ class CrudControllerServiceTest {
     TestDto resultDto = new TestDto(1L, "patched");
 
     when(mMapper.fromUpdateDto(patchDto)).thenReturn(patchEntity);
-    when(mService.patch(any())).thenReturn(List.of(patchEntity));
+    when(mService.patch(List.of(patchEntity))).thenReturn(List.of(patchEntity));
     when(mMapper.toDto(patchEntity)).thenReturn(resultDto);
 
     List<TestDto> result = controllerService.patch(List.of(patchDto));
 
     assertNotNull(result);
-    assertEquals(1, result.size());
+    assertEquals(List.of(resultDto), result);
     verify(mDecorator).decorate(result);
   }
 

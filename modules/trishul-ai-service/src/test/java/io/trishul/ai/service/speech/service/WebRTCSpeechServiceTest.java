@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.LinkedMultiValueMap;
@@ -51,7 +52,15 @@ class WebRTCSpeechServiceTest {
     ResponseEntity<byte[]> mockResponse = ResponseEntity.ok(expectedAudio);
 
     when(mockRestTemplate.postForEntity(eq("https://api.openai.com/v1/audio/speech"),
-        any(HttpEntity.class), eq(byte[].class))).thenReturn(mockResponse);
+        any(HttpEntity.class), eq(byte[].class))).thenAnswer(invocation -> {
+          HttpEntity<Map<String, Object>> entity = invocation.getArgument(1);
+          assertEquals("Bearer mock-api-key", entity.getHeaders().getFirst("Authorization"));
+          assertEquals(MediaType.APPLICATION_JSON, entity.getHeaders().getContentType());
+          assertEquals("tts-1", entity.getBody().get("model"));
+          assertEquals("hello", entity.getBody().get("input"));
+          assertEquals("alloy", entity.getBody().get("voice"));
+          return mockResponse;
+        });
 
     byte[] result = service.textToSpeech("hello", "alloy");
     assertArrayEquals(expectedAudio, result);
@@ -64,7 +73,11 @@ class WebRTCSpeechServiceTest {
     ResponseEntity<byte[]> mockResponse = ResponseEntity.ok(expectedAudio);
 
     when(mockRestTemplate.postForEntity(eq("https://api.openai.com/v1/audio/speech"),
-        any(HttpEntity.class), eq(byte[].class))).thenReturn(mockResponse);
+        any(HttpEntity.class), eq(byte[].class))).thenAnswer(invocation -> {
+          HttpEntity<Map<String, Object>> entity = invocation.getArgument(1);
+          assertEquals("alloy", entity.getBody().get("voice"));
+          return mockResponse;
+        });
 
     byte[] result = service.textToSpeech("hello", null);
     assertArrayEquals(expectedAudio, result);
@@ -94,6 +107,9 @@ class WebRTCSpeechServiceTest {
     when(mockRestTemplate.postForEntity(eq("https://api.openai.com/v1/audio/transcriptions"),
         any(HttpEntity.class), eq(Map.class))).thenAnswer(invocation -> {
           HttpEntity<LinkedMultiValueMap<String, Object>> entity = invocation.getArgument(1);
+          assertEquals("Bearer mock-api-key", entity.getHeaders().getFirst("Authorization"));
+          assertEquals(MediaType.MULTIPART_FORM_DATA, entity.getHeaders().getContentType());
+          assertEquals("whisper-1", entity.getBody().getFirst("model"));
           ByteArrayResource resource = (ByteArrayResource) entity.getBody().getFirst("file");
           assertEquals("audio.webm", resource.getFilename());
           return mockResponse;

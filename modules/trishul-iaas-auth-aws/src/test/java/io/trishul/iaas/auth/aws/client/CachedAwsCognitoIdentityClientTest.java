@@ -16,9 +16,9 @@ import com.amazonaws.services.cognitoidentity.model.Credentials;
 import com.amazonaws.services.cognitoidentity.model.IdentityPoolShortDescription;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 class CachedAwsCognitoIdentityClientTest {
   private AwsCognitoIdentityClient client;
@@ -110,7 +110,8 @@ class CachedAwsCognitoIdentityClientTest {
 
     RuntimeException exception
         = assertThrows(RuntimeException.class, () -> client.getIdentityPools(1));
-    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+    assertEquals(
+        ExecutionException.class.getName() + ": " + Exception.class.getName() + ": checked",
         exception.getMessage());
   }
 
@@ -122,7 +123,8 @@ class CachedAwsCognitoIdentityClientTest {
 
     RuntimeException exception = assertThrows(RuntimeException.class,
         () -> client.getIdentityId("IDENTITY_POOL_ID", Map.of("login", "creds")));
-    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+    assertEquals(
+        ExecutionException.class.getName() + ": " + Exception.class.getName() + ": checked",
         exception.getMessage());
   }
 
@@ -134,7 +136,8 @@ class CachedAwsCognitoIdentityClientTest {
 
     RuntimeException exception = assertThrows(RuntimeException.class,
         () -> client.getCredentialsForIdentity("IDENTITY_POOL_ID", Map.of("login", "creds")));
-    assertEquals("java.util.concurrent.ExecutionException: java.lang.Exception: checked",
+    assertEquals(
+        ExecutionException.class.getName() + ": " + Exception.class.getName() + ": checked",
         exception.getMessage());
   }
 }

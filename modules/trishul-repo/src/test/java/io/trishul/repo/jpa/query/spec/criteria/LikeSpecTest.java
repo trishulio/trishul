@@ -34,12 +34,9 @@ class LikeSpecTest {
   }
 
   @Test
-  void testGetExpression_ReturnsLikeOnLowerCaseExpressionOnDelegatePath() {
-    Expression<String> mLowerExpr = mock(Expression.class);
-    doReturn(mLowerExpr).when(mCb).lower(mExpr);
-
+  void testGetExpression_ReturnsLikeExpressionOnDelegatePath() {
     Predicate mLikeExpr = mock(Predicate.class);
-    doReturn(mLikeExpr).when(mCb).like(mLowerExpr, "%val1%");
+    doReturn(mLikeExpr).when(mCb).like(mExpr, "%VAL1%");
 
     spec = new LikeSpec(mDelegate, "VAL1");
     assertSame(mLikeExpr, spec.getExpression(mRoot, mCq, mCb));

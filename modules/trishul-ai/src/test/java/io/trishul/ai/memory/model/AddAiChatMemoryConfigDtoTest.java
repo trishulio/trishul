@@ -1,6 +1,7 @@
 package io.trishul.ai.memory.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -29,4 +30,47 @@ class AddAiChatMemoryConfigDtoTest {
     assertEquals(60, dto.getTtlMinutes());
     assertTrue(!dto.getIsDefault());
   }
+
+  @Test
+  void testAccessName() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessMaxMessages() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setMaxMessages(123));
+    assertEquals(123, accessor.getMaxMessages());
+  }
+
+  @Test
+  void testAccessMaxTokens() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setMaxTokens(123));
+    assertEquals(123, accessor.getMaxTokens());
+  }
+
+  @Test
+  void testAccessTtlMinutes() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setTtlMinutes(123));
+    assertEquals(123, accessor.getTtlMinutes());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AddAiChatMemoryConfigDto accessor = new AddAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
 }

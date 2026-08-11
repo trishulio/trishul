@@ -2,6 +2,7 @@ package io.trishul.quantity.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,14 +47,14 @@ class UnitEntityTest {
   @Test
   void testAccessSymbol() {
     assertNull(unit.getSymbol());
-    unit.setSymbol("g");
+    assertSame(unit, unit.setSymbol("g"));
     assertEquals("g", unit.getSymbol());
   }
 
   @Test
   void testAccessName() {
     assertNull(unit.getName());
-    unit.setName("Kilogram");
+    assertSame(unit, unit.setName("Kilogram"));
     assertEquals("Kilogram", unit.getName());
   }
 
@@ -71,4 +72,13 @@ class UnitEntityTest {
     final String json = "{\"symbol\":\"KG\",\"name\":\"Kilogram\"}";
     JSONAssert.assertEquals(json, unit.toString(), JSONCompareMode.NON_EXTENSIBLE);
   }
+
+  @Test
+  void testAccessBaseUnitEntity() throws Exception {
+    UnitEntity accessor = new UnitEntity();
+    UnitEntity value = new UnitEntity();
+    assertSame(accessor, accessor.setBaseUnitEntity(value));
+    assertEquals(value, accessor.getBaseUnitEntity());
+  }
+
 }

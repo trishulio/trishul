@@ -82,10 +82,11 @@ public class UserServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(UserSalutationService.class)
   public UserSalutationService userSalutationService(
-      UserSalutationRepository userSalutationRepository) {
-    final UserSalutationService userSalutationService
-        = new UserSalutationService(userSalutationRepository);
-    return userSalutationService;
+      UserSalutationRepository userSalutationRepository,
+      Refresher<UserSalutation, UserSalutationAccessor<?>> userSalutationRefresher) {
+    final RepoService<Long, UserSalutation, UserSalutationAccessor<?>> repoService
+        = new CrudRepoService<>(userSalutationRepository, userSalutationRefresher);
+    return new UserSalutationService(repoService);
   }
 
   @Bean

@@ -1,6 +1,7 @@
 package io.trishul.ai.memory.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -33,4 +34,61 @@ class UpdateAiChatMemoryConfigDtoTest {
     assertTrue(!dto.getIsDefault());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessMaxMessages() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setMaxMessages(123));
+    assertEquals(123, accessor.getMaxMessages());
+  }
+
+  @Test
+  void testAccessMaxTokens() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setMaxTokens(123));
+    assertEquals(123, accessor.getMaxTokens());
+  }
+
+  @Test
+  void testAccessTtlMinutes() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setTtlMinutes(123));
+    assertEquals(123, accessor.getTtlMinutes());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    UpdateAiChatMemoryConfigDto accessor = new UpdateAiChatMemoryConfigDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

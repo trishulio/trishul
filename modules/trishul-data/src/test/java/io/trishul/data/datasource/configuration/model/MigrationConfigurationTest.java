@@ -151,4 +151,11 @@ class MigrationConfigurationTest {
     assertNull(configs[0].getMigrationHistoryTableName());
     assertEquals("table", configs[0].getMigrationScriptPath());
   }
+
+  @Test
+  void testFrom_ThrowsIllegalArgumentException_WhenEmptyPartsOnly() {
+    IllegalArgumentException ex
+        = assertThrows(IllegalArgumentException.class, () -> MigrationConfiguration.from("::"));
+    assertEquals("Invalid schema migration script config: ::", ex.getMessage());
+  }
 }

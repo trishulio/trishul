@@ -46,7 +46,12 @@ public class AwsObjectStoreClient implements
       this.awsClient.deleteBucket(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      log.error("Failed to delete the objectStore: {}", bucketName);
+      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())) {
+        log.info("S3 bucket already deleted or not found: {}", bucketName);
+        success = true;
+      } else {
+        log.error("Failed to delete the objectStore: {}", bucketName);
+      }
     } finally {
       reset();
     }

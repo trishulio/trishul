@@ -2,9 +2,11 @@ package io.trishul.address.mapper;
 
 import io.trishul.address.model.Address;
 import io.trishul.address.model.dto.AddressDto;
+import io.trishul.model.base.mapper.BaseMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public interface AddressMapper { // TODO, implement BaseMapper
-  <A extends Address> AddressDto toDto(A address);
-
-  <A extends AddressDto> Address fromDto(A dto);
+@Mapper
+public interface AddressMapper extends BaseMapper<Address, AddressDto, AddressDto, AddressDto> {
+  AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 }

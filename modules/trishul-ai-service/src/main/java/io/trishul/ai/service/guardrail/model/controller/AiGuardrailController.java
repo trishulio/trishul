@@ -79,7 +79,6 @@ public class AiGuardrailController extends BaseController {
     return this.controller.get(id, attributes);
   }
 
-
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)
   @ResponseStatus(value = HttpStatus.ACCEPTED)
   public DeleteResultDto delete(@RequestParam("ids") Set<Long> ids) {

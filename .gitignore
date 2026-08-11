@@ -35,4 +35,8 @@ build/
 
 dependency-check-data/
 
+scripts/
+
 .scannerwork/
+# CocoIndex Code (ccc)
+/.cocoindex_code/

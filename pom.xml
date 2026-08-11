@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -80,9 +80,9 @@
     </modules>
 
     <properties>
-        <java.version>21</java.version>
-        <!-- spring-boot-starter-parent version is explicitly specified. Update it if this is updated -->
-        <org.springframework.boot.version>3.4.1</org.springframework.boot.version>
+        <java.version>23</java.version>
+
+        <org.springframework.boot.version>3.4.13</org.springframework.boot.version>
         <org.springdoc.openapi.webmvc.version>2.8.5</org.springdoc.openapi.webmvc.version>
         <org.springdoc.openapi.maven.plugin.version>1.5</org.springdoc.openapi.maven.plugin.version>
         <org.mapstruct.version>1.7.0.Beta2</org.mapstruct.version>
@@ -96,12 +96,12 @@
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.7.0.6970</org.sonarsource.scanner.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
-        <spotless.version>3.8.0</spotless.version>
+        <spotless.version>3.9.0</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <spotbugs.version>4.10.2.0</spotbugs.version>
+        <spotbugs.version>4.10.3.0</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
-        <org.owasp.dependency.check.version>12.2.2</org.owasp.dependency.check.version>
+        <org.owasp.dependency.check.version>13.0.0</org.owasp.dependency.check.version>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.15.0</org.apache.maven.plugin.compiler.version>
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
@@ -110,13 +110,16 @@
         <dev.langchain4j.version>0.36.2</dev.langchain4j.version>
         <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
         <com.twilio.sdk.version>12.1.1</com.twilio.sdk.version>
-        <argLine></argLine>
+        <com.google.guava.version>33.6.0-jre</com.google.guava.version>
+        <commons-logging.version>1.4.0</commons-logging.version>
+        <pit.threads>2</pit.threads>
+        <argLine />
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.13</version>
     </parent>
 
 
@@ -548,7 +551,7 @@
                 <version>${com.twilio.sdk.version}</version>
             </dependency>
 
-            <!-- AI Dependencies -->
+
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j-bom</artifactId>
@@ -564,12 +567,25 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${com.google.guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <testResources>
-            <!-- Packaging the test resources in final JAR so it can be imported by the application -->
+
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>false</filtering>
@@ -622,7 +638,7 @@
                             </goals>
                             <configuration>
                                 <resources>
-                                    <!-- Include test resources -->
+
                                     <resource>
                                         <directory>${project.basedir}/src/test/resources</directory>
                                         <includes>
@@ -648,8 +664,8 @@
                                     <include>*.md</include>
                                     <include>.gitignore</include>
                                 </includes>
-                                <trimTrailingWhitespace/>
-                                <endWithNewline/>
+                                <trimTrailingWhitespace />
+                                <endWithNewline />
                                 <indent>
                                     <spaces>true</spaces>
                                     <spacesPerTab>4</spacesPerTab>
@@ -657,8 +673,8 @@
                             </format>
                         </formats>
                         <java>
-                            <removeUnusedImports/>
-                            <importOrder/>
+                            <removeUnusedImports />
+                            <importOrder />
                             <eclipse>
                                 <file>${maven.multiModuleProjectDirectory}/java.xml</file>
                             </eclipse>
@@ -724,7 +740,7 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${org.codehaus.mojo.versions.plugin.version}</version>
-                    <!-- This is set to false to prevent it from running in child modules. Multiple concurrent threads cause race conditions -->
+
                     <inherited>false</inherited>
                     <executions>
                         <execution>
@@ -739,7 +755,7 @@
                     <configuration>
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
-                        <!-- Tech debt -->
+
                         <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,dev.langchain4j.version,org.springframework.ai.version</excludeProperties>
                     </configuration>
                 </plugin>
@@ -792,7 +808,7 @@
                             <phase>integration-test</phase>
                             <configuration>
                                 <target>
-                                    <replaceregexp file="${project.basedir}/api/openapi.json" match="${env.APP_URL}" replace="/" byline="true"/>
+                                    <replaceregexp file="${project.basedir}/api/openapi.json" match="${env.APP_URL}" replace="/" byline="true" />
                                 </target>
                             </configuration>
                             <goals>
@@ -852,8 +868,13 @@
                             <avoidCallsTo>org.slf4j</avoidCallsTo>
                             <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
                         </avoidCallsTo>
-                        <threads>8</threads>
+                        <threads>${pit.threads}</threads>
                         <failWhenNoMutations>false</failWhenNoMutations>
+                        <timeoutFactor>3</timeoutFactor>
+                        <timeoutConstant>10000</timeoutConstant>
+                        <jvmArgs>
+                            <jvmArg>-Xmx1024m</jvmArg>
+                        </jvmArgs>
                     </configuration>
                     <executions>
                         <execution>
@@ -979,6 +1000,11 @@
                     <plugin>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-maven</artifactId>
+                        <configuration>
+                            <outputFormats>
+                                <outputFormat>XML</outputFormat>
+                            </outputFormats>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -1075,4 +1101,11 @@
             </build>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/trishulio/trishul</url>
+        </repository>
+    </distributionManagement>
 </project>

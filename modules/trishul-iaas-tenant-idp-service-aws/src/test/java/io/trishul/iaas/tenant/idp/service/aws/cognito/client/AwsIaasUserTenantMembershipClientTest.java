@@ -29,6 +29,7 @@ import io.trishul.iaas.user.model.IaasUserTenantMembershipId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -175,11 +176,14 @@ class AwsIaasUserTenantMembershipClientTest {
 
   @Test
   void testExists_ReturnsFalse_WhenGetReturnsNull() {
+    AtomicInteger callCount = new AtomicInteger(0);
     doAnswer(inv -> {
       AdminListGroupsForUserRequest req = inv.getArgument(0, AdminListGroupsForUserRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
 
-      return new AdminListGroupsForUserResult().withGroups(new ArrayList<>());
+      String nextToken = callCount.incrementAndGet() > 1 ? "STOP" : null;
+      return new AdminListGroupsForUserResult().withGroups(new ArrayList<>())
+          .withNextToken(nextToken);
     }).when(mIdp).adminListGroupsForUser(any(AdminListGroupsForUserRequest.class));
 
     boolean b = client.exists(new IaasUserTenantMembershipId("USER_1", "T1"));

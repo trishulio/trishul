@@ -12,6 +12,7 @@ import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.criteria.ILikeSpec;
 import io.trishul.repo.jpa.query.spec.criteria.InSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsNullSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
@@ -196,5 +197,43 @@ class WhereClauseBuilderDelegateTest {
     builder.between(new String[] {"layer-1"}, 5, null);
     verify(mAccumulator).add(any());
     verify(mAccumulator).setIsNot(false);
+  }
+
+  @Test
+  void testILike_AddsILikeSpecAndResetFlag_WhenCollectionIsNotNull() {
+    builder.ilike(new String[] {"layer-1"}, Set.of("V1", "V2"));
+
+    verify(mAccumulator, times(2)).add(captor.capture());
+
+    List<CriteriaSpec<Boolean>> expected
+        = List.of(new ILikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V1"),
+            new ILikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V2"));
+    Assertions.assertThat(captor.getAllValues()).containsExactlyInAnyOrderElementsOf(expected);
+
+    verify(mAccumulator).setIsNot(false);
+    verifyNoMoreInteractions(mAccumulator);
+  }
+
+  @Test
+  void testILike_AddsNothingAndResetFlag_WhenCollectionIsNull() {
+    builder.ilike(new String[] {"layer-1"}, null);
+    verify(mAccumulator).setIsNot(false);
+    verifyNoMoreInteractions(mAccumulator);
+  }
+
+  @Test
+  void testILike_SkipsNullQueries() {
+    Set<String> queries = new java.util.HashSet<>();
+    queries.add(null);
+    queries.add("V1");
+
+    builder.ilike(new String[] {"layer-1"}, queries);
+
+    verify(mAccumulator).add(captor.capture());
+    assertEquals(new ILikeSpec(new ColumnSpec<>(new String[] {"layer-1"}), "V1"),
+        captor.getValue());
+
+    verify(mAccumulator).setIsNot(false);
+    verifyNoMoreInteractions(mAccumulator);
   }
 }

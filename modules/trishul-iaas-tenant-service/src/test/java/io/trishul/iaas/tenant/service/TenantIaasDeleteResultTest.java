@@ -1,6 +1,7 @@
 package io.trishul.iaas.tenant.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
@@ -19,19 +20,19 @@ class TenantIaasDeleteResultTest {
 
   @Test
   void testGetSetAuth() {
-    result.setAuth(new TenantIaasAuthDeleteResult(1));
+    assertSame(result, result.setAuth(new TenantIaasAuthDeleteResult(1)));
     assertEquals(new TenantIaasAuthDeleteResult(1), result.getAuth());
   }
 
   @Test
   void testGetSetIdp() {
-    result.setIdp(new TenantIaasIdpDeleteResult(2));
+    assertSame(result, result.setIdp(new TenantIaasIdpDeleteResult(2)));
     assertEquals(new TenantIaasIdpDeleteResult(2), result.getIdp());
   }
 
   @Test
   void testGetSetVfs() {
-    result.setVfs(new TenantIaasVfsDeleteResult(3, 4));
+    assertSame(result, result.setVfs(new TenantIaasVfsDeleteResult(3, 4)));
     assertEquals(new TenantIaasVfsDeleteResult(3, 4), result.getVfs());
   }
 }

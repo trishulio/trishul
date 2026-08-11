@@ -1,6 +1,7 @@
 package io.trishul.ai.speech.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -31,4 +32,54 @@ class AddAiSpeechConfigDtoTest {
     assertEquals(0.5, dto.getSpeed());
     assertTrue(!dto.getIsDefault());
   }
+
+  @Test
+  void testAccessName() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessProvider() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setProvider("testString"));
+    assertEquals("testString", accessor.getProvider());
+  }
+
+  @Test
+  void testAccessTtsModelName() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setTtsModelName("testString"));
+    assertEquals("testString", accessor.getTtsModelName());
+  }
+
+  @Test
+  void testAccessSttModelName() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setSttModelName("testString"));
+    assertEquals("testString", accessor.getSttModelName());
+  }
+
+  @Test
+  void testAccessVoice() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setVoice("testString"));
+    assertEquals("testString", accessor.getVoice());
+  }
+
+  @Test
+  void testAccessSpeed() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setSpeed(123.45));
+    assertEquals(123.45, accessor.getSpeed());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AddAiSpeechConfigDto accessor = new AddAiSpeechConfigDto();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
 }

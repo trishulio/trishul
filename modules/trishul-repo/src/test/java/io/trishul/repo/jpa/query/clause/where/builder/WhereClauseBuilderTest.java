@@ -1,5 +1,6 @@
 package io.trishul.repo.jpa.query.clause.where.builder;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,10 +31,11 @@ class WhereClauseBuilderTest {
   void testBuilder_ReturnsANewInstanceOfCriteriaSpecBuilder() {
     WhereClauseBuilder anotherBuilder = WhereClauseBuilder.builder();
 
+    assertNotNull(anotherBuilder);
     assertNotSame(builder, anotherBuilder);
-    assertTrue(builder instanceof WhereClauseBuilderWrapper,
+    assertTrue(anotherBuilder instanceof WhereClauseBuilderWrapper,
         String.format("WhereClauseBuilder.builder() unexpectedly returned an instance of class: %s",
-            builder.getClass().getSimpleName()));
+            anotherBuilder.getClass().getSimpleName()));
   }
 
   @Test
@@ -170,5 +172,21 @@ class WhereClauseBuilderTest {
 
     assertSame(builder, ret);
     verify(mDelegate, times(1)).is(new String[] {"PATH"}, "VALUE");
+  }
+
+  @Test
+  void testILike_ArrayStringArgs_DelegatesArgumentsByWrappingInArrays() {
+    WhereClauseBuilder ret = builder.ilike("PATH", Set.of("v1"));
+
+    assertSame(builder, ret);
+    verify(mDelegate, times(1)).ilike(new String[] {"PATH"}, Set.of("v1"));
+  }
+
+  @Test
+  void testILike_ArrayArrayArgs_DelegatesArguments() {
+    WhereClauseBuilder ret = builder.ilike(new String[] {"PATH"}, Set.of("v1"));
+
+    assertSame(builder, ret);
+    verify(mDelegate, times(1)).ilike(new String[] {"PATH"}, Set.of("v1"));
   }
 }

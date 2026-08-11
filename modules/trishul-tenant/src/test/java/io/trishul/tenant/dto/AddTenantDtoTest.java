@@ -36,4 +36,19 @@ class AddTenantDtoTest {
     tenantDto.setUrl(url);
     assertSame(url, tenantDto.getUrl());
   }
+
+  @Test
+  void testAccessName() throws Exception {
+    AddTenantDto accessor = new AddTenantDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessUrl() throws Exception {
+    AddTenantDto accessor = new AddTenantDto();
+    assertSame(accessor, accessor.setUrl(URI.create("http://localhost")));
+    assertEquals(URI.create("http://localhost"), accessor.getUrl());
+  }
+
 }

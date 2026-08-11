@@ -1,6 +1,7 @@
 package io.trishul.user.service.user.service.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -129,13 +130,15 @@ class UserServiceTest {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
+    verify(this.mRepoService, times(1)).exists(Set.of(1L, 2L, 3L));
   }
 
   @Test
   void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
+    doReturn(false).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
-    assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
+    assertFalse(this.service.exists(Set.of(1L, 2L, 3L)));
+    verify(this.mRepoService, times(1)).exists(Set.of(1L, 2L, 3L));
   }
 
   @Test
@@ -143,21 +146,27 @@ class UserServiceTest {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
+    verify(this.mRepoService, times(1)).exists(1L);
   }
 
   @Test
   void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService).exists(1L);
+    doReturn(false).when(this.mRepoService).exists(1L);
 
-    assertTrue(this.service.exist(1L));
+    assertFalse(this.service.exist(1L));
+    verify(this.mRepoService, times(1)).exists(1L);
   }
 
   @Test
   void testDelete_CallsRepoServiceDeleteBulk_WhenUserExists() {
+    List<User> users = List.of(new User(1L), new User(2L), new User(3L));
+    doReturn(users).when(this.userRepository).findAllById(Set.of(1L, 2L, 3L));
     doReturn(new DeleteResult(123L)).when(this.mRepoService).delete(Set.of(1L, 2L, 3L));
 
     final DeleteResult count = this.service.delete(Set.of(1L, 2L, 3L));
     assertEquals(new DeleteResult(123L), count);
+    verify(this.userRepository, times(1)).findAllById(Set.of(1L, 2L, 3L));
+    verify(this.iaasService, times(1)).delete(users);
   }
 
   @Test
@@ -167,22 +176,48 @@ class UserServiceTest {
 
     DeleteResult count = this.service.delete(1L);
     assertEquals(new DeleteResult(99L), count);
+    verify(this.service, times(1)).delete(Set.of(1L));
   }
 
   @Test
   void testAdd_AddsUserAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
-    doAnswer(inv -> List.of()).when(this.iaasService).put(anyList());
+    doAnswer(inv -> inv.getArgument(0)).when(this.iaasService).put(anyList());
 
-    final BaseUser<?> user1 = new User(1L);
-    final BaseUser<?> user2 = new User();
+    final User user1 = new User(1L);
+    user1.setEmail("user1@example.com");
+    final User user2 = new User();
+    user2.setEmail("user2@example.com");
+
+    doAnswer(inv -> {
+      IaasUserTenantMembership membership1 = new IaasUserTenantMembership();
+      IaasUser iaasUser1 = new IaasUser();
+      iaasUser1.setId("user1@example.com");
+      iaasUser1.setUserName("iaas_user1");
+      membership1.setUser(iaasUser1);
+
+      IaasUserTenantMembership membership2 = new IaasUserTenantMembership();
+      IaasUser iaasUser2 = new IaasUser();
+      iaasUser2.setId("user2@example.com");
+      iaasUser2.setUserName("iaas_user2");
+      membership2.setUser(iaasUser2);
+
+      return List.of(membership1, membership2);
+    }).when(this.iaasService).put(anyList());
 
     final List<User> added = this.service.add(List.of(user1, user2));
 
     final List<User> expected = List.of(new User(1L), new User());
+    expected.get(0).setEmail("user1@example.com");
+    expected.get(0).setIaasUsername("iaas_user1");
+    expected.get(1).setEmail("user2@example.com");
+    expected.get(1).setIaasUsername("iaas_user2");
 
     assertEquals(expected, added);
-    verify(this.mRepoService, times(2)).saveAll(any());
+    assertEquals("iaas_user1", added.get(0).getIaasUsername());
+    assertEquals("iaas_user2", added.get(1).getIaasUsername());
+    verify(this.iaasService, times(1)).put(List.of(added.get(0), added.get(1)));
+    verify(this.mRepoService, times(1)).saveAll(any());
   }
 
   @Test

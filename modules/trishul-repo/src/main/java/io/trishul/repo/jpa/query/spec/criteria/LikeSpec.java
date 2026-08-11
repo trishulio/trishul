@@ -17,7 +17,6 @@ public class LikeSpec extends BaseModel implements CriteriaSpec<Boolean> {
 
   @Override
   public Expression<Boolean> getExpression(Root<?> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-    return cb.like(cb.lower(this.spec.getExpression(root, cq, cb)),
-        String.format("%%%s%%", text.toLowerCase()));
+    return cb.like(this.spec.getExpression(root, cq, cb), String.format("%%%s%%", text));
   }
 }

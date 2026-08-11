@@ -2,6 +2,7 @@ package io.trishul.repo.jpa.repository.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.trishul.model.base.dto.BaseDto;
@@ -41,19 +42,19 @@ class PageDtoTest {
   @Test
   void testAccessContent() {
     assertTrue(dto.getContent().isEmpty());
-    dto.setContent(List.of(new DummyDto()));
+    assertSame(dto, dto.setContent(List.of(new DummyDto())));
     assertEquals(List.of(new DummyDto()), dto.getContent());
   }
 
   @Test
   void testAccessTotalElement() {
-    dto.setTotalElements(999);
+    assertSame(dto, dto.setTotalElements(999));
     assertEquals(999, dto.getTotalElements());
   }
 
   @Test
   void testAccessTotalPages() {
-    dto.setTotalPages(99);
+    assertSame(dto, dto.setTotalPages(99));
     assertEquals(99, dto.getTotalPages());
   }
 

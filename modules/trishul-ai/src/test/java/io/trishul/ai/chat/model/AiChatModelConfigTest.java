@@ -1,6 +1,7 @@
 package io.trishul.ai.chat.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -47,4 +48,98 @@ class AiChatModelConfigTest {
     assertEquals(now.plusDays(1), config.getLastUpdated());
     assertEquals(2, config.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessProvider() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setProvider("testString"));
+    assertEquals("testString", accessor.getProvider());
+  }
+
+  @Test
+  void testAccessModelName() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setModelName("testString"));
+    assertEquals("testString", accessor.getModelName());
+  }
+
+  @Test
+  void testAccessStreamingModelName() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setStreamingModelName("testString"));
+    assertEquals("testString", accessor.getStreamingModelName());
+  }
+
+  @Test
+  void testAccessApiKey() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setApiKey("testString"));
+    assertEquals("testString", accessor.getApiKey());
+  }
+
+  @Test
+  void testAccessTemperature() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setTemperature(123.45));
+    assertEquals(123.45, accessor.getTemperature());
+  }
+
+  @Test
+  void testAccessMaxTokens() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setMaxTokens(123));
+    assertEquals(123, accessor.getMaxTokens());
+  }
+
+  @Test
+  void testAccessTopP() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setTopP(123.45));
+    assertEquals(123.45, accessor.getTopP());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiChatModelConfig accessor = new AiChatModelConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

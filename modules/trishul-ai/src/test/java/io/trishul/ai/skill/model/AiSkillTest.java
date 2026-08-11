@@ -1,6 +1,7 @@
 package io.trishul.ai.skill.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -35,4 +36,63 @@ class AiSkillTest {
     assertEquals(now.plusDays(1), config.getLastUpdated());
     assertEquals(2, config.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessDescription() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setDescription("testString"));
+    assertEquals("testString", accessor.getDescription());
+  }
+
+  @Test
+  void testAccessSystemPrompt() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setSystemPrompt("testString"));
+    assertEquals("testString", accessor.getSystemPrompt());
+  }
+
+  @Test
+  void testAccessIsEnabled() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setIsEnabled(true));
+    assertEquals(true, accessor.getIsEnabled());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiSkill accessor = new AiSkill();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiSkill accessor = new AiSkill();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiSkill accessor = new AiSkill();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

@@ -3,6 +3,7 @@ package io.trishul.repo.jpa.query.spec.accumulator;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -35,7 +36,7 @@ class PredicateSpecAccumulatorTest {
   void testAdd_WrapsAggregationInAndSpecAndAddsItToTheList_WhenNotFlagIsNotSet() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
 
-    accumulator.setIsNot(false);
+    assertSame(accumulator, accumulator.setIsNot(false));
     accumulator.add(spec);
 
     CriteriaSpec<Boolean> expected = new AndSpec(spec);
@@ -46,7 +47,7 @@ class PredicateSpecAccumulatorTest {
   void testAdd_WrapsAggregationInNotAndSpecAndAddsItToTheList_WhenNotFlagIsSet() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
 
-    accumulator.setIsNot(true);
+    assertSame(accumulator, accumulator.setIsNot(true));
     accumulator.add(spec);
 
     CriteriaSpec<Boolean> expected = new AndSpec(new NotSpec(spec));
@@ -84,7 +85,7 @@ class PredicateSpecAccumulatorTest {
   @Test
   void testAdd_ResetsFlagsAndReturns_WhenIsPredicateIsNull() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
-    accumulator.setIsPredicate(null);
+    assertSame(accumulator, accumulator.setIsPredicate(null));
     accumulator.setIsNot(true);
 
     accumulator.add(spec);
@@ -95,7 +96,7 @@ class PredicateSpecAccumulatorTest {
   @Test
   void testAdd_ResetsFlagsAndReturns_WhenIsPredicateIsFalse() {
     CriteriaSpec<Boolean> spec = mock(CriteriaSpec.class);
-    accumulator.setIsPredicate(false);
+    assertSame(accumulator, accumulator.setIsPredicate(false));
     accumulator.setIsNot(true);
 
     accumulator.add(spec);

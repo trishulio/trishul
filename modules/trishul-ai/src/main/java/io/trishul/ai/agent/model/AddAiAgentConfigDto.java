@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
-
 public class AddAiAgentConfigDto extends BaseDto {
   @NotBlank
   private String name;

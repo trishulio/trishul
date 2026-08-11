@@ -2,6 +2,7 @@ package io.trishul.money.tax.amount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.money.serialize.Register;
 import org.joda.money.Money;
@@ -92,4 +93,29 @@ class TaxAmountTest {
     assertEquals(new TaxAmount(Money.parse("CAD 10")),
         (new TaxAmount(Money.parse("CAD 10"))).deepClone());
   }
+
+  @Test
+  void testAccessPstAmount() throws Exception {
+    TaxAmount accessor = new TaxAmount();
+    Money value = org.joda.money.Money.parse("USD 123.45");
+    assertSame(accessor, accessor.setPstAmount(value));
+    assertEquals(value, accessor.getPstAmount());
+  }
+
+  @Test
+  void testAccessGstAmount() throws Exception {
+    TaxAmount accessor = new TaxAmount();
+    Money value = org.joda.money.Money.parse("USD 123.45");
+    assertSame(accessor, accessor.setGstAmount(value));
+    assertEquals(value, accessor.getGstAmount());
+  }
+
+  @Test
+  void testAccessHstAmount() throws Exception {
+    TaxAmount accessor = new TaxAmount();
+    Money value = org.joda.money.Money.parse("USD 123.45");
+    assertSame(accessor, accessor.setHstAmount(value));
+    assertEquals(value, accessor.getHstAmount());
+  }
+
 }

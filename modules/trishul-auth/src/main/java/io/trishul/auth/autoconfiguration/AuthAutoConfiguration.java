@@ -4,6 +4,7 @@ import io.trishul.auth.session.context.PrincipalContextBuilder;
 import io.trishul.auth.session.context.holder.ContextHolder;
 import io.trishul.auth.session.context.holder.ThreadLocalContextHolder;
 import io.trishul.auth.session.filters.ContextHolderFilter;
+import io.trishul.auth.session.filters.LoggingMdcFilter;
 import jakarta.servlet.Filter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
@@ -26,6 +27,12 @@ public class AuthAutoConfiguration {
       PrincipalContextBuilder principalContextBuilder) {
     return new ContextHolderFilter((ThreadLocalContextHolder) contextHolder,
         principalContextBuilder);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(LoggingMdcFilter.class)
+  public LoggingMdcFilter loggingMdcFilter(ContextHolder contextHolder) {
+    return new LoggingMdcFilter(contextHolder, (ThreadLocalContextHolder) contextHolder);
   }
 
   @Bean

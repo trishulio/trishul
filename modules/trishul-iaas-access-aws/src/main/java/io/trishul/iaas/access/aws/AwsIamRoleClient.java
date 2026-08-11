@@ -46,13 +46,18 @@ public class AwsIamRoleClient
   @Override
   public boolean delete(String roleName) {
     boolean success = false;
-    DeleteRoleRequest request = new DeleteRoleRequest().withRoleName(roleName);
-    try {
-      DeleteRoleResult result = this.awsIamClient.deleteRole(request);
-      log.info("Successfully deleted AWS IAM role. Name: {}, RequestId: {}", roleName,
-          result.getSdkResponseMetadata().getRequestId());
-      success = true;
-    } catch (NoSuchEntityException e) {
+
+    if (roleName != null && !roleName.isBlank()) {
+      DeleteRoleRequest request = new DeleteRoleRequest().withRoleName(roleName);
+      try {
+        DeleteRoleResult result = this.awsIamClient.deleteRole(request);
+        log.info("Successfully deleted AWS IAM role. Name: {}, RequestId: {}", roleName,
+            result.getSdkResponseMetadata().getRequestId());
+        success = true;
+      } catch (NoSuchEntityException e) {
+        log.info("AWS IAM role already deleted or not found: {}", roleName);
+        success = true;
+      }
     }
 
     return success;

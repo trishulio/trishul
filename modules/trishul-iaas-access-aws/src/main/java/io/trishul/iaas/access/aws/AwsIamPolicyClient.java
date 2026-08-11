@@ -64,16 +64,19 @@ public class AwsIamPolicyClient
   public boolean delete(String policyName) {
     boolean success = false;
 
-    String policyArn = awsMapper.getPolicyArn(policyName);
-    DeletePolicyRequest request = new DeletePolicyRequest().withPolicyArn(policyArn);
+    if (policyName != null && !policyName.isBlank()) {
+      String policyArn = awsMapper.getPolicyArn(policyName);
+      DeletePolicyRequest request = new DeletePolicyRequest().withPolicyArn(policyArn);
 
-    try {
-      DeletePolicyResult result = this.awsIamClient.deletePolicy(request);
-      log.info("Successfully deleted AWS IAM policy. ARN: {}, RequestId: {}", policyArn,
-          result.getSdkResponseMetadata().getRequestId());
-      success = true;
-    } catch (NoSuchEntityException e) {
-      log.error("Failed to policy with ARN: {}", policyArn);
+      try {
+        DeletePolicyResult result = this.awsIamClient.deletePolicy(request);
+        log.info("Successfully deleted AWS IAM policy. ARN: {}, RequestId: {}", policyArn,
+            result.getSdkResponseMetadata().getRequestId());
+        success = true;
+      } catch (NoSuchEntityException e) {
+        log.info("AWS IAM policy already deleted or not found: {}", policyArn);
+        success = true;
+      }
     }
 
     return success;

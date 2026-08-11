@@ -2,6 +2,7 @@ package io.trishul.iaas.auth.session.context;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,25 +37,25 @@ class IaasAuthorizationDtoTest {
 
   @Test
   void testGetSetAccessKeyId() {
-    dto.setAccessKeyId("ACCESS_KEY_ID");
+    assertSame(dto, dto.setAccessKeyId("ACCESS_KEY_ID"));
     assertEquals("ACCESS_KEY_ID", dto.getAccessKeyId());
   }
 
   @Test
   void testGetSetAccessSecretKey() {
-    dto.setAccessSecretKey("ACCESS_SECRET_KEY");
+    assertSame(dto, dto.setAccessSecretKey("ACCESS_SECRET_KEY"));
     assertEquals("ACCESS_SECRET_KEY", dto.getAccessSecretKey());
   }
 
   @Test
   void testGetSetSessionToken() {
-    dto.setSessionToken("SESSION_TOKEN");
+    assertSame(dto, dto.setSessionToken("SESSION_TOKEN"));
     assertEquals("SESSION_TOKEN", dto.getSessionToken());
   }
 
   @Test
   void testGetSetExpiration() {
-    dto.setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0));
+    assertSame(dto, dto.setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getExpiration());
   }
 }

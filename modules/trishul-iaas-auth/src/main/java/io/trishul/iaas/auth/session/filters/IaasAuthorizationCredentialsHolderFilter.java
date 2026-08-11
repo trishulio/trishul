@@ -29,10 +29,8 @@ public class IaasAuthorizationCredentialsHolderFilter implements Filter {
     chain.doFilter(request, response);
   }
 
-  private IaasAuthorizationCredentialsHolderFilter setIaasAuthorizationCredentialsContext(
-      ServletRequest request) {
+  private void setIaasAuthorizationCredentialsContext(ServletRequest request) {
     IaasAuthorizationCredentials creds = this.iaasAuthorizationCredentialsBuilder.build(request);
     this.iaasAuthorizationCredentialsHolder.setIaasAuthorizationCredentials(creds);
-    return this;
   }
 }

@@ -6,10 +6,12 @@ import java.util.UUID;
 public class ThreadLocalContextHolder implements ContextHolder {
   private final InheritableThreadLocal<PrincipalContext> principalCtxContainer;
   private final InheritableThreadLocal<UUID> sessionTenantId;
+  private final InheritableThreadLocal<String> requestId;
 
   public ThreadLocalContextHolder() {
     this.principalCtxContainer = new InheritableThreadLocal<>();
     this.sessionTenantId = new InheritableThreadLocal<>();
+    this.requestId = new InheritableThreadLocal<>();
   }
 
   @Override
@@ -41,9 +43,20 @@ public class ThreadLocalContextHolder implements ContextHolder {
     return this.sessionTenantId.get();
   }
 
+  public ThreadLocalContextHolder setRequestId(String id) {
+    this.requestId.set(id);
+    return this;
+  }
+
+  @Override
+  public String getRequestId() {
+    return this.requestId.get();
+  }
+
   @Override
   public void clear() {
     this.principalCtxContainer.remove();
     this.sessionTenantId.remove();
+    this.requestId.remove();
   }
 }

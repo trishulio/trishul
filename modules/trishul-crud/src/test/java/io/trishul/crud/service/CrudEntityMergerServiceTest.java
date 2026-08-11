@@ -3,8 +3,11 @@ package io.trishul.crud.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.model.base.exception.ValidationException;
+import io.trishul.model.validator.Validator;
 import io.trishul.test.model.BaseDummyCrudEntity;
 import io.trishul.test.model.DummyCrudEntity;
 import io.trishul.test.model.UpdateDummyCrudEntity;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 class CrudEntityMergerServiceTest {
   private EntityMergerService<Long, DummyCrudEntity, BaseDummyCrudEntity<?>, UpdateDummyCrudEntity<?>> service;
@@ -47,10 +51,18 @@ class CrudEntityMergerServiceTest {
 
   @Test
   void testGetPutEntities_ReturnsEmptyList_WhenUpdatesAreNull() {
-    assertEquals(new ArrayList<>(), this.service.getPutEntities(null, null));
-    assertEquals(new ArrayList<>(), this.service.getPutEntities(List.of(), null));
-    assertEquals(new ArrayList<>(),
-        this.service.getPutEntities(List.of(new DummyCrudEntity().setId(1L)), null));
+    List<DummyCrudEntity> res1 = this.service.getPutEntities(null, null);
+    assertEquals(new ArrayList<>(), res1);
+    res1.add(new DummyCrudEntity());
+
+    List<DummyCrudEntity> res2 = this.service.getPutEntities(List.of(), null);
+    assertEquals(new ArrayList<>(), res2);
+    res2.add(new DummyCrudEntity());
+
+    List<DummyCrudEntity> res3
+        = this.service.getPutEntities(List.of(new DummyCrudEntity().setId(1L)), null);
+    assertEquals(new ArrayList<>(), res3);
+    res3.add(new DummyCrudEntity());
   }
 
   @Test
@@ -61,12 +73,17 @@ class CrudEntityMergerServiceTest {
             .setVersion(1),
         new DummyCrudEntity().setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1));
 
-    final List<DummyCrudEntity> entities = service.getPutEntities(existing, updates);
+    try (MockedConstruction<Validator> mocked = mockConstruction(Validator.class)) {
+      final List<DummyCrudEntity> entities = service.getPutEntities(existing, updates);
 
-    final List<DummyCrudEntity> expected
-        = List.of(new DummyCrudEntity().setId(1L).setValue("VALUE").setVersion(1),
-            new DummyCrudEntity().setValue("VALUE"));
-    assertEquals(expected, entities);
+      final List<DummyCrudEntity> expected
+          = List.of(new DummyCrudEntity().setId(1L).setValue("VALUE").setVersion(1),
+              new DummyCrudEntity().setValue("VALUE"));
+      assertEquals(expected, entities);
+
+      assertEquals(1, mocked.constructed().size());
+      verify(mocked.constructed().get(0)).raiseErrors();
+    }
   }
 
   @Test
@@ -103,13 +120,13 @@ class CrudEntityMergerServiceTest {
   void testGetPatchEntities_ReturnsListOfEntitiesWithUpdateProperties_WhenPatchesAreNotNull() {
     final List<DummyCrudEntity> existing = List.of(new DummyCrudEntity().setId(1L)
         .setValue("OLD_VALUE").setExcludedValue("OLD_EXCLUDED_VALUE").setVersion(1));
-    final List<UpdateDummyCrudEntity<?>> patches = List.of(new DummyCrudEntity().setId(1L)
-        .setValue("VALUE").setExcludedValue("EXCLUDED_VALUE").setVersion(1));
+    final List<UpdateDummyCrudEntity<?>> patches
+        = List.of(new DummyCrudEntity().setId(1L).setVersion(1));
 
     final List<DummyCrudEntity> entities = this.service.getPatchEntities(existing, patches);
 
     final List<DummyCrudEntity> expected
-        = List.of(new DummyCrudEntity().setId(1L).setValue("VALUE").setVersion(1));
+        = List.of(new DummyCrudEntity().setId(1L).setValue("OLD_VALUE").setVersion(1));
     assertEquals(expected, entities);
   }
 

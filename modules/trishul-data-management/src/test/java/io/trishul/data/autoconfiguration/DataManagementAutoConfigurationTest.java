@@ -1,10 +1,12 @@
 package io.trishul.data.autoconfiguration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
@@ -58,37 +60,29 @@ class DataManagementAutoConfigurationTest {
 
   @Test
   void testDataSourceManager_ReturnsSchemaBasedDataSourceManager() {
-    DataSourceManager mgr = config.dataSourceManager(null, null);
+    DataSourceManager mgr = config.dataSourceManager(null);
     assertTrue(mgr instanceof CachingDataSourceManager);
   }
 
   @Test
   void testDataSourceManager_ReturnsNonNullInstance() {
-    DataSourceManager mgr = config.dataSourceManager(null, null);
+    DataSourceManager mgr = config.dataSourceManager(null);
     assertNotNull(mgr);
   }
 
   @Test
-  void testDsBuilder_ReturnsRoutingDataSourceBuilder() {
-    DataSourceBuilder builder = config.dataSourceBuilder();
-    assertTrue(builder instanceof HikariDataSourceBuilder);
-  }
-
-  @Test
-  void testDsBuilder_ReturnsNonNullInstance() {
-    DataSourceBuilder builder = config.dataSourceBuilder();
-    assertNotNull(builder);
-  }
-
-  @Test
   void testTenantDsManager_ReturnsContextHolderDsManager() {
-    TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null);
+    TenantData adminTenant = Mockito.mock(TenantData.class);
+    Mockito.when(adminTenant.getId()).thenReturn(UUID.randomUUID());
+    TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null, adminTenant);
     assertTrue(mgr instanceof TenantDataSourceManagerWrapper);
   }
 
   @Test
   void testTenantDsManager_ReturnsNonNullInstance() {
-    TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null);
+    TenantData adminTenant = Mockito.mock(TenantData.class);
+    Mockito.when(adminTenant.getId()).thenReturn(UUID.randomUUID());
+    TenantDataSourceManager mgr = config.tenantDataSourceManager(null, null, adminTenant);
     assertNotNull(mgr);
   }
 
@@ -164,5 +158,70 @@ class DataManagementAutoConfigurationTest {
             "jdbc:postgresql://localhost:5432/db", "db", "prefix", "script:script", 10, true);
 
     assertNotNull(result);
+  }
+
+  @Test
+  void testTenantDsConfigProvider_CleansCurrentSchemaFromJdbcUrl() {
+    DataSourceConfiguration adminConfig = Mockito.mock(DataSourceConfiguration.class);
+    TenantData adminTenant = Mockito.mock(TenantData.class);
+    Mockito.when(adminTenant.getId())
+        .thenReturn(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+
+    DataSourceConfigurationManager dsConfigMgr = Mockito.mock(DataSourceConfigurationManager.class);
+    Mockito.when(dsConfigMgr.getFqName(any(), any())).thenReturn("fqName");
+
+    SecretsManager<String, String> secretsManager = Mockito.mock(SecretsManager.class);
+
+    DataSourceConfigurationProvider<UUID> provider = config.tenantDsConfigProvider(adminConfig,
+        adminTenant, dsConfigMgr, secretsManager,
+        "jdbc:postgresql://localhost:5432/db?currentSchema=wezeon_admin_00000000_0000_0000_0000_000000000000",
+        "db", "prefix", "script:script", 10, true);
+
+    UUID tenantId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    DataSourceConfiguration tenantConfig = provider.getConfiguration(tenantId);
+
+    assertEquals("jdbc:postgresql://localhost:5432/db", tenantConfig.getUrl().toString());
+  }
+
+  @Test
+  void testTenantDsConfigProvider_CleansQuestAndAmpersandFromJdbcUrl() {
+    DataSourceConfiguration adminConfig = mock(DataSourceConfiguration.class);
+    TenantData adminTenant = mock(TenantData.class);
+    when(adminTenant.getId()).thenReturn(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+
+    DataSourceConfigurationManager dsConfigMgr = mock(DataSourceConfigurationManager.class);
+    when(dsConfigMgr.getFqName(any(), any())).thenReturn("fqName");
+
+    SecretsManager<String, String> secretsManager = mock(SecretsManager.class);
+
+    DataSourceConfigurationProvider<UUID> provider = config.tenantDsConfigProvider(adminConfig,
+        adminTenant, dsConfigMgr, secretsManager, "jdbc:postgresql://localhost:5432/db?&param=val",
+        "db", "prefix", "script:script", 10, true);
+
+    UUID tenantId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    DataSourceConfiguration tenantConfig = provider.getConfiguration(tenantId);
+
+    assertEquals("jdbc:postgresql://localhost:5432/db?param=val", tenantConfig.getUrl().toString());
+  }
+
+  @Test
+  void testTenantDsConfigProvider_CleansUrlEndingWithQuestionMark() {
+    DataSourceConfiguration adminConfig = mock(DataSourceConfiguration.class);
+    TenantData adminTenant = mock(TenantData.class);
+    when(adminTenant.getId()).thenReturn(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+
+    DataSourceConfigurationManager dsConfigMgr = mock(DataSourceConfigurationManager.class);
+    when(dsConfigMgr.getFqName(any(), any())).thenReturn("fqName");
+
+    SecretsManager<String, String> secretsManager = mock(SecretsManager.class);
+
+    DataSourceConfigurationProvider<UUID> provider
+        = config.tenantDsConfigProvider(adminConfig, adminTenant, dsConfigMgr, secretsManager,
+            "jdbc:postgresql://localhost:5432/db?", "db", "prefix", "script:script", 10, true);
+
+    UUID tenantId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    DataSourceConfiguration tenantConfig = provider.getConfiguration(tenantId);
+
+    assertEquals("jdbc:postgresql://localhost:5432/db", tenantConfig.getUrl().toString());
   }
 }

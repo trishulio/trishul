@@ -114,4 +114,13 @@ class TaxRateTest {
     taxRate.setValue(new BigDecimal("3"));
     assertTrue(TaxRate.isSet(taxRate));
   }
+
+  @Test
+  void testAccessValue() throws Exception {
+    TaxRate accessor = new TaxRate();
+    BigDecimal value = new BigDecimal("123.45");
+    assertSame(accessor, accessor.setValue(value));
+    assertEquals(value, accessor.getValue());
+  }
+
 }

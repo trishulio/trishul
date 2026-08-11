@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -258,16 +259,18 @@ class ReflectionManipulatorTest {
 
   @Test
   void testGetPropertyNames_ReturnsListOfPropertyNamesForTheGivenClass() {
-    final Set<String> props = this.util.getPropertyNames(TestData.class, null);
+    ReflectionManipulator localUtil = new ReflectionManipulator();
+    final Set<String> props = localUtil.getPropertyNames(TestData.class, null);
 
     assertEquals(Set.of("x", "y", "class"), props);
   }
 
   @Test
   void testGetPropertyNames_ReturnsListOfPropertyNamesWithExclusions_WhenExcludedContainsClassProps() {
-    Set<String> props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));
+    ReflectionManipulator localUtil = new ReflectionManipulator();
+    Set<String> props = localUtil.getPropertyNames(TestData.class, Set.of("y", "z"));
 
-    props = this.util.getPropertyNames(TestData.class, Set.of("y", "z"));
+    props = localUtil.getPropertyNames(TestData.class, Set.of("y", "z"));
 
     assertEquals(Set.of("x", "class"), props);
   }
@@ -342,10 +345,46 @@ class ReflectionManipulatorTest {
   void testPropNameKeySetters() {
     ReflectionManipulator.PropNameKey key
         = new ReflectionManipulator.PropNameKey(TestData.class, null);
-    key.setClazz(TestDataWithStringField.class);
-    key.setExclusions(Set.of("name"));
+    assertSame(key, key.setClazz(TestDataWithStringField.class));
+    assertSame(key, key.setExclusions(Set.of("name")));
     assertEquals(TestDataWithStringField.class, key.getClazz());
     assertEquals(Set.of("name"), key.getExclusions());
+
+    ReflectionManipulator.PropNameKey key2
+        = new ReflectionManipulator.PropNameKey(TestDataWithStringField.class, Set.of("name"));
+    assertEquals(key, key2);
+    assertEquals(key.hashCode(), key2.hashCode());
+    assertNotEquals(0, key.hashCode());
+    assertTrue(key.equals(key));
+    assertFalse(key.equals(null));
+    assertFalse(key.equals("different class"));
+  }
+
+  @Test
+  void testGetPropertyNames_IncludesOnlyGettersOrOnlySetters() {
+    ReflectionManipulator localUtil = new ReflectionManipulator();
+    class OnlyGetter {
+      public String getName() {
+        return "";
+      }
+    }
+    class OnlySetter {
+      public void setName(String name) {}
+    }
+    assertEquals(Set.of("name", "class"), localUtil.getPropertyNames(OnlyGetter.class, null));
+    assertEquals(Set.of("name", "class"), localUtil.getPropertyNames(OnlySetter.class, null));
+  }
+
+  @Test
+  void testGetPropertyNames_DoesNotIncludeNonGetSetMethods() {
+    ReflectionManipulator localUtil = new ReflectionManipulator();
+    Set<String> props = localUtil.getPropertyNames(TestData.class, null);
+    assertFalse(props.contains("toString"));
+    assertFalse(props.contains("hashCode"));
+    assertFalse(props.contains("equals"));
+    assertFalse(props.contains("wait"));
+    assertFalse(props.contains("notify"));
+    assertFalse(props.contains("notifyAll"));
   }
 
   @Test
@@ -388,7 +427,12 @@ class ReflectionManipulatorTest {
 
   @Test
   void testConstruct_ThrowsRuntimeException_WhenReflectiveOperationExceptionOccurs() {
-    assertThrows(RuntimeException.class, () -> util.construct(ClassWithoutNoArgConstructor.class));
+    RuntimeException exception = assertThrows(RuntimeException.class,
+        () -> util.construct(ClassWithoutNoArgConstructor.class));
+    assertEquals(RuntimeException.class, exception.getClass());
+    assertEquals(
+        "Failed to execute the predicate because: io.trishul.model.reflection.ReflectionManipulatorTest$ClassWithoutNoArgConstructor.<init>()",
+        exception.getMessage());
   }
 
   @Test

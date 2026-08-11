@@ -1,6 +1,7 @@
 package io.trishul.iaas.tenant.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
@@ -33,20 +34,22 @@ class TenantIaasResourcesTest {
 
   @Test
   void testGetSetAuthResources() {
-    resources.setAuthResources(new TenantIaasAuthResources(new IaasRole("ROLE")));
+    assertSame(resources,
+        resources.setAuthResources(new TenantIaasAuthResources(new IaasRole("ROLE"))));
     assertEquals(new TenantIaasAuthResources(new IaasRole("ROLE")), resources.getAuthResources());
   }
 
   @Test
   void testGetSetIdpResources() {
-    resources.setIdpResources(new TenantIaasIdpResources(new IaasIdpTenant("T1")));
+    assertSame(resources,
+        resources.setIdpResources(new TenantIaasIdpResources(new IaasIdpTenant("T1"))));
     assertEquals(new TenantIaasIdpResources(new IaasIdpTenant("T1")), resources.getIdpResources());
   }
 
   @Test
   void testGetSetVfsResources() {
-    resources.setVfsResources(
-        new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY")));
+    assertSame(resources, resources.setVfsResources(
+        new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY"))));
     assertEquals(
         new TenantIaasVfsResources(new IaasObjectStore("OBJECT_STORE"), new IaasPolicy("POLICY")),
         resources.getVfsResources());

@@ -2,6 +2,8 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.trishul.user.role.binding.model.UserRoleBinding;
 import io.trishul.user.role.model.UserRole;
@@ -50,114 +52,114 @@ class UserTest {
   @Test
   void testAccessId() {
     assertNull(user.getId());
-    user.setId(1L);
+    assertSame(user, user.setId(1L));
     assertEquals(1L, user.getId());
   }
 
   @Test
   void testAccessUserName() {
     assertNull(user.getUserName());
-    user.setUserName("userName");
+    assertSame(user, user.setUserName("userName"));
     assertEquals("userName", user.getUserName());
   }
 
   @Test
   void testAccessIaasUsername() {
     assertNull(user.getIaasUsername());
-    user.setIaasUsername("iaasUsername");
+    assertSame(user, user.setIaasUsername("iaasUsername"));
     assertEquals("iaasUsername", user.getIaasUsername());
   }
 
   @Test
   void testAccessDisplayName() {
     assertNull(user.getDisplayName());
-    user.setDisplayName("displayName");
+    assertSame(user, user.setDisplayName("displayName"));
     assertEquals("displayName", user.getDisplayName());
   }
 
   @Test
   void testAccessFirstName() {
     assertNull(user.getFirstName());
-    user.setFirstName("firstName");
+    assertSame(user, user.setFirstName("firstName"));
     assertEquals("firstName", user.getFirstName());
   }
 
   @Test
   void testAccessLastName() {
     assertNull(user.getLastName());
-    user.setLastName("lastName");
+    assertSame(user, user.setLastName("lastName"));
     assertEquals("lastName", user.getLastName());
   }
 
   @Test
   void testAccessEmail() {
     assertNull(user.getEmail());
-    user.setEmail("email");
+    assertSame(user, user.setEmail("email"));
     assertEquals("email", user.getEmail());
   }
 
   @Test
   void testAccessImageSrc() {
     assertNull(user.getImageSrc());
-    user.setImageSrc(URI.create("imageSrc"));
+    assertSame(user, user.setImageSrc(URI.create("imageSrc")));
     assertEquals(URI.create("imageSrc"), user.getImageSrc());
   }
 
   @Test
   void testAccessPhoneNumber() {
     assertNull(user.getPhoneNumber());
-    user.setPhoneNumber("phoneNumber");
+    assertSame(user, user.setPhoneNumber("phoneNumber"));
     assertEquals("phoneNumber", user.getPhoneNumber());
   }
 
   @Test
   void testAccessStatus() {
     assertNull(user.getStatus());
-    user.setStatus(new UserStatus(1L));
+    assertSame(user, user.setStatus(new UserStatus(1L)));
     assertEquals(new UserStatus(1L), user.getStatus());
   }
 
   @Test
   void testAccessSalutation() {
     assertNull(user.getSalutation());
-    user.setSalutation(new UserSalutation(1L));
+    assertSame(user, user.setSalutation(new UserSalutation(1L)));
     assertEquals(new UserSalutation(1L), user.getSalutation());
   }
 
   @Test
   void testAccessRoles() {
     assertEquals(Collections.emptyList(), user.getRoles());
-    user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
+    assertSame(user, user.setRoles(List.of(new UserRole(1L), new UserRole(2L))));
     assertEquals(List.of(new UserRole(1L), new UserRole(2L)), user.getRoles());
 
-    user.setRoles(List.of(new UserRole(10L), new UserRole(20L)));
+    assertSame(user, user.setRoles(List.of(new UserRole(10L), new UserRole(20L))));
     assertEquals(List.of(new UserRole(10L), new UserRole(20L)), user.getRoles());
   }
 
   @Test
   void testAccessRoles_NullValues() {
     assertEquals(Collections.emptyList(), user.getRoles());
-    user.setRoles(null);
+    assertSame(user, user.setRoles(null));
     assertEquals(Collections.emptyList(), user.getRoles());
   }
 
   @Test
   void testAccessRoles_OverridesOldRoleAndAddNewOnes() {
     assertEquals(Collections.emptyList(), user.getRoles());
-    user.setRoles(List.of(new UserRole(1L)));
+    assertSame(user, user.setRoles(List.of(new UserRole(1L))));
     assertEquals(List.of(new UserRole(1L)), user.getRoles());
 
-    user.setRoles(List.of(new UserRole(10L), new UserRole(20L)));
+    assertSame(user, user.setRoles(List.of(new UserRole(10L), new UserRole(20L))));
     assertEquals(List.of(new UserRole(10L), new UserRole(20L)), user.getRoles());
 
-    user.setRoles(null);
+    assertSame(user, user.setRoles(null));
     assertEquals(new ArrayList<>(), user.getRoles());
   }
 
   @Test
   void testGetRoleBindings() {
     assertEquals(Collections.emptyList(), user.getRoles());
-    user.setRoles(List.of(new UserRole(1L), new UserRole(2L)));
+    assertSame(user, user.setRoles(List.of(new UserRole(1L), new UserRole(2L))));
 
     List<UserRoleBinding> expected = List.of(new UserRoleBinding(null, new UserRole(1L), user),
         new UserRoleBinding(null, new UserRole(2L), user));
@@ -168,21 +170,42 @@ class UserTest {
   @Test
   void testAccessLastUpdated() {
     assertNull(user.getLastUpdated());
-    user.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0));
+    assertSame(user, user.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(1999, 1, 1, 0, 0), user.getLastUpdated());
   }
 
   @Test
   void testAccessCreatedAt() {
     assertNull(user.getCreatedAt());
-    user.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
+    assertSame(user, user.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), user.getCreatedAt());
   }
 
   @Test
   void testAccessVersion() {
     assertNull(user.getVersion());
-    user.setVersion(1);
+    assertSame(user, user.setVersion(1));
     assertEquals(1, user.getVersion());
+  }
+
+  @Test
+  void testGetImageSrc_ThrowsRuntimeException_WhenUriIsInvalid() throws Exception {
+    org.apache.commons.lang3.reflect.FieldUtils.writeField(user, "imageSrc", "http://a b c", true);
+    assertThrows(RuntimeException.class, () -> user.getImageSrc());
+  }
+
+  @Test
+  void testSetRoles_ReusesExistingBinding_WhenRoleIsAlreadyPresent() {
+    UserRole role = new UserRole(1L);
+    assertSame(user, user.setRoles(List.of(role)));
+    List<UserRoleBinding> firstBindings = user.getRoleBindings();
+
+    // Call setRoles again with the same role
+    assertSame(user, user.setRoles(List.of(role)));
+    List<UserRoleBinding> secondBindings = user.getRoleBindings();
+
+    assertEquals(firstBindings.size(), secondBindings.size());
+    // Since the binding is reused, the objects in the list should be the same
+    assertSame(firstBindings.get(0), secondBindings.get(0));
   }
 }

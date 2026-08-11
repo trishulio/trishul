@@ -88,17 +88,20 @@ public class AwsIdpTenantWithRoleClient
   public boolean delete(String id) {
     boolean success = false;
 
-    DeleteGroupRequest request
-        = new DeleteGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
+    if (id != null && !id.isBlank()) {
+      DeleteGroupRequest request
+          = new DeleteGroupRequest().withGroupName(id).withUserPoolId(userPoolId);
 
-    try {
-      DeleteGroupResult result = this.awsCognitoIdpProvider.deleteGroup(request);
-      log.info("Deleted Cognito group. GroupName: {}, UserPoolId: {}, RequestId: {}", id,
-          userPoolId, result.getSdkResponseMetadata().getRequestId());
+      try {
+        DeleteGroupResult result = this.awsCognitoIdpProvider.deleteGroup(request);
+        log.info("Deleted Cognito group. GroupName: {}, UserPoolId: {}, RequestId: {}", id,
+            userPoolId, result.getSdkResponseMetadata().getRequestId());
 
-      success = true;
-    } catch (ResourceNotFoundException e) {
-      log.error("Failed to delete group with id: {}", id);
+        success = true;
+      } catch (ResourceNotFoundException e) {
+        log.info("Cognito group already deleted or not found: {}", id);
+        success = true;
+      }
     }
 
     return success;

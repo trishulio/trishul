@@ -2,6 +2,7 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.net.URI;
 import java.util.List;
@@ -36,73 +37,73 @@ class AddUserDtoTest {
   @Test
   void testAccessUserName() {
     assertNull(dto.getUserName());
-    dto.setUserName("userName");
+    assertSame(dto, dto.setUserName("userName"));
     assertEquals("userName", dto.getUserName());
   }
 
   @Test
   void testAccessDisplayName() {
     assertNull(dto.getDisplayName());
-    dto.setDisplayName("displayName");
+    assertSame(dto, dto.setDisplayName("displayName"));
     assertEquals("displayName", dto.getDisplayName());
   }
 
   @Test
   void testAccessFirstName() {
     assertNull(dto.getFirstName());
-    dto.setFirstName("firstName");
+    assertSame(dto, dto.setFirstName("firstName"));
     assertEquals("firstName", dto.getFirstName());
   }
 
   @Test
   void testAccessLastName() {
     assertNull(dto.getLastName());
-    dto.setLastName("lastName");
+    assertSame(dto, dto.setLastName("lastName"));
     assertEquals("lastName", dto.getLastName());
   }
 
   @Test
   void testAccessEmail() {
     assertNull(dto.getEmail());
-    dto.setEmail("email");
+    assertSame(dto, dto.setEmail("email"));
     assertEquals("email", dto.getEmail());
   }
 
   @Test
   void testAccessStatusId() {
     assertNull(dto.getStatusId());
-    dto.setStatusId(1L);
+    assertSame(dto, dto.setStatusId(1L));
     assertEquals(1L, dto.getStatusId());
   }
 
   @Test
   void testAccessSalutationId() {
     assertNull(dto.getSalutationId());
-    dto.setSalutationId(10L);
+    assertSame(dto, dto.setSalutationId(10L));
     assertEquals(10L, dto.getSalutationId());
   }
 
   @Test
   void testAccessPhoneNumber() {
     assertNull(dto.getPhoneNumber());
-    dto.setPhoneNumber("phoneNumber");
+    assertSame(dto, dto.setPhoneNumber("phoneNumber"));
     assertEquals("phoneNumber", dto.getPhoneNumber());
   }
 
   @Test
   void testAccessImageSrc() {
     assertNull(dto.getImageSrc());
-    dto.setImageSrc(URI.create("imageSrc"));
+    assertSame(dto, dto.setImageSrc(URI.create("imageSrc")));
     assertEquals(URI.create("imageSrc"), dto.getImageSrc());
   }
 
   @Test
   void testAccessRoleIds() {
     assertNull(dto.getRoleIds());
-    dto.setRoleIds(List.of(10L));
+    assertSame(dto, dto.setRoleIds(List.of(10L)));
     assertEquals(List.of(10L), dto.getRoleIds());
 
-    dto.setRoleIds(List.of(20L));
+    assertSame(dto, dto.setRoleIds(List.of(20L)));
     assertEquals(List.of(20L), dto.getRoleIds());
   }
 }

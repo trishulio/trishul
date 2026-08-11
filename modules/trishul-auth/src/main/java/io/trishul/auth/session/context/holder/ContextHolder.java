@@ -8,5 +8,7 @@ public interface ContextHolder {
 
   UUID getSessionTenantId();
 
+  String getRequestId();
+
   void clear();
 }

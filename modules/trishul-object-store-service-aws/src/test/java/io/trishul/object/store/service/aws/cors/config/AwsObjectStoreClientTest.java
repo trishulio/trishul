@@ -61,10 +61,27 @@ class AwsObjectStoreClientTest {
   void testDelete_ReturnsFalse_WhenEntityDoesNotExists() {
     doAnswer(inv -> {
       assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
-      throw new AmazonS3Exception("Cannot delete B1");
+      AmazonS3Exception ex = new AmazonS3Exception("Cannot delete B1");
+      ex.setStatusCode(500);
+      throw ex;
     }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
 
     assertFalse(client.delete("B1"));
+
+    verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
+  }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenEntityDoesNotExistAndS3Throws404NoSuchBucket() {
+    doAnswer(inv -> {
+      assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
+      AmazonS3Exception ex = new AmazonS3Exception("NoSuchBucket");
+      ex.setStatusCode(404);
+      ex.setErrorCode("NoSuchBucket");
+      throw ex;
+    }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
+
+    assertTrue(client.delete("B1"));
 
     verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
   }

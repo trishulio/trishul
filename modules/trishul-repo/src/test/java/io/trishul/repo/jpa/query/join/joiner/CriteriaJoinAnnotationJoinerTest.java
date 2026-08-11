@@ -43,7 +43,7 @@ class CriteriaJoinAnnotationJoinerTest {
     @JoinColumn
     private Child joinColumn;
 
-    @SuppressWarnings("unused")
+    @Deprecated
     private Child get;
   }
 

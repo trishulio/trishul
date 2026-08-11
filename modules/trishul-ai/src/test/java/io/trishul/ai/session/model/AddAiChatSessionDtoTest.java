@@ -1,6 +1,7 @@
 package io.trishul.ai.session.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -26,4 +27,40 @@ class AddAiChatSessionDtoTest {
     assertEquals(2L, dto.getAgentConfigId());
     assertEquals(2L, dto.getChatMemoryConfigId());
   }
+
+  @Test
+  void testAccessSessionKey() throws Exception {
+    AddAiChatSessionDto accessor = new AddAiChatSessionDto();
+    assertSame(accessor, accessor.setSessionKey("testString"));
+    assertEquals("testString", accessor.getSessionKey());
+  }
+
+  @Test
+  void testAccessTitle() throws Exception {
+    AddAiChatSessionDto accessor = new AddAiChatSessionDto();
+    assertSame(accessor, accessor.setTitle("testString"));
+    assertEquals("testString", accessor.getTitle());
+  }
+
+  @Test
+  void testAccessIsActive() throws Exception {
+    AddAiChatSessionDto accessor = new AddAiChatSessionDto();
+    assertSame(accessor, accessor.setIsActive(true));
+    assertEquals(true, accessor.getIsActive());
+  }
+
+  @Test
+  void testAccessAgentConfigId() throws Exception {
+    AddAiChatSessionDto accessor = new AddAiChatSessionDto();
+    assertSame(accessor, accessor.setAgentConfigId(123L));
+    assertEquals(123L, accessor.getAgentConfigId());
+  }
+
+  @Test
+  void testAccessChatMemoryConfigId() throws Exception {
+    AddAiChatSessionDto accessor = new AddAiChatSessionDto();
+    assertSame(accessor, accessor.setChatMemoryConfigId(123L));
+    assertEquals(123L, accessor.getChatMemoryConfigId());
+  }
+
 }

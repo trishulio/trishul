@@ -69,6 +69,15 @@ class IaasRolePolicyAttachmentServiceTest {
   }
 
   @Test
+  void testExists_ReturnsFalse_WhenSomeAttachmentsDoNotExist() {
+    IaasRolePolicyAttachmentId id1 = new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1");
+    IaasRolePolicyAttachmentId id2 = new IaasRolePolicyAttachmentId("ROLE_2", "POLICY_2");
+    doReturn(Map.of(id1, true, id2, false)).when(mIaasRepo).exists(Set.of(id1, id2));
+
+    assertFalse(service.exists(Set.of(id1, id2)));
+  }
+
+  @Test
   void testExist_ReturnsTrue_WhenAttachmentExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());

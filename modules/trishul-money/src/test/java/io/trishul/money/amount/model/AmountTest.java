@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.money.tax.amount.TaxAmount;
 import org.joda.money.Money;
@@ -129,4 +130,21 @@ class AmountTest {
     assertTrue(str.contains("\"amount\":100"));
     assertTrue(str.contains("\"amount\":10"));
   }
+
+  @Test
+  void testAccessSubTotal() throws Exception {
+    Amount accessor = new Amount();
+    Money value = org.joda.money.Money.parse("USD 123.45");
+    assertSame(accessor, accessor.setSubTotal(value));
+    assertEquals(value, accessor.getSubTotal());
+  }
+
+  @Test
+  void testAccessTaxAmount() throws Exception {
+    Amount accessor = new Amount();
+    TaxAmount value = mock(TaxAmount.class);
+    assertSame(accessor, accessor.setTaxAmount(value));
+    assertEquals(value, accessor.getTaxAmount());
+  }
+
 }

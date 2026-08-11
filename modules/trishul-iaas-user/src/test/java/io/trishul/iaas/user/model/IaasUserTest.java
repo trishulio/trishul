@@ -2,6 +2,7 @@ package io.trishul.iaas.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,4 +88,56 @@ class IaasUserTest {
     iaasUser.setVersion(1);
     assertNull(iaasUser.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasUser accessor = new IaasUser();
+    assertSame(accessor, accessor.setId("testString"));
+    assertEquals("testString", accessor.getId());
+  }
+
+  @Test
+  void testAccessUserName() throws Exception {
+    IaasUser accessor = new IaasUser();
+    assertSame(accessor, accessor.setUserName("testString"));
+    assertEquals("testString", accessor.getUserName());
+  }
+
+  @Test
+  void testAccessEmail() throws Exception {
+    IaasUser accessor = new IaasUser();
+    assertSame(accessor, accessor.setEmail("testString"));
+    assertEquals("testString", accessor.getEmail());
+  }
+
+  @Test
+  void testAccessPhoneNumber() throws Exception {
+    IaasUser accessor = new IaasUser();
+    assertSame(accessor, accessor.setPhoneNumber("testString"));
+    assertEquals("testString", accessor.getPhoneNumber());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    IaasUser accessor = new IaasUser();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    IaasUser accessor = new IaasUser();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    IaasUser accessor = new IaasUser();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }

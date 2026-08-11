@@ -1,6 +1,8 @@
 package io.trishul.address.model.dto;
 
-public class AddressDto {
+import io.trishul.model.base.dto.BaseDto;
+
+public class AddressDto extends BaseDto {
   private Long id;
 
   private String addressLine1;

@@ -2,6 +2,7 @@ package io.trishul.iaas.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,4 +44,19 @@ class IaasUserTenantMembershipIdTest {
     assertEquals(new IaasUserTenantMembershipId().setTenantId("T1"),
         IaasUserTenantMembershipId.build(null, "T1"));
   }
+
+  @Test
+  void testAccessUserId() throws Exception {
+    IaasUserTenantMembershipId accessor = new IaasUserTenantMembershipId();
+    assertSame(accessor, accessor.setUserId("testString"));
+    assertEquals("testString", accessor.getUserId());
+  }
+
+  @Test
+  void testAccessTenantId() throws Exception {
+    IaasUserTenantMembershipId accessor = new IaasUserTenantMembershipId();
+    assertSame(accessor, accessor.setTenantId("testString"));
+    assertEquals("testString", accessor.getTenantId());
+  }
+
 }

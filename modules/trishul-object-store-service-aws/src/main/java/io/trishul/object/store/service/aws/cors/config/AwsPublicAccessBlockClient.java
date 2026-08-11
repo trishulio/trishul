@@ -79,8 +79,15 @@ public class AwsPublicAccessBlockClient implements
       this.awsClient.deletePublicAccessBlock(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      log.error("Failed to delete the public access block configuration for bucket: {}",
-          bucketName);
+      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())
+          || "NoSuchPublicAccessBlockConfiguration".equalsIgnoreCase(e.getErrorCode())) {
+        log.info("S3 public access block configuration already deleted or not found: {}",
+            bucketName);
+        success = true;
+      } else {
+        log.error("Failed to delete the public access block configuration for bucket: {}",
+            bucketName);
+      }
     }
 
     return success;

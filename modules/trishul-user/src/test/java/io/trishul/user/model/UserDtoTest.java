@@ -2,6 +2,7 @@ package io.trishul.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import io.trishul.user.role.model.UserRoleDto;
@@ -49,63 +50,63 @@ class UserDtoTest {
   @Test
   void testAccessId() {
     assertNull(dto.getId());
-    dto.setId(1L);
+    assertSame(dto, dto.setId(1L));
     assertEquals(1L, dto.getId());
   }
 
   @Test
   void testAccessUserName() {
     assertNull(dto.getUserName());
-    dto.setUserName("userName");
+    assertSame(dto, dto.setUserName("userName"));
     assertEquals("userName", dto.getUserName());
   }
 
   @Test
   void testAccessIaasUsername() {
     assertNull(dto.getIaasUsername());
-    dto.setIaasUsername("iaasUsername");
+    assertSame(dto, dto.setIaasUsername("iaasUsername"));
     assertEquals("iaasUsername", dto.getIaasUsername());
   }
 
   @Test
   void testAccessDisplayName() {
     assertNull(dto.getDisplayName());
-    dto.setDisplayName("displayName");
+    assertSame(dto, dto.setDisplayName("displayName"));
     assertEquals("displayName", dto.getDisplayName());
   }
 
   @Test
   void testAccessFirstName() {
     assertNull(dto.getFirstName());
-    dto.setFirstName("firstName");
+    assertSame(dto, dto.setFirstName("firstName"));
     assertEquals("firstName", dto.getFirstName());
   }
 
   @Test
   void testAccessLastName() {
     assertNull(dto.getLastName());
-    dto.setLastName("lastName");
+    assertSame(dto, dto.setLastName("lastName"));
     assertEquals("lastName", dto.getLastName());
   }
 
   @Test
   void testAccessEmail() {
     assertNull(dto.getEmail());
-    dto.setEmail("email");
+    assertSame(dto, dto.setEmail("email"));
     assertEquals("email", dto.getEmail());
   }
 
   @Test
   void testAccessImageSrc() {
     assertNull(dto.getImageSrc());
-    dto.setImageSrc(URI.create("imageSrc"));
+    assertSame(dto, dto.setImageSrc(URI.create("imageSrc")));
     assertEquals(URI.create("imageSrc"), dto.getImageSrc());
   }
 
   @Test
   void testAccessObjectStoreFile() {
     assertNull(dto.getObjectStoreFile());
-    dto.setObjectStoreFile(new IaasObjectStoreFileDto(URI.create("file.txt")));
+    assertSame(dto, dto.setObjectStoreFile(new IaasObjectStoreFileDto(URI.create("file.txt"))));
 
     assertEquals(new IaasObjectStoreFileDto(URI.create("file.txt")), dto.getObjectStoreFile());
   }
@@ -113,52 +114,52 @@ class UserDtoTest {
   @Test
   void testAccessPhoneNumber() {
     assertNull(dto.getPhoneNumber());
-    dto.setPhoneNumber("phoneNumber");
+    assertSame(dto, dto.setPhoneNumber("phoneNumber"));
     assertEquals("phoneNumber", dto.getPhoneNumber());
   }
 
   @Test
   void testAccessStatus() {
     assertNull(dto.getStatus());
-    dto.setStatus(new UserStatusDto(1L));
+    assertSame(dto, dto.setStatus(new UserStatusDto(1L)));
     assertEquals(new UserStatusDto(1L), dto.getStatus());
   }
 
   @Test
   void testAccessSalutation() {
     assertNull(dto.getSalutation());
-    dto.setSalutation(new UserSalutationDto(1L));
+    assertSame(dto, dto.setSalutation(new UserSalutationDto(1L)));
     assertEquals(new UserSalutationDto(1L), dto.getSalutation());
   }
 
   @Test
   void testAccessRoles() {
     assertNull(dto.getRoles());
-    dto.setRoles(List.of(new UserRoleDto(1L), new UserRoleDto(2L)));
+    assertSame(dto, dto.setRoles(List.of(new UserRoleDto(1L), new UserRoleDto(2L))));
     assertEquals(List.of(new UserRoleDto(1L), new UserRoleDto(2L)), dto.getRoles());
 
-    dto.setRoles(List.of(new UserRoleDto(10L), new UserRoleDto(20L)));
+    assertSame(dto, dto.setRoles(List.of(new UserRoleDto(10L), new UserRoleDto(20L))));
     assertEquals(List.of(new UserRoleDto(10L), new UserRoleDto(20L)), dto.getRoles());
   }
 
   @Test
   void testAccessLastUpdated() {
     assertNull(dto.getLastUpdated());
-    dto.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0));
+    assertSame(dto, dto.setLastUpdated(LocalDateTime.of(1999, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(1999, 1, 1, 0, 0), dto.getLastUpdated());
   }
 
   @Test
   void testAccessCreatedAt() {
     assertNull(dto.getCreatedAt());
-    dto.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
+    assertSame(dto, dto.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getCreatedAt());
   }
 
   @Test
   void testAccessVersion() {
     assertNull(dto.getVersion());
-    dto.setVersion(1);
+    assertSame(dto, dto.setVersion(1));
     assertEquals(1, dto.getVersion());
   }
 }

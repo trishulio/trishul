@@ -68,10 +68,17 @@ class ThreadLocalContextHolderTest {
   void testClear_RemovesValuesFromThreadLocal() {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     holder.setContext(mCtx);
+
+    UUID tenantId = UUID.randomUUID();
+    when(mCtx.getTenantIds()).thenReturn(Arrays.asList(tenantId));
+    holder.setSessionTenantId(tenantId);
+
+    holder.setRequestId("test-request-id");
     holder.clear();
 
     assertNull(holder.getPrincipalContext());
     assertNull(holder.getSessionTenantId());
+    assertNull(holder.getRequestId());
   }
 
   @Test
@@ -152,6 +159,13 @@ class ThreadLocalContextHolderTest {
     holder.setSessionTenantId(tenantId);
 
     assertEquals(tenantId, holder.getSessionTenantId());
+  }
+
+  @Test
+  void testSetRequestId_ReturnsThis() {
+    ThreadLocalContextHolder result = holder.setRequestId("test-id");
+    assertSame(holder, result);
+    assertEquals("test-id", holder.getRequestId());
   }
 
   private CompletableFuture<Void> runAsync(CheckedRunnable<Exception> runnable) {

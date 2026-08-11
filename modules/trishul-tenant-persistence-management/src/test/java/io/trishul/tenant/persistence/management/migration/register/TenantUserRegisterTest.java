@@ -76,11 +76,12 @@ class TenantUserRegisterTest {
 
     register.add(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    InOrder order = inOrder(mDialect, mSecretsManager);
+    InOrder order = inOrder(mDialect, mSecretsManager, mConn);
     order.verify(mDialect).createUser(mConn, "USERNAME", "PASSWORD");
     order.verify(mDialect).grantPrivilege(mConn, "CONNECT", "DATABASE", "DBNAME", "USERNAME");
     order.verify(mDialect).grantPrivilege(mConn, "CREATE", "DATABASE", "DBNAME", "USERNAME");
     order.verify(mSecretsManager).put("SCHEMA", "PASSWORD");
+    order.verify(mConn).commit();
   }
 
   @Test
@@ -119,10 +120,11 @@ class TenantUserRegisterTest {
 
     register.remove(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    InOrder order = inOrder(mDialect, mSecretsManager);
+    InOrder order = inOrder(mDialect, mSecretsManager, mConn);
     order.verify(mDialect).reassignOwnedByTo(mConn, "USERNAME", "ADMIN");
     order.verify(mDialect).dropOwnedBy(mConn, "USERNAME");
     order.verify(mDialect).dropUser(mConn, "USERNAME");
+    order.verify(mConn).commit();
     order.verify(mSecretsManager).remove("SCHEMA");
   }
 

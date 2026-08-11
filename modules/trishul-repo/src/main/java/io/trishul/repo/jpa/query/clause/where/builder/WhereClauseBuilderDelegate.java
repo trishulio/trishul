@@ -4,6 +4,7 @@ import io.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import io.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
 import io.trishul.repo.jpa.query.spec.criteria.ColumnSpec;
 import io.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
+import io.trishul.repo.jpa.query.spec.criteria.ILikeSpec;
 import io.trishul.repo.jpa.query.spec.criteria.InSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsNullSpec;
 import io.trishul.repo.jpa.query.spec.criteria.IsSpec;
@@ -63,6 +64,19 @@ public class WhereClauseBuilderDelegate {
       for (String text : queries) {
         if (text != null) {
           CriteriaSpec<Boolean> spec = new LikeSpec(new ColumnSpec<>(paths), text);
+          accumulator.add(spec);
+        }
+      }
+    }
+
+    accumulator.setIsNot(false);
+  }
+
+  public void ilike(String[] paths, Set<String> queries) {
+    if (queries != null) {
+      for (String text : queries) {
+        if (text != null) {
+          CriteriaSpec<Boolean> spec = new ILikeSpec(new ColumnSpec<>(paths), text);
           accumulator.add(spec);
         }
       }

@@ -1,6 +1,7 @@
 package io.trishul.ai.speech.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -36,4 +37,68 @@ class UpdateAiSpeechConfigDtoTest {
     assertTrue(!dto.getIsDefault());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessProvider() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setProvider("testString"));
+    assertEquals("testString", accessor.getProvider());
+  }
+
+  @Test
+  void testAccessTtsModelName() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setTtsModelName("testString"));
+    assertEquals("testString", accessor.getTtsModelName());
+  }
+
+  @Test
+  void testAccessSttModelName() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setSttModelName("testString"));
+    assertEquals("testString", accessor.getSttModelName());
+  }
+
+  @Test
+  void testAccessVoice() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setVoice("testString"));
+    assertEquals("testString", accessor.getVoice());
+  }
+
+  @Test
+  void testAccessSpeed() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setSpeed(123.45));
+    assertEquals(123.45, accessor.getSpeed());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    UpdateAiSpeechConfigDto accessor = new UpdateAiSpeechConfigDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

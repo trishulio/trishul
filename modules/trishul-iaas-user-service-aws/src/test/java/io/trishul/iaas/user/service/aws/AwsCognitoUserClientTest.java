@@ -9,6 +9,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -160,10 +161,18 @@ class AwsCognitoUserClientTest {
   }
 
   @Test
-  void testDelete_ReturnsFalse_WhenUserNotFoundExceptionIsThrown() {
+  void testDelete_ReturnsTrue_WhenUserNotFoundExceptionIsThrown() {
     doThrow(UserNotFoundException.class).when(mIdp).adminDeleteUser(any());
 
-    assertFalse(client.delete("USERNAME"));
+    assertTrue(client.delete("USERNAME"));
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenUsernameIsNullOrEmpty() {
+    assertFalse(client.delete(null));
+    assertFalse(client.delete(""));
+    assertFalse(client.delete("   "));
+    verify(mIdp, never()).adminDeleteUser(any());
   }
 
   @Test

@@ -1,6 +1,7 @@
 package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
@@ -39,4 +40,78 @@ class UpdateAiAgentConfigDtoTest {
     assertEquals(Set.of(6L), dto.getToolIds());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessDescription() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setDescription("testString"));
+    assertEquals("testString", accessor.getDescription());
+  }
+
+  @Test
+  void testAccessIsActive() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setIsActive(true));
+    assertEquals(true, accessor.getIsActive());
+  }
+
+  @Test
+  void testAccessChatModelConfigId() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setChatModelConfigId(123L));
+    assertEquals(123L, accessor.getChatModelConfigId());
+  }
+
+  @Test
+  void testAccessChatMemoryConfigId() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setChatMemoryConfigId(123L));
+    assertEquals(123L, accessor.getChatMemoryConfigId());
+  }
+
+  @Test
+  void testAccessGuardrailIds() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    Set<Long> value = java.util.Set.of();
+    assertSame(accessor, accessor.setGuardrailIds(value));
+    assertEquals(value, accessor.getGuardrailIds());
+  }
+
+  @Test
+  void testAccessSkillIds() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    Set<Long> value = java.util.Set.of();
+    assertSame(accessor, accessor.setSkillIds(value));
+    assertEquals(value, accessor.getSkillIds());
+  }
+
+  @Test
+  void testAccessToolIds() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    Set<Long> value = java.util.Set.of();
+    assertSame(accessor, accessor.setToolIds(value));
+    assertEquals(value, accessor.getToolIds());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

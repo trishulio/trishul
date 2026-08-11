@@ -1,10 +1,12 @@
 package io.trishul.user.service.user.service.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.user.model.AddUserDto;
@@ -130,5 +132,13 @@ class UserControllerTest {
     assertEquals(List.of(new UserDto(1L, "user1", "User One", "User", "One", "user1@example.com",
         "1234567890", URI.create("http://example.com/image.jpg"), null, null, null, List.of(), null,
         null, null)), dtos);
+  }
+
+  @Test
+  void testAutowiredConstructor() {
+    AttributeFilter filter = mock(AttributeFilter.class);
+    UserDtoDecorator decorator = mock(UserDtoDecorator.class);
+    UserController userController = new UserController(mService, filter, decorator);
+    assertNotNull(userController);
   }
 }

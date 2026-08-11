@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.trishul.model.base.exception.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,7 +34,8 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testEntityNotFoundException_ReturnsNotFoundResponse() {
-    EntityNotFoundException exception = new EntityNotFoundException("Entity", "id", "123");
+    TrishulEntityNotFoundException exception
+        = new TrishulEntityNotFoundException("Entity", "id", "123");
 
     ErrorResponse response = handler.entityNotFoundException(exception, mRequest);
 
@@ -122,8 +123,7 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testJpaObjectRetrievalFailureException_ReturnsNotFoundResponse() {
-    jakarta.persistence.EntityNotFoundException cause
-        = new jakarta.persistence.EntityNotFoundException("Entity not found");
+    EntityNotFoundException cause = new EntityNotFoundException("Entity not found");
     JpaObjectRetrievalFailureException exception = new JpaObjectRetrievalFailureException(cause);
 
     ErrorResponse response = handler.jpaObjectRetrievalFailureException(exception, mRequest);

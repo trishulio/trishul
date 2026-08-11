@@ -2,7 +2,9 @@ package io.trishul.object.store.configuration.access.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,4 +73,29 @@ class IaasObjectStoreAccessConfigTest {
   void testGetVersion() {
     assertNull(iaasObjectStoreAccessConfig.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasObjectStoreAccessConfig accessor = new IaasObjectStoreAccessConfig();
+    assertSame(accessor, accessor.setId("testString"));
+    assertEquals("testString", accessor.getId());
+  }
+
+  @Test
+  void testAccessObjectStoreName() throws Exception {
+    IaasObjectStoreAccessConfig accessor = new IaasObjectStoreAccessConfig();
+    assertSame(accessor, accessor.setObjectStoreName("testString"));
+    assertEquals("testString", accessor.getObjectStoreName());
+  }
+
+  @Test
+  void testAccessPublicAccessBlockConfig() throws Exception {
+    IaasObjectStoreAccessConfig accessor = new IaasObjectStoreAccessConfig();
+    PublicAccessBlockConfiguration value
+        = org.mockito.Mockito.mock(PublicAccessBlockConfiguration.class);
+    when(value.clone()).thenReturn(value);
+    assertSame(accessor, accessor.setPublicAccessBlockConfig(value));
+    assertEquals(value, accessor.getPublicAccessBlockConfig());
+  }
+
 }

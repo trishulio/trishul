@@ -1,5 +1,6 @@
 package io.trishul.address.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
@@ -87,4 +88,63 @@ class AddressTest {
     assertSame(address, address.setLastUpdated(lastUpdated));
     assertSame(lastUpdated, address.getLastUpdated());
   }
+
+  @Test
+  void testAccessAddressLine1() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setAddressLine1("testString"));
+    assertEquals("testString", accessor.getAddressLine1());
+  }
+
+  @Test
+  void testAccessAddressLine2() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setAddressLine2("testString"));
+    assertEquals("testString", accessor.getAddressLine2());
+  }
+
+  @Test
+  void testAccessCountry() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setCountry("testString"));
+    assertEquals("testString", accessor.getCountry());
+  }
+
+  @Test
+  void testAccessProvince() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setProvince("testString"));
+    assertEquals("testString", accessor.getProvince());
+  }
+
+  @Test
+  void testAccessCity() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setCity("testString"));
+    assertEquals("testString", accessor.getCity());
+  }
+
+  @Test
+  void testAccessPostalCode() throws Exception {
+    Address accessor = new Address();
+    assertSame(accessor, accessor.setPostalCode("testString"));
+    assertEquals("testString", accessor.getPostalCode());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    Address accessor = new Address();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    Address accessor = new Address();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

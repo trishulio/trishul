@@ -1,7 +1,9 @@
 package io.trishul.ai.guardrail.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
@@ -40,4 +42,78 @@ class AiGuardrailDtoTest {
     assertEquals(now.plusDays(1), dto.getLastUpdated());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessType() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    AiGuardrailType value = mock(AiGuardrailType.class);
+    assertSame(accessor, accessor.setType(value));
+    assertEquals(value, accessor.getType());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessConfiguration() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setConfiguration("testString"));
+    assertEquals("testString", accessor.getConfiguration());
+  }
+
+  @Test
+  void testAccessPriority() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setPriority(123));
+    assertEquals(123, accessor.getPriority());
+  }
+
+  @Test
+  void testAccessIsEnabled() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setIsEnabled(true));
+    assertEquals(true, accessor.getIsEnabled());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiGuardrailDto accessor = new AiGuardrailDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

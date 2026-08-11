@@ -32,9 +32,9 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 class AwsIamRolePolicyAttachmentClientTest {
   private AwsIamRolePolicyAttachmentClient client;
@@ -88,9 +88,8 @@ class AwsIamRolePolicyAttachmentClientTest {
     RuntimeException exception = assertThrows(RuntimeException.class,
         () -> client.get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
 
-    assertEquals(
-        "Failed to fetch all the attachedPolicies because java.lang.Exception: CHECKED_EXCEPTION",
-        exception.getMessage());
+    assertEquals("Failed to fetch all the attachedPolicies because " + Exception.class.getName()
+        + ": CHECKED_EXCEPTION", exception.getMessage());
     assertTrue(exception.getCause() instanceof ExecutionException);
     assertEquals("CHECKED_EXCEPTION", exception.getCause().getCause().getMessage());
   }
@@ -199,11 +198,24 @@ class AwsIamRolePolicyAttachmentClientTest {
     List<AttachedPolicy> roleCPoliciesPartion2
         = List.of(new AttachedPolicy().withPolicyName("POLICY_2C"));
 
-    doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleAPolicies))
-        .when(mAwsClient)
+    AtomicInteger roleACount = new AtomicInteger(0);
+    doAnswer(inv -> {
+      if (roleACount.incrementAndGet() > 4) {
+        return new ListAttachedRolePoliciesResult().withAttachedPolicies(List.of())
+            .withIsTruncated(true).withMarker("STOP");
+      }
+      return new ListAttachedRolePoliciesResult().withAttachedPolicies(roleAPolicies);
+    }).when(mAwsClient)
         .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_A"));
-    doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleBPolicies))
-        .when(mAwsClient)
+
+    AtomicInteger roleBCount = new AtomicInteger(0);
+    doAnswer(inv -> {
+      if (roleBCount.incrementAndGet() > 2) {
+        return new ListAttachedRolePoliciesResult().withAttachedPolicies(List.of())
+            .withIsTruncated(true).withMarker("STOP");
+      }
+      return new ListAttachedRolePoliciesResult().withAttachedPolicies(roleBPolicies);
+    }).when(mAwsClient)
         .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_B"));
     doReturn(new ListAttachedRolePoliciesResult().withAttachedPolicies(roleCPoliciesPartion1)
         .withIsTruncated(true).withMarker("MARKER")).when(mAwsClient)

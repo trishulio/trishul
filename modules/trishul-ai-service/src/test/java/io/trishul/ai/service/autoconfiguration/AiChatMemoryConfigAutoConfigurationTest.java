@@ -8,9 +8,13 @@ import static org.mockito.Mockito.when;
 
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
+import io.trishul.ai.service.agent.factory.AgentFactory;
+import io.trishul.ai.service.memory.manager.AiChatMemoryManager;
+import io.trishul.ai.service.memory.manager.AiChatMemoryManagerWrapper;
 import io.trishul.ai.service.memory.model.controller.AiChatMemoryConfigController;
 import io.trishul.ai.service.memory.model.repository.AiChatMemoryConfigRepository;
 import io.trishul.ai.service.memory.model.service.AiChatMemoryConfigService;
+import io.trishul.ai.service.memory.provider.AiChatMemoryConfigProvider;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.base.types.base.pojo.Refresher;
 import io.trishul.crud.controller.filter.AttributeFilter;
@@ -90,6 +94,29 @@ class AiChatMemoryConfigAutoConfigurationTest {
     Refresher<AiChatMemoryConfig, AiChatMemoryConfigAccessor<?>> result
         = config.aiChatMemoryConfigRefresher(mockAccessorRefresher);
 
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiChatMemoryConfigProvider_ReturnsNonNull() {
+    AiChatMemoryConfigService mockService = mock(AiChatMemoryConfigService.class);
+    AiChatMemoryConfigProvider result = config.aiChatMemoryConfigProvider(mockService);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiChatMemoryManager_ReturnsNonNull() {
+    AgentFactory mockAgentFactory = mock(AgentFactory.class);
+    AiChatMemoryManager result = config.aiChatMemoryManager(mockAgentFactory);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiChatMemoryManagerWrapper_ReturnsNonNull() {
+    AiChatMemoryConfigProvider mockProvider = mock(AiChatMemoryConfigProvider.class);
+    AiChatMemoryManager mockManager = mock(AiChatMemoryManager.class);
+    AiChatMemoryManagerWrapper result
+        = config.aiChatMemoryManagerWrapper(mockProvider, mockManager);
     assertNotNull(result);
   }
 }

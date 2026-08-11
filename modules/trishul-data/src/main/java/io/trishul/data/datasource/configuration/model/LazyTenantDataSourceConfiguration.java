@@ -94,4 +94,23 @@ public class LazyTenantDataSourceConfiguration extends BaseModel
   public String getSchemaPrefix() {
     return this.globalConfig.getSchemaPrefix();
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    LazyTenantDataSourceConfiguration that = (LazyTenantDataSourceConfiguration) o;
+    return java.util.Objects.equals(userName, that.userName)
+        && java.util.Objects.equals(schemaName, that.schemaName)
+        && java.util.Objects.equals(globalConfig, that.globalConfig);
+  }
+
+  @Override
+  public int hashCode() {
+    return java.util.Objects.hash(userName, schemaName, globalConfig);
+  }
 }

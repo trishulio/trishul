@@ -2,6 +2,7 @@ package io.trishul.quantity.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,17 +32,17 @@ class QuantityDtoTest {
   @Test
   void testAccessSymbol() {
     assertNull(dto.getSymbol());
-    dto.setSymbol("g");
+    assertSame(dto, dto.setSymbol("g"));
     assertEquals("g", dto.getSymbol());
   }
 
   @Test
   void testAccessValue() {
     assertNull(dto.getValue());
-    dto.setValue(new BigDecimal("100"));
+    assertSame(dto, dto.setValue(new BigDecimal("100")));
     assertEquals(new BigDecimal("100"), dto.getValue());
 
-    dto.setValue(new BigDecimal("100.00"));
+    assertSame(dto, dto.setValue(new BigDecimal("100.00")));
     assertEquals(new BigDecimal("100"), dto.getValue());
   }
 }

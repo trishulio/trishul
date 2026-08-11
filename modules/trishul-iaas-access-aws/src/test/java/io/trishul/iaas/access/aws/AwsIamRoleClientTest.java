@@ -72,12 +72,19 @@ class AwsIamRoleClientTest {
   }
 
   @Test
-  void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
+  void testDelete_ReturnsTrue_WhenDeleteRequestThrowsNoEntityException() {
     DeleteRoleRequest request = new DeleteRoleRequest().withRoleName("ROLE");
 
     doThrow(NoSuchEntityException.class).when(mAwsIamClient).deleteRole(request);
 
-    assertFalse(client.delete("ROLE"));
+    assertTrue(client.delete("ROLE"));
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenRoleNameIsNullOrEmpty() {
+    assertFalse(client.delete(null));
+    assertFalse(client.delete(""));
+    assertFalse(client.delete("   "));
   }
 
   @Test

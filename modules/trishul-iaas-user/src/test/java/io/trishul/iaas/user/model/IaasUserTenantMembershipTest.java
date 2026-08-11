@@ -2,6 +2,8 @@ package io.trishul.iaas.user.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,4 +79,35 @@ class IaasUserTenantMembershipTest {
     membership.setVersion(1);
     assertNull(membership.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasUserTenantMembership accessor = new IaasUserTenantMembership();
+    IaasUserTenantMembershipId value = new IaasUserTenantMembershipId("user-1", "tenant-1");
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessUser() throws Exception {
+    IaasUserTenantMembership accessor = new IaasUserTenantMembership();
+    IaasUser value = mock(IaasUser.class);
+    assertSame(accessor, accessor.setUser(value));
+    assertEquals(value, accessor.getUser());
+  }
+
+  @Test
+  void testAccessTenantId() throws Exception {
+    IaasUserTenantMembership accessor = new IaasUserTenantMembership();
+    assertSame(accessor, accessor.setTenantId("testString"));
+    assertEquals("testString", accessor.getTenantId());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    IaasUserTenantMembership accessor = new IaasUserTenantMembership();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }

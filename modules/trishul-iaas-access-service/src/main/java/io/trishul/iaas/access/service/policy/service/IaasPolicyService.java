@@ -36,7 +36,7 @@ public class IaasPolicyService extends BaseService implements
 
   @Override
   public boolean exists(Set<String> ids) {
-    return iaasRepo.exists(ids).values().stream().filter(b -> !b).findAny().orElseGet(() -> true);
+    return !iaasRepo.exists(ids).containsValue(false);
   }
 
   @Override

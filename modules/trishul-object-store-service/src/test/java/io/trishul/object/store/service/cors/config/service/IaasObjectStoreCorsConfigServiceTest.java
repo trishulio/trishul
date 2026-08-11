@@ -90,8 +90,8 @@ class IaasObjectStoreCorsConfigServiceTest {
 
   @Test
   void testDelete_Id_CallsRepoDeleteWithIds() {
-    doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
-    DeleteResult deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
+    doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1"));
+    DeleteResult deleteCount = service.delete("BUCKET_1");
 
     assertEquals(new DeleteResult(1L), deleteCount);
   }

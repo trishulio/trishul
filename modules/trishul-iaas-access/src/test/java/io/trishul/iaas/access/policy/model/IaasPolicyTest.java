@@ -2,6 +2,7 @@ package io.trishul.iaas.access.policy.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,49 +46,115 @@ class IaasPolicyTest {
 
   @Test
   void testGetSetId() {
-    policy.setId("ID");
+    assertSame(policy, policy.setId("ID"));
     assertEquals("ID", policy.getId());
   }
 
   @Test
   void testGetSetName() {
-    policy.setName("NAME");
+    assertSame(policy, policy.setName("NAME"));
     assertEquals("NAME", policy.getName());
   }
 
   @Test
   void testGetSetDescription() {
-    policy.setDescription("DESCRIPTION");
+    assertSame(policy, policy.setDescription("DESCRIPTION"));
     assertEquals("DESCRIPTION", policy.getDescription());
   }
 
   @Test
   void testGetSetIaasId() {
-    policy.setIaasId("IAAS_ID");
+    assertSame(policy, policy.setIaasId("IAAS_ID"));
     assertEquals("IAAS_ID", policy.getIaasId());
   }
 
   @Test
   void testGetSetIaasResourceName() {
-    policy.setIaasResourceName("IAAS_RES_NAME");
+    assertSame(policy, policy.setIaasResourceName("IAAS_RES_NAME"));
     assertEquals("IAAS_RES_NAME", policy.getIaasResourceName());
   }
 
   @Test
   void testGetSetDocument() {
-    policy.setDocument("DOCUMENT");
+    assertSame(policy, policy.setDocument("DOCUMENT"));
     assertEquals("DOCUMENT", policy.getDocument());
   }
 
   @Test
   void testGetSetCreatedAt() {
-    policy.setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0));
+    assertSame(policy, policy.setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), policy.getCreatedAt());
   }
 
   @Test
   void testGetSetLastUpdated() {
-    policy.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
+    assertSame(policy, policy.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), policy.getLastUpdated());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setId("testString"));
+    assertEquals("testString", accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessIaasId() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setIaasId("testString"));
+    assertEquals("testString", accessor.getIaasId());
+  }
+
+  @Test
+  void testAccessIaasResourceName() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setIaasResourceName("testString"));
+    assertEquals("testString", accessor.getIaasResourceName());
+  }
+
+  @Test
+  void testAccessDocument() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setDocument("testString"));
+    assertEquals("testString", accessor.getDocument());
+  }
+
+  @Test
+  void testAccessDescription() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setDescription("testString"));
+    assertEquals("testString", accessor.getDescription());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    IaasPolicy accessor = new IaasPolicy();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }
