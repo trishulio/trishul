@@ -1,0 +1,59 @@
+package sh.trishul.tenant.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.net.URI;
+import java.util.UUID;
+import sh.trishul.model.base.dto.BaseDto;
+
+public class UpdateTenantDto extends BaseDto {
+  private UUID id;
+
+  @NotBlank
+  private String name;
+
+  @NotNull
+  private URI url;
+
+  public UpdateTenantDto() {
+    super();
+  }
+
+  public UpdateTenantDto(UUID id) {
+    this();
+    setId(id);
+  }
+
+  public UpdateTenantDto(UUID id, String name, URI url) {
+    this(id);
+    setName(name);
+    setUrl(url);
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public UpdateTenantDto setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public UpdateTenantDto setName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public URI getUrl() {
+    return url;
+  }
+
+  public UpdateTenantDto setUrl(URI url) {
+    this.url = url;
+    return this;
+  }
+}

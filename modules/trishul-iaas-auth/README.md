@@ -8,7 +8,7 @@ IaaS authorization credentials and context management for cloud API access.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-iaas-auth</artifactId>
 </dependency>
 ```

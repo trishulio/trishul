@@ -8,7 +8,7 @@ Provides the `User` JPA entity with role bindings, status tracking, and associat
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-user</artifactId>
 </dependency>
 ```

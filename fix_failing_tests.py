@@ -11,7 +11,7 @@ def replace_in_file(filepath, old, new):
 
 # 1. TenantTest - version
 replace_in_file(
-    'modules/trishul-tenant/src/test/java/io/trishul/tenant/entity/TenantTest.java',
+    'modules/trishul-tenant/src/test/java/sh/trishul/tenant/entity/TenantTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessVersion() throws Exception {
     Tenant accessor = new Tenant();
@@ -28,7 +28,7 @@ replace_in_file(
 
 # 2. IaasObjectStoreTest - version
 replace_in_file(
-    'modules/trishul-object-store/src/test/java/io/trishul/object/store/model/IaasObjectStoreTest.java',
+    'modules/trishul-object-store/src/test/java/sh/trishul/object/store/model/IaasObjectStoreTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessVersion() throws Exception {
     IaasObjectStore accessor = new IaasObjectStore();
@@ -45,7 +45,7 @@ replace_in_file(
 
 # 3. IaasObjectStoreAccessConfigTest - publicAccessBlockConfig clone issue
 replace_in_file(
-    'modules/trishul-object-store/src/test/java/io/trishul/object/store/configuration/access/model/IaasObjectStoreAccessConfigTest.java',
+    'modules/trishul-object-store/src/test/java/sh/trishul/object/store/configuration/access/model/IaasObjectStoreAccessConfigTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessPublicAccessBlockConfig() throws Exception {
     IaasObjectStoreAccessConfig accessor = new IaasObjectStoreAccessConfig();
@@ -65,7 +65,7 @@ replace_in_file(
 
 # 4. AmountTest - testAccessSubTotal
 replace_in_file(
-    'modules/trishul-money/src/test/java/io/trishul/money/amount/model/AmountTest.java',
+    'modules/trishul-money/src/test/java/sh/trishul/money/amount/model/AmountTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessSubTotal() throws Exception {
     Amount accessor = new Amount();
@@ -76,7 +76,7 @@ replace_in_file(
     '''  @org.junit.jupiter.api.Test
   void testAccessSubTotal() throws Exception {
     Amount accessor = new Amount();
-    MoneyEntity value = new io.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
+    MoneyEntity value = new sh.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
     org.junit.jupiter.api.Assertions.assertSame(accessor, accessor.setSubTotal(value));
     org.junit.jupiter.api.Assertions.assertEquals(value.getCurrency().getCode(), accessor.getSubTotal().getCurrency().getCode());
     org.junit.jupiter.api.Assertions.assertEquals(value.getValue(), accessor.getSubTotal().getValue());
@@ -85,7 +85,7 @@ replace_in_file(
 
 # 5. TaxAmountTest - testAccessPstAmount
 replace_in_file(
-    'modules/trishul-money/src/test/java/io/trishul/money/tax/amount/TaxAmountTest.java',
+    'modules/trishul-money/src/test/java/sh/trishul/money/tax/amount/TaxAmountTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessPstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
@@ -96,7 +96,7 @@ replace_in_file(
     '''  @org.junit.jupiter.api.Test
   void testAccessPstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    MoneyEntity value = new io.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
+    MoneyEntity value = new sh.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
     org.junit.jupiter.api.Assertions.assertSame(accessor, accessor.setPstAmount(value));
     org.junit.jupiter.api.Assertions.assertEquals(value.getCurrency().getCode(), accessor.getPstAmount().getCurrency().getCode());
     org.junit.jupiter.api.Assertions.assertEquals(value.getValue(), accessor.getPstAmount().getValue());
@@ -105,7 +105,7 @@ replace_in_file(
 
 # 5b. TaxAmountTest - testAccessTotalTaxAmount
 replace_in_file(
-    'modules/trishul-money/src/test/java/io/trishul/money/tax/amount/TaxAmountTest.java',
+    'modules/trishul-money/src/test/java/sh/trishul/money/tax/amount/TaxAmountTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessTotalTaxAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
@@ -116,7 +116,7 @@ replace_in_file(
     '''  @org.junit.jupiter.api.Test
   void testAccessTotalTaxAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    MoneyEntity value = new io.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
+    MoneyEntity value = new sh.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
     org.junit.jupiter.api.Assertions.assertSame(accessor, accessor.setTotalTaxAmount(value));
     org.junit.jupiter.api.Assertions.assertEquals(value.getCurrency().getCode(), accessor.getTotalTaxAmount().getCurrency().getCode());
     org.junit.jupiter.api.Assertions.assertEquals(value.getValue(), accessor.getTotalTaxAmount().getValue());
@@ -125,7 +125,7 @@ replace_in_file(
 
 # 5c. TaxAmountTest - testAccessGstAmount
 replace_in_file(
-    'modules/trishul-money/src/test/java/io/trishul/money/tax/amount/TaxAmountTest.java',
+    'modules/trishul-money/src/test/java/sh/trishul/money/tax/amount/TaxAmountTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessGstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
@@ -136,7 +136,7 @@ replace_in_file(
     '''  @org.junit.jupiter.api.Test
   void testAccessGstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    MoneyEntity value = new io.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
+    MoneyEntity value = new sh.trishul.money.dto.MoneyDto("USD", java.math.BigDecimal.TEN);
     org.junit.jupiter.api.Assertions.assertSame(accessor, accessor.setGstAmount(value));
     org.junit.jupiter.api.Assertions.assertEquals(value.getCurrency().getCode(), accessor.getGstAmount().getCurrency().getCode());
     org.junit.jupiter.api.Assertions.assertEquals(value.getValue(), accessor.getGstAmount().getValue());

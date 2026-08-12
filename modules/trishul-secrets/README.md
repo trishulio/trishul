@@ -8,7 +8,7 @@ Cloud-agnostic secrets management interface for secure credential storage and re
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-secrets</artifactId>
 </dependency>
 ```

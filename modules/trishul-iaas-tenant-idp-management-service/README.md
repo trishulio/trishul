@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-idp-management-service</artifactId>
 </dependency>
 ```
@@ -40,22 +40,22 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasIdpTenantService` via `iaasIdpTenantService()` — @ConditionalOnMissingBean(IaasIdpTenantService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
-- `TenantIaasIdpService` via `tenantIaasIdpService()` — @ConditionalOnMissingBean(TenantIaasIdpService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
-- `TenantIaasAuthService` via `tenantIaasAuthService()` — @ConditionalOnMissingBean(TenantIaasAuthService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/io/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
+- `IaasIdpTenantService` via `iaasIdpTenantService()` — @ConditionalOnMissingBean(IaasIdpTenantService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
+- `TenantIaasIdpService` via `tenantIaasIdpService()` — @ConditionalOnMissingBean(TenantIaasIdpService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
+- `TenantIaasAuthService` via `tenantIaasAuthService()` — @ConditionalOnMissingBean(TenantIaasAuthService.class) ([modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java](modules/trishul-iaas-tenant-idp-management-service/src/main/java/sh/trishul/iaas/tenant/idp/management/service/autoconfiguration/IaasTenantIdpManagementServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.idp.management.service.IaasIdpTenantService`
-- `io.trishul.iaas.tenant.idp.management.service.TenantIaasAuthService`
-- `io.trishul.iaas.tenant.idp.management.service.TenantIaasIdpService`
-- `io.trishul.iaas.tenant.idp.management.service.autoconfiguration.IaasTenantIdpManagementServiceAutoConfiguration`
+- `sh.trishul.iaas.tenant.idp.management.service.IaasIdpTenantService`
+- `sh.trishul.iaas.tenant.idp.management.service.TenantIaasAuthService`
+- `sh.trishul.iaas.tenant.idp.management.service.TenantIaasIdpService`
+- `sh.trishul.iaas.tenant.idp.management.service.autoconfiguration.IaasTenantIdpManagementServiceAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.idp.management.service.IaasIdpTenantServiceTest`
-- `io.trishul.iaas.tenant.idp.management.service.TenantIaasAuthServiceTest`
-- `io.trishul.iaas.tenant.idp.management.service.TenantIaasIdpServiceTest`
+- `sh.trishul.iaas.tenant.idp.management.service.IaasIdpTenantServiceTest`
+- `sh.trishul.iaas.tenant.idp.management.service.TenantIaasAuthServiceTest`
+- `sh.trishul.iaas.tenant.idp.management.service.TenantIaasIdpServiceTest`
 
 ## Integration Guide
 

@@ -1,6 +1,6 @@
 import re
 
-with open('modules/trishul-data/src/test/java/io/trishul/data/datasource/manager/CachingDataSourceManagerTest.java', 'r') as f:
+with open('modules/trishul-data/src/test/java/sh/trishul/data/datasource/manager/CachingDataSourceManagerTest.java', 'r') as f:
     content = f.read()
 
 # Replace the field declaration

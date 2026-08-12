@@ -8,7 +8,7 @@ JDBC dialect abstraction for database-specific operations like schema and user m
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-jdbc</artifactId>
 </dependency>
 ```

@@ -13,7 +13,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-object-store-file-service-aws</artifactId>
 </dependency>
 ```
@@ -45,21 +45,21 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `ObjectStoreFileServiceAwsFactory` via `objectStoreFileServiceAwsFactory()` — @ConditionalOnMissingBean(ObjectStoreFileServiceAwsFactory.class) ([modules/trishul-object-store-file-service-aws/src/main/java/io/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java](modules/trishul-object-store-file-service-aws/src/main/java/io/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java))
-- `IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>>` via `iaasObjectStoreFileClientProvider()` — @ConditionalOnMissingBean(IaasRepositoryProvider.class) ([modules/trishul-object-store-file-service-aws/src/main/java/io/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java](modules/trishul-object-store-file-service-aws/src/main/java/io/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java))
+- `ObjectStoreFileServiceAwsFactory` via `objectStoreFileServiceAwsFactory()` — @ConditionalOnMissingBean(ObjectStoreFileServiceAwsFactory.class) ([modules/trishul-object-store-file-service-aws/src/main/java/sh/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java](modules/trishul-object-store-file-service-aws/src/main/java/sh/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java))
+- `IaasRepositoryProvider<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>>` via `iaasObjectStoreFileClientProvider()` — @ConditionalOnMissingBean(IaasRepositoryProvider.class) ([modules/trishul-object-store-file-service-aws/src/main/java/sh/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java](modules/trishul-object-store-file-service-aws/src/main/java/sh/trishul/object/store/file/service/aws/autoconfiguration/ObjectStoreFileServiceAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.object.store.file.service.aws.autoconfiguration.ObjectStoreFileServiceAwsAutoConfiguration`
-- `io.trishul.object.store.file.service.aws.client.AwsS3FileClient`
-- `io.trishul.object.store.file.service.aws.client.provider.TenantContextAwsObjectStoreFileClientProvider`
-- `io.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactory`
+- `sh.trishul.object.store.file.service.aws.autoconfiguration.ObjectStoreFileServiceAwsAutoConfiguration`
+- `sh.trishul.object.store.file.service.aws.client.AwsS3FileClient`
+- `sh.trishul.object.store.file.service.aws.client.provider.TenantContextAwsObjectStoreFileClientProvider`
+- `sh.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactory`
 
 ## Tests (Examples)
 
-- `io.trishul.object.store.file.service.aws.client.AwsS3FileClientTest`
-- `io.trishul.object.store.file.service.aws.client.provider.TenantContextAwsObjectStoreFileClientProviderTest`
-- `io.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactoryTest`
+- `sh.trishul.object.store.file.service.aws.client.AwsS3FileClientTest`
+- `sh.trishul.object.store.file.service.aws.client.provider.TenantContextAwsObjectStoreFileClientProviderTest`
+- `sh.trishul.object.store.file.service.aws.factory.ObjectStoreFileServiceAwsFactoryTest`
 
 ## Integration Guide
 

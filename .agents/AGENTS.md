@@ -111,8 +111,8 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - Check PIT reports for mutation coverage after test changes (`target/pit-reports/index.html` or `modules/<module>/target/pit-reports/index.html`)
 
 ## Key Files to Review Before Changes
-1. `modules/trishul-base-types/src/main/java/io/trishul/base/types/base/pojo/Identified.java`
-2. `modules/trishul-model/src/main/java/io/trishul/model/base/mapper/BaseMapper.java`
+1. `modules/trishul-base-types/src/main/java/sh/trishul/base/types/base/pojo/Identified.java`
+2. `modules/trishul-model/src/main/java/sh/trishul/model/base/mapper/BaseMapper.java`
 3. Any `*Mapper.java` files when dealing with mapping code
 
 ## Common Issues to Avoid

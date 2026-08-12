@@ -30,14 +30,14 @@ version_test_new = '''  @org.junit.jupiter.api.Test
   }'''
 
 version_files = [
-    ('modules/trishul-iaas-access/src/test/java/io/trishul/iaas/access/policy/model/IaasPolicyTest.java', 'IaasPolicy'),
-    ('modules/trishul-iaas-access/src/test/java/io/trishul/iaas/access/role/attachment/policy/IaasRolePolicyAttachmentTest.java', 'IaasRolePolicyAttachment'),
-    ('modules/trishul-iaas-access/src/test/java/io/trishul/iaas/access/role/model/IaasRoleTest.java', 'IaasRole'),
-    ('modules/trishul-iaas-user/src/test/java/io/trishul/iaas/user/model/IaasUserTenantMembershipTest.java', 'IaasUserTenantMembership'),
-    ('modules/trishul-iaas-user/src/test/java/io/trishul/iaas/user/model/IaasUserTest.java', 'IaasUser'),
-    ('modules/trishul-communication/src/test/java/io/trishul/communication/model/account/CommunicationAccountTest.java', 'CommunicationAccount'),
-    ('modules/trishul-communication/src/test/java/io/trishul/communication/model/channel/CommunicationChannelTest.java', 'CommunicationChannel'),
-    ('modules/trishul-communication/src/test/java/io/trishul/communication/model/message/MessageTest.java', 'Message')
+    ('modules/trishul-iaas-access/src/test/java/sh/trishul/iaas/access/policy/model/IaasPolicyTest.java', 'IaasPolicy'),
+    ('modules/trishul-iaas-access/src/test/java/sh/trishul/iaas/access/role/attachment/policy/IaasRolePolicyAttachmentTest.java', 'IaasRolePolicyAttachment'),
+    ('modules/trishul-iaas-access/src/test/java/sh/trishul/iaas/access/role/model/IaasRoleTest.java', 'IaasRole'),
+    ('modules/trishul-iaas-user/src/test/java/sh/trishul/iaas/user/model/IaasUserTenantMembershipTest.java', 'IaasUserTenantMembership'),
+    ('modules/trishul-iaas-user/src/test/java/sh/trishul/iaas/user/model/IaasUserTest.java', 'IaasUser'),
+    ('modules/trishul-communication/src/test/java/sh/trishul/communication/model/account/CommunicationAccountTest.java', 'CommunicationAccount'),
+    ('modules/trishul-communication/src/test/java/sh/trishul/communication/model/channel/CommunicationChannelTest.java', 'CommunicationChannel'),
+    ('modules/trishul-communication/src/test/java/sh/trishul/communication/model/message/MessageTest.java', 'Message')
 ]
 
 for filepath, classname in version_files:
@@ -47,7 +47,7 @@ for filepath, classname in version_files:
 
 # 2. IaasRolePolicyAttachmentTest - testAccessId
 replace_in_file(
-    'modules/trishul-iaas-access/src/test/java/io/trishul/iaas/access/role/attachment/policy/IaasRolePolicyAttachmentTest.java',
+    'modules/trishul-iaas-access/src/test/java/sh/trishul/iaas/access/role/attachment/policy/IaasRolePolicyAttachmentTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessId() throws Exception {
     IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
@@ -66,7 +66,7 @@ replace_in_file(
 
 # 3. IaasUserTenantMembershipTest - testAccessId
 replace_in_file(
-    'modules/trishul-iaas-user/src/test/java/io/trishul/iaas/user/model/IaasUserTenantMembershipTest.java',
+    'modules/trishul-iaas-user/src/test/java/sh/trishul/iaas/user/model/IaasUserTenantMembershipTest.java',
     '''  @org.junit.jupiter.api.Test
   void testAccessId() throws Exception {
     IaasUserTenantMembership accessor = new IaasUserTenantMembership();

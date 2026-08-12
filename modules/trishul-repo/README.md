@@ -8,7 +8,7 @@ Provides `WhereClauseBuilder` for type-safe criteria queries, `RepoService` for 
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-repo</artifactId>
 </dependency>
 ```

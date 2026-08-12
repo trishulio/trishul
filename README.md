@@ -45,7 +45,7 @@ Add the parent BOM to your `pom.xml`:
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.trishul</groupId>
+            <groupId>sh.trishul</groupId>
             <artifactId>trishul-parent</artifactId>
             <version>1.0.0</version>
             <type>pom</type>
@@ -59,7 +59,7 @@ Then add individual modules as needed:
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-crud</artifactId>
 </dependency>
 ```
@@ -175,15 +175,15 @@ For a simple multi-tenant CRUD API with PostgreSQL:
 ```xml
 <dependencies>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-crud</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-tenant-persistence</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-auth</artifactId>
     </dependency>
 </dependencies>
@@ -197,53 +197,53 @@ For production deployment with AWS Cognito, S3, and Secrets Manager:
 <dependencies>
     <!-- Core -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-crud</artifactId>
     </dependency>
 
     <!-- Multi-tenancy -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-tenant-service</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-tenant-persistence-management</artifactId>
     </dependency>
 
     <!-- AWS Auth -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-auth-aws</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-iaas-auth-aws</artifactId>
     </dependency>
 
     <!-- User Management -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-user-service</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-iaas-user-service-aws</artifactId>
     </dependency>
 
     <!-- Object Storage -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-object-store-service-aws</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-iaas-tenant-object-store-service</artifactId>
     </dependency>
 
     <!-- Secrets -->
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-secrets-aws</artifactId>
     </dependency>
 </dependencies>
@@ -256,23 +256,23 @@ For applications with complex domain models:
 ```xml
 <dependencies>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-crud</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-money</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-quantity</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-address</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-commodity</artifactId>
     </dependency>
 </dependencies>

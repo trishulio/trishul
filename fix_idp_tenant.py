@@ -1,9 +1,9 @@
 import re
 
 files = [
-    'modules/trishul-iaas-tenant-idp/src/test/java/io/trishul/iaas/idp/tenant/model/IaasIdpTenantTest.java',
-    'modules/trishul-iaas-tenant-idp/src/test/java/io/trishul/iaas/idp/tenant/model/TenantIaasAuthResourcesTest.java',
-    'modules/trishul-iaas-tenant-idp/src/test/java/io/trishul/iaas/idp/tenant/model/TenantIaasIdpResourcesTest.java'
+    'modules/trishul-iaas-tenant-idp/src/test/java/sh/trishul/iaas/idp/tenant/model/IaasIdpTenantTest.java',
+    'modules/trishul-iaas-tenant-idp/src/test/java/sh/trishul/iaas/idp/tenant/model/TenantIaasAuthResourcesTest.java',
+    'modules/trishul-iaas-tenant-idp/src/test/java/sh/trishul/iaas/idp/tenant/model/TenantIaasIdpResourcesTest.java'
 ]
 
 for file in files:

@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-object-store</artifactId>
 </dependency>
 ```
@@ -43,18 +43,18 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.object.store.BaseTenantIaasVfsResources`
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult`
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper`
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsResources`
-- `io.trishul.iaas.tenant.object.store.UpdateTenantIaasVfsResources`
-- `io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder`
+- `sh.trishul.iaas.tenant.object.store.BaseTenantIaasVfsResources`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsResources`
+- `sh.trishul.iaas.tenant.object.store.UpdateTenantIaasVfsResources`
+- `sh.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResultTest`
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapperTest`
-- `io.trishul.iaas.tenant.object.store.TenantIaasVfsResourcesTest`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResultTest`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapperTest`
+- `sh.trishul.iaas.tenant.object.store.TenantIaasVfsResourcesTest`
 
 ## Integration Guide
 

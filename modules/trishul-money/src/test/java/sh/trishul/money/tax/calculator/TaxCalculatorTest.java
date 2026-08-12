@@ -1,0 +1,92 @@
+package sh.trishul.money.tax.calculator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import org.joda.money.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.money.tax.amount.TaxAmount;
+import sh.trishul.money.tax.model.Tax;
+import sh.trishul.money.tax.rate.TaxRate;
+
+class TaxCalculatorTest {
+  private TaxCalculator calculator;
+
+  @BeforeEach
+  void init() {
+    calculator = TaxCalculator.INSTANCE;
+  }
+
+  @Test
+  void testGetTaxAmount_ReturnsNull_WhenTaxIsNull() {
+    assertNull(calculator.getTaxAmount(null, Money.parse("CAD 10")));
+  }
+
+  @Test
+  void testGetTaxAmount_ReturnsNull_WhenAmountIsNull() {
+    assertNull(calculator.getTaxAmount(new Tax(), null));
+  }
+
+  @Test
+  void testGetTaxAmount_ReturnsTaxAmount_WhenTaxAndAmountIsNotNull() {
+    Tax tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+    Money money = Money.parse("CAD 10");
+
+    TaxAmount taxAmount = calculator.getTaxAmount(tax, money);
+
+    TaxAmount expected = new TaxAmount(Money.parse("CAD 10"), Money.parse("CAD 20"));
+    assertEquals(expected, taxAmount);
+  }
+
+  @Test
+  void testGetTaxAmount_ReturnsTaxAmountWithHst_WhenTaxHasHstAndAmountIsNotNull() {
+    Tax tax = new Tax(new TaxRate(new BigDecimal("0.13")));
+    Money money = Money.parse("CAD 100");
+
+    TaxAmount taxAmount = calculator.getTaxAmount(tax, money);
+
+    TaxAmount expected = new TaxAmount(Money.parse("CAD 13"));
+    assertEquals(expected, taxAmount);
+  }
+
+  @Test
+  void testTotal_ReturnsNull_WhenTaxAmountsAreNull() {
+    assertNull(calculator.getTaxAmountTotal(null));
+  }
+
+  @Test
+  void testTotal_ReturnsEmptyTaxAmount_WhenTaxAmountsAreEmpty() {
+    assertEquals(new TaxAmount(), calculator.getTaxAmountTotal(new ArrayList<>()));
+  }
+
+  @Test
+  void testTotal_ReturnsTaxAmountWithTotals_WhenTaxAmountsAreNotEmpty() {
+    List<TaxAmount> amounts = new ArrayList<>() {
+      private static final long serialVersionUID = 1L;
+
+      {
+        add(null);
+        add(null);
+        add(new TaxAmount());
+        add(null);
+        add(new TaxAmount(Money.parse("CAD 10")));
+        add(new TaxAmount(null, Money.parse("CAD 20")));
+        add(new TaxAmount(Money.parse("CAD 35"), null));
+        add(new TaxAmount(Money.parse("CAD 40"), Money.parse("CAD 50")));
+        add(null);
+        add(new TaxAmount());
+        add(new TaxAmount(Money.parse("CAD 15")));
+      }
+    };
+
+    TaxAmount total = calculator.getTaxAmountTotal(amounts);
+
+    TaxAmount expected
+        = new TaxAmount(Money.parse("CAD 75"), Money.parse("CAD 70"), Money.parse("CAD 25"));
+    assertEquals(expected, total);
+  }
+}

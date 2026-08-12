@@ -1,0 +1,114 @@
+package sh.trishul.crud.controller;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import sh.trishul.base.types.base.pojo.Identified;
+import sh.trishul.crud.controller.filter.AttributeFilter;
+import sh.trishul.crud.service.CrudService;
+import sh.trishul.model.base.dto.BaseDto;
+import sh.trishul.model.base.dto.DeleteResultDto;
+import sh.trishul.model.base.exception.EntityNotFoundException;
+import sh.trishul.model.base.mapper.BaseMapper;
+import sh.trishul.model.mapper.DeleteResultMapper;
+import sh.trishul.object.store.file.decorator.EntityDecorator;
+import sh.trishul.object.store.file.decorator.NoActionDecorator;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
+
+public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, UpdateEntity extends Identified<ID>, EntityDto extends BaseDto, AddDto extends BaseDto, UpdateDto extends BaseDto> {
+  private final AttributeFilter filter;
+  private final BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper;
+  private final CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service;
+  private final String entityName;
+  private final EntityDecorator<EntityDto> decorator;
+
+  public CrudControllerService(AttributeFilter filter,
+      BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
+      CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service, String entityName,
+      EntityDecorator<EntityDto> decorator) {
+    this.filter = filter;
+    this.mapper = mapper;
+    this.service = service;
+    this.entityName = entityName;
+    this.decorator = decorator;
+  }
+
+  public CrudControllerService(AttributeFilter filter,
+      BaseMapper<Entity, EntityDto, AddDto, UpdateDto> mapper,
+      CrudService<ID, Entity, AddEntity, UpdateEntity, ?> service, String entityName) {
+    this(filter, mapper, service, entityName, new NoActionDecorator<>());
+  }
+
+  public PageDto<EntityDto> getAll(Page<Entity> entities, Set<String> attributes) {
+    final List<EntityDto> content = entities.stream().map(i -> mapper.toDto(i)).toList();
+    content.forEach(entity -> this.filter(entity, attributes));
+
+    this.decorator.decorate(content);
+
+    final PageDto<EntityDto> dto = new PageDto<>();
+    dto.setContent(content);
+    dto.setTotalElements(entities.getTotalElements());
+    dto.setTotalPages(entities.getTotalPages());
+    return dto;
+  }
+
+  public EntityDto get(ID id, Set<String> attributes) {
+    Entity e = this.service.get(id);
+    EntityNotFoundException.assertion(e != null, this.entityName, "id", id.toString());
+
+    EntityDto dto = mapper.toDto(e);
+    this.filter(dto, attributes);
+
+    this.decorator.decorate(List.of(dto));
+
+    return dto;
+  }
+
+  public List<EntityDto> add(List<AddDto> addDtos) {
+    @SuppressWarnings("unchecked")
+    List<AddEntity> additions
+        = (List<AddEntity>) addDtos.stream().map(dto -> mapper.fromAddDto(dto)).toList();
+    List<Entity> added = this.service.add(additions);
+
+    List<EntityDto> dtos = added.stream().map(entity -> mapper.toDto(entity)).toList();
+
+    this.decorator.decorate(dtos);
+
+    return dtos;
+  }
+
+  public List<EntityDto> put(List<UpdateDto> updateDtos) {
+    List<UpdateEntity> updates
+        = updateDtos.stream().map(dto -> mapper.fromUpdateDto(dto)).collect(Collectors.toList());
+    List<Entity> updated = this.service.put(updates);
+
+    List<EntityDto> dtos = updated.stream().map(entity -> mapper.toDto(entity)).toList();
+
+    this.decorator.decorate(dtos);
+
+    return dtos;
+  }
+
+  public List<EntityDto> patch(List<UpdateDto> updateDtos) {
+    List<UpdateEntity> updates
+        = updateDtos.stream().map(dto -> mapper.fromUpdateDto(dto)).collect(Collectors.toList());
+    List<Entity> patched = this.service.patch(updates);
+
+    List<EntityDto> dtos = patched.stream().map(entity -> mapper.toDto(entity)).toList();
+
+    this.decorator.decorate(dtos);
+
+    return dtos;
+  }
+
+  public DeleteResultDto delete(Set<ID> ids) {
+    return DeleteResultMapper.INSTANCE.toDto(this.service.delete(ids));
+  }
+
+  private void filter(BaseDto dto, Set<String> retainAttr) {
+    if (retainAttr != null && !retainAttr.isEmpty()) {
+      this.filter.retain(dto, retainAttr);
+    }
+  }
+}

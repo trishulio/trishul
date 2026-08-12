@@ -1,0 +1,90 @@
+package sh.trishul.tenant.service.autoconfiguration;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.base.types.base.pojo.Refresher;
+import sh.trishul.crud.service.LockService;
+import sh.trishul.iaas.tenant.service.TenantIaasService;
+import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import sh.trishul.tenant.entity.Tenant;
+import sh.trishul.tenant.entity.TenantAccessor;
+import sh.trishul.tenant.persistence.management.migration.manager.MigrationManager;
+import sh.trishul.tenant.persistence.management.migration.register.TenantRegister;
+import sh.trishul.tenant.service.repository.TenantRepository;
+import sh.trishul.tenant.service.service.TenantService;
+
+class TenantServiceAutoConfigurationTest {
+
+  private TenantServiceAutoConfiguration config;
+
+  @BeforeEach
+  void setUp() {
+    config = new TenantServiceAutoConfiguration();
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testTenantService_ReturnsNonNull() {
+    LockService mockLockService = mock(LockService.class);
+    TenantRepository mockTenantRepository = mock(TenantRepository.class);
+    MigrationManager mockMigrationManager = mock(MigrationManager.class);
+    TenantRegister mockTenantRegister = mock(TenantRegister.class);
+    TenantIaasService mockTenantIaasService = mock(TenantIaasService.class);
+    Refresher<Tenant, TenantAccessor<?>> mockTenantRefresher = mock(Refresher.class);
+
+    TenantService result = config.tenantService(mockLockService, mockTenantRepository,
+        mockMigrationManager, mockTenantRegister, mockTenantIaasService, mockTenantRefresher);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testTenantAccessorRefresher_ReturnsNonNull() {
+    TenantRepository mockRepo = mock(TenantRepository.class);
+
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> result
+        = config.tenantAccessorRefresher(mockRepo);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testTenantRefresher_ReturnsNonNull() {
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> mockAccessorRefresher
+        = mock(AccessorRefresher.class);
+
+    Refresher<Tenant, TenantAccessor<?>> result = config.tenantRefresher(mockAccessorRefresher);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testTenantAccessorRefresher_LambdaCoverage() {
+    TenantRepository mockRepo = mock(TenantRepository.class);
+    AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher
+        = config.tenantAccessorRefresher(mockRepo);
+
+    UUID id = UUID.randomUUID();
+    Tenant tenant = new Tenant(id);
+    when(mockRepo.findAllById(any())).thenReturn(List.of(tenant));
+
+    TenantAccessor<?> mockAccessor = mock(TenantAccessor.class);
+    when(mockAccessor.getTenant()).thenReturn(new Tenant(id));
+
+    refresher.refreshAccessors(List.of(mockAccessor));
+
+    verify(mockAccessor).setTenant(null);
+    verify(mockAccessor).setTenant(tenant);
+    verify(mockRepo).findAllById(Set.of(id));
+  }
+}

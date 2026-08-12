@@ -8,7 +8,7 @@ Monetary value handling using Joda-Money with support for currencies, taxes (GST
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-money</artifactId>
 </dependency>
 ```

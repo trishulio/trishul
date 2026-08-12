@@ -13,5 +13,5 @@ variable "repo_name" {
 variable "repo_owner" {
   type        = string
   description = "Repository Owner"
-  default     = "trishulio"
+  default     = "trishulsh"
 }

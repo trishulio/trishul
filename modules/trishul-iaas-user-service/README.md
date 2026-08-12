@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-user-service</artifactId>
 </dependency>
 ```
@@ -40,16 +40,16 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `TenantIaasUserService` via `tenantIaasUserService()` — @ConditionalOnMissingBean(TenantIaasUserService.class) ([modules/trishul-iaas-user-service/src/main/java/io/trishul/iaas/user/service/autoconfiguration/IaasUserServiceAutoConfiguration.java](modules/trishul-iaas-user-service/src/main/java/io/trishul/iaas/user/service/autoconfiguration/IaasUserServiceAutoConfiguration.java))
+- `TenantIaasUserService` via `tenantIaasUserService()` — @ConditionalOnMissingBean(TenantIaasUserService.class) ([modules/trishul-iaas-user-service/src/main/java/sh/trishul/iaas/user/service/autoconfiguration/IaasUserServiceAutoConfiguration.java](modules/trishul-iaas-user-service/src/main/java/sh/trishul/iaas/user/service/autoconfiguration/IaasUserServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.user.service.TenantIaasUserService`
-- `io.trishul.iaas.user.service.autoconfiguration.IaasUserServiceAutoConfiguration`
+- `sh.trishul.iaas.user.service.TenantIaasUserService`
+- `sh.trishul.iaas.user.service.autoconfiguration.IaasUserServiceAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.user.service.TenantIaasUserServiceTest`
+- `sh.trishul.iaas.user.service.TenantIaasUserServiceTest`
 
 ## Integration Guide
 

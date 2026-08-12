@@ -13,7 +13,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-access-aws</artifactId>
 </dependency>
 ```
@@ -49,33 +49,33 @@ export AWS_IAM_ACCESS_SECRET_KEY=...
 
 ## AutoConfiguration Beans
 
-- `IaasAccessAwsFactory` via `iaasAccessAwsFactory()` — @ConditionalOnMissingBean(IaasAccessAwsFactory.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
-- `AmazonIdentityManagement` via `iamClient()` — @ConditionalOnMissingBean(AmazonIdentityManagement.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
-- `AwsArnMapper` via `arnMapper()` — @ConditionalOnMissingBean(AwsArnMapper.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
-- `IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>>` via `iaasPolicyClient()` — @ConditionalOnMissingBean(AwsIamPolicyClient.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
-- `IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>>` via `iaasRoleClient()` — @ConditionalOnMissingBean(AwsIamRoleClient.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
-- `IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>>` via `awsIamRolePolicyClientClient()` — @ConditionalOnMissingBean(AwsIamRolePolicyAttachmentClient.class) ([modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/io/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `IaasAccessAwsFactory` via `iaasAccessAwsFactory()` — @ConditionalOnMissingBean(IaasAccessAwsFactory.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `AmazonIdentityManagement` via `iamClient()` — @ConditionalOnMissingBean(AmazonIdentityManagement.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `AwsArnMapper` via `arnMapper()` — @ConditionalOnMissingBean(AwsArnMapper.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `IaasClient<String, IaasPolicy, BaseIaasPolicy<?>, UpdateIaasPolicy<?>>` via `iaasPolicyClient()` — @ConditionalOnMissingBean(AwsIamPolicyClient.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `IaasClient<String, IaasRole, BaseIaasRole<?>, UpdateIaasRole<?>>` via `iaasRoleClient()` — @ConditionalOnMissingBean(AwsIamRoleClient.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
+- `IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>>` via `awsIamRolePolicyClientClient()` — @ConditionalOnMissingBean(AwsIamRolePolicyAttachmentClient.class) ([modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java](modules/trishul-iaas-access-aws/src/main/java/sh/trishul/iaas/access/aws/autoconfiguration/IaasAccessAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.access.aws.AwsArnMapper`
-- `io.trishul.iaas.access.aws.AwsIaasPolicyMapper`
-- `io.trishul.iaas.access.aws.AwsIaasRoleMapper`
-- `io.trishul.iaas.access.aws.AwsIamPolicyClient`
-- `io.trishul.iaas.access.aws.AwsIamRoleClient`
-- `io.trishul.iaas.access.aws.AwsIamRolePolicyAttachmentClient`
-- `io.trishul.iaas.access.aws.IaasAccessAwsFactory`
-- `io.trishul.iaas.access.aws.autoconfiguration.IaasAccessAwsAutoConfiguration`
+- `sh.trishul.iaas.access.aws.AwsArnMapper`
+- `sh.trishul.iaas.access.aws.AwsIaasPolicyMapper`
+- `sh.trishul.iaas.access.aws.AwsIaasRoleMapper`
+- `sh.trishul.iaas.access.aws.AwsIamPolicyClient`
+- `sh.trishul.iaas.access.aws.AwsIamRoleClient`
+- `sh.trishul.iaas.access.aws.AwsIamRolePolicyAttachmentClient`
+- `sh.trishul.iaas.access.aws.IaasAccessAwsFactory`
+- `sh.trishul.iaas.access.aws.autoconfiguration.IaasAccessAwsAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.access.aws.AwsArnMapperTest`
-- `io.trishul.iaas.access.aws.AwsIaasPolicyMapperTest`
-- `io.trishul.iaas.access.aws.AwsIaasRoleMapperTest`
-- `io.trishul.iaas.access.aws.AwsIamPolicyClientTest`
-- `io.trishul.iaas.access.aws.AwsIamRoleClientTest`
-- `io.trishul.iaas.access.aws.AwsIamRolePolicyAttachmentClientTest`
-- `io.trishul.iaas.access.aws.IaasAccessAwsFactoryTest`
+- `sh.trishul.iaas.access.aws.AwsArnMapperTest`
+- `sh.trishul.iaas.access.aws.AwsIaasPolicyMapperTest`
+- `sh.trishul.iaas.access.aws.AwsIaasRoleMapperTest`
+- `sh.trishul.iaas.access.aws.AwsIamPolicyClientTest`
+- `sh.trishul.iaas.access.aws.AwsIamRoleClientTest`
+- `sh.trishul.iaas.access.aws.AwsIamRolePolicyAttachmentClientTest`
+- `sh.trishul.iaas.access.aws.IaasAccessAwsFactoryTest`
 
 ## Integration Guide
 

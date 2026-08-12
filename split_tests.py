@@ -24,7 +24,7 @@ for root, dirs, files in os.walk('modules'):
             
             # We will rewrite the test class to have one method per class
             new_content = f"package {pkg};\n\n"
-            new_content += "import io.trishul.test.util.PojoTestUtil;\n"
+            new_content += "import sh.trishul.test.util.PojoTestUtil;\n"
             new_content += "import org.junit.jupiter.api.Test;\n\n"
             for tc in target_classes:
                 new_content += f"import {tc};\n"

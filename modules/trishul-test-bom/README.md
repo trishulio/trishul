@@ -8,7 +8,7 @@ Bill of Materials (BOM) for test dependencies used across all Trishul modules.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-test-bom</artifactId>
     <scope>test</scope>
 </dependency>
@@ -22,7 +22,7 @@ Include this BOM to get all testing libraries pre-configured:
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-test-bom</artifactId>
     <scope>test</scope>
 </dependency>

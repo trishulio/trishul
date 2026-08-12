@@ -63,7 +63,7 @@ for module in os.listdir('modules'):
     print(f"Generating {test_file_path} with {len(classes_to_test)} classes")
     
     new_content = f"package {test_pkg};\n\n"
-    new_content += "import io.trishul.test.util.PojoTestUtil;\n"
+    new_content += "import sh.trishul.test.util.PojoTestUtil;\n"
     new_content += "import org.junit.jupiter.api.Test;\n\n"
     for tc in sorted(classes_to_test):
         new_content += f"import {tc};\n"

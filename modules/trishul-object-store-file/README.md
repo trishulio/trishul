@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-object-store-file</artifactId>
 </dependency>
 ```
@@ -41,25 +41,25 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.object.store.file.decorator.EntityDecorator`
-- `io.trishul.object.store.file.decorator.NoActionDecorator`
-- `io.trishul.object.store.file.model.BaseIaasObjectStoreFile`
-- `io.trishul.object.store.file.model.IaasObjectStoreFile`
-- `io.trishul.object.store.file.model.IaasObjectStoreFileMapper`
-- `io.trishul.object.store.file.model.UpdateIaasObjectStoreFile`
-- `io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor`
-- `io.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor`
-- `io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto`
-- `io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto`
-- `io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto`
+- `sh.trishul.object.store.file.decorator.EntityDecorator`
+- `sh.trishul.object.store.file.decorator.NoActionDecorator`
+- `sh.trishul.object.store.file.model.BaseIaasObjectStoreFile`
+- `sh.trishul.object.store.file.model.IaasObjectStoreFile`
+- `sh.trishul.object.store.file.model.IaasObjectStoreFileMapper`
+- `sh.trishul.object.store.file.model.UpdateIaasObjectStoreFile`
+- `sh.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor`
+- `sh.trishul.object.store.file.model.accessor.IaasObjectStoreFileAccessor`
+- `sh.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto`
+- `sh.trishul.object.store.file.model.dto.IaasObjectStoreFileDto`
+- `sh.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto`
 
 ## Tests (Examples)
 
-- `io.trishul.object.store.file.model.IaasObjectStoreFileMapperTest`
-- `io.trishul.object.store.file.model.IaasObjectStoreFileTest`
-- `io.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDtoTest`
-- `io.trishul.object.store.file.model.dto.IaasObjectStoreFileDtoTest`
-- `io.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDtoTest`
+- `sh.trishul.object.store.file.model.IaasObjectStoreFileMapperTest`
+- `sh.trishul.object.store.file.model.IaasObjectStoreFileTest`
+- `sh.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDtoTest`
+- `sh.trishul.object.store.file.model.dto.IaasObjectStoreFileDtoTest`
+- `sh.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDtoTest`
 
 ## Integration Guide
 

@@ -1,11 +1,11 @@
 import re
 
-with open("modules/trishul-data/src/test/java/io/trishul/data/datasource/manager/CachingDataSourceManagerTest.java", "r") as f:
+with open("modules/trishul-data/src/test/java/sh/trishul/data/datasource/manager/CachingDataSourceManagerTest.java", "r") as f:
     content = f.read()
 
 # Add import for mockConstruction and MockedConstruction
 if 'import org.mockito.MockedConstruction;' not in content:
-    content = content.replace('import org.junit.jupiter.api.Test;', 'import org.junit.jupiter.api.Test;\nimport org.mockito.MockedConstruction;\nimport static org.mockito.Mockito.mockConstruction;\nimport io.trishul.data.datasource.builder.HikariDataSourceBuilder;')
+    content = content.replace('import org.junit.jupiter.api.Test;', 'import org.junit.jupiter.api.Test;\nimport org.mockito.MockedConstruction;\nimport static org.mockito.Mockito.mockConstruction;\nimport sh.trishul.data.datasource.builder.HikariDataSourceBuilder;')
 
 # Define the mock setup block
 mock_setup = """try (MockedConstruction<HikariDataSourceBuilder> mocked = mockConstruction(HikariDataSourceBuilder.class, (mock, context) -> {

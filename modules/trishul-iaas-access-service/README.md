@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-access-service</artifactId>
 </dependency>
 ```
@@ -38,21 +38,21 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasRoleService` via `iaasRoleService()` — @ConditionalOnMissingBean(IaasRoleService.class) ([modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
-- `IaasPolicyService` via `iaasPolicyService()` — @ConditionalOnMissingBean(IaasPolicyService.class) ([modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
-- `IaasRolePolicyAttachmentService` via `iaasRolePolicyAttachmentService()` — @ConditionalOnMissingBean(IaasRolePolicyAttachmentService.class) ([modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/io/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
+- `IaasRoleService` via `iaasRoleService()` — @ConditionalOnMissingBean(IaasRoleService.class) ([modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
+- `IaasPolicyService` via `iaasPolicyService()` — @ConditionalOnMissingBean(IaasPolicyService.class) ([modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
+- `IaasRolePolicyAttachmentService` via `iaasRolePolicyAttachmentService()` — @ConditionalOnMissingBean(IaasRolePolicyAttachmentService.class) ([modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java](modules/trishul-iaas-access-service/src/main/java/sh/trishul/iaas/access/service/autoconfiguration/IaasAccessServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.access.service.autoconfiguration.IaasAccessServiceAutoConfiguration`
-- `io.trishul.iaas.access.service.policy.service.IaasPolicyService`
-- `io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService`
-- `io.trishul.iaas.access.service.role.service.IaasRoleService`
+- `sh.trishul.iaas.access.service.autoconfiguration.IaasAccessServiceAutoConfiguration`
+- `sh.trishul.iaas.access.service.policy.service.IaasPolicyService`
+- `sh.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService`
+- `sh.trishul.iaas.access.service.role.service.IaasRoleService`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.access.service.policy.service.IaasPolicyServiceTest`
-- `io.trishul.iaas.access.service.role.service.IaasRoleServiceTest`
+- `sh.trishul.iaas.access.service.policy.service.IaasPolicyServiceTest`
+- `sh.trishul.iaas.access.service.role.service.IaasRoleServiceTest`
 
 ## Integration Guide
 

@@ -1,0 +1,36 @@
+package sh.trishul.secrets.aws;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.services.secretsmanager.AWSSecretsManager;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class SecretsAwsFactoryTest {
+  private SecretsAwsFactory factory;
+
+  @BeforeEach
+  void init() {
+    factory = new SecretsAwsFactory();
+  }
+
+  @Test
+  void testSecretsManager() throws URISyntaxException, IllegalAccessException {
+    AWSSecretsManager secretsManager
+        = factory.secretsManager("REGION", "URL", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
+
+    final AWSCredentialsProvider awsCredentialsProvider = (AWSCredentialsProvider) FieldUtils
+        .readField(secretsManager, "awsCredentialsProvider", true);
+    final URI endpoint = (URI) FieldUtils.readField(secretsManager, "endpoint", true);
+    final String region = (String) FieldUtils.readField(secretsManager, "signingRegion", true);
+
+    assertEquals(new URI("https://URL"), endpoint);
+    assertEquals("REGION", region);
+    assertEquals("ACCESS_KEY_ID", awsCredentialsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals("ACCESS_SECRET_KEY", awsCredentialsProvider.getCredentials().getAWSSecretKey());
+  }
+}

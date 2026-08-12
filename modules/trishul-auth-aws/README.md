@@ -8,7 +8,7 @@ AWS Cognito implementation for authentication context extraction from JWT tokens
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-auth-aws</artifactId>
 </dependency>
 ```

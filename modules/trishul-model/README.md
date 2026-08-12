@@ -8,7 +8,7 @@ Provides `BaseModel`, `BaseEntity`, `BaseDto`, reflection utilities, validation 
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-model</artifactId>
 </dependency>
 ```

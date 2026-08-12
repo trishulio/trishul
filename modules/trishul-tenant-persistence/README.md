@@ -8,7 +8,7 @@ Provides Hibernate multi-tenancy support with dynamic DataSource routing, connec
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-tenant-persistence</artifactId>
 </dependency>
 ```

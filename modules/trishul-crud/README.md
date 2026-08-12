@@ -8,7 +8,7 @@ Generic CRUD patterns that handle entity merging, version checking, and exceptio
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-crud</artifactId>
 </dependency>
 ```

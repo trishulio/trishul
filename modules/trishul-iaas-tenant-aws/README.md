@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-aws</artifactId>
 </dependency>
 ```
@@ -39,21 +39,21 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `AwsDocumentTemplates` via `awsDocumentTemplates()` — @ConditionalOnMissingBean(AwsDocumentTemplates.class) ([modules/trishul-iaas-tenant-aws/src/main/java/io/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java](modules/trishul-iaas-tenant-aws/src/main/java/io/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java))
-- `IaasObjectStoreNameProvider` via `iaasObjectStoreNameProvider()` — @ConditionalOnMissingBean(IaasObjectStoreNameProvider.class) ([modules/trishul-iaas-tenant-aws/src/main/java/io/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java](modules/trishul-iaas-tenant-aws/src/main/java/io/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java))
+- `AwsDocumentTemplates` via `awsDocumentTemplates()` — @ConditionalOnMissingBean(AwsDocumentTemplates.class) ([modules/trishul-iaas-tenant-aws/src/main/java/sh/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java](modules/trishul-iaas-tenant-aws/src/main/java/sh/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java))
+- `IaasObjectStoreNameProvider` via `iaasObjectStoreNameProvider()` — @ConditionalOnMissingBean(IaasObjectStoreNameProvider.class) ([modules/trishul-iaas-tenant-aws/src/main/java/sh/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java](modules/trishul-iaas-tenant-aws/src/main/java/sh/trishul/iaas/tenant/aws/autoconfiguration/IaasTenantAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.aws.AwsDocumentTemplates`
-- `io.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilder`
-- `io.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProvider`
-- `io.trishul.iaas.tenant.aws.autoconfiguration.IaasTenantAwsAutoConfiguration`
+- `sh.trishul.iaas.tenant.aws.AwsDocumentTemplates`
+- `sh.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilder`
+- `sh.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProvider`
+- `sh.trishul.iaas.tenant.aws.autoconfiguration.IaasTenantAwsAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.aws.AwsDocumentTemplatesTest`
-- `io.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilderTest`
-- `io.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProviderTest`
+- `sh.trishul.iaas.tenant.aws.AwsDocumentTemplatesTest`
+- `sh.trishul.iaas.tenant.aws.AwsTenantIaasResourceBuilderTest`
+- `sh.trishul.iaas.tenant.aws.TenantContextAwsBucketNameProviderTest`
 
 ## Integration Guide
 

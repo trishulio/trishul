@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -154,393 +154,393 @@
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-base-types</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-test</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-test-bom</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-auth-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-auth-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-repo</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-secrets</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-secrets-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-data-management</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-jdbc</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-crud</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-repo-aggregation</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-file-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-file-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-tenant</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-tenant-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-tenant-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-tenant-persistence-management</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-tenant-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-money</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-quantity</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-quantity-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-quantity-management-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-address</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-commodity</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-user-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-access</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-access-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-access-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-idp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-object-store</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-object-store-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-object-store-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-idp-management-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-tenant-idp-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-user-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-user-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-iaas-user-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-object-store-service-aws</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-ai</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-ai-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-integration-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-communication</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-communication-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-communication-twilio</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-integration-communication</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-integration-communication-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.trishul</groupId>
+                <groupId>sh.trishul</groupId>
                 <artifactId>trishul-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -1105,7 +1105,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/trishulio/trishul</url>
+            <url>https://maven.pkg.github.com/trishulsh/trishul</url>
         </repository>
     </distributionManagement>
 </project>

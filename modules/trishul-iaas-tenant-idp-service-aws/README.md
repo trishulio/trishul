@@ -13,7 +13,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-idp-service-aws</artifactId>
 </dependency>
 ```
@@ -58,24 +58,24 @@ export AWS_COGNITO_USER_POOL_URL=...
 
 ## AutoConfiguration Beans
 
-- `IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>>` via `iaasIdpTenantClient()` — @ConditionalOnMissingBean(AwsIdpTenantWithRoleClient.class) ([modules/trishul-iaas-tenant-idp-service-aws/src/main/java/io/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java](modules/trishul-iaas-tenant-idp-service-aws/src/main/java/io/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java))
-- `IaasClient<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>>` via `awsCognitoUserGroupMembership()` — @ConditionalOnMissingBean(AwsIaasUserTenantMembershipClient.class) ([modules/trishul-iaas-tenant-idp-service-aws/src/main/java/io/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java](modules/trishul-iaas-tenant-idp-service-aws/src/main/java/io/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java))
+- `IaasClient<String, IaasIdpTenant, BaseIaasIdpTenant<?>, UpdateIaasIdpTenant<?>>` via `iaasIdpTenantClient()` — @ConditionalOnMissingBean(AwsIdpTenantWithRoleClient.class) ([modules/trishul-iaas-tenant-idp-service-aws/src/main/java/sh/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java](modules/trishul-iaas-tenant-idp-service-aws/src/main/java/sh/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java))
+- `IaasClient<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>>` via `awsCognitoUserGroupMembership()` — @ConditionalOnMissingBean(AwsIaasUserTenantMembershipClient.class) ([modules/trishul-iaas-tenant-idp-service-aws/src/main/java/sh/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java](modules/trishul-iaas-tenant-idp-service-aws/src/main/java/sh/trishul/iaas/tenant/idp/service/aws/autoconfiguration/IaasTenantIdpServiceAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.idp.service.aws.autoconfiguration.IaasTenantIdpServiceAwsAutoConfiguration`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentityClient`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentitySdkWrapper`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsGroupTypeMapper`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIaasUserTenantMembershipClient`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIdpTenantWithRoleClient`
+- `sh.trishul.iaas.tenant.idp.service.aws.autoconfiguration.IaasTenantIdpServiceAwsAutoConfiguration`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentityClient`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentitySdkWrapper`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsGroupTypeMapper`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIaasUserTenantMembershipClient`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIdpTenantWithRoleClient`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentitySdkWrapperTest`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsGroupTypeMapperTest`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIaasUserTenantMembershipClientTest`
-- `io.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIdpTenantWithRoleClientTest`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsCognitoIdentitySdkWrapperTest`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsGroupTypeMapperTest`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIaasUserTenantMembershipClientTest`
+- `sh.trishul.iaas.tenant.idp.service.aws.cognito.client.AwsIdpTenantWithRoleClientTest`
 
 ## Integration Guide
 

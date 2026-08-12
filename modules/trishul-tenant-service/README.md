@@ -8,7 +8,7 @@ Complete tenant lifecycle management service with REST API, database provisionin
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-tenant-service</artifactId>
 </dependency>
 ```

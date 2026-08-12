@@ -8,7 +8,7 @@ Provides `IaasObjectStore` entity for bucket management, plus CORS and public ac
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-object-store</artifactId>
 </dependency>
 ```

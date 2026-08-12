@@ -8,7 +8,7 @@ Defines `IaasClient` for single-entity operations and `IaasRepository`/`BulkIaas
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-iaas</artifactId>
 </dependency>
 ```

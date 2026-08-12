@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-object-store-service</artifactId>
 </dependency>
 ```
@@ -39,22 +39,22 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasObjectStoreService` via `iaasObjectStoreService()` — @ConditionalOnMissingBean(IaasObjectStoreService.class) ([modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
-- `IaasObjectStoreCorsConfigService` via `iaasObjectStoreCorsConfigService()` — @ConditionalOnMissingBean(IaasObjectStoreCorsConfigService.class) ([modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
-- `IaasObjectStoreAccessConfigService` via `iaasPublicAccessBlockService()` — @ConditionalOnMissingBean(IaasObjectStoreAccessConfigService.class) ([modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/io/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
+- `IaasObjectStoreService` via `iaasObjectStoreService()` — @ConditionalOnMissingBean(IaasObjectStoreService.class) ([modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
+- `IaasObjectStoreCorsConfigService` via `iaasObjectStoreCorsConfigService()` — @ConditionalOnMissingBean(IaasObjectStoreCorsConfigService.class) ([modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
+- `IaasObjectStoreAccessConfigService` via `iaasPublicAccessBlockService()` — @ConditionalOnMissingBean(IaasObjectStoreAccessConfigService.class) ([modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java](modules/trishul-object-store-service/src/main/java/sh/trishul/object/store/service/autoconfiguration/IaasObjectStoreAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.object.store.service.IaasObjectStoreService`
-- `io.trishul.object.store.service.autoconfiguration.IaasObjectStoreAutoConfiguration`
-- `io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService`
-- `io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService`
+- `sh.trishul.object.store.service.IaasObjectStoreService`
+- `sh.trishul.object.store.service.autoconfiguration.IaasObjectStoreAutoConfiguration`
+- `sh.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService`
+- `sh.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigService`
 
 ## Tests (Examples)
 
-- `io.trishul.object.store.service.IaasObjectStoreServiceTest`
-- `io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigServiceTest`
-- `io.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigServiceTest`
+- `sh.trishul.object.store.service.IaasObjectStoreServiceTest`
+- `sh.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigServiceTest`
+- `sh.trishul.object.store.service.cors.config.service.IaasObjectStoreCorsConfigServiceTest`
 
 ## Integration Guide
 

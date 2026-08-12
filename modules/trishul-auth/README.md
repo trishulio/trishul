@@ -8,7 +8,7 @@ Provides Spring Security OAuth2 JWT integration, `ContextHolder` for accessing t
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-auth</artifactId>
 </dependency>
 ```

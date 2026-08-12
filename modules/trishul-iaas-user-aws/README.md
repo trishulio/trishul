@@ -12,7 +12,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-user-aws</artifactId>
 </dependency>
 ```
@@ -43,13 +43,13 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper`
-- `io.trishul.iaas.user.aws.model.AwsCognitoUserMapper`
+- `sh.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapper`
+- `sh.trishul.iaas.user.aws.model.AwsCognitoUserMapper`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapperTest`
-- `io.trishul.iaas.user.aws.model.AwsCognitoUserMapperTest`
+- `sh.trishul.iaas.user.aws.model.AwsCognitoAdminGetUserResultMapperTest`
+- `sh.trishul.iaas.user.aws.model.AwsCognitoUserMapperTest`
 
 ## Integration Guide
 

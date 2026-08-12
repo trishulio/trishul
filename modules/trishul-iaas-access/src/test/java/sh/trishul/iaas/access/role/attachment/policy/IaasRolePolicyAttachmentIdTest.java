@@ -1,0 +1,78 @@
+package sh.trishul.iaas.access.role.attachment.policy;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.iaas.access.policy.model.IaasPolicy;
+import sh.trishul.iaas.access.role.model.IaasRole;
+
+class IaasRolePolicyAttachmentIdTest {
+  private IaasRolePolicyAttachmentId id;
+
+  @BeforeEach
+  void init() {
+    id = new IaasRolePolicyAttachmentId();
+  }
+
+  @Test
+  void testNoArgConstructor() {
+    assertNull(id.getRoleId());
+    assertNull(id.getPolicyId());
+  }
+
+  @Test
+  void testIdArgConstructor() {
+    id = new IaasRolePolicyAttachmentId("ROLE", "POLICY");
+    assertEquals("ROLE", id.getRoleId());
+    assertEquals("POLICY", id.getPolicyId());
+  }
+
+  @Test
+  void testGetSetRoleId() {
+    assertSame(id, id.setRoleId("ROLE"));
+    assertEquals("ROLE", id.getRoleId());
+  }
+
+  @Test
+  void testGetSetPolicyId() {
+    assertSame(id, id.setPolicyId("POLICY"));
+    assertEquals("POLICY", id.getPolicyId());
+  }
+
+  @Test
+  void testBuild_ReturnsNull_WhenBothRoleAndPolicyIdAreNull() {
+    assertNull(IaasRolePolicyAttachmentId.build(null, null));
+  }
+
+  @Test
+  void testBuild_ReturnsId_WhenArgIsNotNull() {
+    assertEquals(new IaasRolePolicyAttachmentId("ROLE", "POLICY"),
+        IaasRolePolicyAttachmentId.build(new IaasRole("ROLE"), new IaasPolicy("POLICY")));
+    assertEquals(new IaasRolePolicyAttachmentId("ROLE", null),
+        IaasRolePolicyAttachmentId.build(new IaasRole("ROLE"), new IaasPolicy(null)));
+    assertEquals(new IaasRolePolicyAttachmentId(null, "POLICY"),
+        IaasRolePolicyAttachmentId.build(new IaasRole(null), new IaasPolicy("POLICY")));
+    assertEquals(new IaasRolePolicyAttachmentId(null, "POLICY"),
+        IaasRolePolicyAttachmentId.build(null, new IaasPolicy("POLICY")));
+    assertEquals(new IaasRolePolicyAttachmentId("ROLE", null),
+        IaasRolePolicyAttachmentId.build(new IaasRole("ROLE"), null));
+  }
+
+  @Test
+  void testAccessPolicyId() throws Exception {
+    IaasRolePolicyAttachmentId accessor = new IaasRolePolicyAttachmentId();
+    assertSame(accessor, accessor.setPolicyId("testString"));
+    assertEquals("testString", accessor.getPolicyId());
+  }
+
+  @Test
+  void testAccessRoleId() throws Exception {
+    IaasRolePolicyAttachmentId accessor = new IaasRolePolicyAttachmentId();
+    assertSame(accessor, accessor.setRoleId("testString"));
+    assertEquals("testString", accessor.getRoleId());
+  }
+
+}

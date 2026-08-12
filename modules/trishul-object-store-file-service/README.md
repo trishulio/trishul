@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-object-store-file-service</artifactId>
 </dependency>
 ```
@@ -40,23 +40,23 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `TemporaryImageSrcDecorator` via `temporaryImageSrcDecorator()` — @ConditionalOnMissingBean(TemporaryImageSrcDecorator.class) ([modules/trishul-object-store-file-service/src/main/java/io/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java](modules/trishul-object-store-file-service/src/main/java/io/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java))
-- `IaasObjectStoreFileService` via `iaasObjectStoreFileService()` — @ConditionalOnMissingBean(IaasObjectStoreFileService.class) ([modules/trishul-object-store-file-service/src/main/java/io/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java](modules/trishul-object-store-file-service/src/main/java/io/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java))
+- `TemporaryImageSrcDecorator` via `temporaryImageSrcDecorator()` — @ConditionalOnMissingBean(TemporaryImageSrcDecorator.class) ([modules/trishul-object-store-file-service/src/main/java/sh/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java](modules/trishul-object-store-file-service/src/main/java/sh/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java))
+- `IaasObjectStoreFileService` via `iaasObjectStoreFileService()` — @ConditionalOnMissingBean(IaasObjectStoreFileService.class) ([modules/trishul-object-store-file-service/src/main/java/sh/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java](modules/trishul-object-store-file-service/src/main/java/sh/trishul/object/store/file/service/autoconfiguration/IaasObjectStoreFileServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.object.store.file.service.autoconfiguration.IaasObjectStoreFileServiceAutoConfiguration`
-- `io.trishul.object.store.file.service.controller.IaasObjectStoreFileController`
-- `io.trishul.object.store.file.service.decorator.DtoDecorator`
-- `io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator`
-- `io.trishul.object.store.file.service.service.IaasObjectStoreFileService`
-- `io.trishul.object.store.file.service.service.IaasObjectStoreNameProvider`
+- `sh.trishul.object.store.file.service.autoconfiguration.IaasObjectStoreFileServiceAutoConfiguration`
+- `sh.trishul.object.store.file.service.controller.IaasObjectStoreFileController`
+- `sh.trishul.object.store.file.service.decorator.DtoDecorator`
+- `sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator`
+- `sh.trishul.object.store.file.service.service.IaasObjectStoreFileService`
+- `sh.trishul.object.store.file.service.service.IaasObjectStoreNameProvider`
 
 ## Tests (Examples)
 
-- `io.trishul.object.store.file.service.controller.IaasObjectStoreFileControllerTest`
-- `io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecoratorTest`
-- `io.trishul.object.store.file.service.service.IaasObjectStoreFileServiceTest`
+- `sh.trishul.object.store.file.service.controller.IaasObjectStoreFileControllerTest`
+- `sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecoratorTest`
+- `sh.trishul.object.store.file.service.service.IaasObjectStoreFileServiceTest`
 
 ## Integration Guide
 

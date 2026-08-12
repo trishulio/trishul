@@ -1,0 +1,24 @@
+package sh.trishul.user.service.user.service.controller;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.util.Collections;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
+import sh.trishul.user.model.UserDto;
+
+public class UserDtoDecoratorTest {
+
+  @Test
+  public void testDecorate() {
+    TemporaryImageSrcDecorator mockDecorator = mock(TemporaryImageSrcDecorator.class);
+    UserDtoDecorator decorator = new UserDtoDecorator(mockDecorator);
+
+    List<UserDto> list = Collections.singletonList(new UserDto());
+    decorator.decorate(list);
+
+    verify(mockDecorator).decorate(list);
+  }
+}

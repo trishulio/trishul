@@ -12,7 +12,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-object-store-service-aws</artifactId>
 </dependency>
 ```
@@ -39,22 +39,22 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>>` via `iaasObjectStoreClient()` — @ConditionalOnMissingBean(AwsObjectStoreClient.class) ([modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
-- `IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig>` via `iaasObjectStoreAccessConfigClient()` — @ConditionalOnMissingBean(AwsPublicAccessBlockClient.class) ([modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
-- `IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration>` via `iaasObjectStoreCorsConfigClient()` — @ConditionalOnMissingBean(AwsCorsConfigClient.class) ([modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/io/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
+- `IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>>` via `iaasObjectStoreClient()` — @ConditionalOnMissingBean(AwsObjectStoreClient.class) ([modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
+- `IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig>` via `iaasObjectStoreAccessConfigClient()` — @ConditionalOnMissingBean(AwsPublicAccessBlockClient.class) ([modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
+- `IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration>` via `iaasObjectStoreCorsConfigClient()` — @ConditionalOnMissingBean(AwsCorsConfigClient.class) ([modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java](modules/trishul-object-store-service-aws/src/main/java/sh/trishul/object/store/service/aws/autoconfiguration/IaasObjectStoreServiceAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.object.store.service.aws.autoconfiguration.IaasObjectStoreServiceAwsAutoConfiguration`
-- `io.trishul.object.store.service.aws.cors.config.AwsCorsConfigClient`
-- `io.trishul.object.store.service.aws.cors.config.AwsObjectStoreClient`
-- `io.trishul.object.store.service.aws.cors.config.AwsPublicAccessBlockClient`
+- `sh.trishul.object.store.service.aws.autoconfiguration.IaasObjectStoreServiceAwsAutoConfiguration`
+- `sh.trishul.object.store.service.aws.cors.config.AwsCorsConfigClient`
+- `sh.trishul.object.store.service.aws.cors.config.AwsObjectStoreClient`
+- `sh.trishul.object.store.service.aws.cors.config.AwsPublicAccessBlockClient`
 
 ## Tests (Examples)
 
-- `io.trishul.object.store.service.aws.cors.config.AwsCorsConfigClientTest`
-- `io.trishul.object.store.service.aws.cors.config.AwsObjectStoreClientTest`
-- `io.trishul.object.store.service.aws.cors.config.AwsPublicAccessBlockClientTest`
+- `sh.trishul.object.store.service.aws.cors.config.AwsCorsConfigClientTest`
+- `sh.trishul.object.store.service.aws.cors.config.AwsObjectStoreClientTest`
+- `sh.trishul.object.store.service.aws.cors.config.AwsPublicAccessBlockClientTest`
 
 ## Integration Guide
 

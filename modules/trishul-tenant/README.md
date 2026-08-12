@@ -8,7 +8,7 @@ Defines the `Tenant` JPA entity representing an isolated customer/organization, 
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-tenant</artifactId>
 </dependency>
 ```

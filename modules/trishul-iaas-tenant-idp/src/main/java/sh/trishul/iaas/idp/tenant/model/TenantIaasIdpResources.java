@@ -1,0 +1,25 @@
+package sh.trishul.iaas.idp.tenant.model;
+
+import sh.trishul.model.base.pojo.BaseModel;
+
+public class TenantIaasIdpResources extends BaseModel {
+  private IaasIdpTenant idpTenant;
+
+  public TenantIaasIdpResources() {
+    super();
+  }
+
+  public TenantIaasIdpResources(IaasIdpTenant idpTenant) {
+    this();
+    setIaasIdpTenant(idpTenant);
+  }
+
+  public BaseIaasIdpTenant<?> getIaasIdpTenant() {
+    return idpTenant == null ? null : idpTenant.deepClone();
+  }
+
+  public TenantIaasIdpResources setIaasIdpTenant(IaasIdpTenant idpTenant) {
+    this.idpTenant = idpTenant == null ? null : idpTenant.deepClone();
+    return this;
+  }
+}

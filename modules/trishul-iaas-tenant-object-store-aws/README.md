@@ -12,7 +12,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-object-store-aws</artifactId>
 </dependency>
 ```
