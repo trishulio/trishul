@@ -70,7 +70,7 @@ class AwsCognitoUserClientTest {
 
     IaasUser expected
         = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
-            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0)).setUserName("USERNAME");
     assertEquals(expected, user);
   }
 
@@ -101,7 +101,7 @@ class AwsCognitoUserClientTest {
 
     IaasUser expected
         = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
-            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0)).setUserName("EMAIL");
     assertEquals(expected, user);
   }
 
@@ -143,7 +143,7 @@ class AwsCognitoUserClientTest {
 
     IaasUser expected
         = new IaasUser().setEmail("EMAIL").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
-            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0));
+            .setLastUpdated(LocalDateTime.of(2000, 2, 2, 0, 0)).setUserName("EMAIL");
     assertEquals(expected, user);
 
     verify(mIdp).adminUpdateUserAttributes(any());

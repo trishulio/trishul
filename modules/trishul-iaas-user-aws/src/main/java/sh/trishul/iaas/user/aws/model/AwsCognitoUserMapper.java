@@ -22,6 +22,7 @@ public interface AwsCognitoUserMapper extends IaasEntityMapper<UserType, IaasUse
     if (userType != null) {
       iaasUser = new IaasUser();
       iaasUser.setId(userType.getUsername());
+      iaasUser.setUserName(userType.getUsername());
       iaasUser
           .setCreatedAt(LocalDateTimeMapper.INSTANCE.fromUtilDate(userType.getUserCreateDate()));
       iaasUser.setLastUpdated(

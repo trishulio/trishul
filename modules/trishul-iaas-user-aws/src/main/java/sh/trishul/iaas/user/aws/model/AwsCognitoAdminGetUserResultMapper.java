@@ -25,6 +25,7 @@ public interface AwsCognitoAdminGetUserResultMapper
     if (result != null) {
       iaasUser = new IaasUser();
       iaasUser.setId(result.getUsername());
+      iaasUser.setUserName(result.getUsername());
       iaasUser.setCreatedAt(LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserCreateDate()));
       iaasUser.setLastUpdated(
           LocalDateTimeMapper.INSTANCE.fromUtilDate(result.getUserLastModifiedDate()));
