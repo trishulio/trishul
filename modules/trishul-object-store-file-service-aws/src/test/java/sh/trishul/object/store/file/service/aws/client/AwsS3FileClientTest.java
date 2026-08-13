@@ -69,14 +69,17 @@ class AwsS3FileClientTest {
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file
-        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setMimeType(org.springframework.util.MimeTypeUtils.IMAGE_PNG));
 
     assertNotNull(file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
     assertThat(file.getFileUrl().toString()).startsWith("http://localhost/");
     assertThat(file.getFileUrl().toString()).endsWith(file.getFileKey().toString());
+    assertEquals(org.springframework.util.MimeTypeUtils.IMAGE_PNG, file.getMimeType());
 
     assertEquals(HttpMethod.PUT, captor.getValue().getMethod());
+    assertEquals("image/png", captor.getValue().getContentType());
   }
 
   @Test
@@ -90,13 +93,16 @@ class AwsS3FileClientTest {
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file = client.put(new IaasObjectStoreFile()
-        .setFileKey(URI.create("note.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+        .setFileKey(URI.create("note.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
+        .setMimeType(org.springframework.util.MimeTypeUtils.IMAGE_PNG));
 
     assertEquals(URI.create("note.txt"), file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
     assertEquals(URI.create("http://localhost/note.txt").toURL(), file.getFileUrl());
+    assertEquals(org.springframework.util.MimeTypeUtils.IMAGE_PNG, file.getMimeType());
 
     assertEquals(HttpMethod.PUT, captor.getValue().getMethod());
+    assertEquals("image/png", captor.getValue().getContentType());
   }
 
   @Test

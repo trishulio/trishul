@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
+import org.springframework.util.MimeType;
 import sh.trishul.iaas.client.IaasClient;
 import sh.trishul.model.base.pojo.BaseModel;
 import sh.trishul.model.mapper.LocalDateTimeMapper;
@@ -42,17 +43,22 @@ public class AwsS3FileClient implements
         .build(new CacheLoader<PresignUrlRequest, IaasObjectStoreFile>() {
           @Override
           public IaasObjectStoreFile load(@NonNull PresignUrlRequest key) throws Exception {
-            IaasObjectStoreFile file
-                = new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, null);
+            IaasObjectStoreFile file = new IaasObjectStoreFile(URI.create(key.fileKey),
+                key.expiration, null, key.mimeType);
 
             GeneratePresignedUrlRequest req
                 = new GeneratePresignedUrlRequest(bucketName, file.getFileKey().toString())
                     .withMethod(key.method)
                     .withExpiration(dtMapper.toUtilDate(file.getExpiration()));
 
+            if (key.mimeType != null) {
+              req.setContentType(key.mimeType.toString());
+            }
+
             URL url = s3.generatePresignedUrl(req);
 
-            return new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, url);
+            return new IaasObjectStoreFile(URI.create(key.fileKey), key.expiration, url,
+                key.mimeType);
           }
         });
 
@@ -64,18 +70,19 @@ public class AwsS3FileClient implements
     // Note: Due to the signature of the interface implemented, GET requests only
     // takes ID as an input. So we pass in a default expiration for this case.
     LocalDateTime expiration = LocalDateTime.now().plusSeconds(this.getDuration);
-    return presign(id.toString(), expiration, HttpMethod.GET);
+    return presign(id.toString(), expiration, HttpMethod.GET, null);
   }
 
   @Override
   public <BE extends BaseIaasObjectStoreFile<?>> IaasObjectStoreFile add(BE addition) {
     String fileKey = UUID.randomUUID().toString();
-    return presign(fileKey, addition.getExpiration(), HttpMethod.PUT);
+    return presign(fileKey, addition.getExpiration(), HttpMethod.PUT, addition.getMimeType());
   }
 
   @Override
   public <UE extends UpdateIaasObjectStoreFile<?>> IaasObjectStoreFile put(UE update) {
-    return presign(update.getFileKey().toString(), update.getExpiration(), HttpMethod.PUT);
+    return presign(update.getFileKey().toString(), update.getExpiration(), HttpMethod.PUT,
+        update.getMimeType());
   }
 
   @Override
@@ -93,8 +100,9 @@ public class AwsS3FileClient implements
     return s3.doesObjectExist(bucketName, id.toString());
   }
 
-  private IaasObjectStoreFile presign(String fileKey, LocalDateTime expiration, HttpMethod method) {
-    PresignUrlRequest request = new PresignUrlRequest(fileKey, expiration, method);
+  private IaasObjectStoreFile presign(String fileKey, LocalDateTime expiration, HttpMethod method,
+      MimeType mimeType) {
+    PresignUrlRequest request = new PresignUrlRequest(fileKey, expiration, method, mimeType);
     try {
       return this.presignUrlCache.get(request);
     } catch (ExecutionException e) {
@@ -108,10 +116,13 @@ class PresignUrlRequest extends BaseModel {
   final String fileKey;
   final LocalDateTime expiration;
   final HttpMethod method;
+  final MimeType mimeType;
 
-  public PresignUrlRequest(String fileKey, LocalDateTime expiration, HttpMethod method) {
+  public PresignUrlRequest(String fileKey, LocalDateTime expiration, HttpMethod method,
+      MimeType mimeType) {
     this.fileKey = fileKey;
     this.expiration = expiration;
     this.method = method;
+    this.mimeType = mimeType;
   }
 }
