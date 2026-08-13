@@ -14,9 +14,12 @@ public class JacksonJsonMapper implements JsonMapper {
 
   public JacksonJsonMapper(ObjectMapper mapper) {
     this.module = new SimpleModule();
+    this.module.addDeserializer(org.springframework.util.MimeType.class,
+        new MimeTypeDeserializer());
     this.mapper = mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-        .registerModule(new JavaTimeModule());
+        .registerModule(new JavaTimeModule()).registerModule(this.module);
+    this.module = new SimpleModule();
   }
 
   public <T> SimpleModule addSerializer(Class<? extends T> type, JsonSerializer<T> serializer) {
