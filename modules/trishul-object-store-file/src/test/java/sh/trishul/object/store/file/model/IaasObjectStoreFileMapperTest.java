@@ -8,6 +8,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.MimeTypeUtils;
 import sh.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
 import sh.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import sh.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
@@ -29,13 +30,13 @@ class IaasObjectStoreFileMapperTest {
   void testToDto_ReturnsDto_WhenPojoIsNotNull() throws MalformedURLException {
     IaasObjectStoreFile tenant = new IaasObjectStoreFile().setId(URI.create("file.txt"))
         .setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setFileUrl(URI.create("http://localhost/").toURL());
+        .setFileUrl(URI.create("http://localhost/").toURL()).setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     IaasObjectStoreFileDto dto = mapper.toDto(tenant);
 
     IaasObjectStoreFileDto expected = new IaasObjectStoreFileDto()
         .setFileKey(URI.create("file.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setFileUrl(URI.create("http://localhost/").toURL());
+        .setFileUrl(URI.create("http://localhost/").toURL()).setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     assertEquals(expected, dto);
   }
@@ -48,12 +49,13 @@ class IaasObjectStoreFileMapperTest {
   @Test
   void testFromUpdateDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
     UpdateIaasObjectStoreFileDto dto = new UpdateIaasObjectStoreFileDto()
-        .setFileKey(URI.create("file.txt")).setMinValidUntil(LocalDateTime.of(2000, 1, 1, 5, 15));
+        .setFileKey(URI.create("file.txt")).setMinValidUntil(LocalDateTime.of(2000, 1, 1, 5, 15))
+        .setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     IaasObjectStoreFile tenant = mapper.fromUpdateDto(dto);
 
     IaasObjectStoreFile expected = new IaasObjectStoreFile().setId(URI.create("file.txt"))
-        .setExpiration(LocalDateTime.of(2000, 1, 1, 6, 0));
+        .setExpiration(LocalDateTime.of(2000, 1, 1, 6, 0)).setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     assertEquals(expected, tenant);
   }
@@ -65,13 +67,13 @@ class IaasObjectStoreFileMapperTest {
 
   @Test
   void testFromAddDto_ReturnsPojo_WhenDtoIsNotNull() throws MalformedURLException {
-    AddIaasObjectStoreFileDto dto
-        = new AddIaasObjectStoreFileDto().setMinValidUntil(LocalDateTime.of(2000, 1, 1, 5, 15));
+    AddIaasObjectStoreFileDto dto = new AddIaasObjectStoreFileDto()
+        .setMinValidUntil(LocalDateTime.of(2000, 1, 1, 5, 15)).setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     IaasObjectStoreFile tenant = mapper.fromAddDto(dto);
 
-    IaasObjectStoreFile expected
-        = new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 6, 0));
+    IaasObjectStoreFile expected = new IaasObjectStoreFile()
+        .setExpiration(LocalDateTime.of(2000, 1, 1, 6, 0)).setMimeType(MimeTypeUtils.IMAGE_PNG);
 
     assertEquals(expected, tenant);
   }

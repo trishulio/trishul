@@ -9,6 +9,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.MimeTypeUtils;
 
 class IaasObjectStoreFileDtoTest {
   private IaasObjectStoreFileDto dto;
@@ -23,6 +24,7 @@ class IaasObjectStoreFileDtoTest {
     assertNull(dto.getFileKey());
     assertNull(dto.getFileUrl());
     assertNull(dto.getExpiration());
+    assertNull(dto.getMimeType());
   }
 
   @Test
@@ -33,6 +35,18 @@ class IaasObjectStoreFileDtoTest {
     assertEquals(URI.create("file.txt"), dto.getFileKey());
     assertEquals(URI.create("http://localhost/").toURL(), dto.getFileUrl());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getExpiration());
+    assertNull(dto.getMimeType());
+  }
+
+  @Test
+  void testMimeTypeConstructor() throws MalformedURLException {
+    dto = new IaasObjectStoreFileDto(URI.create("file.txt"), LocalDateTime.of(2000, 1, 1, 0, 0),
+        URI.create("http://localhost/").toURL(), MimeTypeUtils.IMAGE_PNG);
+
+    assertEquals(URI.create("file.txt"), dto.getFileKey());
+    assertEquals(URI.create("http://localhost/").toURL(), dto.getFileUrl());
+    assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getExpiration());
+    assertEquals(MimeTypeUtils.IMAGE_PNG, dto.getMimeType());
   }
 
   @Test
@@ -60,4 +74,10 @@ class IaasObjectStoreFileDtoTest {
     assertEquals(URI.create("http://localhost").toURL(), accessor.getFileUrl());
   }
 
+  @Test
+  void testAccessMimeType() throws Exception {
+    IaasObjectStoreFileDto accessor = new IaasObjectStoreFileDto();
+    assertSame(accessor, accessor.setMimeType(MimeTypeUtils.IMAGE_PNG));
+    assertEquals(MimeTypeUtils.IMAGE_PNG, accessor.getMimeType());
+  }
 }

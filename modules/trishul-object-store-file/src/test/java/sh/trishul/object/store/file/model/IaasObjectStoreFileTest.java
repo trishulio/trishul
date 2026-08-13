@@ -9,6 +9,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.MimeTypeUtils;
 
 class IaasObjectStoreFileTest {
   private IaasObjectStoreFile file;
@@ -23,6 +24,7 @@ class IaasObjectStoreFileTest {
     assertNull(file.getFileKey());
     assertNull(file.getExpiration());
     assertNull(file.getFileUrl());
+    assertNull(file.getMimeType());
     assertNull(file.getVersion());
   }
 
@@ -34,6 +36,19 @@ class IaasObjectStoreFileTest {
     assertEquals(URI.create("file.txt"), file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
     assertEquals(URI.create("http://localhost/").toURL(), file.getFileUrl());
+    assertNull(file.getMimeType());
+    assertNull(file.getVersion());
+  }
+
+  @Test
+  void testMimeTypeConstructor() throws MalformedURLException {
+    file = new IaasObjectStoreFile(URI.create("file.txt"), LocalDateTime.of(2000, 1, 1, 0, 0),
+        URI.create("http://localhost/").toURL(), MimeTypeUtils.IMAGE_PNG);
+
+    assertEquals(URI.create("file.txt"), file.getFileKey());
+    assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
+    assertEquals(URI.create("http://localhost/").toURL(), file.getFileUrl());
+    assertEquals(MimeTypeUtils.IMAGE_PNG, file.getMimeType());
     assertNull(file.getVersion());
   }
 
@@ -59,6 +74,12 @@ class IaasObjectStoreFileTest {
   void testGetSetFileUrl() throws MalformedURLException {
     file.setFileUrl(URI.create("http://localhost/").toURL());
     assertEquals(URI.create("http://localhost/").toURL(), file.getFileUrl());
+  }
+
+  @Test
+  void testGetSetMimeType() {
+    file.setMimeType(MimeTypeUtils.IMAGE_PNG);
+    assertEquals(MimeTypeUtils.IMAGE_PNG, file.getMimeType());
   }
 
   @Test
@@ -111,4 +132,10 @@ class IaasObjectStoreFileTest {
     assertEquals(URI.create("http://localhost").toURL(), accessor.getFileUrl());
   }
 
+  @Test
+  void testAccessMimeType() throws Exception {
+    IaasObjectStoreFile accessor = new IaasObjectStoreFile();
+    assertSame(accessor, accessor.setMimeType(MimeTypeUtils.IMAGE_PNG));
+    assertEquals(MimeTypeUtils.IMAGE_PNG, accessor.getMimeType());
+  }
 }
