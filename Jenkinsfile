@@ -26,16 +26,16 @@ pipeline {
         HOST_WORKSPACE = env.WORKSPACE.replaceFirst(env.WORKSPACE_HOME, env.HOST_WORKSPACE_HOME)
         
         // Parameter mappings
-        ENABLE_TESTS = params.ENABLE_TESTS != null ? "${params.ENABLE_TESTS}" : 'true'
-        ENABLE_CODE_COVERAGE = params.ENABLE_CODE_COVERAGE != null ? "${params.ENABLE_CODE_COVERAGE}" : 'true'
-        ENABLE_MUTATION_COVERAGE = params.ENABLE_MUTATION_COVERAGE != null ? "${params.ENABLE_MUTATION_COVERAGE}" : 'true'
-        ENABLE_CHECKSTYLE = params.ENABLE_CHECKSTYLE != null ? "${params.ENABLE_CHECKSTYLE}" : 'true'
-        ENABLE_DEPENDENCY_CHECK = params.ENABLE_DEPENDENCY_CHECK != null ? "${params.ENABLE_DEPENDENCY_CHECK}" : 'true'
-        ENABLE_SPOTBUGS = params.ENABLE_SPOTBUGS != null ? "${params.ENABLE_SPOTBUGS}" : 'true'
-        SPOTBUGS_FAIL_ON_ERROR = params.SPOTBUGS_FAIL_ON_ERROR != null ? "${params.SPOTBUGS_FAIL_ON_ERROR}" : 'true'
-        ENABLE_PMD = params.ENABLE_PMD != null ? "${params.ENABLE_PMD}" : 'true'
-        PMD_FAIL_ON_VIOLATION = params.PMD_FAIL_ON_VIOLATION != null ? "${params.PMD_FAIL_ON_VIOLATION}" : 'true'
-        ENABLE_SONARQUBE = params.ENABLE_SONARQUBE != null ? "${params.ENABLE_SONARQUBE}" : 'true'
+        ENABLE_TESTS = "${params.ENABLE_TESTS != null ? params.ENABLE_TESTS : 'true'}"
+        ENABLE_CODE_COVERAGE = "${params.ENABLE_CODE_COVERAGE != null ? params.ENABLE_CODE_COVERAGE : 'true'}"
+        ENABLE_MUTATION_COVERAGE = "${params.ENABLE_MUTATION_COVERAGE != null ? params.ENABLE_MUTATION_COVERAGE : 'true'}"
+        ENABLE_CHECKSTYLE = "${params.ENABLE_CHECKSTYLE != null ? params.ENABLE_CHECKSTYLE : 'true'}"
+        ENABLE_DEPENDENCY_CHECK = "${params.ENABLE_DEPENDENCY_CHECK != null ? params.ENABLE_DEPENDENCY_CHECK : 'true'}"
+        ENABLE_SPOTBUGS = "${params.ENABLE_SPOTBUGS != null ? params.ENABLE_SPOTBUGS : 'true'}"
+        SPOTBUGS_FAIL_ON_ERROR = "${params.SPOTBUGS_FAIL_ON_ERROR != null ? params.SPOTBUGS_FAIL_ON_ERROR : 'true'}"
+        ENABLE_PMD = "${params.ENABLE_PMD != null ? params.ENABLE_PMD : 'true'}"
+        PMD_FAIL_ON_VIOLATION = "${params.PMD_FAIL_ON_VIOLATION != null ? params.PMD_FAIL_ON_VIOLATION : 'true'}"
+        ENABLE_SONARQUBE = "${params.ENABLE_SONARQUBE != null ? params.ENABLE_SONARQUBE : 'true'}"
     }
 
     stages {
