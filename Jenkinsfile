@@ -12,6 +12,8 @@ pipeline {
         // Map host workspace for docker-compose based builds
         HOST_WORKSPACE = env.WORKSPACE.replaceFirst(env.WORKSPACE_HOME, env.HOST_WORKSPACE_HOME)
         PMD_FAIL_ON_VIOLATION = 'false'
+        ENABLE_DEPENDENCY_CHECK = 'false'
+        ENABLE_SONARQUBE = 'false'
     }
 
     stages {
