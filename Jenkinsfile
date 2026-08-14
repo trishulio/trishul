@@ -56,8 +56,8 @@ pipeline {
         stage('Check & Quality') {
             steps {
                 // Ensure formatting, checkstyle, etc. are passing
-                sh "make compile PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -Dsonar.skip=true'"
-                sh "make check PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dpmd.failOnViolation=false'"
+                sh "make compile PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -Dsonar.skip=true -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz'"
+                sh "make check PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dpmd.failOnViolation=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz'"
             }
         }
 
@@ -77,7 +77,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 // Run full build with tests, mutation coverage, etc.
-                sh "make install PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false'"
+                sh "make install PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz'"
             }
         }
 
