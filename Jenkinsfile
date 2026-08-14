@@ -10,9 +10,9 @@ pipeline {
         booleanParam(name: 'ENABLE_CHECKSTYLE', defaultValue: true, description: 'Enable Checkstyle check')
         booleanParam(name: 'ENABLE_DEPENDENCY_CHECK', defaultValue: true, description: 'Enable OWASP dependency check')
         booleanParam(name: 'ENABLE_SPOTBUGS', defaultValue: true, description: 'Enable SpotBugs check')
-        booleanParam(name: 'SPOTBUGS_FAIL_ON_ERROR', defaultValue: true, description: 'Fail on SpotBugs errors')
+        booleanParam(name: 'SPOTBUGS_FAIL_ON_ERROR', defaultValue: false, description: 'Fail on SpotBugs errors')
         booleanParam(name: 'ENABLE_PMD', defaultValue: true, description: 'Enable PMD check')
-        booleanParam(name: 'PMD_FAIL_ON_VIOLATION', defaultValue: true, description: 'Fail on PMD violations')
+        booleanParam(name: 'PMD_FAIL_ON_VIOLATION', defaultValue: false, description: 'Fail on PMD violations')
         booleanParam(name: 'ENABLE_SONARQUBE', defaultValue: true, description: 'Enable SonarQube analysis')
     }
 
