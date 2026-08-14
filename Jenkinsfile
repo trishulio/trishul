@@ -25,6 +25,9 @@ pipeline {
         // Map host workspace for docker-compose based builds
         HOST_WORKSPACE = env.WORKSPACE.replaceFirst(env.WORKSPACE_HOME, env.HOST_WORKSPACE_HOME)
         
+        // Force single-threaded Maven builds in CI to avoid dependency resolution race conditions
+        THREADS = '1'
+        
         // Extract properties from mvn.env so docker-compose maps them properly
         NVD_API_KEY = sh(script: "grep '^NVD_API_KEY=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
         APP_URL = sh(script: "grep '^APP_URL=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
