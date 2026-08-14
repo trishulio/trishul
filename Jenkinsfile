@@ -80,13 +80,13 @@ pipeline {
         stage('Build & Test') {
             steps {
                 script {
-                    // Check if SonarQube is reachable from the agent
-                    def sonarReachable = sh(script: "curl -s --connect-timeout 5 https://sonarqube.cloudville.me/api/v2/analysis/version >/dev/null && echo 'true' || echo 'false'", returnStdout: true).trim()
-                    echo "SonarQube reachability: ${sonarReachable}"
+                    // Check if SonarQube is reachable from inside the Maven container
+                    def sonarReachable = sh(script: "docker-compose --env-file mvn.env -f docker-compose-bin.yml run --rm mvn wget -q --spider --timeout=5 https://sonarqube.cloudville.me/api/v2/analysis/version && echo 'true' || echo 'false'", returnStdout: true).trim()
+                    echo "SonarQube reachability inside container: ${sonarReachable}"
                     
                     def extraArgs = ""
                     if (sonarReachable == "false") {
-                        echo "SonarQube is unreachable, skipping analysis to prevent build failure."
+                        echo "SonarQube is unreachable inside the container, skipping analysis to prevent build failure."
                         extraArgs = "-Dsonar.skip=true"
                     }
                     
