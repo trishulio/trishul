@@ -79,8 +79,19 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                // Run full build with tests, mutation coverage, etc.
-                sh "make install PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz -DfailBuildOnCVSS=11'"
+                script {
+                    // Check if SonarQube is reachable from the agent
+                    def sonarReachable = sh(script: "curl -s --connect-timeout 5 https://sonarqube.cloudville.me/api/v2/analysis/version >/dev/null && echo 'true' || echo 'false'", returnStdout: true).trim()
+                    echo "SonarQube reachability: ${sonarReachable}"
+                    
+                    def extraArgs = ""
+                    if (sonarReachable == "false") {
+                        echo "SonarQube is unreachable, skipping analysis to prevent build failure."
+                        extraArgs = "-Dsonar.skip=true"
+                    }
+                    
+                    sh "make install PWD='${HOST_WORKSPACE}' THREADS='1' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz -DfailBuildOnCVSS=11 ${extraArgs}'"
+                }
             }
         }
 
