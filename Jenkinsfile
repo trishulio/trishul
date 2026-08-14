@@ -25,6 +25,14 @@ pipeline {
         // Map host workspace for docker-compose based builds
         HOST_WORKSPACE = env.WORKSPACE.replaceFirst(env.WORKSPACE_HOME, env.HOST_WORKSPACE_HOME)
         
+        // Extract properties from mvn.env so docker-compose maps them properly
+        NVD_API_KEY = sh(script: "grep '^NVD_API_KEY=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        APP_URL = sh(script: "grep '^APP_URL=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        SONARQUBE_HOST_URL = sh(script: "grep '^SONARQUBE_HOST_URL=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        SONARQUBE_PROJECT_NAME = sh(script: "grep '^SONARQUBE_PROJECT_NAME=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        SONARQUBE_TOKEN = sh(script: "grep '^SONARQUBE_TOKEN=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        SONARQUBE_PROJECT_KEY = sh(script: "grep '^SONARQUBE_PROJECT_KEY=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+
         // Parameter mappings
         ENABLE_TESTS = "${params.ENABLE_TESTS != null ? params.ENABLE_TESTS : 'true'}"
         ENABLE_CODE_COVERAGE = "${params.ENABLE_CODE_COVERAGE != null ? params.ENABLE_CODE_COVERAGE : 'true'}"
