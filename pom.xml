@@ -102,6 +102,7 @@
         <pmd.version>3.28.0</pmd.version>
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
         <org.owasp.dependency.check.version>13.0.0</org.owasp.dependency.check.version>
+        <failBuildOnCVSS>7</failBuildOnCVSS>
         <org.codehaus.mojo.versions.plugin.version>2.15.0</org.codehaus.mojo.versions.plugin.version>
         <org.apache.maven.plugin.compiler.version>3.15.0</org.apache.maven.plugin.compiler.version>
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
@@ -773,7 +774,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <failBuildOnCVSS>7</failBuildOnCVSS>
+                        <failBuildOnCVSS>${failBuildOnCVSS}</failBuildOnCVSS>
                         <suppressionFile>${maven.multiModuleProjectDirectory}/dependency-check-suppressions.xml</suppressionFile>
                         <dataDirectory>${maven.multiModuleProjectDirectory}/dependency-check-data</dataDirectory>
                         <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
