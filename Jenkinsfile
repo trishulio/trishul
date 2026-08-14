@@ -24,6 +24,7 @@ pipeline {
         stage('Check & Quality') {
             steps {
                 // Ensure formatting, checkstyle, etc. are passing
+                sh "make compile PWD='${HOST_WORKSPACE}'"
                 sh "make check PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true'"
             }
         }
