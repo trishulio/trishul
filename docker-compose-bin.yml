@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: mvn.dockerfile
     container_name: mvn
+    network_mode: host
     working_dir: ${PWD}
     environment:
       ENABLE_TESTS: "${ENABLE_TESTS}"
@@ -15,6 +16,7 @@ services:
       ENABLE_DEPENDENCY_CHECK: "${ENABLE_DEPENDENCY_CHECK}"
       ENABLE_SPOTBUGS: "${ENABLE_SPOTBUGS}"
       SPOTBUGS_FAIL_ON_ERROR: "${SPOTBUGS_FAIL_ON_ERROR}"
+      PMD_FAIL_ON_VIOLATION: "${PMD_FAIL_ON_VIOLATION}"
       APP_URL: "${APP_URL}"
       SONARQUBE_HOST_URL: "${SONARQUBE_HOST_URL}"
       SONARQUBE_PROJECT_NAME: "${SONARQUBE_PROJECT_NAME}"

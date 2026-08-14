@@ -44,7 +44,7 @@ public class PojoTestUtil {
         }
         try {
           instance = (T) constructor.newInstance(args);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
           // If constructor fails, try with default constructor fallback or return
         }
       }
@@ -67,7 +67,7 @@ public class PojoTestUtil {
           if (getter != null) {
             try {
               initialValue = getter.invoke(instance);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
               // Ignore errors reading initial value
             }
           }
