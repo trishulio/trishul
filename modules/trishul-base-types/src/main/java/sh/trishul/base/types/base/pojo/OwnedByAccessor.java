@@ -1,7 +1,7 @@
 package sh.trishul.base.types.base.pojo;
 
 public interface OwnedByAccessor<T> {
-  final String ATTR_OWNED_BY = "ownedBy";
+  String ATTR_OWNED_BY = "ownedBy";
 
   T getOwnedBy();
 
