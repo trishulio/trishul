@@ -2,8 +2,8 @@ package io.trishul.crud.controller;
 
 import io.trishul.model.base.exception.EntityNotFoundException;
 
-public class TrishulEntityNotFoundException extends EntityNotFoundException {
-  public TrishulEntityNotFoundException(String entityName, String identifierName,
+public class ServiceEntityNotFoundException extends EntityNotFoundException {
+  public ServiceEntityNotFoundException(String entityName, String identifierName,
       String identifierValue) {
     super(entityName, identifierName, identifierValue);
   }

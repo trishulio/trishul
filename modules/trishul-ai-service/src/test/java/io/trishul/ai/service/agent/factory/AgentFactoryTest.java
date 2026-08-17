@@ -119,7 +119,7 @@ class AgentFactoryTest {
 
     AiServiceContext ctx = getAiServiceContext(result);
     assertNotNull(ctx);
-    assertTrue(ctx.toolSpecifications == null || ctx.toolSpecifications.isEmpty());
+    assertTrue(ctx.toolSpecifications.isEmpty());
   }
 
   @Test

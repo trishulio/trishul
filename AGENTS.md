@@ -71,6 +71,10 @@ AWS Cognito integration requires both auth modules + region setting in env file 
 ## Entity Pattern Template @Entity public class MyEntity extends BaseEntity implements CrudEntity MY_ENTT Audited<MyEntt> that Id private UUID id; string name attribute with CreationTimestamp for created_at and Update Timestamp columns always added as part of interface contract
 ```java
 
+## Testing and Assertions
+
+Do not use conditional assertions in unit tests. Every assertion should be a strict check on the expected value or state without branched logic (e.g., do not use `assertTrue(x == null || x.isEmpty())`; instead, assert the exact expected condition, such as `assertTrue(x.isEmpty())`).
+
 ## Direct Fully Qualified Classpaths
 
 Do not write fully qualified package class paths directly in Java code (e.g. `org.junit.jupiter.api.Assertions.assertNotEquals`). Instead, import packages and classes and use their short classnames. For functions and static utility methods (e.g. mock, assertions), use static imports.

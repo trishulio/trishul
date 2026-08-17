@@ -1,5 +1,6 @@
 package io.trishul.auth.autoconfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +19,11 @@ public class WebSecurityConfig {
   private List<String> appUrls;
 
   public List<String> getAppUrls() {
-    return this.appUrls == null ? null : new java.util.ArrayList<>(this.appUrls);
+    return this.appUrls == null ? null : new ArrayList<>(this.appUrls);
   }
 
   public void setAppUrls(List<String> appUrls) {
-    this.appUrls = appUrls == null ? null : new java.util.ArrayList<>(appUrls);
+    this.appUrls = appUrls == null ? null : new ArrayList<>(appUrls);
   }
 
   @Bean

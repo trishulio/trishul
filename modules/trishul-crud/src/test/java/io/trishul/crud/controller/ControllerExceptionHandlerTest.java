@@ -34,8 +34,8 @@ class ControllerExceptionHandlerTest {
 
   @Test
   void testEntityNotFoundException_ReturnsNotFoundResponse() {
-    TrishulEntityNotFoundException exception
-        = new TrishulEntityNotFoundException("Entity", "id", "123");
+    ServiceEntityNotFoundException exception
+        = new ServiceEntityNotFoundException("Entity", "id", "123");
 
     ErrorResponse response = handler.entityNotFoundException(exception, mRequest);
 
