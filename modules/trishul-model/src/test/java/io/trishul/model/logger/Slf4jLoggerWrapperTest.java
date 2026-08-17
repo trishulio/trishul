@@ -11,14 +11,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
-class TrishulLoggerTest {
+class Slf4jLoggerWrapperTest {
   private Logger mockLogger;
-  private TrishulLogger trishulLogger;
+  private Slf4jLoggerWrapper trishulLogger;
 
   @BeforeEach
   void setUp() {
     mockLogger = mock(Logger.class);
-    trishulLogger = new TrishulLogger(mockLogger);
+    trishulLogger = new Slf4jLoggerWrapper(mockLogger);
   }
 
   @Test
@@ -144,9 +144,9 @@ class TrishulLoggerTest {
 
   @Test
   void testFactoryGetLogger() {
-    TrishulLogger l1 = TrishulLoggerFactory.getLogger(TrishulLoggerTest.class);
+    Slf4jLoggerWrapper l1 = Slf4jLoggerFactory.getLogger(Slf4jLoggerWrapperTest.class);
     assertNotNull(l1);
-    TrishulLogger l2 = TrishulLoggerFactory.getLogger("some-logger");
+    Slf4jLoggerWrapper l2 = Slf4jLoggerFactory.getLogger("some-logger");
     assertNotNull(l2);
   }
 }

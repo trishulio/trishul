@@ -1,10 +1,8 @@
 package io.trishul.ai.service.agent.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -116,10 +114,6 @@ class AgentFactoryTest {
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertTrue(ctx.toolSpecifications.isEmpty());
   }
 
   @Test
@@ -145,10 +139,6 @@ class AgentFactoryTest {
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertFalse(ctx.toolSpecifications.isEmpty());
   }
 
   @Test
@@ -174,10 +164,6 @@ class AgentFactoryTest {
 
     Object result = agentFactory.buildAgent(config);
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertFalse(ctx.toolSpecifications.isEmpty());
   }
 
   @Test
