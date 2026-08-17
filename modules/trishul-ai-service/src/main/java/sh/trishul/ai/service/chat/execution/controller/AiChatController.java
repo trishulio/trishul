@@ -49,14 +49,14 @@ public class AiChatController {
     UserMessage userMessage = buildUserMessage(request);
 
     TokenStream tokenStream = assistant.streamChat(session.getId(), userMessage);
-    tokenStream.onNext(token -> {
+    tokenStream.onPartialResponse(token -> {
       try {
         emitter.send(SseEmitter.event().data(token));
       } catch (IOException e) {
         log.error("Failed to send SSE event", e);
         emitter.completeWithError(e);
       }
-    }).onComplete(response -> {
+    }).onCompleteResponse(response -> {
       try {
         emitter.send(SseEmitter.event().data("[DONE]"));
         emitter.complete();

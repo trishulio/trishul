@@ -1,16 +1,16 @@
 package sh.trishul.ai.service.agent.factory;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 
 /**
- * Factory that builds synchronous ChatLanguageModel instances for use with AiServices. Complements
- * StreamingChatModelFactory which builds StreamingChatLanguageModel instances.
+ * Factory that builds synchronous ChatModel instances for use with AiServices. Complements
+ * StreamingChatModelFactory which builds StreamingChatModel instances.
  */
 public class ChatModelFactory {
 
-  public ChatLanguageModel getModel(AiProvider provider, AiChatModelConfig config) {
+  public ChatModel getModel(AiProvider provider, AiChatModelConfig config) {
     if (provider == AiProvider.GITHUB_COPILOT) {
       return getGithubCopilotModel(config);
     }
@@ -26,7 +26,7 @@ public class ChatModelFactory {
     throw new IllegalArgumentException("Unsupported AI Provider: " + provider);
   }
 
-  public ChatLanguageModel getGithubCopilotModel(AiChatModelConfig config) {
+  public ChatModel getGithubCopilotModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("GitHub Copilot API Key must be provided");
     }
@@ -35,7 +35,7 @@ public class ChatModelFactory {
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
-  public ChatLanguageModel getOpenRouterModel(AiChatModelConfig config) {
+  public ChatModel getOpenRouterModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenRouter API Key must be provided");
     }
@@ -44,7 +44,7 @@ public class ChatModelFactory {
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
-  public ChatLanguageModel getOpenAiModel(AiChatModelConfig config) {
+  public ChatModel getOpenAiModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenAI API Key must be provided");
     }

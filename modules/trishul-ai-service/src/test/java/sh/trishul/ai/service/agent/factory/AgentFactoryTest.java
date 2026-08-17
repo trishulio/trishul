@@ -16,9 +16,10 @@ import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.output.Response;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
+import dev.langchain4j.model.chat.request.ChatRequest;
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.service.AiServiceContext;
 import dev.langchain4j.service.AiServices;
 import java.lang.reflect.Field;
@@ -69,11 +70,11 @@ class AgentFactoryTest {
   void testBuildStreamingModel_CallsStreamingModelFactory() {
     AiChatModelConfig config = new AiChatModelConfig();
     config.setProvider("openai");
-    StreamingChatLanguageModel mockModel = mock(StreamingChatLanguageModel.class);
+    StreamingChatModel mockModel = mock(StreamingChatModel.class);
     when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(config)))
         .thenReturn(mockModel);
 
-    StreamingChatLanguageModel result = agentFactory.buildStreamingModel(config);
+    StreamingChatModel result = agentFactory.buildStreamingModel(config);
 
     assertNotNull(result);
   }
@@ -106,8 +107,8 @@ class AgentFactoryTest {
     config.setChatModelConfig(modelConfig);
     config.setChatMemoryConfig(memoryConfig);
 
-    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
-    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+    ChatModel mockChatModel = mock(ChatModel.class);
+    StreamingChatModel mockStreamingChatModel = mock(StreamingChatModel.class);
 
     when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockChatModel);
@@ -119,7 +120,8 @@ class AgentFactoryTest {
 
     AiServiceContext ctx = getAiServiceContext(result);
     assertNotNull(ctx);
-    assertTrue(ctx.toolSpecifications == null || ctx.toolSpecifications.isEmpty());
+    assertTrue(ctx.toolService.toolSpecifications() == null
+        || ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -134,8 +136,8 @@ class AgentFactoryTest {
     config.setChatModelConfig(modelConfig);
     config.setChatMemoryConfig(memoryConfig);
 
-    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
-    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+    ChatModel mockChatModel = mock(ChatModel.class);
+    StreamingChatModel mockStreamingChatModel = mock(StreamingChatModel.class);
 
     when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockChatModel);
@@ -148,7 +150,7 @@ class AgentFactoryTest {
 
     AiServiceContext ctx = getAiServiceContext(result);
     assertNotNull(ctx);
-    assertFalse(ctx.toolSpecifications.isEmpty());
+    assertFalse(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -163,8 +165,8 @@ class AgentFactoryTest {
     config.setChatModelConfig(modelConfig);
     config.setChatMemoryConfig(memoryConfig);
 
-    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
-    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+    ChatModel mockChatModel = mock(ChatModel.class);
+    StreamingChatModel mockStreamingChatModel = mock(StreamingChatModel.class);
 
     when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockChatModel);
@@ -177,7 +179,7 @@ class AgentFactoryTest {
 
     AiServiceContext ctx = getAiServiceContext(result);
     assertNotNull(ctx);
-    assertFalse(ctx.toolSpecifications.isEmpty());
+    assertFalse(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -192,17 +194,19 @@ class AgentFactoryTest {
     config.setChatModelConfig(modelConfig);
     config.setChatMemoryConfig(memoryConfig);
 
-    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
-    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+    ChatModel mockChatModel = mock(ChatModel.class);
+    StreamingChatModel mockStreamingChatModel = mock(StreamingChatModel.class);
 
     when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockChatModel);
     when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockStreamingChatModel);
 
-    // Mock ChatLanguageModel generate response
-    Response<AiMessage> mockResponse = Response.from(AiMessage.from("response"));
-    when(mockChatModel.generate(any(List.class))).thenReturn(mockResponse);
+    // Mock ChatModel response
+    ChatResponse mockResponse
+        = ChatResponse.builder().aiMessage(AiMessage.from("response")).build();
+    when(mockChatModel.chat(any(ChatRequest.class))).thenReturn(mockResponse);
+    when(mockChatModel.chat(any(ChatRequest.class), any())).thenReturn(mockResponse);
 
     Object result = agentFactory.buildAgent(config);
     assertNotNull(result);

@@ -71,11 +71,11 @@ class AiChatControllerTest {
     AtomicReference<Consumer<String>> onNextRef = new AtomicReference<>();
     AtomicReference<Consumer<Response<AiMessage>>> onCompleteRef = new AtomicReference<>();
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenAnswer(invocation -> {
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenAnswer(invocation -> {
       onNextRef.set(invocation.getArgument(0));
       return mockTokenStream;
     });
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenAnswer(invocation -> {
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenAnswer(invocation -> {
       onCompleteRef.set(invocation.getArgument(0));
       return mockTokenStream;
     });
@@ -146,8 +146,8 @@ class AiChatControllerTest {
 
     AtomicReference<Consumer<Throwable>> onErrorRef = new AtomicReference<>();
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenReturn(mockTokenStream);
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenReturn(mockTokenStream);
     when(mockTokenStream.onError(any(Consumer.class))).thenAnswer(invocation -> {
       onErrorRef.set(invocation.getArgument(0));
       return mockTokenStream;
@@ -200,11 +200,11 @@ class AiChatControllerTest {
 
     AtomicReference<Consumer<String>> onNextRef = new AtomicReference<>();
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenAnswer(invocation -> {
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenAnswer(invocation -> {
       onNextRef.set(invocation.getArgument(0));
       return mockTokenStream;
     });
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenReturn(mockTokenStream);
     when(mockTokenStream.onError(any(Consumer.class))).thenReturn(mockTokenStream);
 
     doAnswer(invocation -> {
@@ -256,8 +256,8 @@ class AiChatControllerTest {
 
     AtomicReference<Consumer<Response<AiMessage>>> onCompleteRef = new AtomicReference<>();
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenReturn(mockTokenStream);
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenAnswer(invocation -> {
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenAnswer(invocation -> {
       onCompleteRef.set(invocation.getArgument(0));
       return mockTokenStream;
     });
@@ -330,8 +330,8 @@ class AiChatControllerTest {
     ArgumentCaptor<UserMessage> userMessageCaptor = ArgumentCaptor.forClass(UserMessage.class);
     when(mockAssistant.streamChat(any(), userMessageCaptor.capture())).thenReturn(mockTokenStream);
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenReturn(mockTokenStream);
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenReturn(mockTokenStream);
     when(mockTokenStream.onError(any(Consumer.class))).thenReturn(mockTokenStream);
 
     SseEmitter emitter = controller.streamChat(request);
@@ -366,8 +366,8 @@ class AiChatControllerTest {
     ArgumentCaptor<UserMessage> userMessageCaptor = ArgumentCaptor.forClass(UserMessage.class);
     when(mockAssistant.streamChat(any(), userMessageCaptor.capture())).thenReturn(mockTokenStream);
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenReturn(mockTokenStream);
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenReturn(mockTokenStream);
     when(mockTokenStream.onError(any(Consumer.class))).thenReturn(mockTokenStream);
 
     SseEmitter emitter = controller.streamChat(request);
@@ -375,7 +375,7 @@ class AiChatControllerTest {
     assertNotNull(emitter);
     UserMessage capturedMessage = userMessageCaptor.getValue();
     assertNotNull(capturedMessage);
-    assertEquals("Hello fallback", capturedMessage.text());
+    assertEquals("Hello fallback", capturedMessage.singleText());
   }
 
   @Test
@@ -402,8 +402,8 @@ class AiChatControllerTest {
     ArgumentCaptor<UserMessage> userMessageCaptor = ArgumentCaptor.forClass(UserMessage.class);
     when(mockAssistant.streamChat(any(), userMessageCaptor.capture())).thenReturn(mockTokenStream);
 
-    when(mockTokenStream.onNext(any(Consumer.class))).thenReturn(mockTokenStream);
-    when(mockTokenStream.onComplete(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onPartialResponse(any(Consumer.class))).thenReturn(mockTokenStream);
+    when(mockTokenStream.onCompleteResponse(any(Consumer.class))).thenReturn(mockTokenStream);
     when(mockTokenStream.onError(any(Consumer.class))).thenReturn(mockTokenStream);
 
     SseEmitter emitter = controller.streamChat(request);
@@ -411,6 +411,6 @@ class AiChatControllerTest {
     assertNotNull(emitter);
     UserMessage capturedMessage = userMessageCaptor.getValue();
     assertNotNull(capturedMessage);
-    assertEquals("Hello invalid fallback", capturedMessage.text());
+    assertEquals("Hello invalid fallback", capturedMessage.singleText());
   }
 }

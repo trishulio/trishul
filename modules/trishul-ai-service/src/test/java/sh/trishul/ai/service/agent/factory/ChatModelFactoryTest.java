@@ -3,7 +3,7 @@ package sh.trishul.ai.service.agent.factory;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class ChatModelFactoryTest {
     config.setApiKey("test-key");
     config.setModelName("gpt-4");
 
-    ChatLanguageModel model = factory.getModel(AiProvider.OPENAI, config);
+    ChatModel model = factory.getModel(AiProvider.OPENAI, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiChatModel);
@@ -55,7 +55,7 @@ class ChatModelFactoryTest {
     config.setApiKey("test-copilot-key");
     config.setModelName("gpt-4");
 
-    ChatLanguageModel model = factory.getModel(AiProvider.GITHUB_COPILOT, config);
+    ChatModel model = factory.getModel(AiProvider.GITHUB_COPILOT, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiChatModel);

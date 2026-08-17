@@ -1,12 +1,12 @@
 package sh.trishul.ai.service.agent.factory;
 
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 
 public class StreamingChatModelFactory {
 
-  public StreamingChatLanguageModel getModel(AiProvider provider, AiChatModelConfig config) {
+  public StreamingChatModel getModel(AiProvider provider, AiChatModelConfig config) {
     if (provider == AiProvider.GITHUB_COPILOT) {
       return getGithubCopilotModel(config);
     }
@@ -22,7 +22,7 @@ public class StreamingChatModelFactory {
     throw new IllegalArgumentException("Unsupported AI Provider: " + provider);
   }
 
-  public StreamingChatLanguageModel getGithubCopilotModel(AiChatModelConfig config) {
+  public StreamingChatModel getGithubCopilotModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("GitHub Copilot API Key must be provided");
     }
@@ -31,7 +31,7 @@ public class StreamingChatModelFactory {
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
-  public StreamingChatLanguageModel getOpenRouterModel(AiChatModelConfig config) {
+  public StreamingChatModel getOpenRouterModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenRouter API Key must be provided");
     }
@@ -42,7 +42,7 @@ public class StreamingChatModelFactory {
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
-  public StreamingChatLanguageModel getOpenAiModel(AiChatModelConfig config) {
+  public StreamingChatModel getOpenAiModel(AiChatModelConfig config) {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenAI API Key must be provided");
     }

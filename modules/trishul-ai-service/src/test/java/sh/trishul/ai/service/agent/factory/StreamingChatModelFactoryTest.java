@@ -4,11 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 
 class StreamingChatModelFactoryTest {
@@ -27,11 +26,12 @@ class StreamingChatModelFactoryTest {
     config.setApiKey("test-key");
     config.setModelName("gpt-4");
 
-    StreamingChatLanguageModel model = factory.getModel(AiProvider.OPENAI, config);
+    StreamingChatModel model = factory.getModel(AiProvider.OPENAI, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
-    assertEquals("gpt-4", ReflectionTestUtils.getField(model, "modelName"));
+    assertEquals("gpt-4",
+        ((OpenAiStreamingChatModel) model).defaultRequestParameters().modelName());
   }
 
   @Test
@@ -42,11 +42,12 @@ class StreamingChatModelFactoryTest {
     config.setModelName("gpt-4");
     config.setStreamingModelName(null);
 
-    StreamingChatLanguageModel model = factory.getModel(AiProvider.OPENAI, config);
+    StreamingChatModel model = factory.getModel(AiProvider.OPENAI, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
-    assertEquals("gpt-4", ReflectionTestUtils.getField(model, "modelName"));
+    assertEquals("gpt-4",
+        ((OpenAiStreamingChatModel) model).defaultRequestParameters().modelName());
   }
 
   @Test
@@ -74,11 +75,12 @@ class StreamingChatModelFactoryTest {
     config.setModelName("gpt-4");
     config.setStreamingModelName("gpt-4-stream");
 
-    StreamingChatLanguageModel model = factory.getModel(AiProvider.OPENAI, config);
+    StreamingChatModel model = factory.getModel(AiProvider.OPENAI, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
-    assertEquals("gpt-4-stream", ReflectionTestUtils.getField(model, "modelName"));
+    assertEquals("gpt-4-stream",
+        ((OpenAiStreamingChatModel) model).defaultRequestParameters().modelName());
   }
 
   @Test
@@ -100,7 +102,7 @@ class StreamingChatModelFactoryTest {
     config.setApiKey("test-copilot-key");
     config.setModelName("Gemini 3.1 Pro Preview");
 
-    StreamingChatLanguageModel model = factory.getModel(AiProvider.GITHUB_COPILOT, config);
+    StreamingChatModel model = factory.getModel(AiProvider.GITHUB_COPILOT, config);
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
   }
