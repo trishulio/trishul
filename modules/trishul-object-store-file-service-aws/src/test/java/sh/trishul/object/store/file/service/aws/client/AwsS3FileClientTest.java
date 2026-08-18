@@ -69,9 +69,8 @@ class AwsS3FileClientTest {
       return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
-    IaasObjectStoreFile file
-        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
-            .setMimeType(IMAGE_PNG));
+    IaasObjectStoreFile file = client.add(new IaasObjectStoreFile()
+        .setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)).setMimeType(IMAGE_PNG));
 
     assertNotNull(file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
@@ -93,9 +92,9 @@ class AwsS3FileClientTest {
       return URI.create("http://localhost/" + req.getKey()).toURL();
     }).when(mS3).generatePresignedUrl(captor.capture());
 
-    IaasObjectStoreFile file = client.put(new IaasObjectStoreFile()
-        .setFileKey(URI.create("note.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
-        .setMimeType(IMAGE_PNG));
+    IaasObjectStoreFile file
+        = client.put(new IaasObjectStoreFile().setFileKey(URI.create("note.txt"))
+            .setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)).setMimeType(IMAGE_PNG));
 
     assertEquals(URI.create("note.txt"), file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());

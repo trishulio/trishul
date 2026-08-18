@@ -4,7 +4,6 @@ services:
       context: .
       dockerfile: mvn.dockerfile
     container_name: mvn
-    network_mode: host
     working_dir: ${PWD}
     environment:
       ENABLE_TESTS: "${ENABLE_TESTS}"
