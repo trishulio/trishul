@@ -3,8 +3,8 @@ package sh.trishul.base.types.base.pojo;
 import java.time.LocalDateTime;
 
 public interface Audited<T extends Audited<T>> {
-  String ATTR_CREATED_AT = "createdAt";
-  String ATTR_LAST_UPDATED = "lastUpdated";
+  final String ATTR_CREATED_AT = "createdAt";
+  final String ATTR_LAST_UPDATED = "lastUpdated";
 
   LocalDateTime getCreatedAt();
 

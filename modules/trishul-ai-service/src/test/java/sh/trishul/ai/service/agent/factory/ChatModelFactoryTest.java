@@ -81,7 +81,7 @@ class ChatModelFactoryTest {
     config.setApiKey("test-openrouter-key");
     config.setModelName("meta-llama/llama-3");
 
-    ChatLanguageModel model = factory.getModel(AiProvider.OPENROUTER, config);
+    ChatModel model = factory.getModel(AiProvider.OPENROUTER, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiChatModel);

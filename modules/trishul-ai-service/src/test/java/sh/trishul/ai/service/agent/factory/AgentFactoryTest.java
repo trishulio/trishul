@@ -3,7 +3,6 @@ package sh.trishul.ai.service.agent.factory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -121,7 +120,7 @@ class AgentFactoryTest {
 
     AiServiceContext ctx = getAiServiceContext(result);
     assertNotNull(ctx);
-    assertNull(ctx.toolService);
+    assertTrue(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -213,6 +212,20 @@ class AgentFactoryTest {
 
     Assistant assistant = (Assistant) result;
     assistant.chat("session-123", UserMessage.from("hello"));
+  }
+
+  private AiServiceContext getAiServiceContext(Object assistantProxy) {
+    try {
+      InvocationHandler handler = Proxy.getInvocationHandler(assistantProxy);
+      Field this0Field = handler.getClass().getDeclaredField("this$0");
+      this0Field.setAccessible(true);
+      Object defaultAiServices = this0Field.get(handler);
+      Field contextField = AiServices.class.getDeclaredField("context");
+      contextField.setAccessible(true);
+      return (AiServiceContext) contextField.get(defaultAiServices);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
 

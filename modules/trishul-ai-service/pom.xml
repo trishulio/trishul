@@ -59,6 +59,12 @@
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-anthropic-spring-boot-starter</artifactId>
             <version>${dev.langchain4j.spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>dev.langchain4j</groupId>
+                    <artifactId>langchain4j-http-client-jdk</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -71,27 +77,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <langchain4j.http.clientBuilderFactory>dev.langchain4j.http.client.spring.restclient.SpringRestClientBuilderFactory</langchain4j.http.clientBuilderFactory>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <configuration>
-                    <jvmArgs>
-                        <jvmArg>-Xmx1024m</jvmArg>
-                        <jvmArg>-Dlangchain4j.http.clientBuilderFactory=dev.langchain4j.http.client.spring.restclient.SpringRestClientBuilderFactory</jvmArg>
-                    </jvmArgs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

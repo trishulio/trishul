@@ -757,7 +757,7 @@
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
 
-                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,dev.langchain4j.version,dev.langchain4j.spring-boot.version,org.springframework.ai.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,org.springframework.ai.version</excludeProperties>
                     </configuration>
                 </plugin>
 

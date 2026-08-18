@@ -120,7 +120,7 @@ class StreamingChatModelFactoryTest {
     config.setApiKey("test-openrouter-key");
     config.setModelName("meta-llama/llama-3");
 
-    StreamingChatLanguageModel model = factory.getModel(AiProvider.OPENROUTER, config);
+    StreamingChatModel model = factory.getModel(AiProvider.OPENROUTER, config);
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
