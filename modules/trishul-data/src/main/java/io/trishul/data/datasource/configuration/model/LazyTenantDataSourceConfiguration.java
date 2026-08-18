@@ -4,6 +4,7 @@ import io.trishul.model.base.pojo.BaseModel;
 import io.trishul.secrets.SecretsManager;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Objects;
 
 // TODO: Rename this to a datasource that automatically lazily fetches password, nothing to do with
 // tenant
@@ -104,13 +105,12 @@ public class LazyTenantDataSourceConfiguration extends BaseModel
       return false;
     }
     LazyTenantDataSourceConfiguration that = (LazyTenantDataSourceConfiguration) o;
-    return java.util.Objects.equals(userName, that.userName)
-        && java.util.Objects.equals(schemaName, that.schemaName)
-        && java.util.Objects.equals(globalConfig, that.globalConfig);
+    return Objects.equals(userName, that.userName) && Objects.equals(schemaName, that.schemaName)
+        && Objects.equals(globalConfig, that.globalConfig);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(userName, schemaName, globalConfig);
+    return Objects.hash(userName, schemaName, globalConfig);
   }
 }

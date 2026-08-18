@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -190,7 +191,7 @@ class UserTest {
 
   @Test
   void testGetImageSrc_ThrowsRuntimeException_WhenUriIsInvalid() throws Exception {
-    org.apache.commons.lang3.reflect.FieldUtils.writeField(user, "imageSrc", "http://a b c", true);
+    FieldUtils.writeField(user, "imageSrc", "http://a b c", true);
     assertThrows(RuntimeException.class, () -> user.getImageSrc());
   }
 

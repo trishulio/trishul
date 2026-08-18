@@ -75,7 +75,7 @@ class AddAiAgentConfigDtoTest {
   @Test
   void testAccessGuardrailIds() throws Exception {
     AddAiAgentConfigDto accessor = new AddAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setGuardrailIds(value));
     assertEquals(value, accessor.getGuardrailIds());
   }
@@ -83,7 +83,7 @@ class AddAiAgentConfigDtoTest {
   @Test
   void testAccessSkillIds() throws Exception {
     AddAiAgentConfigDto accessor = new AddAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setSkillIds(value));
     assertEquals(value, accessor.getSkillIds());
   }
@@ -91,7 +91,7 @@ class AddAiAgentConfigDtoTest {
   @Test
   void testAccessToolIds() throws Exception {
     AddAiAgentConfigDto accessor = new AddAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setToolIds(value));
     assertEquals(value, accessor.getToolIds());
   }

@@ -86,7 +86,7 @@ class UpdateAiAgentConfigDtoTest {
   @Test
   void testAccessGuardrailIds() throws Exception {
     UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setGuardrailIds(value));
     assertEquals(value, accessor.getGuardrailIds());
   }
@@ -94,7 +94,7 @@ class UpdateAiAgentConfigDtoTest {
   @Test
   void testAccessSkillIds() throws Exception {
     UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setSkillIds(value));
     assertEquals(value, accessor.getSkillIds());
   }
@@ -102,7 +102,7 @@ class UpdateAiAgentConfigDtoTest {
   @Test
   void testAccessToolIds() throws Exception {
     UpdateAiAgentConfigDto accessor = new UpdateAiAgentConfigDto();
-    Set<Long> value = java.util.Set.of();
+    Set<Long> value = Set.of();
     assertSame(accessor, accessor.setToolIds(value));
     assertEquals(value, accessor.getToolIds());
   }

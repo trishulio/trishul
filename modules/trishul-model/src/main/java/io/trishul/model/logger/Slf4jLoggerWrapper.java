@@ -2,6 +2,7 @@ package io.trishul.model.logger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
 /**
  * A wrapper around SLF4J's {@link Logger} to provide contextual logging and standardizing log
@@ -19,7 +20,7 @@ public class Slf4jLoggerWrapper implements Logger {
   }
 
   @Override
-  public boolean isTraceEnabled(org.slf4j.Marker arg0) {
+  public boolean isTraceEnabled(Marker arg0) {
     return log.isTraceEnabled(arg0);
   }
 
@@ -29,7 +30,7 @@ public class Slf4jLoggerWrapper implements Logger {
   }
 
   @Override
-  public boolean isDebugEnabled(org.slf4j.Marker arg0) {
+  public boolean isDebugEnabled(Marker arg0) {
     return log.isDebugEnabled(arg0);
   }
 
@@ -39,7 +40,7 @@ public class Slf4jLoggerWrapper implements Logger {
   }
 
   @Override
-  public boolean isInfoEnabled(org.slf4j.Marker arg0) {
+  public boolean isInfoEnabled(Marker arg0) {
     return log.isInfoEnabled(arg0);
   }
 
@@ -54,12 +55,12 @@ public class Slf4jLoggerWrapper implements Logger {
   }
 
   @Override
-  public boolean isWarnEnabled(org.slf4j.Marker arg0) {
+  public boolean isWarnEnabled(Marker arg0) {
     return log.isWarnEnabled(arg0);
   }
 
   @Override
-  public boolean isErrorEnabled(org.slf4j.Marker arg0) {
+  public boolean isErrorEnabled(Marker arg0) {
     return log.isErrorEnabled(arg0);
   }
 
@@ -69,262 +70,257 @@ public class Slf4jLoggerWrapper implements Logger {
   }
 
   @Override
-  public java.lang.String getName() {
+  public String getName() {
     return log.getName();
   }
 
   @Override
-  public void info(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2) {
+  public void info(String arg0, Object arg1, Object arg2) {
     log.info(arg0, arg1, arg2);
   }
 
   @Override
-  public void info(java.lang.String arg0, java.lang.Object arg1) {
+  public void info(String arg0, Object arg1) {
     log.info(arg0, arg1);
   }
 
   @Override
-  public void info(java.lang.String arg0) {
+  public void info(String arg0) {
     log.info(arg0);
   }
 
   @Override
-  public void info(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Throwable arg2) {
+  public void info(Marker arg0, String arg1, Throwable arg2) {
     log.info(arg0, arg1, arg2);
   }
 
   @Override
-  public void info(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2) {
+  public void info(Marker arg0, String arg1, Object arg2) {
     log.info(arg0, arg1, arg2);
   }
 
   @Override
-  public void info(org.slf4j.Marker arg0, java.lang.String arg1) {
+  public void info(Marker arg0, String arg1) {
     log.info(arg0, arg1);
   }
 
   @Override
-  public void info(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2,
-      java.lang.Object arg3) {
+  public void info(Marker arg0, String arg1, Object arg2, Object arg3) {
     log.info(arg0, arg1, arg2, arg3);
   }
 
   @Override
-  public void info(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object... arg2) {
+  public void info(Marker arg0, String arg1, Object... arg2) {
     log.info(arg0, arg1, arg2);
   }
 
   @Override
-  public void info(java.lang.String arg0, java.lang.Throwable arg1) {
+  public void info(String arg0, Throwable arg1) {
     log.info(arg0, arg1);
   }
 
   @Override
-  public void info(java.lang.String arg0, java.lang.Object... arg1) {
+  public void info(String arg0, Object... arg1) {
     log.info(arg0, arg1);
   }
 
   @Override
-  public void trace(java.lang.String arg0) {
+  public void trace(String arg0) {
     log.trace(arg0);
   }
 
   @Override
-  public void trace(java.lang.String arg0, java.lang.Throwable arg1) {
+  public void trace(String arg0, Throwable arg1) {
     log.trace(arg0, arg1);
   }
 
   @Override
-  public void trace(org.slf4j.Marker arg0, java.lang.String arg1) {
+  public void trace(Marker arg0, String arg1) {
     log.trace(arg0, arg1);
   }
 
   @Override
-  public void trace(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2) {
+  public void trace(Marker arg0, String arg1, Object arg2) {
     log.trace(arg0, arg1, arg2);
   }
 
   @Override
-  public void trace(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Throwable arg2) {
+  public void trace(Marker arg0, String arg1, Throwable arg2) {
     log.trace(arg0, arg1, arg2);
   }
 
   @Override
-  public void trace(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object... arg2) {
+  public void trace(Marker arg0, String arg1, Object... arg2) {
     log.trace(arg0, arg1, arg2);
   }
 
   @Override
-  public void trace(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2) {
+  public void trace(String arg0, Object arg1, Object arg2) {
     log.trace(arg0, arg1, arg2);
   }
 
   @Override
-  public void trace(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2,
-      java.lang.Object arg3) {
+  public void trace(Marker arg0, String arg1, Object arg2, Object arg3) {
     log.trace(arg0, arg1, arg2, arg3);
   }
 
   @Override
-  public void trace(java.lang.String arg0, java.lang.Object arg1) {
+  public void trace(String arg0, Object arg1) {
     log.trace(arg0, arg1);
   }
 
   @Override
-  public void trace(java.lang.String arg0, java.lang.Object... arg1) {
+  public void trace(String arg0, Object... arg1) {
     log.trace(arg0, arg1);
   }
 
   @Override
-  public void error(java.lang.String arg0) {
+  public void error(String arg0) {
     log.error(arg0);
   }
 
   @Override
-  public void error(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Throwable arg2) {
+  public void error(Marker arg0, String arg1, Throwable arg2) {
     log.error(arg0, arg1, arg2);
   }
 
   @Override
-  public void error(org.slf4j.Marker arg0, java.lang.String arg1) {
+  public void error(Marker arg0, String arg1) {
     log.error(arg0, arg1);
   }
 
   @Override
-  public void error(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2) {
+  public void error(Marker arg0, String arg1, Object arg2) {
     log.error(arg0, arg1, arg2);
   }
 
   @Override
-  public void error(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2,
-      java.lang.Object arg3) {
+  public void error(Marker arg0, String arg1, Object arg2, Object arg3) {
     log.error(arg0, arg1, arg2, arg3);
   }
 
   @Override
-  public void error(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object... arg2) {
+  public void error(Marker arg0, String arg1, Object... arg2) {
     log.error(arg0, arg1, arg2);
   }
 
   @Override
-  public void error(java.lang.String arg0, java.lang.Object arg1) {
+  public void error(String arg0, Object arg1) {
     log.error(arg0, arg1);
   }
 
   @Override
-  public void error(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2) {
+  public void error(String arg0, Object arg1, Object arg2) {
     log.error(arg0, arg1, arg2);
   }
 
   @Override
-  public void error(java.lang.String arg0, java.lang.Object... arg1) {
+  public void error(String arg0, Object... arg1) {
     log.error(arg0, arg1);
   }
 
   @Override
-  public void error(java.lang.String arg0, java.lang.Throwable arg1) {
+  public void error(String arg0, Throwable arg1) {
     log.error(arg0, arg1);
   }
 
   @Override
-  public void warn(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2,
-      java.lang.Object arg3) {
+  public void warn(Marker arg0, String arg1, Object arg2, Object arg3) {
     log.warn(arg0, arg1, arg2, arg3);
   }
 
   @Override
-  public void warn(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2) {
+  public void warn(Marker arg0, String arg1, Object arg2) {
     log.warn(arg0, arg1, arg2);
   }
 
   @Override
-  public void warn(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object... arg2) {
+  public void warn(Marker arg0, String arg1, Object... arg2) {
     log.warn(arg0, arg1, arg2);
   }
 
   @Override
-  public void warn(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Throwable arg2) {
+  public void warn(Marker arg0, String arg1, Throwable arg2) {
     log.warn(arg0, arg1, arg2);
   }
 
   @Override
-  public void warn(java.lang.String arg0) {
+  public void warn(String arg0) {
     log.warn(arg0);
   }
 
   @Override
-  public void warn(java.lang.String arg0, java.lang.Object arg1) {
+  public void warn(String arg0, Object arg1) {
     log.warn(arg0, arg1);
   }
 
   @Override
-  public void warn(java.lang.String arg0, java.lang.Object... arg1) {
+  public void warn(String arg0, Object... arg1) {
     log.warn(arg0, arg1);
   }
 
   @Override
-  public void warn(org.slf4j.Marker arg0, java.lang.String arg1) {
+  public void warn(Marker arg0, String arg1) {
     log.warn(arg0, arg1);
   }
 
   @Override
-  public void warn(java.lang.String arg0, java.lang.Throwable arg1) {
+  public void warn(String arg0, Throwable arg1) {
     log.warn(arg0, arg1);
   }
 
   @Override
-  public void warn(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2) {
+  public void warn(String arg0, Object arg1, Object arg2) {
     log.warn(arg0, arg1, arg2);
   }
 
   @Override
-  public void debug(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object... arg2) {
+  public void debug(Marker arg0, String arg1, Object... arg2) {
     log.debug(arg0, arg1, arg2);
   }
 
   @Override
-  public void debug(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Throwable arg2) {
+  public void debug(Marker arg0, String arg1, Throwable arg2) {
     log.debug(arg0, arg1, arg2);
   }
 
   @Override
-  public void debug(org.slf4j.Marker arg0, java.lang.String arg1) {
+  public void debug(Marker arg0, String arg1) {
     log.debug(arg0, arg1);
   }
 
   @Override
-  public void debug(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2,
-      java.lang.Object arg3) {
+  public void debug(Marker arg0, String arg1, Object arg2, Object arg3) {
     log.debug(arg0, arg1, arg2, arg3);
   }
 
   @Override
-  public void debug(org.slf4j.Marker arg0, java.lang.String arg1, java.lang.Object arg2) {
+  public void debug(Marker arg0, String arg1, Object arg2) {
     log.debug(arg0, arg1, arg2);
   }
 
   @Override
-  public void debug(java.lang.String arg0) {
+  public void debug(String arg0) {
     log.debug(arg0);
   }
 
   @Override
-  public void debug(java.lang.String arg0, java.lang.Object arg1) {
+  public void debug(String arg0, Object arg1) {
     log.debug(arg0, arg1);
   }
 
   @Override
-  public void debug(java.lang.String arg0, java.lang.Object arg1, java.lang.Object arg2) {
+  public void debug(String arg0, Object arg1, Object arg2) {
     log.debug(arg0, arg1, arg2);
   }
 
   @Override
-  public void debug(java.lang.String arg0, java.lang.Object... arg1) {
+  public void debug(String arg0, Object... arg1) {
     log.debug(arg0, arg1);
   }
 
   @Override
-  public void debug(java.lang.String arg0, java.lang.Throwable arg1) {
+  public void debug(String arg0, Throwable arg1) {
     log.debug(arg0, arg1);
   }
 
