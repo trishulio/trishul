@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.DeletePublicAccessBlockRequest;
 import com.amazonaws.services.s3.model.GetPublicAccessBlockRequest;
 import com.amazonaws.services.s3.model.GetPublicAccessBlockResult;
 import com.amazonaws.services.s3.model.SetPublicAccessBlockRequest;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.trishul.iaas.client.IaasClient;
@@ -14,6 +15,10 @@ import sh.trishul.object.store.configuration.access.model.IaasObjectStoreAccessC
 public class AwsPublicAccessBlockClient implements
     IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> {
   private static final Logger log = LoggerFactory.getLogger(AwsPublicAccessBlockClient.class);
+
+  private static final Set<Integer> IGNORED_STATUS_CODES = Set.of(404);
+  private static final Set<String> IGNORED_ERRORS
+      = Set.of("nosuchbucket", "nosuchpublicaccessblockconfiguration");
 
   private final AmazonS3 awsClient;
 
@@ -79,8 +84,8 @@ public class AwsPublicAccessBlockClient implements
       this.awsClient.deletePublicAccessBlock(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())
-          || "NoSuchPublicAccessBlockConfiguration".equalsIgnoreCase(e.getErrorCode())) {
+      if (IGNORED_STATUS_CODES.contains(e.getStatusCode()) || (e.getErrorCode() != null
+          && IGNORED_ERRORS.contains(e.getErrorCode().toLowerCase()))) {
         log.info("S3 public access block configuration already deleted or not found: {}",
             bucketName);
         success = true;

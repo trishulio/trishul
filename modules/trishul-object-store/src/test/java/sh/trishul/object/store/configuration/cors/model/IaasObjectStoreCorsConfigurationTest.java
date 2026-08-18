@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,8 +72,7 @@ class IaasObjectStoreCorsConfigurationTest {
   @Test
   void testAccessBucketCrossOriginConfiguration() throws Exception {
     IaasObjectStoreCorsConfiguration accessor = new IaasObjectStoreCorsConfiguration();
-    BucketCrossOriginConfiguration value
-        = org.mockito.Mockito.mock(BucketCrossOriginConfiguration.class);
+    BucketCrossOriginConfiguration value = mock(BucketCrossOriginConfiguration.class);
     assertSame(accessor, accessor.setBucketCrossOriginConfiguration(value));
     assertEquals(value, accessor.getBucketCrossOriginConfiguration());
   }

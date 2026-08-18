@@ -97,7 +97,7 @@ class TaxAmountTest {
   @Test
   void testAccessPstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    Money value = org.joda.money.Money.parse("USD 123.45");
+    Money value = Money.parse("USD 123.45");
     assertSame(accessor, accessor.setPstAmount(value));
     assertEquals(value, accessor.getPstAmount());
   }
@@ -105,7 +105,7 @@ class TaxAmountTest {
   @Test
   void testAccessGstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    Money value = org.joda.money.Money.parse("USD 123.45");
+    Money value = Money.parse("USD 123.45");
     assertSame(accessor, accessor.setGstAmount(value));
     assertEquals(value, accessor.getGstAmount());
   }
@@ -113,7 +113,7 @@ class TaxAmountTest {
   @Test
   void testAccessHstAmount() throws Exception {
     TaxAmount accessor = new TaxAmount();
-    Money value = org.joda.money.Money.parse("USD 123.45");
+    Money value = Money.parse("USD 123.45");
     assertSame(accessor, accessor.setHstAmount(value));
     assertEquals(value, accessor.getHstAmount());
   }

@@ -1,6 +1,7 @@
 package sh.trishul.ai.service.autoconfiguration;
 
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,14 +41,20 @@ public class AiAgentConfigAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(StreamingChatModelFactory.class)
-  public StreamingChatModelFactory streamingChatModelFactory() {
-    return new StreamingChatModelFactory();
+  public StreamingChatModelFactory streamingChatModelFactory(
+      @Value("${ai.copilot.base-url:https://models.inference.ai.azure.com}") String copilotBaseUrl,
+      @Value("${ai.openrouter.base-url:https://openrouter.ai/api/v1}") String openRouterBaseUrl,
+      @Value("${ai.openai.base-url:}") String openAiBaseUrl) {
+    return new StreamingChatModelFactory(copilotBaseUrl, openRouterBaseUrl, openAiBaseUrl);
   }
 
   @Bean
   @ConditionalOnMissingBean(ChatModelFactory.class)
-  public ChatModelFactory chatModelFactory() {
-    return new ChatModelFactory();
+  public ChatModelFactory chatModelFactory(
+      @Value("${ai.copilot.base-url:https://models.inference.ai.azure.com}") String copilotBaseUrl,
+      @Value("${ai.openrouter.base-url:https://openrouter.ai/api/v1}") String openRouterBaseUrl,
+      @Value("${ai.openai.base-url:}") String openAiBaseUrl) {
+    return new ChatModelFactory(copilotBaseUrl, openRouterBaseUrl, openAiBaseUrl);
   }
 
   @Bean
