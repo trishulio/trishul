@@ -55,16 +55,7 @@ push_release:
 
 create_release:
 	@set -e; \
-	NEW_VERSION=$$(python3 -c " \
-import xml.etree.ElementTree as ET; \
-ns = {'mvn': 'http://maven.apache.org/POM/4.0.0'}; \
-root = ET.parse('pom.xml').getroot(); \
-curr = root.find('mvn:version', ns).text; \
-base = curr.replace('-SNAPSHOT', ''); \
-parts = base.split('.'); \
-parts[-1] = str(int(parts[-1]) + 1); \
-print('.'.join(parts)) \
-	"); \
+	NEW_VERSION=$$(python3 -c "import xml.etree.ElementTree as ET; ns = {'mvn': 'http://maven.apache.org/POM/4.0.0'}; root = ET.parse('pom.xml').getroot(); curr = root.find('mvn:version', ns).text; base = curr.replace('-SNAPSHOT', ''); parts = base.split('.'); parts[-1] = str(int(parts[-1]) + 1); print('.'.join(parts))"); \
 	echo "Calculated next version: $$NEW_VERSION"; \
 	git config user.name "Jenkins CI" || true; \
 	git config user.email "jenkins@cloudville.me" || true; \
