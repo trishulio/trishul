@@ -50,11 +50,12 @@ tag_release:
 	git tag -a "v$(VERSION)" -m "Release v$(VERSION)" || true
 
 push_release:
-	git push origin main
+	git push origin HEAD:main
 	git push origin "v$(VERSION)"
 
 create_release:
-	@NEW_VERSION=$$(python3 -c " \
+	@set -e; \
+	NEW_VERSION=$$(python3 -c " \
 import xml.etree.ElementTree as ET; \
 ns = {'mvn': 'http://maven.apache.org/POM/4.0.0'}; \
 root = ET.parse('pom.xml').getroot(); \
@@ -67,8 +68,8 @@ print('.'.join(parts)) \
 	echo "Calculated next version: $$NEW_VERSION"; \
 	git config user.name "Jenkins CI" || true; \
 	git config user.email "jenkins@cloudville.me" || true; \
-	$(MAKE) generate_changelog VERSION=$$NEW_VERSION; \
-	$(MAKE) set_version VERSION=$$NEW_VERSION; \
-	$(MAKE) commit_release VERSION=$$NEW_VERSION; \
-	$(MAKE) tag_release VERSION=$$NEW_VERSION; \
-	$(MAKE) push_release VERSION=$$NEW_VERSION
+	$(MAKE) generate_changelog VERSION="$$NEW_VERSION"; \
+	$(MAKE) set_version VERSION="$$NEW_VERSION"; \
+	$(MAKE) commit_release VERSION="$$NEW_VERSION"; \
+	$(MAKE) tag_release VERSION="$$NEW_VERSION"; \
+	$(MAKE) push_release VERSION="$$NEW_VERSION"
