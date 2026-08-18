@@ -8,7 +8,7 @@ IaaS resource model for tenant cloud infrastructure (authentication, identity pr
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-iaas-tenant</artifactId>
 </dependency>
 ```

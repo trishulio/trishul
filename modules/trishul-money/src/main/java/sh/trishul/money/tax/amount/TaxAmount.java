@@ -1,0 +1,116 @@
+package sh.trishul.money.tax.amount;
+
+import jakarta.persistence.AssociationOverride;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
+import java.util.ArrayList;
+import java.util.List;
+import org.joda.money.Money;
+import sh.trishul.model.base.entity.BaseEntity;
+import sh.trishul.money.MoneyCalculator;
+import sh.trishul.money.MoneyEntity;
+import sh.trishul.money.MoneyMapper;
+
+@Embeddable
+public class TaxAmount extends BaseEntity {
+  public static final String FIELD_PST_AMOUNT = "pstAmount";
+  public static final String FIELD_GST_AMOUNT = "gstAmount";
+  public static final String FIELD_HST_AMOUNT = "hstAmount";
+  public static final String FIELD_TOTAL_TAX_AMOUNT = "totalTaxAmount";
+
+  @Embedded
+  @AttributeOverride(name = "amount", column = @Column(name = "pst_amount"))
+  @AssociationOverride(name = "currency",
+      joinColumns = @JoinColumn(name = "pst_amount_currency_code",
+          referencedColumnName = "numeric_code"))
+  private MoneyEntity pstAmount;
+
+  @Embedded
+  @AttributeOverride(name = "amount", column = @Column(name = "gst_amount"))
+  @AssociationOverride(name = "currency",
+      joinColumns = @JoinColumn(name = "gst_amount_currency_code",
+          referencedColumnName = "numeric_code"))
+  private MoneyEntity gstAmount;
+
+  @Embedded
+  @AttributeOverride(name = "amount", column = @Column(name = "hst_amount"))
+  @AssociationOverride(name = "currency",
+      joinColumns = @JoinColumn(name = "hst_amount_currency_code",
+          referencedColumnName = "numeric_code"))
+  private MoneyEntity hstAmount;
+
+  @Embedded
+  @AttributeOverride(name = "amount", column = @Column(name = "total_tax_amount"))
+  @AssociationOverride(name = "currency",
+      joinColumns = @JoinColumn(name = "total_tax_amount_currency_code",
+          referencedColumnName = "numeric_code"))
+  private MoneyEntity totalTaxAmount;
+
+  public TaxAmount() {
+    super();
+  }
+
+  public TaxAmount(Money pstAmount, Money gstAmount, Money hstAmount) {
+    this();
+    setPstAmount(pstAmount);
+    setGstAmount(gstAmount);
+    setHstAmount(hstAmount);
+  }
+
+  public TaxAmount(Money pstAmount, Money gstAmount) {
+    this(pstAmount, gstAmount, null);
+  }
+
+  public TaxAmount(Money hstAmount) {
+    this(null, null, hstAmount);
+  }
+
+  public Money getPstAmount() {
+    return MoneyMapper.INSTANCE.fromEntity(pstAmount);
+  }
+
+  public Money getGstAmount() {
+    return MoneyMapper.INSTANCE.fromEntity(gstAmount);
+  }
+
+  public Money getHstAmount() {
+    return MoneyMapper.INSTANCE.fromEntity(hstAmount);
+  }
+
+  public TaxAmount setPstAmount(Money pstAmount) {
+    this.pstAmount = MoneyMapper.INSTANCE.toEntity(pstAmount);
+    setTotalTaxAmount();
+    return this;
+  }
+
+  public TaxAmount setGstAmount(Money gstAmount) {
+    this.gstAmount = MoneyMapper.INSTANCE.toEntity(gstAmount);
+    setTotalTaxAmount();
+    return this;
+  }
+
+  public TaxAmount setHstAmount(Money hstAmount) {
+    this.hstAmount = MoneyMapper.INSTANCE.toEntity(hstAmount);
+    setTotalTaxAmount();
+    return this;
+  }
+
+  public Money getTotalTaxAmount() {
+    return MoneyMapper.INSTANCE.fromEntity(totalTaxAmount);
+  }
+
+  @PrePersist
+  public void setTotalTaxAmount() {
+    List<Money> amounts = new ArrayList<>(3);
+    amounts.add(getPstAmount());
+    amounts.add(getGstAmount());
+    amounts.add(getHstAmount());
+    Money totalTaxAmt = MoneyCalculator.INSTANCE.totalAmount(amounts);
+
+    this.totalTaxAmount = MoneyMapper.INSTANCE.toEntity(totalTaxAmt);
+  }
+}

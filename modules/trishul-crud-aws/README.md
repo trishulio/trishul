@@ -8,7 +8,7 @@ AWS exception handling for CRUD REST controllers.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-crud-aws</artifactId>
 </dependency>
 ```

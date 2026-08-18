@@ -8,7 +8,7 @@ Physical quantity handling using JSR-385 (Units of Measurement API) with support
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-quantity</artifactId>
 </dependency>
 ```
@@ -16,7 +16,7 @@ Physical quantity handling using JSR-385 (Units of Measurement API) with support
 ## Quick Start
 
 ```java
-import static io.trishul.quantity.unit.SupportedUnits.*;
+import static sh.trishul.quantity.unit.SupportedUnits.*;
 import tec.uom.se.quantity.Quantities;
 
 // 1. Create quantities with units

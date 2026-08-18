@@ -1,0 +1,72 @@
+package sh.trishul.tenant.dto;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+import java.net.URI;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class UpdateTenantDtoTest {
+  private UpdateTenantDto tenantDto;
+
+  @BeforeEach
+  void init() {
+    tenantDto = new UpdateTenantDto();
+  }
+
+  @Test
+  void testAllArgConstructor() {
+    tenantDto = new UpdateTenantDto(UUID.fromString("00000000-0000-0000-0000-000000000000"), "NAME",
+        URI.create("http://localhost/"));
+
+    assertEquals(UUID.fromString("00000000-0000-0000-0000-000000000000"), tenantDto.getId());
+    assertEquals("NAME", tenantDto.getName());
+    assertEquals(URI.create("http://localhost/"), tenantDto.getUrl());
+  }
+
+  @Test
+  void testGetSetId() {
+    UUID id = UUID.fromString("89efec46-fd0b-4fec-bcde-7f4bcef4f8e9");
+    tenantDto.setId(id);
+    assertSame(id, tenantDto.getId());
+  }
+
+  @Test
+  void testGetSetName() {
+    String name = "testName";
+    tenantDto.setName(name);
+    assertSame(name, tenantDto.getName());
+  }
+
+  @Test
+  void testGetSetUrl() {
+    URI url = URI.create("https://localhost/");
+    tenantDto.setUrl(url);
+    assertSame(url, tenantDto.getUrl());
+  }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    UUID value = UUID.randomUUID();
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessUrl() throws Exception {
+    UpdateTenantDto accessor = new UpdateTenantDto();
+    assertSame(accessor, accessor.setUrl(URI.create("http://localhost")));
+    assertEquals(URI.create("http://localhost"), accessor.getUrl());
+  }
+
+}

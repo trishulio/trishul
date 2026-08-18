@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-object-store-service</artifactId>
 </dependency>
 ```
@@ -40,16 +40,16 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `TenantIaasVfsService` via `iaasVfsService()` — @ConditionalOnMissingBean(TenantIaasVfsService.class) ([modules/trishul-iaas-tenant-object-store-service/src/main/java/io/trishul/iaas/tenant/object/store/service/autoconfiguration/IaasTenantObjectStoreServiceAutoConfiguration.java](modules/trishul-iaas-tenant-object-store-service/src/main/java/io/trishul/iaas/tenant/object/store/service/autoconfiguration/IaasTenantObjectStoreServiceAutoConfiguration.java))
+- `TenantIaasVfsService` via `iaasVfsService()` — @ConditionalOnMissingBean(TenantIaasVfsService.class) ([modules/trishul-iaas-tenant-object-store-service/src/main/java/sh/trishul/iaas/tenant/object/store/service/autoconfiguration/IaasTenantObjectStoreServiceAutoConfiguration.java](modules/trishul-iaas-tenant-object-store-service/src/main/java/sh/trishul/iaas/tenant/object/store/service/autoconfiguration/IaasTenantObjectStoreServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.object.store.service.autoconfiguration.IaasTenantObjectStoreServiceAutoConfiguration`
-- `io.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsService`
+- `sh.trishul.iaas.tenant.object.store.service.autoconfiguration.IaasTenantObjectStoreServiceAutoConfiguration`
+- `sh.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsService`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsServiceTest`
+- `sh.trishul.iaas.tenant.object.store.service.service.TenantIaasVfsServiceTest`
 
 ## Integration Guide
 

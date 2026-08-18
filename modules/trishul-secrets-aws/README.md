@@ -8,7 +8,7 @@ AWS Secrets Manager implementation of the `SecretsManager` interface.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-secrets-aws</artifactId>
 </dependency>
 ```

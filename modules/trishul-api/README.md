@@ -8,7 +8,7 @@ Shared API infrastructure module bundling Spring Boot Web, Actuator, and OpenAPI
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-api</artifactId>
 </dependency>
 ```
@@ -51,7 +51,7 @@ Include this module to get Spring Web + SpringDoc OpenAPI configured:
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-api</artifactId>
 </dependency>
 ```
@@ -157,11 +157,11 @@ public class TenantController {
 <!-- your-api-module/pom.xml -->
 <dependencies>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-api</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.trishul</groupId>
+        <groupId>sh.trishul</groupId>
         <artifactId>trishul-tenant-service</artifactId>
     </dependency>
 </dependencies>

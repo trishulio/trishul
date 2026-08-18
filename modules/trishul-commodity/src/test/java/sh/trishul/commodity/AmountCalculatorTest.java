@@ -1,0 +1,163 @@
+package sh.trishul.commodity;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.measure.Quantity;
+import org.joda.money.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.commodity.good.model.Good;
+import sh.trishul.money.amount.model.Amount;
+import sh.trishul.money.amount.model.AmountSupplier;
+import sh.trishul.money.tax.amount.TaxAmount;
+import sh.trishul.money.tax.calculator.TaxCalculator;
+import sh.trishul.money.tax.model.Tax;
+import sh.trishul.money.tax.rate.TaxRate;
+import sh.trishul.quantity.unit.SupportedUnits;
+import tec.uom.se.quantity.Quantities;
+
+class AmountCalculatorTest {
+  private AmountCalculator calculator;
+
+  @BeforeEach
+  void init() {
+    calculator = AmountCalculator.INSTANCE;
+  }
+
+  @Test
+  void testGetAmount_ReturnsNull_WhenSubTotalIsNull() {
+    Good good = new Good() {
+      @Override
+      public Tax getTax() {
+        return null;
+      }
+
+      @Override
+      public Quantity<?> getQuantity() {
+        return null;
+      }
+
+      @Override
+      public Money getPrice() {
+        return null;
+      }
+    };
+
+    assertNull(calculator.getAmount(good));
+  }
+
+  @Test
+  void testGetAmount_ReturnsAmountWithNullTaxAmount_WhenTaxIsNull() {
+    Good good = new Good() {
+      @Override
+      public Tax getTax() {
+        return null;
+      }
+
+      @Override
+      public Quantity<?> getQuantity() {
+        return Quantities.getQuantity(new BigDecimal("10"), SupportedUnits.GRAM);
+      }
+
+      @Override
+      public Money getPrice() {
+        return Money.parse("CAD 5");
+      }
+    };
+
+    Amount amount = calculator.getAmount(good);
+
+    Amount expected = new Amount(Money.parse("CAD 50"));
+    assertEquals(expected, amount);
+  }
+
+  @Test
+  void testGetAmount_ReturnsAmountt_WhenArgsAreNotNull() {
+    Good good = new Good() {
+      @Override
+      public Tax getTax() {
+        return new Tax(new TaxRate(new BigDecimal("0.1")));
+      }
+
+      @Override
+      public Quantity<?> getQuantity() {
+        return Quantities.getQuantity(new BigDecimal("10"), SupportedUnits.GRAM);
+      }
+
+      @Override
+      public Money getPrice() {
+        return Money.parse("CAD 5");
+      }
+    };
+
+    Amount amount = calculator.getAmount(good);
+
+    Amount expected = new Amount(Money.parse("CAD 50"), new TaxAmount(Money.parse("CAD 5")));
+    assertEquals(expected, amount);
+  }
+
+  @Test
+  void testGetTotal_ReturnsNull_WhenSuppliersAreNull() {
+    assertNull(calculator.getTotal(null));
+  }
+
+  @Test
+  void testGetTotal_ReturnsEmptyAmountWithEmptyTaxes_WhenListIsEmpty() {
+    Amount expected = new Amount();
+    expected.setTaxAmount(new TaxAmount());
+
+    assertEquals(expected, calculator.getTotal(new ArrayList<>()));
+  }
+
+  @Test
+  void testGetTotal_ReturnsTotalOfAmounts() {
+    List<? extends AmountSupplier> suppliers = new ArrayList<>() {
+      private static final long serialVersionUID = 1L;
+
+      {
+        add(null);
+        add(() -> null);
+        add(null);
+        add(() -> null);
+        add(null);
+        add(() -> null);
+        add(() -> new Amount());
+        add(() -> new Amount(Money.parse("CAD 100")));
+        add(() -> new Amount(null, new TaxAmount(Money.parse("CAD 15"))));
+        add(() -> new Amount(Money.parse("CAD 150"), new TaxAmount(Money.parse("CAD 25"))));
+        add(null);
+        add(() -> new Amount(null, new TaxAmount(Money.parse("CAD 35"))));
+        add(() -> null);
+      }
+    };
+
+    Amount total = calculator.getTotal(suppliers);
+
+    Amount expected = new Amount(Money.parse("CAD 250"), new TaxAmount(Money.parse("CAD 75")));
+    assertEquals(expected, total);
+  }
+
+  @Test
+  void testGetAmount_ReturnsAmount_WhenSubTotalIsNullButTaxAmountIsNotNull() {
+    CostCalculator mockCost = mock(CostCalculator.class);
+    TaxCalculator mockTax = mock(TaxCalculator.class);
+    AmountCalculator testCalculator = new AmountCalculator(mockCost, mockTax);
+
+    Good good = mock(Good.class);
+    Tax tax = mock(Tax.class);
+    when(good.getTax()).thenReturn(tax);
+
+    when(mockCost.getCost(good)).thenReturn(null);
+    TaxAmount expectedTaxAmount = new TaxAmount(Money.parse("CAD 5"));
+    when(mockTax.getTaxAmount(tax, null)).thenReturn(expectedTaxAmount);
+
+    Amount expected = new Amount(null, expectedTaxAmount);
+    assertEquals(expected, testCalculator.getAmount(good));
+  }
+}

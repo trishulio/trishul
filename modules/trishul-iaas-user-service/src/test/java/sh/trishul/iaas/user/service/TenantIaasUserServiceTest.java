@@ -1,0 +1,111 @@
+package sh.trishul.iaas.user.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.iaas.repository.IaasRepository;
+import sh.trishul.iaas.user.model.BaseIaasUser;
+import sh.trishul.iaas.user.model.BaseIaasUserTenantMembership;
+import sh.trishul.iaas.user.model.IaasUser;
+import sh.trishul.iaas.user.model.IaasUserTenantMembership;
+import sh.trishul.iaas.user.model.IaasUserTenantMembershipId;
+import sh.trishul.iaas.user.model.TenantIaasUserMapper;
+import sh.trishul.iaas.user.model.UpdateIaasUser;
+import sh.trishul.iaas.user.model.UpdateIaasUserTenantMembership;
+import sh.trishul.tenant.entity.TenantIdProvider;
+import sh.trishul.user.model.User;
+
+class TenantIaasUserServiceTest {
+  private TenantIaasUserService service;
+
+  private IaasRepository<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>> mUserService;
+  private IaasRepository<IaasUserTenantMembershipId, IaasUserTenantMembership, BaseIaasUserTenantMembership<?>, UpdateIaasUserTenantMembership<?>> mMembershipService;
+  private TenantIdProvider mTenantIdProvider;
+
+  @BeforeEach
+  void init() {
+    mUserService = mock(IaasRepository.class);
+    mMembershipService = mock(IaasRepository.class);
+    mTenantIdProvider = mock(TenantIdProvider.class);
+
+    service = new TenantIaasUserService(mUserService, mMembershipService,
+        TenantIaasUserMapper.INSTANCE, mTenantIdProvider);
+  }
+
+  @Test
+  void testPut_ReturnsMembershipsAfterSavingUsersAndCreatingMemberships() {
+    doAnswer(inv -> inv.getArgument(0, List.class)).when(mUserService).put(anyList());
+    doAnswer(inv -> inv.getArgument(0, List.class)).when(mMembershipService).put(anyList());
+
+    doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001")).when(mTenantIdProvider)
+        .getTenantId();
+
+    List<User> users = List.of(
+        new User().setId(1L).setUserName("USERNAME_1").setEmail("example-1@localhost")
+            .setPhoneNumber("phone-number-1").setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0)),
+        new User().setId(2L).setUserName("USERNAME_2").setEmail("example-2@localhost")
+            .setPhoneNumber("phone-number-2").setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)));
+
+    List<IaasUserTenantMembership> memberships = service.put(users);
+
+    List<IaasUserTenantMembership> expected = List.of(
+        new IaasUserTenantMembership()
+            .setUser(new IaasUser().setId("USERNAME_1").setEmail("example-1@localhost")
+                .setPhoneNumber("phone-number-1"))
+            .setTenantId("00000000-0000-0000-0000-000000000001"),
+        new IaasUserTenantMembership()
+            .setUser(new IaasUser().setId("USERNAME_2").setEmail("example-2@localhost")
+                .setPhoneNumber("phone-number-2"))
+            .setTenantId("00000000-0000-0000-0000-000000000001"));
+
+    assertEquals(expected, memberships);
+  }
+
+  @Test
+  void testDelete_RemovesMembershipAndDeletesUsers() {
+    doReturn(55L).when(mMembershipService)
+        .delete(Set.of(
+            new IaasUserTenantMembershipId("example-1@localhost",
+                "00000000-0000-0000-0000-000000000001"),
+            new IaasUserTenantMembershipId("example-2@localhost",
+                "00000000-0000-0000-0000-000000000001")));
+    doReturn(55L).when(mUserService).delete(Set.of("example-1@localhost", "example-2@localhost"));
+
+    doReturn(UUID.fromString("00000000-0000-0000-0000-000000000001")).when(mTenantIdProvider)
+        .getTenantId();
+
+    List<User> users = List.of(
+        new User().setId(1L).setUserName("USERNAME_1").setLastName(null)
+            .setEmail("example-1@localhost").setPhoneNumber("phone-number-1").setImageSrc(null)
+            .setIaasUsername(null).setStatus(null).setSalutation(null).setRoles(null)
+            .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2000, 1, 1, 0, 0)).setVersion(null),
+        new User().setId(2L).setUserName("USERNAME_2").setLastName(null)
+            .setEmail("example-2@localhost").setPhoneNumber("phone-number-2").setImageSrc(null)
+            .setIaasUsername(null).setStatus(null).setSalutation(null).setRoles(null)
+            .setCreatedAt(LocalDateTime.of(2001, 1, 1, 0, 0))
+            .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)).setVersion(null));
+
+    long count = service.delete(users);
+
+    assertEquals(55L, count);
+    verify(mMembershipService).delete(Set.of(
+        new IaasUserTenantMembershipId("example-1@localhost",
+            "00000000-0000-0000-0000-000000000001"),
+        new IaasUserTenantMembershipId("example-2@localhost",
+            "00000000-0000-0000-0000-000000000001")));
+    verify(mUserService).delete(Set.of("example-1@localhost", "example-2@localhost"));
+  }
+}

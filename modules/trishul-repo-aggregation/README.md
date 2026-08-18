@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-repo-aggregation</artifactId>
 </dependency>
 ```
@@ -37,22 +37,22 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `AggregationRepository` via `aggregationRepository()` — @ConditionalOnMissingBean(AggregationRepository.class) ([modules/trishul-repo-aggregation/src/main/java/io/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java](modules/trishul-repo-aggregation/src/main/java/io/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java))
-- `AggregationService` via `aggregationService()` — @ConditionalOnMissingBean(AggregationService.class) ([modules/trishul-repo-aggregation/src/main/java/io/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java](modules/trishul-repo-aggregation/src/main/java/io/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java))
+- `AggregationRepository` via `aggregationRepository()` — @ConditionalOnMissingBean(AggregationRepository.class) ([modules/trishul-repo-aggregation/src/main/java/sh/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java](modules/trishul-repo-aggregation/src/main/java/sh/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java))
+- `AggregationService` via `aggregationService()` — @ConditionalOnMissingBean(AggregationService.class) ([modules/trishul-repo-aggregation/src/main/java/sh/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java](modules/trishul-repo-aggregation/src/main/java/sh/trishul/repo/aggregation/autoconfiguration/RepoAggregationAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.repo.aggregation.autoconfiguration.RepoAggregationAutoConfiguration`
-- `io.trishul.repo.aggregation.repo.AggregationRepository`
-- `io.trishul.repo.aggregation.service.AggregationService`
-- `io.trishul.repo.aggregation.service.function.AggregationFunction`
+- `sh.trishul.repo.aggregation.autoconfiguration.RepoAggregationAutoConfiguration`
+- `sh.trishul.repo.aggregation.repo.AggregationRepository`
+- `sh.trishul.repo.aggregation.service.AggregationService`
+- `sh.trishul.repo.aggregation.service.function.AggregationFunction`
 
 ## Tests (Examples)
 
-- `io.trishul.repo.aggregation.autoconfiguration.RepoAggregationAutoConfigurationTest`
-- `io.trishul.repo.aggregation.repo.AggregationRepositoryTest`
-- `io.trishul.repo.aggregation.service.AggregationServiceTest`
-- `io.trishul.repo.aggregation.service.function.AggregationFunctionTest`
+- `sh.trishul.repo.aggregation.autoconfiguration.RepoAggregationAutoConfigurationTest`
+- `sh.trishul.repo.aggregation.repo.AggregationRepositoryTest`
+- `sh.trishul.repo.aggregation.service.AggregationServiceTest`
+- `sh.trishul.repo.aggregation.service.function.AggregationFunctionTest`
 
 ## Integration Guide
 

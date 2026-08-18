@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-idp</artifactId>
 </dependency>
 ```
@@ -43,28 +43,28 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant`
-- `io.trishul.iaas.idp.tenant.model.IaasIdpTenant`
-- `io.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapper`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthResources`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpResources`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpTenantMapper`
-- `io.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant`
-- `io.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapper`
+- `sh.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant`
+- `sh.trishul.iaas.idp.tenant.model.IaasIdpTenant`
+- `sh.trishul.iaas.idp.tenant.model.IaasIdpTenantAccessor`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapper`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthResources`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpResources`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpTenantMapper`
+- `sh.trishul.iaas.idp.tenant.model.UpdateIaasIdpTenant`
+- `sh.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapper`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.idp.tenant.model.IaasIdpTenantTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResultTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapperTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasAuthResourcesTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResultTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpResourcesTest`
-- `io.trishul.iaas.idp.tenant.model.TenantIaasIdpTenantMapperTest`
-- `io.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapperTest`
+- `sh.trishul.iaas.idp.tenant.model.IaasIdpTenantTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResultTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthResourceMapperTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasAuthResourcesTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResultTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpResourcesTest`
+- `sh.trishul.iaas.idp.tenant.model.TenantIaasIdpTenantMapperTest`
+- `sh.trishul.iaas.idp.tenant.model.mapper.TenantIaasIdpResourcesMapperTest`
 
 ## Integration Guide
 

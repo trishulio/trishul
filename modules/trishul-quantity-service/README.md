@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-quantity-service</artifactId>
 </dependency>
 ```
@@ -38,18 +38,18 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `QuantityUnitService` via `quantityUnitService()` — @ConditionalOnMissingBean ([modules/trishul-quantity-service/src/main/java/io/trishul/quantity/service/autoconfiguration/QuantityServiceAutoConfiguration.java](modules/trishul-quantity-service/src/main/java/io/trishul/quantity/service/autoconfiguration/QuantityServiceAutoConfiguration.java))
+- `QuantityUnitService` via `quantityUnitService()` — @ConditionalOnMissingBean ([modules/trishul-quantity-service/src/main/java/sh/trishul/quantity/service/autoconfiguration/QuantityServiceAutoConfiguration.java](modules/trishul-quantity-service/src/main/java/sh/trishul/quantity/service/autoconfiguration/QuantityServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.quantity.service.autoconfiguration.QuantityServiceAutoConfiguration`
-- `io.trishul.quantity.service.unit.repository.QuantityUnitRepository`
-- `io.trishul.quantity.service.unit.service.QuantityUnitService`
-- `io.trishul.quantity.service.unit.service.QuantityUnitServiceImpl`
+- `sh.trishul.quantity.service.autoconfiguration.QuantityServiceAutoConfiguration`
+- `sh.trishul.quantity.service.unit.repository.QuantityUnitRepository`
+- `sh.trishul.quantity.service.unit.service.QuantityUnitService`
+- `sh.trishul.quantity.service.unit.service.QuantityUnitServiceImpl`
 
 ## Tests (Examples)
 
-- `io.trishul.quantity.service.unit.service.QuantityUnitServiceImplTest`
+- `sh.trishul.quantity.service.unit.service.QuantityUnitServiceImplTest`
 
 ## Integration Guide
 

@@ -1,0 +1,146 @@
+package sh.trishul.tenant.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import sh.trishul.base.types.base.pojo.Audited;
+import sh.trishul.base.types.base.pojo.CrudEntity;
+import sh.trishul.model.base.entity.BaseEntity;
+
+@Entity(name = "tenant")
+@Table(name = "TENANT")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class Tenant extends BaseEntity
+    implements UpdateTenant<Tenant>, CrudEntity<UUID, Tenant>, Audited<Tenant> {
+  @Id
+  private UUID id;
+
+  @Column(name = "name")
+  private String name;
+
+  @Column(name = "url")
+  private URI url;
+
+  @Column(name = "is_ready")
+  private Boolean isReady;
+
+  @CreationTimestamp
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  @Column(name = "last_updated")
+  private LocalDateTime lastUpdated;
+
+  public Tenant() {
+    super();
+    this.isReady = false;
+  }
+
+  public Tenant(UUID id) {
+    this();
+    setId(id);
+  }
+
+  public Tenant(UUID id, String name, URI url, Boolean isReady, LocalDateTime createdAt,
+      LocalDateTime lastUpdated) {
+    this(id);
+    this.name = name;
+    this.url = url;
+    this.isReady = isReady;
+    this.createdAt = createdAt;
+    this.lastUpdated = lastUpdated;
+  }
+
+  @PrePersist
+  public void setId() {
+    if (this.id == null) {
+      this.id = UUID.randomUUID();
+    }
+  }
+
+  @Override
+  public UUID getId() {
+    return id;
+  }
+
+  @Override
+  public Tenant setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public Tenant setName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  @Override
+  public URI getUrl() {
+    return url;
+  }
+
+  @Override
+  public Tenant setUrl(URI url) {
+    this.url = url;
+    return this;
+  }
+
+  @Override
+  public Boolean getIsReady() {
+    return isReady;
+  }
+
+  @Override
+  public Tenant setIsReady(Boolean isReady) {
+    this.isReady = isReady;
+    return this;
+  }
+
+  @Override
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  @Override
+  public Tenant setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
+  @Override
+  public LocalDateTime getLastUpdated() {
+    return lastUpdated;
+  }
+
+  @Override
+  public Tenant setLastUpdated(LocalDateTime lastUpdated) {
+    this.lastUpdated = lastUpdated;
+    return this;
+  }
+
+  @Override
+  public Integer getVersion() {
+    // Versioning not implemented due to lack of use-case
+    return null;
+  }
+
+  public Tenant setVersion(Integer version) {
+    // Versioning not implemented due to lack of use-case
+    return this;
+  }
+}

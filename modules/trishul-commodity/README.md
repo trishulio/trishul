@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-commodity</artifactId>
 </dependency>
 ```
@@ -43,15 +43,15 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.commodity.AmountCalculator`
-- `io.trishul.commodity.CostCalculator`
-- `io.trishul.commodity.good.model.Good`
-- `io.trishul.commodity.model.Commodity`
+- `sh.trishul.commodity.AmountCalculator`
+- `sh.trishul.commodity.CostCalculator`
+- `sh.trishul.commodity.good.model.Good`
+- `sh.trishul.commodity.model.Commodity`
 
 ## Tests (Examples)
 
-- `io.trishul.commodity.AmountCalculatorTest`
-- `io.trishul.commodity.CostCalculatorTest`
+- `sh.trishul.commodity.AmountCalculatorTest`
+- `sh.trishul.commodity.CostCalculatorTest`
 
 ## Integration Guide
 

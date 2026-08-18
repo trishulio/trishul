@@ -1,0 +1,124 @@
+package sh.trishul.iaas.tenant.aws;
+
+import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
+import com.amazonaws.services.s3.model.CORSRule;
+import com.amazonaws.services.s3.model.CORSRule.AllowedMethods;
+import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
+import java.util.ArrayList;
+import java.util.List;
+import sh.trishul.iaas.access.policy.model.IaasPolicy;
+import sh.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
+import sh.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
+import sh.trishul.iaas.access.role.model.IaasRole;
+import sh.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
+import sh.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
+import sh.trishul.iaas.tenant.resource.TenantIaasResourceBuilder;
+import sh.trishul.object.store.configuration.access.model.IaasObjectStoreAccessConfig;
+import sh.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
+import sh.trishul.object.store.model.IaasObjectStore;
+
+public class AwsTenantIaasResourceBuilder
+    implements TenantIaasResourceBuilder, TenantObjectStoreResourceBuilder {
+  private final AwsDocumentTemplates templates;
+
+  private final List<String> allowedHeaders;
+  private final List<String> allowedMethods;
+  private final List<String> allowedOrigins;
+  private final boolean blockPublicAcls;
+  private final boolean ignorePublicAcls;
+  private final boolean blockPublicPolicy;
+  private final boolean restrictPublicBuckets;
+
+  public AwsTenantIaasResourceBuilder(AwsDocumentTemplates templates, List<String> allowedHeaders,
+      List<String> allowedMethods, List<String> allowedOrigins, boolean blockPublicAcls,
+      boolean ignorePublicAcls, boolean blockPublicPolicy, boolean restrictPublicBuckets) {
+    this.templates = templates;
+    this.allowedHeaders = allowedHeaders == null ? null : new ArrayList<>(allowedHeaders);
+    this.allowedMethods = allowedMethods == null ? null : new ArrayList<>(allowedMethods);
+    this.allowedOrigins = allowedOrigins == null ? null : new ArrayList<>(allowedOrigins);
+    this.blockPublicAcls = blockPublicAcls;
+    this.ignorePublicAcls = ignorePublicAcls;
+    this.blockPublicPolicy = blockPublicPolicy;
+    this.restrictPublicBuckets = restrictPublicBuckets;
+  }
+
+  @Override
+  public String getRoleId(String iaasIdpTenantId) {
+    return this.templates.getTenantIaasRoleName(iaasIdpTenantId);
+  }
+
+  @Override
+  public IaasRole buildRole(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
+    return new IaasRole().setName(this.templates.getTenantIaasRoleName(iaasIdpTenantId))
+        .setDescription(this.templates.getTenantIaasRoleDescription(iaasIdpTenantId))
+        .setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
+  }
+
+  @Override
+  public String getVfsPolicyId(String iaasIdpTenantId) {
+    return this.templates.getTenantVfsPolicyName(iaasIdpTenantId);
+  }
+
+  @Override
+  public IaasPolicy buildVfsPolicy(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
+
+    return new IaasPolicy().setName(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+        .setDescription(this.templates.getTenantVfsPolicyDescription(iaasIdpTenantId))
+        .setDocument(this.templates.getTenantBucketPolicyDoc(iaasIdpTenantId));
+  }
+
+  @Override
+  public String getObjectStoreId(String iaasIdpTenantId) {
+    return this.templates.getTenantVfsBucketName(iaasIdpTenantId);
+  }
+
+  @Override
+  public IaasObjectStore buildObjectStore(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    String iaasIdpTenantId = iaasIdpTenant.getName();
+    return new IaasObjectStore().setName(this.templates.getTenantVfsBucketName(iaasIdpTenantId));
+  }
+
+  @Override
+  public IaasRolePolicyAttachmentId buildVfsAttachmentId(String iaasIdpTenantId) {
+    return new IaasRolePolicyAttachmentId()
+        .setPolicyId(this.templates.getTenantVfsPolicyName(iaasIdpTenantId))
+        .setRoleId(this.templates.getTenantIaasRoleName(iaasIdpTenantId));
+  }
+
+  @Override
+  public IaasRolePolicyAttachment buildAttachment(IaasRole role, IaasPolicy policy) {
+    return new IaasRolePolicyAttachment().setIaasRole(role).setIaasPolicy(policy);
+  }
+
+  @Override
+  public IaasObjectStoreCorsConfiguration buildObjectStoreCorsConfiguration(
+      BaseIaasIdpTenant<?> iaasIdpTenant) {
+    List<String> sanitizedOrigins
+        = allowedOrigins.stream().map(o -> o.replaceAll("/*$", "")).toList();
+
+    CORSRule corsRule = new CORSRule().withAllowedHeaders(allowedHeaders)
+        .withAllowedMethods(
+            allowedMethods.stream().map(method -> AllowedMethods.valueOf(method)).toList())
+        .withAllowedOrigins(sanitizedOrigins);
+
+    List<CORSRule> corsRules = List.of(corsRule);
+
+    String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
+
+    return new IaasObjectStoreCorsConfiguration(bucketName,
+        new BucketCrossOriginConfiguration(corsRules));
+  }
+
+  @Override
+  public IaasObjectStoreAccessConfig buildPublicAccessBlock(BaseIaasIdpTenant<?> iaasIdpTenant) {
+    PublicAccessBlockConfiguration publicAccessBlockConfiguration
+        = new PublicAccessBlockConfiguration().withBlockPublicAcls(blockPublicAcls)
+            .withBlockPublicPolicy(blockPublicPolicy).withIgnorePublicAcls(ignorePublicAcls)
+            .withRestrictPublicBuckets(restrictPublicBuckets);
+
+    String bucketName = this.getObjectStoreId(iaasIdpTenant.getName());
+    return new IaasObjectStoreAccessConfig(bucketName, publicAccessBlockConfiguration);
+  }
+}

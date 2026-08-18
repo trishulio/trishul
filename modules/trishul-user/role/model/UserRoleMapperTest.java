@@ -1,4 +1,4 @@
-package io.trishul.user.role.model;
+package sh.trishul.user.role.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

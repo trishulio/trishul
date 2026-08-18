@@ -1,0 +1,283 @@
+package sh.trishul.iaas.access.aws;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import com.amazonaws.ResponseMetadata;
+import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
+import com.amazonaws.services.identitymanagement.model.CreatePolicyRequest;
+import com.amazonaws.services.identitymanagement.model.CreatePolicyResult;
+import com.amazonaws.services.identitymanagement.model.CreatePolicyVersionRequest;
+import com.amazonaws.services.identitymanagement.model.CreatePolicyVersionResult;
+import com.amazonaws.services.identitymanagement.model.DeletePolicyRequest;
+import com.amazonaws.services.identitymanagement.model.DeletePolicyResult;
+import com.amazonaws.services.identitymanagement.model.DeletePolicyVersionRequest;
+import com.amazonaws.services.identitymanagement.model.DeletePolicyVersionResult;
+import com.amazonaws.services.identitymanagement.model.GetPolicyRequest;
+import com.amazonaws.services.identitymanagement.model.GetPolicyResult;
+import com.amazonaws.services.identitymanagement.model.ListPolicyVersionsRequest;
+import com.amazonaws.services.identitymanagement.model.ListPolicyVersionsResult;
+import com.amazonaws.services.identitymanagement.model.NoSuchEntityException;
+import com.amazonaws.services.identitymanagement.model.Policy;
+import com.amazonaws.services.identitymanagement.model.PolicyVersion;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
+import sh.trishul.iaas.access.policy.model.IaasPolicy;
+
+class AwsIamPolicyClientTest {
+  private AwsIamPolicyClient client;
+
+  private AmazonIdentityManagement mAwsIamClient;
+  private AwsArnMapper mAwsMapper;
+
+  @BeforeEach
+  void init() {
+    mAwsIamClient = mock(AmazonIdentityManagement.class);
+    mAwsMapper = mock(AwsArnMapper.class);
+    doAnswer(inv -> inv.getArgument(0, String.class) + "_ARN").when(mAwsMapper)
+        .getPolicyArn(anyString());
+    doAnswer(inv -> inv.getArgument(0, String.class).replace("_ARN", "")).when(mAwsMapper)
+        .getName(anyString());
+
+    client = new AwsIamPolicyClient(mAwsIamClient, mAwsMapper, AwsIaasPolicyMapper.INSTANCE);
+  }
+
+  @Test
+  void testGet_ReturnsPolicyAndDefaultDocumentFromAwsRequest() {
+    doAnswer(inv -> {
+      GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
+      Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));
+      return new GetPolicyResult().withPolicy(policy);
+    }).when(mAwsIamClient).getPolicy(any());
+
+    doAnswer(inv -> {
+      ListPolicyVersionsRequest req = inv.getArgument(0, ListPolicyVersionsRequest.class);
+
+      List<PolicyVersion> versions = List.of(
+          new PolicyVersion().withDocument("DEFAULT_DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(true),
+          new PolicyVersion().withDocument("DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(false));
+
+      return new ListPolicyVersionsResult().withVersions(versions);
+    }).when(mAwsIamClient).listPolicyVersions(any());
+
+    IaasPolicy policy = client.get("POLICY");
+
+    IaasPolicy expected = new IaasPolicy("POLICY");
+    expected.setDocument("DEFAULT_DOCUMENT_POLICY_ARN");
+    assertEquals(expected, policy);
+
+    verify(mAwsIamClient, times(1)).getPolicy(any());
+    verify(mAwsIamClient, times(1)).listPolicyVersions(any());
+  }
+
+  @Test
+  void testGet_ReturnsNull_WhenNoSuchEntityExceptionIsThrown() {
+    doThrow(NoSuchEntityException.class).when(mAwsIamClient).getPolicy(any(GetPolicyRequest.class));
+
+    IaasPolicy policy = client.get("POLICY");
+
+    assertNull(policy);
+  }
+
+  private ResponseMetadata mockResponseMetadata() {
+    ResponseMetadata metadata = mock(ResponseMetadata.class);
+    doReturn("mock-request-id").when(metadata).getRequestId();
+    return metadata;
+  }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenDeleteRequestSucceeds() {
+    doAnswer(inv -> {
+      DeletePolicyResult result = new DeletePolicyResult();
+      result.setSdkResponseMetadata(mockResponseMetadata());
+      return result;
+    }).when(mAwsIamClient).deletePolicy(any());
+
+    assertTrue(client.delete("POLICY"));
+    verify(mAwsIamClient, times(1))
+        .deletePolicy(new DeletePolicyRequest().withPolicyArn("POLICY_ARN"));
+  }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenDeleteRequestThrowsNoEntityException() {
+    doThrow(NoSuchEntityException.class).when(mAwsIamClient)
+        .deletePolicy(new DeletePolicyRequest().withPolicyArn("POLICY_ARN"));
+
+    assertTrue(client.delete("POLICY"));
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenPolicyNameIsNullOrEmpty() {
+    assertFalse(client.delete(null));
+    assertFalse(client.delete(""));
+    assertFalse(client.delete("   "));
+  }
+
+  @Test
+  void testAdd_ReturnsAddedPolicy() {
+    doAnswer(inv -> {
+      CreatePolicyRequest req = inv.getArgument(0, CreatePolicyRequest.class);
+
+      Policy policy
+          = new Policy().withPolicyName(req.getPolicyName()).withDescription(req.getDescription())
+              .withPolicyId(req.getPolicyName() + "_ID").withArn(req.getPolicyName() + "_ARN");
+
+      return new CreatePolicyResult().withPolicy(policy);
+    }).when(mAwsIamClient).createPolicy(any());
+
+    doAnswer(inv -> {
+      ListPolicyVersionsRequest req = inv.getArgument(0, ListPolicyVersionsRequest.class);
+
+      List<PolicyVersion> versions = List.of(
+          new PolicyVersion().withDocument("DEFAULT_DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(true),
+          new PolicyVersion().withDocument("DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(false));
+
+      return new ListPolicyVersionsResult().withVersions(versions);
+    }).when(mAwsIamClient).listPolicyVersions(any());
+
+    IaasPolicy policy = client.add(
+        new IaasPolicy().setName("POLICY_1").setDocument("DOCUMENT").setDescription("DESCRIPTION_1")
+            .setIaasResourceName("POLICY_1_ARN").setIaasId("POLICY_1_ID"));
+
+    IaasPolicy expected = new IaasPolicy("POLICY_1", "DEFAULT_DOCUMENT_POLICY_1_ARN",
+        "DESCRIPTION_1", "POLICY_1_ARN", "POLICY_1_ID", null, null);
+
+    assertEquals(expected, policy);
+    verify(mAwsIamClient, times(1)).createPolicy(any());
+  }
+
+  @Test
+  void testUpdate_ReturnsUpdatedPolicy_AfterAddingNewDefaultVersionAndDeletingAllOtherVersions() {
+    doAnswer(inv -> {
+      GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
+      Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));
+      return new GetPolicyResult().withPolicy(policy);
+    }).when(mAwsIamClient).getPolicy(any());
+
+    doAnswer(inv -> {
+      ListPolicyVersionsRequest req = inv.getArgument(0, ListPolicyVersionsRequest.class);
+
+      List<PolicyVersion> versions = List.of(
+          new PolicyVersion().withDocument("DEFAULT_DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(true).withVersionId("DEFAULT_V1"),
+          new PolicyVersion().withDocument("DOCUMENT_" + req.getPolicyArn())
+              .withIsDefaultVersion(false).withVersionId("NON_DEFAULT_V1"));
+
+      return new ListPolicyVersionsResult().withVersions(versions);
+    }).when(mAwsIamClient).listPolicyVersions(any());
+
+    doReturn(
+        new CreatePolicyVersionResult().withPolicyVersion(new PolicyVersion().withVersionId("V1"))
+            .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>())))
+        .when(mAwsIamClient).createPolicyVersion(any(CreatePolicyVersionRequest.class));
+
+    doReturn(new DeletePolicyVersionResult()
+        .setSdkResponseMetadata(new ResponseMetadata(new HashMap<>()))).when(mAwsIamClient)
+        .deletePolicyVersion(any(DeletePolicyVersionRequest.class));
+
+    IaasPolicy policy = client.update(new IaasPolicy().setName("POLICY_1").setDocument("DOCUMENT_1")
+        .setDescription("DESCRIPTION_1").setIaasResourceName("IAAS_RES_1").setIaasId("IAAS_ID_1")
+        .setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0))
+        .setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)));
+
+    IaasPolicy expected = new IaasPolicy("POLICY_1");
+    expected.setDocument("DEFAULT_DOCUMENT_POLICY_1_ARN");
+    assertEquals(expected, policy);
+
+    InOrder order = inOrder(mAwsIamClient);
+    order.verify(mAwsIamClient).createPolicyVersion(new CreatePolicyVersionRequest()
+        .withPolicyArn("POLICY_1_ARN").withPolicyDocument("DOCUMENT_1").withSetAsDefault(true));
+    order.verify(mAwsIamClient).deletePolicyVersion(new DeletePolicyVersionRequest()
+        .withPolicyArn("POLICY_1_ARN").withVersionId("NON_DEFAULT_V1"));
+
+    verify(mAwsIamClient, never()).deletePolicyVersion(
+        new DeletePolicyVersionRequest().withPolicyArn("POLICY_1_ARN").withVersionId("DEFAULT_V1"));
+  }
+
+  @Test
+  void testExists_ReturnsTrue_WhenGetReturnsObject() {
+    doAnswer(inv -> {
+      GetPolicyRequest req = inv.getArgument(0, GetPolicyRequest.class);
+      Policy policy = new Policy().withPolicyName(mAwsMapper.getName(req.getPolicyArn()));
+      return new GetPolicyResult().withPolicy(policy);
+    }).when(mAwsIamClient).getPolicy(any());
+
+    assertTrue(client.exists("POLICY_NAME"));
+  }
+
+  @Test
+  void testExists_ReturnsFalse_WhenGetReturnsNull() {
+    doThrow(NoSuchEntityException.class).when(mAwsIamClient).getPolicy(any(GetPolicyRequest.class));
+
+    assertFalse(client.exists("POLICY"));
+  }
+
+  @Test
+  void testPut_CallsAdd_WhenExistIsFalse() {
+    client = spy(client);
+    doReturn(false).when(client).exists("POLICY_1");
+
+    doAnswer(inv -> inv.getArgument(0, IaasPolicy.class)).when(client).add(any());
+
+    assertEquals(new IaasPolicy("POLICY_1"), client.put(new IaasPolicy("POLICY_1")));
+  }
+
+  @Test
+  void testPut_CallsUpdate_WhenExistIsTrue() {
+    client = spy(client);
+    doReturn(true).when(client).exists("POLICY_1");
+
+    doAnswer(inv -> inv.getArgument(0, IaasPolicy.class)).when(client).update(any());
+
+    assertEquals(new IaasPolicy("POLICY_1"), client.put(new IaasPolicy("POLICY_1")));
+  }
+
+  @Test
+  void testGetPolicyVersions_ReturnsAllVersions() {
+    List<PolicyVersion> pageA
+        = List.of(new PolicyVersion().withVersionId("A1"), new PolicyVersion().withVersionId("A2"));
+    List<PolicyVersion> pageB
+        = List.of(new PolicyVersion().withVersionId("B1"), new PolicyVersion().withVersionId("B2"));
+    List<PolicyVersion> pageC
+        = List.of(new PolicyVersion().withVersionId("C1"), new PolicyVersion().withVersionId("C2"));
+
+    doReturn(new ListPolicyVersionsResult().withVersions(pageA).withMarker("next_1")
+        .withIsTruncated(true)).when(mAwsIamClient)
+        .listPolicyVersions(new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN"));
+    doReturn(new ListPolicyVersionsResult().withVersions(pageB).withMarker("next_2")
+        .withIsTruncated(true)).when(mAwsIamClient).listPolicyVersions(
+            new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN").withMarker("next_1"));
+    doReturn(new ListPolicyVersionsResult().withVersions(pageC).withIsTruncated(false))
+        .when(mAwsIamClient).listPolicyVersions(
+            new ListPolicyVersionsRequest().withPolicyArn("POLICY_1_ARN").withMarker("next_2"));
+
+    List<PolicyVersion> versions = client.getPolicyVersions("POLICY_1");
+
+    List<PolicyVersion> expected
+        = List.of(new PolicyVersion().withVersionId("A1"), new PolicyVersion().withVersionId("A2"),
+            new PolicyVersion().withVersionId("B1"), new PolicyVersion().withVersionId("B2"),
+            new PolicyVersion().withVersionId("C1"), new PolicyVersion().withVersionId("C2"));
+    assertEquals(expected, versions);
+  }
+}

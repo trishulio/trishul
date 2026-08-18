@@ -8,7 +8,7 @@ Zero-dependency foundation module defining the core interfaces that all Trishul 
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-base-types</artifactId>
 </dependency>
 ```

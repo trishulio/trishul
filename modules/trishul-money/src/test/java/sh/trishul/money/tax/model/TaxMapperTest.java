@@ -1,0 +1,52 @@
+package sh.trishul.money.tax.model;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.math.BigDecimal;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.money.tax.dto.TaxDto;
+import sh.trishul.money.tax.rate.TaxRate;
+import sh.trishul.money.tax.rate.dto.TaxRateDto;
+
+class TaxMapperTest {
+  private TaxMapper mapper;
+
+  @BeforeEach
+  void init() {
+    mapper = TaxMapper.INSTANCE;
+  }
+
+  @Test
+  void testFromDto_ReturnsPojo_WhenDtoIsNotNull() {
+
+    TaxDto dto
+        = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
+    Tax tax = mapper.fromDto(dto);
+
+    Tax expected = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+    assertEquals(expected, tax);
+  }
+
+  @Test
+  void testFromDto_ReturnsNull_WhenDtoIsNull() {
+    assertNull(mapper.fromDto(null));
+  }
+
+  @Test
+  void testToDto_ReturnsDto_WhenPojoIsNotNull() {
+    Tax tax = new Tax(new TaxRate(new BigDecimal("1")), new TaxRate(new BigDecimal("2")));
+
+    TaxDto dto = mapper.toDto(tax);
+
+    TaxDto expected
+        = new TaxDto(new TaxRateDto(new BigDecimal("1")), new TaxRateDto(new BigDecimal("2")));
+    assertEquals(expected, dto);
+  }
+
+  @Test
+  void testToDto_ReturnsNull_WhenPojoIsNull() {
+    assertNull(mapper.toDto(null));
+  }
+}

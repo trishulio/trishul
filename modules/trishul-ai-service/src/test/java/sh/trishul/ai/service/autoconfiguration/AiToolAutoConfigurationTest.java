@@ -1,0 +1,72 @@
+package sh.trishul.ai.service.autoconfiguration;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sh.trishul.ai.service.tool.model.controller.AiToolController;
+import sh.trishul.ai.service.tool.model.repository.AiToolRepository;
+import sh.trishul.ai.service.tool.model.service.AiToolService;
+import sh.trishul.ai.service.tool.registry.AiToolRegistry;
+import sh.trishul.ai.tool.model.AiTool;
+import sh.trishul.ai.tool.model.AiToolAccessor;
+import sh.trishul.base.types.base.pojo.Refresher;
+import sh.trishul.crud.controller.filter.AttributeFilter;
+import sh.trishul.crud.service.LockService;
+import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+
+class AiToolAutoConfigurationTest {
+
+  private AiToolAutoConfiguration config;
+
+  @BeforeEach
+  void setUp() {
+    config = new AiToolAutoConfiguration();
+  }
+
+  @Test
+  void testAiToolController_ReturnsNonNull() {
+    AiToolService mockService = mock(AiToolService.class);
+    AttributeFilter mockFilter = mock(AttributeFilter.class);
+
+    AiToolController result = config.aiToolController(mockService, mockFilter);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiToolAccessorRefresher_ReturnsNonNull() {
+    AiToolRepository mockRepository = mock(AiToolRepository.class);
+    AccessorRefresher<Long, AiToolAccessor<?>, AiTool> result
+        = config.aiToolAccessorRefresher(mockRepository);
+    assertNotNull(result);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testAiToolRefresher_ReturnsNonNull() {
+    AccessorRefresher<Long, AiToolAccessor<?>, AiTool> mockAccessorRefresher
+        = mock(AccessorRefresher.class);
+    Refresher<AiTool, AiToolAccessor<?>> result = config.aiToolRefresher(mockAccessorRefresher);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiToolRegistry_ReturnsNonNull() {
+    AiToolRegistry result = config.aiToolRegistry();
+    assertNotNull(result);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testAiToolService_ReturnsNonNull() {
+    LockService mockLockService = mock(LockService.class);
+    AiToolRepository mockRepository = mock(AiToolRepository.class);
+    Refresher<AiTool, AiToolAccessor<?>> mockRefresher = mock(Refresher.class);
+
+    AiToolService result = config.aiToolService(mockLockService, mockRepository, mockRefresher);
+
+    assertNotNull(result);
+  }
+}

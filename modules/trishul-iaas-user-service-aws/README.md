@@ -12,7 +12,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-user-service-aws</artifactId>
 </dependency>
 ```
@@ -40,16 +40,16 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>>` via `awsUserClient()` — @ConditionalOnMissingBean(AwsCognitoUserClient.class) ([modules/trishul-iaas-user-service-aws/src/main/java/io/trishul/iaas/user/service/aws/autoconfiguration/IaasUserServiceAwsAutoConfiguration.java](modules/trishul-iaas-user-service-aws/src/main/java/io/trishul/iaas/user/service/aws/autoconfiguration/IaasUserServiceAwsAutoConfiguration.java))
+- `IaasClient<String, IaasUser, BaseIaasUser<?>, UpdateIaasUser<?>>` via `awsUserClient()` — @ConditionalOnMissingBean(AwsCognitoUserClient.class) ([modules/trishul-iaas-user-service-aws/src/main/java/sh/trishul/iaas/user/service/aws/autoconfiguration/IaasUserServiceAwsAutoConfiguration.java](modules/trishul-iaas-user-service-aws/src/main/java/sh/trishul/iaas/user/service/aws/autoconfiguration/IaasUserServiceAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.user.service.aws.AwsCognitoUserClient`
-- `io.trishul.iaas.user.service.aws.autoconfiguration.IaasUserServiceAwsAutoConfiguration`
+- `sh.trishul.iaas.user.service.aws.AwsCognitoUserClient`
+- `sh.trishul.iaas.user.service.aws.autoconfiguration.IaasUserServiceAwsAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.user.service.aws.AwsCognitoUserClientTest`
+- `sh.trishul.iaas.user.service.aws.AwsCognitoUserClientTest`
 
 ## Integration Guide
 

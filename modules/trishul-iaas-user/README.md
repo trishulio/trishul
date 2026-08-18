@@ -8,7 +8,7 @@ IaaS user model for identity provider user management with tenant membership.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-iaas-user</artifactId>
 </dependency>
 ```

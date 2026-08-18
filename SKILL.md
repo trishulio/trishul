@@ -18,13 +18,13 @@ Trishul uses a strict interface hierarchy to maintain consistency across Entitie
 - **Methods**: Define getters and fluent setters (returning `T` for method chaining).
 - **Example**:
   ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
 import java.net.URI;
 import java.util.List;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.salutation.model.UserSalutationAccessor;
-import io.trishul.user.status.UserStatusAccessor;
+import sh.trishul.user.role.model.UserRole;
+import sh.trishul.user.salutation.model.UserSalutationAccessor;
+import sh.trishul.user.status.UserStatusAccessor;
 
 public interface BaseUser<T extends BaseUser<T>>
     extends UserStatusAccessor<T>, UserSalutationAccessor<T> {
@@ -82,9 +82,9 @@ public interface BaseUser<T extends BaseUser<T>>
 - **Key Difference**: Inherits `getId()` from `Identified` and `getVersion()` from `Versioned` (via `UpdatableEntity`), making it suitable for representing updatable entities.
 - **Example**:
   ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
-import io.trishul.base.types.base.pojo.UpdatableEntity;
+import sh.trishul.base.types.base.pojo.UpdatableEntity;
 
 public interface UpdateUser<T extends UpdateUser<T>> extends BaseUser<T>, UpdatableEntity<Long, T> {
 }
@@ -101,7 +101,7 @@ The JPA entity represents the persistent state of a domain object. It defines th
 ##### Entity Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -118,15 +118,15 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import io.trishul.base.types.base.pojo.Audited;
-import io.trishul.base.types.base.pojo.CrudEntity;
-import io.trishul.model.base.entity.BaseEntity;
-import io.trishul.model.base.entity.CriteriaJoin;
-import io.trishul.user.role.binding.model.UserRoleBinding;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.role.model.UserRoleAccessor;
-import io.trishul.user.salutation.model.UserSalutation;
-import io.trishul.user.status.UserStatus;
+import sh.trishul.base.types.base.pojo.Audited;
+import sh.trishul.base.types.base.pojo.CrudEntity;
+import sh.trishul.model.base.entity.BaseEntity;
+import sh.trishul.model.base.entity.CriteriaJoin;
+import sh.trishul.user.role.binding.model.UserRoleBinding;
+import sh.trishul.user.role.model.UserRole;
+import sh.trishul.user.role.model.UserRoleAccessor;
+import sh.trishul.user.salutation.model.UserSalutation;
+import sh.trishul.user.status.UserStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -455,7 +455,7 @@ Accessor interfaces define methods to retrieve and set a specific domain entity 
 ##### Accessor Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
 public interface UserAccessor<T extends UserAccessor<T>> {
   final String ATTR_USER = "user";
@@ -473,12 +473,12 @@ The Add DTO is used for creating new entities. It contains all necessary fields 
 ##### Add DTO Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import io.trishul.model.base.dto.BaseDto;
+import sh.trishul.model.base.dto.BaseDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -629,13 +629,13 @@ The Update DTO is used for updating existing entities. It includes the entity's 
 ##### Update DTO Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import io.trishul.model.base.dto.BaseDto;
-import io.trishul.model.validation.NullOrNotBlank;
+import sh.trishul.model.base.dto.BaseDto;
+import sh.trishul.model.validation.NullOrNotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -816,14 +816,14 @@ The Read DTO is used for presenting data to clients. It includes all fields nece
 ##### Read DTO Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
-import io.trishul.model.base.dto.BaseDto;
-import io.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
-import io.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
-import io.trishul.user.role.model.UserRoleDto;
-import io.trishul.user.salutation.model.UserSalutationDto;
-import io.trishul.user.status.UserStatusDto;
+import sh.trishul.model.base.dto.BaseDto;
+import sh.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
+import sh.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
+import sh.trishul.user.role.model.UserRoleDto;
+import sh.trishul.user.salutation.model.UserSalutationDto;
+import sh.trishul.user.status.UserStatusDto;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -1046,17 +1046,17 @@ Refresher implementations are responsible for enriching entities or DTOs by reso
 ##### Refresher Example
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
-import io.trishul.base.types.base.pojo.OwnedByAccessor;
-import io.trishul.base.types.base.pojo.Refresher;
-import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import io.trishul.user.role.binding.model.UserRoleBinding;
-import io.trishul.user.role.binding.model.UserRoleBindingAccessor;
-import io.trishul.user.salutation.model.UserSalutation;
-import io.trishul.user.salutation.model.UserSalutationAccessor;
-import io.trishul.user.status.UserStatus;
-import io.trishul.user.status.UserStatusAccessor;
+import sh.trishul.base.types.base.pojo.OwnedByAccessor;
+import sh.trishul.base.types.base.pojo.Refresher;
+import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import sh.trishul.user.role.binding.model.UserRoleBinding;
+import sh.trishul.user.role.binding.model.UserRoleBindingAccessor;
+import sh.trishul.user.salutation.model.UserSalutation;
+import sh.trishul.user.salutation.model.UserSalutationAccessor;
+import sh.trishul.user.status.UserStatus;
+import sh.trishul.user.status.UserStatusAccessor;
 import java.util.Collection;
 import java.util.List;
 import org.slf4j.Logger;
@@ -1124,12 +1124,12 @@ MapStruct is used for mapping between Entities and DTOs. Mappers should extend `
 Below is a complete example of a `UserMapper`, demonstrating common patterns like ignoring fields, mapping by source, and using other mappers for nested objects.
 
 ```java
-package io.trishul.user.model;
+package sh.trishul.user.model;
 
-import io.trishul.model.base.mapper.BaseMapper;
-import io.trishul.user.role.model.UserRoleMapper;
-import io.trishul.user.salutation.model.UserSalutationMapper;
-import io.trishul.user.status.UserStatusMapper;
+import sh.trishul.model.base.mapper.BaseMapper;
+import sh.trishul.user.role.model.UserRoleMapper;
+import sh.trishul.user.salutation.model.UserSalutationMapper;
+import sh.trishul.user.status.UserStatusMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -1196,7 +1196,7 @@ Create SQL migrations in `trishul-<domain>-service/src/main/resources/db/tenant_
 - Use sequences for primary keys (e.g., `<ENTITY>_SEQUENCE`).
 
 ### 2. Entity Definition
-Create the JPA entity in `trishul-<domain>/src/main/java/io/trishul/<domain>/model/`.
+Create the JPA entity in `trishul-<domain>/src/main/java/sh/trishul/<domain>/model/`.
 - Use JPA annotations: `@Entity`, `@Table(name = "_<entity>")`, `@Id`, `@GeneratedValue(strategy = GenerationType.SEQUENCE)`, `@Version`, `@CreationTimestamp`, `@UpdateTimestamp`.
 
 ### 3. Refresher Pattern
@@ -1217,15 +1217,15 @@ The repository interface is the lowest level of data access. It should extend Sp
 All custom repository methods, such as batch operations, should be defined in this interface.
 
 ```java
-package io.trishul.user.service.user.service.repository;
+package sh.trishul.user.service.user.service.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import io.trishul.repo.jpa.repository.ExtendedRepository;
-import io.trishul.user.model.User;
+import sh.trishul.repo.jpa.repository.ExtendedRepository;
+import sh.trishul.user.model.User;
 
 public interface UserRepository
     extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, ExtendedRepository<Long> {
@@ -1249,7 +1249,7 @@ The service class contains the domain's business logic. It must implement the `C
 The `UserService` below shows a typical implementation. It handles complex retrieval logic (`getUsers`), and orchestrates Iaas user management during add/update operations.
 
 ```java
-package io.trishul.user.service.user.service.service;
+package sh.trishul.user.service.user.service.service;
 
 import java.util.Collection;
 import java.util.List;
@@ -1264,26 +1264,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
-import io.trishul.base.types.base.pojo.Identified;
-import io.trishul.crud.service.BaseService;
-import io.trishul.crud.service.CrudService;
-import io.trishul.crud.service.EntityMergerService;
-import io.trishul.iaas.user.model.IaasUser;
-import io.trishul.iaas.user.model.IaasUserTenantMembership;
-import io.trishul.iaas.user.service.TenantIaasUserService;
-import io.trishul.model.base.exception.EntityNotFoundException;
-import io.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
-import io.trishul.repo.jpa.repository.service.RepoService;
-import io.trishul.user.model.BaseUser;
-import io.trishul.user.model.UpdateUser;
-import io.trishul.user.model.User;
-import io.trishul.user.model.UserAccessor;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.salutation.model.UserSalutation;
-import io.trishul.user.salutation.model.UserSalutationAccessor;
-import io.trishul.user.service.user.service.repository.UserRepository;
-import io.trishul.user.status.UserStatus;
-import io.trishul.user.status.UserStatusAccessor;
+import sh.trishul.base.types.base.pojo.Identified;
+import sh.trishul.crud.service.BaseService;
+import sh.trishul.crud.service.CrudService;
+import sh.trishul.crud.service.EntityMergerService;
+import sh.trishul.iaas.user.model.IaasUser;
+import sh.trishul.iaas.user.model.IaasUserTenantMembership;
+import sh.trishul.iaas.user.service.TenantIaasUserService;
+import sh.trishul.model.base.exception.EntityNotFoundException;
+import sh.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
+import sh.trishul.repo.jpa.repository.service.RepoService;
+import sh.trishul.user.model.BaseUser;
+import sh.trishul.user.model.UpdateUser;
+import sh.trishul.user.model.User;
+import sh.trishul.user.model.UserAccessor;
+import sh.trishul.user.role.model.UserRole;
+import sh.trishul.user.salutation.model.UserSalutation;
+import sh.trishul.user.salutation.model.UserSalutationAccessor;
+import sh.trishul.user.service.user.service.repository.UserRepository;
+import sh.trishul.user.status.UserStatus;
+import sh.trishul.user.status.UserStatusAccessor;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -1455,20 +1455,20 @@ All REST controllers must follow a standardized pattern to ensure consistency an
 New controllers should be modeled after the following `UserController` example. This structure provides a consistent API surface for all domain entities.
 
 ```java
-package io.trishul.user.service.user.service.controller;
+package sh.trishul.user.service.user.service.controller;
 
-import io.trishul.crud.controller.BaseController;
-import io.trishul.crud.controller.CrudControllerService;
-import io.trishul.crud.controller.filter.AttributeFilter;
-import io.trishul.repo.jpa.repository.model.dto.PageDto;
-import io.trishul.user.model.AddUserDto;
-import io.trishul.user.model.BaseUser;
-import io.trishul.user.model.UpdateUser;
-import io.trishul.user.model.UpdateUserDto;
-import io.trishul.user.model.User;
-import io.trishul.user.model.UserDto;
-import io.trishul.user.model.UserMapper;
-import io.trishul.user.service.user.service.service.UserService;
+import sh.trishul.crud.controller.BaseController;
+import sh.trishul.crud.controller.CrudControllerService;
+import sh.trishul.crud.controller.filter.AttributeFilter;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
+import sh.trishul.user.model.AddUserDto;
+import sh.trishul.user.model.BaseUser;
+import sh.trishul.user.model.UpdateUser;
+import sh.trishul.user.model.UpdateUserDto;
+import sh.trishul.user.model.User;
+import sh.trishul.user.model.UserDto;
+import sh.trishul.user.model.UserMapper;
+import sh.trishul.user.service.user.service.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -1591,11 +1591,11 @@ Decorators implement the `EntityDecorator<T>` interface and are injected into th
 The `UserDtoDecorator` below uses a `TemporaryImageSrcDecorator` to add a temporary image URL to the `UserDto`.
 
 ```java
-package io.trishul.user.service.user.service.controller;
+package sh.trishul.user.service.user.service.controller;
 
-import io.trishul.object.store.file.decorator.EntityDecorator;
-import io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
-import io.trishul.user.model.UserDto;
+import sh.trishul.object.store.file.decorator.EntityDecorator;
+import sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
+import sh.trishul.user.model.UserDto;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1626,7 +1626,7 @@ To make the service module available to the main application, you must create an
 The `UserServiceAutoConfiguration` class below is a complete example of how to wire the entire `user` domain. It should be placed in the `...<domain>.service.autoconfiguration` package.
 
 ```java
-package io.trishul.user.service.user.service.autoconfiguration;
+package sh.trishul.user.service.user.service.autoconfiguration;
 
 import java.util.Set;
 
@@ -1635,46 +1635,46 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import io.trishul.auth.session.context.holder.ContextHolder;
-import io.trishul.base.types.base.pojo.OwnedByAccessor;
-import io.trishul.base.types.base.pojo.Refresher;
-import io.trishul.crud.service.CrudEntityMergerService;
-import io.trishul.crud.service.CrudRepoService;
-import io.trishul.crud.service.EntityMergerService;
-import io.trishul.crud.service.LockService;
-import io.trishul.iaas.user.service.TenantIaasUserService;
-import io.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
-import io.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
-import io.trishul.repo.jpa.repository.service.RepoService;
-import io.trishul.user.model.AssignedToAccessor;
-import io.trishul.user.model.BaseUser;
-import io.trishul.user.model.UpdateUser;
-import io.trishul.user.model.User;
-import io.trishul.user.model.UserAccessor;
-import io.trishul.user.model.UserRefresher;
-import io.trishul.user.role.binding.model.UserRoleBinding;
-import io.trishul.user.role.binding.model.UserRoleBindingAccessor;
-import io.trishul.user.role.binding.model.UserRoleBindingRefresher;
-import io.trishul.user.role.model.BaseUserRole;
-import io.trishul.user.role.model.UpdateUserRole;
-import io.trishul.user.role.model.UserRole;
-import io.trishul.user.role.model.UserRoleAccessor;
-import io.trishul.user.role.model.UserRoleRefresher;
-import io.trishul.user.salutation.model.UserSalutation;
-import io.trishul.user.salutation.model.UserSalutationAccessor;
-import io.trishul.user.salutation.model.UserSalutationRefresher;
-import io.trishul.user.service.user.service.controller.UserDtoDecorator;
-import io.trishul.user.service.user.service.repository.UserRepository;
-import io.trishul.user.service.user.service.repository.role.repository.UserRoleRepository;
-import io.trishul.user.service.user.service.role.service.UserRoleService;
-import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
-import io.trishul.user.service.user.service.salutation.service.UserSalutationService;
-import io.trishul.user.service.user.service.service.AccountService;
-import io.trishul.user.service.user.service.service.UserService;
-import io.trishul.user.service.user.service.status.repository.UserStatusRepository;
-import io.trishul.user.status.UserStatus;
-import io.trishul.user.status.UserStatusAccessor;
-import io.trishul.user.status.UserStatusRefresher;
+import sh.trishul.auth.session.context.holder.ContextHolder;
+import sh.trishul.base.types.base.pojo.OwnedByAccessor;
+import sh.trishul.base.types.base.pojo.Refresher;
+import sh.trishul.crud.service.CrudEntityMergerService;
+import sh.trishul.crud.service.CrudRepoService;
+import sh.trishul.crud.service.EntityMergerService;
+import sh.trishul.crud.service.LockService;
+import sh.trishul.iaas.user.service.TenantIaasUserService;
+import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
+import sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
+import sh.trishul.repo.jpa.repository.service.RepoService;
+import sh.trishul.user.model.AssignedToAccessor;
+import sh.trishul.user.model.BaseUser;
+import sh.trishul.user.model.UpdateUser;
+import sh.trishul.user.model.User;
+import sh.trishul.user.model.UserAccessor;
+import sh.trishul.user.model.UserRefresher;
+import sh.trishul.user.role.binding.model.UserRoleBinding;
+import sh.trishul.user.role.binding.model.UserRoleBindingAccessor;
+import sh.trishul.user.role.binding.model.UserRoleBindingRefresher;
+import sh.trishul.user.role.model.BaseUserRole;
+import sh.trishul.user.role.model.UpdateUserRole;
+import sh.trishul.user.role.model.UserRole;
+import sh.trishul.user.role.model.UserRoleAccessor;
+import sh.trishul.user.role.model.UserRoleRefresher;
+import sh.trishul.user.salutation.model.UserSalutation;
+import sh.trishul.user.salutation.model.UserSalutationAccessor;
+import sh.trishul.user.salutation.model.UserSalutationRefresher;
+import sh.trishul.user.service.user.service.controller.UserDtoDecorator;
+import sh.trishul.user.service.user.service.repository.UserRepository;
+import sh.trishul.user.service.user.service.repository.role.repository.UserRoleRepository;
+import sh.trishul.user.service.user.service.role.service.UserRoleService;
+import sh.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
+import sh.trishul.user.service.user.service.salutation.service.UserSalutationService;
+import sh.trishul.user.service.user.service.service.AccountService;
+import sh.trishul.user.service.user.service.service.UserService;
+import sh.trishul.user.service.user.service.status.repository.UserStatusRepository;
+import sh.trishul.user.status.UserStatus;
+import sh.trishul.user.status.UserStatusAccessor;
+import sh.trishul.user.status.UserStatusRefresher;
 
 @Configuration
 public class UserServiceAutoConfiguration {

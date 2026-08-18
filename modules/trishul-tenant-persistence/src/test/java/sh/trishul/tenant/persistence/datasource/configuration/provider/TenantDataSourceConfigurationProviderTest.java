@@ -1,0 +1,103 @@
+package sh.trishul.tenant.persistence.datasource.configuration.provider;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+
+import com.google.common.cache.LoadingCache;
+import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import sh.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
+import sh.trishul.data.datasource.configuration.model.DataSourceConfiguration;
+import sh.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
+import sh.trishul.data.datasource.configuration.model.ImmutableGlobalDataSourceConfiguration;
+import sh.trishul.data.datasource.configuration.model.LazyTenantDataSourceConfiguration;
+import sh.trishul.data.datasource.configuration.model.MigrationConfiguration;
+import sh.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
+import sh.trishul.secrets.SecretsManager;
+import sh.trishul.tenant.entity.AdminTenant;
+import sh.trishul.tenant.entity.TenantData;
+
+class TenantDataSourceConfigurationProviderTest {
+  private DataSourceConfigurationProvider<UUID> dsProvider;
+
+  private DataSourceConfiguration mAdminConfig;
+  private TenantData mAdminTenant;
+  private GlobalDataSourceConfiguration mGlobalDsConfig;
+  private DataSourceConfigurationManager mConfigMgr;
+  private SecretsManager<String, String> mSecretsManager;
+
+  @BeforeEach
+  void init() throws URISyntaxException {
+    mAdminTenant = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000000"), "ADMIN",
+        URI.create("http://localhost/"));
+    mGlobalDsConfig = new ImmutableGlobalDataSourceConfiguration(new URI("jdbc://url/"), "dbName",
+        MigrationConfiguration.from("MIGRATION_PATH"), "SCHEMA_", 10, false);
+    mAdminConfig = new LazyTenantDataSourceConfiguration("00000000-0000-0000-0000-000000000000",
+        mGlobalDsConfig, mSecretsManager);
+    mConfigMgr
+        = new DataSourceConfigurationManager();interface StringSecretsManager extends SecretsManager<String,String>{}
+    mSecretsManager = mock(StringSecretsManager.class);
+
+    dsProvider = new TenantDataSourceConfigurationProvider(mAdminConfig, mAdminTenant,
+        mGlobalDsConfig, mConfigMgr, mSecretsManager);
+  }
+
+  @Test
+  void testGetConfiguration_ReturnsAdminConfig_WhenIdMatchesAdminId() {
+    DataSourceConfiguration config
+        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+    assertSame(mAdminConfig, config);
+  }
+
+  @Test
+  void testGetConfiguration_ReturnsLazyTenantConfig_WhenIdIsNotTenantId()
+      throws URISyntaxException {
+    DataSourceConfiguration config
+        = dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    DataSourceConfiguration expected = new LazyTenantDataSourceConfiguration(
+        "SCHEMA_00000000_0000_0000_0000_000000000001", mGlobalDsConfig, mSecretsManager);
+
+    assertNotSame(mAdminConfig, config);
+    assertEquals(expected, config);
+  }
+
+  @Test
+  void testGetAdminConfiguration_ReturnsAdminDsConfiguration() {
+    DataSourceConfiguration config = dsProvider.getAdminConfiguration();
+
+    assertEquals(mAdminConfig, config);
+  }
+
+  @Test
+  void testGetConfiguration_ThrowsRuntimeException_WhenCacheThrowsExecutionException()
+      throws Exception {
+    Field field = dsProvider.getClass().getDeclaredField("cache");
+    field.setAccessible(true);
+
+    LoadingCache<UUID, DataSourceConfiguration> mockCache = mock(LoadingCache.class);
+
+    Mockito.doThrow(new ExecutionException("Execution error", new Exception("cause")))
+        .when(mockCache).get(any(UUID.class));
+
+    field.set(dsProvider, mockCache);
+
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+      dsProvider.getConfiguration(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    });
+
+    assertEquals(
+        "Failed to load datasource configuration for tenantId: '00000000-0000-0000-0000-000000000001' because: Execution error",
+        exception.getMessage());
+  }
+}

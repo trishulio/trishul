@@ -8,7 +8,7 @@ Test helper classes, mock utilities, and dummy entities for testing Trishul modu
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-test</artifactId>
     <scope>test</scope>
 </dependency>

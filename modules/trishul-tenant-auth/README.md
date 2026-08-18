@@ -8,7 +8,7 @@ Tenant ID provider that extracts the current tenant from authentication context.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-tenant-auth</artifactId>
 </dependency>
 ```

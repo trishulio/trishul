@@ -8,7 +8,7 @@ IAM policy and role models for cloud infrastructure access management.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-iaas-access</artifactId>
 </dependency>
 ```

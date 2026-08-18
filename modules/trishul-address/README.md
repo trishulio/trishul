@@ -8,7 +8,7 @@ Reusable address entity base class for JPA entities requiring postal address fie
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-address</artifactId>
 </dependency>
 ```

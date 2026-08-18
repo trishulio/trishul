@@ -8,7 +8,7 @@ Tenant database schema creation, user provisioning, and Flyway migration managem
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-tenant-persistence-management</artifactId>
 </dependency>
 ```

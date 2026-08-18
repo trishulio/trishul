@@ -8,7 +8,7 @@ AWS S3 implementation for the object store abstraction layer.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-object-store-aws</artifactId>
 </dependency>
 ```

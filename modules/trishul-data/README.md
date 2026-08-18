@@ -8,7 +8,7 @@ DataSource configuration and management with HikariCP connection pooling for mul
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-data</artifactId>
 </dependency>
 ```

@@ -8,7 +8,7 @@ User management service with REST API for users, roles, salutations, and account
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-user-service</artifactId>
 </dependency>
 ```

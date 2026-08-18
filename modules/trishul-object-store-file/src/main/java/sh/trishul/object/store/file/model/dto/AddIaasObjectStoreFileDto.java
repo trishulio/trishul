@@ -1,0 +1,25 @@
+package sh.trishul.object.store.file.model.dto;
+
+import java.time.LocalDateTime;
+import sh.trishul.model.base.dto.BaseDto;
+
+public class AddIaasObjectStoreFileDto extends BaseDto {
+  private LocalDateTime minValidUntil;
+
+  public AddIaasObjectStoreFileDto() {
+    super();
+  }
+
+  public AddIaasObjectStoreFileDto(LocalDateTime minValidUntil) {
+    this.minValidUntil = minValidUntil;
+  }
+
+  public LocalDateTime getMinValidUntil() {
+    return minValidUntil;
+  }
+
+  public AddIaasObjectStoreFileDto setMinValidUntil(LocalDateTime minValidUntil) {
+    this.minValidUntil = minValidUntil;
+    return this;
+  }
+}

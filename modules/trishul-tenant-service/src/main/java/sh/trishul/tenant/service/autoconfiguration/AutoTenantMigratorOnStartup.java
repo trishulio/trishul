@@ -1,0 +1,48 @@
+package sh.trishul.tenant.service.autoconfiguration;
+
+import jakarta.annotation.PostConstruct;
+import java.util.List;
+import java.util.TreeSet;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
+import sh.trishul.tenant.entity.AdminTenant;
+import sh.trishul.tenant.entity.Tenant;
+import sh.trishul.tenant.persistence.management.migration.manager.MigrationManager;
+import sh.trishul.tenant.service.service.TenantService;
+
+@Component
+@ConditionalOnProperty(name = "trishul.tenant.migration.on-startup.enabled", havingValue = "true")
+public class AutoTenantMigratorOnStartup {
+  private final TenantService tenantService;
+  private final MigrationManager migrationManager;
+  private final AdminTenant adminTenant;
+
+  public AutoTenantMigratorOnStartup(AdminTenant adminTenant, TenantService tenantService,
+      MigrationManager migrationManager) {
+    this.adminTenant = adminTenant;
+    this.tenantService = tenantService;
+    this.migrationManager = migrationManager;
+  }
+
+  @PostConstruct
+  public void migrateAllTenantsOnStartup() {
+    this.migrationManager.migrate(adminTenant);
+
+    this.migrateTenants();
+  }
+
+  private void migrateTenants() {
+    final int SIZE = 100;
+    int page = 0;
+    Page<Tenant> tenantPage;
+
+    do {
+      tenantPage = tenantService.getAll(null, null, null, true, new TreeSet<>(List.of("id")), true,
+          page, SIZE);
+      List<Tenant> tenants = tenantPage.getContent();
+      this.migrationManager.migrateAll(tenants);
+      page++;
+    } while (tenantPage.hasNext());
+  }
+}

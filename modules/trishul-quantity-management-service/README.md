@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-quantity-management-service</artifactId>
 </dependency>
 ```
@@ -42,12 +42,12 @@ None detected in this module’s properties file.
 
 ## Key Classes & APIs
 
-- `io.trishul.quantity.management.service.unit.controller.QuantityUnitController`
-- `io.trishul.quantity.management.service.unit.controller.QuantityUnitControllerExceptionHandler`
+- `sh.trishul.quantity.management.service.unit.controller.QuantityUnitController`
+- `sh.trishul.quantity.management.service.unit.controller.QuantityUnitControllerExceptionHandler`
 
 ## Tests (Examples)
 
-- `io.trishul.quantity.management.service.unit.controller.QuantityUnitControllerTest`
+- `sh.trishul.quantity.management.service.unit.controller.QuantityUnitControllerTest`
 
 ## Integration Guide
 

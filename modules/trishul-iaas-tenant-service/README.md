@@ -11,7 +11,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-tenant-service</artifactId>
 </dependency>
 ```
@@ -38,18 +38,18 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `TenantIaasService` via `tenantIaasService()` — @ConditionalOnMissingBean(TenantIaasService.class) ([modules/trishul-iaas-tenant-service/src/main/java/io/trishul/iaas/tenant/service/autoconfiguration/IaasTenantServiceAutoConfiguration.java](modules/trishul-iaas-tenant-service/src/main/java/io/trishul/iaas/tenant/service/autoconfiguration/IaasTenantServiceAutoConfiguration.java))
+- `TenantIaasService` via `tenantIaasService()` — @ConditionalOnMissingBean(TenantIaasService.class) ([modules/trishul-iaas-tenant-service/src/main/java/sh/trishul/iaas/tenant/service/autoconfiguration/IaasTenantServiceAutoConfiguration.java](modules/trishul-iaas-tenant-service/src/main/java/sh/trishul/iaas/tenant/service/autoconfiguration/IaasTenantServiceAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.tenant.service.TenantIaasDeleteResult`
-- `io.trishul.iaas.tenant.service.TenantIaasService`
-- `io.trishul.iaas.tenant.service.autoconfiguration.IaasTenantServiceAutoConfiguration`
+- `sh.trishul.iaas.tenant.service.TenantIaasDeleteResult`
+- `sh.trishul.iaas.tenant.service.TenantIaasService`
+- `sh.trishul.iaas.tenant.service.autoconfiguration.IaasTenantServiceAutoConfiguration`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.tenant.service.TenantIaasDeleteResultTest`
-- `io.trishul.iaas.tenant.service.TenantIaasServiceTest`
+- `sh.trishul.iaas.tenant.service.TenantIaasDeleteResultTest`
+- `sh.trishul.iaas.tenant.service.TenantIaasServiceTest`
 
 ## Integration Guide
 

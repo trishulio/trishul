@@ -12,7 +12,7 @@
 
 ```xml
 <dependency>
-  <groupId>io.trishul</groupId>
+  <groupId>sh.trishul</groupId>
   <artifactId>trishul-iaas-auth-aws</artifactId>
 </dependency>
 ```
@@ -40,29 +40,29 @@ None detected in this module’s properties file.
 
 ## AutoConfiguration Beans
 
-- `IaasAuthAwsFactory` via `iaasAuthAwsFactory()` — @ConditionalOnMissingBean(IaasAuthAwsFactory.class) ([modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
-- `AmazonCognitoIdentity` via `amazonCognitoIdentity()` — @ConditionalOnMissingBean(AmazonCognitoIdentity.class) ([modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
-- `AWSCognitoIdentityProvider` via `awsCognitoIdpProvider()` — @ConditionalOnMissingBean(AWSCognitoIdentityProvider.class) ([modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
-- `AwsCognitoIdentityClient` via `awsCognitoIdentityClient()` — @ConditionalOnMissingBean(AwsCognitoIdentityClient.class) ([modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
-- `IaasAuthorizationFetcher` via `iaasAuthorizationFetcher()` — @ConditionalOnMissingBean(IaasAuthorizationFetcher.class) ([modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/io/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
+- `IaasAuthAwsFactory` via `iaasAuthAwsFactory()` — @ConditionalOnMissingBean(IaasAuthAwsFactory.class) ([modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
+- `AmazonCognitoIdentity` via `amazonCognitoIdentity()` — @ConditionalOnMissingBean(AmazonCognitoIdentity.class) ([modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
+- `AWSCognitoIdentityProvider` via `awsCognitoIdpProvider()` — @ConditionalOnMissingBean(AWSCognitoIdentityProvider.class) ([modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
+- `AwsCognitoIdentityClient` via `awsCognitoIdentityClient()` — @ConditionalOnMissingBean(AwsCognitoIdentityClient.class) ([modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
+- `IaasAuthorizationFetcher` via `iaasAuthorizationFetcher()` — @ConditionalOnMissingBean(IaasAuthorizationFetcher.class) ([modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java](modules/trishul-iaas-auth-aws/src/main/java/sh/trishul/iaas/auth/aws/autoconfiguration/IaasAuthAwsAutoConfiguration.java))
 
 ## Key Classes & APIs
 
-- `io.trishul.iaas.auth.aws.autoconfiguration.IaasAuthAwsAutoConfiguration`
-- `io.trishul.iaas.auth.aws.client.AwsCognitoIdentityClient`
-- `io.trishul.iaas.auth.aws.client.AwsCognitoIdentitySdkWrapper`
-- `io.trishul.iaas.auth.aws.client.AwsIdentityCredentialsMapper`
-- `io.trishul.iaas.auth.aws.client.AwsResourceCredentialsFetcher`
-- `io.trishul.iaas.auth.aws.client.CachedAwsCognitoIdentityClient`
-- `io.trishul.iaas.auth.aws.factory.IaasAuthAwsFactory`
+- `sh.trishul.iaas.auth.aws.autoconfiguration.IaasAuthAwsAutoConfiguration`
+- `sh.trishul.iaas.auth.aws.client.AwsCognitoIdentityClient`
+- `sh.trishul.iaas.auth.aws.client.AwsCognitoIdentitySdkWrapper`
+- `sh.trishul.iaas.auth.aws.client.AwsIdentityCredentialsMapper`
+- `sh.trishul.iaas.auth.aws.client.AwsResourceCredentialsFetcher`
+- `sh.trishul.iaas.auth.aws.client.CachedAwsCognitoIdentityClient`
+- `sh.trishul.iaas.auth.aws.factory.IaasAuthAwsFactory`
 
 ## Tests (Examples)
 
-- `io.trishul.iaas.auth.aws.client.AwsCognitoIdentitySdkWrapperTest`
-- `io.trishul.iaas.auth.aws.client.AwsIdentityCredentialsMapperTest`
-- `io.trishul.iaas.auth.aws.client.AwsResourceCredentialsFetcherTest`
-- `io.trishul.iaas.auth.aws.client.CachedAwsCognitoIdentityClientTest`
-- `io.trishul.iaas.auth.aws.factory.IaasAuthAwsFactoryTest`
+- `sh.trishul.iaas.auth.aws.client.AwsCognitoIdentitySdkWrapperTest`
+- `sh.trishul.iaas.auth.aws.client.AwsIdentityCredentialsMapperTest`
+- `sh.trishul.iaas.auth.aws.client.AwsResourceCredentialsFetcherTest`
+- `sh.trishul.iaas.auth.aws.client.CachedAwsCognitoIdentityClientTest`
+- `sh.trishul.iaas.auth.aws.factory.IaasAuthAwsFactoryTest`
 
 ## Integration Guide
 

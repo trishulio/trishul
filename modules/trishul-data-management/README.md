@@ -8,7 +8,7 @@ Spring Boot auto-configuration for DataSource management components.
 
 ```xml
 <dependency>
-    <groupId>io.trishul</groupId>
+    <groupId>sh.trishul</groupId>
     <artifactId>trishul-data-management</artifactId>
 </dependency>
 ```
