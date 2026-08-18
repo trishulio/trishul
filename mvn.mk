@@ -13,7 +13,7 @@ dependency_tree:
 	$(MAVEN) mvn dependency:tree $(MVN_ARGS)
 
 deploy:
-	$(MAVEN) mvn clean deploy -T $(THREADS) $(MVN_ARGS)
+	$(MAVEN) mvn clean deploy -s settings.xml -T $(THREADS) $(MVN_ARGS)
 
 set_version:
 	$(MAVEN) mvn versions:set -DnewVersion=$(VERSION) -DgenerateBackupPoms=false $(MVN_ARGS)
@@ -50,8 +50,13 @@ tag_release:
 	git tag -a "v$(VERSION)" -m "Release v$(VERSION)" || true
 
 push_release:
-	git push origin HEAD:main
-	git push origin "v$(VERSION)"
+	@if [ -n "$$GITHUB_TOKEN" ]; then \
+		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git HEAD:main; \
+		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git "v$(VERSION)"; \
+	else \
+		git push origin HEAD:main; \
+		git push origin "v$(VERSION)"; \
+	fi
 
 create_release:
 	@set -e; \
