@@ -23,6 +23,7 @@ public class AwsObjectStoreClient implements
     IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> {
   private static final Logger log = LoggerFactory.getLogger(AwsObjectStoreClient.class);
 
+  private static final Set<Integer> IGNORED_STATUS_CODES = Set.of(404);
   private static final Set<String> IGNORED_ERRORS = Set.of("nosuchbucket");
 
   private final AmazonS3 awsClient;
@@ -49,7 +50,7 @@ public class AwsObjectStoreClient implements
       this.awsClient.deleteBucket(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      if (e.getStatusCode() == 404 || (e.getErrorCode() != null
+      if (IGNORED_STATUS_CODES.contains(e.getStatusCode()) || (e.getErrorCode() != null
           && IGNORED_ERRORS.contains(e.getErrorCode().toLowerCase()))) {
         log.info("S3 bucket already deleted or not found: {}", bucketName);
         success = true;

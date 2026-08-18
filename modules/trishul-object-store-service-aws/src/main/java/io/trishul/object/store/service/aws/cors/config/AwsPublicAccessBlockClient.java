@@ -16,6 +16,7 @@ public class AwsPublicAccessBlockClient implements
     IaasClient<String, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig, IaasObjectStoreAccessConfig> {
   private static final Logger log = LoggerFactory.getLogger(AwsPublicAccessBlockClient.class);
 
+  private static final Set<Integer> IGNORED_STATUS_CODES = Set.of(404);
   private static final Set<String> IGNORED_ERRORS
       = Set.of("nosuchbucket", "nosuchpublicaccessblockconfiguration");
 
@@ -83,7 +84,7 @@ public class AwsPublicAccessBlockClient implements
       this.awsClient.deletePublicAccessBlock(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      if (e.getStatusCode() == 404 || (e.getErrorCode() != null
+      if (IGNORED_STATUS_CODES.contains(e.getStatusCode()) || (e.getErrorCode() != null
           && IGNORED_ERRORS.contains(e.getErrorCode().toLowerCase()))) {
         log.info("S3 public access block configuration already deleted or not found: {}",
             bucketName);
