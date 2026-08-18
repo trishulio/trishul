@@ -28,13 +28,13 @@ pipeline {
         // Force single-threaded Maven builds in CI to avoid dependency resolution race conditions
         THREADS = '1'
         
-        // Extract properties from mvn.env so docker-compose maps them properly
-        NVD_API_KEY = sh(script: "grep '^NVD_API_KEY=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
-        APP_URL = sh(script: "grep '^APP_URL=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
-        SONARQUBE_HOST_URL = sh(script: "grep '^SONARQUBE_HOST_URL=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
-        SONARQUBE_PROJECT_NAME = sh(script: "grep '^SONARQUBE_PROJECT_NAME=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
-        SONARQUBE_TOKEN = sh(script: "grep '^SONARQUBE_TOKEN=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
-        SONARQUBE_PROJECT_KEY = sh(script: "grep '^SONARQUBE_PROJECT_KEY=' mvn.env | cut -d= -f2-", returnStdout: true).trim()
+        // Default properties and credentials
+        APP_URL = 'http://localhost:8080'
+        SONARQUBE_HOST_URL = 'https://sonarqube.cloudville.me'
+        SONARQUBE_PROJECT_NAME = 'trishul'
+        SONARQUBE_PROJECT_KEY = 'trishulio_trishul_9d26085e-e21c-4b54-8871-18d7c7dabb72'
+        SONARQUBE_TOKEN = credentials('sonarqube-token')
+        NVD_API_KEY = credentials('nvd-api-key')
 
         // Parameter mappings
         ENABLE_TESTS = "${params.ENABLE_TESTS != null ? params.ENABLE_TESTS : 'true'}"
@@ -59,8 +59,7 @@ pipeline {
         stage('Check & Quality') {
             steps {
                 // Ensure formatting, checkstyle, etc. are passing
-                sh "make compile PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -Dsonar.skip=true -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz -DfailBuildOnCVSS=11'"
-                sh "make check PWD='${HOST_WORKSPACE}' MVN_ARGS='-Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dpmd.failOnViolation=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz -DfailBuildOnCVSS=11'"
+                sh "ENABLE_SONARQUBE=false make check PWD='${HOST_WORKSPACE}'"
             }
         }
 
@@ -84,13 +83,12 @@ pipeline {
                     def sonarReachable = sh(script: "docker-compose --env-file mvn.env -f docker-compose-bin.yml run --rm mvn wget -q --spider --timeout=5 https://sonarqube.cloudville.me/api/v2/analysis/version && echo 'true' || echo 'false'", returnStdout: true).trim()
                     echo "SonarQube reachability inside container: ${sonarReachable}"
                     
-                    def extraArgs = ""
+                    def enableSonar = (sonarReachable == "true" && env.ENABLE_SONARQUBE == "true") ? "true" : "false"
                     if (sonarReachable == "false") {
                         echo "SonarQube is unreachable inside the container, skipping analysis to prevent build failure."
-                        extraArgs = "-Dsonar.skip=true"
                     }
                     
-                    sh "make install PWD='${HOST_WORKSPACE}' THREADS='1' MVN_ARGS='-Dpmd.failOnViolation=false -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcpd.skip=true -Dspotbugs.failOnError=false -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/nvdcve-{0}.json.gz -DfailBuildOnCVSS=11 ${extraArgs}'"
+                    sh "ENABLE_SONARQUBE=${enableSonar} make install PWD='${HOST_WORKSPACE}' THREADS='1'"
                 }
             }
         }

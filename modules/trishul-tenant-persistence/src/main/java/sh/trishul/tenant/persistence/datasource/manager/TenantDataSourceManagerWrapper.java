@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 import javax.sql.DataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import sh.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
 import sh.trishul.data.datasource.manager.DataSourceManager;
 import sh.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 
 public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
-  private static final Logger log = LoggerFactory.getLogger(TenantDataSourceManagerWrapper.class);
-
   private final DataSourceManager dsMgr;
   private final DataSourceConfigurationProvider<UUID> dsConfigMgr;
   private final UUID adminTenantId;
@@ -29,12 +25,9 @@ public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
   public DataSource getDataSource(UUID tenantId) throws SQLException, IOException {
     DataSource ds = this.dsMgr.getAdminDataSource();
 
-    log.debug("Requesting data source for tenant: {}", tenantId);
-
     if (tenantId != null && !tenantId.equals(this.adminTenantId)) {
       DataSourceConfiguration config = this.dsConfigMgr.getConfiguration(tenantId);
       ds = this.dsMgr.getDataSource(config);
-      log.debug("Tenant data source config found for tenant: {}", tenantId);
     }
 
     return ds;
