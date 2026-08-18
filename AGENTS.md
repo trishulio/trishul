@@ -71,6 +71,17 @@ AWS Cognito integration requires both auth modules + region setting in env file 
 ## Entity Pattern Template @Entity public class MyEntity extends BaseEntity implements CrudEntity MY_ENTT Audited<MyEntt> that Id private UUID id; string name attribute with CreationTimestamp for created_at and Update Timestamp columns always added as part of interface contract
 ```java
 
+## Testing and Assertions
+
+- Do not use conditional assertions in unit tests. Every assertion should be a strict check on the expected value or state without branched logic (e.g., do not use `assertTrue(x == null || x.isEmpty())`; instead, assert the exact expected condition, such as `assertTrue(x.isEmpty())`).
+- When testing AWS client implementations that log request IDs, mock `ResponseMetadata` (e.g. `new ResponseMetadata(Map.of(ResponseMetadata.AWS_REQUEST_ID, "REQ_ID"))`).
+- When testing AWS SDK error handling, include test cases that trigger `ResourceNotFoundException` / `NoSuchEntityException` / `AmazonS3Exception` catch blocks.
+- Fluent setters returning `this` must be asserted with `assertSame(instance, instance.setter(...))`.
+- For classes extending `BaseModel`, explicitly test `equals`, `hashCode`, and `toString`.
+- For deep-cloning setters and summation/accumulator loops, test both `null` and non-null branches.
+- For MapStruct mappers with nested structures, test scenarios where nested fields in the source/target DTOs are `null`.
+- Only test implementing POJO/Model classes; base interfaces do not need direct tests. Avoid empty or trivial `testContextLoads()` tests.
+
 ## Direct Fully Qualified Classpaths
 
 Do not write fully qualified package class paths directly in Java code (e.g. `org.junit.jupiter.api.Assertions.assertNotEquals`). Instead, import packages and classes and use their short classnames. For functions and static utility methods (e.g. mock, assertions), use static imports.

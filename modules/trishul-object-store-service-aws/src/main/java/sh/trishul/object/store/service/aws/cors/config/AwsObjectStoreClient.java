@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.DeleteBucketRequest;
 import com.amazonaws.services.s3.model.ListBucketsRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ import sh.trishul.object.store.model.UpdateIaasObjectStore;
 public class AwsObjectStoreClient implements
     IaasClient<String, IaasObjectStore, BaseIaasObjectStore<?>, UpdateIaasObjectStore<?>> {
   private static final Logger log = LoggerFactory.getLogger(AwsObjectStoreClient.class);
+
+  private static final Set<Integer> IGNORED_STATUS_CODES = Set.of(404);
+  private static final Set<String> IGNORED_ERRORS = Set.of("nosuchbucket");
 
   private final AmazonS3 awsClient;
   private final InheritableThreadLocal<Map<String, IaasObjectStore>> localCache;
@@ -46,7 +50,8 @@ public class AwsObjectStoreClient implements
       this.awsClient.deleteBucket(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())) {
+      if (IGNORED_STATUS_CODES.contains(e.getStatusCode()) || (e.getErrorCode() != null
+          && IGNORED_ERRORS.contains(e.getErrorCode().toLowerCase()))) {
         log.info("S3 bucket already deleted or not found: {}", bucketName);
         success = true;
       } else {
