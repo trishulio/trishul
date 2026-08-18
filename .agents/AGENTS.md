@@ -109,6 +109,14 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - PIT mutation testing runs after unit tests in each module for quality assurance
 - PIT mutation test coverage should be maintained
 - Check PIT reports for mutation coverage after test changes (`target/pit-reports/index.html` or `modules/<module>/target/pit-reports/index.html`)
+- No conditional assertions in unit tests (assert exact expected condition without branching)
+- When testing AWS clients logging request IDs, mock `ResponseMetadata`
+- Test `ResourceNotFoundException` / `NoSuchEntityException` / `AmazonS3Exception` catch branches
+- Verify fluent setters return `this` via `assertSame`
+- For classes extending `BaseModel`, test `equals`, `hashCode`, and `toString`
+- For deep-cloning setters and accumulator loops, test both `null` and non-null branches
+- For MapStruct mappers with nested structures, test scenarios where nested fields in DTOs are `null`
+- Only test implementing POJO/Model classes; base interfaces do not need direct tests. Remove `testContextLoads()` style tests.
 
 ## Key Files to Review Before Changes
 1. `modules/trishul-base-types/src/main/java/io/trishul/base/types/base/pojo/Identified.java`

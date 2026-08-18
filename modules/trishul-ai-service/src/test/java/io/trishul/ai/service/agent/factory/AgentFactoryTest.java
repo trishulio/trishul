@@ -17,17 +17,12 @@ import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.output.Response;
-import dev.langchain4j.service.AiServiceContext;
-import dev.langchain4j.service.AiServices;
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.service.agent.Assistant;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -197,19 +192,6 @@ class AgentFactoryTest {
     assistant.chat("session-123", UserMessage.from("hello"));
   }
 
-  private AiServiceContext getAiServiceContext(Object assistantProxy) {
-    try {
-      InvocationHandler handler = Proxy.getInvocationHandler(assistantProxy);
-      Field this0Field = handler.getClass().getDeclaredField("this$0");
-      this0Field.setAccessible(true);
-      Object defaultAiServices = this0Field.get(handler);
-      Field contextField = AiServices.class.getDeclaredField("context");
-      contextField.setAccessible(true);
-      return (AiServiceContext) contextField.get(defaultAiServices);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
 
   @Test
   void testBuildMemory_WithNullConfig_UsesDefaultMaxMessages() {

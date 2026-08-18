@@ -112,7 +112,6 @@
         <com.twilio.sdk.version>12.1.1</com.twilio.sdk.version>
         <com.google.guava.version>33.7.0-jre</com.google.guava.version>
         <commons-logging.version>1.4.0</commons-logging.version>
-        <pit.threads>2</pit.threads>
         <argLine />
     </properties>
 
@@ -868,7 +867,6 @@
                             <avoidCallsTo>org.slf4j</avoidCallsTo>
                             <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
                         </avoidCallsTo>
-                        <threads>${pit.threads}</threads>
                         <failWhenNoMutations>false</failWhenNoMutations>
                         <timeoutFactor>3</timeoutFactor>
                         <timeoutConstant>10000</timeoutConstant>
