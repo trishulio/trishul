@@ -63,7 +63,7 @@ public class IaasRoleService extends BaseService implements
     if (roles.size() == 1) {
       role = roles.get(0);
     } else {
-      log.debug("Get IaasRole: '{}' returned {}", roles);
+      log.debug("Get IaasRole: '{}' returned {}", id, roles.size());
     }
 
     return role;

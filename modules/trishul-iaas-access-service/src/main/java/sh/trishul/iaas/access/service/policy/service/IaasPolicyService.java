@@ -62,7 +62,7 @@ public class IaasPolicyService extends BaseService implements
     if (policies.size() == 1) {
       policy = policies.get(0);
     } else {
-      log.debug("Get policy: '{}' returned {}", policies);
+      log.debug("Get policy: '{}' returned {}", id, policies.size());
     }
 
     return policy;

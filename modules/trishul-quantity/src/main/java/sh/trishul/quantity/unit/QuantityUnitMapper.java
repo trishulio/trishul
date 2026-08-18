@@ -87,8 +87,8 @@ public abstract class QuantityUnitMapper {
     try {
       return field.get(null);
     } catch (IllegalAccessException e) {
+      log.error("Failed to retrieve the field value because: {}", e.getMessage());
       String msg = String.format("Failed to retrieve the field value because: %s", e.getMessage());
-      log.error(msg);
       throw new RuntimeException(msg, e);
     }
   }

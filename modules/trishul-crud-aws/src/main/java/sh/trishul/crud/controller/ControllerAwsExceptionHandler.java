@@ -21,9 +21,9 @@ public class ControllerAwsExceptionHandler {
     @ExceptionHandler(value = { AmazonServiceException.class })
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse amazonServiceException(AmazonServiceException e, HttpServletRequest request) {
-        String message = String.format("Failed to call AWS, received ErrorCode: %s; StatusCode: %s; Message: %s", e.getErrorCode(), e.getStatusCode(), e.getMessage());
-        log.error(message);
+        log.error("Failed to call AWS, received ErrorCode: {}; StatusCode: {}; Message: {}", e.getErrorCode(), e.getStatusCode(), e.getMessage());
 
+        String message = String.format("Failed to call AWS, received ErrorCode: %s; StatusCode: %s; Message: %s", e.getErrorCode(), e.getStatusCode(), e.getMessage());
         ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), message, request.getRequestURI());
 
         return response;

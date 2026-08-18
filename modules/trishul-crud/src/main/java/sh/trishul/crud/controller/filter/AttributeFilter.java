@@ -35,12 +35,12 @@ public class AttributeFilter {
         util.invokeSetter(o, pd, NULL_VALUE);
       }
     } catch (IntrospectionException e) {
-      String msg = String.format("Failed to get the property descriptors for the the object");
+      String msg = "Failed to get the property descriptors for the the object";
       log.error(msg);
       throw new RuntimeException(msg, e.getCause());
     } catch (IllegalArgumentException e) {
       String msg = String.format("Failed to dynamically call setter because: %s", e.getMessage());
-      log.error(msg);
+      log.error("Failed to dynamically call setter because: {}", e.getMessage());
       throw new RuntimeException(msg, e.getCause());
     }
   }
