@@ -35,8 +35,6 @@ pipeline {
         SONARQUBE_PROJECT_KEY = 'trishulio_trishul_9d26085e-e21c-4b54-8871-18d7c7dabb72'
         SONARQUBE_TOKEN = credentials('sonarqube-token')
         NVD_API_KEY = credentials('nvd-api-key')
-        GITHUB_TOKEN = credentials('jenky')
-        GITHUB_ACTOR = 'rishabmanocha'
 
         // Parameter mappings
         ENABLE_TESTS = "${params.ENABLE_TESTS != null ? params.ENABLE_TESTS : 'true'}"

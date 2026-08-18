@@ -47,15 +47,15 @@ commit_release:
 	git diff --cached --quiet || git commit -m "chore(release): bump version to $(VERSION)"
 
 tag_release:
-	git tag -a "v$(VERSION)" -m "Release v$(VERSION)" || true
+	git tag -fa "v$(VERSION)" -m "Release v$(VERSION)" || true
 
 push_release:
 	@if [ -n "$$GITHUB_TOKEN" ]; then \
-		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git HEAD:main; \
-		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git "v$(VERSION)"; \
+		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git HEAD:main || echo "Failed to push branch to GitHub"; \
+		git push https://x-access-token:$$GITHUB_TOKEN@github.com/trishulio/trishul.git "v$(VERSION)" || echo "Failed to push tag to GitHub"; \
 	else \
-		git push origin HEAD:main; \
-		git push origin "v$(VERSION)"; \
+		git push origin HEAD:main || echo "Failed to push branch to remote"; \
+		git push origin "v$(VERSION)" || echo "Failed to push tag to remote"; \
 	fi
 
 create_release:
