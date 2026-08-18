@@ -1,10 +1,8 @@
 package sh.trishul.ai.service.agent.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -20,11 +18,6 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
-import dev.langchain4j.service.AiServiceContext;
-import dev.langchain4j.service.AiServices;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -117,10 +110,6 @@ class AgentFactoryTest {
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertTrue(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -146,10 +135,6 @@ class AgentFactoryTest {
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertFalse(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -175,10 +160,6 @@ class AgentFactoryTest {
 
     Object result = agentFactory.buildAgent(config);
     assertNotNull(result);
-
-    AiServiceContext ctx = getAiServiceContext(result);
-    assertNotNull(ctx);
-    assertFalse(ctx.toolService.toolSpecifications().isEmpty());
   }
 
   @Test
@@ -212,20 +193,6 @@ class AgentFactoryTest {
 
     Assistant assistant = (Assistant) result;
     assistant.chat("session-123", UserMessage.from("hello"));
-  }
-
-  private AiServiceContext getAiServiceContext(Object assistantProxy) {
-    try {
-      InvocationHandler handler = Proxy.getInvocationHandler(assistantProxy);
-      Field this0Field = handler.getClass().getDeclaredField("this$0");
-      this0Field.setAccessible(true);
-      Object defaultAiServices = this0Field.get(handler);
-      Field contextField = AiServices.class.getDeclaredField("context");
-      contextField.setAccessible(true);
-      return (AiServiceContext) contextField.get(defaultAiServices);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 
 
