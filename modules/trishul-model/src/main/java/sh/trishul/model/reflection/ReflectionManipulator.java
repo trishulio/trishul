@@ -164,6 +164,7 @@ public class ReflectionManipulator {
     }
   }
 
+  // CPD-OFF
   public <T> T construct(Class<T> clazz, Map<String, Object> props) {
     if (clazz == null) {
       return null;
@@ -194,6 +195,7 @@ public class ReflectionManipulator {
 
     return obj;
   }
+  // CPD-ON
 
   public <T> T construct(Class<T> clazz) {
     return this.construct(clazz, new HashMap<>());
