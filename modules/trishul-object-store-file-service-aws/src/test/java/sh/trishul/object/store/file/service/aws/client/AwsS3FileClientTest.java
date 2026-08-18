@@ -13,6 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.util.MimeTypeUtils.IMAGE_PNG;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -69,14 +70,17 @@ class AwsS3FileClientTest {
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file
-        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+        = client.add(new IaasObjectStoreFile().setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
+            .setMimeType(IMAGE_PNG));
 
     assertNotNull(file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
     assertThat(file.getFileUrl().toString()).startsWith("http://localhost/");
     assertThat(file.getFileUrl().toString()).endsWith(file.getFileKey().toString());
+    assertEquals(IMAGE_PNG, file.getMimeType());
 
     assertEquals(HttpMethod.PUT, captor.getValue().getMethod());
+    assertEquals("image/png", captor.getValue().getContentType());
   }
 
   @Test
@@ -90,13 +94,16 @@ class AwsS3FileClientTest {
     }).when(mS3).generatePresignedUrl(captor.capture());
 
     IaasObjectStoreFile file = client.put(new IaasObjectStoreFile()
-        .setFileKey(URI.create("note.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0)));
+        .setFileKey(URI.create("note.txt")).setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0))
+        .setMimeType(IMAGE_PNG));
 
     assertEquals(URI.create("note.txt"), file.getFileKey());
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), file.getExpiration());
     assertEquals(URI.create("http://localhost/note.txt").toURL(), file.getFileUrl());
+    assertEquals(IMAGE_PNG, file.getMimeType());
 
     assertEquals(HttpMethod.PUT, captor.getValue().getMethod());
+    assertEquals("image/png", captor.getValue().getContentType());
   }
 
   @Test

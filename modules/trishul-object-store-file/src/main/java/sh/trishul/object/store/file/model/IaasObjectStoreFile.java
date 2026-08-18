@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import org.springframework.util.MimeType;
 import sh.trishul.base.types.base.pojo.CrudEntity;
 import sh.trishul.model.base.entity.BaseEntity;
 
@@ -12,6 +13,7 @@ public class IaasObjectStoreFile extends BaseEntity implements
   private URI fileKey;
   private LocalDateTime expiration;
   private URL fileUrl;
+  private MimeType mimeType;
 
   public IaasObjectStoreFile() {
     super();
@@ -26,6 +28,12 @@ public class IaasObjectStoreFile extends BaseEntity implements
     this(fileKey);
     setExpiration(expiration);
     setFileUrl(fileUrl);
+  }
+
+  public IaasObjectStoreFile(URI fileKey, LocalDateTime expiration, URL fileUrl,
+      MimeType mimeType) {
+    this(fileKey, expiration, fileUrl);
+    setMimeType(mimeType);
   }
 
   @Override
@@ -82,6 +90,17 @@ public class IaasObjectStoreFile extends BaseEntity implements
   @Override
   public IaasObjectStoreFile setFileUrl(URL fileUrl) {
     this.fileUrl = fileUrl;
+    return this;
+  }
+
+  @Override
+  public MimeType getMimeType() {
+    return this.mimeType;
+  }
+
+  @Override
+  public IaasObjectStoreFile setMimeType(MimeType mimeType) {
+    this.mimeType = mimeType;
     return this;
   }
 

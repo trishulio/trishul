@@ -3,12 +3,14 @@ package sh.trishul.object.store.file.model;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
+import org.springframework.util.MimeType;
 
 public interface BaseIaasObjectStoreFile<T extends BaseIaasObjectStoreFile<T>> {
   final String ATTR_FILE_KEY = "fileKey";
   final String ATTR_EXPIRATION = "expiration";
   final String ATTR_FILE_URL = "fileUrl";
   final String ATTR_MIN_VALID_UNTIL = "minValidUntil";
+  final String ATTR_MIME_TYPE = "mimeType";
 
   URI getFileKey();
 
@@ -23,4 +25,8 @@ public interface BaseIaasObjectStoreFile<T extends BaseIaasObjectStoreFile<T>> {
   T setFileUrl(URL fileUrl);
 
   T setMinValidUntil(LocalDateTime minValidUntil);
+
+  MimeType getMimeType();
+
+  T setMimeType(MimeType mimeType);
 }
