@@ -108,7 +108,8 @@
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <org.apache.maven.plugin.antrun.version>3.2.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
-        <dev.langchain4j.version>0.36.2</dev.langchain4j.version>
+        <dev.langchain4j.version>1.19.0</dev.langchain4j.version>
+        <dev.langchain4j.spring-boot.version>1.19.0-beta29</dev.langchain4j.spring-boot.version>
         <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
         <com.twilio.sdk.version>12.1.1</com.twilio.sdk.version>
         <com.google.guava.version>33.7.0-jre</com.google.guava.version>
@@ -756,7 +757,7 @@
                         <allowSnapshots>false</allowSnapshots>
                         <generateBackupPoms>false</generateBackupPoms>
 
-                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,dev.langchain4j.version,org.springframework.ai.version</excludeProperties>
+                        <excludeProperties>org.pitest.version,org.codehaus.mojo.versions.plugin.version,org.apache.maven.plugin.compiler.version,org.apache.maven.plugin.version,org.springframework.boot.version,org.springdoc.openapi.webmvc.version,org.springframework.ai.version</excludeProperties>
                     </configuration>
                 </plugin>
 

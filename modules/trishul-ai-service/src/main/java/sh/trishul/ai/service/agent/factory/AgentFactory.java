@@ -2,8 +2,8 @@ package sh.trishul.ai.service.agent.factory;
 
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
 import java.util.List;
 import sh.trishul.ai.agent.model.AiAgentConfig;
@@ -29,9 +29,9 @@ public class AgentFactory {
   }
 
   /**
-   * Builds a LangChain4j AiServices proxy (Assistant) configured with the ChatLanguageModel and
-   * ChatMemory derived from the given AiAgentConfig. The ChatMemory is pre-built and wired in
-   * directly, using a ChatMemoryProvider keyed by memoryId for per-conversation isolation.
+   * Builds a LangChain4j AiServices proxy (Assistant) configured with the ChatModel and ChatMemory
+   * derived from the given AiAgentConfig. The ChatMemory is pre-built and wired in directly, using
+   * a ChatMemoryProvider keyed by memoryId for per-conversation isolation.
    *
    * @param config the full AiAgentConfig (must not be null).
    * @param chatMemory a pre-built ChatMemory scoped to the current session/memoryId.
@@ -41,12 +41,11 @@ public class AgentFactory {
     if (config == null) {
       throw new IllegalArgumentException("AiAgentConfig must not be null");
     }
-    ChatLanguageModel chatModel = buildChatModel(config.getChatModelConfig());
-    StreamingChatLanguageModel streamingChatModel
-        = buildStreamingModel(config.getChatModelConfig());
+    ChatModel chatModel = buildChatModel(config.getChatModelConfig());
+    StreamingChatModel streamingChatModel = buildStreamingModel(config.getChatModelConfig());
     List<Object> tools = resolveTool(config);
-    AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatLanguageModel(chatModel)
-        .streamingChatLanguageModel(streamingChatModel).chatMemory(chatMemory);
+    AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatModel(chatModel)
+        .streamingChatModel(streamingChatModel).chatMemory(chatMemory);
     if (!tools.isEmpty()) {
       builder.tools(tools);
     }
@@ -62,13 +61,12 @@ public class AgentFactory {
     if (config == null) {
       throw new IllegalArgumentException("AiAgentConfig must not be null");
     }
-    ChatLanguageModel chatModel = buildChatModel(config.getChatModelConfig());
-    StreamingChatLanguageModel streamingChatModel
-        = buildStreamingModel(config.getChatModelConfig());
+    ChatModel chatModel = buildChatModel(config.getChatModelConfig());
+    StreamingChatModel streamingChatModel = buildStreamingModel(config.getChatModelConfig());
     AiChatMemoryConfig memCfg = config.getChatMemoryConfig();
     List<Object> tools = resolveTool(config);
-    AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatLanguageModel(chatModel)
-        .streamingChatLanguageModel(streamingChatModel)
+    AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatModel(chatModel)
+        .streamingChatModel(streamingChatModel)
         .chatMemoryProvider(memoryId -> buildMemory(memCfg, memoryId));
     if (!tools.isEmpty()) {
       builder.tools(tools);
@@ -76,7 +74,7 @@ public class AgentFactory {
     return builder.build();
   }
 
-  public ChatLanguageModel buildChatModel(AiChatModelConfig modelConfig) {
+  public ChatModel buildChatModel(AiChatModelConfig modelConfig) {
     if (modelConfig == null) {
       throw new IllegalArgumentException("AiChatModelConfig must not be null");
     }
@@ -85,10 +83,9 @@ public class AgentFactory {
   }
 
   /**
-   * Kept for callers that explicitly need a StreamingChatLanguageModel (e.g., AiChatController SSE
-   * path).
+   * Kept for callers that explicitly need a StreamingChatModel (e.g., AiChatController SSE path).
    */
-  public StreamingChatLanguageModel buildStreamingModel(AiChatModelConfig modelConfig) {
+  public StreamingChatModel buildStreamingModel(AiChatModelConfig modelConfig) {
     if (modelConfig == null) {
       throw new IllegalArgumentException("AiChatModelConfig must not be null");
     }
