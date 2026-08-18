@@ -134,7 +134,7 @@ class AmountTest {
   @Test
   void testAccessSubTotal() throws Exception {
     Amount accessor = new Amount();
-    Money value = org.joda.money.Money.parse("USD 123.45");
+    Money value = Money.parse("USD 123.45");
     assertSame(accessor, accessor.setSubTotal(value));
     assertEquals(value, accessor.getSubTotal());
   }

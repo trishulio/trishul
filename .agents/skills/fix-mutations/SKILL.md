@@ -20,7 +20,7 @@ Automates the process of finding and resolving survived PIT mutation tests acros
 Run the following command to fetch the next batch of 10 survived mutations:
 
 ```bash
-(echo "<mutations>"; xmllint modules/*/target/pit-reports/mutations.xml | grep 'status="SURVIVED"' | head -n <COUNT> | tail -n 10; echo "</mutations>") | xmllint --format -
+(echo "<mutations>"; xmllint modules/*/target/pit-reports/mutations.xml | grep -v 'status="KILLED"' | head -n <COUNT> | tail -n 10; echo "</mutations>") | xmllint --format -
 ```
 
 - Start with `<COUNT>=10` for the first batch.
@@ -98,7 +98,7 @@ This builds all modules with `clean install`, running all tests and PIT mutation
 After `make install` completes, verify zero survived mutations remain:
 
 ```bash
-xmllint modules/*/target/pit-reports/mutations.xml | grep -c 'status="SURVIVED"'
+xmllint modules/*/target/pit-reports/mutations.xml | grep -v -c 'status="KILLED"'
 ```
 
 If the count is `0`, the goal is complete.

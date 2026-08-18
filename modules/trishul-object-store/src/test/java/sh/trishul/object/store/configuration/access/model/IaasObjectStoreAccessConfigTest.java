@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
@@ -91,8 +92,7 @@ class IaasObjectStoreAccessConfigTest {
   @Test
   void testAccessPublicAccessBlockConfig() throws Exception {
     IaasObjectStoreAccessConfig accessor = new IaasObjectStoreAccessConfig();
-    PublicAccessBlockConfiguration value
-        = org.mockito.Mockito.mock(PublicAccessBlockConfiguration.class);
+    PublicAccessBlockConfiguration value = mock(PublicAccessBlockConfiguration.class);
     when(value.clone()).thenReturn(value);
     assertSame(accessor, accessor.setPublicAccessBlockConfig(value));
     assertEquals(value, accessor.getPublicAccessBlockConfig());

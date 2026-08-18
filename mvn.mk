@@ -1,11 +1,10 @@
 .PHONY: install compile deploy set_version check fast-build release
 
 MAVEN := docker-compose --env-file mvn.env -f docker-compose-bin.yml run --rm --remove-orphans mvn
-THREADS ?= 4C
-PIT_THREADS ?= $(shell NUM=$$(echo "$(THREADS)" | tr -cd '0-9'); echo $${NUM:-2})
+THREADS ?= 2C
 
 install:
-	$(MAVEN) mvn clean install -T $(THREADS) -Dpit.threads=$(PIT_THREADS) $(MVN_ARGS)
+	$(MAVEN) mvn clean install -T $(THREADS) $(MVN_ARGS)
 
 compile:
 	$(MAVEN) mvn clean install -DskipTests -T $(THREADS) $(MVN_ARGS)
@@ -14,13 +13,13 @@ dependency_tree:
 	$(MAVEN) mvn dependency:tree $(MVN_ARGS)
 
 deploy:
-	$(MAVEN) mvn clean deploy -T $(THREADS) -Dpit.threads=$(PIT_THREADS) $(MVN_ARGS)
+	$(MAVEN) mvn clean deploy -T $(THREADS) $(MVN_ARGS)
 
 set_version:
 	$(MAVEN) mvn versions:set -DnewVersion=$(VERSION) -DgenerateBackupPoms=false $(MVN_ARGS)
 
 verify:
-	$(MAVEN) mvn clean verify -T $(THREADS) -Dpit.threads=$(PIT_THREADS) $(MVN_ARGS)
+	$(MAVEN) mvn clean verify -T $(THREADS) $(MVN_ARGS)
 
 check:
 	ENABLE_TESTS=false ENABLE_MUTATION_COVERAGE=false ENABLE_CODE_COVERAGE=false ENABLE_SONARQUBE=false ENABLE_SPOTBUGS=false ENABLE_DEPENDENCY_CHECK=false $(MAVEN) mvn spotless:check checkstyle:check pmd:check pmd:cpd-check -T $(THREADS) $(MVN_ARGS)

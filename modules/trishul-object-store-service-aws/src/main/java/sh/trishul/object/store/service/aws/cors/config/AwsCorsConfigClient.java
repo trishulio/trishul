@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.BucketCrossOriginConfiguration;
 import com.amazonaws.services.s3.model.DeleteBucketCrossOriginConfigurationRequest;
 import com.amazonaws.services.s3.model.GetBucketCrossOriginConfigurationRequest;
 import com.amazonaws.services.s3.model.SetBucketCrossOriginConfigurationRequest;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.trishul.iaas.client.IaasClient;
@@ -14,6 +15,10 @@ import sh.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfi
 public class AwsCorsConfigClient implements
     IaasClient<String, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration, IaasObjectStoreCorsConfiguration> {
   private static final Logger log = LoggerFactory.getLogger(AwsCorsConfigClient.class);
+
+  private static final Set<Integer> IGNORED_STATUS_CODES = Set.of(404);
+  private static final Set<String> IGNORED_ERRORS
+      = Set.of("nosuchbucket", "nosuchcorsconfiguration");
 
   private final AmazonS3 awsClient;
 
@@ -91,8 +96,8 @@ public class AwsCorsConfigClient implements
       this.awsClient.deleteBucketCrossOriginConfiguration(request);
       success = true;
     } catch (AmazonS3Exception e) {
-      if (e.getStatusCode() == 404 || "NoSuchBucket".equalsIgnoreCase(e.getErrorCode())
-          || "NoSuchCORSConfiguration".equalsIgnoreCase(e.getErrorCode())) {
+      if (IGNORED_STATUS_CODES.contains(e.getStatusCode()) || (e.getErrorCode() != null
+          && IGNORED_ERRORS.contains(e.getErrorCode().toLowerCase()))) {
         log.info("S3 CORS configuration already deleted or not found: {}", bucketName);
         success = true;
       } else {

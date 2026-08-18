@@ -44,13 +44,15 @@ class AiAgentConfigAutoConfigurationTest {
 
   @Test
   void testStreamingChatModelFactory_ReturnsNonNull() {
-    StreamingChatModelFactory result = config.streamingChatModelFactory();
+    StreamingChatModelFactory result = config.streamingChatModelFactory("https://copilot",
+        "https://openrouter", "https://openai");
     assertNotNull(result);
   }
 
   @Test
   void testChatModelFactory_ReturnsNonNull() {
-    ChatModelFactory result = config.chatModelFactory();
+    ChatModelFactory result
+        = config.chatModelFactory("https://copilot", "https://openrouter", "https://openai");
     assertNotNull(result);
   }
 

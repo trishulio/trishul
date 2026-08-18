@@ -96,7 +96,7 @@
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.7.0.6970</org.sonarsource.scanner.version>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
-        <spotless.version>3.9.0</spotless.version>
+        <spotless.version>3.10.0</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <spotbugs.version>4.10.3.0</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>
@@ -110,9 +110,8 @@
         <dev.langchain4j.version>0.36.2</dev.langchain4j.version>
         <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
         <com.twilio.sdk.version>12.1.1</com.twilio.sdk.version>
-        <com.google.guava.version>33.6.0-jre</com.google.guava.version>
+        <com.google.guava.version>33.7.0-jre</com.google.guava.version>
         <commons-logging.version>1.4.0</commons-logging.version>
-        <pit.threads>2</pit.threads>
         <argLine />
     </properties>
 
@@ -868,7 +867,6 @@
                             <avoidCallsTo>org.slf4j</avoidCallsTo>
                             <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
                         </avoidCallsTo>
-                        <threads>${pit.threads}</threads>
                         <failWhenNoMutations>false</failWhenNoMutations>
                         <timeoutFactor>3</timeoutFactor>
                         <timeoutConstant>10000</timeoutConstant>
