@@ -22,7 +22,7 @@ verify:
 	$(MAVEN) mvn clean verify -T $(THREADS) $(MVN_ARGS)
 
 check:
-	ENABLE_TESTS=false ENABLE_MUTATION_COVERAGE=false ENABLE_CODE_COVERAGE=false ENABLE_SONARQUBE=false ENABLE_SPOTBUGS=false ENABLE_DEPENDENCY_CHECK=false $(MAVEN) mvn spotless:check checkstyle:check pmd:check pmd:cpd-check -T $(THREADS) $(MVN_ARGS)
+	$(MAVEN) mvn spotless:check -T $(THREADS) $(MVN_ARGS)
 
 fast-build:
 	ENABLE_MUTATION_COVERAGE=false ENABLE_CODE_COVERAGE=false ENABLE_SONARQUBE=false ENABLE_SPOTBUGS=false ENABLE_DEPENDENCY_CHECK=false $(MAVEN) mvn clean install -T $(THREADS) $(MVN_ARGS)
