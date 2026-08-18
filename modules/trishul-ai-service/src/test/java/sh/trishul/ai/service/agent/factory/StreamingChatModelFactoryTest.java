@@ -112,6 +112,45 @@ class StreamingChatModelFactoryTest {
   }
 
   @Test
+  void testGetModel_ReturnsOpenRouterModel_WhenProviderIsOpenRouter() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setProvider("openrouter");
+    config.setApiKey("test-openrouter-key");
+    config.setModelName("meta-llama/llama-3");
+
+    StreamingChatLanguageModel model = factory.getModel(AiProvider.OPENROUTER, config);
+
+    assertNotNull(model);
+    assert (model instanceof OpenAiStreamingChatModel);
+  }
+
+  @Test
+  void testGetOpenRouterModel_ThrowsException_WhenApiKeyIsMissing() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    assertThrows(IllegalArgumentException.class, () -> factory.getOpenRouterModel(config));
+  }
+
+  @Test
+  void testGetOpenRouterModel_ThrowsException_WhenApiKeyIsEmpty() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("");
+    assertThrows(IllegalArgumentException.class, () -> factory.getOpenRouterModel(config));
+  }
+
+  @Test
+  void testCustomBaseUrlConstructor() {
+    StreamingChatModelFactory customFactory = new StreamingChatModelFactory(
+        "https://custom-copilot", "https://custom-openrouter", "https://custom-openai");
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("key");
+    config.setModelName("m");
+
+    assertNotNull(customFactory.getGithubCopilotModel(config));
+    assertNotNull(customFactory.getOpenRouterModel(config));
+    assertNotNull(customFactory.getOpenAiModel(config));
+  }
+
+  @Test
   void testGetGithubCopilotModel_ThrowsException_WhenApiKeyIsEmpty() {
     AiChatModelConfig config = new AiChatModelConfig();
     config.setApiKey("");

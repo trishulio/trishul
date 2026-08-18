@@ -9,6 +9,19 @@ import sh.trishul.ai.chat.model.AiChatModelConfig;
  * StreamingChatModelFactory which builds StreamingChatLanguageModel instances.
  */
 public class ChatModelFactory {
+  private final String copilotBaseUrl;
+  private final String openRouterBaseUrl;
+  private final String openAiBaseUrl;
+
+  public ChatModelFactory() {
+    this("https://models.inference.ai.azure.com", "https://openrouter.ai/api/v1", null);
+  }
+
+  public ChatModelFactory(String copilotBaseUrl, String openRouterBaseUrl, String openAiBaseUrl) {
+    this.copilotBaseUrl = copilotBaseUrl;
+    this.openRouterBaseUrl = openRouterBaseUrl;
+    this.openAiBaseUrl = openAiBaseUrl;
+  }
 
   public ChatLanguageModel getModel(AiProvider provider, AiChatModelConfig config) {
     if (provider == AiProvider.GITHUB_COPILOT) {
@@ -30,8 +43,11 @@ public class ChatModelFactory {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("GitHub Copilot API Key must be provided");
     }
-    return OpenAiChatModel.builder().baseUrl("https://models.inference.ai.azure.com")
-        .apiKey(config.getApiKey()).modelName(config.getModelName())
+    var builder = OpenAiChatModel.builder();
+    if (this.copilotBaseUrl != null && !this.copilotBaseUrl.isEmpty()) {
+      builder.baseUrl(this.copilotBaseUrl);
+    }
+    return builder.apiKey(config.getApiKey()).modelName(config.getModelName())
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
@@ -39,8 +55,11 @@ public class ChatModelFactory {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenRouter API Key must be provided");
     }
-    return OpenAiChatModel.builder().baseUrl("https://openrouter.ai/api/v1")
-        .apiKey(config.getApiKey()).modelName(config.getModelName())
+    var builder = OpenAiChatModel.builder();
+    if (this.openRouterBaseUrl != null && !this.openRouterBaseUrl.isEmpty()) {
+      builder.baseUrl(this.openRouterBaseUrl);
+    }
+    return builder.apiKey(config.getApiKey()).modelName(config.getModelName())
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
@@ -48,7 +67,11 @@ public class ChatModelFactory {
     if (config.getApiKey() == null || config.getApiKey().isEmpty()) {
       throw new IllegalArgumentException("OpenAI API Key must be provided");
     }
-    return OpenAiChatModel.builder().apiKey(config.getApiKey()).modelName(config.getModelName())
+    var builder = OpenAiChatModel.builder();
+    if (this.openAiBaseUrl != null && !this.openAiBaseUrl.isEmpty()) {
+      builder.baseUrl(this.openAiBaseUrl);
+    }
+    return builder.apiKey(config.getApiKey()).modelName(config.getModelName())
         .temperature(config.getTemperature()).topP(config.getTopP()).build();
   }
 
