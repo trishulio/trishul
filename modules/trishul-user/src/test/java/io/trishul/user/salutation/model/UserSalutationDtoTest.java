@@ -2,6 +2,7 @@ package io.trishul.user.salutation.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,35 +31,35 @@ class UserSalutationDtoTest {
   @Test
   void testAccessId() {
     assertNull(dto.getId());
-    dto.setId(1L);
+    assertSame(dto, dto.setId(1L));
     assertEquals(1L, dto.getId());
   }
 
   @Test
   void testAccessTitle() {
     assertNull(dto.getTitle());
-    dto.setTitle("title");
+    assertSame(dto, dto.setTitle("title"));
     assertEquals("title", dto.getTitle());
   }
 
   @Test
   void testAccessCreatedAt() {
     assertNull(dto.getCreatedAt());
-    dto.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
+    assertSame(dto, dto.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getCreatedAt());
   }
 
   @Test
   void testAccessLastUpdated() {
     assertNull(dto.getLastUpdated());
-    dto.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
+    assertSame(dto, dto.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), dto.getLastUpdated());
   }
 
   @Test
   void testAccessVersion() {
     assertNull(dto.getVersion());
-    dto.setVersion(1);
+    assertSame(dto, dto.setVersion(1));
     assertEquals(1, dto.getVersion());
   }
 }

@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 public class TenantConnectionProviderPool extends AbstractMultiTenantConnectionProvider<String> {
   private static final Logger log = LoggerFactory.getLogger(TenantConnectionProviderPool.class);
@@ -27,7 +27,7 @@ public class TenantConnectionProviderPool extends AbstractMultiTenantConnectionP
 
     this.cache = CacheBuilder.newBuilder().build(new CacheLoader<String, ConnectionProvider>() {
       @Override
-      public ConnectionProvider load(@Nonnull String sTenantId) throws Exception {
+      public ConnectionProvider load(@NonNull String sTenantId) throws Exception {
         // TODO: Since we change tenantID back to UUID, we can
         // remove this operation by simply returning UUID in the
         // TenantIdResolver

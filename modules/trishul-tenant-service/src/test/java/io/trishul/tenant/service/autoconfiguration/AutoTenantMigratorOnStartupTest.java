@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,7 +19,6 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 class AutoTenantMigratorOnStartupTest {
 
@@ -43,9 +43,12 @@ class AutoTenantMigratorOnStartupTest {
 
   @Test
   void testMigrateAllTenantsOnStartup_MigratesAdminAndTenants() {
-    Page<Tenant> emptyPage = new PageImpl<>(Collections.emptyList());
+    Page<Tenant> page = mock(Page.class);
+    when(page.hasNext()).thenReturn(false, true);
+    when(page.getContent()).thenReturn(Collections.emptyList());
+
     when(mockTenantService.getAll(isNull(), isNull(), isNull(), anyBoolean(), any(), anyBoolean(),
-        anyInt(), anyInt())).thenReturn(emptyPage);
+        anyInt(), anyInt())).thenReturn(page);
 
     AutoTenantMigratorOnStartup migrator
         = new AutoTenantMigratorOnStartup(mockAdminTenant, mockTenantService, mockMigrationManager);
@@ -53,6 +56,7 @@ class AutoTenantMigratorOnStartupTest {
     migrator.migrateAllTenantsOnStartup();
 
     verify(mockMigrationManager).migrate(mockAdminTenant);
+    verify(mockMigrationManager).migrateAll(Collections.emptyList());
   }
 
   @Test
@@ -76,6 +80,7 @@ class AutoTenantMigratorOnStartupTest {
     migrator.migrateAllTenantsOnStartup();
 
     verify(mockMigrationManager).migrate(mockAdminTenant);
+    verify(mockMigrationManager, times(2)).migrateAll(Collections.emptyList());
     verify(mockTenantService).getAll(isNull(), isNull(), isNull(), anyBoolean(), any(),
         anyBoolean(), eq(0), anyInt());
     verify(mockTenantService).getAll(isNull(), isNull(), isNull(), anyBoolean(), any(),

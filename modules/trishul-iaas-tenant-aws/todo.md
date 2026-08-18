@@ -1,1 +1,0 @@
-- Split up AwsTenantIaasResourceBuilderTest into respective module

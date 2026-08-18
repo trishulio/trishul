@@ -1,24 +1,23 @@
 package io.trishul.communication.twilio.message;
 
+import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.Message.Direction;
 import com.twilio.rest.api.v2010.account.Message.Status;
 import io.trishul.communication.model.channel.ChannelType;
-import io.trishul.communication.model.message.Message;
 import io.trishul.communication.model.message.MessageDirection;
 import io.trishul.communication.model.message.MessageStatus;
 import io.trishul.iaas.mapper.IaasEntityMapper;
 
-public class TwilioMessageMapper
-    implements IaasEntityMapper<com.twilio.rest.api.v2010.account.Message, Message> {
+public class TwilioMessageMapper implements IaasEntityMapper<Message, TrishulMessage> {
   public static final TwilioMessageMapper INSTANCE = new TwilioMessageMapper();
 
   @Override
-  public Message fromIaasEntity(com.twilio.rest.api.v2010.account.Message twilioMessage) {
+  public TrishulMessage fromIaasEntity(Message twilioMessage) {
     if (twilioMessage == null) {
       return null;
     }
 
-    return new Message(twilioMessage.getSid(), twilioMessage.getFrom().toString(),
+    return new TrishulMessage(twilioMessage.getSid(), twilioMessage.getFrom().toString(),
         twilioMessage.getTo(), twilioMessage.getBody(), mapChannelType(twilioMessage),
         mapStatus(twilioMessage.getStatus()), mapDirection(twilioMessage.getDirection()), null, // mediaUrls
         twilioMessage.getErrorCode() != null ? twilioMessage.getErrorCode().toString() : null,
@@ -30,7 +29,7 @@ public class TwilioMessageMapper
             : null);
   }
 
-  private ChannelType mapChannelType(com.twilio.rest.api.v2010.account.Message twilioMessage) {
+  private ChannelType mapChannelType(Message twilioMessage) {
     String from = twilioMessage.getFrom() != null ? twilioMessage.getFrom().toString() : "";
     if (from.startsWith("whatsapp:")) {
       return ChannelType.WHATSAPP;

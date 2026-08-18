@@ -31,6 +31,10 @@ public interface WhereClauseBuilder {
 
   WhereClauseBuilder like(String path, Set<String> queries);
 
+  WhereClauseBuilder ilike(String[] paths, Set<String> queries);
+
+  WhereClauseBuilder ilike(String path, Set<String> queries);
+
   <C extends Comparable<C>> WhereClauseBuilder between(String[] paths, C start, C end);
 
   <C extends Comparable<C>> WhereClauseBuilder between(String path, C start, C end);

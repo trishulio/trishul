@@ -37,17 +37,28 @@ class TemporaryImageSrcDecoratorTest {
         .getAll(anySet());
 
     List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/2")),
-        new DecoratedEntity(URI.create("http://localhost/1")));
+        new DecoratedEntity(null), new DecoratedEntity(URI.create("http://localhost/1")));
 
     decorator.decorate(entities);
 
     List<DecoratedEntity> expected = List.of(
         new DecoratedEntity(URI.create("http://localhost/2"),
             new IaasObjectStoreFileDto(URI.create("http://localhost/2"))),
-        new DecoratedEntity(URI.create("http://localhost/1"),
+        new DecoratedEntity(null), new DecoratedEntity(URI.create("http://localhost/1"),
             new IaasObjectStoreFileDto(URI.create("http://localhost/1"))));
 
     assertEquals(expected, entities);
+  }
+
+  @Test
+  void testDecorate_DoesNotThrow_WhenControllerReturnsUnrequestedFileKey() {
+    IaasObjectStoreFileDto unrequestedFile
+        = new IaasObjectStoreFileDto(URI.create("http://localhost/unrequested"));
+    doAnswer(inv -> List.of(unrequestedFile)).when(mController).getAll(anySet());
+
+    List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/1")));
+
+    decorator.decorate(entities); // should not throw NullPointerException
   }
 
   @Test

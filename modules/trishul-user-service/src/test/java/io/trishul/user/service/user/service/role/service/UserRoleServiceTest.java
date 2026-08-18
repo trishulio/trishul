@@ -1,6 +1,7 @@
 package io.trishul.user.service.user.service.role.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -117,13 +118,15 @@ class UserRoleServiceTest {
     doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
     assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
+    verify(this.mRepoService, times(1)).exists(Set.of(1L, 2L, 3L));
   }
 
   @Test
   void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
+    doReturn(false).when(this.mRepoService).exists(Set.of(1L, 2L, 3L));
 
-    assertTrue(this.service.exists(Set.of(1L, 2L, 3L)));
+    assertFalse(this.service.exists(Set.of(1L, 2L, 3L)));
+    verify(this.mRepoService, times(1)).exists(Set.of(1L, 2L, 3L));
   }
 
   @Test
@@ -131,13 +134,15 @@ class UserRoleServiceTest {
     doReturn(true).when(this.mRepoService).exists(1L);
 
     assertTrue(this.service.exist(1L));
+    verify(this.mRepoService, times(1)).exists(1L);
   }
 
   @Test
   void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService).exists(1L);
+    doReturn(false).when(this.mRepoService).exists(1L);
 
-    assertTrue(this.service.exist(1L));
+    assertFalse(this.service.exist(1L));
+    verify(this.mRepoService, times(1)).exists(1L);
   }
 
   @Test
@@ -150,7 +155,9 @@ class UserRoleServiceTest {
 
   @Test
   void testDelete_CallsRepoServiceDelete_WhenUserRoleExists() {
-    this.service.delete(1L);
+    doReturn(new DeleteResult(99L)).when(this.mRepoService).delete(1L);
+
+    assertEquals(new DeleteResult(99L), this.service.delete(1L));
     verify(this.mRepoService).delete(1L);
   }
 

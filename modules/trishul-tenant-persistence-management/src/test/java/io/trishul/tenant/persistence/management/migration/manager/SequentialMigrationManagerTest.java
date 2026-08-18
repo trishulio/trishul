@@ -1,10 +1,15 @@
 package io.trishul.tenant.persistence.management.migration.manager;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import io.trishul.tenant.entity.Tenant;
 import io.trishul.tenant.entity.TenantData;
 import io.trishul.tenant.persistence.management.migration.register.MigrationRegister;
@@ -14,6 +19,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+import org.slf4j.LoggerFactory;
 
 class SequentialMigrationManagerTest {
   private MigrationManager mgr;
@@ -70,5 +76,27 @@ class SequentialMigrationManagerTest {
     order.verify(mMigrationReg).migrate(tenant1);
     order.verify(mTenantReg).put(tenant2);
     order.verify(mMigrationReg).migrate(tenant2);
+  }
+
+  @Test
+  void testMigrateAll_LogsErrors_WhenErrorsExist() {
+    Tenant tenant1 = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    doThrow(new RuntimeException("Test Exception")).when(mMigrationReg).migrate(tenant1);
+
+    Logger logger = (Logger) LoggerFactory.getLogger(SequentialMigrationManager.class);
+    ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+    listAppender.start();
+    logger.addAppender(listAppender);
+
+    try {
+      mgr.migrateAll(List.of(tenant1));
+
+      List<ILoggingEvent> logs = listAppender.list;
+      boolean foundError = logs.stream().anyMatch(event -> event.getLevel() == Level.ERROR
+          && event.getFormattedMessage().contains("Failed to migrate 1 tenants"));
+      assertTrue(foundError);
+    } finally {
+      logger.detachAppender(listAppender);
+    }
   }
 }

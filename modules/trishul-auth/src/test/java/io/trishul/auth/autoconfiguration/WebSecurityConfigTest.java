@@ -1,10 +1,13 @@
 package io.trishul.auth.autoconfiguration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.config.Customizer;
@@ -15,6 +18,8 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer.JwtConfigurer;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 class WebSecurityConfigTest {
   private WebSecurityConfig config;
@@ -25,9 +30,61 @@ class WebSecurityConfigTest {
   }
 
   @Test
+  void testAccessAppUrls() {
+    assertNull(config.getAppUrls());
+    config.setAppUrls(List.of("http://test.com"));
+    assertEquals(List.of("http://test.com"), config.getAppUrls());
+  }
+
+  @Test
+  void testCorsConfigurationSource_WithUrls() {
+    config.setAppUrls(List.of("http://test.com"));
+    UrlBasedCorsConfigurationSource source
+        = (UrlBasedCorsConfigurationSource) config.corsConfigurationSource();
+    assertNotNull(source);
+    CorsConfiguration corsConfig = source.getCorsConfigurations().get("/**");
+    assertNotNull(corsConfig);
+    assertEquals(List.of("http://test.com"), corsConfig.getAllowedOrigins());
+    assertEquals(List.of("*"), corsConfig.getAllowedMethods());
+    assertEquals(List.of("*"), corsConfig.getAllowedHeaders());
+    assertEquals(true, corsConfig.getAllowCredentials());
+  }
+
+  @Test
+  void testCorsConfigurationSource_WithoutUrls() {
+    config.setAppUrls(null);
+    UrlBasedCorsConfigurationSource source
+        = (UrlBasedCorsConfigurationSource) config.corsConfigurationSource();
+    assertNotNull(source);
+    CorsConfiguration corsConfig = source.getCorsConfigurations().get("/**");
+    assertNotNull(corsConfig);
+    assertNull(corsConfig.getAllowedOrigins());
+    assertEquals(List.of("*"), corsConfig.getAllowedMethods());
+    assertEquals(List.of("*"), corsConfig.getAllowedHeaders());
+    assertEquals(true, corsConfig.getAllowCredentials());
+  }
+
+  @Test
+  void testCorsConfigurationSource_WithEmptyUrls() {
+    config.setAppUrls(List.of());
+    UrlBasedCorsConfigurationSource source
+        = (UrlBasedCorsConfigurationSource) config.corsConfigurationSource();
+    assertNotNull(source);
+    CorsConfiguration corsConfig = source.getCorsConfigurations().get("/**");
+    assertNotNull(corsConfig);
+    assertNull(corsConfig.getAllowedOrigins());
+    assertEquals(List.of("*"), corsConfig.getAllowedMethods());
+    assertEquals(List.of("*"), corsConfig.getAllowedHeaders());
+    assertEquals(true, corsConfig.getAllowCredentials());
+  }
+
+  @Test
   void testSecurityFilterChain_ReturnsNonNullInstance() throws Exception {
     HttpSecurity httpSecurity = mock(HttpSecurity.class);
     DefaultSecurityFilterChain filterChain = mock(DefaultSecurityFilterChain.class);
+
+    // Mock for cors
+    when(httpSecurity.cors(any(Customizer.class))).thenReturn(httpSecurity);
 
     // Mock for authorizeHttpRequests
     AuthorizationManagerRequestMatcherRegistry registry

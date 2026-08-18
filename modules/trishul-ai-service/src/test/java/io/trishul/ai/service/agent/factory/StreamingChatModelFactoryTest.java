@@ -1,5 +1,6 @@
 package io.trishul.ai.service.agent.factory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,6 +9,7 @@ import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class StreamingChatModelFactoryTest {
 
@@ -29,6 +31,7 @@ class StreamingChatModelFactoryTest {
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
+    assertEquals("gpt-4", ReflectionTestUtils.getField(model, "modelName"));
   }
 
   @Test
@@ -43,6 +46,7 @@ class StreamingChatModelFactoryTest {
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
+    assertEquals("gpt-4", ReflectionTestUtils.getField(model, "modelName"));
   }
 
   @Test
@@ -74,6 +78,7 @@ class StreamingChatModelFactoryTest {
 
     assertNotNull(model);
     assert (model instanceof OpenAiStreamingChatModel);
+    assertEquals("gpt-4-stream", ReflectionTestUtils.getField(model, "modelName"));
   }
 
   @Test
@@ -87,5 +92,29 @@ class StreamingChatModelFactoryTest {
   void testGetModel_ThrowsException_WhenProviderIsNull() {
     AiChatModelConfig config = new AiChatModelConfig();
     assertThrows(IllegalArgumentException.class, () -> factory.getModel(null, config));
+  }
+
+  @Test
+  void testGetGithubCopilotModel_ReturnsModel_WhenApiKeyIsProvided() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("test-copilot-key");
+    config.setModelName("Gemini 3.1 Pro Preview");
+
+    StreamingChatLanguageModel model = factory.getModel(AiProvider.GITHUB_COPILOT, config);
+    assertNotNull(model);
+    assert (model instanceof OpenAiStreamingChatModel);
+  }
+
+  @Test
+  void testGetGithubCopilotModel_ThrowsException_WhenApiKeyIsMissing() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    assertThrows(IllegalArgumentException.class, () -> factory.getGithubCopilotModel(config));
+  }
+
+  @Test
+  void testGetGithubCopilotModel_ThrowsException_WhenApiKeyIsEmpty() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("");
+    assertThrows(IllegalArgumentException.class, () -> factory.getGithubCopilotModel(config));
   }
 }

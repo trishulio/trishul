@@ -23,10 +23,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 public class AwsIamRolePolicyAttachmentClient implements
     IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> {
@@ -124,7 +124,7 @@ public class AwsIamRolePolicyAttachmentClient implements
     if (cache == null) {
       cache = CacheBuilder.newBuilder().build(new CacheLoader<String, Set<String>>() {
         @Override
-        public Set<String> load(@Nonnull String roleName) throws Exception {
+        public Set<String> load(@NonNull String roleName) throws Exception {
           Set<String> allPolicyNames = new HashSet<>();
           String marker = null;
           do {

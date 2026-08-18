@@ -75,4 +75,50 @@ class TenantDtoTest {
     tenantDto.setLastUpdated(lastUpdated);
     assertSame(lastUpdated, tenantDto.getLastUpdated());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    TenantDto accessor = new TenantDto();
+    UUID value = UUID.randomUUID();
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    TenantDto accessor = new TenantDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessUrl() throws Exception {
+    TenantDto accessor = new TenantDto();
+    assertSame(accessor, accessor.setUrl(URI.create("http://localhost")));
+    assertEquals(URI.create("http://localhost"), accessor.getUrl());
+  }
+
+  @Test
+  void testAccessIsReady() throws Exception {
+    TenantDto accessor = new TenantDto();
+    assertSame(accessor, accessor.setIsReady(true));
+    assertEquals(true, accessor.getIsReady());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    TenantDto accessor = new TenantDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    TenantDto accessor = new TenantDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

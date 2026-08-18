@@ -58,8 +58,8 @@ public class UserService extends BaseService
       boolean orderAscending) {
     final Specification<User> spec
         = WhereClauseBuilder.builder().in(User.ATTR_ID, ids).not().in(User.ATTR_ID, excludeIds)
-            .in(User.ATTR_USER_NAME, userNames).in(User.ATTR_DISPLAY_NAME, displayNames)
-            .in(User.ATTR_EMAIL, emails).in(User.ATTR_PHONE_NUMBER, phoneNumbers)
+            .ilike(User.ATTR_USER_NAME, userNames).ilike(User.ATTR_DISPLAY_NAME, displayNames)
+            .ilike(User.ATTR_EMAIL, emails).ilike(User.ATTR_PHONE_NUMBER, phoneNumbers)
             .in(new String[] {User.ATTR_STATUS, UserStatus.ATTR_ID}, statusIds)
             .in(new String[] {User.ATTR_SALUTATION, UserSalutation.ATTR_ID}, salutationIds)
             .in(new String[] {User.ATTR_ROLES, UserRole.ATTR_ID}, roles).build();
@@ -115,9 +115,7 @@ public class UserService extends BaseService
 
     final List<User> entities = this.entityMergerService.getAddEntities(additions);
 
-    List<User> users = this.repoService.saveAll(entities);
-
-    List<IaasUserTenantMembership> updatedIaasUserMemberships = this.iaasService.put(users);
+    List<IaasUserTenantMembership> updatedIaasUserMemberships = this.iaasService.put(entities);
 
     // Create a map of email to IaasUser for efficient lookup
     Map<String, IaasUser> iaasUserMap = updatedIaasUserMemberships.stream()
@@ -125,14 +123,14 @@ public class UserService extends BaseService
         .collect(Collectors.toMap(IaasUser::getId, iaasUser -> iaasUser));
 
     // Update users with IaasUsername
-    users.forEach(user -> {
+    entities.forEach(user -> {
       IaasUser iaasUser = iaasUserMap.get(user.getEmail());
       if (iaasUser != null) {
         user.setIaasUsername(iaasUser.getUserName());
       }
     });
 
-    users = this.repoService.saveAll(users);
+    List<User> users = this.repoService.saveAll(entities);
 
     log.info("Added users: {}", users.size());
 

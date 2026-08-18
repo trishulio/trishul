@@ -2,6 +2,7 @@ package io.trishul.repo.jpa.query.clause.select.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -37,7 +38,7 @@ class SelectClauseBuilderTest {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"PATH_1", "PATH_2"}).when(mProvider).getPath();
 
-    selector.select(mProvider);
+    assertSame(selector, selector.select(mProvider));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
@@ -45,7 +46,7 @@ class SelectClauseBuilderTest {
 
   @Test
   void testSelect_PathProvider_DoesNothign_WhenProviderIsNull() {
-    selector.select((PathProvider) null);
+    assertSame(selector, selector.select((PathProvider) null));
     verifyNoInteractions(mAccumulator);
   }
 
@@ -53,7 +54,7 @@ class SelectClauseBuilderTest {
   void testSelect_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
-    selector.select(new String[] {"PATH_1", "PATH_2"});
+    assertSame(selector, selector.select(new String[] {"PATH_1", "PATH_2"}));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
@@ -61,7 +62,7 @@ class SelectClauseBuilderTest {
 
   @Test
   void testSelect_StringArray_DoesNothing_WhenStringArrayIsNull() {
-    selector.select((String[]) null);
+    assertSame(selector, selector.select((String[]) null));
     verifyNoInteractions(mAccumulator);
   }
 
@@ -70,7 +71,7 @@ class SelectClauseBuilderTest {
     ArgumentCaptor<CriteriaSpec<?>> captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
     CriteriaSpec<?> mSpec = mock(CriteriaSpec.class);
-    selector.select(mSpec);
+    assertSame(selector, selector.select(mSpec));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(mSpec, captor.getValue());
@@ -78,7 +79,7 @@ class SelectClauseBuilderTest {
 
   @Test
   void testSelect_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
-    selector.select((CriteriaSpec<?>) null);
+    assertSame(selector, selector.select((CriteriaSpec<?>) null));
     verifyNoInteractions(mAccumulator);
   }
 

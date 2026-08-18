@@ -38,7 +38,7 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
 
   @Override
   public boolean exists(Set<IaasRolePolicyAttachmentId> ids) {
-    return iaasRepo.exists(ids).values().stream().filter(b -> !b).findAny().orElseGet(() -> true);
+    return !iaasRepo.exists(ids).containsValue(false);
   }
 
   @Override

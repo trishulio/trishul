@@ -164,4 +164,11 @@ class QuantityUnitMapperTest {
     });
     assertEquals("Failed to retrieve the field value because: Access Denied", ex.getMessage());
   }
+
+  @Test
+  void testGetFieldValue_ReturnsValue_WhenFieldIsAccessible() throws Exception {
+    Field field = SupportedUnits.class.getField("GRAM");
+    Object value = QuantityUnitMapper.getFieldValue(field);
+    assertSame(SupportedUnits.GRAM, value);
+  }
 }

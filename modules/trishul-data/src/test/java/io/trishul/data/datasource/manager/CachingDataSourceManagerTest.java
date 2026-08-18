@@ -6,48 +6,72 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
+import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import javax.sql.DataSource;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 class CachingDataSourceManagerTest {
   private CachingDataSourceManager dataSourceManager;
 
   private DataSource mAdminDs;
-  private DataSourceBuilder mDataSourceBuilder;
   private DataSourceConfiguration mDsConfig;
   private Connection mConnection;
+  private MockedConstruction<HikariDataSourceBuilder> mockedBuilderConstruction;
+
+  private DataSource mBuiltDs;
+  private Throwable builderException;
 
   @BeforeEach
   void init() throws SQLException {
     mAdminDs = mock(DataSource.class);
-    mDataSourceBuilder = mock(DataSourceBuilder.class);
     mDsConfig = mock(DataSourceConfiguration.class);
     mConnection = mock(Connection.class);
 
+    mBuiltDs = mock(DataSource.class);
+    builderException = null;
+
     // Setup default mocks
     when(mAdminDs.getConnection()).thenReturn(mConnection);
-    when(mDataSourceBuilder.clear()).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.url(any())).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.schema(any())).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.username(any())).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.password(any())).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.poolSize(any(Integer.class))).thenReturn(mDataSourceBuilder);
-    when(mDataSourceBuilder.autoCommit(any(Boolean.class))).thenReturn(mDataSourceBuilder);
 
-    dataSourceManager = new CachingDataSourceManager(mAdminDs, mDataSourceBuilder);
+    mockedBuilderConstruction = mockConstruction(HikariDataSourceBuilder.class, (mock, context) -> {
+      when(mock.clear()).thenReturn(mock);
+      when(mock.url(any())).thenReturn(mock);
+      when(mock.schema(any())).thenReturn(mock);
+      when(mock.username(any())).thenReturn(mock);
+      when(mock.password(any())).thenReturn(mock);
+      when(mock.poolSize(any(Integer.class))).thenReturn(mock);
+      when(mock.autoCommit(any(Boolean.class))).thenReturn(mock);
+      when(mock.build()).thenAnswer(invocation -> {
+        if (builderException != null) {
+          throw builderException;
+        }
+        return mBuiltDs;
+      });
+    });
+
+    dataSourceManager = new CachingDataSourceManager(mAdminDs);
+  }
+
+  @AfterEach
+  void tearDown() {
+    if (mockedBuilderConstruction != null) {
+      mockedBuilderConstruction.close();
+    }
   }
 
   @Test
@@ -67,7 +91,7 @@ class CachingDataSourceManagerTest {
     DataSource result = dataSourceManager.getDataSource(mDsConfig);
 
     assertSame(mAdminDs, result);
-    verify(mDataSourceBuilder, never()).build();
+    assertEquals(0, mockedBuilderConstruction.constructed().size());
   }
 
   @Test
@@ -81,8 +105,6 @@ class CachingDataSourceManagerTest {
     int poolSize = 10;
     boolean autoCommit = false;
 
-    DataSource mBuiltDs = mock(DataSource.class);
-
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
     when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
     when(mDsConfig.getUrl()).thenReturn(url);
@@ -90,19 +112,23 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn(password);
     when(mDsConfig.getPoolSize()).thenReturn(poolSize);
     when(mDsConfig.isAutoCommit()).thenReturn(autoCommit);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs);
 
     DataSource result = dataSourceManager.getDataSource(mDsConfig);
 
     assertSame(mBuiltDs, result);
-    verify(mDataSourceBuilder).clear();
-    verify(mDataSourceBuilder).url(url.toString());
-    verify(mDataSourceBuilder).schema(tenantSchemaName);
-    verify(mDataSourceBuilder).username(username);
-    verify(mDataSourceBuilder).password(password);
-    verify(mDataSourceBuilder).poolSize(poolSize);
-    verify(mDataSourceBuilder).autoCommit(autoCommit);
-    verify(mDataSourceBuilder).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(1, constructed.size());
+    HikariDataSourceBuilder mockBuilder = constructed.get(0);
+
+    verify(mockBuilder).clear();
+    verify(mockBuilder).url(url.toString());
+    verify(mockBuilder).schema(tenantSchemaName);
+    verify(mockBuilder).username(username);
+    verify(mockBuilder).password(password);
+    verify(mockBuilder).poolSize(poolSize);
+    verify(mockBuilder).autoCommit(autoCommit);
+    verify(mockBuilder).build();
   }
 
   @Test
@@ -115,8 +141,6 @@ class CachingDataSourceManagerTest {
     int poolSize = 10;
     boolean autoCommit = false;
 
-    DataSource mBuiltDs = mock(DataSource.class);
-
     when(mConnection.getSchema()).thenReturn(null);
     when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
     when(mDsConfig.getUrl()).thenReturn(url);
@@ -124,12 +148,15 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn(password);
     when(mDsConfig.getPoolSize()).thenReturn(poolSize);
     when(mDsConfig.isAutoCommit()).thenReturn(autoCommit);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs);
 
     DataSource result = dataSourceManager.getDataSource(mDsConfig);
 
     assertSame(mBuiltDs, result);
-    verify(mDataSourceBuilder).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(1, constructed.size());
+    HikariDataSourceBuilder mockBuilder = constructed.get(0);
+    verify(mockBuilder).build();
   }
 
   @Test
@@ -143,8 +170,6 @@ class CachingDataSourceManagerTest {
     int poolSize = 10;
     boolean autoCommit = false;
 
-    DataSource mBuiltDs = mock(DataSource.class);
-
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
     when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
     when(mDsConfig.getUrl()).thenReturn(url);
@@ -152,7 +177,6 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn(password);
     when(mDsConfig.getPoolSize()).thenReturn(poolSize);
     when(mDsConfig.isAutoCommit()).thenReturn(autoCommit);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs);
 
     // First call
     DataSource result1 = dataSourceManager.getDataSource(mDsConfig);
@@ -162,8 +186,11 @@ class CachingDataSourceManagerTest {
     assertSame(mBuiltDs, result1);
     assertSame(mBuiltDs, result2);
     assertSame(result1, result2);
-    // Builder should only be called once due to caching
-    verify(mDataSourceBuilder, times(1)).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(1, constructed.size());
+    HikariDataSourceBuilder mockBuilder = constructed.get(0);
+    verify(mockBuilder, times(1)).build();
   }
 
   @Test
@@ -193,12 +220,13 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn("testpass");
     when(mDsConfig.getPoolSize()).thenReturn(10);
     when(mDsConfig.isAutoCommit()).thenReturn(false);
-    when(mDataSourceBuilder.build()).thenThrow(builderException);
+
+    this.builderException = builderException;
 
     RuntimeException thrownException
         = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
-    assertEquals(builderException, thrownException.getCause());
+    assertSame(builderException, thrownException);
   }
 
   @Test
@@ -216,12 +244,13 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn("testpass");
     when(mDsConfig.getPoolSize()).thenReturn(10);
     when(mDsConfig.isAutoCommit()).thenReturn(false);
-    when(mDataSourceBuilder.build()).thenThrow(builderException);
 
-    RuntimeException thrownException
-        = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
+    this.builderException = builderException;
 
-    assertEquals(builderException, thrownException.getCause());
+    IllegalArgumentException thrownException = assertThrows(IllegalArgumentException.class,
+        () -> dataSourceManager.getDataSource(mDsConfig));
+
+    assertSame(builderException, thrownException);
   }
 
   @Test
@@ -239,12 +268,37 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn("testpass");
     when(mDsConfig.getPoolSize()).thenReturn(10);
     when(mDsConfig.isAutoCommit()).thenReturn(false);
-    when(mDataSourceBuilder.build()).thenThrow(expectedException);
+
+    this.builderException = expectedException;
 
     RuntimeException thrownException
         = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
-    assertEquals(expectedException, thrownException.getCause());
+    assertSame(expectedException, thrownException);
+  }
+
+  @Test
+  void testGetDataSource_ThrowsError_WhenDataSourceBuilderThrowsError()
+      throws SQLException, IOException, URISyntaxException {
+    String adminSchemaName = "admin_schema";
+    String tenantSchemaName = "tenant_schema";
+    URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
+    AssertionError expectedError = new AssertionError("Mock Assertion Error");
+
+    when(mConnection.getSchema()).thenReturn(adminSchemaName);
+    when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
+    when(mDsConfig.getUrl()).thenReturn(url);
+    when(mDsConfig.getUserName()).thenReturn("testuser");
+    when(mDsConfig.getPassword()).thenReturn("testpass");
+    when(mDsConfig.getPoolSize()).thenReturn(10);
+    when(mDsConfig.isAutoCommit()).thenReturn(false);
+
+    this.builderException = expectedError;
+
+    AssertionError thrownError
+        = assertThrows(AssertionError.class, () -> dataSourceManager.getDataSource(mDsConfig));
+
+    assertSame(expectedError, thrownError);
   }
 
   @Test
@@ -256,7 +310,6 @@ class CachingDataSourceManagerTest {
     DataSourceConfiguration mDsConfig1 = mock(DataSourceConfiguration.class);
     String tenantSchemaName1 = "tenant_schema_1";
     URI url1 = new URI("jdbc:postgresql://localhost:5432/testdb1");
-    DataSource mBuiltDs1 = mock(DataSource.class);
 
     when(mDsConfig1.getSchemaName()).thenReturn(tenantSchemaName1);
     when(mDsConfig1.getUrl()).thenReturn(url1);
@@ -269,7 +322,6 @@ class CachingDataSourceManagerTest {
     DataSourceConfiguration mDsConfig2 = mock(DataSourceConfiguration.class);
     String tenantSchemaName2 = "tenant_schema_2";
     URI url2 = new URI("jdbc:postgresql://localhost:5432/testdb2");
-    DataSource mBuiltDs2 = mock(DataSource.class);
 
     when(mDsConfig2.getSchemaName()).thenReturn(tenantSchemaName2);
     when(mDsConfig2.getUrl()).thenReturn(url2);
@@ -279,7 +331,41 @@ class CachingDataSourceManagerTest {
     when(mDsConfig2.isAutoCommit()).thenReturn(true);
 
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs1).thenReturn(mBuiltDs2);
+
+    // Set up built DS
+    DataSource mBuiltDs1 = mock(DataSource.class);
+    DataSource mBuiltDs2 = mock(DataSource.class);
+
+    // We can't easily return different mocks dynamically unless we use an answer.
+    // Let's modify the build answer to return mBuiltDs1 first, then mBuiltDs2.
+    this.mBuiltDs = mBuiltDs1; // Default
+
+    // We can set it dynamically by checking invocation or counting.
+    // Since we want to return mBuiltDs1 for url1 and mBuiltDs2 for url2:
+    // Let's do it in the answer:
+    if (mockedBuilderConstruction != null) {
+      mockedBuilderConstruction.close();
+    }
+    mockedBuilderConstruction = mockConstruction(HikariDataSourceBuilder.class, (mock, context) -> {
+      when(mock.clear()).thenReturn(mock);
+      when(mock.url(any())).thenReturn(mock);
+      when(mock.schema(any())).thenReturn(mock);
+      when(mock.username(any())).thenReturn(mock);
+      when(mock.password(any())).thenReturn(mock);
+      when(mock.poolSize(any(Integer.class))).thenReturn(mock);
+      when(mock.autoCommit(any(Boolean.class))).thenReturn(mock);
+      when(mock.build()).thenAnswer(invocation -> {
+        // If clear() was followed by url("...testdb1")
+        // But since we mock everything, we can just return based on a count or state.
+        // Let's use a counter or list.
+        int constructedCount = mockedBuilderConstruction.constructed().size();
+        if (constructedCount <= 1) {
+          return mBuiltDs1;
+        } else {
+          return mBuiltDs2;
+        }
+      });
+    });
 
     DataSource result1 = dataSourceManager.getDataSource(mDsConfig1);
     DataSource result2 = dataSourceManager.getDataSource(mDsConfig2);
@@ -287,7 +373,11 @@ class CachingDataSourceManagerTest {
     assertSame(mBuiltDs1, result1);
     assertSame(mBuiltDs2, result2);
     assertNotSame(result1, result2);
-    verify(mDataSourceBuilder, times(2)).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(2, constructed.size());
+    verify(constructed.get(0)).build();
+    verify(constructed.get(1)).build();
   }
 
   @Test
@@ -300,8 +390,6 @@ class CachingDataSourceManagerTest {
     int poolSize = 10;
     boolean autoCommit = false;
 
-    DataSource mBuiltDs = mock(DataSource.class);
-
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
     when(mDsConfig.getSchemaName()).thenReturn(null);
     when(mDsConfig.getUrl()).thenReturn(url);
@@ -309,12 +397,14 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn(password);
     when(mDsConfig.getPoolSize()).thenReturn(poolSize);
     when(mDsConfig.isAutoCommit()).thenReturn(autoCommit);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs);
 
     DataSource result = dataSourceManager.getDataSource(mDsConfig);
 
     assertSame(mBuiltDs, result);
-    verify(mDataSourceBuilder).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(1, constructed.size());
+    verify(constructed.get(0)).build();
   }
 
   @Test
@@ -326,8 +416,6 @@ class CachingDataSourceManagerTest {
     int poolSize = 10;
     boolean autoCommit = false;
 
-    DataSource mBuiltDs = mock(DataSource.class);
-
     when(mConnection.getSchema()).thenReturn(null);
     when(mDsConfig.getSchemaName()).thenReturn(null);
     when(mDsConfig.getUrl()).thenReturn(url);
@@ -335,11 +423,36 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPassword()).thenReturn(password);
     when(mDsConfig.getPoolSize()).thenReturn(poolSize);
     when(mDsConfig.isAutoCommit()).thenReturn(autoCommit);
-    when(mDataSourceBuilder.build()).thenReturn(mBuiltDs);
 
     DataSource result = dataSourceManager.getDataSource(mDsConfig);
-
     assertSame(mBuiltDs, result);
-    verify(mDataSourceBuilder).build();
+
+    List<HikariDataSourceBuilder> constructed = mockedBuilderConstruction.constructed();
+    assertEquals(1, constructed.size());
+    verify(constructed.get(0)).build();
+  }
+
+  @Test
+  void testGetDataSource_ThrowsIOException_WhenDataSourceBuilderThrowsIOException()
+      throws SQLException, IOException, URISyntaxException {
+    String adminSchemaName = "admin_schema";
+    String tenantSchemaName = "tenant_schema";
+    URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
+    IOException expectedException = new IOException("IO error");
+
+    when(mConnection.getSchema()).thenReturn(adminSchemaName);
+    when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
+    when(mDsConfig.getUrl()).thenReturn(url);
+    when(mDsConfig.getUserName()).thenReturn("testuser");
+    when(mDsConfig.getPassword()).thenReturn("testpass");
+    when(mDsConfig.getPoolSize()).thenReturn(10);
+    when(mDsConfig.isAutoCommit()).thenReturn(false);
+
+    this.builderException = expectedException;
+
+    IOException thrownException
+        = assertThrows(IOException.class, () -> dataSourceManager.getDataSource(mDsConfig));
+
+    assertEquals(expectedException, thrownException);
   }
 }

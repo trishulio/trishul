@@ -2,7 +2,9 @@ package io.trishul.money.tax.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.money.tax.rate.TaxRate;
 import java.math.BigDecimal;
@@ -126,4 +128,29 @@ class TaxTest {
 
     assertEquals(tax, Tax.fromString(json, Tax.class));
   }
+
+  @Test
+  void testAccessGstRate() throws Exception {
+    Tax accessor = new Tax();
+    TaxRate value = mock(TaxRate.class);
+    assertSame(accessor, accessor.setGstRate(value));
+    assertEquals(value, accessor.getGstRate());
+  }
+
+  @Test
+  void testAccessPstRate() throws Exception {
+    Tax accessor = new Tax();
+    TaxRate value = mock(TaxRate.class);
+    assertSame(accessor, accessor.setPstRate(value));
+    assertEquals(value, accessor.getPstRate());
+  }
+
+  @Test
+  void testAccessHstRate() throws Exception {
+    Tax accessor = new Tax();
+    TaxRate value = mock(TaxRate.class);
+    assertSame(accessor, accessor.setHstRate(value));
+    assertEquals(value, accessor.getHstRate());
+  }
+
 }

@@ -2,6 +2,7 @@ package io.trishul.iaas.access.role.attachment.policy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
@@ -42,7 +43,7 @@ class IaasRolePolicyAttachmentTest {
 
   @Test
   void testGetSetId() {
-    attachment.setId(new IaasRolePolicyAttachmentId("ROLE", "POLICY"));
+    assertSame(attachment, attachment.setId(new IaasRolePolicyAttachmentId("ROLE", "POLICY")));
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", "POLICY"), attachment.getId());
   }
 
@@ -54,14 +55,14 @@ class IaasRolePolicyAttachmentTest {
 
   @Test
   void testGetSetIaasRole() {
-    attachment.setIaasRole(new IaasRole("ROLE"));
+    assertSame(attachment, attachment.setIaasRole(new IaasRole("ROLE")));
 
     assertEquals(new IaasRole("ROLE"), attachment.getIaasRole());
   }
 
   @Test
   void testGetSetIaasPolicy() {
-    attachment.setIaasPolicy(new IaasPolicy("POLICY"));
+    assertSame(attachment, attachment.setIaasPolicy(new IaasPolicy("POLICY")));
 
     assertEquals(new IaasPolicy("POLICY"), attachment.getIaasPolicy());
   }
@@ -113,14 +114,14 @@ class IaasRolePolicyAttachmentTest {
   @Test
   void testGetSetCreatedAt() {
     LocalDateTime now = LocalDateTime.now();
-    attachment.setCreatedAt(now);
+    assertSame(attachment, attachment.setCreatedAt(now));
     assertEquals(now, attachment.getCreatedAt());
   }
 
   @Test
   void testGetSetLastUpdated() {
     LocalDateTime now = LocalDateTime.now();
-    attachment.setLastUpdated(now);
+    assertSame(attachment, attachment.setLastUpdated(now));
     assertEquals(now, attachment.getLastUpdated());
   }
 
@@ -129,4 +130,52 @@ class IaasRolePolicyAttachmentTest {
     attachment.setVersion(1);
     assertNull(attachment.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    IaasRolePolicyAttachmentId value = new IaasRolePolicyAttachmentId("role-1", "policy-1");
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessIaasRole() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    IaasRole value = new IaasRole();
+    assertSame(accessor, accessor.setIaasRole(value));
+    assertEquals(value, accessor.getIaasRole());
+  }
+
+  @Test
+  void testAccessIaasPolicy() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    IaasPolicy value = new IaasPolicy();
+    assertSame(accessor, accessor.setIaasPolicy(value));
+    assertEquals(value, accessor.getIaasPolicy());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    IaasRolePolicyAttachment accessor = new IaasRolePolicyAttachment();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }

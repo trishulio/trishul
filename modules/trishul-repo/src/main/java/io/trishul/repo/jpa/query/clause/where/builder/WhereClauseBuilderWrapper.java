@@ -76,6 +76,18 @@ public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
   }
 
   @Override
+  public WhereClauseBuilder ilike(String[] paths, Set<String> queries) {
+    this.delegate.ilike(paths, queries);
+    return this;
+  }
+
+  @Override
+  public WhereClauseBuilder ilike(String path, Set<String> queries) {
+    this.delegate.ilike(new String[] {path}, queries);
+    return this;
+  }
+
+  @Override
   public <C extends Comparable<C>> WhereClauseBuilder between(String[] paths, C start, C end) {
     this.delegate.between(paths, start, end);
     return this;

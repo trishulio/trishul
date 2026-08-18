@@ -1,5 +1,6 @@
 package io.trishul.address.model.dto;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -76,4 +77,54 @@ class AddressDtoTest {
     assertSame(addressDto, addressDto.setPostalCode("postalCode"));
     assertSame("postalCode", addressDto.getPostalCode());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessAddressLine1() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setAddressLine1("testString"));
+    assertEquals("testString", accessor.getAddressLine1());
+  }
+
+  @Test
+  void testAccessAddressLine2() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setAddressLine2("testString"));
+    assertEquals("testString", accessor.getAddressLine2());
+  }
+
+  @Test
+  void testAccessCountry() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setCountry("testString"));
+    assertEquals("testString", accessor.getCountry());
+  }
+
+  @Test
+  void testAccessProvince() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setProvince("testString"));
+    assertEquals("testString", accessor.getProvince());
+  }
+
+  @Test
+  void testAccessCity() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setCity("testString"));
+    assertEquals("testString", accessor.getCity());
+  }
+
+  @Test
+  void testAccessPostalCode() throws Exception {
+    AddressDto accessor = new AddressDto();
+    assertSame(accessor, accessor.setPostalCode("testString"));
+    assertEquals("testString", accessor.getPostalCode());
+  }
+
 }

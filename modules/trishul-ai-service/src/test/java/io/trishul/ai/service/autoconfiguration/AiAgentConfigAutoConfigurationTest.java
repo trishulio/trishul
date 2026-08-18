@@ -14,10 +14,14 @@ import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
 import io.trishul.ai.service.agent.cache.AgentCache;
 import io.trishul.ai.service.agent.factory.AgentFactory;
+import io.trishul.ai.service.agent.factory.ChatModelFactory;
 import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
+import io.trishul.ai.service.agent.manager.AiAgentManagerWrapper;
 import io.trishul.ai.service.agent.model.controller.AiAgentConfigController;
 import io.trishul.ai.service.agent.model.repository.AiAgentConfigRepository;
 import io.trishul.ai.service.agent.model.service.AiAgentConfigService;
+import io.trishul.ai.service.agent.provider.AiAgentConfigProvider;
+import io.trishul.ai.service.memory.manager.AiChatMemoryManagerWrapper;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.base.types.base.pojo.Refresher;
@@ -45,11 +49,36 @@ class AiAgentConfigAutoConfigurationTest {
   }
 
   @Test
+  void testChatModelFactory_ReturnsNonNull() {
+    ChatModelFactory result = config.chatModelFactory();
+    assertNotNull(result);
+  }
+
+  @Test
   void testAgentFactory_ReturnsNonNull() {
     TenantChatMemoryStore mockMemoryStore = mock(TenantChatMemoryStore.class);
     AiToolRegistry mockToolRegistry = mock(AiToolRegistry.class);
-    StreamingChatModelFactory mockModelFactory = mock(StreamingChatModelFactory.class);
-    AgentFactory result = config.agentFactory(mockMemoryStore, mockToolRegistry, mockModelFactory);
+    StreamingChatModelFactory mockStreamingModelFactory = mock(StreamingChatModelFactory.class);
+    ChatModelFactory mockChatModelFactory = mock(ChatModelFactory.class);
+    AgentFactory result = config.agentFactory(mockMemoryStore, mockToolRegistry,
+        mockStreamingModelFactory, mockChatModelFactory);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiAgentConfigProvider_ReturnsNonNull() {
+    AiAgentConfigService mockService = mock(AiAgentConfigService.class);
+    AiAgentConfigProvider result = config.aiAgentConfigProvider(mockService);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testAiAgentManagerWrapper_ReturnsNonNull() {
+    AiAgentConfigProvider mockProvider = mock(AiAgentConfigProvider.class);
+    AiChatMemoryManagerWrapper mockMemoryWrapper = mock(AiChatMemoryManagerWrapper.class);
+    AgentFactory mockAgentFactory = mock(AgentFactory.class);
+    AiAgentManagerWrapper result
+        = config.aiAgentManagerWrapper(mockProvider, mockMemoryWrapper, mockAgentFactory);
     assertNotNull(result);
   }
 

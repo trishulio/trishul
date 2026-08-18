@@ -38,7 +38,7 @@ public class SequentialMigrationManager implements MigrationManager {
     }));
 
     log.info("{} tenants migrated successfully", tasks.getResults().size());
-    if (tasks.getErrors().size() > 0) {
+    if (!tasks.getErrors().isEmpty()) {
       log.error("Failed to migrate {} tenants", tasks.getErrors().size());
     }
 

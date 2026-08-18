@@ -1,6 +1,7 @@
 package io.trishul.repo.jpa.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -55,5 +56,29 @@ class StringCryptoConverterTest {
     StringCryptoConverter invalidConverter = new StringCryptoConverter("INVALID_ALGO", "key");
     assertThrows(RuntimeException.class,
         () -> invalidConverter.convertToEntityAttribute("base64data"));
+  }
+
+  @Test
+  void testNoArgsConstructor_UsesDefaults() {
+    StringCryptoConverter defaultConverter = new StringCryptoConverter();
+    assertNotNull(defaultConverter);
+    // Verify it functions correctly with default keys
+    String original = "hello";
+    String encrypted = defaultConverter.convertToDatabaseColumn(original);
+    assertEquals(original, defaultConverter.convertToEntityAttribute(encrypted));
+  }
+
+  @Test
+  void testConstructor_UsesKeyProvided() {
+    StringCryptoConverter converter1
+        = new StringCryptoConverter("AES/ECB/PKCS5Padding", "my_secret_key_123");
+    StringCryptoConverter converter2
+        = new StringCryptoConverter("AES/ECB/PKCS5Padding", "different_key_456");
+
+    String plainText = "hello_world";
+    String encrypted1 = converter1.convertToDatabaseColumn(plainText);
+    String encrypted2 = converter2.convertToDatabaseColumn(plainText);
+
+    assertNotEquals(encrypted1, encrypted2);
   }
 }

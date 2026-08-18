@@ -12,22 +12,21 @@ import javax.sql.DataSource;
 public class TenantDataSourceManagerWrapper implements TenantDataSourceManager {
   private final DataSourceManager dsMgr;
   private final DataSourceConfigurationProvider<UUID> dsConfigMgr;
+  private final UUID adminTenantId;
 
   public TenantDataSourceManagerWrapper(DataSourceManager dsMgr,
-      TenantDataSourceConfigurationProvider dsConfigMgr) {
+      TenantDataSourceConfigurationProvider dsConfigMgr, UUID adminTenantId) {
     this.dsMgr = dsMgr;
     this.dsConfigMgr = dsConfigMgr;
+    this.adminTenantId = adminTenantId;
   }
 
   @Override
   public DataSource getDataSource(UUID tenantId) throws SQLException, IOException {
     DataSource ds = this.dsMgr.getAdminDataSource();
 
-    // TODO: Check if tenantId is same as Admin, then also return admin DS. No point
-    // creating duplicate adminDS
-    if (tenantId != null) {
+    if (tenantId != null && !tenantId.equals(this.adminTenantId)) {
       DataSourceConfiguration config = this.dsConfigMgr.getConfiguration(tenantId);
-
       ds = this.dsMgr.getDataSource(config);
     }
 

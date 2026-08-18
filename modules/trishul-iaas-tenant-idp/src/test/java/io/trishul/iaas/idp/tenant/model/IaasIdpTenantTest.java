@@ -2,6 +2,7 @@ package io.trishul.iaas.idp.tenant.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.iaas.access.role.model.IaasRole;
 import java.time.LocalDateTime;
@@ -75,4 +76,57 @@ class IaasIdpTenantTest {
     idpTenant.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), idpTenant.getLastUpdated());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    assertSame(accessor, accessor.setId("testString"));
+    assertEquals("testString", accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessDescription() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    assertSame(accessor, accessor.setDescription("testString"));
+    assertEquals("testString", accessor.getDescription());
+  }
+
+  @Test
+  void testAccessIaasRole() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    IaasRole value = new IaasRole();
+    assertSame(accessor, accessor.setIaasRole(value));
+    assertEquals(value, accessor.getIaasRole());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    IaasIdpTenant accessor = new IaasIdpTenant();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }

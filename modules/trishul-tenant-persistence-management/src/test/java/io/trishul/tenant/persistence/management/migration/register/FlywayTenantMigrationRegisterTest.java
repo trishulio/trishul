@@ -122,8 +122,6 @@ class FlywayTenantMigrationRegisterTest {
     });
   }
 
-
-
   @Test
   void testMigrate_ThrowsRuntimeException_WhenFlywayExceptionIsThrown() {
     Flyway mFw = mock(Flyway.class);

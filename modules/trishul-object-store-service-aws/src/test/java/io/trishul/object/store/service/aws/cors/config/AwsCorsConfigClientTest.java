@@ -159,7 +159,6 @@ class AwsCorsConfigClientTest {
     assertFalse(client.exists("BUCKET_1"));
   }
 
-
   @Test
   void testExists_ReturnsTrue_WhenGetReturnsEntity() {
     client = spy(client);
@@ -184,8 +183,20 @@ class AwsCorsConfigClientTest {
 
   @Test
   void testDelete_ReturnsFalse_WhenEntityDoesNotExist() {
-    doThrow(AmazonS3Exception.class).when(mAwsClient).deleteBucketCrossOriginConfiguration(
+    AmazonS3Exception ex = new AmazonS3Exception("error");
+    ex.setStatusCode(500);
+    doThrow(ex).when(mAwsClient).deleteBucketCrossOriginConfiguration(
         any(DeleteBucketCrossOriginConfigurationRequest.class));
     assertFalse(client.delete("BUCKET_1"));
+  }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenEntityDoesNotExistAndS3Throws404NoSuchCORS() {
+    AmazonS3Exception ex = new AmazonS3Exception("NoSuchCORSConfiguration");
+    ex.setStatusCode(404);
+    ex.setErrorCode("NoSuchCORSConfiguration");
+    doThrow(ex).when(mAwsClient).deleteBucketCrossOriginConfiguration(
+        any(DeleteBucketCrossOriginConfigurationRequest.class));
+    assertTrue(client.delete("BUCKET_1"));
   }
 }

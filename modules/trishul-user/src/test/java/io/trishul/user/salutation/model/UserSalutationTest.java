@@ -2,6 +2,7 @@ package io.trishul.user.salutation.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,35 +31,35 @@ class UserSalutationTest {
   @Test
   void testAccessId() {
     assertNull(salutation.getId());
-    salutation.setId(1L);
+    assertSame(salutation, salutation.setId(1L));
     assertEquals(1L, salutation.getId());
   }
 
   @Test
   void testAccessTitle() {
     assertNull(salutation.getTitle());
-    salutation.setTitle("title");
+    assertSame(salutation, salutation.setTitle("title"));
     assertEquals("title", salutation.getTitle());
   }
 
   @Test
   void testAccessCreatedAt() {
     assertNull(salutation.getCreatedAt());
-    salutation.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0));
+    assertSame(salutation, salutation.setCreatedAt(LocalDateTime.of(2000, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), salutation.getCreatedAt());
   }
 
   @Test
   void testAccessLastUpdated() {
     assertNull(salutation.getLastUpdated());
-    salutation.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0));
+    assertSame(salutation, salutation.setLastUpdated(LocalDateTime.of(2001, 1, 1, 0, 0)));
     assertEquals(LocalDateTime.of(2001, 1, 1, 0, 0), salutation.getLastUpdated());
   }
 
   @Test
   void testAccessVersion() {
     assertNull(salutation.getVersion());
-    salutation.setVersion(1);
+    assertSame(salutation, salutation.setVersion(1));
     assertEquals(1, salutation.getVersion());
   }
 }

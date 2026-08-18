@@ -16,6 +16,7 @@
     </parent>
 
     <dependencies>
+
         <dependency>
             <groupId>io.trishul</groupId>
             <artifactId>trishul-base-types</artifactId>
@@ -53,4 +54,6 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+
 </project>

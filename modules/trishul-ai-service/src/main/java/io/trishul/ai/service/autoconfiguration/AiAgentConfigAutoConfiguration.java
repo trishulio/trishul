@@ -11,10 +11,15 @@ import io.trishul.ai.memory.model.AiChatMemoryConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
 import io.trishul.ai.service.agent.cache.AgentCache;
 import io.trishul.ai.service.agent.factory.AgentFactory;
+import io.trishul.ai.service.agent.factory.ChatModelFactory;
 import io.trishul.ai.service.agent.factory.StreamingChatModelFactory;
+import io.trishul.ai.service.agent.manager.AiAgentManagerWrapper;
 import io.trishul.ai.service.agent.model.controller.AiAgentConfigController;
 import io.trishul.ai.service.agent.model.repository.AiAgentConfigRepository;
 import io.trishul.ai.service.agent.model.service.AiAgentConfigService;
+import io.trishul.ai.service.agent.provider.AiAgentConfigProvider;
+import io.trishul.ai.service.agent.provider.CachingAiAgentConfigProvider;
+import io.trishul.ai.service.memory.manager.AiChatMemoryManagerWrapper;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
 import io.trishul.base.types.base.pojo.Refresher;
@@ -40,16 +45,35 @@ public class AiAgentConfigAutoConfiguration {
   }
 
   @Bean
+  @ConditionalOnMissingBean(ChatModelFactory.class)
+  public ChatModelFactory chatModelFactory() {
+    return new ChatModelFactory();
+  }
+
+  @Bean
   @ConditionalOnMissingBean(AgentFactory.class)
   public AgentFactory agentFactory(TenantChatMemoryStore memoryStore, AiToolRegistry toolRegistry,
-      StreamingChatModelFactory modelFactory) {
-    return new AgentFactory(memoryStore, toolRegistry, modelFactory);
+      StreamingChatModelFactory streamingModelFactory, ChatModelFactory chatModelFactory) {
+    return new AgentFactory(memoryStore, toolRegistry, streamingModelFactory, chatModelFactory);
   }
 
   @Bean
   @ConditionalOnMissingBean(AgentCache.class)
   public AgentCache agentCache(AgentFactory agentFactory) {
     return new AgentCache(agentFactory);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(AiAgentConfigProvider.class)
+  public AiAgentConfigProvider aiAgentConfigProvider(AiAgentConfigService aiAgentConfigService) {
+    return new CachingAiAgentConfigProvider(aiAgentConfigService);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(AiAgentManagerWrapper.class)
+  public AiAgentManagerWrapper aiAgentManagerWrapper(AiAgentConfigProvider aiAgentConfigProvider,
+      AiChatMemoryManagerWrapper chatMemoryManagerWrapper, AgentFactory agentFactory) {
+    return new AiAgentManagerWrapper(aiAgentConfigProvider, chatMemoryManagerWrapper, agentFactory);
   }
 
   @Bean

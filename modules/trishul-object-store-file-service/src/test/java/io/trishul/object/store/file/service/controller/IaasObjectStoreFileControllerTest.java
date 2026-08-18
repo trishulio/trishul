@@ -1,10 +1,12 @@
 package io.trishul.object.store.file.service.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.object.store.file.model.BaseIaasObjectStoreFile;
 import io.trishul.object.store.file.model.IaasObjectStoreFile;
@@ -97,5 +99,12 @@ class IaasObjectStoreFileControllerTest {
         List.of(new UpdateIaasObjectStoreFileDto(URI.create("file_1.txt"))));
 
     assertEquals(List.of(new IaasObjectStoreFileDto(URI.create("file_1.txt"))), dtos);
+  }
+
+  @Test
+  void testAutowiredConstructor() {
+    AttributeFilter filter = mock(AttributeFilter.class);
+    IaasObjectStoreFileController controller = new IaasObjectStoreFileController(mService, filter);
+    assertNotNull(controller);
   }
 }

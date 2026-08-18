@@ -2,6 +2,7 @@ package io.trishul.money.currency.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,14 +28,14 @@ class CurrencyTest {
   @Test
   void testAccessNumericCode() {
     assertNull(currency.getNumericCode());
-    currency.setNumericCode(123);
+    assertSame(currency, currency.setNumericCode(123));
     assertEquals(123, currency.getNumericCode());
   }
 
   @Test
   void testAccessCode() {
     assertNull(currency.getCode());
-    currency.setCode("USD");
+    assertSame(currency, currency.setCode("USD"));
     assertEquals("USD", currency.getCode());
   }
 

@@ -1,7 +1,9 @@
 package io.trishul.ai.session.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.ai.agent.model.AiAgentConfigDto;
 import io.trishul.ai.memory.model.AiChatMemoryConfigDto;
@@ -43,4 +45,72 @@ class AiChatSessionDtoTest {
     assertEquals(now.plusDays(1), dto.getLastUpdated());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessSessionKey() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    assertSame(accessor, accessor.setSessionKey("testString"));
+    assertEquals("testString", accessor.getSessionKey());
+  }
+
+  @Test
+  void testAccessTitle() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    assertSame(accessor, accessor.setTitle("testString"));
+    assertEquals("testString", accessor.getTitle());
+  }
+
+  @Test
+  void testAccessIsActive() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    assertSame(accessor, accessor.setIsActive(true));
+    assertEquals(true, accessor.getIsActive());
+  }
+
+  @Test
+  void testAccessAgentConfig() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    AiAgentConfigDto value = mock(AiAgentConfigDto.class);
+    assertSame(accessor, accessor.setAgentConfig(value));
+    assertEquals(value, accessor.getAgentConfig());
+  }
+
+  @Test
+  void testAccessChatMemoryConfig() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    AiChatMemoryConfigDto value = mock(AiChatMemoryConfigDto.class);
+    assertSame(accessor, accessor.setChatMemoryConfig(value));
+    assertEquals(value, accessor.getChatMemoryConfig());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiChatSessionDto accessor = new AiChatSessionDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

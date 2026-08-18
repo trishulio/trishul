@@ -36,6 +36,6 @@ public class AdminTenant implements TenantData {
 
   @Override
   public Boolean getIsReady() {
-    return isReady;
+    return true;
   }
 }

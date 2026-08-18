@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
+import io.trishul.repo.jpa.repository.service.RepoService;
 import io.trishul.user.salutation.model.UserSalutation;
-import io.trishul.user.service.user.service.salutation.repository.UserSalutationRepository;
+import io.trishul.user.salutation.model.UserSalutationAccessor;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,12 +17,8 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,12 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 class UserSalutationServiceTest {
   private UserSalutationService userSalutationService;
 
-  private UserSalutationRepository userSalutationRepository;
+  private RepoService<Long, UserSalutation, UserSalutationAccessor<?>> mRepoService;
 
   @BeforeEach
   void init() {
-    userSalutationRepository = Mockito.mock(UserSalutationRepository.class);
-    userSalutationService = new UserSalutationService(userSalutationRepository);
+    mRepoService = mock(RepoService.class);
+    userSalutationService = new UserSalutationService(mRepoService);
   }
 
   @Test
@@ -45,9 +43,8 @@ class UserSalutationServiceTest {
     final ArgumentCaptor<Specification<UserSalutation>> specificationCaptor
         = ArgumentCaptor.forClass(Specification.class);
 
-    when(userSalutationRepository.findAll(specificationCaptor.capture(),
-        eq(PageRequest.of(0, 100, Sort.by(Direction.ASC, new String[] {"id"})))))
-        .thenReturn(expectedSalutationsPage);
+    doReturn(expectedSalutationsPage).when(mRepoService).getAll(specificationCaptor.capture(),
+        eq(new TreeSet<>(List.of("id"))), eq(true), eq(0), eq(100));
 
     Page<UserSalutation> actualSalutationsPage
         = userSalutationService.getSalutations(null, new TreeSet<>(List.of("id")), true, 0, 100);

@@ -1,6 +1,7 @@
 package io.trishul.ai.service.guardrail.model.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -94,8 +95,20 @@ class AiGuardrailServiceTest {
   }
 
   @Test
+  void testExists_ReturnsFalse() {
+    when(mockRepoService.exists(Set.of(1L))).thenReturn(false);
+    assertFalse(service.exists(Set.of(1L)));
+  }
+
+  @Test
+  void testExist_ReturnsFalse() {
+    when(mockRepoService.exists(1L)).thenReturn(false);
+    assertFalse(service.exist(1L));
+  }
+
+  @Test
   void testDelete_ReturnsCount() {
-    when(mockRepoService.delete(Set.of(1L))).thenReturn(1L);
+    when(mockRepoService.delete(Set.of(1L))).thenReturn(new DeleteResult(1L));
     assertEquals(new DeleteResult(1L), service.delete(Set.of(1L)));
   }
 

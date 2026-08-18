@@ -2,6 +2,7 @@ package io.trishul.quantity.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.quantity.unit.UnitEntity;
 import java.math.BigDecimal;
@@ -29,14 +30,14 @@ class QuantityEntityTest {
   @Test
   void testAccessUnit() {
     assertNull(quantity.getUnit());
-    quantity.setUnit(new UnitEntity("L"));
+    assertSame(quantity, quantity.setUnit(new UnitEntity("L")));
     assertEquals(new UnitEntity("L"), quantity.getUnit());
   }
 
   @Test
   void testAccessValue() {
     assertNull(quantity.getValue());
-    quantity.setValue(new BigDecimal("99"));
+    assertSame(quantity, quantity.setValue(new BigDecimal("99")));
     assertEquals(new BigDecimal("99"), quantity.getValue());
   }
 

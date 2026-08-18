@@ -11,6 +11,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -117,11 +118,18 @@ class AwsIamPolicyClientTest {
   }
 
   @Test
-  void testDelete_ReturnsFalse_WhenDeleteRequestThrowsNoEntityException() {
+  void testDelete_ReturnsTrue_WhenDeleteRequestThrowsNoEntityException() {
     doThrow(NoSuchEntityException.class).when(mAwsIamClient)
         .deletePolicy(new DeletePolicyRequest().withPolicyArn("POLICY_ARN"));
 
-    assertFalse(client.delete("POLICY"));
+    assertTrue(client.delete("POLICY"));
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenPolicyNameIsNullOrEmpty() {
+    assertFalse(client.delete(null));
+    assertFalse(client.delete(""));
+    assertFalse(client.delete("   "));
   }
 
   @Test
@@ -202,6 +210,9 @@ class AwsIamPolicyClientTest {
         .withPolicyArn("POLICY_1_ARN").withPolicyDocument("DOCUMENT_1").withSetAsDefault(true));
     order.verify(mAwsIamClient).deletePolicyVersion(new DeletePolicyVersionRequest()
         .withPolicyArn("POLICY_1_ARN").withVersionId("NON_DEFAULT_V1"));
+
+    verify(mAwsIamClient, never()).deletePolicyVersion(
+        new DeletePolicyVersionRequest().withPolicyArn("POLICY_1_ARN").withVersionId("DEFAULT_V1"));
   }
 
   @Test

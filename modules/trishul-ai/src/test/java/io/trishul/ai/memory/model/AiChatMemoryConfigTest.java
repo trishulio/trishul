@@ -1,6 +1,7 @@
 package io.trishul.ai.memory.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -40,4 +41,77 @@ class AiChatMemoryConfigTest {
     assertEquals(now.plusDays(1), config.getLastUpdated());
     assertEquals(2, config.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessMaxMessages() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setMaxMessages(123));
+    assertEquals(123, accessor.getMaxMessages());
+  }
+
+  @Test
+  void testAccessMaxTokens() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setMaxTokens(123));
+    assertEquals(123, accessor.getMaxTokens());
+  }
+
+  @Test
+  void testAccessTtlMinutes() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setTtlMinutes(123));
+    assertEquals(123, accessor.getTtlMinutes());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiChatMemoryConfig accessor = new AiChatMemoryConfig();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

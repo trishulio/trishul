@@ -11,7 +11,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 class ObjectStoreAwsFactoryTest {
   private ObjectStoreAwsFactory factory;
 
@@ -36,5 +35,20 @@ class ObjectStoreAwsFactoryTest {
     assertEquals(
         ((BasicSessionCredentials) awsCredentialsProvider.getCredentials()).getSessionToken(),
         "SESSION_TOKEN");
+  }
+
+  @Test
+  void testS3Client_WithoutSessionToken() throws IllegalAccessException, URISyntaxException {
+    AmazonS3 s3 = factory.s3Client("REGION", "ACCESS_KEY_ID", "ACCESS_SECRET_KEY");
+
+    final AWSCredentialsProvider awsCredentialsProvider
+        = (AWSCredentialsProvider) FieldUtils.readField(s3, "awsCredentialsProvider", true);
+    final URI endpoint = (URI) FieldUtils.readField(s3, "endpoint", true);
+    final String region = (String) FieldUtils.readField(s3, "signingRegion", true);
+
+    assertEquals(new URI("https://s3.REGION.amazonaws.com"), endpoint);
+    assertEquals("REGION", region);
+    assertEquals("ACCESS_KEY_ID", awsCredentialsProvider.getCredentials().getAWSAccessKeyId());
+    assertEquals("ACCESS_SECRET_KEY", awsCredentialsProvider.getCredentials().getAWSSecretKey());
   }
 }

@@ -1,6 +1,7 @@
 package io.trishul.iaas.tenant.object.store;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,13 +22,13 @@ class TenantIaasVfsDeleteResultTest {
 
   @Test
   void testGetSetObjectStore() {
-    result.setObjectStore(1);
+    assertSame(result, result.setObjectStore(1));
     assertEquals(1, result.getObjectStore());
   }
 
   @Test
   void testGetSetPolicy() {
-    result.setPolicy(2);
+    assertSame(result, result.setPolicy(2));
     assertEquals(2, result.getPolicy());
   }
 }

@@ -1,5 +1,6 @@
 package io.trishul.model.validator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,19 +19,23 @@ class ValidatorTest {
 
   @Test
   void testRule_SetsMsgAsError_WhenConditionIsFalse() {
-    validator.rule(false, "This is an error message: %s", "TEST");
-    assertThrows(ValidationException.class, () -> validator.raiseErrors(),
-        "1. This is an error message: TEST");
+    assertFalse(validator.rule(false, "This is an error message: %s", "TEST"));
+    ValidationException exception
+        = assertThrows(ValidationException.class, () -> validator.raiseErrors());
+    assertEquals("1. This is an error message: TEST" + System.lineSeparator(),
+        exception.getMessage());
   }
 
   @Test
   void testRule_DoesNotSetMsgAsError_WhenConditionIsTrue() {
-    validator.rule(true, "This is not an error message: %s", "TEST");
-    validator.rule(false, "This is an error message: %s", "TEST");
-    validator.rule(true, "This is not an error message: %s", "TEST");
+    assertTrue(validator.rule(true, "This is not an error message: %s", "TEST"));
+    assertFalse(validator.rule(false, "This is an error message: %s", "TEST"));
+    assertTrue(validator.rule(true, "This is not an error message: %s", "TEST"));
 
-    ValidationException exception = assertThrows(ValidationException.class,
-        () -> validator.raiseErrors(), "1. This is an error message: TEST");
+    ValidationException exception
+        = assertThrows(ValidationException.class, () -> validator.raiseErrors());
+    assertEquals("1. This is an error message: TEST" + System.lineSeparator(),
+        exception.getMessage());
   }
 
   @Test
@@ -50,10 +55,12 @@ class ValidatorTest {
     validator.rule(true, "This message is ignored: %s", "TEST");
     validator.rule(false, "This is error C: %s", "TEST");
 
-    String expected = "" + "1. This is error A: TEST\n" + "2. This is error B: TEST\n"
-        + "3. This is error C: TEST\n";
+    String expected
+        = "1. This is error A: TEST" + System.lineSeparator() + "2. This is error B: TEST"
+            + System.lineSeparator() + "3. This is error C: TEST" + System.lineSeparator();
     ValidationException exception
-        = assertThrows(ValidationException.class, () -> validator.raiseErrors(), expected);
+        = assertThrows(ValidationException.class, () -> validator.raiseErrors());
+    assertEquals(expected, exception.getMessage());
   }
 
   @Test

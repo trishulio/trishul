@@ -2,6 +2,8 @@ package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.ai.guardrail.model.AiGuardrail;
 import java.time.LocalDateTime;
@@ -40,4 +42,51 @@ class AiAgentGuardrailTest {
     AiAgentGuardrail agentGuardrail2 = new AiAgentGuardrail(2L);
     assertEquals(2L, agentGuardrail2.getId());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessAgentConfig() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    AiAgentConfig value = mock(AiAgentConfig.class);
+    assertSame(accessor, accessor.setAgentConfig(value));
+    assertEquals(value, accessor.getAgentConfig());
+  }
+
+  @Test
+  void testAccessGuardrail() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    AiGuardrail value = mock(AiGuardrail.class);
+    assertSame(accessor, accessor.setGuardrail(value));
+    assertEquals(value, accessor.getGuardrail());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiAgentGuardrail accessor = new AiAgentGuardrail();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

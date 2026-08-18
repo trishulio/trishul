@@ -7,6 +7,7 @@ import io.trishul.tenant.entity.Tenant;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,21 @@ class TenantIaasIdpTenantMapperTest {
 
     List<IaasIdpTenant> expected = List.of(new IaasIdpTenant());
     assertEquals(expected, idpTenants);
+  }
+
+  @Test
+  void testToIaasTenantIds_ReturnsNull_WhenArgIsNull() {
+    assertNull(mapper.toIaasTenantIds(null));
+  }
+
+  @Test
+  void testToIaasTenantIds_ReturnsSet_WhenArgIsNotNull() {
+    Set<UUID> ids = Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    assertEquals(Set.of("00000000-0000-0000-0000-000000000001"), mapper.toIaasTenantIds(ids));
+  }
+
+  @Test
+  void testFromTenant_ReturnsNull_WhenArgIsNull() {
+    assertNull(mapper.fromTenant(null));
   }
 }

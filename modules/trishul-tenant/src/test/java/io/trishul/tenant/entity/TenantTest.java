@@ -101,4 +101,60 @@ class TenantTest {
   void testSetVersion_ReturnsThis() {
     assertSame(tenant, tenant.setVersion(1));
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    Tenant accessor = new Tenant();
+    UUID value = UUID.randomUUID();
+    assertSame(accessor, accessor.setId(value));
+    assertEquals(value, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    Tenant accessor = new Tenant();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessUrl() throws Exception {
+    Tenant accessor = new Tenant();
+    assertSame(accessor, accessor.setUrl(URI.create("http://localhost")));
+    assertEquals(URI.create("http://localhost"), accessor.getUrl());
+  }
+
+  @Test
+  void testAccessIsReady() throws Exception {
+    Tenant accessor = new Tenant();
+    assertEquals(false, accessor.getIsReady());
+    assertSame(accessor, accessor.setIsReady(true));
+    assertEquals(true, accessor.getIsReady());
+    assertSame(accessor, accessor.setIsReady(false));
+    assertEquals(false, accessor.getIsReady());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    Tenant accessor = new Tenant();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    Tenant accessor = new Tenant();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    Tenant accessor = new Tenant();
+    assertSame(accessor, accessor.setVersion(123));
+    assertNull(accessor.getVersion());
+  }
+
 }

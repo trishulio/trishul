@@ -1,7 +1,5 @@
 package io.trishul.data.autoconfiguration;
 
-import io.trishul.data.datasource.builder.HikariDataSourceBuilder;
-import io.trishul.data.datasource.configuration.builder.DataSourceBuilder;
 import io.trishul.data.datasource.configuration.manager.DataSourceConfigurationManager;
 import io.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import io.trishul.data.datasource.configuration.model.GlobalDataSourceConfiguration;
@@ -75,7 +73,14 @@ public class DataManagementAutoConfiguration {
       @Value("${app.config.tenant.ds.schema.migration.configs}") String schemaMigrationScriptConfigsStr,
       @Value("${app.config.tenant.ds.pool.size}") int poolSize,
       @Value("${app.config.tenant.ds.db.auto-commit}") boolean autoCommit) {
-    URI uri = URI.create(jdbcUrl);
+    String cleanedUrl = jdbcUrl.replaceAll("[?&]currentSchema=[^&]*", "");
+    if (cleanedUrl.contains("?&")) {
+      cleanedUrl = cleanedUrl.replace("?&", "?");
+    }
+    if (cleanedUrl.endsWith("?")) {
+      cleanedUrl = cleanedUrl.substring(0, cleanedUrl.length() - 1);
+    }
+    URI uri = URI.create(cleanedUrl);
     MigrationConfiguration[] migrationConfigs
         = MigrationConfiguration.from(schemaMigrationScriptConfigsStr);
     GlobalDataSourceConfiguration globalTenantDsConfig = new ImmutableGlobalDataSourceConfiguration(
@@ -94,24 +99,18 @@ public class DataManagementAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(DataSourceManager.class)
-  public DataSourceManager dataSourceManager(DataSource adminDs,
-      DataSourceBuilder dataSourceBuilder) {
-    return new CachingDataSourceManager(adminDs, dataSourceBuilder);
+  public DataSourceManager dataSourceManager(DataSource adminDs) {
+    return new CachingDataSourceManager(adminDs);
   }
 
-  @Bean
-  @ConditionalOnMissingBean(DataSourceBuilder.class)
-  public DataSourceBuilder dataSourceBuilder() {
-    DataSourceBuilder builder = new HikariDataSourceBuilder();
-    return builder;
-  }
+
 
   @Bean
   @ConditionalOnMissingBean(TenantDataSourceManager.class)
   public TenantDataSourceManager tenantDataSourceManager(DataSourceManager dataSourceManager,
-      DataSourceConfigurationProvider<UUID> tenantDsConfigProvider) {
+      DataSourceConfigurationProvider<UUID> tenantDsConfigProvider, TenantData adminTenant) {
     TenantDataSourceManager mgr = new TenantDataSourceManagerWrapper(dataSourceManager,
-        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider);
+        (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminTenant.getId());
     return mgr;
   }
 

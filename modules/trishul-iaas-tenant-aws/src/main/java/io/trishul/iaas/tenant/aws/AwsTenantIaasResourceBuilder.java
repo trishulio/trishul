@@ -55,7 +55,6 @@ public class AwsTenantIaasResourceBuilder
         .setAssumePolicyDocument(this.templates.getCognitoIdAssumeRolePolicyDoc());
   }
 
-
   @Override
   public String getVfsPolicyId(String iaasIdpTenantId) {
     return this.templates.getTenantVfsPolicyName(iaasIdpTenantId);

@@ -2,6 +2,7 @@ package io.trishul.repo.jpa.query.clause.group.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -37,7 +38,7 @@ class GroupByClauseBuilderTest {
     PathProvider mProvider = mock(PathProvider.class);
     doReturn(new String[] {"PATH_1", "PATH_2"}).when(mProvider).getPath();
 
-    grouper.groupBy(mProvider);
+    assertSame(grouper, grouper.groupBy(mProvider));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
@@ -45,7 +46,7 @@ class GroupByClauseBuilderTest {
 
   @Test
   void testGroupBy_PathProvider_DoesNothign_WhenProviderIsNull() {
-    grouper.groupBy((PathProvider) null);
+    assertSame(grouper, grouper.groupBy((PathProvider) null));
     verifyNoInteractions(mAccumulator);
   }
 
@@ -53,7 +54,7 @@ class GroupByClauseBuilderTest {
   void testGroupBy_StringArray_AddsAColumnSpecWithPath_WhenProviderIsNotNull() {
     ArgumentCaptor<ColumnSpec<?>> captor = ArgumentCaptor.forClass(ColumnSpec.class);
 
-    grouper.groupBy(new String[] {"PATH_1", "PATH_2"});
+    assertSame(grouper, grouper.groupBy(new String[] {"PATH_1", "PATH_2"}));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(new ColumnSpec<>(new String[] {"PATH_1", "PATH_2"}), captor.getValue());
@@ -61,7 +62,7 @@ class GroupByClauseBuilderTest {
 
   @Test
   void testGroupBy_StringArray_DoesNothing_WhenStringArrayIsNull() {
-    grouper.groupBy((String[]) null);
+    assertSame(grouper, grouper.groupBy((String[]) null));
     verifyNoInteractions(mAccumulator);
   }
 
@@ -70,7 +71,7 @@ class GroupByClauseBuilderTest {
     ArgumentCaptor<CriteriaSpec<?>> captor = ArgumentCaptor.forClass(CriteriaSpec.class);
 
     CriteriaSpec<?> mSpec = mock(CriteriaSpec.class);
-    grouper.groupBy(mSpec);
+    assertSame(grouper, grouper.groupBy(mSpec));
 
     verify(mAccumulator).add(captor.capture());
     assertEquals(mSpec, captor.getValue());
@@ -78,7 +79,7 @@ class GroupByClauseBuilderTest {
 
   @Test
   void testGroupBy_CriteriaSpec_DoesNothing_WhenSpecIsNull() {
-    grouper.groupBy((CriteriaSpec<?>) null);
+    assertSame(grouper, grouper.groupBy((CriteriaSpec<?>) null));
     verifyNoInteractions(mAccumulator);
   }
 

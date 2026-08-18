@@ -1,7 +1,9 @@
 package io.trishul.ai.guardrail.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,4 +31,48 @@ class AddAiGuardrailDtoTest {
     assertEquals(2, dto.getPriority());
     assertTrue(!dto.getIsEnabled());
   }
+
+  @Test
+  void testAccessName() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessType() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    AiGuardrailType value = mock(AiGuardrailType.class);
+    assertSame(accessor, accessor.setType(value));
+    assertEquals(value, accessor.getType());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessConfiguration() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    assertSame(accessor, accessor.setConfiguration("testString"));
+    assertEquals("testString", accessor.getConfiguration());
+  }
+
+  @Test
+  void testAccessPriority() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    assertSame(accessor, accessor.setPriority(123));
+    assertEquals(123, accessor.getPriority());
+  }
+
+  @Test
+  void testAccessIsEnabled() throws Exception {
+    AddAiGuardrailDto accessor = new AddAiGuardrailDto();
+    assertSame(accessor, accessor.setIsEnabled(true));
+    assertEquals(true, accessor.getIsEnabled());
+  }
+
 }

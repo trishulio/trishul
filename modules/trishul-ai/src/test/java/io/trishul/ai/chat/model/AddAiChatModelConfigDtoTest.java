@@ -1,6 +1,7 @@
 package io.trishul.ai.chat.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -36,4 +37,68 @@ class AddAiChatModelConfigDtoTest {
     assertEquals(0.8, dto.getTopP());
     assertTrue(!dto.getIsDefault());
   }
+
+  @Test
+  void testAccessName() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessProvider() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setProvider("testString"));
+    assertEquals("testString", accessor.getProvider());
+  }
+
+  @Test
+  void testAccessModelName() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setModelName("testString"));
+    assertEquals("testString", accessor.getModelName());
+  }
+
+  @Test
+  void testAccessStreamingModelName() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setStreamingModelName("testString"));
+    assertEquals("testString", accessor.getStreamingModelName());
+  }
+
+  @Test
+  void testAccessApiKey() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setApiKey("testString"));
+    assertEquals("testString", accessor.getApiKey());
+  }
+
+  @Test
+  void testAccessTemperature() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setTemperature(123.45));
+    assertEquals(123.45, accessor.getTemperature());
+  }
+
+  @Test
+  void testAccessMaxTokens() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setMaxTokens(123));
+    assertEquals(123, accessor.getMaxTokens());
+  }
+
+  @Test
+  void testAccessTopP() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setTopP(123.45));
+    assertEquals(123.45, accessor.getTopP());
+  }
+
+  @Test
+  void testAccessIsDefault() throws Exception {
+    AddAiChatModelConfigDto accessor = new AddAiChatModelConfigDto();
+    assertSame(accessor, accessor.setIsDefault(true));
+    assertEquals(true, accessor.getIsDefault());
+  }
+
 }

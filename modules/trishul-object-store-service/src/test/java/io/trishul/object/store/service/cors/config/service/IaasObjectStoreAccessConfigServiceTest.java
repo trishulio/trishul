@@ -65,6 +65,22 @@ class IaasObjectStoreAccessConfigServiceTest {
   }
 
   @Test
+  void testExist_ReturnsTrue_WhenAllObjectStoreIdsExists() {
+    doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
+        .exists(anySet());
+
+    assertTrue(service.exist("BUCKET_1"));
+  }
+
+  @Test
+  void testExist_ReturnsFalse_WhenAllObjectStoreIdsDoesNotExists() {
+    doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), false)).when(mIaasRepo)
+        .exists(anySet());
+
+    assertFalse(service.exist("BUCKET_1"));
+  }
+
+  @Test
   void testDelete_Set_CallsRepoDeleteWithIds() {
     doReturn(99L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
     DeleteResult deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
@@ -74,8 +90,8 @@ class IaasObjectStoreAccessConfigServiceTest {
 
   @Test
   void testDelete_Id_CallsRepoDeleteWithIds() {
-    doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1", "BUCKET_2"));
-    DeleteResult deleteCount = service.delete(Set.of("BUCKET_1", "BUCKET_2"));
+    doReturn(1L).when(mIaasRepo).delete(Set.of("BUCKET_1"));
+    DeleteResult deleteCount = service.delete("BUCKET_1");
 
     assertEquals(new DeleteResult(1L), deleteCount);
   }

@@ -35,7 +35,7 @@ public class IaasObjectStoreCorsConfigService extends BaseService implements
 
   @Override
   public boolean exists(Set<String> ids) {
-    return iaasRepo.exists(ids).values().stream().filter(b -> !b).findAny().orElseGet(() -> true);
+    return !iaasRepo.exists(ids).containsValue(false);
   }
 
   @Override
@@ -85,8 +85,8 @@ public class IaasObjectStoreCorsConfigService extends BaseService implements
   public List<IaasObjectStoreCorsConfiguration> getByAccessorIds(
       Collection<? extends IaasObjectStoreCorsConfigurationAccessor<?>> accessors) {
     List<IaasObjectStoreCorsConfiguration> idProviders = accessors.stream().filter(Objects::nonNull)
-        .map(accessor -> accessor.getIaasObjectStoreCorsConfiguration()).filter(Objects::nonNull)
-        .toList();
+        .map(IaasObjectStoreCorsConfigurationAccessor::getIaasObjectStoreCorsConfiguration)
+        .filter(Objects::nonNull).toList();
     return getByIds(idProviders);
   }
 

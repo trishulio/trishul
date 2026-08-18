@@ -2,6 +2,7 @@ package io.trishul.money.tax.rate.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,4 +27,13 @@ class TaxRateDtoTest {
 
     assertEquals(new BigDecimal("1"), taxRate.getValue());
   }
+
+  @Test
+  void testAccessValue() throws Exception {
+    TaxRateDto accessor = new TaxRateDto();
+    BigDecimal value = new java.math.BigDecimal("123.45");
+    assertSame(accessor, accessor.setValue(value));
+    assertEquals(value, accessor.getValue());
+  }
+
 }

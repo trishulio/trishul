@@ -98,6 +98,7 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - Configuration files: `pom.xml`, `mvn.env`, `docker-compose-bin.yml`, `Makefile`
 - Build runs inside Docker container via docker-compose
 - Use `make install` to build the project. Always run `make install` after changes to verify build passes.
+- **Monitoring Builds**: The full `make install` build takes about 30 minutes. When running it, set a background timer (e.g., `schedule` tool) for 15 minutes (900 seconds) to monitor status, rather than polling frequently (e.g. every minute) to conserve tokens and context.
 - Plugins: Spotless (code formatting, runs automatically), JaCoCo (code coverage), PIT (mutation testing), SonarQube (static analysis), SpotBugs (bug detection).
 - Java 21 features allowed. Follow existing patterns in the codebase.
 
@@ -108,6 +109,14 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - PIT mutation testing runs after unit tests in each module for quality assurance
 - PIT mutation test coverage should be maintained
 - Check PIT reports for mutation coverage after test changes (`target/pit-reports/index.html` or `modules/<module>/target/pit-reports/index.html`)
+- No conditional assertions in unit tests (assert exact expected condition without branching)
+- When testing AWS clients logging request IDs, mock `ResponseMetadata`
+- Test `ResourceNotFoundException` / `NoSuchEntityException` / `AmazonS3Exception` catch branches
+- Verify fluent setters return `this` via `assertSame`
+- For classes extending `BaseModel`, test `equals`, `hashCode`, and `toString`
+- For deep-cloning setters and accumulator loops, test both `null` and non-null branches
+- For MapStruct mappers with nested structures, test scenarios where nested fields in DTOs are `null`
+- Only test implementing POJO/Model classes; base interfaces do not need direct tests. Remove `testContextLoads()` style tests.
 
 ## Key Files to Review Before Changes
 1. `modules/trishul-base-types/src/main/java/io/trishul/base/types/base/pojo/Identified.java`
@@ -119,3 +128,4 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 2. **Empty test methods**: Add meaningful assertions
 3. **Removing TODOs**: Implement or leave them
 4. **Breaking the mapper pattern**: Always test with `make install`
+5. **Direct fully qualified classpaths**: Do not write fully qualified package class paths directly in code (e.g., `org.junit.jupiter.api.Assertions.assertNotEquals`). Instead, import classes and use their short name. For functions/static methods, use static imports (e.g., `import static org.junit.jupiter.api.Assertions.assertNotEquals;`).

@@ -10,7 +10,9 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.amazonaws.ResponseMetadata;
@@ -132,6 +134,7 @@ class AwsIdpTenantWithRoleClientTest {
     IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
         LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
     assertEquals(expected, tenant);
+    verify(mArnMapper, never()).getRoleArn(any());
   }
 
   @Test
@@ -156,6 +159,7 @@ class AwsIdpTenantWithRoleClientTest {
     IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
         LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
     assertEquals(expected, tenant);
+    verify(mArnMapper, never()).getRoleArn(any());
   }
 
   @Test
@@ -226,12 +230,19 @@ class AwsIdpTenantWithRoleClientTest {
   }
 
   @Test
-  void testDelete_ReturnsFalse_WhenCognitoThrowsResourceNotFoundException() {
+  void testDelete_ReturnsTrue_WhenCognitoThrowsResourceNotFoundException() {
     doThrow(ResourceNotFoundException.class).when(mIdp).deleteGroup(any(DeleteGroupRequest.class));
 
     boolean success = client.delete("T1");
 
-    assertFalse(success);
+    assertTrue(success);
+  }
+
+  @Test
+  void testDelete_ReturnsFalse_WhenGroupNameIsNullOrEmpty() {
+    assertFalse(client.delete(null));
+    assertFalse(client.delete(""));
+    assertFalse(client.delete("   "));
   }
 
   @Test

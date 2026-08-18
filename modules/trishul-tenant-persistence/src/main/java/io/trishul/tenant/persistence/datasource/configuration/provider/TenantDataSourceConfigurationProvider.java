@@ -12,7 +12,7 @@ import io.trishul.secrets.SecretsManager;
 import io.trishul.tenant.entity.TenantData;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
+import org.springframework.lang.NonNull;
 
 public class TenantDataSourceConfigurationProvider
     implements DataSourceConfigurationProvider<UUID> {
@@ -26,7 +26,7 @@ public class TenantDataSourceConfigurationProvider
 
     this.cache = CacheBuilder.newBuilder().build(new CacheLoader<UUID, DataSourceConfiguration>() {
       @Override
-      public DataSourceConfiguration load(@Nonnull UUID tenantId) throws Exception {
+      public DataSourceConfiguration load(@NonNull UUID tenantId) throws Exception {
         DataSourceConfiguration config = adminDataSourceConfiguration;
 
         if (!adminTenant.getId().equals(tenantId)) {

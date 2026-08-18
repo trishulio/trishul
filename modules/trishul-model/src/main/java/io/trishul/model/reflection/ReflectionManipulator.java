@@ -17,14 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 public class ReflectionManipulator {
-  @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(ReflectionManipulator.class);
 
   private static final String ERR_MSG_DYNAMIC_METHOD_ACCESS
@@ -86,7 +85,7 @@ public class ReflectionManipulator {
   public ReflectionManipulator() {
     this.propNamesCache = CacheBuilder.newBuilder().build(new CacheLoader<Class<?>, Set<String>>() {
       @Override
-      public Set<String> load(@Nonnull Class<?> clazz) throws Exception {
+      public Set<String> load(@NonNull Class<?> clazz) throws Exception {
         final Method[] methods = clazz.getMethods();
         final Set<String> propertyNames = Arrays.stream(methods)
             .filter(m -> m.getName().startsWith("get") || m.getName().startsWith("set"))
@@ -102,7 +101,7 @@ public class ReflectionManipulator {
     this.propNamesCacheWithExclusions
         = CacheBuilder.newBuilder().build(new CacheLoader<PropNameKey, Set<String>>() {
           @Override
-          public Set<String> load(@Nonnull PropNameKey key) throws Exception {
+          public Set<String> load(@NonNull PropNameKey key) throws Exception {
             Set<String> propNames = ReflectionManipulator.this.propNamesCache.get(key.getClazz());
 
             if (key.getExclusions() != null) {
@@ -205,7 +204,6 @@ public class ReflectionManipulator {
     return new RuntimeException(msg, e);
   }
 
-  // TODO: add unit tests
   public void invokeSetter(Object o, PropertyDescriptor pd, Object value) {
     try {
       Class<?> clazz = o.getClass();

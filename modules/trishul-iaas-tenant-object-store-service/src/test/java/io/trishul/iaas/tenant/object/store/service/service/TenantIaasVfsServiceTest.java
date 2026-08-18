@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
@@ -16,10 +17,12 @@ import io.trishul.iaas.access.role.model.IaasRole;
 import io.trishul.iaas.access.service.policy.service.IaasPolicyService;
 import io.trishul.iaas.access.service.role.policy.attachment.service.IaasRolePolicyAttachmentService;
 import io.trishul.iaas.idp.tenant.model.IaasIdpTenant;
+import io.trishul.iaas.tenant.object.store.TenantIaasVfsDeleteResult;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsResourceMapper;
 import io.trishul.iaas.tenant.object.store.TenantIaasVfsResources;
 import io.trishul.iaas.tenant.object.store.builder.TenantObjectStoreResourceBuilder;
 import io.trishul.model.base.pojo.DeleteResult;
+import io.trishul.object.store.configuration.cors.model.IaasObjectStoreCorsConfiguration;
 import io.trishul.object.store.model.IaasObjectStore;
 import io.trishul.object.store.service.IaasObjectStoreService;
 import io.trishul.object.store.service.cors.config.service.IaasObjectStoreAccessConfigService;
@@ -109,6 +112,11 @@ class TenantIaasVfsServiceTest {
     doReturn(new IaasPolicy("VFS_POLICY_1")).when(mBuilder).buildVfsPolicy(iaasIdpTenant.get(0));
     doReturn(new IaasPolicy("VFS_POLICY_2")).when(mBuilder).buildVfsPolicy(iaasIdpTenant.get(1));
 
+    doReturn(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_1", null)).when(mBuilder)
+        .buildObjectStoreCorsConfiguration(iaasIdpTenant.get(0));
+    doReturn(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_2", null)).when(mBuilder)
+        .buildObjectStoreCorsConfiguration(iaasIdpTenant.get(1));
+
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mPolicyService).add(anyList());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mObjectStoreService).add(anyList());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mAttachmentService).add(anyList());
@@ -124,6 +132,12 @@ class TenantIaasVfsServiceTest {
             new IaasPolicy("VFS_POLICY_2")));
 
     assertEquals(expected, this.service.add(iaasIdpTenant));
+    verify(mAttachmentService).add(List.of(
+        new IaasRolePolicyAttachment(new IaasRole("IAAS_ROLE_1"), new IaasPolicy("VFS_POLICY_1")),
+        new IaasRolePolicyAttachment(new IaasRole("IAAS_ROLE_2"), new IaasPolicy("VFS_POLICY_2"))));
+    verify(mIaasBucketCrossOriginConfigService)
+        .add(List.of(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_1", null),
+            new IaasObjectStoreCorsConfiguration("CORS_CONFIG_2", null)));
   }
 
   @Test
@@ -140,6 +154,11 @@ class TenantIaasVfsServiceTest {
     doReturn(new IaasPolicy("VFS_POLICY_1")).when(mBuilder).buildVfsPolicy(iaasIdpTenant.get(0));
     doReturn(new IaasPolicy("VFS_POLICY_2")).when(mBuilder).buildVfsPolicy(iaasIdpTenant.get(1));
 
+    doReturn(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_1", null)).when(mBuilder)
+        .buildObjectStoreCorsConfiguration(iaasIdpTenant.get(0));
+    doReturn(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_2", null)).when(mBuilder)
+        .buildObjectStoreCorsConfiguration(iaasIdpTenant.get(1));
+
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mPolicyService).put(anyList());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mObjectStoreService).put(anyList());
     doAnswer(inv -> inv.getArgument(0, List.class)).when(mAttachmentService).put(anyList());
@@ -155,6 +174,12 @@ class TenantIaasVfsServiceTest {
             new IaasPolicy("VFS_POLICY_2")));
 
     assertEquals(expected, this.service.put(iaasIdpTenant));
+    verify(mAttachmentService).put(List.of(
+        new IaasRolePolicyAttachment(new IaasRole("IAAS_ROLE_1"), new IaasPolicy("VFS_POLICY_1")),
+        new IaasRolePolicyAttachment(new IaasRole("IAAS_ROLE_2"), new IaasPolicy("VFS_POLICY_2"))));
+    verify(mIaasBucketCrossOriginConfigService)
+        .put(List.of(new IaasObjectStoreCorsConfiguration("CORS_CONFIG_1", null),
+            new IaasObjectStoreCorsConfiguration("CORS_CONFIG_2", null)));
   }
 
   @Test
@@ -169,10 +194,14 @@ class TenantIaasVfsServiceTest {
     doReturn("POLICY_ID_2").when(mBuilder).getVfsPolicyId("T2");
     doReturn("OBJECT_STORE_1").when(mBuilder).getObjectStoreId("T1");
     doReturn("OBJECT_STORE_2").when(mBuilder).getObjectStoreId("T2");
-    doReturn(new DeleteResult(0L)).when(mPolicyService).delete(any(Set.class));
-    doReturn(new DeleteResult(0L)).when(mObjectStoreService).delete(any(Set.class));
+    doReturn(new DeleteResult(3L)).when(mPolicyService)
+        .delete(Set.of("POLICY_ID_1", "POLICY_ID_2"));
+    doReturn(new DeleteResult(4L)).when(mObjectStoreService)
+        .delete(Set.of("OBJECT_STORE_1", "OBJECT_STORE_2"));
 
-    this.service.delete(iaasIdpTenantIds);
+    TenantIaasVfsDeleteResult result = this.service.delete(iaasIdpTenantIds);
+
+    assertEquals(new TenantIaasVfsDeleteResult(3L, 4L), result);
 
     InOrder order = inOrder(mAttachmentService, mIaasBucketCrossOriginConfigService,
         mIaasPublicAccessBlockService, mPolicyService, mObjectStoreService);

@@ -20,12 +20,15 @@ class TenantDataSourceManagerWrapperTest {
   private DataSourceManager mDsMgr;
   private TenantDataSourceConfigurationProvider mConfigProvider;
 
+  private static final UUID ADMIN_TENANT_ID
+      = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
   @BeforeEach
   void init() {
     mDsMgr = mock(DataSourceManager.class);
     mConfigProvider = mock(TenantDataSourceConfigurationProvider.class);
 
-    tenantDsMgr = new TenantDataSourceManagerWrapper(mDsMgr, mConfigProvider);
+    tenantDsMgr = new TenantDataSourceManagerWrapper(mDsMgr, mConfigProvider, ADMIN_TENANT_ID);
   }
 
   @Test
@@ -38,7 +41,16 @@ class TenantDataSourceManagerWrapperTest {
   }
 
   @Test
-  void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNull()
+  void testGetDataSource_ReturnsAdminDataSource_WhenTenantIdIsAdminTenantId()
+      throws SQLException, IOException {
+    DataSource mDs = mock(DataSource.class);
+    doReturn(mDs).when(mDsMgr).getAdminDataSource();
+
+    assertEquals(mDs, tenantDsMgr.getDataSource(ADMIN_TENANT_ID));
+  }
+
+  @Test
+  void testGetDataSource_ReturnsDataSourceFromTenantDsConfig_WhenTenantIdIsNotNullAndNotAdminTenantId()
       throws SQLException, IOException {
     DataSourceConfiguration mConfig = mock(DataSourceConfiguration.class);
     doReturn(mConfig).when(mConfigProvider)

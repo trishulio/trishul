@@ -28,4 +28,11 @@ class TenantIaasIdpResourcesMapperTest {
 
     assertEquals(expected, resources);
   }
+
+  @Test
+  void testFromComponents_SingleTenant() {
+    IaasIdpTenant tenant = new IaasIdpTenant("T1");
+    TenantIaasIdpResources resource = mapper.fromComponents(tenant);
+    assertEquals(new TenantIaasIdpResources(tenant), resource);
+  }
 }

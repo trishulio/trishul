@@ -2,6 +2,7 @@ package io.trishul.iaas.access.role.attachment.policy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import io.trishul.iaas.access.policy.model.IaasPolicy;
 import io.trishul.iaas.access.role.model.IaasRole;
@@ -30,6 +31,18 @@ class IaasRolePolicyAttachmentIdTest {
   }
 
   @Test
+  void testGetSetRoleId() {
+    assertSame(id, id.setRoleId("ROLE"));
+    assertEquals("ROLE", id.getRoleId());
+  }
+
+  @Test
+  void testGetSetPolicyId() {
+    assertSame(id, id.setPolicyId("POLICY"));
+    assertEquals("POLICY", id.getPolicyId());
+  }
+
+  @Test
   void testBuild_ReturnsNull_WhenBothRoleAndPolicyIdAreNull() {
     assertNull(IaasRolePolicyAttachmentId.build(null, null));
   }
@@ -47,4 +60,19 @@ class IaasRolePolicyAttachmentIdTest {
     assertEquals(new IaasRolePolicyAttachmentId("ROLE", null),
         IaasRolePolicyAttachmentId.build(new IaasRole("ROLE"), null));
   }
+
+  @Test
+  void testAccessPolicyId() throws Exception {
+    IaasRolePolicyAttachmentId accessor = new IaasRolePolicyAttachmentId();
+    assertSame(accessor, accessor.setPolicyId("testString"));
+    assertEquals("testString", accessor.getPolicyId());
+  }
+
+  @Test
+  void testAccessRoleId() throws Exception {
+    IaasRolePolicyAttachmentId accessor = new IaasRolePolicyAttachmentId();
+    assertSame(accessor, accessor.setRoleId("testString"));
+    assertEquals("testString", accessor.getRoleId());
+  }
+
 }

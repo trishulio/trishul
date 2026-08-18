@@ -89,7 +89,6 @@ public class AllDtoAndMapperCoverageTest {
     assertNotNull(skillDto1.getLastUpdated());
     assertNotNull(skillDto1.getVersion());
 
-
     // AddAiSkillDto
     AddAiSkillDto addSkill1 = new AddAiSkillDto();
     assertNotNull(addSkill1);

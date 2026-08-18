@@ -1,10 +1,12 @@
 package io.trishul.user.service.user.service.role.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import io.trishul.crud.controller.CrudControllerService;
+import io.trishul.crud.controller.filter.AttributeFilter;
 import io.trishul.model.base.dto.DeleteResultDto;
 import io.trishul.repo.jpa.repository.model.dto.PageDto;
 import io.trishul.user.role.model.AddUserRoleDto;
@@ -94,5 +96,12 @@ class UserRoleControllerTest {
     List<UserRoleDto> dtos = this.controller.patchUserRole(List.of(new UpdateUserRoleDto(1L)));
 
     assertEquals(List.of(new UserRoleDto(1L)), dtos);
+  }
+
+  @Test
+  void testAutowiredConstructor() {
+    AttributeFilter filter = mock(AttributeFilter.class);
+    UserRoleController userRoleController = new UserRoleController(mService, filter);
+    assertNotNull(userRoleController);
   }
 }

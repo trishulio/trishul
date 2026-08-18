@@ -2,6 +2,8 @@ package io.trishul.ai.agent.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.ai.tool.model.AiTool;
 import java.time.LocalDateTime;
@@ -40,4 +42,51 @@ class AiAgentToolTest {
     AiAgentTool agentTool2 = new AiAgentTool(2L);
     assertEquals(2L, agentTool2.getId());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessAgentConfig() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    AiAgentConfig value = mock(AiAgentConfig.class);
+    assertSame(accessor, accessor.setAgentConfig(value));
+    assertEquals(value, accessor.getAgentConfig());
+  }
+
+  @Test
+  void testAccessTool() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    AiTool value = mock(AiTool.class);
+    assertSame(accessor, accessor.setTool(value));
+    assertEquals(value, accessor.getTool());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
+  @Test
+  void testAccessCreatedAt() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setCreatedAt(value));
+    assertEquals(value, accessor.getCreatedAt());
+  }
+
+  @Test
+  void testAccessLastUpdated() throws Exception {
+    AiAgentTool accessor = new AiAgentTool();
+    LocalDateTime value = LocalDateTime.of(2000, 1, 1, 0, 0);
+    assertSame(accessor, accessor.setLastUpdated(value));
+    assertEquals(value, accessor.getLastUpdated());
+  }
+
 }

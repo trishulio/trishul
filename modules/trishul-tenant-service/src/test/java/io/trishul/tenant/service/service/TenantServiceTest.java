@@ -1,6 +1,7 @@
 package io.trishul.tenant.service.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -159,12 +160,12 @@ class TenantServiceTest {
 
   @Test
   void testExists_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService)
+    doReturn(false).when(this.mRepoService)
         .exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
             UUID.fromString("00000000-0000-0000-0000-000000000002"),
             UUID.fromString("00000000-0000-0000-0000-000000000003")));
 
-    assertTrue(this.service.exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+    assertFalse(this.service.exists(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
         UUID.fromString("00000000-0000-0000-0000-000000000002"),
         UUID.fromString("00000000-0000-0000-0000-000000000003"))));
   }
@@ -179,10 +180,10 @@ class TenantServiceTest {
 
   @Test
   void testExist_ReturnsFalse_WhenRepoServiceReturnsFalse() {
-    doReturn(true).when(this.mRepoService)
+    doReturn(false).when(this.mRepoService)
         .exists(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
-    assertTrue(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    assertFalse(this.service.exist(UUID.fromString("00000000-0000-0000-0000-000000000001")));
   }
 
   @Test
@@ -205,8 +206,12 @@ class TenantServiceTest {
       Set<UUID> ids = inv.getArgument(0, Set.class);
       return ids.stream().map(Tenant::new).peek(tenant -> tenant.setIsReady(true)).toList();
     }).when(mTenantRepo).findAllById(any());
+    doReturn(new DeleteResult(1L)).when(mRepoService)
+        .delete(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
-    this.service.delete(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    DeleteResult result
+        = this.service.delete(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    assertEquals(new DeleteResult(1L), result);
 
     Set<UUID> tenantIds = Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
 
@@ -233,6 +238,7 @@ class TenantServiceTest {
 
     assertEquals(expected, added);
     verify(this.mRepoService, times(2)).saveAll(added);
+    verify(mMigrationMgr, times(1)).migrateAll(anyList());
     verify(mIaasService, times(1)).put(added);
   }
 
@@ -262,6 +268,7 @@ class TenantServiceTest {
 
     assertEquals(expected, updated);
     verify(this.mRepoService, times(2)).saveAll(updated);
+    verify(mMigrationMgr, times(1)).migrateAll(anyList());
     verify(mIaasService, times(1)).put(updated);
   }
 
@@ -291,6 +298,7 @@ class TenantServiceTest {
 
     assertEquals(expected, updated);
     verify(this.mRepoService, times(2)).saveAll(updated);
+    verify(mMigrationMgr, times(1)).migrateAll(anyList());
     verify(mIaasService, times(1)).put(updated);
   }
 

@@ -1,6 +1,9 @@
 package io.trishul.auth.session.filters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -62,6 +65,11 @@ class ContextHolderFilterTest {
     PrincipalContext mCtx = mock(PrincipalContext.class);
     doReturn(mCtx).when(mPrincipalContextBuilder).build(mJwt);
 
+    doAnswer(invocation -> {
+      assertSame(mCtx, mcontextHolder.getPrincipalContext());
+      return null;
+    }).when(mChain).doFilter(mReq, mRes);
+
     filter.doFilter(mReq, mRes, mChain);
 
     // Context should be cleared after doFilter
@@ -76,6 +84,11 @@ class ContextHolderFilterTest {
 
     UUID tenantId = UUID.randomUUID();
     doReturn(tenantId.toString()).when((HttpServletRequest) mReq).getHeader("X-TENANT-ID");
+
+    doAnswer(invocation -> {
+      assertEquals(tenantId, mcontextHolder.getSessionTenantId());
+      return null;
+    }).when(mChain).doFilter(mReq, mRes);
 
     filter.doFilter(mReq, mRes, mChain);
 

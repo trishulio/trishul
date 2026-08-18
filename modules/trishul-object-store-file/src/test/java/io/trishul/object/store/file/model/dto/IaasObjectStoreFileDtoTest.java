@@ -2,6 +2,7 @@ package io.trishul.object.store.file.model.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -51,4 +52,12 @@ class IaasObjectStoreFileDtoTest {
     dto.setExpiration(LocalDateTime.of(2000, 1, 1, 0, 0));
     assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0), dto.getExpiration());
   }
+
+  @Test
+  void testAccessFileUrl() throws Exception {
+    IaasObjectStoreFileDto accessor = new IaasObjectStoreFileDto();
+    assertSame(accessor, accessor.setFileUrl(URI.create("http://localhost").toURL()));
+    assertEquals(URI.create("http://localhost").toURL(), accessor.getFileUrl());
+  }
+
 }

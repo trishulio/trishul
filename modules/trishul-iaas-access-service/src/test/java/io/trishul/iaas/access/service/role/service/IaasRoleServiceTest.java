@@ -67,6 +67,14 @@ class IaasRoleServiceTest {
   }
 
   @Test
+  void testExists_ReturnsFalse_WhenSomeAttachmentsDoNotExist() {
+    doReturn(Map.of("TENANT_1", true, "TENANT_2", false)).when(mIaasRepo)
+        .exists(Set.of("TENANT_1", "TENANT_2"));
+
+    assertFalse(service.exists(Set.of("TENANT_1", "TENANT_2")));
+  }
+
+  @Test
   void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());

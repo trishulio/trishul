@@ -2,6 +2,8 @@ package io.trishul.money.tax.amount.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.money.dto.MoneyDto;
 import java.math.BigDecimal;
@@ -82,4 +84,37 @@ class TaxAmountDtoTest {
 
     assertEquals(new MoneyDto("CAD", new BigDecimal("60")), taxAmount.getTotalTaxAmount());
   }
+
+  @Test
+  void testAccessPstAmount() throws Exception {
+    TaxAmountDto accessor = new TaxAmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setPstAmount(value));
+    assertEquals(value, accessor.getPstAmount());
+  }
+
+  @Test
+  void testAccessGstAmount() throws Exception {
+    TaxAmountDto accessor = new TaxAmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setGstAmount(value));
+    assertEquals(value, accessor.getGstAmount());
+  }
+
+  @Test
+  void testAccessHstAmount() throws Exception {
+    TaxAmountDto accessor = new TaxAmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setHstAmount(value));
+    assertEquals(value, accessor.getHstAmount());
+  }
+
+  @Test
+  void testAccessTotalTaxAmount() throws Exception {
+    TaxAmountDto accessor = new TaxAmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setTotalTaxAmount(value));
+    assertEquals(value, accessor.getTotalTaxAmount());
+  }
+
 }

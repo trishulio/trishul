@@ -1,18 +1,32 @@
 package io.trishul.ai.service.agent.factory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.data.message.ChatMessage;
+import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.output.Response;
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.chat.model.AiChatModelConfig;
 import io.trishul.ai.memory.model.AiChatMemoryConfig;
+import io.trishul.ai.service.agent.Assistant;
 import io.trishul.ai.service.memory.store.TenantChatMemoryStore;
 import io.trishul.ai.service.tool.registry.AiToolRegistry;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,75 +35,202 @@ class AgentFactoryTest {
   private AgentFactory agentFactory;
   private TenantChatMemoryStore mockMemoryStore;
   private AiToolRegistry mockToolRegistry;
-  private StreamingChatModelFactory mockModelFactory;
+  private StreamingChatModelFactory mockStreamingModelFactory;
+  private ChatModelFactory mockChatModelFactory;
 
   @BeforeEach
+  @SuppressWarnings("unchecked")
   void setUp() {
     mockMemoryStore = mock(TenantChatMemoryStore.class);
     mockToolRegistry = mock(AiToolRegistry.class);
-    mockModelFactory = mock(StreamingChatModelFactory.class);
-    agentFactory = new AgentFactory(mockMemoryStore, mockToolRegistry, mockModelFactory);
+    mockStreamingModelFactory = mock(StreamingChatModelFactory.class);
+    mockChatModelFactory = mock(ChatModelFactory.class);
+    agentFactory = new AgentFactory(mockMemoryStore, mockToolRegistry, mockStreamingModelFactory,
+        mockChatModelFactory);
+
+    Map<Object, List<ChatMessage>> storeMap = new HashMap<>();
+    when(mockMemoryStore.getMessages(any())).thenAnswer(
+        invocation -> storeMap.getOrDefault(invocation.getArgument(0), new ArrayList<>()));
+    doAnswer(invocation -> {
+      storeMap.put(invocation.getArgument(0),
+          new ArrayList<>((List<ChatMessage>) invocation.getArgument(1)));
+      return null;
+    }).when(mockMemoryStore).updateMessages(any(), any());
   }
 
   @Test
-  void testBuildModel_CallsModelFactory() {
+  void testBuildStreamingModel_CallsStreamingModelFactory() {
     AiChatModelConfig config = new AiChatModelConfig();
     config.setProvider("openai");
     StreamingChatLanguageModel mockModel = mock(StreamingChatLanguageModel.class);
-    when(mockModelFactory.getModel(eq(AiProvider.OPENAI), eq(config))).thenReturn(mockModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(config)))
+        .thenReturn(mockModel);
 
-    StreamingChatLanguageModel result = agentFactory.buildModel(config);
-
-    assertNotNull(result);
-  }
-
-  @Test
-  void testBuildModel_ThrowsException_WhenConfigIsNull() {
-    assertThrows(IllegalArgumentException.class, () -> agentFactory.buildModel(null));
-  }
-
-  @Test
-  void testBuildMemory_ReturnsNonNull() {
-    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
-    memoryConfig.setMaxMessages(20);
-
-    ChatMemory result = agentFactory.buildMemory(memoryConfig, "memoryId");
+    StreamingChatLanguageModel result = agentFactory.buildStreamingModel(config);
 
     assertNotNull(result);
   }
 
   @Test
-  void testBuildAgent_ReturnsModel_ForNow() {
-    AiAgentConfig agentConfig = new AiAgentConfig();
-    AiChatModelConfig modelConfig = new AiChatModelConfig();
-    modelConfig.setProvider("openai");
-    agentConfig.setChatModelConfig(modelConfig);
-
-    StreamingChatLanguageModel mockModel = mock(StreamingChatLanguageModel.class);
-    when(mockModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig))).thenReturn(mockModel);
-
-    Object result = agentFactory.buildAgent(agentConfig);
-
-    assertNotNull(result);
+  void testBuildStreamingModel_ThrowsException_WhenConfigIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> agentFactory.buildStreamingModel(null));
   }
 
   @Test
-  void testBuildAgent_ThrowsException_WhenConfigIsNull() {
+  void testLegacyBuildAgent_ThrowsException_WhenConfigIsNull() {
     assertThrows(IllegalArgumentException.class, () -> agentFactory.buildAgent(null));
   }
 
   @Test
-  void testBuildMemory_UsesDefaultMaxMessages_WhenConfigIsNull() {
-    ChatMemory result = agentFactory.buildMemory(null, "memoryId");
+  void testBuildAgentWithMemory_ThrowsException_WhenConfigIsNull() {
+    ChatMemory mockMemory = mock(ChatMemory.class);
+    assertThrows(IllegalArgumentException.class, () -> agentFactory.buildAgent(null, mockMemory));
+  }
+
+  @Test
+  void testBuildAgent_ReturnsAssistant() {
+    AiChatModelConfig modelConfig = new AiChatModelConfig();
+    modelConfig.setProvider("openai");
+
+    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
+    memoryConfig.setMaxMessages(10);
+
+    AiAgentConfig config = new AiAgentConfig();
+    config.setChatModelConfig(modelConfig);
+    config.setChatMemoryConfig(memoryConfig);
+
+    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
+    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+
+    when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockChatModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockStreamingChatModel);
+
+    Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
   }
 
   @Test
-  void testBuildMemory_UsesDefaultMaxMessages_WhenMaxMessagesIsNull() {
-    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
-    memoryConfig.setMaxMessages(null);
+  void testBuildAgent_ReturnsAssistant_WithTools() {
+    AiChatModelConfig modelConfig = new AiChatModelConfig();
+    modelConfig.setProvider("openai");
 
-    ChatMemory result = agentFactory.buildMemory(memoryConfig, "memoryId");
+    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
+    memoryConfig.setMaxMessages(10);
+
+    AiAgentConfig config = new AiAgentConfig();
+    config.setChatModelConfig(modelConfig);
+    config.setChatMemoryConfig(memoryConfig);
+
+    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
+    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+
+    when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockChatModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockStreamingChatModel);
+    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of(new MyTestTool()));
+
+    Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
+  }
+
+  @Test
+  void testLegacyBuildAgent_ReturnsAssistant() {
+    AiChatModelConfig modelConfig = new AiChatModelConfig();
+    modelConfig.setProvider("openai");
+
+    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
+    memoryConfig.setMaxMessages(10);
+
+    AiAgentConfig config = new AiAgentConfig();
+    config.setChatModelConfig(modelConfig);
+    config.setChatMemoryConfig(memoryConfig);
+
+    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
+    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+
+    when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockChatModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockStreamingChatModel);
+    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of(new MyTestTool()));
+
+    Object result = agentFactory.buildAgent(config);
+    assertNotNull(result);
+  }
+
+  @Test
+  void testLegacyBuildAgent_TriggersChatMemoryProvider_WhenChatIsInvoked() {
+    AiChatModelConfig modelConfig = new AiChatModelConfig();
+    modelConfig.setProvider("openai");
+
+    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
+    memoryConfig.setMaxMessages(10);
+
+    AiAgentConfig config = new AiAgentConfig();
+    config.setChatModelConfig(modelConfig);
+    config.setChatMemoryConfig(memoryConfig);
+
+    ChatLanguageModel mockChatModel = mock(ChatLanguageModel.class);
+    StreamingChatLanguageModel mockStreamingChatModel = mock(StreamingChatLanguageModel.class);
+
+    when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockChatModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockStreamingChatModel);
+
+    // Mock ChatLanguageModel generate response
+    Response<AiMessage> mockResponse = Response.from(AiMessage.from("response"));
+    when(mockChatModel.generate(any(List.class))).thenReturn(mockResponse);
+
+    Object result = agentFactory.buildAgent(config);
+    assertNotNull(result);
+
+    Assistant assistant = (Assistant) result;
+    assistant.chat("session-123", UserMessage.from("hello"));
+  }
+
+
+  @Test
+  void testBuildMemory_WithNullConfig_UsesDefaultMaxMessages() {
+    ChatMemory memory = agentFactory.buildMemory(null, "session-1");
+    assertNotNull(memory);
+    for (int i = 0; i < 15; i++) {
+      memory.add(UserMessage.from("msg " + i));
+    }
+    assertEquals(10, memory.messages().size());
+  }
+
+  @Test
+  void testBuildMemory_WithNullMaxMessages_UsesDefaultMaxMessages() {
+    AiChatMemoryConfig config = new AiChatMemoryConfig();
+    config.setMaxMessages(null);
+    ChatMemory memory = agentFactory.buildMemory(config, "session-1");
+    assertNotNull(memory);
+    for (int i = 0; i < 15; i++) {
+      memory.add(UserMessage.from("msg " + i));
+    }
+    assertEquals(10, memory.messages().size());
+  }
+
+  @Test
+  void testBuildMemory_WithValidMaxMessages_UsesConfiguredMaxMessages() {
+    AiChatMemoryConfig config = new AiChatMemoryConfig();
+    config.setMaxMessages(5);
+    ChatMemory memory = agentFactory.buildMemory(config, "session-1");
+    assertNotNull(memory);
+    for (int i = 0; i < 15; i++) {
+      memory.add(UserMessage.from("msg " + i));
+    }
+    assertEquals(5, memory.messages().size());
+  }
+
+  public static class MyTestTool {
+    @Tool("test tool")
+    public String execute() {
+      return "done";
+    }
   }
 }

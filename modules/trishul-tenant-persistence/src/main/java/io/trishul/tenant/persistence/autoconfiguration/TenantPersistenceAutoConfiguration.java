@@ -16,6 +16,7 @@ import org.hibernate.cfg.JdbcSettings;
 import org.hibernate.cfg.MultiTenancySettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -27,7 +28,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 
 @Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
@@ -63,7 +63,8 @@ public class TenantPersistenceAutoConfiguration {
       JpaVendorAdapter jpaVendorAdapter, DataSourceManager dataSourceManager,
       MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
       CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver,
-      PackageScanConfig packageScanConfig) {
+      PackageScanConfig packageScanConfig,
+      @Value("${spring.jpa.database-platform:${spring.jpa.properties.hibernate.dialect:org.hibernate.dialect.PostgreSQLDialect}}") String dialect) {
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
         = new LocalContainerEntityManagerFactoryBean();
     localContainerEntityManagerFactoryBean.setDataSource(dataSourceManager.getAdminDataSource());
@@ -72,7 +73,7 @@ public class TenantPersistenceAutoConfiguration {
         ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "io.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
-    jpaProperties.put(JdbcSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+    jpaProperties.put(JdbcSettings.DIALECT, dialect);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER,
         multiTenantConnectionProvider);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,

@@ -1,6 +1,7 @@
 package io.trishul.iaas.idp.tenant.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import io.trishul.iaas.access.role.model.IaasRole;
 import java.util.List;
@@ -24,5 +25,10 @@ class TenantIaasAuthResourceMapperTest {
     List<TenantIaasAuthResources> expected
         = List.of(new TenantIaasAuthResources(new IaasRole("ROLE_1")));
     assertEquals(expected, resources);
+  }
+
+  @Test
+  void testFromComponents_ReturnsNull_WhenRolesIsNull() {
+    assertNull(mapper.fromComponents(null));
   }
 }

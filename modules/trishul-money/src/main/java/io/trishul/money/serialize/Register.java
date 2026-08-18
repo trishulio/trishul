@@ -6,7 +6,10 @@ import org.joda.money.Money;
 
 public class Register {
   public static void init() {
-    JacksonJsonMapper instance = (JacksonJsonMapper) JsonMapper.INSTANCE;
+    init((JacksonJsonMapper) JsonMapper.INSTANCE);
+  }
+
+  public static void init(JacksonJsonMapper instance) {
     instance.addSerializer(Money.class, new MoneySerializer());
     instance.addDeserializer(Money.class, new MoneyDeserializer());
     instance.registerModule();

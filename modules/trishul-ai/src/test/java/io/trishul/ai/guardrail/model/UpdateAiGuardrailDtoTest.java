@@ -1,7 +1,9 @@
 package io.trishul.ai.guardrail.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,4 +35,62 @@ class UpdateAiGuardrailDtoTest {
     assertTrue(!dto.getIsEnabled());
     assertEquals(2, dto.getVersion());
   }
+
+  @Test
+  void testAccessId() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setId(123L));
+    assertEquals(123L, accessor.getId());
+  }
+
+  @Test
+  void testAccessName() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setName("testString"));
+    assertEquals("testString", accessor.getName());
+  }
+
+  @Test
+  void testAccessType() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    AiGuardrailType value = mock(AiGuardrailType.class);
+    assertSame(accessor, accessor.setType(value));
+    assertEquals(value, accessor.getType());
+  }
+
+  @Test
+  void testAccessStrategy() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setStrategy("testString"));
+    assertEquals("testString", accessor.getStrategy());
+  }
+
+  @Test
+  void testAccessConfiguration() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setConfiguration("testString"));
+    assertEquals("testString", accessor.getConfiguration());
+  }
+
+  @Test
+  void testAccessPriority() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setPriority(123));
+    assertEquals(123, accessor.getPriority());
+  }
+
+  @Test
+  void testAccessIsEnabled() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setIsEnabled(true));
+    assertEquals(true, accessor.getIsEnabled());
+  }
+
+  @Test
+  void testAccessVersion() throws Exception {
+    UpdateAiGuardrailDto accessor = new UpdateAiGuardrailDto();
+    assertSame(accessor, accessor.setVersion(123));
+    assertEquals(123, accessor.getVersion());
+  }
+
 }

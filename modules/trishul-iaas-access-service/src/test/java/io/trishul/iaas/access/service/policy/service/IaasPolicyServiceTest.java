@@ -66,6 +66,14 @@ class IaasPolicyServiceTest {
   }
 
   @Test
+  void testExists_ReturnsFalse_WhenSomeAttachmentsDoNotExist() {
+    doReturn(Map.of("POLICY_1", true, "POLICY_2", false)).when(mIaasRepo)
+        .exists(Set.of("POLICY_1", "POLICY_2"));
+
+    assertFalse(service.exists(Set.of("POLICY_1", "POLICY_2")));
+  }
+
+  @Test
   void testExist_ReturnsTrue_WhenAllAttachmentsExists() {
     doAnswer(inv -> Map.of(inv.getArgument(0, Set.class).iterator().next(), true)).when(mIaasRepo)
         .exists(anySet());

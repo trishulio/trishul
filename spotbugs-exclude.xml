@@ -4,9 +4,9 @@
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
     <Or>
         <!-- 1. All framework-style / DI classes -->
-        <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper)" />
+        <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper|Filter)" />
         <!-- 2. Entire internal packages where exposure is acceptable -->
-        <Class name="~io\.trishul\..*\.(service|client|manager|provider|controller|config|executor|wrapper|delegate|repository)\..*" />
+        <Class name="~io\.trishul\..*\.(service|client|manager|provider|controller|config|executor|wrapper|delegate|repository|filters)\..*" />
         <!-- 3. Known framework / infra types (instead of Parameter filters) -->
         <Class name="~(javax|jakarta|org\.springframework|com\.amazonaws)\..*" />
         <!-- 4. Models / DTOs (if you want blanket allowance) -->

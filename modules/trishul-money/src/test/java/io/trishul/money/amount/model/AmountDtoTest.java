@@ -2,6 +2,8 @@ package io.trishul.money.amount.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import io.trishul.money.dto.MoneyDto;
 import io.trishul.money.tax.amount.dto.TaxAmountDto;
@@ -56,4 +58,29 @@ class AmountDtoTest {
     assertEquals(new TaxAmountDto(new MoneyDto("CAD", new BigDecimal("10")),
         new MoneyDto("CAD", new BigDecimal("20"))), amount.getTaxAmount());
   }
+
+  @Test
+  void testAccessTotal() throws Exception {
+    AmountDto accessor = new AmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setTotal(value));
+    assertEquals(value, accessor.getTotal());
+  }
+
+  @Test
+  void testAccessSubTotal() throws Exception {
+    AmountDto accessor = new AmountDto();
+    MoneyDto value = mock(MoneyDto.class);
+    assertSame(accessor, accessor.setSubTotal(value));
+    assertEquals(value, accessor.getSubTotal());
+  }
+
+  @Test
+  void testAccessTaxAmount() throws Exception {
+    AmountDto accessor = new AmountDto();
+    TaxAmountDto value = mock(TaxAmountDto.class);
+    assertSame(accessor, accessor.setTaxAmount(value));
+    assertEquals(value, accessor.getTaxAmount());
+  }
+
 }

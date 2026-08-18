@@ -6,9 +6,9 @@ import com.google.common.cache.LoadingCache;
 import io.trishul.ai.agent.model.AiAgentConfig;
 import io.trishul.ai.service.agent.factory.AgentFactory;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 public class AgentCache {
   private static final Logger log = LoggerFactory.getLogger(AgentCache.class);
@@ -18,7 +18,7 @@ public class AgentCache {
   public AgentCache(AgentFactory agentFactory) {
     this.cache = CacheBuilder.newBuilder().build(new CacheLoader<AiAgentConfig, Object>() {
       @Override
-      public Object load(@Nonnull AiAgentConfig config) throws Exception {
+      public Object load(@NonNull AiAgentConfig config) throws Exception {
         log.debug("Loading new agent for config id: {}", config.getId());
         return agentFactory.buildAgent(config);
       }

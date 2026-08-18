@@ -55,6 +55,12 @@ class AuthAutoConfigurationTest {
   }
 
   @Test
+  void testLoggingMdcFilter_ReturnsNonNullInstance() {
+    ThreadLocalContextHolder contextHolder = new ThreadLocalContextHolder();
+    assertNotNull(config.loggingMdcFilter(contextHolder));
+  }
+
+  @Test
   void testJwtDecoder_ReturnsNonNullInstance() {
     OAuth2ResourceServerProperties props = mock(OAuth2ResourceServerProperties.class);
     OAuth2ResourceServerProperties.Jwt jwt = mock(OAuth2ResourceServerProperties.Jwt.class);

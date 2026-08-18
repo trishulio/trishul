@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import io.trishul.iaas.repository.IaasRepository;
 import io.trishul.iaas.user.model.BaseIaasUser;
@@ -100,5 +101,11 @@ class TenantIaasUserServiceTest {
     long count = service.delete(users);
 
     assertEquals(55L, count);
+    verify(mMembershipService).delete(Set.of(
+        new IaasUserTenantMembershipId("example-1@localhost",
+            "00000000-0000-0000-0000-000000000001"),
+        new IaasUserTenantMembershipId("example-2@localhost",
+            "00000000-0000-0000-0000-000000000001")));
+    verify(mUserService).delete(Set.of("example-1@localhost", "example-2@localhost"));
   }
 }
