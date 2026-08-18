@@ -56,7 +56,7 @@ public class AwsIaasUserTenantMembershipClient implements
         = new AdminAddUserToGroupRequest().withUsername(addition.getUser().getId())
             .withGroupName(addition.getTenantId()).withUserPoolId(userPoolId);
     AdminAddUserToGroupResult result = this.idp.adminAddUserToGroup(request);
-    log.info(String.format("AdminAddUserToGroupResult result: %s", result.toString()));
+    log.info("AdminAddUserToGroupResult result: {}", result);
 
     return (IaasUserTenantMembership) addition;
   }
@@ -78,7 +78,7 @@ public class AwsIaasUserTenantMembershipClient implements
         .withUsername(id.getUserId()).withGroupName(id.getTenantId()).withUserPoolId(userPoolId);
     try {
       AdminRemoveUserFromGroupResult result = this.idp.adminRemoveUserFromGroup(request);
-      log.info(String.format("AdminRemoveUserFromGroupResult result: %s", result.toString()));
+      log.info("AdminRemoveUserFromGroupResult result: {}", result);
 
       success = true;
     } catch (ResourceNotFoundException e) {

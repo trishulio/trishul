@@ -64,7 +64,7 @@ public class IaasObjectStoreFileService extends BaseService implements
     if (files.size() == 1) {
       file = files.get(0);
     } else {
-      log.debug("Get objectStore: '{}' returned {}", files);
+      log.debug("Get objectStore: '{}' returned {}", id, files.size());
     }
 
     return file;

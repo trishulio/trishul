@@ -63,7 +63,7 @@ public class IaasObjectStoreService extends BaseService implements
     if (policies.size() == 1) {
       objectStore = policies.get(0);
     } else {
-      log.debug("Get objectStore: '{}' returned {}", policies);
+      log.debug("Get objectStore: '{}' returned {}", id, policies.size());
     }
 
     return objectStore;

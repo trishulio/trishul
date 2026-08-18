@@ -64,7 +64,7 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
     if (attachments.size() == 1) {
       attachment = attachments.get(0);
     } else {
-      log.debug("Get policy: '{}' returned {}", attachments);
+      log.debug("Get policy: '{}' returned {}", id, attachments.size());
     }
 
     return attachment;

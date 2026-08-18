@@ -99,15 +99,14 @@ public class TenantIaasVfsService {
 
     List<IaasRolePolicyAttachment> attachments
         = this.rolePolicyAttachmentService.add(attachmentAdditions);
-    log.info(String.format("Created attachments: %s", attachments.size()));
+    log.info("Created attachments: {}", attachments.size());
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates
         = tenants.stream().map(this.resourceBuilder::buildObjectStoreCorsConfiguration).toList();
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs
         = this.objectStoreCorsConfigService.add(objectStoreCorsConfigUpdates);
-    log.info(
-        String.format("Created ObjectStoreCorsConfigurations: %s", objectStoreCorsConfigs.size()));
+    log.info("Created ObjectStoreCorsConfigurations: {}", objectStoreCorsConfigs.size());
 
     List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates
         = tenants.stream().map(this.resourceBuilder::buildPublicAccessBlock).toList();
@@ -115,8 +114,7 @@ public class TenantIaasVfsService {
     List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs
         = this.objectStoreAccessConfigService.add(objectStoreAccessConfigUpdates);
 
-    log.info(
-        String.format("Created IaasObjectStoreAccessConfig: %s", objectStoreAccessConfigs.size()));
+    log.info("Created IaasObjectStoreAccessConfig: {}", objectStoreAccessConfigs.size());
     return this.mapper.fromComponents(objectStores, policies);
   }
 
@@ -143,23 +141,21 @@ public class TenantIaasVfsService {
 
     List<IaasRolePolicyAttachment> attachments
         = this.rolePolicyAttachmentService.put(attachmentUpdates);
-    log.info(String.format("Created IaasRolePolicyAttachment: %s", attachments.size()));
+    log.info("Created IaasRolePolicyAttachment: {}", attachments.size());
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigUpdates = tenants.stream()
         .map(tenant -> this.resourceBuilder.buildObjectStoreCorsConfiguration(tenant)).toList();
 
     List<IaasObjectStoreCorsConfiguration> objectStoreCorsConfigs
         = this.objectStoreCorsConfigService.put(objectStoreCorsConfigUpdates);
-    log.info(String.format("Created IaasObjectStoreCorsConfiguration: %s",
-        objectStoreCorsConfigs.size()));
+    log.info("Created IaasObjectStoreCorsConfiguration: {}", objectStoreCorsConfigs.size());
 
     List<IaasObjectStoreAccessConfig> objectStoreAccessConfigUpdates
         = tenants.stream().map(this.resourceBuilder::buildPublicAccessBlock).toList();
 
     List<IaasObjectStoreAccessConfig> objectStoreAccessConfigs
         = this.objectStoreAccessConfigService.put(objectStoreAccessConfigUpdates);
-    log.info(
-        String.format("Created IaasObjectStoreAccessConfig: %s", objectStoreAccessConfigs.size()));
+    log.info("Created IaasObjectStoreAccessConfig: {}", objectStoreAccessConfigs.size());
 
     return this.mapper.fromComponents(objectStores, policies);
   }
