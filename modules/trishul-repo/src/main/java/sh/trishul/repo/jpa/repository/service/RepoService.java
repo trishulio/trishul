@@ -38,6 +38,22 @@ public interface RepoService<ID, E extends Identified<ID>, A> {
 
   List<E> getByIds(Collection<? extends Identified<ID>> idProviders);
 
+  /**
+   * Tokenized free-text search. The query is split on whitespace; each non-empty term must match
+   * (AND) at least one of the given field paths (OR across paths). Matching uses an ilike
+   * (case-insensitive) predicate built from the field paths.
+   *
+   * @param query the free-text search query, may be blank
+   * @param fieldPaths the field (possibly dotted/nested) paths to match against
+   * @param sort the sort properties
+   * @param orderAscending the sort direction
+   * @param page the zero-based page number
+   * @param size the page size
+   * @return the matching page of entities
+   */
+  Page<E> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size);
+
   List<E> getByAccessorIds(Collection<? extends A> accessors,
       Function<A, ? extends Identified<ID>> entityGetter);
 

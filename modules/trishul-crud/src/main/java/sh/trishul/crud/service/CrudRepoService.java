@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.base.types.base.pojo.Refresher;
 import sh.trishul.model.base.pojo.DeleteResult;
+import sh.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 import sh.trishul.repo.jpa.repository.ExtendedRepository;
 import sh.trishul.repo.jpa.repository.service.RepoService;
 
@@ -82,6 +83,27 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
         .map(accessor -> entityGetter.apply(accessor)).filter(Objects::nonNull)
         .map(Identified::getId).filter(Objects::nonNull).collect(Collectors.toSet());
     return this.repo.findAllById(ids);
+  }
+
+  @Override
+  public Page<E> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    Specification<E> spec = WhereClauseBuilder.<E>builder().build();
+    if (query != null && !query.isBlank()) {
+      for (String term : query.split("\\s+")) {
+        if (term.isBlank()) {
+          continue;
+        }
+        Specification<E> termSpec = null;
+        for (String[] path : fieldPaths) {
+          final Specification<E> pathSpec
+              = WhereClauseBuilder.<E>builder().ilike(path, Set.of(term)).build();
+          termSpec = termSpec == null ? pathSpec : termSpec.or(pathSpec);
+        }
+        spec = spec.and(termSpec);
+      }
+    }
+    return getAll(spec, sort, orderAscending, page, size);
   }
 
   @Override
