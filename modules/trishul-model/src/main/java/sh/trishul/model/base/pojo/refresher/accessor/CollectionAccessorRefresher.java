@@ -10,15 +10,10 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.model.base.exception.EntityNotFoundException;
 
 public class CollectionAccessorRefresher<I, A, V extends Identified<I>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(CollectionAccessorRefresher.class);
-
   private final Class<V> clazz;
   private final Function<A, Collection<V>> getter;
   private final BiConsumer<A, Collection<V>> setter;

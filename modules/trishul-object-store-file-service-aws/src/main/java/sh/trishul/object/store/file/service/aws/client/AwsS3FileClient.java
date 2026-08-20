@@ -13,8 +13,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.util.MimeType;
 import sh.trishul.iaas.client.IaasClient;
@@ -26,9 +24,6 @@ import sh.trishul.object.store.file.model.UpdateIaasObjectStoreFile;
 
 public class AwsS3FileClient implements
     IaasClient<URI, IaasObjectStoreFile, BaseIaasObjectStoreFile<?>, UpdateIaasObjectStoreFile<?>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(AwsS3FileClient.class);
-
   private final LoadingCache<PresignUrlRequest, IaasObjectStoreFile> presignUrlCache;
   private final AmazonS3 s3;
   private final String bucketName;

@@ -15,7 +15,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsCognitoAdminGetUserResultMapper
     extends IaasEntityMapper<AdminGetUserResult, IaasUser> {
-  final AwsCognitoAdminGetUserResultMapper INSTANCE
+  AwsCognitoAdminGetUserResultMapper INSTANCE
       = Mappers.getMapper(AwsCognitoAdminGetUserResultMapper.class);
 
   @Override

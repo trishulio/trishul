@@ -1,17 +1,12 @@
 package sh.trishul.iaas.access.policy.model;
 
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.Audited;
 import sh.trishul.base.types.base.pojo.CrudEntity;
 import sh.trishul.model.base.entity.BaseEntity;
 
 public class IaasPolicy extends BaseEntity
     implements UpdateIaasPolicy<IaasPolicy>, CrudEntity<String, IaasPolicy>, Audited<IaasPolicy> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(IaasPolicy.class);
-
   private String name;
   private String document;
   private String description;

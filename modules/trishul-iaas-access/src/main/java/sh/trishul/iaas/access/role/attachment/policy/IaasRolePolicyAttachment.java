@@ -1,8 +1,6 @@
 package sh.trishul.iaas.access.role.attachment.policy;
 
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.Audited;
 import sh.trishul.base.types.base.pojo.CrudEntity;
 import sh.trishul.iaas.access.policy.model.IaasPolicy;
@@ -13,9 +11,6 @@ public class IaasRolePolicyAttachment extends BaseEntity
     implements UpdateIaasRolePolicyAttachment<IaasRolePolicyAttachment>,
     CrudEntity<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment>,
     Audited<IaasRolePolicyAttachment> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(IaasRolePolicyAttachment.class);
-
   private IaasRole role;
   private IaasPolicy policy;
   private LocalDateTime createdAt;

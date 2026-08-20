@@ -1,16 +1,12 @@
 package sh.trishul.object.store.file.service.decorator;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.model.base.dto.BaseDto;
 import sh.trishul.object.store.file.decorator.EntityDecorator;
 import sh.trishul.object.store.file.model.accessor.DecoratedIaasObjectStoreFileAccessor;
 
 public class DtoDecorator<T extends DecoratedIaasObjectStoreFileAccessor<? extends BaseDto>>
     implements EntityDecorator<T> {
-  private static final Logger logger = LoggerFactory.getLogger(DtoDecorator.class);
-
   private final TemporaryImageSrcDecorator imageSrcDecorator;
 
   public DtoDecorator(TemporaryImageSrcDecorator imageSrcDecorator) {

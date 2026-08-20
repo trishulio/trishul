@@ -99,7 +99,7 @@ public abstract class QuantityUnitMapper {
     Map<String, Unit<?>> unitMap
         = Arrays.stream(fields).filter(field -> !field.getName().contains("DEFAULT"))
             .map(QuantityUnitMapper::getFieldValue).filter(o -> o instanceof Unit)
-            .collect(Collectors.toMap(o -> toSymbol(((Unit<?>) o)), o -> (Unit<?>) o));
+            .collect(Collectors.toMap(o -> toSymbol((Unit<?>) o), o -> (Unit<?>) o));
 
     return unitMap;
   }

@@ -2,8 +2,6 @@ package sh.trishul.user.model;
 
 import java.util.Collection;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sh.trishul.base.types.base.pojo.OwnedByAccessor;
 import sh.trishul.base.types.base.pojo.Refresher;
@@ -16,9 +14,6 @@ import sh.trishul.user.status.UserStatus;
 import sh.trishul.user.status.UserStatusAccessor;
 
 public class UserRefresher implements Refresher<User, UserAccessor<?>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(UserRefresher.class);
-
   private final AccessorRefresher<Long, UserAccessor<?>, User> refresher;
   private final AccessorRefresher<Long, AssignedToAccessor<?>, User> assignedToAccessorRefresher;
   private final AccessorRefresher<Long, OwnedByAccessor<User>, User> ownedByAccessorRefresher;

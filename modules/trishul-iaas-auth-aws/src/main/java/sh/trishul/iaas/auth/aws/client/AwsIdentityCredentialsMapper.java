@@ -12,8 +12,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIdentityCredentialsMapper
     extends IaasEntityMapper<Credentials, IaasAuthorization> {
-  final AwsIdentityCredentialsMapper INSTANCE
-      = Mappers.getMapper(AwsIdentityCredentialsMapper.class);
+  AwsIdentityCredentialsMapper INSTANCE = Mappers.getMapper(AwsIdentityCredentialsMapper.class);
 
   @Override
   @Mapping(ignore = true, target = IaasAuthorization.ATTR_ID) // AccessKeyId is the ID

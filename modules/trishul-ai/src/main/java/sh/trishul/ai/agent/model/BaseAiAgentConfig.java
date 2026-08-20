@@ -5,9 +5,9 @@ import sh.trishul.ai.memory.model.AiChatMemoryConfigAccessor;
 
 public interface BaseAiAgentConfig<T extends BaseAiAgentConfig<T>>
     extends AiChatModelConfigAccessor<T>, AiChatMemoryConfigAccessor<T> {
-  final String ATTR_NAME = "name";
-  final String ATTR_DESCRIPTION = "description";
-  final String ATTR_IS_ACTIVE = "isActive";
+  String ATTR_NAME = "name";
+  String ATTR_DESCRIPTION = "description";
+  String ATTR_IS_ACTIVE = "isActive";
 
   String getName();
 

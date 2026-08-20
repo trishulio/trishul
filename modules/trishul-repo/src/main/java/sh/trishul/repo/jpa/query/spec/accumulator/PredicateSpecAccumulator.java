@@ -6,16 +6,11 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.repo.jpa.query.spec.criteria.AndSpec;
 import sh.trishul.repo.jpa.query.spec.criteria.CriteriaSpec;
 import sh.trishul.repo.jpa.query.spec.criteria.NotSpec;
 
 public class PredicateSpecAccumulator {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(PredicateSpecAccumulator.class);
-
   private final List<CriteriaSpec<Boolean>> aggregations;
   private boolean isNot;
   private Boolean isPredicate;

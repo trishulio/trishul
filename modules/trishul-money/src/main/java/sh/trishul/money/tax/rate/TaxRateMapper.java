@@ -6,7 +6,7 @@ import sh.trishul.money.tax.rate.dto.TaxRateDto;
 
 @Mapper
 public interface TaxRateMapper {
-  final TaxRateMapper INSTANCE = Mappers.getMapper(TaxRateMapper.class);
+  TaxRateMapper INSTANCE = Mappers.getMapper(TaxRateMapper.class);
 
   TaxRateDto toDto(TaxRate taxRate);
 

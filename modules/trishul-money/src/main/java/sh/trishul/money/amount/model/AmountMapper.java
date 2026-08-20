@@ -8,7 +8,7 @@ import sh.trishul.money.tax.model.TaxMapper;
 
 @Mapper(uses = {TaxMapper.class, MoneyMapper.class, DeleteResultMapper.class})
 public interface AmountMapper {
-  final AmountMapper INSTANCE = Mappers.getMapper(AmountMapper.class);
+  AmountMapper INSTANCE = Mappers.getMapper(AmountMapper.class);
 
   AmountDto toDto(Amount amount);
 

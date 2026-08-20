@@ -9,8 +9,6 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Selection;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.query.QueryUtils;
@@ -18,9 +16,6 @@ import sh.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
 import sh.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 
 public class QueryResolver {
-  @SuppressWarnings("unused")
-  private static Logger log = LoggerFactory.getLogger(QueryResolver.class);
-
   private final EntityManager em;
 
   public QueryResolver(EntityManager em) {

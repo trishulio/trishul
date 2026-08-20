@@ -1,13 +1,13 @@
 package sh.trishul.ai.speech.model;
 
 public interface BaseAiSpeechConfig<T extends BaseAiSpeechConfig<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_PROVIDER = "provider";
-  final String ATTR_TTS_MODEL_NAME = "ttsModelName";
-  final String ATTR_STT_MODEL_NAME = "sttModelName";
-  final String ATTR_VOICE = "voice";
-  final String ATTR_SPEED = "speed";
-  final String ATTR_IS_DEFAULT = "isDefault";
+  String ATTR_NAME = "name";
+  String ATTR_PROVIDER = "provider";
+  String ATTR_TTS_MODEL_NAME = "ttsModelName";
+  String ATTR_STT_MODEL_NAME = "sttModelName";
+  String ATTR_VOICE = "voice";
+  String ATTR_SPEED = "speed";
+  String ATTR_IS_DEFAULT = "isDefault";
 
   String getName();
 

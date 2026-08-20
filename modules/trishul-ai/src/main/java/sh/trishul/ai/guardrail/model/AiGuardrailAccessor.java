@@ -1,7 +1,7 @@
 package sh.trishul.ai.guardrail.model;
 
 public interface AiGuardrailAccessor<T extends AiGuardrailAccessor<T>> {
-  final String ATTR_GUARDRAIL = "guardrail";
+  String ATTR_GUARDRAIL = "guardrail";
 
   AiGuardrail getGuardrail();
 

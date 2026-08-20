@@ -14,7 +14,7 @@ import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.model.base.pojo.DeleteResult;
 
 public interface RepoService<ID, E extends Identified<ID>, A> {
-  public static PageRequest pageRequest(SortedSet<String> sort, boolean orderAscending, int page,
+  static PageRequest pageRequest(SortedSet<String> sort, boolean orderAscending, int page,
       int size) {
     Sort sortBy = Sort.unsorted();
     if (sort != null && !sort.isEmpty()) {

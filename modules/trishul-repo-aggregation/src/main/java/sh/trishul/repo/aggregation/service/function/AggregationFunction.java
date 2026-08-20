@@ -27,7 +27,7 @@ public enum AggregationFunction {
   private final Class<? extends CriteriaSpec<? extends Number>> clazz;
 
   @SuppressWarnings({"unchecked", "rawtypes"})
-  private AggregationFunction(Class<? extends CriteriaSpec> clazz) {
+  AggregationFunction(Class<? extends CriteriaSpec> clazz) {
     this.clazz = (Class<? extends CriteriaSpec<? extends Number>>) clazz;
   }
 

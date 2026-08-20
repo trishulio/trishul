@@ -1,12 +1,12 @@
 package sh.trishul.ai.memory.model;
 
 public interface BaseAiChatMemoryConfig<T extends BaseAiChatMemoryConfig<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_STRATEGY = "strategy";
-  final String ATTR_MAX_MESSAGES = "maxMessages";
-  final String ATTR_MAX_TOKENS = "maxTokens";
-  final String ATTR_TTL_MINUTES = "ttlMinutes";
-  final String ATTR_IS_DEFAULT = "isDefault";
+  String ATTR_NAME = "name";
+  String ATTR_STRATEGY = "strategy";
+  String ATTR_MAX_MESSAGES = "maxMessages";
+  String ATTR_MAX_TOKENS = "maxTokens";
+  String ATTR_TTL_MINUTES = "ttlMinutes";
+  String ATTR_IS_DEFAULT = "isDefault";
 
   String getName();
 

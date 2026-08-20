@@ -12,14 +12,9 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Set;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.model.base.entity.CriteriaJoin;
 
 public final class CriteriaJoinAnnotationJoiner implements JpaJoiner {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(CriteriaJoinAnnotationJoiner.class);
-
   public static final Set<Class<?>> COMPOUND_ENTITY_ANNOTATIONS = ImmutableSet.of(OneToMany.class,
       ManyToOne.class, Embedded.class, JoinColumn.class, CriteriaJoin.class);
 

@@ -1,12 +1,12 @@
 package sh.trishul.ai.guardrail.model;
 
 public interface BaseAiGuardrail<T extends BaseAiGuardrail<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_TYPE = "type";
-  final String ATTR_STRATEGY = "strategy";
-  final String ATTR_CONFIGURATION = "configuration";
-  final String ATTR_PRIORITY = "priority";
-  final String ATTR_IS_ENABLED = "isEnabled";
+  String ATTR_NAME = "name";
+  String ATTR_TYPE = "type";
+  String ATTR_STRATEGY = "strategy";
+  String ATTR_CONFIGURATION = "configuration";
+  String ATTR_PRIORITY = "priority";
+  String ATTR_IS_ENABLED = "isEnabled";
 
   String getName();
 

@@ -1,7 +1,7 @@
 package sh.trishul.ai.tool.model;
 
 public interface AiToolAccessor<T extends AiToolAccessor<T>> {
-  final String ATTR_TOOL = "tool";
+  String ATTR_TOOL = "tool";
 
   AiTool getTool();
 

@@ -2,15 +2,10 @@ package sh.trishul.repo.jpa.query.clause.where.builder;
 
 import java.util.Collection;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 
 public class WhereClauseBuilderWrapper implements WhereClauseBuilder {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(WhereClauseBuilderWrapper.class);
-
   private final WhereClauseBuilderDelegate delegate;
 
   public WhereClauseBuilderWrapper() {

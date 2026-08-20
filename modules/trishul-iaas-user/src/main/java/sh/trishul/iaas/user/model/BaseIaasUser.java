@@ -1,9 +1,9 @@
 package sh.trishul.iaas.user.model;
 
 public interface BaseIaasUser<T extends BaseIaasUser<T>> {
-  final String ATTR_EMAIL = "email";
-  final String ATTR_PHONE_NUMBER = "phoneNumber";
-  final String ATTR_USER_NAME = "userName";
+  String ATTR_EMAIL = "email";
+  String ATTR_PHONE_NUMBER = "phoneNumber";
+  String ATTR_USER_NAME = "userName";
 
   String getEmail();
 

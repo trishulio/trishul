@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.base.types.base.pojo.Identified;
@@ -26,9 +24,6 @@ import sh.trishul.user.role.model.UserRoleAccessor;
 @Transactional
 public class UserRoleService extends BaseService implements
     CrudService<Long, UserRole, BaseUserRole<?>, UpdateUserRole<?>, UserRoleAccessor<?>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(UserRoleService.class);
-
   private final EntityMergerService<Long, UserRole, BaseUserRole<?>, UpdateUserRole<?>> entityMergerService;
   private final RepoService<Long, UserRole, UserRoleAccessor<?>> repoService;
 

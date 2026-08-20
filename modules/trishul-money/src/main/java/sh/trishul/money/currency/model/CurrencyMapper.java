@@ -3,14 +3,9 @@ package sh.trishul.money.currency.model;
 import org.joda.money.CurrencyUnit;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Mapper
 public abstract class CurrencyMapper {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(CurrencyMapper.class);
-
   public static final CurrencyMapper INSTANCE = Mappers.getMapper(CurrencyMapper.class);
 
   public Currency toEntity(String code) {

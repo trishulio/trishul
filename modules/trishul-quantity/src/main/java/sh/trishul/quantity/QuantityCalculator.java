@@ -12,7 +12,7 @@ import tec.uom.se.quantity.Quantities;
 public class QuantityCalculator {
   public static final QuantityCalculator INSTANCE = new QuantityCalculator();
 
-  private QuantityCalculator() {};
+  private QuantityCalculator() {}
 
   @SuppressWarnings("unchecked")
   public Quantity<?> subtract(Quantity<?> q1, Quantity<?> q2) {

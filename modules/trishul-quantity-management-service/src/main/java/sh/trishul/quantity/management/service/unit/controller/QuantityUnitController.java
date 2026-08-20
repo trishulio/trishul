@@ -3,8 +3,6 @@ package sh.trishul.quantity.management.service.unit.controller;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +20,6 @@ import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 @RestController
 @RequestMapping(path = "/api/v1/quantity/units")
 public class QuantityUnitController extends BaseController {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(QuantityUnitController.class);
-
   private final QuantityUnitService quantityUnitService;
 
   private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;

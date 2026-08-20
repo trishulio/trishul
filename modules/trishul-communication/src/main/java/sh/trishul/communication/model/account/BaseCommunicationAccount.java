@@ -1,9 +1,9 @@
 package sh.trishul.communication.model.account;
 
 public interface BaseCommunicationAccount<T extends BaseCommunicationAccount<T>> {
-  final String ATTR_FRIENDLY_NAME = "friendlyName";
-  final String ATTR_ACCOUNT_STATUS = "accountStatus";
-  final String ATTR_AUTH_TOKEN = "authToken";
+  String ATTR_FRIENDLY_NAME = "friendlyName";
+  String ATTR_ACCOUNT_STATUS = "accountStatus";
+  String ATTR_AUTH_TOKEN = "authToken";
 
   String getFriendlyName();
 

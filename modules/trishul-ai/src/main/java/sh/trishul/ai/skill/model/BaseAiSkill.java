@@ -1,10 +1,10 @@
 package sh.trishul.ai.skill.model;
 
 public interface BaseAiSkill<T extends BaseAiSkill<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_DESCRIPTION = "description";
-  final String ATTR_SYSTEM_PROMPT = "systemPrompt";
-  final String ATTR_IS_ENABLED = "isEnabled";
+  String ATTR_NAME = "name";
+  String ATTR_DESCRIPTION = "description";
+  String ATTR_SYSTEM_PROMPT = "systemPrompt";
+  String ATTR_IS_ENABLED = "isEnabled";
 
   String getName();
 

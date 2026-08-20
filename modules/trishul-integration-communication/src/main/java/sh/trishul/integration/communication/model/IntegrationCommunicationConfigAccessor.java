@@ -1,7 +1,7 @@
 package sh.trishul.integration.communication.model;
 
 public interface IntegrationCommunicationConfigAccessor<T extends IntegrationCommunicationConfigAccessor<T>> {
-  final String ATTR_INTEGRATION_COMMUNICATION_CONFIG = "integrationCommunicationConfig";
+  String ATTR_INTEGRATION_COMMUNICATION_CONFIG = "integrationCommunicationConfig";
 
   IntegrationCommunicationConfig getIntegrationCommunicationConfig();
 

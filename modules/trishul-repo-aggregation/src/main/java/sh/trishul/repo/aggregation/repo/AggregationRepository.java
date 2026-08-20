@@ -2,8 +2,6 @@ package sh.trishul.repo.aggregation.repo;
 
 import jakarta.persistence.TypedQuery;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.repo.jpa.query.clause.group.builder.GroupByClauseBuilder;
@@ -11,9 +9,6 @@ import sh.trishul.repo.jpa.query.clause.select.builder.SelectClauseBuilder;
 import sh.trishul.repo.jpa.query.resolver.QueryResolver;
 
 public class AggregationRepository {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(AggregationRepository.class);
-
   private final QueryResolver qResolver;
 
   public AggregationRepository(QueryResolver qResolver) {

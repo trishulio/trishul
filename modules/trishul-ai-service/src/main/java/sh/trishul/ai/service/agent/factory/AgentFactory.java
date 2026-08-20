@@ -43,7 +43,7 @@ public class AgentFactory {
     }
     ChatModel chatModel = buildChatModel(config.getChatModelConfig());
     StreamingChatModel streamingChatModel = buildStreamingModel(config.getChatModelConfig());
-    List<Object> tools = resolveTool(config);
+    List<Object> tools = resolveTool();
     AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatModel(chatModel)
         .streamingChatModel(streamingChatModel).chatMemory(chatMemory);
     if (!tools.isEmpty()) {
@@ -64,7 +64,7 @@ public class AgentFactory {
     ChatModel chatModel = buildChatModel(config.getChatModelConfig());
     StreamingChatModel streamingChatModel = buildStreamingModel(config.getChatModelConfig());
     AiChatMemoryConfig memCfg = config.getChatMemoryConfig();
-    List<Object> tools = resolveTool(config);
+    List<Object> tools = resolveTool();
     AiServices<Assistant> builder = AiServices.builder(Assistant.class).chatModel(chatModel)
         .streamingChatModel(streamingChatModel)
         .chatMemoryProvider(memoryId -> buildMemory(memCfg, memoryId));
@@ -102,7 +102,7 @@ public class AgentFactory {
         .chatMemoryStore(memoryStore).build();
   }
 
-  private List<Object> resolveTool(AiAgentConfig config) {
+  private List<Object> resolveTool() {
     return toolRegistry.getToolsByIds(List.of());
   }
 }

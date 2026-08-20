@@ -5,10 +5,10 @@ import sh.trishul.integration.model.IntegrationAccessor;
 
 public interface BaseIntegrationCommunicationConfig<T extends BaseIntegrationCommunicationConfig<T>>
     extends IntegrationAccessor<T> {
-  final String ATTR_CHANNEL_TYPE = "channelType";
-  final String ATTR_CHANNEL_ADDRESS = "channelAddress";
-  final String ATTR_DEFAULT_FROM = "defaultFrom";
-  final String ATTR_ENABLED = "enabled";
+  String ATTR_CHANNEL_TYPE = "channelType";
+  String ATTR_CHANNEL_ADDRESS = "channelAddress";
+  String ATTR_DEFAULT_FROM = "defaultFrom";
+  String ATTR_ENABLED = "enabled";
 
   ChannelType getChannelType();
 

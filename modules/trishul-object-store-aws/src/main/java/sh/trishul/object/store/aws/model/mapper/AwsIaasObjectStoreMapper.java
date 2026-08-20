@@ -11,7 +11,7 @@ import sh.trishul.object.store.model.IaasObjectStore;
 
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIaasObjectStoreMapper extends IaasEntityMapper<Bucket, IaasObjectStore> {
-  final AwsIaasObjectStoreMapper INSTANCE = Mappers.getMapper(AwsIaasObjectStoreMapper.class);
+  AwsIaasObjectStoreMapper INSTANCE = Mappers.getMapper(AwsIaasObjectStoreMapper.class);
 
   @Override
   @Mapping(ignore = true, target = IaasObjectStore.ATTR_ID) // Name is the ID

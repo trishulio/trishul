@@ -1,8 +1,7 @@
 package sh.trishul.ai.session.model;
 
 import java.util.Collection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import sh.trishul.ai.agent.model.AiAgentConfig;
 import sh.trishul.ai.agent.model.AiAgentConfigAccessor;
 import sh.trishul.ai.memory.model.AiChatMemoryConfig;
@@ -11,9 +10,6 @@ import sh.trishul.base.types.base.pojo.Refresher;
 import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class AiChatSessionRefresher implements Refresher<AiChatSession, AiChatSessionAccessor<?>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(AiChatSessionRefresher.class);
-
   private final AccessorRefresher<Long, AiChatSessionAccessor<?>, AiChatSession> refresher;
   private final Refresher<AiAgentConfig, AiAgentConfigAccessor<?>> agentConfigRefresher;
   private final Refresher<AiChatMemoryConfig, AiChatMemoryConfigAccessor<?>> chatMemoryConfigRefresher;

@@ -11,7 +11,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIaasRoleMapper extends IaasEntityMapper<Role, IaasRole> {
-  final AwsIaasRoleMapper INSTANCE = Mappers.getMapper(AwsIaasRoleMapper.class);
+  AwsIaasRoleMapper INSTANCE = Mappers.getMapper(AwsIaasRoleMapper.class);
 
   @Override
   @Mapping(ignore = true, target = IaasRole.ATTR_ID)

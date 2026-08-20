@@ -11,7 +11,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsGroupTypeMapper extends IaasEntityMapper<GroupType, IaasIdpTenant> {
-  final AwsGroupTypeMapper INSTANCE = Mappers.getMapper(AwsGroupTypeMapper.class);
+  AwsGroupTypeMapper INSTANCE = Mappers.getMapper(AwsGroupTypeMapper.class);
 
   @Override
   @Mapping(target = IaasIdpTenant.ATTR_CREATED_AT, source = "creationDate")

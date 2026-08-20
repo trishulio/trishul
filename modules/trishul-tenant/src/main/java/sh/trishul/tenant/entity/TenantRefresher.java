@@ -2,15 +2,10 @@ package sh.trishul.tenant.entity;
 
 import java.util.Collection;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.Refresher;
 import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 
 public class TenantRefresher implements Refresher<Tenant, TenantAccessor<?>> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(TenantRefresher.class);
-
   private final AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher;
 
   public TenantRefresher(AccessorRefresher<UUID, TenantAccessor<?>, Tenant> refresher) {

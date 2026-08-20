@@ -15,7 +15,7 @@ public class TwilioChannelMapper
       return null;
     }
 
-    String capabilities = buildCapabilities(phoneNumber);
+    String capabilities = buildCapabilities();
 
     return new CommunicationChannel(phoneNumber.getSid(), phoneNumber.getPhoneNumber().toString(),
         ChannelType.SMS, phoneNumber.getFriendlyName(), capabilities,
@@ -25,7 +25,7 @@ public class TwilioChannelMapper
             : null);
   }
 
-  private String buildCapabilities(IncomingPhoneNumber phoneNumber) {
+  private String buildCapabilities() {
     // TODO: Map Twilio phone number capabilities to JSON string
     return "{}";
   }

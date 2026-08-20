@@ -2,8 +2,6 @@ package sh.trishul.tenant.persistence.management.migration.register;
 
 import java.sql.Connection;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.util.random.RandomGenerator;
 import sh.trishul.data.datasource.configuration.model.DataSourceConfiguration;
 import sh.trishul.data.datasource.configuration.provider.DataSourceConfigurationProvider;
@@ -14,9 +12,6 @@ import sh.trishul.tenant.entity.TenantData;
 import sh.trishul.tenant.persistence.datasource.configuration.provider.TenantDataSourceConfigurationProvider;
 
 public class TenantUserRegister implements TenantRegister {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(TenantUserRegister.class);
-
   public static final int PASSWORD_LENGTH = 48;
 
   private final DataSourceQueryRunner runner;

@@ -1,7 +1,7 @@
 package sh.trishul.user.model;
 
 public interface AssignedToAccessor<T extends AssignedToAccessor<T>> {
-  final String ATTR_ASSIGNED_TO = "assignedTo";
+  String ATTR_ASSIGNED_TO = "assignedTo";
 
   User getAssignedTo();
 

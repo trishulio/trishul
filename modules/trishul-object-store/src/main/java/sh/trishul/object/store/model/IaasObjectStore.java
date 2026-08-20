@@ -1,17 +1,12 @@
 package sh.trishul.object.store.model;
 
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.Audited;
 import sh.trishul.base.types.base.pojo.CrudEntity;
 import sh.trishul.model.base.entity.BaseEntity;
 
 public class IaasObjectStore extends BaseEntity implements UpdateIaasObjectStore<IaasObjectStore>,
     CrudEntity<String, IaasObjectStore>, Audited<IaasObjectStore> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(IaasObjectStore.class);
-
   private String name;
   private LocalDateTime createdAt;
   private LocalDateTime lastUpdated;

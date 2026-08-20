@@ -1,11 +1,11 @@
 package sh.trishul.money.currency.model;
 
 public interface BaseCurrency<T extends BaseCurrency<T>> {
-  public Integer getNumericCode();
+  Integer getNumericCode();
 
-  public T setNumericCode(Integer numericCode);
+  T setNumericCode(Integer numericCode);
 
-  public String getCode();
+  String getCode();
 
-  public T setCode(String code);
+  T setCode(String code);
 }

@@ -11,7 +11,7 @@ import sh.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
 @Mapper
 public interface IaasObjectStoreFileMapper extends
     BaseMapper<IaasObjectStoreFile, IaasObjectStoreFileDto, AddIaasObjectStoreFileDto, UpdateIaasObjectStoreFileDto> {
-  final IaasObjectStoreFileMapper INSTANCE = Mappers.getMapper(IaasObjectStoreFileMapper.class);
+  IaasObjectStoreFileMapper INSTANCE = Mappers.getMapper(IaasObjectStoreFileMapper.class);
 
   @Override
   @Mapping(target = IaasObjectStoreFile.ATTR_ID, ignore = true)

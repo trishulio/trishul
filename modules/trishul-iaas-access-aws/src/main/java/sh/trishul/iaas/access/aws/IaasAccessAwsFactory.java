@@ -6,13 +6,8 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IaasAccessAwsFactory {
-  @SuppressWarnings("unused")
-  private static final Logger logg = LoggerFactory.getLogger(IaasAccessAwsFactory.class);
-
   public AmazonIdentityManagement iamClient(String iamAccessKeyId, String iamSecret) {
     BasicAWSCredentials basicAwsCredentials = new BasicAWSCredentials(iamAccessKeyId, iamSecret);
     AWSCredentialsProvider credsProvider = new AWSStaticCredentialsProvider(basicAwsCredentials);

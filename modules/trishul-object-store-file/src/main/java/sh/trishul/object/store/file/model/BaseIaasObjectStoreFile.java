@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import org.springframework.util.MimeType;
 
 public interface BaseIaasObjectStoreFile<T extends BaseIaasObjectStoreFile<T>> {
-  final String ATTR_FILE_KEY = "fileKey";
-  final String ATTR_EXPIRATION = "expiration";
-  final String ATTR_FILE_URL = "fileUrl";
-  final String ATTR_MIN_VALID_UNTIL = "minValidUntil";
-  final String ATTR_MIME_TYPE = "mimeType";
+  String ATTR_FILE_KEY = "fileKey";
+  String ATTR_EXPIRATION = "expiration";
+  String ATTR_FILE_URL = "fileUrl";
+  String ATTR_MIN_VALID_UNTIL = "minValidUntil";
+  String ATTR_MIME_TYPE = "mimeType";
 
   URI getFileKey();
 

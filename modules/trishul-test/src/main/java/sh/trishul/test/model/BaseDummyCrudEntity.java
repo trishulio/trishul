@@ -1,8 +1,8 @@
 package sh.trishul.test.model;
 
 public interface BaseDummyCrudEntity<T extends BaseDummyCrudEntity<T>> {
-  final String ATTR_EXCLUDED_VALUE = "excludedValue";
-  final String ATTR_VALUE = "value";
+  String ATTR_EXCLUDED_VALUE = "excludedValue";
+  String ATTR_VALUE = "value";
 
   String getExcludedValue();
 

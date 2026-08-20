@@ -1,7 +1,7 @@
 package sh.trishul.ai.chat.model;
 
 public interface AiChatModelConfigAccessor<T extends AiChatModelConfigAccessor<T>> {
-  final String ATTR_CHAT_MODEL_CONFIG = "chatModelConfig";
+  String ATTR_CHAT_MODEL_CONFIG = "chatModelConfig";
 
   AiChatModelConfig getChatModelConfig();
 

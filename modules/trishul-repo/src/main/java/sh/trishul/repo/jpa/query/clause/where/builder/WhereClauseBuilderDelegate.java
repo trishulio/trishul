@@ -3,8 +3,6 @@ package sh.trishul.repo.jpa.query.clause.where.builder;
 import jakarta.persistence.criteria.Predicate;
 import java.util.Collection;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.repo.jpa.query.spec.accumulator.PredicateSpecAccumulator;
 import sh.trishul.repo.jpa.query.spec.criteria.BetweenSpec;
@@ -17,9 +15,6 @@ import sh.trishul.repo.jpa.query.spec.criteria.IsSpec;
 import sh.trishul.repo.jpa.query.spec.criteria.LikeSpec;
 
 public class WhereClauseBuilderDelegate {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(WhereClauseBuilderDelegate.class);
-
   private final PredicateSpecAccumulator accumulator;
 
   public WhereClauseBuilderDelegate(PredicateSpecAccumulator accumulator) {

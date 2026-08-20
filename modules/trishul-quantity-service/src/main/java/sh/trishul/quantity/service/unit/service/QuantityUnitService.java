@@ -10,5 +10,5 @@ public interface QuantityUnitService {
   Page<UnitEntity> getUnits(Set<String> symbols, SortedSet<String> sort, boolean orderAscending,
       int page, int size);
 
-  public Unit<?> get(String symbol);
+  Unit<?> get(String symbol);
 }

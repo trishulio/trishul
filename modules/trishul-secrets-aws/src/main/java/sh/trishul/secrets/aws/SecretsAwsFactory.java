@@ -6,13 +6,8 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SecretsAwsFactory {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(SecretsAwsFactory.class);
-
   public AWSSecretsManager secretsManager(String region, String url, String accessKeyId,
       String accessSecretKey) {
     AWSCredentials creds = new BasicAWSCredentials(accessKeyId, accessSecretKey);

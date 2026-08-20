@@ -8,15 +8,15 @@ import sh.trishul.user.status.UserStatusAccessor;
 
 public interface BaseUser<T extends BaseUser<T>>
     extends UserStatusAccessor<T>, UserSalutationAccessor<T> {
-  final String ATTR_DISPLAY_NAME = "displayName";
-  final String ATTR_FIRST_NAME = "firstName";
-  final String ATTR_LAST_NAME = "lastName";
-  final String ATTR_EMAIL = "email";
-  final String ATTR_IMAGE_SRC = "imageSrc";
-  final String ATTR_PHONE_NUMBER = "phoneNumber";
-  final String ATTR_USER_NAME = "userName";
-  final String ATTR_IAAS_USERNAME = "iaasUsername";
-  final String ATTR_ROLES = "roles";
+  String ATTR_DISPLAY_NAME = "displayName";
+  String ATTR_FIRST_NAME = "firstName";
+  String ATTR_LAST_NAME = "lastName";
+  String ATTR_EMAIL = "email";
+  String ATTR_IMAGE_SRC = "imageSrc";
+  String ATTR_PHONE_NUMBER = "phoneNumber";
+  String ATTR_USER_NAME = "userName";
+  String ATTR_IAAS_USERNAME = "iaasUsername";
+  String ATTR_ROLES = "roles";
 
   String getDisplayName();
 

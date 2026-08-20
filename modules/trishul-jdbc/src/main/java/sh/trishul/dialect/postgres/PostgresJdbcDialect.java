@@ -39,7 +39,8 @@ public class PostgresJdbcDialect implements JdbcDialect {
     try (PreparedStatement ps = conn.prepareStatement(sql)) {
       ps.setObject(1, username);
       try (ResultSet rs = ps.executeQuery()) {
-        userExists = rs.next();
+        boolean next = rs.next();
+        userExists = next;
       }
     }
 
@@ -54,7 +55,8 @@ public class PostgresJdbcDialect implements JdbcDialect {
     try (PreparedStatement ps = conn.prepareStatement(sql)) {
       ps.setObject(1, schemaName);
       try (ResultSet rs = ps.executeQuery()) {
-        exists = rs.next();
+        boolean next = rs.next();
+        exists = next;
       }
     }
 

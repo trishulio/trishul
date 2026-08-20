@@ -2,13 +2,9 @@ package sh.trishul.repo.jpa.query.root;
 
 import jakarta.persistence.criteria.From;
 import jakarta.persistence.criteria.Path;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.repo.jpa.query.join.joiner.JpaJoiner;
 
 public class RootUtil {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(RootUtil.class);
   public static final RootUtil INSTANCE = new RootUtil(JpaJoiner.JPA_JOINER);
 
   private final JpaJoiner jpaJoiner;

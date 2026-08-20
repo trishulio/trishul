@@ -1,10 +1,10 @@
 package sh.trishul.ai.tool.model;
 
 public interface BaseAiTool<T extends BaseAiTool<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_BEAN_NAME = "beanName";
-  final String ATTR_DESCRIPTION = "description";
-  final String ATTR_IS_ENABLED = "isEnabled";
+  String ATTR_NAME = "name";
+  String ATTR_BEAN_NAME = "beanName";
+  String ATTR_DESCRIPTION = "description";
+  String ATTR_IS_ENABLED = "isEnabled";
 
   String getName();
 

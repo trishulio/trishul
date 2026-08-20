@@ -13,7 +13,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 
 @Mapper
 public interface AwsCognitoUserMapper extends IaasEntityMapper<UserType, IaasUser> {
-  final AwsCognitoUserMapper INSTANCE = Mappers.getMapper(AwsCognitoUserMapper.class);
+  AwsCognitoUserMapper INSTANCE = Mappers.getMapper(AwsCognitoUserMapper.class);
 
   @Override
   default IaasUser fromIaasEntity(UserType userType) {

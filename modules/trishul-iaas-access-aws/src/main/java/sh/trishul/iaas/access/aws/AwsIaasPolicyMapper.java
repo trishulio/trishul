@@ -11,7 +11,7 @@ import sh.trishul.model.mapper.LocalDateTimeMapper;
 
 @Mapper(uses = {LocalDateTimeMapper.class, DeleteResultMapper.class})
 public interface AwsIaasPolicyMapper extends IaasEntityMapper<Policy, IaasPolicy> {
-  final AwsIaasPolicyMapper INSTANCE = Mappers.getMapper(AwsIaasPolicyMapper.class);
+  AwsIaasPolicyMapper INSTANCE = Mappers.getMapper(AwsIaasPolicyMapper.class);
 
   @Override
   @Mapping(ignore = true, target = IaasPolicy.ATTR_ID) // ID is same as name

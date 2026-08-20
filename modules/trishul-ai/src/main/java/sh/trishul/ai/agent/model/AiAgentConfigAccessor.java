@@ -1,7 +1,7 @@
 package sh.trishul.ai.agent.model;
 
 public interface AiAgentConfigAccessor<T extends AiAgentConfigAccessor<T>> {
-  final String ATTR_AGENT_CONFIG = "agentConfig";
+  String ATTR_AGENT_CONFIG = "agentConfig";
 
   AiAgentConfig getAgentConfig();
 

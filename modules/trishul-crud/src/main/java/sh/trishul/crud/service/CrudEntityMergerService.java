@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sh.trishul.base.types.base.pojo.CrudEntity;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.base.types.base.pojo.UpdatableEntity;
@@ -16,9 +14,6 @@ import sh.trishul.model.validator.Validator;
 
 public class CrudEntityMergerService<ID, E extends CrudEntity<ID, E>, BE, UE extends UpdatableEntity<ID, ?>>
     extends BaseService implements EntityMergerService<ID, E, BE, UE> {
-  @SuppressWarnings("unused")
-  private static final Logger log = LoggerFactory.getLogger(CrudEntityMergerService.class);
-
   private final LockService lockService;
 
   private final Class<BE> baseEntityCls;

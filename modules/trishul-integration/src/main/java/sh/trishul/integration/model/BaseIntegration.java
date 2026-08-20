@@ -1,11 +1,11 @@
 package sh.trishul.integration.model;
 
 public interface BaseIntegration<T extends BaseIntegration<T>> {
-  final String ATTR_NAME = "name";
-  final String ATTR_TYPE = "type";
-  final String ATTR_PROVIDER = "provider";
-  final String ATTR_STATUS = "status";
-  final String ATTR_CONFIGURATION = "configuration";
+  String ATTR_NAME = "name";
+  String ATTR_TYPE = "type";
+  String ATTR_PROVIDER = "provider";
+  String ATTR_STATUS = "status";
+  String ATTR_CONFIGURATION = "configuration";
 
   String getName();
 
