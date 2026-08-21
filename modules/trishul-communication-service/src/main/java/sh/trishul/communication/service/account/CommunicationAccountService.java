@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.communication.model.account.BaseCommunicationAccount;
 import sh.trishul.communication.model.account.CommunicationAccount;
@@ -117,5 +119,11 @@ public class CommunicationAccountService extends BaseService implements
         = this.entityMergerService.getPatchEntities(existing, updates);
 
     return iaasRepo.put(updated);
+  }
+
+  @Override
+  public Page<CommunicationAccount> search(String query, String[][] fieldPaths,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

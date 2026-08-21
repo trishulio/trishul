@@ -98,7 +98,7 @@
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
         <spotless.version>3.10.0</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
-        <spotbugs.version>4.10.3.0</spotbugs.version>
+        <spotbugs.version>4.10.4.0</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>
         <com.marvinformatics.formatter.plugin.version>2.24.1</com.marvinformatics.formatter.plugin.version>
         <org.owasp.dependency.check.version>13.0.0</org.owasp.dependency.check.version>

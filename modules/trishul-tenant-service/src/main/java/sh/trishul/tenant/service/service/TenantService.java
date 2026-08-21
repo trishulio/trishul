@@ -61,6 +61,12 @@ public class TenantService
   }
 
   @Override
+  public Page<Tenant> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  }
+
+  @Override
   public boolean exists(Set<UUID> ids) {
     return this.repoService.exists(ids);
   }

@@ -123,4 +123,10 @@ public class AiChatSessionService extends BaseService implements
     List<AiChatSession> updated = this.entityMergerService.getPatchEntities(existing, patches);
     return this.repoService.saveAll(updated);
   }
+
+  @Override
+  public Page<AiChatSession> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  }
 }

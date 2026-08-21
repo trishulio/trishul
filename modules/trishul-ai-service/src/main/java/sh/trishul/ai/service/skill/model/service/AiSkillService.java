@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import sh.trishul.ai.skill.model.AiSkill;
 import sh.trishul.ai.skill.model.AiSkillAccessor;
 import sh.trishul.ai.skill.model.BaseAiSkill;
@@ -33,6 +35,12 @@ public class AiSkillService extends BaseService
   @Override
   public AiSkill get(Long id) {
     return this.repoService.get(id);
+  }
+
+  @Override
+  public Page<AiSkill> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
   }
 
   @Override

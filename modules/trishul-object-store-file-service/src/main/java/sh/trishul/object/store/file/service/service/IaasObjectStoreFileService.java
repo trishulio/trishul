@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.crud.service.BaseService;
 import sh.trishul.crud.service.CrudService;
@@ -119,5 +121,11 @@ public class IaasObjectStoreFileService extends BaseService implements
     }
 
     throw new UnsupportedOperationException("Patch is not supported for file urls");
+  }
+
+  @Override
+  public Page<IaasObjectStoreFile> search(String query, String[][] fieldPaths,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

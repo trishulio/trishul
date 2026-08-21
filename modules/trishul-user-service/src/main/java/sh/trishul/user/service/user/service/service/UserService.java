@@ -68,6 +68,12 @@ public class UserService extends BaseService
   }
 
   @Override
+  public Page<User> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  }
+
+  @Override
   public User get(Long id) {
     return this.repoService.get(id);
   }

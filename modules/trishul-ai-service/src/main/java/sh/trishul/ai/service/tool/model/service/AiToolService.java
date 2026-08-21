@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import sh.trishul.ai.tool.model.AiTool;
 import sh.trishul.ai.tool.model.AiToolAccessor;
 import sh.trishul.ai.tool.model.BaseAiTool;
@@ -33,6 +35,12 @@ public class AiToolService extends BaseService
   @Override
   public AiTool get(Long id) {
     return this.repoService.get(id);
+  }
+
+  @Override
+  public Page<AiTool> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
   }
 
   @Override
