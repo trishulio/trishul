@@ -109,9 +109,11 @@ public class AiSpeechConfigService extends BaseService implements
     return this.repoService.saveAll(updated);
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"name"}};
+
   @Override
-  public Page<AiSpeechConfig> search(String query, String[][] fieldPaths, SortedSet<String> sort,
-      boolean orderAscending, int page, int size) {
-    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  public Page<AiSpeechConfig> search(String query, SortedSet<String> sort, boolean orderAscending,
+      int page, int size) {
+    return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 }

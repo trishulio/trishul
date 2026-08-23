@@ -36,16 +36,19 @@ import sh.trishul.model.base.dto.DeleteResultDto;
 public class AiToolController extends BaseController {
 
   private final CrudControllerService<Long, AiTool, BaseAiTool<?>, UpdateAiTool<?>, AiToolDto, AddAiToolDto, UpdateAiToolDto> controller;
+  private final AiToolService service;
 
   @Autowired
   public AiToolController(AiToolService service, AttributeFilter filter) {
-    this(new CrudControllerService<>(filter, AiToolMapper.INSTANCE, service, "AiTool"));
+    this(new CrudControllerService<>(filter, AiToolMapper.INSTANCE, service, "AiTool"), service);
   }
 
   public AiToolController(
-      CrudControllerService<Long, AiTool, BaseAiTool<?>, UpdateAiTool<?>, AiToolDto, AddAiToolDto, UpdateAiToolDto> controller) {
+      CrudControllerService<Long, AiTool, BaseAiTool<?>, UpdateAiTool<?>, AiToolDto, AddAiToolDto, UpdateAiToolDto> controller,
+      AiToolService service) {
     super();
     this.controller = controller;
+    this.service = service;
   }
 
   @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE,
@@ -75,6 +78,23 @@ public class AiToolController extends BaseController {
   @ResponseStatus(value = HttpStatus.ACCEPTED)
   public List<AiToolDto> patch(@Valid @NotNull @RequestBody List<UpdateAiToolDto> updateDtos) {
     return this.controller.patch(updateDtos);
+  }
+
+  @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public sh.trishul.repo.jpa.repository.model.dto.PageDto<AiToolDto> search(
+      @RequestParam(name = "q", required = false) String query,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_ATTR,
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    org.springframework.data.domain.Page<AiTool> entityPage
+        = service.search(query, sort, orderAscending, page, size);
+    return this.controller.getAll(entityPage, attributes);
   }
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)

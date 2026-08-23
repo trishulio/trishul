@@ -20,6 +20,13 @@ public class UserSalutationService extends BaseService {
     this.repoService = repoService;
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"name"}};
+
+  public Page<UserSalutation> search(String query, SortedSet<String> sort, boolean orderAscending,
+      int page, int size) {
+    return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
+  }
+
   public Page<UserSalutation> getSalutations(Set<Long> ids, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {
     Specification<UserSalutation> spec

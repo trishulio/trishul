@@ -94,4 +94,9 @@ public class TenantIaasService {
     return vfsResources.stream().map(vfsResource -> new TenantIaasResources(authIterator.next(),
         idpIterator.next(), vfsResource)).toList();
   }
+
+  public org.springframework.data.domain.Page<TenantIaasResources> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

@@ -46,4 +46,9 @@ public class TenantIaasIdpService {
   public boolean exist(String iaasIdpTenantId) {
     return this.idpService.exist(iaasIdpTenantId);
   }
+
+  public org.springframework.data.domain.Page<TenantIaasIdpResources> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

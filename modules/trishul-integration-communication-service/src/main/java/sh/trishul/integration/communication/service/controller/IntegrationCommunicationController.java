@@ -66,4 +66,30 @@ public class IntegrationCommunicationController {
       return this;
     }
   }
+
+  @org.springframework.web.bind.annotation.GetMapping(value = "/search",
+      consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public sh.trishul.repo.jpa.repository.model.dto.PageDto<sh.trishul.integration.communication.model.IntegrationCommunicationConfigDto> search(
+      @org.springframework.web.bind.annotation.RequestParam(name = "q",
+          required = false) String query,
+      @org.springframework.web.bind.annotation.RequestParam(name = "page",
+          defaultValue = "0") int page,
+      @org.springframework.web.bind.annotation.RequestParam(name = "size",
+          defaultValue = "100") int size,
+      @org.springframework.web.bind.annotation.RequestParam(name = "sort",
+          defaultValue = "id") java.util.SortedSet<String> sort,
+      @org.springframework.web.bind.annotation.RequestParam(name = "order_asc",
+          defaultValue = "true") boolean orderAscending) {
+    org.springframework.data.domain.Page<sh.trishul.integration.communication.model.IntegrationCommunicationConfig> configPage
+        = service.search(query, sort, orderAscending, page, size);
+
+    java.util.List<sh.trishul.integration.communication.model.IntegrationCommunicationConfigDto> configs
+        = configPage.stream().map(
+            config -> sh.trishul.integration.communication.model.IntegrationCommunicationConfigMapper.INSTANCE
+                .toDto(config))
+            .toList();
+
+    return new sh.trishul.repo.jpa.repository.model.dto.PageDto<>(configs,
+        configPage.getTotalPages(), configPage.getTotalElements());
+  }
 }

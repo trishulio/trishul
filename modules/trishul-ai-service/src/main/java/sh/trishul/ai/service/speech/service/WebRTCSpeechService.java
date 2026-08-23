@@ -74,4 +74,9 @@ public class WebRTCSpeechService {
     }
     return "";
   }
+
+  public org.springframework.data.domain.Page<Object> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

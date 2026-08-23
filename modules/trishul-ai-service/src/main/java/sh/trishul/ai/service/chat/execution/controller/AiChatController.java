@@ -96,4 +96,17 @@ public class AiChatController {
 
     return UserMessage.from(contents);
   }
+
+  @org.springframework.web.bind.annotation.GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public sh.trishul.repo.jpa.repository.model.dto.PageDto<Object> search(
+      @org.springframework.web.bind.annotation.RequestParam(name = "q", required = false) String query,
+      @org.springframework.web.bind.annotation.RequestParam(name = "page", defaultValue = "0") int page,
+      @org.springframework.web.bind.annotation.RequestParam(name = "size", defaultValue = "100") int size,
+      @org.springframework.web.bind.annotation.RequestParam(name = "sort",
+          defaultValue = "id") java.util.SortedSet<String> sort,
+      @org.springframework.web.bind.annotation.RequestParam(name = "order_asc",
+          defaultValue = "true") boolean orderAscending) {
+    return new sh.trishul.repo.jpa.repository.model.dto.PageDto<>(new ArrayList<>(), 0, 0);
+  }
 }

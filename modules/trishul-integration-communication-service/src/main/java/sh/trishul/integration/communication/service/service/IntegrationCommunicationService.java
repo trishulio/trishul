@@ -158,9 +158,11 @@ public class IntegrationCommunicationService extends BaseService implements
     return messages != null && !messages.isEmpty() ? messages.get(0) : null;
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"name"}};
+
   @Override
-  public Page<IntegrationCommunicationConfig> search(String query, String[][] fieldPaths,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  public Page<IntegrationCommunicationConfig> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 }

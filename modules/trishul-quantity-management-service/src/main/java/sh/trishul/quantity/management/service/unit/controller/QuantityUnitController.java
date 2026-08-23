@@ -49,4 +49,21 @@ public class QuantityUnitController extends BaseController {
 
     return dto;
   }
+
+  @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<UnitDto> search(@RequestParam(name = "q", required = false) String query,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = UnitEntity.FIELD_SYMBOL) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size) {
+    Page<UnitEntity> unitsPage
+        = quantityUnitService.search(query, sort, orderAscending, page, size);
+
+    List<UnitDto> units = unitsPage.stream().map(unit -> quantityUnitMapper.toDto(unit)).toList();
+
+    return new PageDto<>(units, unitsPage.getTotalPages(), unitsPage.getTotalElements());
+  }
 }

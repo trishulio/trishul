@@ -24,6 +24,19 @@ public class QuantityUnitServiceImpl implements QuantityUnitService {
   }
 
   @Override
+  public Page<UnitEntity> search(String query, SortedSet<String> sort, boolean orderAscending,
+      int page, int size) {
+    if (query == null || query.isBlank()) {
+      return getUnits(null, sort, orderAscending, page, size);
+    }
+    String likeQuery = "%" + query.trim().toLowerCase() + "%";
+    Specification<UnitEntity> spec
+        = (root, cq, cb) -> cb.or(cb.like(cb.lower(root.get(UnitEntity.FIELD_SYMBOL)), likeQuery),
+            cb.like(cb.lower(root.get(UnitEntity.FIELD_NAME)), likeQuery));
+    return quantityUnitRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
+  }
+
+  @Override
   public Page<UnitEntity> getUnits(Set<String> symbols, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {
     Specification<UnitEntity> spec

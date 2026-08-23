@@ -67,4 +67,9 @@ public class TenantIaasUserService {
 
     return userCount;
   }
+
+  public org.springframework.data.domain.Page<IaasUserTenantMembership> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

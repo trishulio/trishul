@@ -96,7 +96,8 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
         }
         Specification<E> termSpec = null;
         for (String[] path : fieldPaths) {
-          final Specification<E> pathSpec = WhereClauseBuilder.builder().ilike(path, Set.of(term)).build();
+          final Specification<E> pathSpec
+              = WhereClauseBuilder.builder().ilike(path, Set.of(term)).build();
           termSpec = termSpec == null ? pathSpec : termSpec.or(pathSpec);
         }
         spec = spec.and(termSpec);

@@ -79,4 +79,9 @@ public class TenantIaasAuthService {
 
     return new TenantIaasAuthDeleteResult(roleCount);
   }
+
+  public org.springframework.data.domain.Page<TenantIaasAuthResources> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

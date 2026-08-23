@@ -185,4 +185,9 @@ public class TenantIaasVfsService {
 
     return new TenantIaasVfsDeleteResult(policyCount, objectStoreCount);
   }
+
+  public org.springframework.data.domain.Page<TenantIaasVfsResources> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

@@ -50,4 +50,9 @@ public class AccountService {
 
     return users.get(0);
   }
+
+  public org.springframework.data.domain.Page<User> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

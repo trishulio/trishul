@@ -13,4 +13,9 @@ public class TextToSpeechStreamingService {
     // and yield byte arrays of PCM audio data as quickly as possible.
     return new byte[0];
   }
+
+  public org.springframework.data.domain.Page<Object> search(String query,
+      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return org.springframework.data.domain.Page.empty();
+  }
 }

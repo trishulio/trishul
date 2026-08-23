@@ -35,13 +35,11 @@ public interface CrudService<ID, E, BE, UE extends Identified<ID>, A> {
    * (case-insensitive) predicate built from the field paths.
    *
    * @param query the free-text search query, may be blank
-   * @param fieldPaths the field (possibly dotted/nested) paths to match against
    * @param sort the sort properties
    * @param orderAscending the sort direction
    * @param page the zero-based page number
    * @param size the page size
    * @return the matching page of entities
    */
-  Page<E> search(String query, String[][] fieldPaths, SortedSet<String> sort,
-      boolean orderAscending, int page, int size);
+  Page<E> search(String query, SortedSet<String> sort, boolean orderAscending, int page, int size);
 }

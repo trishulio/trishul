@@ -67,10 +67,12 @@ public class UserService extends BaseService
     return this.repoService.getAll(spec, sort, orderAscending, page, size);
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"firstName"}, {"lastName"}, {"email"}};
+
   @Override
-  public Page<User> search(String query, String[][] fieldPaths, SortedSet<String> sort,
-      boolean orderAscending, int page, int size) {
-    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  public Page<User> search(String query, SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
+    return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 
   @Override

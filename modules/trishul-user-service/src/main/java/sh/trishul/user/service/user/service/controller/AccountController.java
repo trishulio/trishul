@@ -31,4 +31,24 @@ public class AccountController extends BaseController {
 
     return UserMapper.INSTANCE.toDto(user);
   }
+
+  @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public sh.trishul.repo.jpa.repository.model.dto.PageDto<UserDto> search(
+      @RequestParam(name = "q", required = false) String query,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) java.util.SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending) {
+    org.springframework.data.domain.Page<User> userPage
+        = accountService.search(query, sort, orderAscending, page, size);
+
+    java.util.List<UserDto> users
+        = userPage.stream().map(user -> UserMapper.INSTANCE.toDto(user)).toList();
+
+    return new sh.trishul.repo.jpa.repository.model.dto.PageDto<>(users, userPage.getTotalPages(),
+        userPage.getTotalElements());
+  }
 }
