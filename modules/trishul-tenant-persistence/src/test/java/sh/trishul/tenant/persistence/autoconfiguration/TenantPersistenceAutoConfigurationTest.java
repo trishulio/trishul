@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
-import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -110,8 +109,7 @@ class TenantPersistenceAutoConfigurationTest {
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
         = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(
             jpaVendorAdapterMock, dataSourceManageMock, multiTenantConnectionProviderMock,
-            currentTenantIdentifierResolverMock, packageScanConfig,
-            PostgreSQLDialect.class.getName());
+            currentTenantIdentifierResolverMock, packageScanConfig, "");
 
     assertSame(dataSourceMock, localContainerEntityManagerFactoryBean.getDataSource());
     assertSame(jpaVendorAdapterMock, localContainerEntityManagerFactoryBean.getJpaVendorAdapter());
@@ -120,15 +118,13 @@ class TenantPersistenceAutoConfigurationTest {
         .getDeclaredField("internalPersistenceUnitManager");
     pumField.setAccessible(true);
     Object pum = pumField.get(localContainerEntityManagerFactoryBean);
-
     Field field = pum.getClass().getDeclaredField("packagesToScan");
     field.setAccessible(true);
     String[] packages = (String[]) field.get(pum);
     assertArrayEquals(new String[] {"package1", "sh.trishul"}, packages);
 
     Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
-    assertEquals(3, jpaPropertyMap.size());
-    assertEquals(PostgreSQLDialect.class.getName(), jpaPropertyMap.get(Environment.DIALECT));
+    assertEquals(2, jpaPropertyMap.size());
     assertEquals(multiTenantConnectionProviderMock,
         jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
     assertEquals(currentTenantIdentifierResolverMock,

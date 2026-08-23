@@ -103,8 +103,6 @@ public class DataManagementAutoConfiguration {
     return new CachingDataSourceManager(adminDs);
   }
 
-
-
   @Bean
   @ConditionalOnMissingBean(TenantDataSourceManager.class)
   public TenantDataSourceManager tenantDataSourceManager(DataSourceManager dataSourceManager,
