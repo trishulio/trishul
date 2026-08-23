@@ -122,8 +122,7 @@ public class AiChatMemoryConfigController extends BaseController {
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
-    Page<AiChatMemoryConfig> entityPage
-        = service.search(query, sort, orderAscending, page, size);
+    Page<AiChatMemoryConfig> entityPage = service.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }
 }

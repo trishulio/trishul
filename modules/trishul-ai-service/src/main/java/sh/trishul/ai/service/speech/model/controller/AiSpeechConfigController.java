@@ -114,8 +114,7 @@ public class AiSpeechConfigController extends BaseController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public PageDto<AiSpeechConfigDto> search(
-      @RequestParam(name = "q", required = false) String query,
+  public PageDto<AiSpeechConfigDto> search(@RequestParam(name = "q", required = false) String query,
       @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
       @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
       @RequestParam(name = PROPNAME_SORT_BY,
@@ -124,8 +123,7 @@ public class AiSpeechConfigController extends BaseController {
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
-    Page<AiSpeechConfig> entityPage
-        = service.search(query, sort, orderAscending, page, size);
+    Page<AiSpeechConfig> entityPage = service.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }
 }

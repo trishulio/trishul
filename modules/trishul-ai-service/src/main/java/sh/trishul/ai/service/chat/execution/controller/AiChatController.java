@@ -103,14 +103,11 @@ public class AiChatController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public PageDto<Object> search(
-      @RequestParam(name = "q", required = false) String query,
+  public PageDto<Object> search(@RequestParam(name = "q", required = false) String query,
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "100") int size,
-      @RequestParam(name = "sort",
-          defaultValue = "id") SortedSet<String> sort,
-      @RequestParam(name = "order_asc",
-          defaultValue = "true") boolean orderAscending) {
+      @RequestParam(name = "sort", defaultValue = "id") SortedSet<String> sort,
+      @RequestParam(name = "order_asc", defaultValue = "true") boolean orderAscending) {
     return new PageDto<>(new ArrayList<>(), 0, 0);
   }
 }

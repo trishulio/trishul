@@ -110,8 +110,8 @@ public class AiChatMemoryConfigService extends BaseService implements
   private static final String[][] SEARCH_FIELDS = {{"name"}};
 
   @Override
-  public Page<AiChatMemoryConfig> search(String query, SortedSet<String> sort, boolean orderAscending,
-      int page, int size) {
+  public Page<AiChatMemoryConfig> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 }

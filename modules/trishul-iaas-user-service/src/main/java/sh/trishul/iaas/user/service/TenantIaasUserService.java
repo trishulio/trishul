@@ -70,8 +70,8 @@ public class TenantIaasUserService {
     return userCount;
   }
 
-  public Page<IaasUserTenantMembership> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<IaasUserTenantMembership> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

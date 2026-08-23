@@ -40,8 +40,8 @@ public class AiToolService extends BaseService
   private static final String[][] SEARCH_FIELDS = {{"name"}, {"description"}};
 
   @Override
-  public Page<AiTool> search(String query, SortedSet<String> sort, boolean orderAscending,
-      int page, int size) {
+  public Page<AiTool> search(String query, SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
     return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 

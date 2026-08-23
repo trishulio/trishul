@@ -113,8 +113,8 @@ public class AiChatModelConfigService extends BaseService implements
   private static final String[][] SEARCH_FIELDS = {{"name"}, {"provider"}};
 
   @Override
-  public Page<AiChatModelConfig> search(String query, SortedSet<String> sort, boolean orderAscending,
-      int page, int size) {
+  public Page<AiChatModelConfig> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return this.repoService.search(query, SEARCH_FIELDS, sort, orderAscending, page, size);
   }
 }

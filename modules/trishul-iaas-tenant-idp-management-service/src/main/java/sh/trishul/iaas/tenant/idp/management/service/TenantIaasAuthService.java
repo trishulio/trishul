@@ -82,8 +82,8 @@ public class TenantIaasAuthService {
     return new TenantIaasAuthDeleteResult(roleCount);
   }
 
-  public Page<TenantIaasAuthResources> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<TenantIaasAuthResources> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

@@ -77,8 +77,8 @@ public class WebRTCSpeechService {
     return "";
   }
 
-  public Page<Object> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<Object> search(String query, SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
     return Page.empty();
   }
 }

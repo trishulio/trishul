@@ -76,29 +76,20 @@ public class IntegrationCommunicationController {
     }
   }
 
-  @GetMapping(value = "/search",
-      consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public PageDto<IntegrationCommunicationConfigDto> search(
-      @RequestParam(name = "q",
-          required = false) String query,
-      @RequestParam(name = "page",
-          defaultValue = "0") int page,
-      @RequestParam(name = "size",
-          defaultValue = "100") int size,
-      @RequestParam(name = "sort",
-          defaultValue = "id") SortedSet<String> sort,
-      @RequestParam(name = "order_asc",
-          defaultValue = "true") boolean orderAscending) {
+      @RequestParam(name = "q", required = false) String query,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "100") int size,
+      @RequestParam(name = "sort", defaultValue = "id") SortedSet<String> sort,
+      @RequestParam(name = "order_asc", defaultValue = "true") boolean orderAscending) {
     Page<IntegrationCommunicationConfig> configPage
         = service.search(query, sort, orderAscending, page, size);
 
-    List<IntegrationCommunicationConfigDto> configs
-        = configPage.stream().map(
-            config -> IntegrationCommunicationConfigMapper.INSTANCE
-                .toDto(config))
-            .toList();
+    List<IntegrationCommunicationConfigDto> configs = configPage.stream()
+        .map(config -> IntegrationCommunicationConfigMapper.INSTANCE.toDto(config)).toList();
 
-    return new PageDto<>(configs,
-        configPage.getTotalPages(), configPage.getTotalElements());
+    return new PageDto<>(configs, configPage.getTotalPages(), configPage.getTotalElements());
   }
 }
