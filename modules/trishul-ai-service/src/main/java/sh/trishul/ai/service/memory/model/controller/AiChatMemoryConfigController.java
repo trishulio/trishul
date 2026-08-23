@@ -112,17 +112,17 @@ public class AiChatMemoryConfigController extends BaseController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public sh.trishul.repo.jpa.repository.model.dto.PageDto<AiChatMemoryConfigDto> search(
+  public PageDto<AiChatMemoryConfigDto> search(
       @RequestParam(name = "q", required = false) String query,
       @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
       @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
       @RequestParam(name = PROPNAME_SORT_BY,
-          defaultValue = VALUE_DEFAULT_SORT_BY) java.util.SortedSet<String> sort,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
       @RequestParam(name = PROPNAME_ORDER_ASC,
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
-          defaultValue = VALUE_DEFAULT_ATTR) java.util.Set<String> attributes) {
-    org.springframework.data.domain.Page<AiChatMemoryConfig> entityPage
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    Page<AiChatMemoryConfig> entityPage
         = service.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }

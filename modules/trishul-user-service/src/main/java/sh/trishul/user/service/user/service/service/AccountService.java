@@ -2,6 +2,8 @@ package sh.trishul.user.service.user.service.service;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.auth.session.context.PrincipalContext;
 import sh.trishul.auth.session.context.holder.ContextHolder;
@@ -51,8 +53,8 @@ public class AccountService {
     return users.get(0);
   }
 
-  public org.springframework.data.domain.Page<User> search(String query,
-      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return org.springframework.data.domain.Page.empty();
+  public Page<User> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

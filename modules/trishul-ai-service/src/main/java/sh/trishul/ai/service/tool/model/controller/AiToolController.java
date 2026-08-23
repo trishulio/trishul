@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +32,7 @@ import sh.trishul.crud.controller.BaseController;
 import sh.trishul.crud.controller.CrudControllerService;
 import sh.trishul.crud.controller.filter.AttributeFilter;
 import sh.trishul.model.base.dto.DeleteResultDto;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 @RestController
 @RequestMapping("/api/v1/ai/tools")
@@ -82,7 +85,7 @@ public class AiToolController extends BaseController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public sh.trishul.repo.jpa.repository.model.dto.PageDto<AiToolDto> search(
+  public PageDto<AiToolDto> search(
       @RequestParam(name = "q", required = false) String query,
       @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
       @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
@@ -92,7 +95,7 @@ public class AiToolController extends BaseController {
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
-    org.springframework.data.domain.Page<AiTool> entityPage
+    Page<AiTool> entityPage
         = service.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }

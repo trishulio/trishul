@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.access.policy.model.BaseIaasPolicy;
 import sh.trishul.iaas.access.policy.model.IaasPolicy;
 import sh.trishul.iaas.access.policy.model.UpdateIaasPolicy;
@@ -186,8 +188,8 @@ public class TenantIaasVfsService {
     return new TenantIaasVfsDeleteResult(policyCount, objectStoreCount);
   }
 
-  public org.springframework.data.domain.Page<TenantIaasVfsResources> search(String query,
-      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return org.springframework.data.domain.Page.empty();
+  public Page<TenantIaasVfsResources> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

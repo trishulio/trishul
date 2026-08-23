@@ -56,7 +56,7 @@ public class UserSalutationController extends BaseController {
       @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
       @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
       @RequestParam(name = PROPNAME_SORT_BY,
-          defaultValue = VALUE_DEFAULT_SORT_BY) java.util.SortedSet<String> sort,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
       @RequestParam(name = PROPNAME_ORDER_ASC,
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending) {
     Page<UserSalutation> userSalutationPage

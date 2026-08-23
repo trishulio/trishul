@@ -1,5 +1,7 @@
 package sh.trishul.ai.service.speech.service;
 
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,8 +16,8 @@ public class TextToSpeechStreamingService {
     return new byte[0];
   }
 
-  public org.springframework.data.domain.Page<Object> search(String query,
-      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return org.springframework.data.domain.Page.empty();
+  public Page<Object> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

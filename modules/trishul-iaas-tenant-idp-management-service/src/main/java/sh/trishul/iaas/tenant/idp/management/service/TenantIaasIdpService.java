@@ -2,6 +2,8 @@ package sh.trishul.iaas.tenant.idp.management.service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import sh.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import sh.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
@@ -47,8 +49,8 @@ public class TenantIaasIdpService {
     return this.idpService.exist(iaasIdpTenantId);
   }
 
-  public org.springframework.data.domain.Page<TenantIaasIdpResources> search(String query,
-      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return org.springframework.data.domain.Page.empty();
+  public Page<TenantIaasIdpResources> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

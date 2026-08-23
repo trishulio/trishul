@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.access.role.model.BaseIaasRole;
 import sh.trishul.iaas.access.role.model.IaasRole;
 import sh.trishul.iaas.access.role.model.UpdateIaasRole;
@@ -80,8 +82,8 @@ public class TenantIaasAuthService {
     return new TenantIaasAuthDeleteResult(roleCount);
   }
 
-  public org.springframework.data.domain.Page<TenantIaasAuthResources> search(String query,
-      java.util.SortedSet<String> sort, boolean orderAscending, int page, int size) {
-    return org.springframework.data.domain.Page.empty();
+  public Page<TenantIaasAuthResources> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }
