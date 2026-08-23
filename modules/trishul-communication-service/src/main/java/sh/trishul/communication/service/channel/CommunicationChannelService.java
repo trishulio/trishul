@@ -125,9 +125,11 @@ public class CommunicationChannelService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"name"}};
+
   @Override
-  public Page<CommunicationChannel> search(String query, String[][] fieldPaths,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<CommunicationChannel> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

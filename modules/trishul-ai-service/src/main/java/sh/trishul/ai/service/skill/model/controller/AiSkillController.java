@@ -36,16 +36,19 @@ import sh.trishul.model.base.dto.DeleteResultDto;
 public class AiSkillController extends BaseController {
 
   private final CrudControllerService<Long, AiSkill, BaseAiSkill<?>, UpdateAiSkill<?>, AiSkillDto, AddAiSkillDto, UpdateAiSkillDto> controller;
+  private final AiSkillService service;
 
   @Autowired
   public AiSkillController(AiSkillService service, AttributeFilter filter) {
-    this(new CrudControllerService<>(filter, AiSkillMapper.INSTANCE, service, "AiSkill"));
+    this(new CrudControllerService<>(filter, AiSkillMapper.INSTANCE, service, "AiSkill"), service);
   }
 
   public AiSkillController(
-      CrudControllerService<Long, AiSkill, BaseAiSkill<?>, UpdateAiSkill<?>, AiSkillDto, AddAiSkillDto, UpdateAiSkillDto> controller) {
+      CrudControllerService<Long, AiSkill, BaseAiSkill<?>, UpdateAiSkill<?>, AiSkillDto, AddAiSkillDto, UpdateAiSkillDto> controller,
+      AiSkillService service) {
     super();
     this.controller = controller;
+    this.service = service;
   }
 
   @GetMapping(value = "/{id}", consumes = MediaType.ALL_VALUE,
@@ -75,6 +78,23 @@ public class AiSkillController extends BaseController {
   @ResponseStatus(value = HttpStatus.ACCEPTED)
   public List<AiSkillDto> patch(@Valid @NotNull @RequestBody List<UpdateAiSkillDto> updateDtos) {
     return this.controller.patch(updateDtos);
+  }
+
+  @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public PageDto<AiSkillDto> search(
+      @RequestParam(name = "q", required = false) String query,
+      @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
+      @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
+      @RequestParam(name = PROPNAME_SORT_BY,
+          defaultValue = VALUE_DEFAULT_SORT_BY) SortedSet<String> sort,
+      @RequestParam(name = PROPNAME_ORDER_ASC,
+          defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
+      @RequestParam(name = PROPNAME_ATTR,
+          defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
+    Page<AiSkill> entityPage
+        = service.search(query, sort, orderAscending, page, size);
+    return this.controller.getAll(entityPage, attributes);
   }
 
   @DeleteMapping(value = "", consumes = MediaType.ALL_VALUE)

@@ -3,7 +3,9 @@ package sh.trishul.iaas.tenant.service;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
 import sh.trishul.iaas.idp.tenant.model.TenantIaasAuthDeleteResult;
 import sh.trishul.iaas.idp.tenant.model.TenantIaasAuthResources;
@@ -93,5 +95,10 @@ public class TenantIaasService {
 
     return vfsResources.stream().map(vfsResource -> new TenantIaasResources(authIterator.next(),
         idpIterator.next(), vfsResource)).toList();
+  }
+
+  public Page<TenantIaasResources> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

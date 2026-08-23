@@ -2,7 +2,9 @@ package sh.trishul.ai.service.speech.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -73,5 +75,10 @@ public class WebRTCSpeechService {
       return (String) responseBody.get("text");
     }
     return "";
+  }
+
+  public Page<Object> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

@@ -2,9 +2,11 @@ package sh.trishul.iaas.user.service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.repository.IaasRepository;
 import sh.trishul.iaas.user.model.BaseIaasUser;
 import sh.trishul.iaas.user.model.BaseIaasUserTenantMembership;
@@ -66,5 +68,10 @@ public class TenantIaasUserService {
     log.info("Deleted user memberships: {}; users: {}", membershipCount, userCount);
 
     return userCount;
+  }
+
+  public Page<IaasUserTenantMembership> search(String query,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return Page.empty();
   }
 }

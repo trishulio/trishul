@@ -118,10 +118,11 @@ public class CommunicationMessageService extends BaseService
     return iaasRepo.put(updated);
   }
 
+  private static final String[][] SEARCH_FIELDS = {{"subject"}};
+
   @Override
-  public Page<Message> search(String query, String[][] fieldPaths, SortedSet<String> sort,
-      boolean orderAscending, int page, int size) {
-    // Iaas-backed messages support no server-side free-text search over an index.
+  public Page<Message> search(String query, SortedSet<String> sort, boolean orderAscending,
+      int page, int size) {
     return Page.empty();
   }
 }

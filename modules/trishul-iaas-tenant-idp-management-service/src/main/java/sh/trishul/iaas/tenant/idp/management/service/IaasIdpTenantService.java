@@ -124,9 +124,10 @@ public class IaasIdpTenantService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
+
   @Override
-  public Page<IaasIdpTenant> search(String query, String[][] fieldPaths, SortedSet<String> sort,
-      boolean orderAscending, int page, int size) {
+  public Page<IaasIdpTenant> search(String query, SortedSet<String> sort, boolean orderAscending,
+      int page, int size) {
     return Page.empty();
   }
 }
