@@ -105,7 +105,9 @@ public class AiChatMemoryConfigService extends BaseService implements
       throw new EntityNotFoundException("Entity not found");
     List<AiChatMemoryConfig> updated = this.entityMergerService.getPatchEntities(existing, patches);
     return this.repoService.saveAll(updated);
-  }  private static final String[][] SEARCH_FIELDS = {{"name"}};
+  }
+
+  private static final String[][] SEARCH_FIELDS = {{"name"}};
 
   @Override
   public Page<AiChatMemoryConfig> search(String query, SortedSet<String> sort, boolean orderAscending,
