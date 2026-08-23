@@ -288,6 +288,13 @@
         </dependency>
     </dependencies>
 
+    <properties>
+        <jib.base.image>eclipse-temurin:23-jre-alpine</jib.base.image>
+        <jib.image>${project.groupId}/${project.artifactId}</jib.image>
+        <jib.main.class>${project.groupId}.Application</jib.main.class>
+        <jib.version>3.4.4</jib.version>
+    </properties>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -332,6 +339,38 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <layers>
+                                <enabled>true</enabled>
+                            </layers>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>${jib.version}</version>
+                        <configuration>
+                            <containerizingMode>packaged</containerizingMode>
+                            <from>
+                                <image>${jib.base.image}</image>
+                            </from>
+                            <to>
+                                <image>${jib.image}</image>
+                            </to>
+                            <container>
+                                <user>1000</user>
+                                <mainClass>${jib.main.class}</mainClass>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <jvmFlags>
+                                    <jvmFlag>-XX:+UseG1GC</jvmFlag>
+                                    <jvmFlag>-XX:MaxRAMPercentage=75.0</jvmFlag>
+                                    <jvmFlag>-XX:MinRAMPercentage=50.0</jvmFlag>
+                                    <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
+                                </jvmFlags>
+                            </container>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

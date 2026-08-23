@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.communication.model.message.BaseMessage;
 import sh.trishul.communication.model.message.Message;
@@ -114,5 +116,12 @@ public class CommunicationMessageService extends BaseService
     List<Message> updated = this.entityMergerService.getPatchEntities(existing, updates);
 
     return iaasRepo.put(updated);
+  }
+
+  @Override
+  public Page<Message> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    // Iaas-backed messages support no server-side free-text search over an index.
+    return Page.empty();
   }
 }

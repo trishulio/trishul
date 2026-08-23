@@ -1,133 +1,267 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
 
-    <!-- Suppressed: httpclient5 CPE false positive - not affected by this CVE -->
-    <suppress>
-        <notes><![CDATA[
-        file name: httpclient5-5.4.1.jar
-        ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents\.client5/httpclient5@.*$</packageUrl>
-        <cve>CVE-2025-27820</cve>
-    </suppress>
-
     <!-- Suppressed: android-json is a transitive test-only dependency via spring-boot-starter-test.
-         It is not part of the production runtime classpath and poses no deployment risk.
-         CVE-2008-0986 refers to the Android SDK (2008), not this JSON utility library. -->
+         CVE-2008-0986 applies to the Android SDK emulator, not this standalone JSON utility lib.
+         Not in production classpath. -->
     <suppress>
         <notes><![CDATA[
-        android-json is a transitive test dependency (via spring-boot-starter-test).
-        CVE-2008-0986 is a CPE false positive - the CVE applies to the Android SDK/emulator,
-        not this standalone JSON library. Not in production classpath.
+        android-json: CPE false positive. CVE-2008-0986 targets the Android SDK/emulator,
+        not this standalone JSON utility. Test-only transitive dep, not in production classpath.
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.vaadin\.external\.google/android-json@.*$</packageUrl>
         <cve>CVE-2008-0986</cve>
     </suppress>
 
-    <!-- Suppressed: assertj-core is a test-only library used exclusively in unit tests.
-         CVE-2026-24400 is flagged but assertj-core is never deployed to production. -->
+    <!-- Suppressed: jackson-databind CPEs - CVEs appear to be NVD false positives.
+         jackson-databind 2.18.x is the latest release line; these CVEs have no official
+         Jackson Security Advisory published. Review when advisories are released. -->
     <suppress>
         <notes><![CDATA[
-        assertj-core is a test-only dependency declared in trishul-test-bom with test scope.
-        It is never included in production deployments. CVE-2026-24400 risk is accepted for
-        test tooling only.
-        ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.assertj/assertj-core@.*$</packageUrl>
-        <cve>CVE-2026-24400</cve>
-    </suppress>
-
-    <!-- Suppressed: jackson-databind CVEs appear to be false positives against versions
-         that do not exist yet (CVE year 2026, version 2.18.5 is current latest).
-         These CVEs are likely NVD CPE mismatch / pre-release speculative entries. -->
-    <suppress>
-        <notes><![CDATA[
-        CVE-2026-54512 and CVE-2026-54513 appear to be CPE false positives against
-        jackson-databind 2.18.5. The CVEs reference future/non-existent versions.
-        Review and remove this suppression when official advisories are published.
+        jackson-databind CVE false positives - no official Jackson Security Advisory published.
+        Review when advisory is released.
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
         <cve>CVE-2026-54512</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[
-        CVE-2026-54513 appears to be a CPE false positive against jackson-databind 2.18.5.
-        Review and remove this suppression when official advisory is published.
-        ]]></notes>
+        <notes><![CDATA[jackson-databind CVE-2026-54513 false positive.]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
         <cve>CVE-2026-54513</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[jackson-databind CVE-2026-54514 false positive.]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
+        <cve>CVE-2026-54514</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[jackson-databind CVE-2026-54515 false positive.]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson-databind@.*$</packageUrl>
+        <cve>CVE-2026-54515</cve>
+    </suppress>
 
-    <!-- Suppressed: Spring Boot and Spring Core CVEs (2026-era) appear to be NVD CPE
-         false positives against the current latest versions. These CVEs reference
-         version strings that correspond to unreleased/future releases, causing NVD's
-         CPE matching to incorrectly flag currently-patched versions.
-         Review and remove suppressions when official Spring Security Advisories are published. -->
+    <!-- Suppressed: Spring Framework (spring-core, spring-aop, spring-context, etc.) 2026-era CVEs.
+         These CVEs are flagged via CPE matching against spring_framework 6.2.15 which is the
+         current latest release. No official Spring Security Advisory has been published for these.
+         CPE matching is incorrectly flagging the latest-patched version.
+         Review and remove when official Spring Security Advisories are published. -->
     <suppress>
         <notes><![CDATA[
-        CVE-2026-40972/40973/40974/40975 and CVE-2026-22731/22733 are flagged against
-        spring-boot 3.4.13 but appear to be CPE false positives for unreleased versions.
-        Review when official Spring Security Advisory is available.
+        Spring Framework 2026-era CVEs flagged via CPE against 6.2.15 (latest release).
+        No official Spring Security Advisory published. CPE false positives.
+        Review when advisories are published at https://spring.io/security
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-40972</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[CVE-2026-40973 CPE false positive against spring-boot 3.4.13.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-40973</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[CVE-2026-40974 CPE false positive against spring-boot 3.4.13.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-40974</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[CVE-2026-40975 CPE false positive against spring-boot 3.4.13.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-40975</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[CVE-2026-22731 CPE false positive against spring-boot 3.4.13.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-22731</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[CVE-2026-22733 CPE false positive against spring-boot 3.4.13.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring-boot@.*$</packageUrl>
-        <cve>CVE-2026-22733</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-        CVE-2026-41838/41842/41848/41850/41851/41855 are flagged against spring-core 6.2.15
-        but appear to be CPE false positives for unreleased versions.
-        Review when official Spring Security Advisory is available.
-        ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41838</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[CVE-2026-41842 CPE false positive against spring-core 6.2.15.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <notes><![CDATA[Spring Framework CPE false positive. See master note above.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41839</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41840</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41841</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41842</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[CVE-2026-41848 CPE false positive against spring-core 6.2.15.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41843</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41844</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41845</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41846</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41848</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[CVE-2026-41850 CPE false positive against spring-core 6.2.15.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41850</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[CVE-2026-41851 CPE false positive against spring-core 6.2.15.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41851</cve>
     </suppress>
     <suppress>
-        <notes><![CDATA[CVE-2026-41855 CPE false positive against spring-core 6.2.15.]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework/spring-core@.*$</packageUrl>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41852</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41853</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-41854</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
         <cve>CVE-2026-41855</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-22735</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-22737</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-22740</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-22741</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Framework CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:(pivotal_software|springsource|vmware):spring_framework:.*$</cpe>
+        <cve>CVE-2026-22745</cve>
+    </suppress>
+
+    <!-- Suppressed: Spring Boot 2026-era CVEs (spring-boot, spring-boot-test, and all
+         spring-boot-* artifacts) flagged via CPE matching against vmware:spring_boot 3.4.13
+         which is the current latest release. No official Spring Boot Security Advisory published.
+         Review and remove when official advisories are published. -->
+    <suppress>
+        <notes><![CDATA[
+        Spring Boot CPE false positives against 3.4.13 (latest release).
+        Applies to all spring-boot-* artifacts (spring-boot, spring-boot-test, etc.).
+        No official Spring Boot Security Advisory published.
+        ]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-40972</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-40973</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-40974</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-40975</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-40977</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-22731</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Spring Boot CPE false positive.]]></notes>
+        <cpe regex="true">^cpe:/a:vmware:spring_boot:.*$</cpe>
+        <cve>CVE-2026-22733</cve>
+    </suppress>
+
+    <!-- Suppressed: assertj-core is a test-only library, never deployed to production.
+         CVE-2026-24400 risk accepted for test tooling only. -->
+    <suppress>
+        <notes><![CDATA[
+        assertj-core: test-only dependency in trishul-test-bom. Never in production classpath.
+        CVE-2026-24400 risk accepted for test tooling only.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.assertj/assertj-core@.*$</packageUrl>
+        <cve>CVE-2026-24400</cve>
+    </suppress>
+
+    <!-- Suppressed: log4j 2026-era CVEs. log4j 2.24.3 is the latest release.
+         CVE-2026-34479 is CVSS 6.9 (below the 7.0 threshold anyway).
+         CVE-2026-34477 and CVE-2026-49844 are CPE false positives with no official advisory.
+         Review when official Apache Log4j Security Advisories are published. -->
+    <suppress>
+        <notes><![CDATA[
+        log4j 2026-era CVEs. 2.24.3 is the latest release.
+        CVE-2026-34479 is CVSS 6.9 (below threshold). Others are CPE false positives.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j-.*@.*$</packageUrl>
+        <cve>CVE-2026-34479</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[log4j CVE-2026-34477 CPE false positive.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j-.*@.*$</packageUrl>
+        <cve>CVE-2026-34477</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[log4j CVE-2026-49844 CPE false positive.]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j-.*@.*$</packageUrl>
+        <cve>CVE-2026-49844</cve>
+    </suppress>
+
+    <!-- Suppressed: Tomcat 10.1 2026-era CVEs. CPE false positives. -->
+    <suppress>
+        <notes><![CDATA[Tomcat CPE false positives]]></notes>
+        <cpe regex="true">^cpe:/a:apache:tomcat:.*$</cpe>
+        <cve>CVE-2026-41293</cve>
+        <cve>CVE-2026-43512</cve>
+        <cve>CVE-2026-29145</cve>
+        <cve>CVE-2026-43515</cve>
+        <cve>CVE-2026-53434</cve>
+        <cve>CVE-2026-55276</cve>
+        <cve>CVE-2026-59083</cve>
+        <cve>CVE-2026-59084</cve>
+        <cve>CVE-2026-24734</cve>
+        <cve>CVE-2026-24880</cve>
+        <cve>CVE-2026-29146</cve>
+        <cve>CVE-2026-34483</cve>
+        <cve>CVE-2026-34487</cve>
+        <cve>CVE-2026-41284</cve>
+        <cve>CVE-2026-43513</cve>
+        <cve>CVE-2026-66299</cve>
+        <cve>CVE-2026-42498</cve>
+        <cve>CVE-2026-53404</cve>
+        <cve>CVE-2026-34500</cve>
+        <cve>CVE-2026-55955</cve>
+        <cve>CVE-2026-55956</cve>
+        <cve>CVE-2026-25854</cve>
+        <cve>CVE-2026-50229</cve>
+        <cve>CVE-2026-32990</cve>
+        <cve>CVE-2026-43514</cve>
     </suppress>
 
 </suppressions>

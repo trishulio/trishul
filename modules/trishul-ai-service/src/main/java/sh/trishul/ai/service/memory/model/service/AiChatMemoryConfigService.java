@@ -106,4 +106,10 @@ public class AiChatMemoryConfigService extends BaseService implements
     List<AiChatMemoryConfig> updated = this.entityMergerService.getPatchEntities(existing, patches);
     return this.repoService.saveAll(updated);
   }
+
+  @Override
+  public Page<AiChatMemoryConfig> search(String query, String[][] fieldPaths,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  }
 }

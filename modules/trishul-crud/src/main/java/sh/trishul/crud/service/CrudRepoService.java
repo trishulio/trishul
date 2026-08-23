@@ -88,7 +88,7 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
   @Override
   public Page<E> search(String query, String[][] fieldPaths, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {
-    Specification<E> spec = WhereClauseBuilder.<E>builder().build();
+    Specification<E> spec = WhereClauseBuilder.builder().build();
     if (query != null && !query.isBlank()) {
       for (String term : query.split("\\s+")) {
         if (term.isBlank()) {
@@ -96,8 +96,7 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
         }
         Specification<E> termSpec = null;
         for (String[] path : fieldPaths) {
-          final Specification<E> pathSpec
-              = WhereClauseBuilder.<E>builder().ilike(path, Set.of(term)).build();
+          final Specification<E> pathSpec = WhereClauseBuilder.builder().ilike(path, Set.of(term)).build();
           termSpec = termSpec == null ? pathSpec : termSpec.or(pathSpec);
         }
         spec = spec.and(termSpec);

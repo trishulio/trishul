@@ -195,7 +195,6 @@ class AgentFactoryTest {
     assistant.chat("session-123", UserMessage.from("hello"));
   }
 
-
   @Test
   void testBuildMemory_WithNullConfig_UsesDefaultMaxMessages() {
     ChatMemory memory = agentFactory.buildMemory(null, "session-1");

@@ -4,9 +4,11 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.communication.model.message.Message;
 import sh.trishul.communication.service.message.CommunicationMessageService;
@@ -154,5 +156,11 @@ public class IntegrationCommunicationService extends BaseService implements
 
     List<Message> messages = this.communicationMessageService.add(List.of(message));
     return messages != null && !messages.isEmpty() ? messages.get(0) : null;
+  }
+
+  @Override
+  public Page<IntegrationCommunicationConfig> search(String query, String[][] fieldPaths,
+      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
   }
 }

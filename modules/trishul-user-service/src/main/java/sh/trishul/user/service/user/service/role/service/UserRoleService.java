@@ -121,4 +121,10 @@ public class UserRoleService extends BaseService implements
 
     return this.repoService.saveAll(updated);
   }
+
+  @Override
+  public Page<UserRole> search(String query, String[][] fieldPaths, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
+    return this.repoService.search(query, fieldPaths, sort, orderAscending, page, size);
+  }
 }

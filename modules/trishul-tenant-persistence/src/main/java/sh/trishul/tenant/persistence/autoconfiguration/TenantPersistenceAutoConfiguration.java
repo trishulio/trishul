@@ -64,7 +64,7 @@ public class TenantPersistenceAutoConfiguration {
       MultiTenantConnectionProvider<String> multiTenantConnectionProvider,
       CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver,
       PackageScanConfig packageScanConfig,
-      @Value("${spring.jpa.database-platform:${spring.jpa.properties.hibernate.dialect:org.hibernate.dialect.PostgreSQLDialect}}") String dialect) {
+      @Value("${spring.jpa.database-platform:${spring.jpa.properties.hibernate.dialect:}}") String dialect) {
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
         = new LocalContainerEntityManagerFactoryBean();
     localContainerEntityManagerFactoryBean.setDataSource(dataSourceManager.getAdminDataSource());
@@ -73,7 +73,9 @@ public class TenantPersistenceAutoConfiguration {
         ArrayUtils.add(packageScanConfig.getEntityPackagesToScan(), "sh.trishul"));
 
     Map<String, Object> jpaProperties = new HashMap<>();
-    jpaProperties.put(JdbcSettings.DIALECT, dialect);
+    if (dialect != null && !dialect.isEmpty()) {
+      jpaProperties.put(JdbcSettings.DIALECT, dialect);
+    }
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER,
         multiTenantConnectionProvider);
     jpaProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER,
