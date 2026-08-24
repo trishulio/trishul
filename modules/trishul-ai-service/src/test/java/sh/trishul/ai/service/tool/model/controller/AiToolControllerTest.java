@@ -32,7 +32,7 @@ class AiToolControllerTest {
   void init() {
     this.mCrudController = mock(CrudControllerService.class);
     this.mService = mock(AiToolService.class);
-    this.controller = new AiToolController(mCrudController);
+    this.controller = new AiToolController(mCrudController, mService);
   }
 
   @Test

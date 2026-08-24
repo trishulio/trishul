@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sh.trishul.ai.service.speech.service.WebRTCSpeechService;
+import sh.trishul.ai.speech.model.AiSpeechConfigDto;
 import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 @RestController
@@ -42,7 +43,7 @@ public class AiSpeechController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public PageDto<Object> search(@RequestParam(name = "q", required = false) String query,
+  public PageDto<AiSpeechConfigDto> search(@RequestParam(name = "q", required = false) String query,
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "100") int size,
       @RequestParam(name = "sort", defaultValue = "id") SortedSet<String> sort,
