@@ -26,6 +26,7 @@ import sh.trishul.ai.service.chat.execution.dto.ChatMessageContentDto;
 import sh.trishul.ai.service.chat.execution.dto.ChatRequestDto;
 import sh.trishul.ai.service.session.model.service.AiChatSessionService;
 import sh.trishul.ai.session.model.AiChatSession;
+import sh.trishul.model.base.dto.BaseDto;
 import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 @RestController
@@ -103,14 +104,11 @@ public class AiChatController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public PageDto<Object> search(
-      @RequestParam(name = "q", required = false) String query,
+  public PageDto<BaseDto> search(@RequestParam(name = "q", required = false) String query,
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "100") int size,
-      @RequestParam(name = "sort",
-          defaultValue = "id") SortedSet<String> sort,
-      @RequestParam(name = "order_asc",
-          defaultValue = "true") boolean orderAscending) {
+      @RequestParam(name = "sort", defaultValue = "id") SortedSet<String> sort,
+      @RequestParam(name = "order_asc", defaultValue = "true") boolean orderAscending) {
     return new PageDto<>(new ArrayList<>(), 0, 0);
   }
 }

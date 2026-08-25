@@ -97,8 +97,8 @@ public class TenantIaasService {
         idpIterator.next(), vfsResource)).toList();
   }
 
-  public Page<TenantIaasResources> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<TenantIaasResources> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

@@ -124,8 +124,7 @@ public class AiChatModelConfigController extends BaseController {
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
-    Page<AiChatModelConfig> entityPage
-        = service.search(query, sort, orderAscending, page, size);
+    Page<AiChatModelConfig> entityPage = service.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }
 }

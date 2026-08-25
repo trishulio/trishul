@@ -16,8 +16,8 @@ public class TextToSpeechStreamingService {
     return new byte[0];
   }
 
-  public Page<Object> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<Object> search(String query, SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
     return Page.empty();
   }
 }

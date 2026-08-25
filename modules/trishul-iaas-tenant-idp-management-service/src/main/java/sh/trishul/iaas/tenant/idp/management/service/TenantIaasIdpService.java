@@ -49,8 +49,8 @@ public class TenantIaasIdpService {
     return this.idpService.exist(iaasIdpTenantId);
   }
 
-  public Page<TenantIaasIdpResources> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<TenantIaasIdpResources> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

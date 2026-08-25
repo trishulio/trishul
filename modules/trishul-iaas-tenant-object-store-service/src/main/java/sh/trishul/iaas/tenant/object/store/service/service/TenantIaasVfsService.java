@@ -188,8 +188,8 @@ public class TenantIaasVfsService {
     return new TenantIaasVfsDeleteResult(policyCount, objectStoreCount);
   }
 
-  public Page<TenantIaasVfsResources> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<TenantIaasVfsResources> search(String query, SortedSet<String> sort,
+      boolean orderAscending, int page, int size) {
     return Page.empty();
   }
 }

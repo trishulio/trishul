@@ -53,8 +53,8 @@ public class AccountService {
     return users.get(0);
   }
 
-  public Page<User> search(String query,
-      SortedSet<String> sort, boolean orderAscending, int page, int size) {
+  public Page<User> search(String query, SortedSet<String> sort, boolean orderAscending, int page,
+      int size) {
     return Page.empty();
   }
 }

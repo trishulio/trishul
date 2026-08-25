@@ -116,8 +116,7 @@ public class TenantController extends BaseController {
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public PageDto<TenantDto> search(
-      @RequestParam(name = "q", required = false) String query,
+  public PageDto<TenantDto> search(@RequestParam(name = "q", required = false) String query,
       @RequestParam(name = PROPNAME_PAGE_INDEX, defaultValue = VALUE_DEFAULT_PAGE_INDEX) int page,
       @RequestParam(name = PROPNAME_PAGE_SIZE, defaultValue = VALUE_DEFAULT_PAGE_SIZE) int size,
       @RequestParam(name = PROPNAME_SORT_BY,
@@ -126,8 +125,7 @@ public class TenantController extends BaseController {
           defaultValue = VALUE_DEFAULT_ORDER_ASC) boolean orderAscending,
       @RequestParam(name = PROPNAME_ATTR,
           defaultValue = VALUE_DEFAULT_ATTR) Set<String> attributes) {
-    Page<Tenant> entityPage
-        = tenantService.search(query, sort, orderAscending, page, size);
+    Page<Tenant> entityPage = tenantService.search(query, sort, orderAscending, page, size);
     return this.controller.getAll(entityPage, attributes);
   }
 }
