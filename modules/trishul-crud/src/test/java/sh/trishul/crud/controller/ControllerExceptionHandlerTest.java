@@ -15,11 +15,13 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.server.ResponseStatusException;
 
 class ControllerExceptionHandlerTest {
   private ControllerExceptionHandler handler;
@@ -155,5 +157,42 @@ class ControllerExceptionHandlerTest {
     assertNotNull(response);
     assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
     assertEquals(HttpStatus.BAD_REQUEST.getReasonPhrase(), response.getError());
+  }
+
+  @Test
+  void testResponseStatusException_WithReason_ReturnsMappedResponse() {
+    ResponseStatusException exception
+        = new ResponseStatusException(HttpStatus.BAD_REQUEST, "Validation failure");
+
+    ResponseEntity<ErrorResponse> responseEntity
+        = handler.responseStatusException(exception, mRequest);
+
+    assertNotNull(responseEntity);
+    assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    ErrorResponse response = responseEntity.getBody();
+    assertNotNull(response);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+    assertEquals(HttpStatus.BAD_REQUEST.getReasonPhrase(), response.getError());
+    assertEquals("Validation failure", response.getMessage());
+    assertEquals("/api/test", response.getPath());
+  }
+
+  @Test
+  void testResponseStatusException_WithoutReason_ReturnsMessage() {
+    ResponseStatusException exception = new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+    ResponseEntity<ErrorResponse> responseEntity
+        = handler.responseStatusException(exception, mRequest);
+
+    assertNotNull(responseEntity);
+    assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    ErrorResponse response = responseEntity.getBody();
+    assertNotNull(response);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+    assertEquals(HttpStatus.BAD_REQUEST.getReasonPhrase(), response.getError());
+    assertEquals(exception.getMessage(), response.getMessage());
+    assertEquals("/api/test", response.getPath());
   }
 }

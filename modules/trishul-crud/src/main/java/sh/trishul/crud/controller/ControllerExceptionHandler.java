@@ -10,12 +10,14 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 import sh.trishul.model.base.exception.EntityNotFoundException;
 
 @RestControllerAdvice
@@ -81,6 +83,18 @@ public class ControllerExceptionHandler {
         HttpStatus.BAD_REQUEST.getReasonPhrase(), fieldErrors, request.getRequestURI());
 
     return response;
+  }
+
+  @ExceptionHandler(value = {ResponseStatusException.class})
+  public ResponseEntity<ErrorResponse> responseStatusException(ResponseStatusException e,
+      HttpServletRequest request) {
+
+    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getStatusCode().value(),
+        HttpStatus.valueOf(e.getStatusCode().value()).getReasonPhrase(),
+        e.getReason() != null ? e.getReason() : e.getMessage(), request.getRequestURI());
+
+    log.error("Response Status Exception", e);
+    return ResponseEntity.status(e.getStatusCode()).body(response);
   }
 
   @ExceptionHandler(value = {RuntimeException.class})
