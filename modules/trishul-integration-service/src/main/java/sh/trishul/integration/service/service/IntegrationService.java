@@ -88,6 +88,16 @@ public class IntegrationService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<Integration> add(final List<? extends BaseIntegration<?>> additions) {
     if (additions == null) {
       return null;

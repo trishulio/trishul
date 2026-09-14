@@ -180,6 +180,24 @@ class UserServiceTest {
   }
 
   @Test
+  void testArchive_CallsRepoServiceArchive() {
+    doReturn(new DeleteResult(5L)).when(this.mRepoService).archive(Set.of(1L, 2L));
+
+    DeleteResult count = this.service.archive(Set.of(1L, 2L));
+    assertEquals(new DeleteResult(5L), count);
+    verify(this.mRepoService, times(1)).archive(Set.of(1L, 2L));
+  }
+
+  @Test
+  void testArchive_Id_CallsRepoServiceArchive() {
+    doReturn(new DeleteResult(1L)).when(this.mRepoService).archive(1L);
+
+    DeleteResult count = this.service.archive(1L);
+    assertEquals(new DeleteResult(1L), count);
+    verify(this.mRepoService, times(1)).archive(1L);
+  }
+
+  @Test
   void testAdd_AddsUserAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
     doAnswer(inv -> inv.getArgument(0)).when(this.iaasService).put(anyList());

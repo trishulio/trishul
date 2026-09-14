@@ -59,6 +59,16 @@ public class IaasObjectStoreFileService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<URI> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(URI id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public IaasObjectStoreFile get(URI id) {
     IaasObjectStoreFile file = null;
 

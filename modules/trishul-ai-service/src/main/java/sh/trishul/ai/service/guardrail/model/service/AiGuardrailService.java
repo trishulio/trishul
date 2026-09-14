@@ -79,6 +79,16 @@ public class AiGuardrailService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<AiGuardrail> add(List<? extends BaseAiGuardrail<?>> additions) {
     if (additions == null)
       return null;

@@ -117,6 +117,21 @@ class IaasRolePolicyAttachmentServiceTest {
   }
 
   @Test
+  void testArchive_Set_ReturnsZero() {
+    IaasRolePolicyAttachmentId id1 = new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1");
+    IaasRolePolicyAttachmentId id2 = new IaasRolePolicyAttachmentId("ROLE_2", "POLICY_2");
+    DeleteResult result = service.archive(Set.of(id1, id2));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_Id_ReturnsZero() {
+    IaasRolePolicyAttachmentId id = new IaasRolePolicyAttachmentId("ROLE", "POLICY");
+    DeleteResult result = service.archive(id);
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
   void testGet_ReturnsAttachmentFromRepo() {
     IaasRolePolicyAttachmentId id = new IaasRolePolicyAttachmentId("ROLE", "POLICY");
     IaasRolePolicyAttachment attachment = new IaasRolePolicyAttachment(id);

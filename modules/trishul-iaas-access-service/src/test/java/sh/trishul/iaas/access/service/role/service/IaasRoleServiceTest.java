@@ -108,6 +108,18 @@ class IaasRoleServiceTest {
   }
 
   @Test
+  void testArchive_Set_ReturnsZero() {
+    DeleteResult result = service.archive(Set.of("TENANT_1", "TENANT_2"));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_Id_ReturnsZero() {
+    DeleteResult result = service.archive("TENANT");
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List.of(new IaasRole((String) inv.getArgument(0, Set.class).iterator().next())))
         .when(mIaasRepo).get(anySet());

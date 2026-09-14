@@ -76,6 +76,16 @@ public class AiSkillService extends BaseService
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<AiSkill> add(List<? extends BaseAiSkill<?>> additions) {
     if (additions == null)
       return null;

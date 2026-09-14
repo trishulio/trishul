@@ -162,6 +162,23 @@ class UserRoleServiceTest {
   }
 
   @Test
+  void testArchive_CallsRepoServiceArchiveBulk_WhenUserRoleExists() {
+    doReturn(new DeleteResult(123L)).when(this.mRepoService).archive(Set.of(1L, 2L, 3L));
+
+    final DeleteResult count = this.service.archive(Set.of(1L, 2L, 3L));
+    assertEquals(new DeleteResult(123L), count);
+    verify(this.mRepoService).archive(Set.of(1L, 2L, 3L));
+  }
+
+  @Test
+  void testArchive_CallsRepoServiceArchive_WhenUserRoleExists() {
+    doReturn(new DeleteResult(99L)).when(this.mRepoService).archive(1L);
+
+    assertEquals(new DeleteResult(99L), this.service.archive(1L));
+    verify(this.mRepoService).archive(1L);
+  }
+
+  @Test
   void testAdd_AddsUserRoleAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     doAnswer(inv -> inv.getArgument(0)).when(this.mMergerService).getAddEntities(any());
 

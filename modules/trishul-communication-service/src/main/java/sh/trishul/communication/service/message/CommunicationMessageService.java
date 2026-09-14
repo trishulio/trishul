@@ -56,6 +56,16 @@ public class CommunicationMessageService extends BaseService
   }
 
   @Override
+  public DeleteResult archive(Set<String> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(String id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public Message get(String id) {
     Message message = null;
 

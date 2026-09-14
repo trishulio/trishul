@@ -83,6 +83,16 @@ public class AiChatModelConfigService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<AiChatModelConfig> add(List<? extends BaseAiChatModelConfig<?>> additions) {
     if (additions == null)
       return null;

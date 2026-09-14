@@ -59,6 +59,16 @@ public class IaasRolePolicyAttachmentService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<IaasRolePolicyAttachmentId> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(IaasRolePolicyAttachmentId id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public IaasRolePolicyAttachment get(IaasRolePolicyAttachmentId id) {
     IaasRolePolicyAttachment attachment = null;
 

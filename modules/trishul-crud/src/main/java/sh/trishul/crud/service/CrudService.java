@@ -17,13 +17,9 @@ public interface CrudService<ID, E, BE, UE extends Identified<ID>, A> {
 
   DeleteResult delete(ID id);
 
-  default DeleteResult archive(Set<ID> ids) {
-    return new DeleteResult(0L);
-  }
+  DeleteResult archive(Set<ID> ids);
 
-  default DeleteResult archive(ID id) {
-    return archive(id == null ? Set.of() : Set.of(id));
-  }
+  DeleteResult archive(ID id);
 
   E get(ID id);
 

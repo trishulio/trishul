@@ -14,12 +14,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -292,72 +290,6 @@ class CrudRepoServiceTest {
     assertEquals(new DeleteResult(1L), result);
   }
 
-  @Test
-  void testCrudServiceDefaultArchive_ReturnsZero() {
-    CrudService<Long, DummyCrudEntity, DummyCrudEntity, DummyCrudEntity, Object> dummyService
-        = new CrudService<>() {
-          @Override
-          public boolean exists(Set<Long> ids) {
-            return false;
-          }
-
-          @Override
-          public boolean exist(Long id) {
-            return false;
-          }
-
-          @Override
-          public DeleteResult delete(Set<Long> ids) {
-            return new DeleteResult(0L);
-          }
-
-          @Override
-          public DeleteResult delete(Long id) {
-            return new DeleteResult(0L);
-          }
-
-          @Override
-          public DummyCrudEntity get(Long id) {
-            return null;
-          }
-
-          @Override
-          public List<DummyCrudEntity> getByIds(
-              Collection<? extends Identified<Long>> idProviders) {
-            return List.of();
-          }
-
-          @Override
-          public List<DummyCrudEntity> getByAccessorIds(Collection<?> accessors) {
-            return List.of();
-          }
-
-          @Override
-          public List<DummyCrudEntity> add(List<? extends DummyCrudEntity> additions) {
-            return List.of();
-          }
-
-          @Override
-          public List<DummyCrudEntity> put(List<? extends DummyCrudEntity> updates) {
-            return List.of();
-          }
-
-          @Override
-          public List<DummyCrudEntity> patch(List<? extends DummyCrudEntity> updates) {
-            return List.of();
-          }
-
-          @Override
-          public Page<DummyCrudEntity> search(String query, SortedSet<String> sort,
-              boolean orderAscending, int page, int size) {
-            return null;
-          }
-        };
-
-    assertEquals(new DeleteResult(0L), dummyService.archive(Set.of(1L)));
-    assertEquals(new DeleteResult(0L), dummyService.archive(1L));
-    assertEquals(new DeleteResult(0L), dummyService.archive((Long) null));
-  }
 
   private static class DummyArchiveableEntity extends DummyCrudEntity implements Archiveable {
     private Boolean archived;

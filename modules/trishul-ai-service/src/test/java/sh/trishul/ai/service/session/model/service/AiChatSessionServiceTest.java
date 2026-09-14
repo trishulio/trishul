@@ -140,6 +140,18 @@ class AiChatSessionServiceTest {
   }
 
   @Test
+  void testArchive_ReturnsCount() {
+    when(mockRepoService.archive(Set.of(1L))).thenReturn(new DeleteResult(1L));
+    assertEquals(new DeleteResult(1L), service.archive(Set.of(1L)));
+  }
+
+  @Test
+  void testArchiveSingle_ReturnsCount() {
+    when(mockRepoService.archive(1L)).thenReturn(new DeleteResult(1L));
+    assertEquals(new DeleteResult(1L), service.archive(1L));
+  }
+
+  @Test
   void testAdd_ReturnsSavedEntities() {
     List<AiChatSession> entities = List.of(new AiChatSession(1L));
     when(mockMerger.getAddEntities(any())).thenReturn(entities);

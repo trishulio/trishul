@@ -116,6 +116,16 @@ public class UserService extends BaseService
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<User> add(final List<? extends BaseUser<?>> additions) {
     if (additions == null) {
       return null;

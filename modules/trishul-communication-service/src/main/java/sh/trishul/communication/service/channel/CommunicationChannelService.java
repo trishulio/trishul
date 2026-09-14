@@ -56,6 +56,16 @@ public class CommunicationChannelService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<String> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(String id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public CommunicationChannel get(String id) {
     CommunicationChannel channel = null;
 
