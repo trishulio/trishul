@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2,EI_EXPOSE_STATIC_REP2"/>
     <Or>
         <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper|Filter|Aspect|Interceptor|Configurer|Listener)" />
         <!-- 2. Entire internal packages where exposure is acceptable -->

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sh.trishul.auth.session.context.PrincipalContext;
@@ -25,6 +26,21 @@ class OwnerEntityListenerTest {
     when(mockContextHolder.getPrincipalContext()).thenReturn(mockPrincipal);
 
     listener = new OwnerEntityListener(mockContextHolder);
+  }
+
+  @AfterEach
+  void tearDown() {
+    OwnerEntityListener.setContextHolder(null);
+  }
+
+  @Test
+  void testDefaultConstructor_UsesStaticContextHolder() {
+    OwnerEntityListener.setContextHolder(mockContextHolder);
+    OwnerEntityListener defaultListener = new OwnerEntityListener();
+    TestOwnedEntity entity = new TestOwnedEntity();
+    defaultListener.prePersist(entity);
+
+    assertEquals("testuser@example.com", entity.getOwnerUsername());
   }
 
   @Test
