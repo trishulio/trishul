@@ -23,14 +23,12 @@ public class OwnerEntityListener {
   }
 
   private void populateOwnerUsername(Object entity) {
-    if (entity instanceof OwnedEntity owned) {
-      if (owned.getOwnerUsername() == null || owned.getOwnerUsername().isBlank()) {
-        if (contextHolder != null && contextHolder.getPrincipalContext() != null) {
-          String username = contextHolder.getPrincipalContext().getUsername();
-          if (username != null && !username.isBlank()) {
-            owned.setOwnerUsername(username);
-          }
-        }
+    if (entity instanceof OwnedEntity owned
+        && (owned.getOwnerUsername() == null || owned.getOwnerUsername().isBlank())
+        && contextHolder != null && contextHolder.getPrincipalContext() != null) {
+      String username = contextHolder.getPrincipalContext().getUsername();
+      if (username != null && !username.isBlank()) {
+        owned.setOwnerUsername(username);
       }
     }
   }
