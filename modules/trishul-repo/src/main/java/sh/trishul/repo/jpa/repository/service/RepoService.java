@@ -62,4 +62,8 @@ public interface RepoService<ID, E extends Identified<ID>, A> {
   DeleteResult delete(Set<ID> ids);
 
   DeleteResult delete(ID id);
+
+  DeleteResult archive(Set<ID> ids);
+
+  DeleteResult archive(ID id);
 }

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import sh.trishul.base.types.base.pojo.Archiveable;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.base.types.base.pojo.Refresher;
 import sh.trishul.model.base.pojo.DeleteResult;
@@ -135,5 +136,36 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
   @Override
   public DeleteResult delete(ID id) {
     return new DeleteResult(Long.valueOf(this.repo.deleteOneById(id)));
+  }
+
+  @Override
+  public DeleteResult archive(final Set<ID> ids) {
+    if (ids == null || ids.isEmpty()) {
+      return new DeleteResult(0L);
+    }
+
+    final List<E> entities = this.repo.findAllById(ids);
+    long count = 0;
+    for (E entity : entities) {
+      if (entity instanceof Archiveable archiveable) {
+        archiveable.setArchived(true);
+        count++;
+      }
+    }
+
+    if (count > 0) {
+      this.repo.saveAll(entities);
+      this.repo.flush();
+    }
+
+    return new DeleteResult(count);
+  }
+
+  @Override
+  public DeleteResult archive(final ID id) {
+    if (id == null) {
+      return new DeleteResult(0L);
+    }
+    return archive(Set.of(id));
   }
 }
