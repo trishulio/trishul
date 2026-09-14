@@ -28,6 +28,16 @@ class OwnerEntityListenerTest {
   }
 
   @Test
+  void testNoArgConstructor_UsesStaticContextHolder() {
+    OwnerEntityListener.setContextHolder(mockContextHolder);
+    OwnerEntityListener noArgListener = new OwnerEntityListener();
+    TestOwnedEntity entity = new TestOwnedEntity();
+    noArgListener.prePersist(entity);
+
+    assertEquals("testuser@example.com", entity.getOwnerUsername());
+  }
+
+  @Test
   void testPrePersist_WhenOwnerUsernameNull_SetsUsername() {
     TestOwnedEntity entity = new TestOwnedEntity();
     listener.prePersist(entity);
