@@ -1,5 +1,6 @@
 package sh.trishul.user.service.user.service.autoconfiguration;
 
+import jakarta.persistence.EntityManager;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,10 @@ import sh.trishul.user.role.model.UserRoleRefresher;
 import sh.trishul.user.salutation.model.UserSalutation;
 import sh.trishul.user.salutation.model.UserSalutationAccessor;
 import sh.trishul.user.salutation.model.UserSalutationRefresher;
+import sh.trishul.user.service.filter.OwnerFilterAspect;
+import sh.trishul.user.service.filter.OwnerFilterHandlerInterceptor;
+import sh.trishul.user.service.filter.OwnerFilterWebMvcConfigurer;
+import sh.trishul.user.service.listener.OwnerEntityListener;
 import sh.trishul.user.service.user.service.controller.UserDtoDecorator;
 import sh.trishul.user.service.user.service.repository.UserRepository;
 import sh.trishul.user.service.user.service.repository.role.repository.UserRoleRepository;
@@ -170,5 +175,32 @@ public class UserServiceAutoConfiguration {
   public Refresher<UserStatus, UserStatusAccessor<?>> userStatusRefresher(
       AccessorRefresher<Long, UserStatusAccessor<?>, UserStatus> userStatusAccessorRefresher) {
     return new UserStatusRefresher(userStatusAccessorRefresher);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(OwnerFilterHandlerInterceptor.class)
+  public OwnerFilterHandlerInterceptor ownerFilterHandlerInterceptor(EntityManager entityManager,
+      ContextHolder contextHolder) {
+    return new OwnerFilterHandlerInterceptor(entityManager, contextHolder);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(OwnerFilterAspect.class)
+  public OwnerFilterAspect ownerFilterAspect(EntityManager entityManager,
+      ContextHolder contextHolder) {
+    return new OwnerFilterAspect(entityManager, contextHolder);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(OwnerFilterWebMvcConfigurer.class)
+  public OwnerFilterWebMvcConfigurer ownerFilterWebMvcConfigurer(
+      OwnerFilterHandlerInterceptor interceptor) {
+    return new OwnerFilterWebMvcConfigurer(interceptor);
+  }
+
+  @Bean
+  public OwnerEntityListener initOwnerEntityListener(ContextHolder contextHolder) {
+    OwnerEntityListener.setContextHolder(contextHolder);
+    return new OwnerEntityListener(contextHolder);
   }
 }
