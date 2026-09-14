@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,10 @@ import sh.trishul.user.role.model.UserRole;
 import sh.trishul.user.role.model.UserRoleAccessor;
 import sh.trishul.user.salutation.model.UserSalutation;
 import sh.trishul.user.salutation.model.UserSalutationAccessor;
+import sh.trishul.user.service.filter.OwnerFilterAspect;
+import sh.trishul.user.service.filter.OwnerFilterHandlerInterceptor;
+import sh.trishul.user.service.filter.OwnerFilterWebMvcConfigurer;
+import sh.trishul.user.service.listener.OwnerEntityListener;
 import sh.trishul.user.service.user.service.controller.UserDtoDecorator;
 import sh.trishul.user.service.user.service.repository.UserRepository;
 import sh.trishul.user.service.user.service.repository.role.repository.UserRoleRepository;
@@ -318,6 +323,45 @@ class UserServiceAutoConfigurationTest {
 
     Refresher<UserStatus, UserStatusAccessor<?>> result
         = config.userStatusRefresher(mockUserStatusAccessorRefresher);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testOwnerFilterHandlerInterceptor_ReturnsNonNull() {
+    EntityManager mockEm = mock(EntityManager.class);
+    ContextHolder mockContextHolder = mock(ContextHolder.class);
+
+    OwnerFilterHandlerInterceptor result
+        = config.ownerFilterHandlerInterceptor(mockEm, mockContextHolder);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testOwnerFilterAspect_ReturnsNonNull() {
+    EntityManager mockEm = mock(EntityManager.class);
+    ContextHolder mockContextHolder = mock(ContextHolder.class);
+
+    OwnerFilterAspect result = config.ownerFilterAspect(mockEm, mockContextHolder);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testOwnerFilterWebMvcConfigurer_ReturnsNonNull() {
+    OwnerFilterHandlerInterceptor mockInterceptor = mock(OwnerFilterHandlerInterceptor.class);
+
+    OwnerFilterWebMvcConfigurer result = config.ownerFilterWebMvcConfigurer(mockInterceptor);
+
+    assertNotNull(result);
+  }
+
+  @Test
+  void testOwnerEntityListener_ReturnsNonNull() {
+    ContextHolder mockContextHolder = mock(ContextHolder.class);
+
+    OwnerEntityListener result = config.ownerEntityListener(mockContextHolder);
 
     assertNotNull(result);
   }
