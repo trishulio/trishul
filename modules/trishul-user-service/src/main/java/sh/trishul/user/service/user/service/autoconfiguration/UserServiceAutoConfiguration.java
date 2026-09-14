@@ -199,8 +199,8 @@ public class UserServiceAutoConfiguration {
   }
 
   @Bean
-  public OwnerEntityListener initOwnerEntityListener(ContextHolder contextHolder) {
-    OwnerEntityListener.setContextHolder(contextHolder);
+  @ConditionalOnMissingBean(OwnerEntityListener.class)
+  public OwnerEntityListener ownerEntityListener(ContextHolder contextHolder) {
     return new OwnerEntityListener(contextHolder);
   }
 }

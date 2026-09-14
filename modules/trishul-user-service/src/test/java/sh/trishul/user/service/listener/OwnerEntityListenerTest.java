@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sh.trishul.auth.session.context.PrincipalContext;
@@ -25,13 +24,7 @@ class OwnerEntityListenerTest {
     when(mockPrincipal.getUsername()).thenReturn("testuser@example.com");
     when(mockContextHolder.getPrincipalContext()).thenReturn(mockPrincipal);
 
-    OwnerEntityListener.setContextHolder(mockContextHolder);
-    listener = new OwnerEntityListener();
-  }
-
-  @AfterEach
-  void tearDown() {
-    OwnerEntityListener.setContextHolder(null);
+    listener = new OwnerEntityListener(mockContextHolder);
   }
 
   @Test
@@ -93,11 +86,10 @@ class OwnerEntityListenerTest {
 
   @Test
   void testPrePersist_WhenContextHolderNull_DoesNotSetUsername() {
-    OwnerEntityListener.setContextHolder(null);
-    OwnerEntityListener uninitializedListener = new OwnerEntityListener();
+    OwnerEntityListener nullListener = new OwnerEntityListener(null);
 
     TestOwnedEntity entity = new TestOwnedEntity();
-    uninitializedListener.prePersist(entity);
+    nullListener.prePersist(entity);
 
     assertNull(entity.getOwnerUsername());
   }
@@ -128,38 +120,6 @@ class OwnerEntityListenerTest {
 
     TestOwnedEntity entity = new TestOwnedEntity();
     listener.prePersist(entity);
-
-    assertNull(entity.getOwnerUsername());
-  }
-
-  @Test
-  void testPrePersist_WhenInstanceConstructorUsed_SetsUsername() {
-    OwnerEntityListener.setContextHolder(null);
-    OwnerEntityListener instanceListener = new OwnerEntityListener(mockContextHolder);
-
-    TestOwnedEntity entity = new TestOwnedEntity();
-    instanceListener.prePersist(entity);
-
-    assertEquals("testuser@example.com", entity.getOwnerUsername());
-  }
-
-  @Test
-  void testPrePersist_WhenInstanceConstructorWithNull_FallsBackToStatic() {
-    OwnerEntityListener instanceListener = new OwnerEntityListener(null);
-
-    TestOwnedEntity entity = new TestOwnedEntity();
-    instanceListener.prePersist(entity);
-
-    assertEquals("testuser@example.com", entity.getOwnerUsername());
-  }
-
-  @Test
-  void testPrePersist_WhenBothInstanceAndStaticContextHolderNull_DoesNotSetUsername() {
-    OwnerEntityListener.setContextHolder(null);
-    OwnerEntityListener instanceListener = new OwnerEntityListener(null);
-
-    TestOwnedEntity entity = new TestOwnedEntity();
-    instanceListener.prePersist(entity);
 
     assertNull(entity.getOwnerUsername());
   }
