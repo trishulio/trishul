@@ -98,6 +98,16 @@ public class TenantService
   }
 
   @Override
+  public DeleteResult archive(Set<UUID> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(UUID id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public Tenant get(UUID id) {
     return this.repoService.get(id);
   }

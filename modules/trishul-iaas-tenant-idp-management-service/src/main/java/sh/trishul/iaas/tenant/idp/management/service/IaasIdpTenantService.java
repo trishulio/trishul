@@ -56,6 +56,16 @@ public class IaasIdpTenantService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<String> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(String id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public IaasIdpTenant get(String id) {
     IaasIdpTenant policy = null;
 

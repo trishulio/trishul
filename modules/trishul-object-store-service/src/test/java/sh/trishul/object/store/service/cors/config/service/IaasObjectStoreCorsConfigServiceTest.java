@@ -97,6 +97,18 @@ class IaasObjectStoreCorsConfigServiceTest {
   }
 
   @Test
+  void testArchive_Set_ReturnsZero() {
+    DeleteResult result = service.archive(Set.of("BUCKET_1", "BUCKET_2"));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_Id_ReturnsZero() {
+    DeleteResult result = service.archive("BUCKET_1");
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
   void testGet_ReturnsAttachmentFromRepo() {
     IaasObjectStoreCorsConfiguration expected = new IaasObjectStoreCorsConfiguration();
     doAnswer(inv -> {

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2,EI_EXPOSE_STATIC_REP2"/>
     <Or>
-        <!-- 1. All framework-style / DI classes -->
-        <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper|Filter|Listener)" />
+        <Class name="~.*(Service|Client|Manager|Provider|Controller|Configuration|Executor|Wrapper|Register|Delegate|Decorator|Repository|Repo|Resolver|Util|Builder|Mapper|Filter|Aspect|Interceptor|Configurer|Listener)" />
         <!-- 2. Entire internal packages where exposure is acceptable -->
-        <Class name="~sh\.trishul\..*\.(service|client|manager|provider|controller|config|executor|wrapper|delegate|repository|filters|listener)\..*" />
+        <Class name="~sh\.trishul\..*\.(service|client|manager|provider|controller|config|executor|wrapper|delegate|repo|repository|filter|filters|listener)\..*" />
         <!-- 3. Known framework / infra types (instead of Parameter filters) -->
         <Class name="~(javax|jakarta|org\.springframework|com\.amazonaws)\..*" />
         <!-- 4. Models / DTOs (if you want blanket allowance) -->

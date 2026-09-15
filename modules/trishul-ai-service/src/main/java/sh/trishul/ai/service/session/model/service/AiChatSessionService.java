@@ -97,6 +97,16 @@ public class AiChatSessionService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<AiChatSession> add(List<? extends BaseAiChatSession<?>> additions) {
     if (additions == null)
       return null;

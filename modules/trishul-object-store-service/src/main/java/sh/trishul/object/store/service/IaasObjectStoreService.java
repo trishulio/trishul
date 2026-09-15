@@ -58,6 +58,16 @@ public class IaasObjectStoreService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<String> ids) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
+  public DeleteResult archive(String id) {
+    return new DeleteResult(0L);
+  }
+
+  @Override
   public IaasObjectStore get(String id) {
     IaasObjectStore objectStore = null;
 

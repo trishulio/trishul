@@ -261,4 +261,22 @@ class CrudControllerServiceTest {
 
     assertEquals(new DeleteResultDto(2L), result);
   }
+
+  @Test
+  void testArchive_ReturnsArchiveCount() {
+    when(mService.archive(Set.of(1L, 2L))).thenReturn(new DeleteResult(2L));
+
+    DeleteResultDto result = controllerService.archive(Set.of(1L, 2L));
+
+    assertEquals(new DeleteResultDto(2L), result);
+  }
+
+  @Test
+  void testArchive_SingleId_ReturnsArchiveCount() {
+    when(mService.archive(1L)).thenReturn(new DeleteResult(1L));
+
+    DeleteResultDto result = controllerService.archive(1L);
+
+    assertEquals(new DeleteResultDto(1L), result);
+  }
 }

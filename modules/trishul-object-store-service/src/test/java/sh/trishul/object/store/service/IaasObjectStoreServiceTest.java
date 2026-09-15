@@ -100,6 +100,18 @@ class IaasObjectStoreServiceTest {
   }
 
   @Test
+  void testArchive_Set_ReturnsZero() {
+    DeleteResult result = service.archive(Set.of("POLICY_1", "POLICY_2"));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_Id_ReturnsZero() {
+    DeleteResult result = service.archive("POLICY");
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStore((String) inv.getArgument(0, Set.class).iterator().next())))

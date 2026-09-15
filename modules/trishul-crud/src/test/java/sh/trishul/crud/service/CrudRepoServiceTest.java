@@ -9,7 +9,9 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import sh.trishul.base.types.base.pojo.Archiveable;
 import sh.trishul.base.types.base.pojo.Identified;
 import sh.trishul.base.types.base.pojo.Refresher;
 import sh.trishul.model.base.pojo.DeleteResult;
@@ -216,5 +219,93 @@ class CrudRepoServiceTest {
     DeleteResult count = this.service.delete(1L);
 
     assertEquals(new DeleteResult(1L), count);
+  }
+
+  @Test
+  void testArchive_WhenIdsNull_ReturnsZero() {
+    DeleteResult result = this.service.archive((Set<Long>) null);
+
+    assertEquals(new DeleteResult(0L), result);
+    verify(this.mRepo, never()).findAllById(any());
+  }
+
+  @Test
+  void testArchive_WhenIdsEmpty_ReturnsZero() {
+    DeleteResult result = this.service.archive(Set.of());
+
+    assertEquals(new DeleteResult(0L), result);
+    verify(this.mRepo, never()).findAllById(any());
+  }
+
+  @Test
+  void testArchive_WhenEntitiesAreArchiveable_SetsArchivedAndSavesAndReturnsCount() {
+    DummyArchiveableEntity e1 = new DummyArchiveableEntity(1L);
+    DummyArchiveableEntity e2 = new DummyArchiveableEntity(2L);
+    List<DummyCrudEntity> entities = List.of(e1, e2);
+
+    doReturn(entities).when(this.mRepo).findAllById(Set.of(1L, 2L));
+
+    DeleteResult result = this.service.archive(Set.of(1L, 2L));
+
+    assertEquals(new DeleteResult(2L), result);
+    assertTrue(e1.isArchived());
+    assertEquals(Boolean.TRUE, e1.getArchived());
+    assertTrue(e2.isArchived());
+    assertEquals("archived", Archiveable.ATTR_ARCHIVED);
+    verify(this.mRepo).saveAll(entities);
+    verify(this.mRepo).flush();
+  }
+
+  @Test
+  void testArchive_WhenEntitiesNotArchiveable_DoesNotSaveAndReturnsZero() {
+    DummyCrudEntity e1 = new DummyCrudEntity(1L);
+    List<DummyCrudEntity> entities = List.of(e1);
+
+    doReturn(entities).when(this.mRepo).findAllById(Set.of(1L));
+
+    DeleteResult result = this.service.archive(Set.of(1L));
+
+    assertEquals(new DeleteResult(0L), result);
+    verify(this.mRepo, never()).saveAll(any());
+    verify(this.mRepo, never()).flush();
+  }
+
+  @Test
+  void testArchive_SingleId_WhenIdNull_ReturnsZero() {
+    DeleteResult result = this.service.archive((Long) null);
+
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_SingleId_DelegatesToSet() {
+    DummyArchiveableEntity e1 = new DummyArchiveableEntity(1L);
+    doReturn(List.of(e1)).when(this.mRepo).findAllById(Set.of(1L));
+
+    DeleteResult result = this.service.archive(1L);
+
+    assertTrue(e1.isArchived());
+    verify(this.mRepo).saveAll(List.of(e1));
+    verify(this.mRepo).flush();
+    assertEquals(new DeleteResult(1L), result);
+  }
+
+
+  private static class DummyArchiveableEntity extends DummyCrudEntity implements Archiveable {
+    private Boolean archived;
+
+    public DummyArchiveableEntity(Long id) {
+      super(id);
+    }
+
+    @Override
+    public Boolean isArchived() {
+      return archived;
+    }
+
+    @Override
+    public void setArchived(Boolean archived) {
+      this.archived = archived;
+    }
   }
 }

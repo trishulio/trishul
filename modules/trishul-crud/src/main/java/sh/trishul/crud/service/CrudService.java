@@ -17,6 +17,10 @@ public interface CrudService<ID, E, BE, UE extends Identified<ID>, A> {
 
   DeleteResult delete(ID id);
 
+  DeleteResult archive(Set<ID> ids);
+
+  DeleteResult archive(ID id);
+
   E get(ID id);
 
   List<E> getByIds(Collection<? extends Identified<ID>> idProviders);

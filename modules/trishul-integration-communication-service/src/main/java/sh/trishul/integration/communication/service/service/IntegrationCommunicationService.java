@@ -80,6 +80,16 @@ public class IntegrationCommunicationService extends BaseService implements
   }
 
   @Override
+  public DeleteResult archive(Set<Long> ids) {
+    return this.repoService.archive(ids);
+  }
+
+  @Override
+  public DeleteResult archive(Long id) {
+    return this.repoService.archive(id);
+  }
+
+  @Override
   public List<IntegrationCommunicationConfig> add(
       final List<? extends BaseIntegrationCommunicationConfig<?>> additions) {
     if (additions == null) {

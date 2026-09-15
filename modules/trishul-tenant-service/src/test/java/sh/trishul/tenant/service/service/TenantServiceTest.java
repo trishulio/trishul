@@ -225,6 +225,35 @@ class TenantServiceTest {
   }
 
   @Test
+  void testArchive_CallsRepoServiceArchiveBulk_WhenTenantExists() {
+    doReturn(new DeleteResult(10L)).when(this.mRepoService)
+        .archive(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
+
+    final DeleteResult count
+        = this.service.archive(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
+    assertEquals(new DeleteResult(10L), count);
+    verify(this.mRepoService)
+        .archive(Set.of(UUID.fromString("00000000-0000-0000-0000-000000000001"),
+            UUID.fromString("00000000-0000-0000-0000-000000000002"),
+            UUID.fromString("00000000-0000-0000-0000-000000000003")));
+  }
+
+  @Test
+  void testArchive_CallsRepoServiceArchive_WhenTenantExists() {
+    doReturn(new DeleteResult(1L)).when(mRepoService)
+        .archive(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+
+    DeleteResult result
+        = this.service.archive(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+    assertEquals(new DeleteResult(1L), result);
+    verify(this.mRepoService).archive(UUID.fromString("00000000-0000-0000-0000-000000000001"));
+  }
+
+  @Test
   void testAdd_AddsTenantAndItemsAndSavesToRepo_WhenAdditionsAreNotNull() {
     final BaseTenant<?> tenant1
         = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"));

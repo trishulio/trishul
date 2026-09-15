@@ -106,6 +106,14 @@ public class CrudControllerService<ID, Entity extends UpdateEntity, AddEntity, U
     return DeleteResultMapper.INSTANCE.toDto(this.service.delete(ids));
   }
 
+  public DeleteResultDto archive(final Set<ID> ids) {
+    return DeleteResultMapper.INSTANCE.toDto(this.service.archive(ids));
+  }
+
+  public DeleteResultDto archive(final ID id) {
+    return DeleteResultMapper.INSTANCE.toDto(this.service.archive(id));
+  }
+
   private void filter(BaseDto dto, Set<String> retainAttr) {
     if (retainAttr != null && !retainAttr.isEmpty()) {
       this.filter.retain(dto, retainAttr);

@@ -101,6 +101,18 @@ class IaasObjectStoreFileServiceTest {
   }
 
   @Test
+  void testArchive_Set_ReturnsZero() {
+    DeleteResult result = service.archive(Set.of(URI.create("URI_1"), URI.create("URI_2")));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
+  void testArchive_Id_ReturnsZero() {
+    DeleteResult result = service.archive(URI.create("URI"));
+    assertEquals(new DeleteResult(0L), result);
+  }
+
+  @Test
   void testGet_ReturnsAttachmentFromRepo() {
     doAnswer(inv -> List
         .of(new IaasObjectStoreFile((URI) inv.getArgument(0, Set.class).iterator().next())))
