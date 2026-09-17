@@ -2,6 +2,7 @@ package sh.trishul.repo.autoconfiguration;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sh.trishul.repo.filter.ArchiveFilterAspect;
@@ -26,6 +27,8 @@ public class RepositoryAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(ArchiveFilterHandlerInterceptor.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.archive", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public ArchiveFilterHandlerInterceptor archiveFilterHandlerInterceptor(
       EntityManager entityManager) {
     return new ArchiveFilterHandlerInterceptor(entityManager);
@@ -33,12 +36,16 @@ public class RepositoryAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(ArchiveFilterAspect.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.archive", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public ArchiveFilterAspect archiveFilterAspect(EntityManager entityManager) {
     return new ArchiveFilterAspect(entityManager);
   }
 
   @Bean
   @ConditionalOnMissingBean(ArchiveFilterWebMvcConfigurer.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.archive", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public ArchiveFilterWebMvcConfigurer archiveFilterWebMvcConfigurer(
       ArchiveFilterHandlerInterceptor interceptor) {
     return new ArchiveFilterWebMvcConfigurer(interceptor);

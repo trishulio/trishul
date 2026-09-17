@@ -35,7 +35,7 @@ public final class OwnerFilterEnabler {
         }
       }
     } catch (Exception e) {
-      log.warn("Could not enable ownerFilter: {}", e.getMessage());
+      log.debug("Could not enable ownerFilter: {}", e.getMessage());
     }
     return false;
   }

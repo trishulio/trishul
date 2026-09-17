@@ -29,7 +29,7 @@ public final class ArchiveFilterEnabler {
         return true;
       }
     } catch (Exception e) {
-      log.warn("Could not enable {}: {}", ArchiveFilter.NAME, e.getMessage());
+      log.debug("Could not enable {}: {}", ArchiveFilter.NAME, e.getMessage());
     }
     return false;
   }

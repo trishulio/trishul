@@ -3,6 +3,7 @@ package sh.trishul.user.service.user.service.autoconfiguration;
 import jakarta.persistence.EntityManager;
 import java.util.Set;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -179,6 +180,8 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(OwnerFilterHandlerInterceptor.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.owner", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public OwnerFilterHandlerInterceptor ownerFilterHandlerInterceptor(EntityManager entityManager,
       ContextHolder contextHolder) {
     return new OwnerFilterHandlerInterceptor(entityManager, contextHolder);
@@ -186,6 +189,8 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(OwnerFilterAspect.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.owner", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public OwnerFilterAspect ownerFilterAspect(EntityManager entityManager,
       ContextHolder contextHolder) {
     return new OwnerFilterAspect(entityManager, contextHolder);
@@ -193,6 +198,8 @@ public class UserServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(OwnerFilterWebMvcConfigurer.class)
+  @ConditionalOnProperty(prefix = "trishul.filter.owner", name = "enabled", havingValue = "true",
+      matchIfMissing = true)
   public OwnerFilterWebMvcConfigurer ownerFilterWebMvcConfigurer(
       OwnerFilterHandlerInterceptor interceptor) {
     return new OwnerFilterWebMvcConfigurer(interceptor);
