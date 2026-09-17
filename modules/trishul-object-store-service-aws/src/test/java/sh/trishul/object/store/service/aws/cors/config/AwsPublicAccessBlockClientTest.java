@@ -159,4 +159,14 @@ class AwsPublicAccessBlockClientTest {
         .deletePublicAccessBlock(new DeletePublicAccessBlockRequest().withBucketName("BUCKET_1"));
     assertTrue(client.delete("BUCKET_1"));
   }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenEntityDoesNotExistAndS3ThrowsIgnoredErrorCodeWithNonIgnoredStatusCode() {
+    AmazonS3Exception ex = new AmazonS3Exception("NoSuchPublicAccessBlockConfiguration");
+    ex.setStatusCode(400);
+    ex.setErrorCode("NoSuchPublicAccessBlockConfiguration");
+    doThrow(ex).when(mAwsClient)
+        .deletePublicAccessBlock(new DeletePublicAccessBlockRequest().withBucketName("BUCKET_1"));
+    assertTrue(client.delete("BUCKET_1"));
+  }
 }

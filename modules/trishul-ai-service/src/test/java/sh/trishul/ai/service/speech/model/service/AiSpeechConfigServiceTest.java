@@ -181,4 +181,17 @@ class AiSpeechConfigServiceTest {
   void testPatch_ReturnsNull_WhenPatchesIsNull() {
     assertNull(service.patch(null));
   }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testSearch_ReturnsPage() {
+    Page<AiSpeechConfig> expected = new PageImpl<>(List.of(new AiSpeechConfig(1L)));
+    SortedSet<String> sort = new TreeSet<>(Set.of("name"));
+    when(mockRepoService.search(eq("query"), any(String[][].class), eq(sort), eq(true), eq(1),
+        eq(10))).thenReturn(expected);
+
+    Page<AiSpeechConfig> result = service.search("query", sort, true, 1, 10);
+
+    assertEquals(expected, result);
+  }
 }

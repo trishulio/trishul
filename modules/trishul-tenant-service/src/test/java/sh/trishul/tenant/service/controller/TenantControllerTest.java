@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import sh.trishul.crud.controller.CrudControllerService;
 import sh.trishul.crud.controller.filter.AttributeFilter;
@@ -127,5 +128,20 @@ class TenantControllerTest {
     AttributeFilter filter = mock(AttributeFilter.class);
     TenantController autowiredController = new TenantController(mService, filter);
     assertNotNull(autowiredController);
+  }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    Page<Tenant> entityPage = new PageImpl<>(
+        List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    PageDto<TenantDto> expected = new PageDto<>(
+        List.of(new TenantDto(UUID.fromString("00000000-0000-0000-0000-000000000001"))), 1, 1);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of(""));
+
+    PageDto<TenantDto> response
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of(""));
+
+    assertEquals(expected, response);
   }
 }

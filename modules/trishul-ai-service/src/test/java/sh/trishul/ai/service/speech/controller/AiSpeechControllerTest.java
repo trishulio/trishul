@@ -4,11 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import sh.trishul.ai.service.speech.service.WebRTCSpeechService;
+import sh.trishul.model.base.dto.BaseDto;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 class AiSpeechControllerTest {
 
@@ -45,5 +50,12 @@ class AiSpeechControllerTest {
     String result = controller.speechToText(audioData);
 
     assertEquals("Transcribed Text", result);
+  }
+
+  @Test
+  void testSearch_ReturnsPageDto() {
+    PageDto<BaseDto> result = controller.search("test", 0, 100, new TreeSet<>(Set.of("id")), true);
+    PageDto<BaseDto> expected = new PageDto<>(new ArrayList<>(), 0, 0);
+    assertEquals(expected, result);
   }
 }

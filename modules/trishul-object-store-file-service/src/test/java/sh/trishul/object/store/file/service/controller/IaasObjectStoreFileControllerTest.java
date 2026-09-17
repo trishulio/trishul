@@ -8,8 +8,11 @@ import static org.mockito.Mockito.mock;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import sh.trishul.crud.controller.CrudControllerService;
 import sh.trishul.crud.controller.filter.AttributeFilter;
 import sh.trishul.model.base.dto.DeleteResultDto;
@@ -20,6 +23,7 @@ import sh.trishul.object.store.file.model.dto.AddIaasObjectStoreFileDto;
 import sh.trishul.object.store.file.model.dto.IaasObjectStoreFileDto;
 import sh.trishul.object.store.file.model.dto.UpdateIaasObjectStoreFileDto;
 import sh.trishul.object.store.file.service.service.IaasObjectStoreFileService;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 class IaasObjectStoreFileControllerTest {
   private IaasObjectStoreFileController controller;
@@ -106,5 +110,21 @@ class IaasObjectStoreFileControllerTest {
     AttributeFilter filter = mock(AttributeFilter.class);
     IaasObjectStoreFileController controller = new IaasObjectStoreFileController(mService, filter);
     assertNotNull(controller);
+  }
+
+  @Test
+  void testSearch_ReturnsPageOfDtosFromController() {
+    Page<IaasObjectStoreFile> entityPage
+        = new PageImpl<>(List.of(new IaasObjectStoreFile(URI.create("file_1.txt"))));
+    PageDto<IaasObjectStoreFileDto> dtoPage
+        = new PageDto<>(List.of(new IaasObjectStoreFileDto(URI.create("file_1.txt"))), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 0, 10);
+    doReturn(dtoPage).when(mCrudController).getAll(entityPage, Set.of("all"));
+
+    PageDto<IaasObjectStoreFileDto> result
+        = this.controller.search("query", 0, 10, new TreeSet<>(List.of("id")), true, Set.of("all"));
+
+    assertEquals(dtoPage, result);
   }
 }

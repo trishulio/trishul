@@ -3,10 +3,12 @@ package sh.trishul.ai.service.agent.factory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import dev.langchain4j.agent.tool.Tool;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import sh.trishul.ai.agent.model.AiAgentConfig;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 import sh.trishul.ai.memory.model.AiChatMemoryConfig;
@@ -107,9 +110,18 @@ class AgentFactoryTest {
         .thenReturn(mockChatModel);
     when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockStreamingChatModel);
+    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of());
+    ChatResponse mockResponse
+        = ChatResponse.builder().aiMessage(AiMessage.from("response")).build();
+    when(mockChatModel.chat(any(ChatRequest.class))).thenReturn(mockResponse);
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
+
+    result.chat("session-1", UserMessage.from("hello"));
+    ArgumentCaptor<ChatRequest> captor = ArgumentCaptor.forClass(ChatRequest.class);
+    verify(mockChatModel).chat(captor.capture());
+    assertTrue(captor.getValue().toolSpecifications().isEmpty());
   }
 
   @Test
@@ -132,9 +144,19 @@ class AgentFactoryTest {
     when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockStreamingChatModel);
     when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of(new MyTestTool()));
+    ChatResponse mockResponse
+        = ChatResponse.builder().aiMessage(AiMessage.from("response")).build();
+    when(mockChatModel.chat(any(ChatRequest.class))).thenReturn(mockResponse);
 
     Assistant result = agentFactory.buildAgent(config, mock(ChatMemory.class));
     assertNotNull(result);
+
+    result.chat("session-1", UserMessage.from("hello"));
+    ArgumentCaptor<ChatRequest> captor = ArgumentCaptor.forClass(ChatRequest.class);
+    verify(mockChatModel).chat(captor.capture());
+    assertNotNull(captor.getValue().toolSpecifications());
+    assertEquals(1, captor.getValue().toolSpecifications().size());
+    assertEquals("execute", captor.getValue().toolSpecifications().get(0).name());
   }
 
   @Test
@@ -156,10 +178,53 @@ class AgentFactoryTest {
         .thenReturn(mockChatModel);
     when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
         .thenReturn(mockStreamingChatModel);
-    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of(new MyTestTool()));
+    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of());
+    ChatResponse mockResponse
+        = ChatResponse.builder().aiMessage(AiMessage.from("response")).build();
+    when(mockChatModel.chat(any(ChatRequest.class))).thenReturn(mockResponse);
 
     Object result = agentFactory.buildAgent(config);
     assertNotNull(result);
+
+    ((Assistant) result).chat("session-1", UserMessage.from("hello"));
+    ArgumentCaptor<ChatRequest> captor = ArgumentCaptor.forClass(ChatRequest.class);
+    verify(mockChatModel).chat(captor.capture());
+    assertTrue(captor.getValue().toolSpecifications().isEmpty());
+  }
+
+  @Test
+  void testLegacyBuildAgent_ReturnsAssistant_WithTools() {
+    AiChatModelConfig modelConfig = new AiChatModelConfig();
+    modelConfig.setProvider("openai");
+
+    AiChatMemoryConfig memoryConfig = new AiChatMemoryConfig();
+    memoryConfig.setMaxMessages(10);
+
+    AiAgentConfig config = new AiAgentConfig();
+    config.setChatModelConfig(modelConfig);
+    config.setChatMemoryConfig(memoryConfig);
+
+    ChatModel mockChatModel = mock(ChatModel.class);
+    StreamingChatModel mockStreamingChatModel = mock(StreamingChatModel.class);
+
+    when(mockChatModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockChatModel);
+    when(mockStreamingModelFactory.getModel(eq(AiProvider.OPENAI), eq(modelConfig)))
+        .thenReturn(mockStreamingChatModel);
+    when(mockToolRegistry.getToolsByIds(any())).thenReturn(List.of(new MyTestTool()));
+    ChatResponse mockResponse
+        = ChatResponse.builder().aiMessage(AiMessage.from("response")).build();
+    when(mockChatModel.chat(any(ChatRequest.class))).thenReturn(mockResponse);
+
+    Object result = agentFactory.buildAgent(config);
+    assertNotNull(result);
+
+    ((Assistant) result).chat("session-1", UserMessage.from("hello"));
+    ArgumentCaptor<ChatRequest> captor = ArgumentCaptor.forClass(ChatRequest.class);
+    verify(mockChatModel).chat(captor.capture());
+    assertNotNull(captor.getValue().toolSpecifications());
+    assertEquals(1, captor.getValue().toolSpecifications().size());
+    assertEquals("execute", captor.getValue().toolSpecifications().get(0).name());
   }
 
   @Test

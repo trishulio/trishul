@@ -101,4 +101,20 @@ class AiChatMemoryConfigControllerTest {
 
     assertEquals(List.of(dto), dtos);
   }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    AiChatMemoryConfig entity = new AiChatMemoryConfig(1L);
+    AiChatMemoryConfigDto dto = new AiChatMemoryConfigDto(1L);
+    PageImpl<AiChatMemoryConfig> entityPage = new PageImpl<>(List.of(entity));
+    PageDto<AiChatMemoryConfigDto> expected = new PageDto<>(List.of(dto), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of("id"));
+
+    PageDto<AiChatMemoryConfigDto> result
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of("id"));
+
+    assertEquals(expected, result);
+  }
 }

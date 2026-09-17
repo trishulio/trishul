@@ -7,8 +7,10 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import sh.trishul.auth.session.context.PrincipalContext;
 import sh.trishul.auth.session.context.holder.ContextHolder;
@@ -128,5 +130,11 @@ class AccountServiceTest {
 
     assertEquals(expectedUser, user);
     assertEquals("iaas_jane.smith", user.getIaasUsername());
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<User> page = this.service.search("query", new TreeSet<>(List.of("id")), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

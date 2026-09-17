@@ -10,9 +10,11 @@ import static org.mockito.Mockito.verify;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.repository.IaasRepository;
 import sh.trishul.iaas.user.model.BaseIaasUser;
 import sh.trishul.iaas.user.model.BaseIaasUserTenantMembership;
@@ -107,5 +109,12 @@ class TenantIaasUserServiceTest {
         new IaasUserTenantMembershipId("example-2@localhost",
             "00000000-0000-0000-0000-000000000001")));
     verify(mUserService).delete(Set.of("example-1@localhost", "example-2@localhost"));
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<IaasUserTenantMembership> page
+        = service.search("query", new TreeSet<>(List.of("id")), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

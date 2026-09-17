@@ -7,8 +7,10 @@ import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageImpl;
 import sh.trishul.ai.service.tool.model.service.AiToolService;
 import sh.trishul.ai.tool.model.AddAiToolDto;
 import sh.trishul.ai.tool.model.AiTool;
@@ -19,6 +21,7 @@ import sh.trishul.ai.tool.model.UpdateAiToolDto;
 import sh.trishul.crud.controller.CrudControllerService;
 import sh.trishul.crud.controller.filter.AttributeFilter;
 import sh.trishul.model.base.dto.DeleteResultDto;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 class AiToolControllerTest {
   private AiToolController controller;
@@ -90,5 +93,21 @@ class AiToolControllerTest {
     List<AiToolDto> dtos = this.controller.patch(List.of(patchDto));
 
     assertEquals(List.of(dto), dtos);
+  }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    AiTool entity = new AiTool(1L);
+    AiToolDto dto = new AiToolDto(1L);
+    PageImpl<AiTool> entityPage = new PageImpl<>(List.of(entity));
+    PageDto<AiToolDto> expected = new PageDto<>(List.of(dto), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of("id"));
+
+    PageDto<AiToolDto> result
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of("id"));
+
+    assertEquals(expected, result);
   }
 }

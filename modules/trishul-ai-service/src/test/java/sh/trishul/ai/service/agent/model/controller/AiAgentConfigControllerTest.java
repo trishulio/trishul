@@ -101,4 +101,20 @@ class AiAgentConfigControllerTest {
 
     assertEquals(List.of(dto), dtos);
   }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    AiAgentConfig entity = new AiAgentConfig(1L);
+    AiAgentConfigDto dto = new AiAgentConfigDto(1L);
+    PageImpl<AiAgentConfig> entityPage = new PageImpl<>(List.of(entity));
+    PageDto<AiAgentConfigDto> expected = new PageDto<>(List.of(dto), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of("id"));
+
+    PageDto<AiAgentConfigDto> result
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of("id"));
+
+    assertEquals(expected, result);
+  }
 }

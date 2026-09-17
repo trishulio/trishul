@@ -6,9 +6,11 @@ import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.access.policy.model.IaasPolicy;
 import sh.trishul.iaas.access.role.model.IaasRole;
 import sh.trishul.iaas.idp.tenant.model.BaseIaasIdpTenant;
@@ -187,5 +189,11 @@ class TenantIaasServiceTest {
     TenantIaasDeleteResult expected = new TenantIaasDeleteResult(new TenantIaasAuthDeleteResult(3),
         new TenantIaasIdpDeleteResult(4), new TenantIaasVfsDeleteResult(5, 6));
     assertEquals(expected, result);
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<TenantIaasResources> page = service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

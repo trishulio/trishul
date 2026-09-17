@@ -1,5 +1,6 @@
 package sh.trishul.user.service.user.service.autoconfiguration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sh.trishul.auth.session.context.PrincipalContext;
 import sh.trishul.auth.session.context.holder.ContextHolder;
 import sh.trishul.base.types.base.pojo.OwnedByAccessor;
 import sh.trishul.base.types.base.pojo.Refresher;
@@ -18,6 +20,7 @@ import sh.trishul.iaas.user.service.TenantIaasUserService;
 import sh.trishul.model.base.pojo.refresher.accessor.AccessorRefresher;
 import sh.trishul.object.store.file.service.decorator.TemporaryImageSrcDecorator;
 import sh.trishul.user.model.AssignedToAccessor;
+import sh.trishul.user.model.OwnedEntity;
 import sh.trishul.user.model.User;
 import sh.trishul.user.model.UserAccessor;
 import sh.trishul.user.role.binding.model.UserRoleBinding;
@@ -360,10 +363,32 @@ class UserServiceAutoConfigurationTest {
   @Test
   void testOwnerEntityListener_ReturnsNonNull() {
     ContextHolder mockContextHolder = mock(ContextHolder.class);
+    PrincipalContext mockPrincipal = mock(PrincipalContext.class);
+    doReturn(mockPrincipal).when(mockContextHolder).getPrincipalContext();
+    doReturn("testuser@example.com").when(mockPrincipal).getUsername();
+
+    OwnerEntityListener.setContextHolder(null);
 
     OwnerEntityListener result = config.ownerEntityListener(mockContextHolder);
 
     assertNotNull(result);
+
+    OwnerEntityListener defaultListener = new OwnerEntityListener();
+    OwnedEntity entity = new OwnedEntity() {
+      private String ownerUsername;
+
+      @Override
+      public String getOwnerUsername() {
+        return ownerUsername;
+      }
+
+      @Override
+      public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+      }
+    };
+    defaultListener.prePersist(entity);
+    assertEquals("testuser@example.com", entity.getOwnerUsername());
   }
 
   private static final class UserAccessorImpl implements UserAccessor<UserAccessorImpl> {

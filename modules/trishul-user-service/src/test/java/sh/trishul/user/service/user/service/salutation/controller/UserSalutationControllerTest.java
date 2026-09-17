@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,22 @@ class UserSalutationControllerTest {
         new TreeSet<>(List.of("id")), true, 1, 10);
 
     assertEquals(1, dto.getTotalPages());
+    assertEquals(List.of(new UserSalutationDto(1L, "MR", LocalDateTime.of(2018, 1, 2, 3, 4),
+        LocalDateTime.of(2019, 1, 2, 3, 4), 1)), dto.getContent());
+  }
+
+  @Test
+  void testSearch_ReturnsPageDto() {
+    Page<UserSalutation> mPage = new PageImpl<>(List.of(new UserSalutation(1L, "MR",
+        LocalDateTime.of(2018, 1, 2, 3, 4), LocalDateTime.of(2019, 1, 2, 3, 4), 1)));
+
+    SortedSet<String> sort = new TreeSet<>(List.of("id"));
+    doReturn(mPage).when(userSalutationService).search("query", sort, true, 1, 10);
+
+    PageDto<UserSalutationDto> dto = userSalutationController.search("query", 1, 10, sort, true);
+
+    assertEquals(1, dto.getTotalPages());
+    assertEquals(1L, dto.getTotalElements());
     assertEquals(List.of(new UserSalutationDto(1L, "MR", LocalDateTime.of(2018, 1, 2, 3, 4),
         LocalDateTime.of(2019, 1, 2, 3, 4), 1)), dto.getContent());
   }

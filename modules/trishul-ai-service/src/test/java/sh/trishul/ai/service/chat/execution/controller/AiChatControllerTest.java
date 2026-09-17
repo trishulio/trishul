@@ -21,6 +21,8 @@ import dev.langchain4j.service.TokenStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -36,6 +38,8 @@ import sh.trishul.ai.service.chat.execution.dto.ChatMessageContentDto;
 import sh.trishul.ai.service.chat.execution.dto.ChatRequestDto;
 import sh.trishul.ai.service.session.model.service.AiChatSessionService;
 import sh.trishul.ai.session.model.AiChatSession;
+import sh.trishul.model.base.dto.BaseDto;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 
 class AiChatControllerTest {
 
@@ -412,5 +416,12 @@ class AiChatControllerTest {
     UserMessage capturedMessage = userMessageCaptor.getValue();
     assertNotNull(capturedMessage);
     assertEquals("Hello invalid fallback", capturedMessage.singleText());
+  }
+
+  @Test
+  void testSearch_ReturnsPageDto() {
+    PageDto<BaseDto> result = controller.search("test", 0, 100, new TreeSet<>(Set.of("id")), true);
+    PageDto<BaseDto> expected = new PageDto<>(new ArrayList<>(), 0, 0);
+    assertEquals(expected, result);
   }
 }

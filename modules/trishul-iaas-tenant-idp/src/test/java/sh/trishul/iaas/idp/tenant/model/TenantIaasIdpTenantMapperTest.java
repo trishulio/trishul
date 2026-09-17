@@ -64,4 +64,26 @@ class TenantIaasIdpTenantMapperTest {
   void testFromTenant_ReturnsNull_WhenArgIsNull() {
     assertNull(mapper.fromTenant(null));
   }
+
+  @Test
+  void testFromTenant_ReturnsIdpTenant_WhenArgIsNotNull() {
+    Tenant tenant = new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"), "TENANT_1",
+        URI.create("http://localhost/"), true, LocalDateTime.of(2000, 1, 1, 0, 0),
+        LocalDateTime.of(2000, 1, 1, 0, 0));
+
+    BaseIaasIdpTenant<?> idpTenant = mapper.fromTenant(tenant);
+
+    IaasIdpTenant expected = new IaasIdpTenant("00000000-0000-0000-0000-000000000001");
+    assertEquals(expected, idpTenant);
+  }
+
+  @Test
+  void testFromTenant_ReturnsIdpTenantWithNoId_WhenTenantIdIsNull() {
+    Tenant tenant = new Tenant();
+
+    BaseIaasIdpTenant<?> idpTenant = mapper.fromTenant(tenant);
+
+    IaasIdpTenant expected = new IaasIdpTenant();
+    assertEquals(expected, idpTenant);
+  }
 }

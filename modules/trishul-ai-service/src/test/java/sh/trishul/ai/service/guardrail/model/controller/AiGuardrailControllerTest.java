@@ -101,4 +101,20 @@ class AiGuardrailControllerTest {
 
     assertEquals(List.of(dto), dtos);
   }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    AiGuardrail entity = new AiGuardrail(1L);
+    AiGuardrailDto dto = new AiGuardrailDto(1L);
+    PageImpl<AiGuardrail> entityPage = new PageImpl<>(List.of(entity));
+    PageDto<AiGuardrailDto> expected = new PageDto<>(List.of(dto), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of("id"));
+
+    PageDto<AiGuardrailDto> result
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of("id"));
+
+    assertEquals(expected, result);
+  }
 }

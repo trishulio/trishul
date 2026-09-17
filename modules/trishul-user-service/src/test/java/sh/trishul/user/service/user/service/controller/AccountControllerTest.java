@@ -7,8 +7,14 @@ import static org.mockito.Mockito.mock;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 import sh.trishul.user.model.User;
 import sh.trishul.user.model.UserDto;
 import sh.trishul.user.service.user.service.service.AccountService;
@@ -70,5 +76,25 @@ class AccountControllerTest {
     UserDto dto2 = this.controller.getCurrentUser(Set.of("id", "userName"));
 
     assertEquals(dto1, dto2);
+  }
+
+  @Test
+  void testSearch_ReturnsPageDtoFromService() {
+    User user = new User(1L, "john.doe", "John Doe", "John", "Doe", "john.doe@example.com",
+        "5551234567", URI.create("http://example.com/avatar.jpg"), null, null, null, List.of(),
+        null, null, null);
+    Page<User> userPage = new PageImpl<>(List.of(user), PageRequest.of(0, 10), 1);
+    SortedSet<String> sort = new TreeSet<>(List.of("id"));
+
+    doReturn(userPage).when(mService).search("query", sort, true, 0, 10);
+
+    PageDto<UserDto> result = this.controller.search("query", 0, 10, sort, true);
+
+    UserDto expectedDto = new UserDto(1L, "john.doe", "John Doe", "John", "Doe",
+        "john.doe@example.com", "5551234567", URI.create("http://example.com/avatar.jpg"), null,
+        null, null, List.of(), null, null, null);
+    PageDto<UserDto> expected = new PageDto<>(List.of(expectedDto), 1, 1);
+
+    assertEquals(expected, result);
   }
 }

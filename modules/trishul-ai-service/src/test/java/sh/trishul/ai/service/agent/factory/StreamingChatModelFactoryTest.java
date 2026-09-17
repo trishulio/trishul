@@ -8,6 +8,7 @@ import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 
 class StreamingChatModelFactoryTest {
@@ -140,6 +141,38 @@ class StreamingChatModelFactoryTest {
   }
 
   @Test
+  void testGetOpenRouterModel_UsesStreamingModelName_WhenStreamingModelNameIsNotNull() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setProvider("openrouter");
+    config.setApiKey("test-openrouter-key");
+    config.setModelName("meta-llama/llama-3");
+    config.setStreamingModelName("meta-llama/llama-3-stream");
+
+    StreamingChatModel model = factory.getModel(AiProvider.OPENROUTER, config);
+
+    assertNotNull(model);
+    assert (model instanceof OpenAiStreamingChatModel);
+    assertEquals("meta-llama/llama-3-stream",
+        ((OpenAiStreamingChatModel) model).defaultRequestParameters().modelName());
+  }
+
+  @Test
+  void testGetOpenRouterModel_UsesModelName_WhenStreamingModelNameIsNull() {
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setProvider("openrouter");
+    config.setApiKey("test-openrouter-key");
+    config.setModelName("meta-llama/llama-3");
+    config.setStreamingModelName(null);
+
+    StreamingChatModel model = factory.getModel(AiProvider.OPENROUTER, config);
+
+    assertNotNull(model);
+    assert (model instanceof OpenAiStreamingChatModel);
+    assertEquals("meta-llama/llama-3",
+        ((OpenAiStreamingChatModel) model).defaultRequestParameters().modelName());
+  }
+
+  @Test
   void testCustomBaseUrlConstructor() {
     StreamingChatModelFactory customFactory = new StreamingChatModelFactory(
         "https://custom-copilot", "https://custom-openrouter", "https://custom-openai");
@@ -147,9 +180,47 @@ class StreamingChatModelFactoryTest {
     config.setApiKey("key");
     config.setModelName("m");
 
-    assertNotNull(customFactory.getGithubCopilotModel(config));
-    assertNotNull(customFactory.getOpenRouterModel(config));
-    assertNotNull(customFactory.getOpenAiModel(config));
+    StreamingChatModel copilotModel = customFactory.getGithubCopilotModel(config);
+    StreamingChatModel openRouterModel = customFactory.getOpenRouterModel(config);
+    StreamingChatModel openAiModel = customFactory.getOpenAiModel(config);
+
+    assertNotNull(copilotModel);
+    assertNotNull(openRouterModel);
+    assertNotNull(openAiModel);
+
+    assertEquals("https://custom-copilot", getBaseUrl(copilotModel));
+    assertEquals("https://custom-openrouter", getBaseUrl(openRouterModel));
+    assertEquals("https://custom-openai", getBaseUrl(openAiModel));
+  }
+
+  @Test
+  void testDefaultBaseUrls_WhenUrlsAreEmptyOrNull() {
+    StreamingChatModelFactory emptyFactory = new StreamingChatModelFactory("", "", "");
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("key");
+    config.setModelName("m");
+
+    StreamingChatModel copilotModel = emptyFactory.getGithubCopilotModel(config);
+    StreamingChatModel openRouterModel = emptyFactory.getOpenRouterModel(config);
+    StreamingChatModel openAiModel = emptyFactory.getOpenAiModel(config);
+
+    assertEquals("https://api.openai.com/v1", getBaseUrl(copilotModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openRouterModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openAiModel));
+
+    StreamingChatModelFactory nullFactory = new StreamingChatModelFactory(null, null, null);
+    copilotModel = nullFactory.getGithubCopilotModel(config);
+    openRouterModel = nullFactory.getOpenRouterModel(config);
+    openAiModel = nullFactory.getOpenAiModel(config);
+
+    assertEquals("https://api.openai.com/v1", getBaseUrl(copilotModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openRouterModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openAiModel));
+  }
+
+  private String getBaseUrl(StreamingChatModel model) {
+    Object client = ReflectionTestUtils.getField(model, "client");
+    return (String) ReflectionTestUtils.getField(client, "baseUrl");
   }
 
   @Test

@@ -181,4 +181,17 @@ class AiChatModelConfigServiceTest {
   void testPatch_ReturnsNull_WhenPatchesIsNull() {
     assertNull(service.patch(null));
   }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testSearch_ReturnsPage() {
+    Page<AiChatModelConfig> expected = new PageImpl<>(List.of(new AiChatModelConfig(1L)));
+    SortedSet<String> sort = new TreeSet<>(Set.of("name"));
+    when(mockRepoService.search(eq("query"), any(String[][].class), eq(sort), eq(true), eq(1),
+        eq(10))).thenReturn(expected);
+
+    Page<AiChatModelConfig> result = service.search("query", sort, true, 1, 10);
+
+    assertEquals(expected, result);
+  }
 }

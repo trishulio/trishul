@@ -1,5 +1,6 @@
 package sh.trishul.user.service.user.service.salutation.service;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,5 +71,22 @@ class UserSalutationServiceTest {
     for (Method method : methods) {
       assertFalse(method.isAnnotationPresent(Transactional.class));
     }
+  }
+
+  @Test
+  void testSearch_DelegatesToRepoServiceAndReturnsPage() {
+    Page<UserSalutation> expectedPage
+        = new PageImpl<>(List.of(new UserSalutation(1L, "MR", null, null, 1)));
+    String[][] expectedFields = new String[][] {{"name"}};
+    SortedSet<String> sort = new TreeSet<>(List.of("id"));
+
+    ArgumentCaptor<String[][]> fieldsCaptor = ArgumentCaptor.forClass(String[][].class);
+    doReturn(expectedPage).when(mRepoService).search(eq("query"), fieldsCaptor.capture(), eq(sort),
+        eq(true), eq(0), eq(10));
+
+    Page<UserSalutation> result = userSalutationService.search("query", sort, true, 0, 10);
+
+    assertEquals(expectedPage, result);
+    assertArrayEquals(expectedFields, fieldsCaptor.getValue());
   }
 }

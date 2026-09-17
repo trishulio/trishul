@@ -10,8 +10,10 @@ import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.access.role.model.IaasRole;
 import sh.trishul.iaas.access.service.role.service.IaasRoleService;
 import sh.trishul.iaas.idp.tenant.model.IaasIdpTenant;
@@ -95,5 +97,11 @@ class TenantIaasAuthServiceTest {
     TenantIaasAuthDeleteResult result = this.service.delete(Set.of("T1", "T2"));
 
     assertEquals(new TenantIaasAuthDeleteResult(2L), result);
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<TenantIaasAuthResources> page = this.service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

@@ -1,5 +1,6 @@
 package sh.trishul.user.service.user.service.role.service;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
@@ -258,5 +260,21 @@ class UserRoleServiceTest {
     EntityNotFoundException exception
         = assertThrows(EntityNotFoundException.class, () -> this.service.patch(updates));
     assertEquals("Cannot find userRoles with Ids: [3, 4]", exception.getMessage());
+  }
+
+  @Test
+  void testSearch_DelegatesToRepoServiceAndReturnsPage() {
+    Page<UserRole> expectedPage = new PageImpl<>(List.of(new UserRole(1L)));
+    String[][] expectedFields = new String[][] {{"name"}, {"description"}};
+    SortedSet<String> sort = new TreeSet<>(List.of("id"));
+
+    ArgumentCaptor<String[][]> fieldsCaptor = ArgumentCaptor.forClass(String[][].class);
+    doReturn(expectedPage).when(mRepoService).search(eq("query"), fieldsCaptor.capture(), eq(sort),
+        eq(true), eq(0), eq(10));
+
+    Page<UserRole> result = service.search("query", sort, true, 0, 10);
+
+    assertEquals(expectedPage, result);
+    assertArrayEquals(expectedFields, fieldsCaptor.getValue());
   }
 }

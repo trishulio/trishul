@@ -87,6 +87,21 @@ class AwsObjectStoreClientTest {
   }
 
   @Test
+  void testDelete_ReturnsTrue_WhenEntityDoesNotExistAndS3ThrowsIgnoredErrorCodeWithNonIgnoredStatusCode() {
+    doAnswer(inv -> {
+      assertEquals("B1", inv.getArgument(0, DeleteBucketRequest.class).getBucketName());
+      AmazonS3Exception ex = new AmazonS3Exception("NoSuchBucket");
+      ex.setStatusCode(400);
+      ex.setErrorCode("NoSuchBucket");
+      throw ex;
+    }).when(s3).deleteBucket(any(DeleteBucketRequest.class));
+
+    assertTrue(client.delete("B1"));
+
+    verify(s3, times(1)).deleteBucket(any(DeleteBucketRequest.class));
+  }
+
+  @Test
   void testGet_ReturnsNull_WhenBucketDoesNotExist() {
     doReturn(List.of(new Bucket("B2"))).when(s3).listBuckets(any(ListBucketsRequest.class));
 

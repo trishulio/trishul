@@ -102,4 +102,20 @@ class AiChatSessionControllerTest {
 
     assertEquals(List.of(dto), dtos);
   }
+
+  @Test
+  void testSearch_ReturnsDtosFromController() {
+    AiChatSession entity = new AiChatSession(1L);
+    AiChatSessionDto dto = new AiChatSessionDto(1L);
+    PageImpl<AiChatSession> entityPage = new PageImpl<>(List.of(entity));
+    PageDto<AiChatSessionDto> expected = new PageDto<>(List.of(dto), 1, 1);
+
+    doReturn(entityPage).when(mService).search("query", new TreeSet<>(List.of("id")), true, 1, 10);
+    doReturn(expected).when(mCrudController).getAll(entityPage, Set.of("id"));
+
+    PageDto<AiChatSessionDto> result
+        = this.controller.search("query", 1, 10, new TreeSet<>(List.of("id")), true, Set.of("id"));
+
+    assertEquals(expected, result);
+  }
 }

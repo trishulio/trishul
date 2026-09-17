@@ -181,4 +181,17 @@ class AiChatMemoryConfigServiceTest {
     when(mockRepoService.getByIds(patches)).thenReturn(entities);
     assertThrows(EntityNotFoundException.class, () -> service.patch(patches));
   }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testSearch_ReturnsPage() {
+    Page<AiChatMemoryConfig> expected = new PageImpl<>(List.of(new AiChatMemoryConfig(1L)));
+    SortedSet<String> sort = new TreeSet<>(Set.of("name"));
+    when(mockRepoService.search(eq("query"), any(String[][].class), eq(sort), eq(true), eq(1),
+        eq(10))).thenReturn(expected);
+
+    Page<AiChatMemoryConfig> result = service.search("query", sort, true, 1, 10);
+
+    assertEquals(expected, result);
+  }
 }

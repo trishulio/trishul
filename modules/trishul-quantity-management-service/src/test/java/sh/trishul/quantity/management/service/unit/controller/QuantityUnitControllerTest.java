@@ -42,4 +42,18 @@ class QuantityUnitControllerTest {
     assertEquals(1, dto.getTotalPages());
     assertEquals(List.of(new UnitDto("g")), dto.getContent());
   }
+
+  @Test
+  void testSearch() {
+    Page<UnitEntity> mPage = new PageImpl<>(List.of(new UnitEntity("g", "g")));
+
+    doReturn(mPage).when(quantityUnitService).search("g", new TreeSet<>(List.of("symbol")), true, 1,
+        10);
+
+    PageDto<UnitDto> dto
+        = quantityUnitController.search("g", new TreeSet<>(List.of("symbol")), true, 1, 10);
+
+    assertEquals(1, dto.getTotalPages());
+    assertEquals(List.of(new UnitDto("g")), dto.getContent());
+  }
 }

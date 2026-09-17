@@ -9,9 +9,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -141,5 +143,11 @@ class WebRTCSpeechServiceTest {
 
     String result = service.speechToText(new byte[] {1, 2, 3});
     assertEquals("", result);
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<Object> result = service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), result);
   }
 }

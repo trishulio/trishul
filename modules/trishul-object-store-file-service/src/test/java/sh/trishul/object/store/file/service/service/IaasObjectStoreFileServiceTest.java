@@ -20,8 +20,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.crud.service.CrudEntityMergerService;
 import sh.trishul.crud.service.EntityMergerService;
 import sh.trishul.crud.service.LockService;
@@ -250,5 +252,12 @@ class IaasObjectStoreFileServiceTest {
   @Test
   void testPatch_DoesNothingReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<IaasObjectStoreFile> page
+        = service.search("query", new TreeSet<>(List.of("id")), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

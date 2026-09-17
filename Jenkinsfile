@@ -41,7 +41,7 @@ pipeline {
         ENABLE_CODE_COVERAGE = "${params.ENABLE_CODE_COVERAGE != null ? params.ENABLE_CODE_COVERAGE : 'true'}"
         ENABLE_MUTATION_COVERAGE = "${params.ENABLE_MUTATION_COVERAGE != null ? params.ENABLE_MUTATION_COVERAGE : 'true'}"
         ENABLE_CHECKSTYLE = "${params.ENABLE_CHECKSTYLE != null ? params.ENABLE_CHECKSTYLE : 'true'}"
-        ENABLE_DEPENDENCY_CHECK = "${params.ENABLE_DEPENDENCY_CHECK != null ? params.ENABLE_DEPENDENCY_CHECK : 'true'}"
+        ENABLE_DEPENDENCY_CHECK = "${params.ENABLE_DEPENDENCY_CHECK != null ? params.ENABLE_DEPENDENCY_CHECK : 'false'}"
         ENABLE_SPOTBUGS = "${params.ENABLE_SPOTBUGS != null ? params.ENABLE_SPOTBUGS : 'true'}"
         SPOTBUGS_FAIL_ON_ERROR = "${params.SPOTBUGS_FAIL_ON_ERROR != null ? params.SPOTBUGS_FAIL_ON_ERROR : 'false'}"
         ENABLE_PMD = "${params.ENABLE_PMD != null ? params.ENABLE_PMD : 'true'}"

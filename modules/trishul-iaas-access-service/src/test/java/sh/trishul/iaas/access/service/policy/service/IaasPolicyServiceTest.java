@@ -19,8 +19,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.crud.service.CrudEntityMergerService;
 import sh.trishul.crud.service.EntityMergerService;
 import sh.trishul.crud.service.LockService;
@@ -287,5 +289,11 @@ class IaasPolicyServiceTest {
   @Test
   void testPatch_ReturnsNull_WhenArgIsNull() {
     assertNull(service.patch(null));
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<IaasPolicy> page = service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

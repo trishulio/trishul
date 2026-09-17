@@ -354,4 +354,16 @@ class TenantServiceTest {
         "Cannot find tenants with Ids: [00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004]",
         exception.getMessage());
   }
+
+  @Test
+  void testSearch_CallsRepoService() {
+    Page<Tenant> expected = new PageImpl<>(
+        List.of(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001"))));
+    TreeSet<String> sort = new TreeSet<>(Set.of("name"));
+    doReturn(expected).when(mRepoService).search(eq("query"), any(), eq(sort), eq(true), eq(1),
+        eq(10));
+
+    Page<Tenant> result = service.search("query", sort, true, 1, 10);
+    assertEquals(expected, result);
+  }
 }

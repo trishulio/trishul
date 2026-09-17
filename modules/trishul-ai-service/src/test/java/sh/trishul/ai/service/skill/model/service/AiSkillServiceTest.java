@@ -6,13 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import sh.trishul.ai.skill.model.AiSkill;
 import sh.trishul.ai.skill.model.AiSkillAccessor;
 import sh.trishul.ai.skill.model.BaseAiSkill;
@@ -153,5 +158,18 @@ class AiSkillServiceTest {
     List<UpdateAiSkill<?>> patches = List.of(mock(UpdateAiSkill.class), mock(UpdateAiSkill.class));
     when(mockRepoService.getByIds(patches)).thenReturn(entities);
     assertThrows(EntityNotFoundException.class, () -> service.patch(patches));
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testSearch_ReturnsPage() {
+    Page<AiSkill> expected = new PageImpl<>(List.of(new AiSkill(1L)));
+    SortedSet<String> sort = new TreeSet<>(Set.of("name"));
+    when(mockRepoService.search(eq("query"), any(String[][].class), eq(sort), eq(true), eq(1),
+        eq(10))).thenReturn(expected);
+
+    Page<AiSkill> result = service.search("query", sort, true, 1, 10);
+
+    assertEquals(expected, result);
   }
 }

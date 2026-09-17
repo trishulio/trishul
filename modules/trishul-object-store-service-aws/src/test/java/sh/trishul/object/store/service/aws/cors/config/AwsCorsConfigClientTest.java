@@ -199,4 +199,14 @@ class AwsCorsConfigClientTest {
         any(DeleteBucketCrossOriginConfigurationRequest.class));
     assertTrue(client.delete("BUCKET_1"));
   }
+
+  @Test
+  void testDelete_ReturnsTrue_WhenEntityDoesNotExistAndS3ThrowsIgnoredErrorCodeWithNonIgnoredStatusCode() {
+    AmazonS3Exception ex = new AmazonS3Exception("NoSuchCORSConfiguration");
+    ex.setStatusCode(400);
+    ex.setErrorCode("NoSuchCORSConfiguration");
+    doThrow(ex).when(mAwsClient).deleteBucketCrossOriginConfiguration(
+        any(DeleteBucketCrossOriginConfigurationRequest.class));
+    assertTrue(client.delete("BUCKET_1"));
+  }
 }

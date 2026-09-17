@@ -12,8 +12,10 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.idp.tenant.model.IaasIdpTenant;
 import sh.trishul.iaas.idp.tenant.model.TenantIaasIdpDeleteResult;
 import sh.trishul.iaas.idp.tenant.model.TenantIaasIdpResources;
@@ -99,5 +101,11 @@ class TenantIaasIdpServiceTest {
     doReturn(false).when(mIdpTenantService).exist("T1");
 
     assertFalse(service.exist("T1"));
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<TenantIaasIdpResources> page = service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

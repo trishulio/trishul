@@ -13,9 +13,11 @@ import static org.mockito.Mockito.verify;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+import org.springframework.data.domain.Page;
 import sh.trishul.iaas.access.policy.model.IaasPolicy;
 import sh.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachment;
 import sh.trishul.iaas.access.role.attachment.policy.IaasRolePolicyAttachmentId;
@@ -214,5 +216,11 @@ class TenantIaasVfsServiceTest {
         .delete(Set.of("OBJECT_STORE_1", "OBJECT_STORE_2"));
     order.verify(mPolicyService, times(1)).delete(Set.of("POLICY_ID_1", "POLICY_ID_2"));
     order.verify(mObjectStoreService, times(1)).delete(Set.of("OBJECT_STORE_1", "OBJECT_STORE_2"));
+  }
+
+  @Test
+  void testSearch_ReturnsEmptyPage() {
+    Page<TenantIaasVfsResources> page = service.search("query", new TreeSet<>(), true, 0, 10);
+    assertEquals(Page.empty(), page);
   }
 }

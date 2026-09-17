@@ -58,7 +58,10 @@ class TemporaryImageSrcDecoratorTest {
 
     List<DecoratedEntity> entities = List.of(new DecoratedEntity(URI.create("http://localhost/1")));
 
-    decorator.decorate(entities); // should not throw NullPointerException
+    decorator.decorate(entities);
+
+    List<DecoratedEntity> expected = List.of(new DecoratedEntity(URI.create("http://localhost/1")));
+    assertEquals(expected, entities);
   }
 
   @Test

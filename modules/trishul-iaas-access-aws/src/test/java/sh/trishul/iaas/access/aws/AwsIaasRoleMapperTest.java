@@ -39,4 +39,33 @@ class AwsIaasRoleMapperTest {
 
     assertEquals(expected, entity);
   }
+
+  @Test
+  void testFromIaasEntity_ReturnsIaasEntity_WhenRoleLastUsedIsNull() {
+    Role role = new Role().withArn("ROLE_1_ARN").withAssumeRolePolicyDocument("ROLE_1_DOC")
+        .withCreateDate(new Date(1, 1, 1)).withDescription("ROLE_1_DESCRIPTION")
+        .withRoleId("ROLE_1_ID").withRoleName("ROLE_1_NAME").withRoleLastUsed(null);
+
+    IaasRole entity = mapper.fromIaasEntity(role);
+
+    IaasRole expected = new IaasRole("ROLE_1_NAME", "ROLE_1_DESCRIPTION", "ROLE_1_DOC",
+        "ROLE_1_ARN", "ROLE_1_ID", null, LocalDateTime.of(1901, 2, 1, 0, 0), null);
+
+    assertEquals(expected, entity);
+  }
+
+  @Test
+  void testFromIaasEntity_ReturnsIaasEntity_WhenRoleLastUsedDateIsNull() {
+    Role role = new Role().withArn("ROLE_1_ARN").withAssumeRolePolicyDocument("ROLE_1_DOC")
+        .withCreateDate(new Date(1, 1, 1)).withDescription("ROLE_1_DESCRIPTION")
+        .withRoleId("ROLE_1_ID").withRoleName("ROLE_1_NAME")
+        .withRoleLastUsed(new RoleLastUsed().withLastUsedDate(null));
+
+    IaasRole entity = mapper.fromIaasEntity(role);
+
+    IaasRole expected = new IaasRole("ROLE_1_NAME", "ROLE_1_DESCRIPTION", "ROLE_1_DOC",
+        "ROLE_1_ARN", "ROLE_1_ID", null, LocalDateTime.of(1901, 2, 1, 0, 0), null);
+
+    assertEquals(expected, entity);
+  }
 }

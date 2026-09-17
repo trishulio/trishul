@@ -2,9 +2,12 @@ package sh.trishul.crud.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
@@ -13,6 +16,12 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +30,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -290,6 +300,125 @@ class CrudRepoServiceTest {
     assertEquals(new DeleteResult(1L), result);
   }
 
+  @Test
+  void testSearch_WhenQueryIsNull_ReturnsPageFromRepository() {
+    ArgumentCaptor<Specification<DummyCrudEntity>> specCaptor
+        = ArgumentCaptor.forClass(Specification.class);
+    ArgumentCaptor<PageRequest> pageCaptor = ArgumentCaptor.forClass(PageRequest.class);
+    Page<DummyCrudEntity> expectedPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
+    doReturn(expectedPage).when(this.mRepo).findAll(specCaptor.capture(), pageCaptor.capture());
+
+    Page<DummyCrudEntity> result = this.service.search(null, new String[][] {{"name"}},
+        new TreeSet<>(List.of("id")), true, 0, 10);
+
+    assertEquals(expectedPage, result);
+    assertEquals(PageRequest.of(0, 10, Direction.ASC, "id"), pageCaptor.getValue());
+
+    Root<DummyCrudEntity> mRoot = mock(Root.class);
+    CriteriaQuery<?> mQuery = mock(CriteriaQuery.class);
+    CriteriaBuilder mCb = mock(CriteriaBuilder.class);
+    Predicate mAndPred = mock(Predicate.class);
+    doReturn(mAndPred).when(mCb).and(any(Predicate[].class));
+
+    Predicate pred = specCaptor.getValue().toPredicate(mRoot, mQuery, mCb);
+    assertNotNull(pred);
+    verify(mCb, never()).like(any(), anyString());
+  }
+
+  @Test
+  void testSearch_WhenQueryIsBlank_ReturnsPageFromRepository() {
+    ArgumentCaptor<Specification<DummyCrudEntity>> specCaptor
+        = ArgumentCaptor.forClass(Specification.class);
+    Page<DummyCrudEntity> expectedPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
+    doReturn(expectedPage).when(this.mRepo).findAll(specCaptor.capture(), any(PageRequest.class));
+
+    Page<DummyCrudEntity> result = this.service.search("   ", new String[][] {{"name"}},
+        new TreeSet<>(List.of("id")), true, 0, 10);
+
+    assertEquals(expectedPage, result);
+
+    Root<DummyCrudEntity> mRoot = mock(Root.class);
+    CriteriaQuery<?> mQuery = mock(CriteriaQuery.class);
+    CriteriaBuilder mCb = mock(CriteriaBuilder.class);
+    Predicate mAndPred = mock(Predicate.class);
+    doReturn(mAndPred).when(mCb).and(any(Predicate[].class));
+
+    Predicate pred = specCaptor.getValue().toPredicate(mRoot, mQuery, mCb);
+    assertNotNull(pred);
+    verify(mCb, never()).like(any(), anyString());
+  }
+
+  @Test
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  void testSearch_WhenQueryHasMultipleTermsAndMultiplePaths_BuildsCompoundSpecification() {
+    ArgumentCaptor<Specification<DummyCrudEntity>> specCaptor
+        = ArgumentCaptor.forClass(Specification.class);
+    ArgumentCaptor<PageRequest> pageCaptor = ArgumentCaptor.forClass(PageRequest.class);
+    Page<DummyCrudEntity> expectedPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
+    doReturn(expectedPage).when(this.mRepo).findAll(specCaptor.capture(), pageCaptor.capture());
+
+    Page<DummyCrudEntity> result = this.service.search("  term1 term2  ",
+        new String[][] {{"value"}, {"excludedValue"}}, new TreeSet<>(List.of("id")), false, 1, 10);
+
+    assertEquals(expectedPage, result);
+    assertEquals(PageRequest.of(1, 10, Direction.DESC, "id"), pageCaptor.getValue());
+
+    Root<DummyCrudEntity> mRoot = mock(Root.class);
+    doReturn(DummyCrudEntity.class).when(mRoot).getJavaType();
+    CriteriaQuery<?> mQuery = mock(CriteriaQuery.class);
+    CriteriaBuilder mCb = mock(CriteriaBuilder.class);
+    Path mPath = mock(Path.class);
+    Expression<String> mLowerExpr = mock(Expression.class);
+    Predicate mLikePred = mock(Predicate.class);
+    Predicate mOrPred = mock(Predicate.class);
+    Predicate mAndPred = mock(Predicate.class);
+
+    doReturn(mPath).when(mRoot).get(any(String.class));
+    doReturn(mLowerExpr).when(mCb).lower(any());
+    doReturn(mLikePred).when(mCb).like(any(), anyString());
+    doReturn(mOrPred).when(mCb).or(any(Predicate.class), any(Predicate.class));
+    doReturn(mAndPred).when(mCb).and(any(Predicate.class), any(Predicate.class));
+    doReturn(mAndPred).when(mCb).and(any(Predicate[].class));
+
+    Predicate pred = specCaptor.getValue().toPredicate(mRoot, mQuery, mCb);
+    assertNotNull(pred);
+    verify(mCb, times(2)).like(any(), eq("%term1%"));
+    verify(mCb, times(2)).like(any(), eq("%term2%"));
+    verify(mCb, never()).like(any(), eq("%%"));
+  }
+
+  @Test
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  void testSearch_WhenSinglePath_BuildsSpecification() {
+    ArgumentCaptor<Specification<DummyCrudEntity>> specCaptor
+        = ArgumentCaptor.forClass(Specification.class);
+    Page<DummyCrudEntity> expectedPage = new PageImpl<>(List.of(new DummyCrudEntity(1L)));
+    doReturn(expectedPage).when(this.mRepo).findAll(specCaptor.capture(), any(PageRequest.class));
+
+    Page<DummyCrudEntity> result = this.service.search("term1", new String[][] {{"value"}},
+        new TreeSet<>(List.of("id")), true, 0, 10);
+
+    assertEquals(expectedPage, result);
+
+    Root<DummyCrudEntity> mRoot = mock(Root.class);
+    doReturn(DummyCrudEntity.class).when(mRoot).getJavaType();
+    CriteriaQuery<?> mQuery = mock(CriteriaQuery.class);
+    CriteriaBuilder mCb = mock(CriteriaBuilder.class);
+    Path mPath = mock(Path.class);
+    Expression<String> mLowerExpr = mock(Expression.class);
+    Predicate mLikePred = mock(Predicate.class);
+    Predicate mAndPred = mock(Predicate.class);
+
+    doReturn(mPath).when(mRoot).get(any(String.class));
+    doReturn(mLowerExpr).when(mCb).lower(any());
+    doReturn(mLikePred).when(mCb).like(any(), anyString());
+    doReturn(mAndPred).when(mCb).and(any(Predicate.class), any(Predicate.class));
+    doReturn(mAndPred).when(mCb).and(any(Predicate[].class));
+
+    Predicate pred = specCaptor.getValue().toPredicate(mRoot, mQuery, mCb);
+    assertNotNull(pred);
+    verify(mCb, times(1)).like(any(), eq("%term1%"));
+  }
 
   private static class DummyArchiveableEntity extends DummyCrudEntity implements Archiveable {
     private Boolean archived;

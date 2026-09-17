@@ -1,5 +1,6 @@
 package sh.trishul.ai.service.agent.factory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -7,6 +8,7 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 import sh.trishul.ai.chat.model.AiChatModelConfig;
 
 class ChatModelFactoryTest {
@@ -108,9 +110,47 @@ class ChatModelFactoryTest {
     config.setApiKey("key");
     config.setModelName("m");
 
-    assertNotNull(customFactory.getGithubCopilotModel(config));
-    assertNotNull(customFactory.getOpenRouterModel(config));
-    assertNotNull(customFactory.getOpenAiModel(config));
+    ChatModel copilotModel = customFactory.getGithubCopilotModel(config);
+    ChatModel openRouterModel = customFactory.getOpenRouterModel(config);
+    ChatModel openAiModel = customFactory.getOpenAiModel(config);
+
+    assertNotNull(copilotModel);
+    assertNotNull(openRouterModel);
+    assertNotNull(openAiModel);
+
+    assertEquals("https://custom-copilot", getBaseUrl(copilotModel));
+    assertEquals("https://custom-openrouter", getBaseUrl(openRouterModel));
+    assertEquals("https://custom-openai", getBaseUrl(openAiModel));
+  }
+
+  @Test
+  void testDefaultBaseUrls_WhenUrlsAreEmptyOrNull() {
+    ChatModelFactory emptyFactory = new ChatModelFactory("", "", "");
+    AiChatModelConfig config = new AiChatModelConfig();
+    config.setApiKey("key");
+    config.setModelName("m");
+
+    ChatModel copilotModel = emptyFactory.getGithubCopilotModel(config);
+    ChatModel openRouterModel = emptyFactory.getOpenRouterModel(config);
+    ChatModel openAiModel = emptyFactory.getOpenAiModel(config);
+
+    assertEquals("https://api.openai.com/v1", getBaseUrl(copilotModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openRouterModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openAiModel));
+
+    ChatModelFactory nullFactory = new ChatModelFactory(null, null, null);
+    copilotModel = nullFactory.getGithubCopilotModel(config);
+    openRouterModel = nullFactory.getOpenRouterModel(config);
+    openAiModel = nullFactory.getOpenAiModel(config);
+
+    assertEquals("https://api.openai.com/v1", getBaseUrl(copilotModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openRouterModel));
+    assertEquals("https://api.openai.com/v1", getBaseUrl(openAiModel));
+  }
+
+  private String getBaseUrl(ChatModel model) {
+    Object client = ReflectionTestUtils.getField(model, "client");
+    return (String) ReflectionTestUtils.getField(client, "baseUrl");
   }
 
   @Test

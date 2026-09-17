@@ -8,9 +8,11 @@ import static org.mockito.Mockito.mock;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import sh.trishul.crud.controller.CrudControllerService;
 import sh.trishul.crud.controller.filter.AttributeFilter;
@@ -140,5 +142,19 @@ class UserControllerTest {
     UserDtoDecorator decorator = mock(UserDtoDecorator.class);
     UserController userController = new UserController(mService, filter, decorator);
     assertNotNull(userController);
+  }
+
+  @Test
+  void testSearch_ReturnsPageOfDtosFromController() {
+    Page<User> entityPage = new PageImpl<>(List.of(new User(1L)));
+    PageDto<UserDto> dtoPage = new PageDto<>(List.of(new UserDto(1L)), 1, 1);
+    SortedSet<String> sort = new TreeSet<>(List.of("id"));
+
+    doReturn(entityPage).when(mService).search("query", sort, true, 0, 10);
+    doReturn(dtoPage).when(mCrudController).getAll(entityPage, Set.of("all"));
+
+    PageDto<UserDto> result = this.controller.search("query", 0, 10, sort, true, Set.of("all"));
+
+    assertEquals(dtoPage, result);
   }
 }

@@ -180,4 +180,17 @@ class AiGuardrailServiceTest {
   void testPatch_ReturnsNull_WhenPatchesIsNull() {
     assertNull(service.patch(null));
   }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void testSearch_ReturnsPage() {
+    Page<AiGuardrail> expected = new PageImpl<>(List.of(new AiGuardrail(1L)));
+    SortedSet<String> sort = new TreeSet<>(Set.of("name"));
+    when(mockRepoService.search(eq("query"), any(String[][].class), eq(sort), eq(true), eq(1),
+        eq(10))).thenReturn(expected);
+
+    Page<AiGuardrail> result = service.search("query", sort, true, 1, 10);
+
+    assertEquals(expected, result);
+  }
 }

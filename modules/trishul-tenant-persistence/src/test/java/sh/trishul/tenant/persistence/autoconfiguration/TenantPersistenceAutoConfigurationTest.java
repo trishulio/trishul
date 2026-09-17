@@ -2,6 +2,7 @@ package sh.trishul.tenant.persistence.autoconfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -125,9 +126,48 @@ class TenantPersistenceAutoConfigurationTest {
 
     Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
     assertEquals(2, jpaPropertyMap.size());
+    assertFalse(jpaPropertyMap.containsKey(Environment.DIALECT));
     assertEquals(multiTenantConnectionProviderMock,
         jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
     assertEquals(currentTenantIdentifierResolverMock,
         jpaPropertyMap.get(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER));
+  }
+
+  @Test
+  void testLocalContainerEntityManagerFactoryBean_WithDialect() {
+    when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
+
+    PackageScanConfig packageScanConfig = () -> new String[] {"package1"};
+
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
+        = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(
+            jpaVendorAdapterMock, dataSourceManageMock, multiTenantConnectionProviderMock,
+            currentTenantIdentifierResolverMock, packageScanConfig,
+            "org.hibernate.dialect.PostgreSQLDialect");
+
+    Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
+    assertEquals(3, jpaPropertyMap.size());
+    assertEquals("org.hibernate.dialect.PostgreSQLDialect",
+        jpaPropertyMap.get(Environment.DIALECT));
+    assertEquals(multiTenantConnectionProviderMock,
+        jpaPropertyMap.get(Environment.MULTI_TENANT_CONNECTION_PROVIDER));
+    assertEquals(currentTenantIdentifierResolverMock,
+        jpaPropertyMap.get(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER));
+  }
+
+  @Test
+  void testLocalContainerEntityManagerFactoryBean_WithNullDialect() {
+    when(dataSourceManageMock.getAdminDataSource()).thenReturn(dataSourceMock);
+
+    PackageScanConfig packageScanConfig = () -> new String[] {"package1"};
+
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
+        = tenantPersistenceAutoConfiguration.localContainerEntityManagerFactoryBean(
+            jpaVendorAdapterMock, dataSourceManageMock, multiTenantConnectionProviderMock,
+            currentTenantIdentifierResolverMock, packageScanConfig, null);
+
+    Map<String, Object> jpaPropertyMap = localContainerEntityManagerFactoryBean.getJpaPropertyMap();
+    assertEquals(2, jpaPropertyMap.size());
+    assertFalse(jpaPropertyMap.containsKey(Environment.DIALECT));
   }
 }
