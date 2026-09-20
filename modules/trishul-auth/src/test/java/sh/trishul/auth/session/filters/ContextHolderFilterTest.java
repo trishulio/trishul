@@ -113,20 +113,44 @@ class ContextHolderFilterTest {
   }
 
   @Test
+  void testDoFilter_SetsNull_WhenAuthenticationIsNull() throws IOException, ServletException {
+    doReturn(null).when(mSecurityCtx).getAuthentication();
+
+    filter.doFilter(mReq, mRes, mChain);
+
+    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
+
+    assertNull(ctx);
+    verify(mChain).doFilter(mReq, mRes);
+    verifyNoInteractions(mPrincipalContextBuilder);
+  }
+
+  @Test
   void testPublicConstructorAndFilter() throws Exception {
     SecurityContext originalContext = getContext();
     try {
       SecurityContext mockCtx = mock(SecurityContext.class);
       Authentication mockAuth = mock(Authentication.class);
+      Jwt mockJwt = mock(Jwt.class);
+      PrincipalContext mockPrincipalCtx = mock(PrincipalContext.class);
+
       doReturn(mockAuth).when(mockCtx).getAuthentication();
-      doReturn(null).when(mockAuth).getPrincipal();
+      doReturn(mockJwt).when(mockAuth).getPrincipal();
+      doReturn(mockPrincipalCtx).when(mPrincipalContextBuilder).build(mockJwt);
 
       setContext(mockCtx);
 
       ContextHolderFilter publicFilter
           = new ContextHolderFilter(mcontextHolder, mPrincipalContextBuilder);
+
+      doAnswer(invocation -> {
+        assertSame(mockPrincipalCtx, mcontextHolder.getPrincipalContext());
+        return null;
+      }).when(mChain).doFilter(mReq, mRes);
+
       publicFilter.doFilter(mReq, mRes, mChain);
       verify(mChain).doFilter(mReq, mRes);
+      assertNull(mcontextHolder.getPrincipalContext());
     } finally {
       setContext(originalContext);
     }

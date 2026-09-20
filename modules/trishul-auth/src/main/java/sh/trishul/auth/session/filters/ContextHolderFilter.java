@@ -50,8 +50,8 @@ public class ContextHolderFilter implements Filter {
 
   private void setPrincipalContext() {
     SecurityContext ctx = securityCtxSupplier.get();
-    Authentication auth = ctx.getAuthentication();
-    Object principal = auth.getPrincipal();
+    Authentication auth = ctx != null ? ctx.getAuthentication() : null;
+    Object principal = auth != null ? auth.getPrincipal() : null;
     PrincipalContext principalCtx = null;
     if (principal instanceof Jwt jwt) {
       principalCtx = this.principalContextBuilder.build(jwt);

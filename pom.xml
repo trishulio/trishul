@@ -83,6 +83,7 @@
         <java.version>23</java.version>
 
         <org.springframework.boot.version>3.4.13</org.springframework.boot.version>
+        <spring-security.version>7.2.0-M1</spring-security.version>
         <org.springdoc.openapi.webmvc.version>2.8.5</org.springdoc.openapi.webmvc.version>
         <org.springdoc.openapi.maven.plugin.version>1.5</org.springdoc.openapi.maven.plugin.version>
         <org.mapstruct.version>1.7.0.Beta2</org.mapstruct.version>
@@ -125,6 +126,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
