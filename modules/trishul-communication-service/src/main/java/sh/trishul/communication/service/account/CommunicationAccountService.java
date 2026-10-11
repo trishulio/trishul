@@ -131,8 +131,6 @@ public class CommunicationAccountService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"name"}, {"provider"}};
-
   @Override
   public Page<CommunicationAccount> search(String query, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {

@@ -24,16 +24,16 @@ class AddressDtoTest {
     String city = "city";
     String postalCode = "postalCode";
 
-    AddressDto addressDto
+    AddressDto actual
         = new AddressDto(id, addressLine1, addressLine2, country, province, city, postalCode);
 
-    assertSame(id, addressDto.getId());
-    assertSame(addressLine1, addressDto.getAddressLine1());
-    assertSame(addressLine2, addressDto.getAddressLine2());
-    assertSame(country, addressDto.getCountry());
-    assertSame(province, addressDto.getProvince());
-    assertSame(city, addressDto.getCity());
-    assertSame(postalCode, addressDto.getPostalCode());
+    assertSame(id, actual.getId());
+    assertSame(addressLine1, actual.getAddressLine1());
+    assertSame(addressLine2, actual.getAddressLine2());
+    assertSame(country, actual.getCountry());
+    assertSame(province, actual.getProvince());
+    assertSame(city, actual.getCity());
+    assertSame(postalCode, actual.getPostalCode());
   }
 
   @Test

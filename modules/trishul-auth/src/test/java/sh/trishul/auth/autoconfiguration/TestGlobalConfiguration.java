@@ -1,6 +1,6 @@
-// TODO: Renable if needed.
+package sh.trishul.auth.autoconfiguration;
 
-// package sh.trishul.auth.autoconfiguration;
+// TODO: Renable if needed.
 
 // import TestConfiguration;
 // import MockBean;

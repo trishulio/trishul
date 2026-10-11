@@ -15,9 +15,7 @@ public class SecretsAwsFactory {
 
     AwsClientBuilder.EndpointConfiguration endpointConfig
         = new AwsClientBuilder.EndpointConfiguration(url, region);
-    AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
-        .withEndpointConfiguration(endpointConfig).withCredentials(credsProvider).build();
-
-    return client;
+    return AWSSecretsManagerClientBuilder.standard().withEndpointConfiguration(endpointConfig)
+        .withCredentials(credsProvider).build();
   }
 }

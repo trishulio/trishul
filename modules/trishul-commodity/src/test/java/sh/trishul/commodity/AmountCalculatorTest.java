@@ -127,7 +127,7 @@ class AmountCalculatorTest {
         add(() -> null);
         add(null);
         add(() -> null);
-        add(() -> new Amount());
+        add(Amount::new);
         add(() -> new Amount(Money.parse("CAD 100")));
         add(() -> new Amount(null, new TaxAmount(Money.parse("CAD 15"))));
         add(() -> new Amount(Money.parse("CAD 150"), new TaxAmount(Money.parse("CAD 25"))));
