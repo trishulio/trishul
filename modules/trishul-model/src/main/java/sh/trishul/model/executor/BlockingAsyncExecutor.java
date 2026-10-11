@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
 public class BlockingAsyncExecutor {
+  private static final String ERR_MSG_TASK_EXECUTION = "Failed to execute tasks because: %s";
+
   // Note: Add fault-tolerance to this executor using resilience4j library.
   // if the need arises.
 
@@ -18,13 +20,15 @@ public class BlockingAsyncExecutor {
     }
 
     CompletableFuture<List<R>> resultOperation = CompletableFuture.allOf(operations)
-        .thenApply(__ -> Arrays.stream(operations).map(CompletableFuture::join).toList());
+        .thenApply(v -> Arrays.stream(operations).map(CompletableFuture::join).toList());
 
     try {
       return resultOperation.get();
-    } catch (ExecutionException | InterruptedException e) {
-      throw new RuntimeException(
-          String.format("Failed to execute tasks because: %s", e.getMessage()), e);
+    } catch (ExecutionException e) {
+      throw new RuntimeException(String.format(ERR_MSG_TASK_EXECUTION, e.getMessage()), e);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException(String.format(ERR_MSG_TASK_EXECUTION, e.getMessage()), e);
     }
   }
 
@@ -39,9 +43,11 @@ public class BlockingAsyncExecutor {
 
     try {
       resultOperation.get();
-    } catch (ExecutionException | InterruptedException e) {
-      throw new RuntimeException(
-          String.format("Failed to execute tasks because: %s", e.getMessage()), e);
+    } catch (ExecutionException e) {
+      throw new RuntimeException(String.format(ERR_MSG_TASK_EXECUTION, e.getMessage()), e);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException(String.format(ERR_MSG_TASK_EXECUTION, e.getMessage()), e);
     }
   }
 }

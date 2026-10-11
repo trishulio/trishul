@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,6 +85,19 @@ class BlockingAsyncExecutorTest {
   }
 
   @Test
+  void testSupply_ThrowsRuntimeException_WhenThreadIsInterrupted() {
+    Thread.currentThread().interrupt();
+    try {
+      RuntimeException exception
+          = assertThrows(RuntimeException.class, () -> executor.supply(List.of(() -> "val")));
+      assertTrue(exception.getCause() instanceof InterruptedException);
+      assertTrue(Thread.currentThread().isInterrupted());
+    } finally {
+      Thread.interrupted();
+    }
+  }
+
+  @Test
   void testRun_CompletesSuccessfully_WhenRunnablesIsEmpty() {
     List<Runnable> runnables = new ArrayList<>();
 
@@ -94,7 +108,7 @@ class BlockingAsyncExecutorTest {
   @Test
   void testRun_ExecutesSingleRunnable() {
     AtomicInteger counter = new AtomicInteger(0);
-    List<Runnable> runnables = List.of(() -> counter.incrementAndGet());
+    List<Runnable> runnables = List.of(counter::incrementAndGet);
 
     executor.run(runnables);
 
@@ -104,8 +118,8 @@ class BlockingAsyncExecutorTest {
   @Test
   void testRun_ExecutesMultipleRunnables() {
     AtomicInteger counter = new AtomicInteger(0);
-    List<Runnable> runnables = List.of(() -> counter.incrementAndGet(),
-        () -> counter.incrementAndGet(), () -> counter.incrementAndGet());
+    List<Runnable> runnables
+        = List.of(counter::incrementAndGet, counter::incrementAndGet, counter::incrementAndGet);
 
     executor.run(runnables);
 
@@ -124,30 +138,27 @@ class BlockingAsyncExecutorTest {
   }
 
   @Test
+  void testRun_ThrowsRuntimeException_WhenThreadIsInterrupted() {
+    Thread.currentThread().interrupt();
+    try {
+      RuntimeException exception
+          = assertThrows(RuntimeException.class, () -> executor.run(List.of(() -> {
+            /* no-op */
+          })));
+      assertTrue(exception.getCause() instanceof InterruptedException);
+      assertTrue(Thread.currentThread().isInterrupted());
+    } finally {
+      Thread.interrupted();
+    }
+  }
+
+  @Test
   void testRun_ExecutesRunnablesAsynchronously() {
-    AtomicInteger counter = new AtomicInteger(0);
-    List<Runnable> runnables = List.of(() -> {
-      try {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-      }
-      counter.incrementAndGet();
-    }, () -> {
-      try {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-      }
-      counter.incrementAndGet();
-    }, () -> {
-      try {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-      }
-      counter.incrementAndGet();
-    });
+    CountDownLatch latch = new CountDownLatch(3);
+    List<Runnable> runnables = List.of(latch::countDown, latch::countDown, latch::countDown);
 
     executor.run(runnables);
 
-    assertEquals(3, counter.get());
+    assertEquals(0, latch.getCount());
   }
 }
