@@ -35,7 +35,7 @@ public class TenantIaasIdpTenantMapper {
     BaseIaasIdpTenant<?> idpTenant = null;
 
     if (tenant != null) {
-      idpTenant = (BaseIaasIdpTenant<?>) new IaasIdpTenant();
+      idpTenant = new IaasIdpTenant();
 
       UUID id = tenant.getId();
       if (id != null) {

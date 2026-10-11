@@ -52,8 +52,7 @@ class CachedAwsCognitoIdentityClientTest {
   void testGetIdentityPools_ThrowsException_WhenClientThrowsException() {
     doThrow(RuntimeException.class).when(mDelegate).getIdentityPools(1);
 
-    RuntimeException exception
-        = assertThrows(RuntimeException.class, () -> client.getIdentityPools(1));
+    assertThrows(RuntimeException.class, () -> client.getIdentityPools(1));
   }
 
   @Test
@@ -74,7 +73,7 @@ class CachedAwsCognitoIdentityClientTest {
     doThrow(RuntimeException.class).when(mDelegate).getIdentityId("IDENTITY_POOL_ID",
         Map.of("login", "creds"));
 
-    RuntimeException exception = assertThrows(RuntimeException.class,
+    assertThrows(RuntimeException.class,
         () -> client.getIdentityId("IDENTITY_POOL_ID", Map.of("login", "creds")));
   }
 
@@ -98,7 +97,7 @@ class CachedAwsCognitoIdentityClientTest {
     doThrow(RuntimeException.class).when(mDelegate).getCredentialsForIdentity("IDENTITY_POOL_ID",
         Map.of("login", "creds"));
 
-    RuntimeException exception = assertThrows(RuntimeException.class,
+    assertThrows(RuntimeException.class,
         () -> client.getCredentialsForIdentity("IDENTITY_POOL_ID", Map.of("login", "creds")));
   }
 
