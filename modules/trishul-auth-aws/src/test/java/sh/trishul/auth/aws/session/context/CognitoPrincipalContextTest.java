@@ -64,6 +64,48 @@ class CognitoPrincipalContextTest {
   }
 
   @Test
+  void testFromJwt_NullGroupsAndNullScope() {
+    Jwt jwt = mock(Jwt.class);
+    doReturn("USERNAME_1").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
+    doReturn(null).when(jwt).getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+    doReturn(null).when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
+
+    CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
+    assertEquals("USERNAME_1", context.getUsername());
+    assertTrue(context.getTenantIds().isEmpty());
+    assertTrue(context.getRoles().isEmpty());
+  }
+
+  @Test
+  void testFromJwt_NullGroups_NonNullScope() {
+    Jwt jwt = mock(Jwt.class);
+    doReturn("USERNAME_1").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
+    doReturn(null).when(jwt).getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+    doReturn("SCOPE_1 SCOPE_2").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
+
+    CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
+    assertEquals("USERNAME_1", context.getUsername());
+    assertTrue(context.getTenantIds().isEmpty());
+    assertEquals(Arrays.asList("SCOPE_1", "SCOPE_2"), context.getRoles());
+  }
+
+  @Test
+  void testFromJwt_NonNullGroups_NullScope() {
+    Jwt jwt = mock(Jwt.class);
+    doReturn("USERNAME_1").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
+    doReturn(Arrays.asList("00000000-0000-0000-0000-000000000001")).when(jwt)
+        .getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+    doReturn(null).when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
+
+    CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
+    assertEquals("USERNAME_1", context.getUsername());
+    assertEquals(Arrays.asList(UUID.fromString("00000000-0000-0000-0000-000000000001")),
+        context.getTenantIds());
+    assertTrue(context.getRoles().isEmpty());
+  }
+
+  @Test
+
   void testPrivateConstructor_NullArguments() throws Exception {
     Constructor<CognitoPrincipalContext> constructor = CognitoPrincipalContext.class
         .getDeclaredConstructor(List.class, String.class, List.class);
