@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
-import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sh.trishul.iaas.access.aws.AwsArnMapper;
@@ -100,7 +99,7 @@ class IaasAccessAwsAutoConfigurationTest {
 
   @Test
   void testAwsIamRolePolicyClientClient_ReturnsNonNullInstance() {
-    AmazonIdentityManagementClient mIamClient = mock(AmazonIdentityManagementClient.class);
+    AmazonIdentityManagement mIamClient = mock(AmazonIdentityManagement.class);
     AwsArnMapper mArnMapper = mock(AwsArnMapper.class);
 
     IaasClient<?, ?, ?, ?> client = config.awsIamRolePolicyClientClient(mIamClient, mArnMapper);
@@ -110,7 +109,7 @@ class IaasAccessAwsAutoConfigurationTest {
 
   @Test
   void testAwsIamRolePolicyClientClient_ReturnsInstanceOfAwsIamRolePolicyAttachmentClient() {
-    AmazonIdentityManagementClient mIamClient = mock(AmazonIdentityManagementClient.class);
+    AmazonIdentityManagement mIamClient = mock(AmazonIdentityManagement.class);
     AwsArnMapper mArnMapper = mock(AwsArnMapper.class);
 
     IaasClient<?, ?, ?, ?> client = config.awsIamRolePolicyClientClient(mIamClient, mArnMapper);

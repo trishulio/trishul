@@ -1,7 +1,6 @@
 package sh.trishul.iaas.access.aws.autoconfiguration;
 
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
-import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -65,7 +64,7 @@ public class IaasAccessAwsAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(AwsIamRolePolicyAttachmentClient.class)
   public IaasClient<IaasRolePolicyAttachmentId, IaasRolePolicyAttachment, BaseIaasRolePolicyAttachment<?>, UpdateIaasRolePolicyAttachment<?>> awsIamRolePolicyClientClient(
-      AmazonIdentityManagementClient iamClient, AwsArnMapper arnMapper) {
+      AmazonIdentityManagement iamClient, AwsArnMapper arnMapper) {
     return new AwsIamRolePolicyAttachmentClient(iamClient, arnMapper);
   }
 }

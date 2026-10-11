@@ -7,7 +7,6 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentityClientBuilder;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClient;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,8 @@ public class IaasAuthAwsFactory {
     final AwsClientBuilder.EndpointConfiguration endpointConfig
         = new AwsClientBuilder.EndpointConfiguration(cognitoUrl, cognitoRegion);
     final AWSCognitoIdentityProviderClientBuilder idpClientBuilder
-        = AWSCognitoIdentityProviderClient.builder().withEndpointConfiguration(endpointConfig);
+        = AWSCognitoIdentityProviderClientBuilder.standard()
+            .withEndpointConfiguration(endpointConfig);
     BasicAWSCredentials basicAwsCredentials
         = new BasicAWSCredentials(cognitoAccessKeyId, cognitoAccessSecretKey);
     idpClientBuilder.withCredentials(new AWSStaticCredentialsProvider(basicAwsCredentials));
