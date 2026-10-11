@@ -9,7 +9,7 @@ import sh.trishul.tenant.entity.TenantData;
 import sh.trishul.tenant.persistence.management.migration.register.MigrationRegister;
 import sh.trishul.tenant.persistence.management.migration.register.TenantRegister;
 
-// Note: Can be replaced with a parallel task-set that uses blocking Async executor;
+// Note: Can be replaced with a parallel task-set that uses blocking Async executor
 public class SequentialMigrationManager implements MigrationManager {
   private static final Logger log = LoggerFactory.getLogger(SequentialMigrationManager.class);
 
@@ -33,9 +33,7 @@ public class SequentialMigrationManager implements MigrationManager {
   public void migrateAll(List<? extends TenantData> tenants) {
     TaskSet tasks = new SequentialTaskSet();
 
-    tenants.forEach(id -> tasks.submit(() -> {
-      migrate(id);
-    }));
+    tenants.forEach(id -> tasks.submit(() -> migrate(id)));
 
     log.info("{} tenants migrated successfully", tasks.getResults().size());
     if (!tasks.getErrors().isEmpty()) {

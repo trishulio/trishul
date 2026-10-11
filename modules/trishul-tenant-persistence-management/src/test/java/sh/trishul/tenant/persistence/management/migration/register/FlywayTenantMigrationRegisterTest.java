@@ -59,7 +59,7 @@ class FlywayTenantMigrationRegisterTest {
 
   @Test
   void testMigrate_RunsFlywayOnTenantWithTenantsDataSource() {
-    Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+    Flyway mFw = mockFlyway(mFwConfig);
 
     register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
@@ -79,7 +79,7 @@ class FlywayTenantMigrationRegisterTest {
       FlywayTenantMigrationRegister publicReg
           = new FlywayTenantMigrationRegister(mDsMgr, mConfigProvider);
 
-      Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+      Flyway mFw = mockFlyway(mFwConfig);
       publicReg.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
       verify(mFw).migrate();
     }
@@ -90,7 +90,7 @@ class FlywayTenantMigrationRegisterTest {
     doReturn(MigrationConfiguration.from("HISTORY_TABLE:MIGRATION_PATH")).when(mConfig)
         .getMigrationConfigurations();
 
-    Flyway mFw = mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+    Flyway mFw = mockFlyway(mFwConfig);
 
     register.migrate(new Tenant(UUID.fromString("00000000-0000-0000-0000-000000000001")));
 
@@ -100,7 +100,7 @@ class FlywayTenantMigrationRegisterTest {
 
   @Test
   void testMigrate_ThrowsRuntimeException_WhenSQLExceptionIsThrown() throws Exception {
-    mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+    mockFlyway(mFwConfig);
 
     doThrow(new SQLException("DB Error")).when(mDsMgr)
         .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
@@ -112,7 +112,7 @@ class FlywayTenantMigrationRegisterTest {
 
   @Test
   void testMigrate_ThrowsRuntimeException_WhenIOExceptionIsThrown() throws Exception {
-    mockFlyway(mFwConfig, "SCHEMA", "MIGRATION_PATH", mDs);
+    mockFlyway(mFwConfig);
 
     doThrow(new IOException("IO Error")).when(mDsMgr)
         .getDataSource(UUID.fromString("00000000-0000-0000-0000-000000000001"));
@@ -142,8 +142,7 @@ class FlywayTenantMigrationRegisterTest {
     });
   }
 
-  private Flyway mockFlyway(FluentConfiguration config, String schemas, String location,
-      DataSource ds) {
+  private Flyway mockFlyway(FluentConfiguration config) {
     Flyway mFw = mock(Flyway.class);
     doReturn(mFw).when(config).load();
     doReturn(config).when(config).locations(anyString());
