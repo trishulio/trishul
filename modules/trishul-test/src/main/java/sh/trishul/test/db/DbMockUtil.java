@@ -12,7 +12,14 @@ import javax.sql.DataSource;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-public abstract class DbMockUtil {
+public class DbMockUtil {
+  private static final String KEY_USERNAME = "username";
+  private static final String KEY_AUTO_COMMIT = "autoCommit";
+  private static final String KEY_SCHEMA = "schema";
+  private static final String KEY_URL = "url";
+
+  private DbMockUtil() {}
+
   public static PreparedStatement mockPs(Connection conn, String sql, boolean isResultSet)
       throws SQLException {
     PreparedStatement stmt = mockPs(conn, sql);
@@ -73,7 +80,7 @@ public abstract class DbMockUtil {
 
     Mockito.when(ds.getConnection(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
         .thenAnswer(inv -> {
-          data.put("username", inv.getArgument(0, String.class));
+          data.put(KEY_USERNAME, inv.getArgument(0, String.class));
           return dynamicUsername;
         });
   }
@@ -86,23 +93,23 @@ public abstract class DbMockUtil {
 
   public static Connection mockConnection(Map<String, Object> data, String username, String schema,
       String url, boolean autoCommit) throws SQLException {
-    data.put("username", username);
-    data.put("url", url);
-    data.put("autoCommit", autoCommit);
-    data.put("schema", schema);
+    data.put(KEY_USERNAME, username);
+    data.put(KEY_URL, url);
+    data.put(KEY_AUTO_COMMIT, autoCommit);
+    data.put(KEY_SCHEMA, schema);
 
     DatabaseMetaData md = Mockito.mock(DatabaseMetaData.class);
-    Mockito.when(md.getURL()).thenAnswer(inv -> data.get("url"));
-    Mockito.when(md.getUserName()).thenAnswer(inv -> data.get("username"));
+    Mockito.when(md.getURL()).thenAnswer(inv -> data.get(KEY_URL));
+    Mockito.when(md.getUserName()).thenAnswer(inv -> data.get(KEY_USERNAME));
 
     Connection conn = Mockito.mock(Connection.class);
     Mockito.when(conn.getMetaData()).thenReturn(md);
-    Mockito.when(conn.getSchema()).thenAnswer(inv -> data.get("schema"));
-    Mockito.when(conn.getAutoCommit()).thenAnswer(inv -> data.get("autoCommit"));
+    Mockito.when(conn.getSchema()).thenAnswer(inv -> data.get(KEY_SCHEMA));
+    Mockito.when(conn.getAutoCommit()).thenAnswer(inv -> data.get(KEY_AUTO_COMMIT));
 
-    Mockito.doAnswer(inv -> data.put("autoCommit", inv.getArgument(0, Boolean.class))).when(conn)
+    Mockito.doAnswer(inv -> data.put(KEY_AUTO_COMMIT, inv.getArgument(0, Boolean.class))).when(conn)
         .setAutoCommit(ArgumentMatchers.anyBoolean());
-    Mockito.doAnswer(inv -> data.put("schema", inv.getArgument(0, String.class))).when(conn)
+    Mockito.doAnswer(inv -> data.put(KEY_SCHEMA, inv.getArgument(0, String.class))).when(conn)
         .setSchema(ArgumentMatchers.anyString());
 
     return conn;

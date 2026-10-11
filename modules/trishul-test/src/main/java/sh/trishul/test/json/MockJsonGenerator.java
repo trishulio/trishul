@@ -15,10 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class MockJsonGenerator extends JsonGenerator {
-  private final StringBuffer buffer;
+  private static final String FIELD_FORMAT = "\"%s\":";
+  private static final String QUOTED_FORMAT = "\"%s\"";
+
+  private final StringBuilder buffer;
 
   public MockJsonGenerator() {
-    this.buffer = new StringBuffer();
+    this.buffer = new StringBuilder();
   }
 
   public String json() {
@@ -97,82 +100,78 @@ public class MockJsonGenerator extends JsonGenerator {
         && !Set.of('{', '[').contains(this.buffer.charAt(this.buffer.length() - 1))) {
       this.buffer.append(",");
     }
-    this.buffer.append(String.format("\"%s\":", name));
+    this.buffer.append(String.format(FIELD_FORMAT, name));
   }
 
   @Override
   public void writeFieldName(SerializableString name) throws IOException {
-    this.buffer.append(String.format("\"%s\":", name.getValue()));
+    this.buffer.append(String.format(FIELD_FORMAT, name.getValue()));
   }
 
   @Override
   public void writeString(String text) throws IOException {
-    this.buffer.append(String.format("\"%s\"", text));
+    this.buffer.append(String.format(QUOTED_FORMAT, text));
   }
 
   @Override
   public void writeString(char[] text, int offset, int len) throws IOException {
     String s = String.valueOf(text, offset, len);
-    this.buffer.append(String.format("\"%s\"", s));
+    this.buffer.append(String.format(QUOTED_FORMAT, s));
   }
 
   @Override
   public void writeString(SerializableString text) throws IOException {
-    this.buffer.append(String.format("\"%s\"", text.getValue()));
+    this.buffer.append(String.format(QUOTED_FORMAT, text.getValue()));
   }
 
   @Override
   public void writeRawUTF8String(byte[] text, int offset, int length) throws IOException {
     String s = new String(text, offset, length, StandardCharsets.UTF_8);
-    this.buffer.append(String.format("\"%s\"", s));
+    this.buffer.append(String.format(QUOTED_FORMAT, s));
   }
 
   @Override
   public void writeUTF8String(byte[] text, int offset, int length) throws IOException {
-    String s = new String(text, offset, length, StandardCharsets.UTF_8);
-    this.buffer.append(String.format("\"%s\"", s));
+    writeRawUTF8String(text, offset, length);
   }
 
   @Override
   public void writeRaw(String text) throws IOException {
-    this.buffer.append(String.format("\"%s\"", text));
+    this.buffer.append(String.format(QUOTED_FORMAT, text));
   }
 
   @Override
   public void writeRaw(String text, int offset, int len) throws IOException {
     String s
         = new String(text.getBytes(StandardCharsets.UTF_8), offset, len, StandardCharsets.UTF_8);
-    this.buffer.append(String.format("\"%s\"", s));
+    this.buffer.append(String.format(QUOTED_FORMAT, s));
   }
 
   @Override
   public void writeRaw(char[] text, int offset, int len) throws IOException {
     String s = new String(text, offset, len);
-    this.buffer.append(String.format("\"%s\"", s));
+    this.buffer.append(String.format(QUOTED_FORMAT, s));
   }
 
   @Override
   public void writeRaw(char c) throws IOException {
     String s = Character.toString(c);
-    this.buffer.append(String.format("\"%s\"", s));
+    this.buffer.append(String.format(QUOTED_FORMAT, s));
   }
 
   @Override
   public void writeRawValue(String text) throws IOException {
-    this.buffer.append(String.format("\"%s\"", text));
+    writeRaw(text);
   }
 
   @Override
   public void writeRawValue(String text, int offset, int len) throws IOException {
-    String s
-        = new String(text.getBytes(StandardCharsets.UTF_8), offset, len, StandardCharsets.UTF_8);
-    this.buffer.append(String.format("\"%s\"", s));
+    writeRaw(text, offset, len);
   }
 
   @Override
   public void writeRawValue(char[] text, int offset, int len) throws IOException {
-    String s = new String(text, offset, len);
-    this.buffer.append(String.format("\"%s\"", s));
+    writeRaw(text, offset, len);
   }
 
   @Override
