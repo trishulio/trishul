@@ -20,7 +20,7 @@ Automates the process of finding and resolving survived PIT mutation tests acros
 Run the following command to fetch the next batch of 10 survived mutations:
 
 ```bash
-(echo "<mutations>"; xmllint modules/*/target/pit-reports/mutations.xml | grep -v 'status="KILLED"' | head -n <COUNT> | tail -n 10; echo "</mutations>") | xmllint --format -
+(echo "<mutations>"; grep -E "status=['\"](SURVIVED|NO_COVERAGE)['\"]" modules/*/target/pit-reports/mutations.xml | head -n <COUNT> | tail -n 10; echo "</mutations>") | xmllint --format -
 ```
 
 - Start with `<COUNT>=10` for the first batch.
@@ -98,7 +98,7 @@ This builds all modules with `clean install`, running all tests and PIT mutation
 After `make install` completes, verify zero survived mutations remain:
 
 ```bash
-xmllint modules/*/target/pit-reports/mutations.xml | grep -v -c 'status="KILLED"'
+grep -h -E "status=['\"](SURVIVED|NO_COVERAGE)['\"]" modules/*/target/pit-reports/mutations.xml | wc -l
 ```
 
 If the count is `0`, the goal is complete.
@@ -122,6 +122,35 @@ connection.commit();
 // Test: verify in order
 InOrder order = inOrder(mock1, mock2, connection);
 order.verify(connection).commit();
+```
+
+### Restoring Thread Interrupted Flag
+```java
+// Source:
+} catch (InterruptedException e) {
+  Thread.currentThread().interrupt();
+  throw new RuntimeException(String.format(ERR_MSG_TASK_EXECUTION, e.getMessage()), e);
+}
+
+// Test: assert thread interrupt status and clear in finally
+@Test
+void testInterrupted() {
+  Thread.currentThread().interrupt();
+  try {
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> service.run());
+    assertTrue(exception.getCause() instanceof InterruptedException);
+    assertTrue(Thread.currentThread().isInterrupted());
+  } finally {
+    Thread.interrupted();
+  }
+}
+```
+
+### Empty Object on Collection/Map helper returning null
+```java
+// Vulnerable: parseParameters returns null on missing/non-object parameters, and caller branches `if (parameters != null)`
+// PIT replaces `return null;` with `Collections.emptyMap()`, and caller produces identical behavior.
+// Fix: Inline parameter parsing or always initialize a collection without null checks to make the code mutation-immune.
 ```
 
 ### Conditional boundary `> 0` → `>= 0`
