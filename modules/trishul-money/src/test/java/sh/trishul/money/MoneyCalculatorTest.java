@@ -64,8 +64,7 @@ class MoneyCalculatorTest {
     List<MoneySupplier> suppliers = List.of(() -> Money.parse("CAD 10"),
         () -> Money.parse("USD 20"), () -> Money.parse("INR 30"));
 
-    CurrencyMismatchException exception
-        = assertThrows(CurrencyMismatchException.class, () -> calculator.total(suppliers));
+    assertThrows(CurrencyMismatchException.class, () -> calculator.total(suppliers));
   }
 
   @Test
