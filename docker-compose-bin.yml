@@ -1,9 +1,10 @@
 services:
   mvn:
+    image: trishul-mvn:latest
     build:
       context: .
       dockerfile: mvn.dockerfile
-    container_name: mvn
+    network_mode: bridge
     working_dir: ${PWD}
     environment:
       ENABLE_TESTS: "${ENABLE_TESTS}"
