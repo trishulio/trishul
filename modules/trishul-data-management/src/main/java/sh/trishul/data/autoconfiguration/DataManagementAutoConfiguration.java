@@ -107,16 +107,14 @@ public class DataManagementAutoConfiguration {
   @ConditionalOnMissingBean(TenantDataSourceManager.class)
   public TenantDataSourceManager tenantDataSourceManager(DataSourceManager dataSourceManager,
       DataSourceConfigurationProvider<UUID> tenantDsConfigProvider, TenantData adminTenant) {
-    TenantDataSourceManager mgr = new TenantDataSourceManagerWrapper(dataSourceManager,
+    return new TenantDataSourceManagerWrapper(dataSourceManager,
         (TenantDataSourceConfigurationProvider) tenantDsConfigProvider, adminTenant.getId());
-    return mgr;
   }
 
   @Bean
   @ConditionalOnMissingBean(JdbcTemplate.class)
   public JdbcTemplate jdbcTemplate(DataSourceManager dataSourceManager) {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSourceManager.getAdminDataSource());
-    return jdbcTemplate;
+    return new JdbcTemplate(dataSourceManager.getAdminDataSource());
   }
 
   @Bean
@@ -124,7 +122,6 @@ public class DataManagementAutoConfiguration {
   public TransactionTemplate transactionTemplate(DataSourceManager dataSourceManager) {
     PlatformTransactionManager platformTransactionManager
         = new DataSourceTransactionManager(dataSourceManager.getAdminDataSource());
-    TransactionTemplate transactionTemplate = new TransactionTemplate(platformTransactionManager);
-    return transactionTemplate;
+    return new TransactionTemplate(platformTransactionManager);
   }
 }

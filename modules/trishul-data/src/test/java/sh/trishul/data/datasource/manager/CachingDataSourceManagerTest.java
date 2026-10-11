@@ -211,7 +211,7 @@ class CachingDataSourceManagerTest {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
     URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
-    RuntimeException builderException = new RuntimeException("Build failed");
+    this.builderException = new RuntimeException("Build failed");
 
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
     when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
@@ -221,12 +221,10 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPoolSize()).thenReturn(10);
     when(mDsConfig.isAutoCommit()).thenReturn(false);
 
-    this.builderException = builderException;
-
     RuntimeException thrownException
         = assertThrows(RuntimeException.class, () -> dataSourceManager.getDataSource(mDsConfig));
 
-    assertSame(builderException, thrownException);
+    assertSame(this.builderException, thrownException);
   }
 
   @Test
@@ -235,7 +233,7 @@ class CachingDataSourceManagerTest {
     String adminSchemaName = "admin_schema";
     String tenantSchemaName = "tenant_schema";
     URI url = new URI("jdbc:postgresql://localhost:5432/testdb");
-    IllegalArgumentException builderException = new IllegalArgumentException("Invalid argument");
+    IllegalArgumentException illegalArgException = new IllegalArgumentException("Invalid argument");
 
     when(mConnection.getSchema()).thenReturn(adminSchemaName);
     when(mDsConfig.getSchemaName()).thenReturn(tenantSchemaName);
@@ -245,12 +243,12 @@ class CachingDataSourceManagerTest {
     when(mDsConfig.getPoolSize()).thenReturn(10);
     when(mDsConfig.isAutoCommit()).thenReturn(false);
 
-    this.builderException = builderException;
+    this.builderException = illegalArgException;
 
     IllegalArgumentException thrownException = assertThrows(IllegalArgumentException.class,
         () -> dataSourceManager.getDataSource(mDsConfig));
 
-    assertSame(builderException, thrownException);
+    assertSame(illegalArgException, thrownException);
   }
 
   @Test

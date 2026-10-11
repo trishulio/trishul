@@ -41,8 +41,6 @@ public class HikariDataSourceBuilder extends AbstractDataSourceBuilder {
       config.setMaximumPoolSize(size);
     }
 
-    DataSource ds = new HikariDataSource(config);
-
-    return ds;
+    return new HikariDataSource(config);
   }
 }

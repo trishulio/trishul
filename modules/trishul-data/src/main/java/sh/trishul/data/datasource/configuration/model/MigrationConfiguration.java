@@ -23,7 +23,8 @@ public class MigrationConfiguration extends BaseModel {
   public static MigrationConfiguration[] from(String migrationConfigurationsStr) {
     return Arrays.stream(migrationConfigurationsStr.split(";")).map(configStr -> {
       String[] config = configStr.split(":");
-      String schemaHistoryTableName, schemaMigrationScriptPath;
+      String schemaHistoryTableName;
+      String schemaMigrationScriptPath;
 
       if (config.length <= 0 || config.length > 2) {
         throw new IllegalArgumentException(
