@@ -92,6 +92,8 @@
         <javax.measure.impl.version>1.0.10</javax.measure.impl.version>
         <org.joda.money.version>1.0.1</org.joda.money.version>
         <aws.sdk.version>1.12.797</aws.sdk.version>
+        <aws.sdk.v2.version>2.55.14</aws.sdk.v2.version>
+        <aws.java.v1.disableDeprecationAnnouncement>true</aws.java.v1.disableDeprecationAnnouncement>
         <org.jacoco.plugin.version>0.8.15</org.jacoco.plugin.version>
         <org.pitest.version>1.17.3</org.pitest.version>
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
@@ -145,6 +147,13 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-bom</artifactId>
                 <version>${aws.sdk.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>${aws.sdk.v2.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -632,6 +641,11 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <aws.java.v1.disableDeprecationAnnouncement>true</aws.java.v1.disableDeprecationAnnouncement>
+                        </systemPropertyVariables>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -881,6 +895,7 @@
                         <timeoutConstant>10000</timeoutConstant>
                         <jvmArgs>
                             <jvmArg>-Xmx1024m</jvmArg>
+                            <jvmArg>-Daws.java.v1.disableDeprecationAnnouncement=true</jvmArg>
                         </jvmArgs>
                     </configuration>
                     <executions>
