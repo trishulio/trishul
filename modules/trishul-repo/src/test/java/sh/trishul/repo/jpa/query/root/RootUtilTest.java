@@ -14,15 +14,12 @@ import sh.trishul.repo.jpa.query.join.joiner.JpaJoiner;
 
 class RootUtilTest {
   class Layer0 {
-    private Layer1 layer1;
   }
 
   class Layer1 {
-    private Layer2 layer2;
   }
 
   class Layer2 {
-    private Layer3 layer3;
   }
 
   class Layer3 {
@@ -80,13 +77,11 @@ class RootUtilTest {
 
   @Test
   void testGetPath_ThrowException_WhenPathIsNull() {
-    IllegalArgumentException exception
-        = assertThrows(IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, null));
+    assertThrows(IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, null));
   }
 
   @Test
   void testGetPath_ThrowException_WhenPathIsEmpty() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-        () -> rootUtil.getPath(mRoot, new String[] {}));
+    assertThrows(IllegalArgumentException.class, () -> rootUtil.getPath(mRoot, new String[] {}));
   }
 }

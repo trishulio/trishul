@@ -48,7 +48,7 @@ public final class CriteriaJoinAnnotationJoiner implements JpaJoiner {
   }
 
   private boolean isBasicField(Field field) {
-    return !Arrays.stream(field.getAnnotations())
-        .anyMatch(annotation -> COMPOUND_ENTITY_ANNOTATIONS.contains(annotation.annotationType()));
+    return Arrays.stream(field.getAnnotations())
+        .noneMatch(annotation -> COMPOUND_ENTITY_ANNOTATIONS.contains(annotation.annotationType()));
   }
 }

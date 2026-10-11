@@ -16,11 +16,7 @@ class JpaJoinerCachingProxyTest {
   class Entity {
   }
 
-  class Child {
-  }
-
   private From<Object, Entity> mRoot;
-  private From<Child, Entity> mChild;
 
   private JpaJoiner joiner;
   private JpaJoiner mDelegate;
