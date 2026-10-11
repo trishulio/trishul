@@ -105,7 +105,7 @@ class UserServiceTest {
   void testGetByAccessorIds_CallsRepoService() {
     class S implements UserAccessor<S> {
       @Override
-      public S setUser(User User) {
+      public S setUser(User user) {
         return this;
       }
 
@@ -317,10 +317,7 @@ class UserServiceTest {
     doAnswer(inv -> List.of(membership)).when(this.iaasService).put(anyList());
 
     // Mock repoService.saveAll() to return users with iaasUsername set
-    doAnswer(inv -> {
-      List<User> users = inv.getArgument(0);
-      return users;
-    }).when(this.mRepoService).saveAll(anyList());
+    doAnswer(inv -> inv.getArgument(0)).when(this.mRepoService).saveAll(anyList());
 
     final List<User> updated = this.service.put(List.of(userUpdate));
 
