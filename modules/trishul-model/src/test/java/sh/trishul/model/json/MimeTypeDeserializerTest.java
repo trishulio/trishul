@@ -3,6 +3,7 @@ package sh.trishul.model.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -37,6 +38,7 @@ class MimeTypeDeserializerTest {
     assertNotNull(mimeType);
     assertEquals("image", mimeType.getType());
     assertEquals("jpeg", mimeType.getSubtype());
+    assertTrue(mimeType.getParameters().isEmpty());
   }
 
   @Test
@@ -48,6 +50,17 @@ class MimeTypeDeserializerTest {
     assertEquals("text", mimeType.getType());
     assertEquals("plain", mimeType.getSubtype());
     assertEquals("utf-8", mimeType.getParameter("charset"));
+    assertEquals(1, mimeType.getParameters().size());
+  }
+
+  @Test
+  void testDeserialize_FromObjectWithNonObjectParameters() throws IOException {
+    String json = "{\"type\":\"text\",\"subtype\":\"plain\",\"parameters\":\"not-an-object\"}";
+    MimeType mimeType = mapper.readValue(json, MimeType.class);
+    assertNotNull(mimeType);
+    assertEquals("text", mimeType.getType());
+    assertEquals("plain", mimeType.getSubtype());
+    assertTrue(mimeType.getParameters().isEmpty());
   }
 
   @Test
