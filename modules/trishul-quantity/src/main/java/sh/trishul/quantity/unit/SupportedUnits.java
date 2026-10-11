@@ -11,6 +11,8 @@ import tec.uom.se.unit.TransformedUnit;
 import tec.uom.se.unit.Units;
 
 public class SupportedUnits {
+  private SupportedUnits() {}
+
   // Any new units must also be added to the QTY_UNIT table
   public static final Unit<AmountOfSubstance> EACH
       = new BaseUnit<>("each", QuantityDimension.AMOUNT_OF_SUBSTANCE);

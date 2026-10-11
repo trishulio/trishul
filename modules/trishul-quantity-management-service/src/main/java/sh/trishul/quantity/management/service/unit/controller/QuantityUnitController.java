@@ -22,7 +22,7 @@ import sh.trishul.repo.jpa.repository.model.dto.PageDto;
 public class QuantityUnitController extends BaseController {
   private final QuantityUnitService quantityUnitService;
 
-  private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
+  private static final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
 
   public QuantityUnitController(QuantityUnitService quantityUnitService, AttributeFilter filter) {
     super(filter);
@@ -44,10 +44,7 @@ public class QuantityUnitController extends BaseController {
     List<UnitDto> userRoles
         = unitsPage.stream().map(unit -> quantityUnitMapper.toDto(unit)).toList();
 
-    PageDto<UnitDto> dto
-        = new PageDto<>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
-
-    return dto;
+    return new PageDto<>(userRoles, unitsPage.getTotalPages(), unitsPage.getTotalElements());
   }
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,

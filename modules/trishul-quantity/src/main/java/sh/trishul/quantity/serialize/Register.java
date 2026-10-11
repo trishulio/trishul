@@ -5,6 +5,8 @@ import sh.trishul.model.json.JacksonJsonMapper;
 import sh.trishul.model.json.JsonMapper;
 
 public class Register {
+  private Register() {}
+
   public static void init() {
     init((JacksonJsonMapper) JsonMapper.INSTANCE);
   }

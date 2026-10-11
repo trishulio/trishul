@@ -21,9 +21,7 @@ public class QuantityUnitControllerExceptionHandler {
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ErrorResponse incompatibleQuantityUnitException(IncompatibleQuantityUnitException e,
       HttpServletRequest request) {
-    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+    return new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
         HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), request.getRequestURI());
-
-    return response;
   }
 }
