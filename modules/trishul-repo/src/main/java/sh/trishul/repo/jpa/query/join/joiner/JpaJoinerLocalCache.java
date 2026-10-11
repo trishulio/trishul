@@ -26,4 +26,8 @@ public class JpaJoinerLocalCache {
 
     return attribute;
   }
+
+  public void clear() {
+    this.cacheHolder.remove();
+  }
 }

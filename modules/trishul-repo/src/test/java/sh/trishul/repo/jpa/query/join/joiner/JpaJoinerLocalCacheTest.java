@@ -89,4 +89,18 @@ class JpaJoinerLocalCacheTest {
 
     verify(mSupplier, times(2)).get();
   }
+
+  @Test
+  <X, Y> void testClear_RemovesThreadLocalCache() {
+    Key<X, Y> mKey = mock(Key.class);
+    Path<X> mPath = mock(Path.class);
+    Supplier<Path<X>> mSupplier = mock(Supplier.class);
+    doReturn(mPath).when(mSupplier).get();
+
+    this.cache.get(mKey, mSupplier);
+    this.cache.clear();
+    this.cache.get(mKey, mSupplier);
+
+    verify(mSupplier, times(2)).get();
+  }
 }
