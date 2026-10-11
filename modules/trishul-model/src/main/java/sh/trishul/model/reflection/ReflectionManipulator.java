@@ -87,14 +87,13 @@ public class ReflectionManipulator {
       @Override
       public Set<String> load(@NonNull Class<?> clazz) throws Exception {
         final Method[] methods = clazz.getMethods();
-        final Set<String> propertyNames = Arrays.stream(methods)
+        return Arrays.stream(methods)
             .filter(m -> m.getName().startsWith("get") || m.getName().startsWith("set"))
             .map(method -> method.getName().replaceFirst("get|set", "")).map(prop -> {
               final char c = Character.toLowerCase(prop.charAt(0));
               final String l = Character.toString(c);
               return prop.replaceFirst("\\w", l);
             }).collect(ImmutableSet.toImmutableSet());
-        return propertyNames;
       }
     });
 
@@ -222,18 +221,23 @@ public class ReflectionManipulator {
             = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
       }
 
-      try {
-        Method writeMethod = clazz.getMethod(writeMethodName, pd.getPropertyType());
-        writeMethod.invoke(o, value);
-      } catch (NoSuchMethodException e) {
-        log.info("No setter method found for property: {}", propertyName);
-      }
+      invokeWriteMethod(o, clazz, writeMethodName, pd, value);
     } catch (final ReflectiveOperationException e) {
       final String msg = String.format(ERR_MSG_PREDICATE_EXECUTION, e.getMessage());
       throw this.handleException(msg, e);
     } catch (IllegalArgumentException e) {
       final String msg = String.format(ERR_MSG_DYNAMIC_METHOD_ACCESS, e.getMessage());
       throw this.handleException(msg, e);
+    }
+  }
+
+  private void invokeWriteMethod(Object o, Class<?> clazz, String writeMethodName,
+      PropertyDescriptor pd, Object value) throws ReflectiveOperationException {
+    try {
+      Method writeMethod = clazz.getMethod(writeMethodName, pd.getPropertyType());
+      writeMethod.invoke(o, value);
+    } catch (NoSuchMethodException e) {
+      log.info("No setter method found for property: {}", pd.getName());
     }
   }
 }

@@ -25,7 +25,7 @@ public class SequentialTaskSet implements TaskSet {
   }
 
   @Override
-  public <T> void submit(Runnable runnable) {
+  public void submit(Runnable runnable) {
     try {
       runnable.run();
       results.add(null);

@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 public interface TaskSet {
   <T> void submit(Supplier<T> supplier);
 
-  <T> void submit(Runnable runnable);
+  void submit(Runnable runnable);
 
   List<Exception> getErrors();
 
