@@ -28,6 +28,10 @@ class AggregationServiceTest {
     public TestEntity(Long id) {
       this.id = id;
     }
+
+    public Long getId() {
+      return this.id;
+    }
   }
 
   class TestPathProvider implements PathProvider {
