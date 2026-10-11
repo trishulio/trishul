@@ -136,8 +136,6 @@ public class IaasObjectStoreService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"name"}, {"bucketName"}};
-
   @Override
   public Page<IaasObjectStore> search(String query, SortedSet<String> sort, boolean orderAscending,
       int page, int size) {

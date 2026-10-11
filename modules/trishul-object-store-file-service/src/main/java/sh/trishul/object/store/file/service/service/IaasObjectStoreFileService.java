@@ -133,8 +133,6 @@ public class IaasObjectStoreFileService extends BaseService implements
     throw new UnsupportedOperationException("Patch is not supported for file urls");
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"fileName"}, {"originalFileName"}};
-
   @Override
   public Page<IaasObjectStoreFile> search(String query, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {

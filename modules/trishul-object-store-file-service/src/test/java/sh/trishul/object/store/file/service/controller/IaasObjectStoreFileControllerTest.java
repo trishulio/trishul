@@ -108,8 +108,9 @@ class IaasObjectStoreFileControllerTest {
   @Test
   void testAutowiredConstructor() {
     AttributeFilter filter = mock(AttributeFilter.class);
-    IaasObjectStoreFileController controller = new IaasObjectStoreFileController(mService, filter);
-    assertNotNull(controller);
+    IaasObjectStoreFileController newController
+        = new IaasObjectStoreFileController(mService, filter);
+    assertNotNull(newController);
   }
 
   @Test

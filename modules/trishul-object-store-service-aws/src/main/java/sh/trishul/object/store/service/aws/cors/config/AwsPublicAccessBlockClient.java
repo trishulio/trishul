@@ -38,10 +38,9 @@ public class AwsPublicAccessBlockClient implements
       log.error("Failed to get the public access block configuration for bucket: {}", bucketName);
     }
 
-    IaasObjectStoreAccessConfig iaasObjectStoreConfig = publicAccessBlockResult == null ? null
+    return publicAccessBlockResult == null ? null
         : new IaasObjectStoreAccessConfig(bucketName,
             publicAccessBlockResult.getPublicAccessBlockConfiguration());
-    return iaasObjectStoreConfig;
   }
 
   @Override
