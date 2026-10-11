@@ -49,16 +49,12 @@ public class CrudRepoService<T extends JpaRepository<E, ID> & JpaSpecificationEx
       int page, int size) {
     final PageRequest pageable = pageRequest(sort, orderAscending, page, size);
 
-    final Page<E> entities = this.repo.findAll(spec, pageable);
-
-    return entities;
+    return this.repo.findAll(spec, pageable);
   }
 
   @Override
   public List<E> getAll(Specification<E> spec) {
-    final List<E> entities = this.repo.findAll(spec);
-
-    return entities;
+    return this.repo.findAll(spec);
   }
 
   @Override

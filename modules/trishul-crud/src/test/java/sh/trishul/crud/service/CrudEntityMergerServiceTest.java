@@ -168,9 +168,9 @@ class CrudEntityMergerServiceTest {
     final List<UpdateDummyCrudEntity<?>> patchesWithSameNullIds
         = List.of(new DummyCrudEntity(), new DummyCrudEntity());
 
-    IllegalStateException exception1 = assertThrows(IllegalStateException.class,
+    assertThrows(IllegalStateException.class,
         () -> this.service.getPatchEntities(existing, patchesWithSameId));
-    IllegalStateException exception2 = assertThrows(IllegalStateException.class,
+    assertThrows(IllegalStateException.class,
         () -> this.service.getPatchEntities(existing, patchesWithSameNullIds));
   }
 

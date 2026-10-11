@@ -141,9 +141,8 @@ class AttributeFilterTest {
     }
     PrimitiveDummy data = new PrimitiveDummy();
 
-    // ReflectionManipulator catches IllegalArgumentException and rethrows as RuntimeException
-    // So this might not hit the catch(IllegalArgumentException) block in AttributeFilter
-    // but we add it to satisfy the requirement of using a class with primitive fields.
+    // ReflectionManipulator rethrows exceptions as RuntimeException
+    // We add this test case to verify behavior with primitive fields
     assertThrows(RuntimeException.class, () -> filter.remove(data, Set.of("id")));
   }
 }

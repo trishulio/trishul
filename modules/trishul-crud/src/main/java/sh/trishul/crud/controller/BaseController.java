@@ -19,7 +19,7 @@ public abstract class BaseController {
 
   private final AttributeFilter filter;
 
-  public BaseController() {
+  protected BaseController() {
     this(new AttributeFilter());
   }
 
