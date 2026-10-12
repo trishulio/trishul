@@ -177,9 +177,7 @@ public class UserService extends BaseService
       }
     });
 
-    List<User> users = this.repoService.saveAll(updated);
-
-    return users;
+    return this.repoService.saveAll(updated);
   }
 
   @Override

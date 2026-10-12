@@ -67,11 +67,10 @@ public class WebRTCSpeechService {
     });
 
     HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-    ResponseEntity<Map> response = restTemplate
+    ResponseEntity<?> response = restTemplate
         .postForEntity("https://api.openai.com/v1/audio/transcriptions", requestEntity, Map.class);
 
-    Map<?, ?> responseBody = response.getBody();
-    if (responseBody != null && responseBody.containsKey("text")) {
+    if (response.getBody() instanceof Map<?, ?> responseBody && responseBody.containsKey("text")) {
       return (String) responseBody.get("text");
     }
     return "";

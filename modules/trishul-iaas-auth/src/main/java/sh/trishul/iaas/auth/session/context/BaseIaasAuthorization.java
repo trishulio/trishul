@@ -22,5 +22,5 @@ public interface BaseIaasAuthorization<T extends BaseIaasAuthorization<T>> {
 
   LocalDateTime getExpiration();
 
-  T setExpiration(LocalDateTime Expiration);
+  T setExpiration(LocalDateTime expiration);
 }

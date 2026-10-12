@@ -22,7 +22,7 @@ import sh.trishul.user.service.user.service.salutation.service.UserSalutationSer
 public class UserSalutationController extends BaseController {
   private final UserSalutationService userSalutationService;
 
-  private final UserSalutationMapper userSalutationMapper = UserSalutationMapper.INSTANCE;
+  private static final UserSalutationMapper userSalutationMapper = UserSalutationMapper.INSTANCE;
 
   public UserSalutationController(UserSalutationService userService, AttributeFilter filter) {
     super(filter);
@@ -44,10 +44,8 @@ public class UserSalutationController extends BaseController {
     List<UserSalutationDto> userSalutations = userSalutationPage.stream()
         .map(salutation -> userSalutationMapper.toDto(salutation)).toList();
 
-    PageDto<UserSalutationDto> dto = new PageDto<>(userSalutations,
-        userSalutationPage.getTotalPages(), userSalutationPage.getTotalElements());
-
-    return dto;
+    return new PageDto<>(userSalutations, userSalutationPage.getTotalPages(),
+        userSalutationPage.getTotalElements());
   }
 
   @GetMapping(value = "/search", consumes = MediaType.ALL_VALUE,

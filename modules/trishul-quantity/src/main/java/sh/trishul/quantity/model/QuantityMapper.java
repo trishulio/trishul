@@ -18,7 +18,7 @@ public abstract class QuantityMapper {
     QuantityDto dto = null;
     if (quantity != null) {
       dto = new QuantityDto();
-      String unitSymbol = QuantityUnitMapper.INSTANCE.toSymbol(quantity.getUnit());
+      String unitSymbol = QuantityUnitMapper.toSymbol(quantity.getUnit());
       dto.setSymbol(unitSymbol);
       dto.setValue(parseNumber(quantity.getValue()));
     }
@@ -56,7 +56,7 @@ public abstract class QuantityMapper {
    */
   public BigDecimal parseNumber(Number num) {
     BigDecimal bigDecimal = null;
-    if (num != null && num instanceof Double) {
+    if (num instanceof Double) {
       bigDecimal = new BigDecimal(num.toString());
     } else {
       bigDecimal = (BigDecimal) num;

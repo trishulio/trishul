@@ -32,7 +32,7 @@ public class TenantIaasAuthService {
   public List<TenantIaasAuthResources> get(Set<String> idpTenantsIds) {
     Set<String> roleIds = new HashSet<>();
 
-    idpTenantsIds.stream().forEach(idpTenantsId -> {
+    idpTenantsIds.forEach(idpTenantsId -> {
       String roleName = this.resourceBuilder.getRoleId(idpTenantsId);
       roleIds.add(roleName);
     });
@@ -72,7 +72,7 @@ public class TenantIaasAuthService {
   public TenantIaasAuthDeleteResult delete(Set<String> iaasIdpTenantIds) {
     Set<String> roleIds = new HashSet<>();
 
-    iaasIdpTenantIds.stream().forEach(iaasIdpTenantId -> {
+    iaasIdpTenantIds.forEach(iaasIdpTenantId -> {
       String roleName = this.resourceBuilder.getRoleId(iaasIdpTenantId);
       roleIds.add(roleName);
     });

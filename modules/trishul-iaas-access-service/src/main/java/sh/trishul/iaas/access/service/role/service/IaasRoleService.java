@@ -135,8 +135,6 @@ public class IaasRoleService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"name"}, {"description"}};
-
   @Override
   public Page<IaasRole> search(String query, SortedSet<String> sort, boolean orderAscending,
       int page, int size) {

@@ -43,11 +43,10 @@ public class CachingDataSourceManager implements DataSourceManager {
             }
 
             HikariDataSourceBuilder dataSourceBuilder = new HikariDataSourceBuilder();
-            DataSource ds = dataSourceBuilder.clear().url(dsConfig.getUrl().toString())
+            return dataSourceBuilder.clear().url(dsConfig.getUrl().toString())
                 .schema(dsConfig.getSchemaName()).username(dsConfig.getUserName())
                 .password(dsConfig.getPassword()).poolSize(dsConfig.getPoolSize())
                 .autoCommit(dsConfig.isAutoCommit()).build();
-            return ds;
           }
         });
   }
@@ -55,32 +54,31 @@ public class CachingDataSourceManager implements DataSourceManager {
   @Override
   public DataSource getDataSource(DataSourceConfiguration dsConfig)
       throws SQLException, IOException {
-    DataSource ds = null;
     try {
-      ds = this.cache.get(dsConfig);
+      return this.cache.get(dsConfig);
     } catch (ExecutionException | UncheckedExecutionException | ExecutionError e) {
       log.error("Error loading the datasource from the cache");
       Throwable cause = e.getCause();
       if (cause == null) {
         throw new RuntimeException(e);
       }
-      if (cause instanceof SQLException c) {
-        log.error("SQLException occurred while fetching DataSource");
-        throw c;
-      } else if (cause instanceof IOException io) {
-        log.error("IOException occurred while fetching DataSource");
-        throw io;
-      } else if (cause instanceof RuntimeException re) {
-        throw re;
-      } else if (cause instanceof Error err) {
-        throw err;
-      } else {
-        log.error("Unknown error occurred while fetching DataSource");
-        throw new RuntimeException(cause);
+      switch (cause) {
+        case SQLException c -> {
+          log.error("SQLException occurred while fetching DataSource");
+          throw c;
+        }
+        case IOException io -> {
+          log.error("IOException occurred while fetching DataSource");
+          throw io;
+        }
+        case RuntimeException re -> throw re;
+        case Error err -> throw err;
+        default -> {
+          log.error("Unknown error occurred while fetching DataSource");
+          throw new RuntimeException(cause);
+        }
       }
     }
-
-    return ds;
   }
 
   @Override

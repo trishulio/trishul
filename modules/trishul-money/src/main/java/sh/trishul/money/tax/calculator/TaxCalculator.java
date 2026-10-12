@@ -44,37 +44,24 @@ public class TaxCalculator {
 
       while (it.hasNext()) {
         TaxAmount amount = it.next();
-        if (pst == null) {
-          pst = amount.getPstAmount();
-        } else {
-          Money currentPst = amount.getPstAmount();
-          if (currentPst != null) {
-            pst = pst.plus(currentPst);
-          }
-        }
-
-        if (gst == null) {
-          gst = amount.getGstAmount();
-        } else {
-          Money currentGst = amount.getGstAmount();
-          if (currentGst != null) {
-            gst = gst.plus(currentGst);
-          }
-        }
-
-        if (hst == null) {
-          hst = amount.getHstAmount();
-        } else {
-          Money currentHst = amount.getHstAmount();
-          if (currentHst != null) {
-            hst = hst.plus(currentHst);
-          }
-        }
+        pst = addMoney(pst, amount.getPstAmount());
+        gst = addMoney(gst, amount.getGstAmount());
+        hst = addMoney(hst, amount.getHstAmount());
       }
 
       taxAmount = new TaxAmount(pst, gst, hst);
     }
 
     return taxAmount;
+  }
+
+  private static Money addMoney(Money total, Money toAdd) {
+    if (total == null) {
+      return toAdd;
+    }
+    if (toAdd != null) {
+      return total.plus(toAdd);
+    }
+    return total;
   }
 }

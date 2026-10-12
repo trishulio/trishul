@@ -270,8 +270,6 @@ class ReflectionManipulatorTest {
     ReflectionManipulator localUtil = new ReflectionManipulator();
     Set<String> props = localUtil.getPropertyNames(TestData.class, Set.of("y", "z"));
 
-    props = localUtil.getPropertyNames(TestData.class, Set.of("y", "z"));
-
     assertEquals(Set.of("x", "class"), props);
   }
 
@@ -369,7 +367,9 @@ class ReflectionManipulatorTest {
       }
     }
     class OnlySetter {
-      public void setName(String name) {}
+      public void setName(String name) {
+        // No-op method for reflection property testing
+      }
     }
     assertEquals(Set.of("name", "class"), localUtil.getPropertyNames(OnlyGetter.class, null));
     assertEquals(Set.of("name", "class"), localUtil.getPropertyNames(OnlySetter.class, null));
@@ -499,7 +499,9 @@ class ReflectionManipulatorTest {
       throw new RuntimeException("Getter failed");
     }
 
-    public void setX(int x) {}
+    public void setX(int x) {
+      // No-op method for reflection property testing
+    }
   }
 
   @Test

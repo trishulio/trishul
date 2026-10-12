@@ -37,18 +37,14 @@ public class TenantPersistenceAutoConfiguration {
   @ConditionalOnMissingBean(MultiTenantConnectionProvider.class)
   public MultiTenantConnectionProvider<String> multiTenantConnectionProvider(
       TenantDataSourceManager tenantDataSourceManager, DataSource adminDataSource) {
-    MultiTenantConnectionProvider<String> multiTenantConnectionProvider
-        = new TenantConnectionProviderPool(tenantDataSourceManager, adminDataSource);
-    return multiTenantConnectionProvider;
+    return new TenantConnectionProviderPool(tenantDataSourceManager, adminDataSource);
   }
 
   @Bean
   @ConditionalOnMissingBean(CurrentTenantIdentifierResolver.class)
   public CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver(
       TenantIdProvider tenantIdProvider) {
-    CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolver
-        = new TenantIdentifierResolver(tenantIdProvider);
-    return currentTenantIdentifierResolver;
+    return new TenantIdentifierResolver(tenantIdProvider);
   }
 
   @Bean
@@ -95,9 +91,6 @@ public class TenantPersistenceAutoConfiguration {
       throw new IllegalStateException("EntityManagerFactory returned null");
     }
 
-    PlatformTransactionManager platformTransactionManager
-        = new JpaTransactionManager(localContainerEntityManagerFactoryBean);
-
-    return platformTransactionManager;
+    return new JpaTransactionManager(localContainerEntityManagerFactoryBean);
   }
 }

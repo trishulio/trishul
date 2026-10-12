@@ -38,10 +38,8 @@ public class AwsCorsConfigClient implements
       log.error("Failed to get the cross origin configuration for bucket: {}", bucketName);
     }
 
-    IaasObjectStoreCorsConfiguration iaasObjectStoreCorsConfiguration
-        = bucketCrossOriginConfiguration == null ? null
-            : new IaasObjectStoreCorsConfiguration(bucketName, bucketCrossOriginConfiguration);
-    return iaasObjectStoreCorsConfiguration;
+    return bucketCrossOriginConfiguration == null ? null
+        : new IaasObjectStoreCorsConfiguration(bucketName, bucketCrossOriginConfiguration);
   }
 
   @Override

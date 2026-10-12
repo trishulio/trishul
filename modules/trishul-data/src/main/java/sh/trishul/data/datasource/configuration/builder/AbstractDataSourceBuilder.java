@@ -12,7 +12,7 @@ public abstract class AbstractDataSourceBuilder implements DataSourceBuilder {
   private final String keySchema;
   private final String poolSize;
 
-  public AbstractDataSourceBuilder(String keyUsername, String keyPassword, String keyUrl,
+  protected AbstractDataSourceBuilder(String keyUsername, String keyPassword, String keyUrl,
       String keyAutoCommit, String keySchema, String poolSize) {
     this.props = new Properties(5);
 

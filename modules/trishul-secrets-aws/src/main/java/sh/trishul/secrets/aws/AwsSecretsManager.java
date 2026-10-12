@@ -51,7 +51,7 @@ public class AwsSecretsManager implements SecretsManager<String, String> {
   public Boolean exists(String secretId) throws IOException {
     GetSecretValueRequest getSecretRequest = new GetSecretValueRequest().withSecretId(secretId);
     GetSecretValueResult getSecretValueResult = null;
-    Boolean secretExists = false;
+    boolean secretExists = false;
 
     try {
       getSecretValueResult = client.getSecretValue(getSecretRequest);
@@ -70,7 +70,7 @@ public class AwsSecretsManager implements SecretsManager<String, String> {
 
   @Override
   public void put(String secretId, String secret) throws IOException {
-    Boolean secretExists = this.exists(secretId);
+    boolean secretExists = Boolean.TRUE.equals(this.exists(secretId));
 
     if (!secretExists) {
       this.create(secretId, secret);

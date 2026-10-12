@@ -23,7 +23,7 @@ class ApplicationTest {
   void contextLoads() {}
 
   @Test
-  public void testAutoCommitIsSetToFalse(@Autowired DataSource ds) throws SQLException {
+  void testAutoCommitIsSetToFalse(@Autowired DataSource ds) throws SQLException {
     try (Connection conn = ds.getConnection()) {
       log.debug("Database Product Name: {}", conn.getMetaData().getDatabaseProductName());
       log.debug("Database Username: {}", conn.getMetaData().getUserName());

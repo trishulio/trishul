@@ -37,9 +37,8 @@ class IncompatibleQuantityUnitExceptionTest {
     BaseQuantityUnitAccessor<?> accessor = mock(BaseQuantityUnitAccessor.class);
     doReturn(SupportedUnits.LITRE).when(accessor).getBaseQuantityUnit();
 
-    IncompatibleQuantityUnitException exception = assertThrows(
-        IncompatibleQuantityUnitException.class, () -> IncompatibleQuantityUnitException
-            .validateUnit(accessor, Quantities.getQuantity("10 g")));
+    assertThrows(IncompatibleQuantityUnitException.class, () -> IncompatibleQuantityUnitException
+        .validateUnit(accessor, Quantities.getQuantity("10 g")));
   }
 
   @Test
@@ -52,10 +51,9 @@ class IncompatibleQuantityUnitExceptionTest {
 
   @Test
   void testValidateCompatibleQuantities_ThrowsException_WhenUnitsAreIncompatible() {
-    IncompatibleQuantityUnitException exception
-        = assertThrows(IncompatibleQuantityUnitException.class,
-            () -> IncompatibleQuantityUnitException.validateCompatibleQuantities(
-                Quantities.getQuantity("10 l"), Quantities.getQuantity("10 g")));
+    assertThrows(IncompatibleQuantityUnitException.class,
+        () -> IncompatibleQuantityUnitException.validateCompatibleQuantities(
+            Quantities.getQuantity("10 l"), Quantities.getQuantity("10 g")));
   }
 
   @Test
@@ -66,10 +64,9 @@ class IncompatibleQuantityUnitExceptionTest {
 
   @Test
   void testValidateExpectedUnit_ThrowsException_WhenUnitIsUnexpected() {
-    IncompatibleQuantityUnitException exception
-        = assertThrows(IncompatibleQuantityUnitException.class,
-            () -> IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM,
-                Quantities.getQuantity(100, SupportedUnits.LITRE)));
+    assertThrows(IncompatibleQuantityUnitException.class,
+        () -> IncompatibleQuantityUnitException.validateExpectedUnit(SupportedUnits.GRAM,
+            Quantities.getQuantity(100, SupportedUnits.LITRE)));
   }
 
   @Test

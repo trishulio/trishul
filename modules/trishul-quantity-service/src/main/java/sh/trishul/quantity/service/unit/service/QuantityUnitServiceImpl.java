@@ -15,7 +15,7 @@ import sh.trishul.repo.jpa.query.clause.where.builder.WhereClauseBuilder;
 
 @Transactional
 public class QuantityUnitServiceImpl implements QuantityUnitService {
-  private final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
+  private static final QuantityUnitMapper quantityUnitMapper = QuantityUnitMapper.INSTANCE;
 
   private final QuantityUnitRepository quantityUnitRepository;
 
@@ -41,10 +41,7 @@ public class QuantityUnitServiceImpl implements QuantityUnitService {
       boolean orderAscending, int page, int size) {
     Specification<UnitEntity> spec
         = WhereClauseBuilder.builder().in(UnitEntity.FIELD_SYMBOL, symbols).build();
-    Page<UnitEntity> units
-        = quantityUnitRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
-
-    return units;
+    return quantityUnitRepository.findAll(spec, pageRequest(sort, orderAscending, page, size));
   }
 
   @Override

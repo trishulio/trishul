@@ -57,21 +57,21 @@ public class Amount extends BaseEntity {
 
   @PrePersist
   public void setTotal() {
-    Money total = null;
+    Money calculatedTotal = null;
 
-    Money subTotal = getSubTotal();
-    TaxAmount taxAmount = getTaxAmount();
+    Money currentSubTotal = getSubTotal();
+    TaxAmount currentTaxAmount = getTaxAmount();
 
     Money totalTaxAmount = null;
-    if (taxAmount != null) {
-      totalTaxAmount = taxAmount.getTotalTaxAmount();
+    if (currentTaxAmount != null) {
+      totalTaxAmount = currentTaxAmount.getTotalTaxAmount();
     }
 
-    if (subTotal != null && totalTaxAmount != null) {
-      total = subTotal.plus(totalTaxAmount);
+    if (currentSubTotal != null && totalTaxAmount != null) {
+      calculatedTotal = currentSubTotal.plus(totalTaxAmount);
     }
 
-    this.total = MoneyMapper.INSTANCE.toEntity(total);
+    this.total = MoneyMapper.INSTANCE.toEntity(calculatedTotal);
   }
 
   public Money getSubTotal() {

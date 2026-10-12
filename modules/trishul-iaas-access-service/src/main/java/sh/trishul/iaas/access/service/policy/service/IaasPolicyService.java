@@ -134,8 +134,6 @@ public class IaasPolicyService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"name"}, {"description"}};
-
   @Override
   public Page<IaasPolicy> search(String query, SortedSet<String> sort, boolean orderAscending,
       int page, int size) {

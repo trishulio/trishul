@@ -4,7 +4,7 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sh.trishul.model.reflection.ReflectionManipulator;
@@ -19,20 +19,19 @@ public class AttributeFilter {
   }
 
   public void remove(Object o, Set<String> attributes) {
-    setNullValueOnProps(o, propName -> attributes.contains(propName));
+    setNullValueOnProps(o, attributes::contains);
   }
 
-  private void setNullValueOnProps(Object o, Function<String, Boolean> predicate) {
+  private void setNullValueOnProps(Object o, Predicate<String> predicate) {
     try {
-      final Object NULL_VALUE = null;
       PropertyDescriptor[] pds = Introspector.getBeanInfo(o.getClass()).getPropertyDescriptors();
       for (PropertyDescriptor pd : pds) {
         String propertyName = pd.getName();
-        if (!predicate.apply(propertyName)) {
+        if (!predicate.test(propertyName)) {
           continue;
         }
 
-        util.invokeSetter(o, pd, NULL_VALUE);
+        util.invokeSetter(o, pd, null);
       }
     } catch (IntrospectionException e) {
       String msg = "Failed to get the property descriptors for the the object";

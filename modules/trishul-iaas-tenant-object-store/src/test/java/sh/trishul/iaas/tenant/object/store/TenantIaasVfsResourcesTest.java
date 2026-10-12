@@ -82,9 +82,9 @@ class TenantIaasVfsResourcesTest {
 
   @Test
   void testToString() {
-    TenantIaasVfsResources resources
+    TenantIaasVfsResources actual
         = new TenantIaasVfsResources(new IaasObjectStore("OS1"), new IaasPolicy("P1"));
-    String toString = resources.toString();
+    String toString = actual.toString();
 
     assertTrue(toString.contains("OS1"));
     assertTrue(toString.contains("P1"));

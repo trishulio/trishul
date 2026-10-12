@@ -74,7 +74,7 @@ class AwsIamRolePolicyAttachmentClientTest {
     doThrow(RuntimeException.class).when(mAwsClient)
         .listAttachedRolePolicies(new ListAttachedRolePoliciesRequest().withRoleName("ROLE_1"));
 
-    RuntimeException exception = assertThrows(RuntimeException.class,
+    assertThrows(RuntimeException.class,
         () -> client.get(new IaasRolePolicyAttachmentId("ROLE_1", "POLICY_1")));
   }
 

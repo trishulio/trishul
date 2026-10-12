@@ -144,8 +144,6 @@ public class IaasObjectStoreAccessConfigService extends BaseService implements
     return iaasRepo.put(updated);
   }
 
-  private static final String[][] SEARCH_FIELDS = {{"id"}};
-
   @Override
   public Page<IaasObjectStoreAccessConfig> search(String query, SortedSet<String> sort,
       boolean orderAscending, int page, int size) {

@@ -24,10 +24,9 @@ public class TenantIaasVfsResourceMapper {
     Iterator<IaasObjectStore> objectStoresIterator = objectStores.iterator();
     Iterator<IaasPolicy> policiesIterator = policies.iterator();
 
-    List<TenantIaasVfsResources> resources = Stream
+    return Stream
         .generate(
             () -> new TenantIaasVfsResources(objectStoresIterator.next(), policiesIterator.next()))
         .limit(objectStoreCount).toList();
-    return resources;
   }
 }

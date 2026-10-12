@@ -36,9 +36,8 @@ public class TenantServiceAutoConfiguration {
         = new CrudEntityMergerService<>(lockService, BaseTenant.class, UpdateTenant.class,
             Tenant.class, Set.of(""));
 
-    final TenantService tenantService = new TenantService(repoService, updateService,
-        tenantRepository, migrationManager, tenantIaasService);
-    return tenantService;
+    return new TenantService(repoService, updateService, tenantRepository, migrationManager,
+        tenantIaasService);
   }
 
   @Bean

@@ -64,7 +64,7 @@ public class TenantIaasVfsService {
     Set<String> policyIds = new HashSet<>();
     Set<String> objectStoreIds = new HashSet<>();
 
-    iaasIdpTenantIds.stream().forEach(iaasIdpTenantId -> {
+    iaasIdpTenantIds.forEach(iaasIdpTenantId -> {
       String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
       policyIds.add(policyId);
 
@@ -167,7 +167,7 @@ public class TenantIaasVfsService {
     Set<String> policyIds = new HashSet<>();
     Set<IaasRolePolicyAttachmentId> attachmentIds = new HashSet<>();
 
-    iaasIdpTenantIds.stream().forEach(iaasIdpTenantId -> {
+    iaasIdpTenantIds.forEach(iaasIdpTenantId -> {
       String policyId = this.resourceBuilder.getVfsPolicyId(iaasIdpTenantId);
       policyIds.add(policyId);
 

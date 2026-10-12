@@ -47,9 +47,9 @@ class TenantIaasVfsResourceMapperTest {
 
   @Test
   void testFromComponents_ThrowsException_WhenComponentsAreNotSameSize() {
-    IllegalArgumentException exception1 = assertThrows(IllegalArgumentException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> mapper.fromComponents(List.of(), List.of(new IaasPolicy())));
-    IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> mapper.fromComponents(List.of(new IaasObjectStore()), List.of()));
   }
 }

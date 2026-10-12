@@ -63,7 +63,7 @@ class QuantityCalculatorTest {
     Quantity<Length> q1 = Quantities.getQuantity(new BigDecimal("100"), Units.METRE);
     Quantity<Length> q2 = Quantities.getQuantity(new BigDecimal("25"), Units.METRE);
 
-    RuntimeException exception = assertThrows(RuntimeException.class, () -> calc.subtract(q1, q2));
+    assertThrows(RuntimeException.class, () -> calc.subtract(q1, q2));
   }
 
   @Test
@@ -100,7 +100,7 @@ class QuantityCalculatorTest {
     Quantity<Length> q1 = Quantities.getQuantity(new BigDecimal("100"), Units.METRE);
     Quantity<Length> q2 = Quantities.getQuantity(new BigDecimal("25"), Units.METRE);
 
-    RuntimeException exception = assertThrows(RuntimeException.class, () -> calc.add(q1, q2));
+    assertThrows(RuntimeException.class, () -> calc.add(q1, q2));
   }
 
   @Test

@@ -35,19 +35,27 @@ class LoggingAspectTest {
   @NoMethodLogging
   public static class IgnoredService implements DummyService {
     @Override
-    public void process(String arg) {}
+    public void process(String arg) {
+      // Dummy implementation for AOP logging tests
+    }
 
     @Override
-    public void skipProcess(String arg) {}
+    public void skipProcess(String arg) {
+      // Dummy implementation for AOP logging tests
+    }
   }
 
   public static class StandardService implements DummyService {
     @Override
-    public void process(String arg) {}
+    public void process(String arg) {
+      // Dummy implementation for AOP logging tests
+    }
 
     @Override
     @NoMethodLogging
-    public void skipProcess(String arg) {}
+    public void skipProcess(String arg) {
+      // Dummy implementation for AOP logging tests
+    }
   }
 
   @Test

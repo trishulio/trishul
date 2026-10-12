@@ -79,10 +79,8 @@ public class ControllerExceptionHandler {
         .map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage())
         .collect(Collectors.joining(", "));
 
-    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+    return new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
         HttpStatus.BAD_REQUEST.getReasonPhrase(), fieldErrors, request.getRequestURI());
-
-    return response;
   }
 
   @ExceptionHandler(value = {ResponseStatusException.class})
@@ -127,19 +125,15 @@ public class ControllerExceptionHandler {
       HttpServletRequest request) {
     log.error("argument not valid", e);
 
-    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+    return new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
         HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), request.getRequestURI());
-
-    return response;
   }
 
   @ExceptionHandler(value = {ConversionFailedException.class})
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ErrorResponse conversionFailedErrorResponse(ConversionFailedException e,
       HttpServletRequest request) {
-    ErrorResponse response = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+    return new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
         HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), request.getRequestURI());
-
-    return response;
   }
 }

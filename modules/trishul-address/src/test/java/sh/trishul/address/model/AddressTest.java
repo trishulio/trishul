@@ -26,17 +26,17 @@ class AddressTest {
     LocalDateTime createdAt = LocalDateTime.of(2025, 1, 1, 0, 0);
     LocalDateTime lastUpdated = LocalDateTime.of(2025, 1, 2, 0, 0);
 
-    Address address = new Address(addressLine1, addressLine2, country, province, city, postalCode,
+    Address actual = new Address(addressLine1, addressLine2, country, province, city, postalCode,
         createdAt, lastUpdated);
 
-    assertSame(addressLine1, address.getAddressLine1());
-    assertSame(addressLine2, address.getAddressLine2());
-    assertSame(country, address.getCountry());
-    assertSame(province, address.getProvince());
-    assertSame(city, address.getCity());
-    assertSame(postalCode, address.getPostalCode());
-    assertSame(createdAt, address.getCreatedAt());
-    assertSame(lastUpdated, address.getLastUpdated());
+    assertSame(addressLine1, actual.getAddressLine1());
+    assertSame(addressLine2, actual.getAddressLine2());
+    assertSame(country, actual.getCountry());
+    assertSame(province, actual.getProvince());
+    assertSame(city, actual.getCity());
+    assertSame(postalCode, actual.getPostalCode());
+    assertSame(createdAt, actual.getCreatedAt());
+    assertSame(lastUpdated, actual.getLastUpdated());
   }
 
   @Test
