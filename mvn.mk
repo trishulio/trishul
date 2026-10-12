@@ -1,7 +1,11 @@
-.PHONY: install compile deploy set_version check fast-build release
+.PHONY: install compile deploy set_version check fast-build release build-image
 
-MAVEN := docker-compose --env-file mvn.env -f docker-compose-bin.yml run --rm --remove-orphans mvn
+COMPOSE := docker-compose --env-file mvn.env -f docker-compose-bin.yml
+MAVEN := $(COMPOSE) run --rm --remove-orphans mvn
 THREADS ?= 2C
+
+build-image:
+	$(COMPOSE) build mvn
 
 install:
 	$(MAVEN) mvn clean install -T $(THREADS) $(MVN_ARGS)

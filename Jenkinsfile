@@ -56,6 +56,12 @@ pipeline {
             }
         }
 
+        stage('Build Image') {
+            steps {
+                sh "make build-image PWD='${HOST_WORKSPACE}'"
+            }
+        }
+
         stage('Check & Quality') {
             steps {
                 // Ensure formatting, checkstyle, etc. are passing
