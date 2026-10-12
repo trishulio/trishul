@@ -97,7 +97,7 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - Maven multi-module project
 - Configuration files: `pom.xml`, `mvn.env`, `docker-compose-bin.yml`, `Makefile`
 - Build runs inside Docker container via docker-compose
-- Use `make install` to build the project. Always run `make install` after changes to verify build passes.
+- Use `make install THREADS=1C` to build the project (single-threaded execution prevents Docker resource exhaustion and parallel PIT minion crashes). Always run `make install` after changes to verify build passes.
 - **Monitoring Builds**: The full `make install` build takes about 30 minutes. When running it, set a background timer (e.g., `schedule` tool) for 15 minutes (900 seconds) to monitor status, rather than polling frequently (e.g. every minute) to conserve tokens and context.
 - Plugins: Spotless (code formatting, runs automatically), JaCoCo (code coverage), PIT (mutation testing), SonarQube (static analysis), SpotBugs (bug detection).
 - Java 21 features allowed. Follow existing patterns in the codebase.
@@ -117,6 +117,7 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 - For deep-cloning setters and accumulator loops, test both `null` and non-null branches
 - For MapStruct mappers with nested structures, test scenarios where nested fields in DTOs are `null`
 - Only test implementing POJO/Model classes; base interfaces do not need direct tests. Remove `testContextLoads()` style tests.
+- When testing code that catches `InterruptedException` and restores the interrupt flag with `Thread.currentThread().interrupt()`, always assert `assertTrue(Thread.currentThread().isInterrupted())` and reset the flag in a `finally` block with `Thread.interrupted()`. This ensures PIT `VoidMethodCallMutator` is killed without leaking interrupted state to subsequent tests.
 
 ## Key Files to Review Before Changes
 1. `modules/trishul-base-types/src/main/java/sh/trishul/base/types/base/pojo/Identified.java`
@@ -129,3 +130,25 @@ public interface TenantMapper extends BaseMapper<Tenant, TenantDto, AddTenantDto
 3. **Removing TODOs**: Implement or leave them
 4. **Breaking the mapper pattern**: Always test with `make install`
 5. **Direct fully qualified classpaths**: Do not write fully qualified package class paths directly in code (e.g., `org.junit.jupiter.api.Assertions.assertNotEquals`). Instead, import classes and use their short name. For functions/static methods, use static imports (e.g., `import static org.junit.jupiter.api.Assertions.assertNotEquals;`).
+
+## SonarQube & Static Analysis Triage Guidelines
+When running the `fix-sonarqube` skill or triaging static analysis issues:
+
+### 🚫 Rules to PRESERVE (DO NOT MODIFY):
+- `java:S3252`: MapStruct static entity constants must be accessed through concrete classes (`Tenant.ATTR_ID`).
+- `java:S119`: Framework generic type parameter naming (`<T extends BaseUser<T>>`, `<ID, E>`).
+- `java:S1135` / `xml:S1135`: TODO comments must only be removed upon genuine feature implementation.
+- `java:S1874` / `java:S1123`: Deprecated methods are preserved for API consumer backward compatibility.
+- `java:S1602`: Lambda `{ return ...; }` braces that disambiguate overloaded CheckedSupplier vs CheckedConsumer functional interfaces (e.g. `TenantSchemaRegister`).
+- `java:S3011` / `java:S2160`: Reflection in `BaseModel` / `ReflectionManipulator`. Do not generate boilerplate `equals/hashCode` on DTOs extending `BaseModel`.
+- `java:S1172`: Unused parameters mandated by polymorphic service or controller signatures.
+
+### ✅ Rules to FIX:
+- `java:S1068` / `java:S1481` / `java:S1144`: Remove unused private fields, local variables, and private methods.
+- `java:S1488`: Inline immediately returned local variables (`return expr;`).
+- `java:S2142`: Restore thread interrupt flag `Thread.currentThread().interrupt();` before rethrowing exception.
+- `java:S5164`: Clean up `ThreadLocal` instances in a `finally` block with `.remove()`.
+- `java:S1155`: Replace `.size() == 0` or `.size() > 0` with `.isEmpty()` / `!isEmpty()`.
+- `java:S2129`: Replace boxed constructors with literals or `.valueOf()`.
+- `java:S1161`: Add missing `@Override` annotations.
+- `java:S3776`: Refactor cognitive complexity into guard clauses and helper methods.

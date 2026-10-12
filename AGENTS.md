@@ -21,8 +21,8 @@ make compile
 # Run verification/tests
 make verify
 
-# Change Maven threads for faster builds
-export THREADS=4C && make install
+# Full build with tests and mutation coverage (use THREADS=1C to prevent Docker PIT minion memory crashes)
+make install THREADS=1C
 ```
 
 When running `make install`, it takes about 30 minutes. To avoid wasting tokens and context, monitor the build status by setting a background schedule/timer for 15 minutes (900 seconds) instead of polling frequently.
@@ -81,7 +81,31 @@ AWS Cognito integration requires both auth modules + region setting in env file 
 - For deep-cloning setters and summation/accumulator loops, test both `null` and non-null branches.
 - For MapStruct mappers with nested structures, test scenarios where nested fields in the source/target DTOs are `null`.
 - Only test implementing POJO/Model classes; base interfaces do not need direct tests. Avoid empty or trivial `testContextLoads()` tests.
+- When testing code that catches `InterruptedException` and restores the interrupt flag with `Thread.currentThread().interrupt()`, always assert `assertTrue(Thread.currentThread().isInterrupted())` and reset the flag in a `finally` block with `Thread.interrupted()`. This ensures PIT `VoidMethodCallMutator` is killed without leaking interrupted state to subsequent tests.
 
 ## Direct Fully Qualified Classpaths
 
 Do not write fully qualified package class paths directly in Java code (e.g. `org.junit.jupiter.api.Assertions.assertNotEquals`). Instead, import packages and classes and use their short classnames. For functions and static utility methods (e.g. mock, assertions), use static imports.
+
+## SonarQube & Static Analysis Guidelines
+
+When remediating SonarQube issues (or using the `fix-sonarqube` skill), strictly adhere to the triage matrix:
+
+### 🚫 Architectural Patterns to PRESERVE (NEVER MODIFY):
+- **`java:S3252` (MapStruct static constant access via concrete class)**: MapStruct requires referencing entity constants via the concrete entity class (`Tenant.ATTR_ID`), not base interfaces. Never "fix" static constant access on mappers.
+- **`java:S119` (Type parameter names)**: Framework generic parameters (`<T extends BaseUser<T>>`, `<ID, E>`) define the entity model contracts. Never rename them.
+- **`java:S1135` / `xml:S1135` (TODO comments)**: Never delete or comment out TODO tags to silence SonarQube. Only remove a TODO when the associated feature/fix is actually implemented.
+- **`java:S1874` / `java:S1123` (Deprecated code & tags)**: Deprecated methods are intentionally maintained for consumer backward compatibility.
+- **`java:S1602` (Lambda block braces `{ return ...; }`)**: Multi-overloaded functional interfaces (e.g. `TenantSchemaRegister`) require explicit braces and return to disambiguate overloaded methods (`CheckedSupplier` vs `CheckedConsumer`). Removing braces breaks javac compilation.
+- **`java:S3011` / `java:S2160` (Reflection accessibility & BaseModel equals)**: Reflection manipulation is by-design in `ReflectionManipulator` and `BaseModel`. Do not generate boilerplate equals/hashCode on DTOs extending `BaseModel`.
+- **`java:S1172` (Unused parameters on framework interfaces)**: Do not remove parameters mandated by polymorphic service or controller signatures.
+
+### ✅ Actionable Code Smells to FIX:
+- **`java:S1068` / `java:S1481` / `java:S1144`**: Safely remove unused private fields, local variables, and dead private methods.
+- **`java:S1488`**: Inline immediately returned local variables (`return expr;`).
+- **`java:S2142`**: Always restore thread interrupt flag `Thread.currentThread().interrupt();` before rethrowing exceptions.
+- **`java:S5164`**: Always clean up `ThreadLocal` instances in a `finally` block via `.remove()`.
+- **`java:S1155`**: Replace `.size() == 0` or `.size() > 0` with `.isEmpty()` / `!isEmpty()`.
+- **`java:S2129`**: Replace boxed constructors with literals or `valueOf()`.
+- **`java:S1161`**: Add missing `@Override` annotations.
+- **`java:S3776`**: Refactor cognitive complexity with guard clauses and helper methods.
