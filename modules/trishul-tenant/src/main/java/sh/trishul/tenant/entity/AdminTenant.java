@@ -12,11 +12,15 @@ public class AdminTenant implements TenantData {
   private final Boolean isReady;
 
   public AdminTenant(UUID id, String name, URI url) {
+    this(id, name, url, true);
+  }
+
+  public AdminTenant(UUID id, String name, URI url, Boolean isReady) {
     super();
     this.id = id;
     this.name = name;
     this.url = url;
-    this.isReady = true;
+    this.isReady = isReady;
   }
 
   @Override
@@ -36,6 +40,6 @@ public class AdminTenant implements TenantData {
 
   @Override
   public Boolean getIsReady() {
-    return true;
+    return this.isReady;
   }
 }

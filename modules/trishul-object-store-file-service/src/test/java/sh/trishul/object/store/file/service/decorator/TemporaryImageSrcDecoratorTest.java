@@ -102,6 +102,10 @@ class DecoratedEntity extends BaseModel
     this.objectStoreFile = objectStoreFile;
     return this;
   }
+
+  public IaasObjectStoreFileDto getObjectStoreFile() {
+    return this.objectStoreFile;
+  }
 }
 
 
@@ -132,5 +136,9 @@ class DummyDto extends BaseDto implements DecoratedIaasObjectStoreFileAccessor<D
   public DummyDto setObjectStoreFile(IaasObjectStoreFileDto objectStoreFile) {
     this.objectStoreFile = objectStoreFile;
     return this;
+  }
+
+  public IaasObjectStoreFileDto getObjectStoreFile() {
+    return this.objectStoreFile;
   }
 }

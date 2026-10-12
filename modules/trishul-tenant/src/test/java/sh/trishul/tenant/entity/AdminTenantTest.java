@@ -1,6 +1,7 @@
 package sh.trishul.tenant.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
@@ -25,6 +26,11 @@ class AdminTenantTest {
   @Test
   void testGetSetIsReady() {
     assertTrue(adminTenant.getIsReady());
+
+    AdminTenant notReadyTenant
+        = new AdminTenant(UUID.fromString("00000000-0000-0000-0000-000000000002"), "NOT_READY",
+            URI.create("http://localhost/"), false);
+    assertFalse(notReadyTenant.getIsReady());
   }
 
   @Test

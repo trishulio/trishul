@@ -64,6 +64,20 @@ class CognitoPrincipalContextTest {
   }
 
   @Test
+  void testFromJwt_WhenScopeAndGroupsAreNull() {
+    Jwt jwt = mock(Jwt.class);
+    doReturn("USER").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
+    doReturn(null).when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
+    doReturn(null).when(jwt).getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+
+    CognitoPrincipalContext result = CognitoPrincipalContext.fromJwt(jwt);
+
+    assertEquals("USER", result.getUsername());
+    assertTrue(result.getRoles().isEmpty());
+    assertTrue(result.getTenantIds().isEmpty());
+  }
+
+  @Test
   void testPrivateConstructor_NullArguments() throws Exception {
     Constructor<CognitoPrincipalContext> constructor = CognitoPrincipalContext.class
         .getDeclaredConstructor(List.class, String.class, List.class);

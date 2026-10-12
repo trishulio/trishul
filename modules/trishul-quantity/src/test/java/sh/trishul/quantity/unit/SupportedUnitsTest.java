@@ -3,6 +3,7 @@ package sh.trishul.quantity.unit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.lang.reflect.Constructor;
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 import javax.measure.quantity.Volume;
@@ -36,8 +37,10 @@ class SupportedUnitsTest {
   }
 
   @Test
-  void testConstructor() {
-    SupportedUnits supportedUnits = new SupportedUnits();
-    assertNotNull(supportedUnits);
+  void testPrivateConstructor() throws Exception {
+    Constructor<SupportedUnits> constructor = SupportedUnits.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+    SupportedUnits instance = constructor.newInstance();
+    assertNotNull(instance);
   }
 }

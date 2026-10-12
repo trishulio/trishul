@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.lang.reflect.Constructor;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +65,10 @@ public class RegisterTest {
   }
 
   @Test
-  public void testConstructor() {
-    assertNotNull(new Register());
+  public void testPrivateConstructor() throws Exception {
+    Constructor<Register> constructor = Register.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+    Register instance = constructor.newInstance();
+    assertNotNull(instance);
   }
 }

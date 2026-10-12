@@ -27,11 +27,10 @@ public class MimeTypeDeserializer extends JsonDeserializer<MimeType> {
       String type = node.has("type") ? node.get("type").asText() : "";
       String subtype = node.has("subtype") ? node.get("subtype").asText() : "";
 
-      Map<String, String> parameters = null;
+      Map<String, String> parameters = new HashMap<>();
       if (node.has("parameters")) {
         JsonNode paramsNode = node.get("parameters");
         if (paramsNode.isObject()) {
-          parameters = new HashMap<>();
           Iterator<Map.Entry<String, JsonNode>> fields = paramsNode.fields();
           while (fields.hasNext()) {
             Map.Entry<String, JsonNode> field = fields.next();
@@ -40,11 +39,7 @@ public class MimeTypeDeserializer extends JsonDeserializer<MimeType> {
         }
       }
 
-      if (parameters != null) {
-        return new MimeType(type, subtype, parameters);
-      } else {
-        return new MimeType(type, subtype);
-      }
+      return new MimeType(type, subtype, parameters);
     }
 
     throw ctxt.instantiationException(MimeType.class,
