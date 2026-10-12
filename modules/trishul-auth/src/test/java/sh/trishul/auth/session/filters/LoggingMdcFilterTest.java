@@ -87,4 +87,36 @@ class LoggingMdcFilterTest {
 
     filter.doFilter(request, response, chain);
   }
+
+  @Test
+  void testDoFilter_GeneratesRequestId_WhenHeaderIsBlank() throws IOException, ServletException {
+    doReturn(null).when(contextHolder).getSessionTenantId();
+    doReturn(null).when(contextHolder).getPrincipalContext();
+    doReturn("   ").when(request).getHeader(LoggingMdcFilter.REQUEST_ID_HEADER);
+
+    doAnswer(invocation -> {
+      String generatedId = MDC.get(LoggingMdcFilter.MDC_REQUEST_ID);
+      UUID.fromString(generatedId);
+      assertEquals(generatedId, threadLocalContextHolder.getRequestId());
+      return null;
+    }).when(chain).doFilter(request, response);
+
+    filter.doFilter(request, response, chain);
+  }
+
+  @Test
+  void testDoFilter_SkipsUsername_WhenPrincipalUsernameIsNull()
+      throws IOException, ServletException {
+    PrincipalContext principalCtx = mock(PrincipalContext.class);
+    doReturn(principalCtx).when(contextHolder).getPrincipalContext();
+    doReturn(null).when(principalCtx).getUsername();
+    doReturn("custom-req-id").when(request).getHeader(LoggingMdcFilter.REQUEST_ID_HEADER);
+
+    doAnswer(invocation -> {
+      assertNull(MDC.get(LoggingMdcFilter.MDC_USERNAME));
+      return null;
+    }).when(chain).doFilter(request, response);
+
+    filter.doFilter(request, response, chain);
+  }
 }

@@ -126,6 +126,35 @@ class ContextHolderFilterTest {
   }
 
   @Test
+  void testDoFilter_SetsNull_WhenSecurityContextIsNull() throws IOException, ServletException {
+    filter = new ContextHolderFilter(() -> null, mcontextHolder, mPrincipalContextBuilder);
+
+    filter.doFilter(mReq, mRes, mChain);
+
+    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
+
+    assertNull(ctx);
+    verify(mChain).doFilter(mReq, mRes);
+    verifyNoInteractions(mPrincipalContextBuilder);
+  }
+
+  @Test
+  void testDoFilter_SetsNull_WhenPrincipalIsNotJwt() throws IOException, ServletException {
+    Authentication mAuth = mock(Authentication.class);
+    doReturn(mAuth).when(mSecurityCtx).getAuthentication();
+    doReturn("not-a-jwt").when(mAuth).getPrincipal();
+
+    filter.doFilter(mReq, mRes, mChain);
+
+    PrincipalContext ctx = mcontextHolder.getPrincipalContext();
+
+    assertNull(ctx);
+    verify(mChain).doFilter(mReq, mRes);
+    verifyNoInteractions(mPrincipalContextBuilder);
+  }
+
+  @Test
+
   void testPublicConstructorAndFilter() throws Exception {
     SecurityContext originalContext = getContext();
     try {
