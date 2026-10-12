@@ -83,7 +83,7 @@
         <java.version>23</java.version>
 
         <org.springframework.boot.version>3.4.13</org.springframework.boot.version>
-        <spring-security.version>7.2.0-M1</spring-security.version>
+        <spring-security.version>7.2.0-M2</spring-security.version>
         <org.springdoc.openapi.webmvc.version>2.8.5</org.springdoc.openapi.webmvc.version>
         <org.springdoc.openapi.maven.plugin.version>1.5</org.springdoc.openapi.maven.plugin.version>
         <org.mapstruct.version>1.7.0.Beta2</org.mapstruct.version>
@@ -96,7 +96,7 @@
         <org.pitest.version>1.17.3</org.pitest.version>
         <org.pitest.junit5.plugin.version>1.2.3</org.pitest.junit5.plugin.version>
         <org.sonarsource.scanner.version>5.8.0.7211</org.sonarsource.scanner.version>
-        <spotless.version>3.10.2</spotless.version>
+        <spotless.version>3.10.3</spotless.version>
         <checkstyle.version>3.6.0</checkstyle.version>
         <spotbugs.version>4.10.4.1</spotbugs.version>
         <pmd.version>3.28.0</pmd.version>
@@ -108,11 +108,11 @@
         <org.apache.maven.plugin.version>3.2.0</org.apache.maven.plugin.version>
         <org.apache.maven.plugin.antrun.version>3.2.0</org.apache.maven.plugin.antrun.version>
         <com.h3xstream.findsecbugs.plugin.version>1.11.0</com.h3xstream.findsecbugs.plugin.version>
-        <dev.langchain4j.version>1.20.0</dev.langchain4j.version>
+        <dev.langchain4j.version>1.21.0</dev.langchain4j.version>
         <dev.langchain4j.spring-boot.version>1.19.0-beta29</dev.langchain4j.spring-boot.version>
         <org.springframework.ai.version>1.0.0-M5</org.springframework.ai.version>
-        <com.twilio.sdk.version>13.0.1</com.twilio.sdk.version>
-        <com.google.guava.version>33.7.1-jre</com.google.guava.version>
+        <com.twilio.sdk.version>13.0.2</com.twilio.sdk.version>
+        <com.google.guava.version>33.7.2-jre</com.google.guava.version>
         <assertj.version>4.0.0-M1</assertj.version>
         <commons-logging.version>1.4.0</commons-logging.version>
         <argLine />
