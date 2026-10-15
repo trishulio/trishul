@@ -94,6 +94,8 @@ class AwsIdpTenantWithRoleClientTest {
     doAnswer(inv -> {
       CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
+      assertEquals("T1", req.getGroupName());
+      assertEquals("T1: T1_DESCRIPTION", req.getDescription());
 
       return new CreateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
           .withDescription(req.getGroupName() + "_DESCRIPTION")
@@ -117,6 +119,8 @@ class AwsIdpTenantWithRoleClientTest {
     doAnswer(inv -> {
       CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
+      assertEquals("T1", req.getGroupName());
+      assertEquals("T1: T1_DESCRIPTION", req.getDescription());
       assertNull(req.getRoleArn());
 
       return new CreateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
@@ -142,6 +146,8 @@ class AwsIdpTenantWithRoleClientTest {
     doAnswer(inv -> {
       CreateGroupRequest req = inv.getArgument(0, CreateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
+      assertEquals("T1", req.getGroupName());
+      assertEquals("T1: T1_DESCRIPTION", req.getDescription());
       assertNull(req.getRoleArn());
 
       return new CreateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
@@ -167,6 +173,8 @@ class AwsIdpTenantWithRoleClientTest {
     doAnswer(inv -> {
       UpdateGroupRequest req = inv.getArgument(0, UpdateGroupRequest.class);
       assertEquals("USER_POOL", req.getUserPoolId());
+      assertEquals("T1", req.getGroupName());
+      assertEquals("T1: T1_DESCRIPTION", req.getDescription());
 
       return new UpdateGroupResult().withGroup(new GroupType().withGroupName(req.getGroupName())
           .withDescription(req.getGroupName() + "_DESCRIPTION")
@@ -183,6 +191,62 @@ class AwsIdpTenantWithRoleClientTest {
     IaasIdpTenant expected = new IaasIdpTenant("T1", new IaasRole("ARN_T1_ROLE"), "T1_DESCRIPTION",
         LocalDateTime.of(2000, 1, 1, 0, 0), LocalDateTime.of(2000, 2, 2, 0, 0));
     assertEquals(expected, tenant);
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsNull_WhenEntityIsNull() {
+    assertNull(client.getGroupDescription(null));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsNull_WhenNameAndDescriptionAreNull() {
+    assertNull(client.getGroupDescription(new IaasIdpTenant()));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsNull_WhenNameAndDescriptionAreBlank() {
+    assertNull(client.getGroupDescription(new IaasIdpTenant("  ", null, "  ", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsNull_WhenNameAndDescriptionAreEmpty() {
+    assertNull(client.getGroupDescription(new IaasIdpTenant("", null, "", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsName_WhenDescriptionIsNull() {
+    assertEquals("T1", client.getGroupDescription(new IaasIdpTenant("T1")));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsName_WhenDescriptionIsBlank() {
+    assertEquals("T1", client.getGroupDescription(new IaasIdpTenant("T1", null, "  ", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsName_WhenDescriptionIsEmpty() {
+    assertEquals("T1", client.getGroupDescription(new IaasIdpTenant("T1", null, "", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsDescription_WhenNameIsNull() {
+    assertEquals("D1", client.getGroupDescription(new IaasIdpTenant(null, null, "D1", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsDescription_WhenNameIsBlank() {
+    assertEquals("D1", client.getGroupDescription(new IaasIdpTenant("  ", null, "D1", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsDescription_WhenNameIsEmpty() {
+    assertEquals("D1", client.getGroupDescription(new IaasIdpTenant("", null, "D1", null, null)));
+  }
+
+  @Test
+  void testGetGroupDescription_ReturnsFormatted_WhenNameAndDescriptionArePresent() {
+    assertEquals("T1: D1",
+        client.getGroupDescription(new IaasIdpTenant("T1", null, "D1", null, null)));
   }
 
   @Test
