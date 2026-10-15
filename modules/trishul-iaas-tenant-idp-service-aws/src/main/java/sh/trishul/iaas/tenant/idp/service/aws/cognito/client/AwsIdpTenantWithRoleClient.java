@@ -64,8 +64,9 @@ public class AwsIdpTenantWithRoleClient
 
   @Override
   public <BE extends BaseIaasIdpTenant<?>> IaasIdpTenant add(BE entity) {
-    CreateGroupRequest request = new CreateGroupRequest().withDescription(entity.getDescription())
-        .withGroupName(entity.getName()).withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
+    CreateGroupRequest request = new CreateGroupRequest()
+        .withDescription(getGroupDescription(entity)).withGroupName(entity.getName())
+        .withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
 
     CreateGroupResult result = this.awsCognitoIdpProvider.createGroup(request);
 
@@ -113,8 +114,9 @@ public class AwsIdpTenantWithRoleClient
   }
 
   public <UE extends UpdateIaasIdpTenant<?>> IaasIdpTenant update(UE entity) {
-    UpdateGroupRequest request = new UpdateGroupRequest().withDescription(entity.getDescription())
-        .withGroupName(entity.getName()).withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
+    UpdateGroupRequest request = new UpdateGroupRequest()
+        .withDescription(getGroupDescription(entity)).withGroupName(entity.getName())
+        .withRoleArn(roleArn(entity)).withUserPoolId(userPoolId);
 
     UpdateGroupResult result = this.awsCognitoIdpProvider.updateGroup(request);
 
@@ -122,6 +124,29 @@ public class AwsIdpTenantWithRoleClient
     setRole(tenant, result.getGroup().getRoleArn());
 
     return tenant;
+  }
+
+  protected String getGroupDescription(BaseIaasIdpTenant<?> entity) {
+    if (entity == null) {
+      return null;
+    }
+
+    String name = entity.getName();
+    String description = entity.getDescription();
+
+    StringBuilder sb = new StringBuilder();
+    if (name != null && !name.isBlank()) {
+      sb.append(name);
+    }
+
+    if (description != null && !description.isBlank()) {
+      if (!sb.isEmpty()) {
+        sb.append(": ");
+      }
+      sb.append(description);
+    }
+
+    return sb.isEmpty() ? null : sb.toString();
   }
 
   private String roleArn(IaasRoleAccessor<?> accessor) {

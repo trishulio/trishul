@@ -31,10 +31,12 @@ public class CognitoPrincipalContext implements PrincipalContext {
     }
 
     String username = jwt.getClaimAsString(CLAIM_USERNAME);
-    List<String> roles = Arrays.asList(jwt.getClaimAsString(CLAIM_SCOPE).split(" "));
+    String scope = jwt.getClaimAsString(CLAIM_SCOPE);
+    List<String> roles = scope != null ? Arrays.asList(scope.split(" ")) : Collections.emptyList();
 
     List<String> groups = jwt.getClaimAsStringList(CLAIM_GROUPS);
-    List<UUID> tenantIds = groups.stream().map(UUID::fromString).toList();
+    List<UUID> tenantIds
+        = groups != null ? groups.stream().map(UUID::fromString).toList() : Collections.emptyList();
 
     return new CognitoPrincipalContext(tenantIds, username, roles);
   }

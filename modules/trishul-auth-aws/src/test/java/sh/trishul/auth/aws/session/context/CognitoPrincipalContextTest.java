@@ -73,4 +73,18 @@ class CognitoPrincipalContextTest {
     assertTrue(context.getTenantIds().isEmpty());
     assertTrue(context.getRoles().isEmpty());
   }
+
+  @Test
+  void testFromJwt_HandlesNullScopeAndNullGroups() {
+    Jwt jwt = mock(Jwt.class);
+    doReturn(null).when(jwt).getClaimAsStringList(CognitoPrincipalContext.CLAIM_GROUPS);
+    doReturn("USERNAME_1").when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_USERNAME);
+    doReturn(null).when(jwt).getClaimAsString(CognitoPrincipalContext.CLAIM_SCOPE);
+
+    CognitoPrincipalContext context = CognitoPrincipalContext.fromJwt(jwt);
+
+    assertEquals("USERNAME_1", context.getUsername());
+    assertTrue(context.getTenantIds().isEmpty());
+    assertTrue(context.getRoles().isEmpty());
+  }
 }
